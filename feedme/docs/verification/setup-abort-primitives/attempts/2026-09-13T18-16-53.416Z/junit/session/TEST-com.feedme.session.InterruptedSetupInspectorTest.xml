@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.session.InterruptedSetupInspectorTest" tests="33" skipped="0" failures="0" errors="0" timestamp="2026-09-13T18:17:09.633Z" hostname="ansachars-MacBook-Pro.local" time="0.431">
+  <properties/>
+  <testcase name="changedBindingPayloadOnReverseReadNeverLeaksPreviouslyGoodStages[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.036"/>
+  <testcase name="missingNativeCapabilityAndStorageFailuresStayTypedAndHaveNoFallback[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.037"/>
+  <testcase name="ownerAlreadyStaleFailsBeforeAnyControlOrMetadataCall[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.01"/>
+  <testcase name="legacyCredentialPendingNeverExtractsOrObservesCompositeResources[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.006"/>
+  <testcase name="confirmedFlagReportsAuthenticatedCleanupProgressWithoutInferringActions[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.128"/>
+  <testcase name="semanticallyEquivalentOrLegacyBindingJsonIsNotCanonicalSetupEvidence[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.008"/>
+  <testcase name="changedResourceStatusCannotBeHiddenBehindUnchangedFingerprintOrRevision[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.005"/>
+  <testcase name="sameCredentialStatusWithChangedFingerprintIsChangedEvidence[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.002"/>
+  <testcase name="sameDataStatusWithChangedFingerprintIsChangedEvidence[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.002"/>
+  <testcase name="malformedForeignAndStaleNativeProofFailuresAreResourceMismatches[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.01"/>
+  <testcase name="noncooperativeCancellationAtEveryAwaitStopsFurtherInspection[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.012"/>
+  <testcase name="unconfirmedAbortedWorkIsAMismatchWhileConfirmedObservationGrantsNoCleanup[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.003"/>
+  <testcase name="reportsAndObservationsExposeOnlySafeStagesReasonsAndAdvisoryNextSteps[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.002"/>
+  <testcase name="preparedInspectionNeverReadsBindingOrCreatesAnyResource[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.001"/>
+  <testcase name="nonemptyDataRequiresPresentTargetAndReservedSchemaTwoBinding[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.005"/>
+  <testcase name="ordinaryRetirementAndEmptyDiscardWinBeforeAnyNativeSetupRead[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.002"/>
+  <testcase name="repeatedInspectionsNeverConfirmAbortAcknowledgeControlOrMintAuthority[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.007"/>
+  <testcase name="byteIdenticalBindingAtChangedRevisionInvalidatesTheWholeObservation[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.002"/>
+  <testcase name="missingMalformedAndUnreadableControlNeverBecomeNoneOrInitializeState[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.004"/>
+  <testcase name="boundEvidenceIsReadForwardAndBackwardInsideControlAndLatchBrackets[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.01"/>
+  <testcase name="everyImpossibleLiveSelectionOrderFailsWithoutPublishingStages[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.086"/>
+  <testcase name="durableRetirementReplacementWinsOverLowerReadFailureAndPriorSetup[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.003"/>
+  <testcase name="changedBindingTargetWithInternallyMatchingPayloadIsStillChangedEvidence[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.003"/>
+  <testcase name="lateOwnerChangeAtEveryAwaitEscapesRatherThanReturningOldDiagnostics[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.012"/>
+  <testcase name="fullCanonicalBindingFieldsMustMatchTheOriginalCompositeIntent[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.005"/>
+  <testcase name="idleAndCompleteAreNoneWithoutLowerResourceInspection[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.002"/>
+  <testcase name="cancellationBeforeEntryOrThrownByNativePortIsNeverFlattenedToEvidenceFailure[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.004"/>
+  <testcase name="processRetirementLatchWinsAtEveryOuterBracketIncludingUnavailableControl[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.005"/>
+  <testcase name="everyReachableUnconfirmedStageReportsOnlyCoherentEnums[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.007"/>
+  <testcase name="nativeExceptionsCannotEscapeIntoDiagnosticTextOrBecomeSuccess[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.004"/>
+  <testcase name="configurationDisagreementIsDetectedBeforeAnyLowerNativeRead[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.002"/>
+  <testcase name="sameWorkStatusWithChangedRevisionIsChangedEvidence[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.001"/>
+  <testcase name="changedControlRevisionOrPayloadWinsOverSuccessAndNativeFailure[jvm]" classname="com.feedme.session.InterruptedSetupInspectorTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

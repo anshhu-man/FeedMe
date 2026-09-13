@@ -28,6 +28,7 @@ kotlin {
             implementation(project(":shared:session"))
         }
         androidInstrumentedTest.dependencies {
+            implementation(project(":shared:session"))
             implementation(libs.androidx.test.runner)
             implementation(libs.androidx.test.junit)
         }
@@ -45,7 +46,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    // Instrumentation-only syscall injector. It is never an input to main/release JNI packaging.
+    // Instrumentation-only VFS injector. It is never an input to main/release JNI packaging.
     sourceSets.getByName("androidTest").jniLibs.srcDir(layout.buildDirectory.dir("generated/syncFailureJni"))
 }
 

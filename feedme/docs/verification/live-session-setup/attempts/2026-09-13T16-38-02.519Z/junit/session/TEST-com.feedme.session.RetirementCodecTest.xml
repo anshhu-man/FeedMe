@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.session.RetirementCodecTest" tests="26" skipped="0" failures="0" errors="0" timestamp="2026-09-13T16:38:14.600Z" hostname="ansachars-MacBook-Pro.local" time="0.024">
+  <properties/>
+  <testcase name="everyPendingFieldIsRequiredAndAdditionalSecretFieldsRejected[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.001"/>
+  <testcase name="duplicateKeysMalformedUtf8AndSurrogatesFailClosed[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.001"/>
+  <testcase name="setupDiscardCannotBeParsedAsLegacyLogoutByChangingItsTagWhenTargetsAreAbsent[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.001"/>
+  <testcase name="accessGateAllowsOnlyIdleAndCompletedAndBlocksEveryPendingKind[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.0"/>
+  <testcase name="setupDiscardGuestScopeDoesNotBecomeAnAccount[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.0"/>
+  <testcase name="completedStateRemovesOwnerOriginAndTargets[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.0"/>
+  <testcase name="setupDiscardCheckpointSetDerivesOnlyPresentResourcesAndIsDetached[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.002"/>
+  <testcase name="setupDiscardIdsScopeAndNullableTargetTypesAreStrict[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.001"/>
+  <testcase name="setupDiscardViewsAndCompletionDoNotExposeTargetIdentity[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.0"/>
+  <testcase name="setupDiscardRoundTripsAllSixAnchoredOptionalTargetCombinations[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.001"/>
+  <testcase name="ownerKindAndScopeRemainStrictAndGuestIsNotAccount[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.002"/>
+  <testcase name="setupDiscardDuplicateKeysAndOversizedPayloadRemainRejected[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.001"/>
+  <testcase name="schemaVersionIsExactAndUnknownKeysAreRejected[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.001"/>
+  <testcase name="credentialCreateCannotMasqueradeAsCleanupOrCompletedStateAndViewsAreRedacted[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.0"/>
+  <testcase name="credentialCreateRejectsMalformedNoncanonicalAndUnboundedEmbeddedPlans[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.002"/>
+  <testcase name="setupDiscardRejectsDuplicateOrUnknownCompletionSteps[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.001"/>
+  <testcase name="initialStateMatchesNativeControlFormatExactly[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.0"/>
+  <testcase name="setupDiscardNeverAcceptsDataOnlyOrNoAnchorAndNeverMarksAbsentTargetsDone[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.0"/>
+  <testcase name="setupDiscardHasDistinctTagAndExplicitNullsWithoutPlaceholderTargets[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.0"/>
+  <testcase name="credentialCreateHasDistinctStrictOpaquePlanTagAndExplicitConfirmationBoolean[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.001"/>
+  <testcase name="privateModelViewsAndBytesRemainDetachedAndRedacted[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.006"/>
+  <testcase name="pendingRoundTripsExactOpaqueTargetsAndIncarnations[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.001"/>
+  <testcase name="completedStepSetDoesNotAcceptDuplicatesOrUnknownSteps[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.0"/>
+  <testcase name="opaqueTargetIsBoundedExactHexNotAPathOrCredential[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.0"/>
+  <testcase name="sizeAndNestingRemainBounded[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.001"/>
+  <testcase name="operationAndIncarnationIdsAreExactLowercaseUuids[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

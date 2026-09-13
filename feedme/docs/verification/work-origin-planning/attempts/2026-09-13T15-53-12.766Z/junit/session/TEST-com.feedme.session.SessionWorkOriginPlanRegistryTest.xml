@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.session.SessionWorkOriginPlanRegistryTest" tests="20" skipped="0" failures="0" errors="0" timestamp="2026-09-13T15:53:24.367Z" hostname="ansachars-MacBook-Pro.local" time="0.194">
+  <properties/>
+  <testcase name="successfulCasRequiresExactReadbackBeforeSelectionAcknowledgement[jvm]" classname="com.feedme.session.SessionWorkOriginPlanRegistryTest" time="0.037"/>
+  <testcase name="signingFailureOrMalformedProofNeverCreatesUsablePlanOrWrites[jvm]" classname="com.feedme.session.SessionWorkOriginPlanRegistryTest" time="0.011"/>
+  <testcase name="changedIdleRevisionOrBytesCannotBeInferredAsTheAuthenticatedPredecessor[jvm]" classname="com.feedme.session.SessionWorkOriginPlanRegistryTest" time="0.007"/>
+  <testcase name="ordinaryRetirementCannotEraseSelectionOrLeaveARejectedFenceBehind[jvm]" classname="com.feedme.session.SessionWorkOriginPlanRegistryTest" time="0.012"/>
+  <testcase name="ordinaryControlStoreCannotSilentlyReplaceMissingProofCapability[jvm]" classname="com.feedme.session.SessionWorkOriginPlanRegistryTest" time="0.005"/>
+  <testcase name="planningCapturesExactIdlePredecessorWithoutWritingOrPublishingAuthority[jvm]" classname="com.feedme.session.SessionWorkOriginPlanRegistryTest" time="0.009"/>
+  <testcase name="boundaryActivationDuringReadAuthenticationOrCasStopsSetupAuthority[jvm]" classname="com.feedme.session.SessionWorkOriginPlanRegistryTest" time="0.036"/>
+  <testcase name="competingPlansCannotClaimOneAnothersPersistentSelection[jvm]" classname="com.feedme.session.SessionWorkOriginPlanRegistryTest" time="0.008"/>
+  <testcase name="cancellationAfterSuspendingProofOrCasOperationsNeverReturnsAuthority[jvm]" classname="com.feedme.session.SessionWorkOriginPlanRegistryTest" time="0.009"/>
+  <testcase name="failedCasNeverPromotesVisibleSelectionAndRetryUsesExactOriginalPlan[jvm]" classname="com.feedme.session.SessionWorkOriginPlanRegistryTest" time="0.009"/>
+  <testcase name="changedRecordDuringAuthenticationInvalidatesPlanningInspectionAndSelection[jvm]" classname="com.feedme.session.SessionWorkOriginPlanRegistryTest" time="0.006"/>
+  <testcase name="ordinaryUsedOrRetiringOriginsNeverSubstituteForSelectionProvenance[jvm]" classname="com.feedme.session.SessionWorkOriginPlanRegistryTest" time="0.007"/>
+  <testcase name="missingCorruptOrClosedLedgerNeverInitializesOrSelectsAnything[jvm]" classname="com.feedme.session.SessionWorkOriginPlanRegistryTest" time="0.002"/>
+  <testcase name="selectedReplayRejectsNoncanonicalWrapperAndExhaustedResolutionSpace[jvm]" classname="com.feedme.session.SessionWorkOriginPlanRegistryTest" time="0.005"/>
+  <testcase name="preparedInspectionIsReadOnlyAndNeverAllocatesAnotherIdentity[jvm]" classname="com.feedme.session.SessionWorkOriginPlanRegistryTest" time="0.003"/>
+  <testcase name="falseSuccessReceiptCannotAcknowledgeEvenCommittedExactSelection[jvm]" classname="com.feedme.session.SessionWorkOriginPlanRegistryTest" time="0.009"/>
+  <testcase name="invalidScopeRevisionAndIdFailWithoutPlanOrLedgerMutation[jvm]" classname="com.feedme.session.SessionWorkOriginPlanRegistryTest" time="0.007"/>
+  <testcase name="structurallyValidTamperedOrForeignProofCannotSelectAnIdleLedger[jvm]" classname="com.feedme.session.SessionWorkOriginPlanRegistryTest" time="0.004"/>
+  <testcase name="selectedReplaySurvivesManagerReopenButAlwaysNeedsFreshChangedAcknowledgement[jvm]" classname="com.feedme.session.SessionWorkOriginPlanRegistryTest" time="0.006"/>
+  <testcase name="everySetupOperationRequiresAnInactiveBoundary[jvm]" classname="com.feedme.session.SessionWorkOriginPlanRegistryTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

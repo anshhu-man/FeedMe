@@ -26,6 +26,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
@@ -175,17 +177,21 @@ class LocalRetirementCoordinatorTest {
         }
     }
 
-    @Test fun everyUnknownControlCommitIsReconciledByExactPayloadWithoutRepeatedNativeEffects() = runTest {
+    @Test fun repeatedUnknownControlCommitsCannotStartCleanupUntilFreshAcknowledgement() = runTest {
         withCoordinatorFixture(StandardTestDispatcher(testScheduler)) { f ->
             f.activate()
             val coordinator = f.coordinator()
             val binding = coordinatorValue(coordinator.capture(f.lease, ORIGIN, CREDENTIAL))
             f.controlConnection.failEveryWriteCommitAfter = true
-            val result = coordinatorValue(coordinator.retire(binding, OPERATION))
+            failure(FailureReason.OUTCOME_UNKNOWN, coordinator.retire(binding, OPERATION))
+            failure(FailureReason.OUTCOME_UNKNOWN, coordinator.recover())
+            assertTrue(f.workCalls.isEmpty()); assertTrue(f.credentialCalls.isEmpty()); assertTrue(f.dataVault.deleted.isEmpty())
+            assertPending(f.controlRecord(), emptySet())
             f.controlConnection.failEveryWriteCommitAfter = false
+            val result = coordinatorValue(coordinator.recover())
             assertEquals(LocalRetirementPhase.COMPLETE, result.phase)
-            assertEquals(5, f.controlConnection.faultsInjected)
-            assertEquals(6L, f.controlRecord().revision)
+            assertEquals(2, f.controlConnection.faultsInjected)
+            assertEquals(8L, f.controlRecord().revision)
             assertEquals(OPERATION, stringField(ledger(f.controlRecord()), "operationId"))
             assertEquals(1, f.workCalls.size)
             assertEquals(1, f.credentialCalls.size)
@@ -371,25 +377,30 @@ class LocalRetirementCoordinatorTest {
         }
     }
 
-    @Test fun lostCompletedAcknowledgementAndFailedReconcileReadKeepLatchUntilExactCompleteIsObserved() = runTest {
+    @Test fun lostCompletedAcknowledgementKeepsLatchUntilExactCompleteIsWrittenAgain() = runTest {
         withCoordinatorFixture(StandardTestDispatcher(testScheduler)) { f ->
             f.activate()
             val coordinator = f.coordinator()
             val binding = coordinatorValue(coordinator.capture(f.lease, ORIGIN, CREDENTIAL))
             f.controlConnection.faultOnWriteCommit = f.controlConnection.writeCommits + 5
             f.controlConnection.failReadAfterFault = true
-            failure(FailureReason.STORAGE_FAILURE, coordinator.retire(binding, OPERATION))
+            failure(FailureReason.OUTCOME_UNKNOWN, coordinator.retire(binding, OPERATION))
+            failure(FailureReason.STORAGE_FAILURE, f.control.read())
             assertEquals("complete", stringField(ledger(f.controlRecord()), "state"))
             assertFalse(coordinatorValue(f.coordinator().restorationAllowed()))
             assertEquals(1, f.workCalls.size)
             assertEquals(1, f.credentialCalls.size)
+            f.controlConnection.nextWriteCommitFault = CoordinatorCommitFault.AFTER
+            failure(FailureReason.OUTCOME_UNKNOWN, f.coordinator().recover())
+            failure(FailureReason.STORAGE_FAILURE, f.control.read())
+            assertFalse(coordinatorValue(f.coordinator().restorationAllowed()))
             val recovered = coordinatorValue(f.coordinator().recover())
             assertEquals(LocalRetirementPhase.COMPLETE, recovered.phase)
             assertEquals(OPERATION, recovered.operationId)
             assertTrue(coordinatorValue(f.coordinator().restorationAllowed()))
             assertEquals(1, f.workCalls.size)
             assertEquals(1, f.credentialCalls.size)
-            assertEquals(6L, f.controlRecord().revision)
+            assertEquals(8L, f.controlRecord().revision)
         }
     }
 
@@ -468,7 +479,7 @@ class LocalRetirementCoordinatorTest {
             for (private in listOf(OWNER.actorId, OWNER.environment, ORIGIN, CREDENTIAL, target)) assertFalse(text.contains(private))
             val revision = record.revision
             assertEquals(LocalRetirementPhase.COMPLETE, coordinatorValue(coordinator.recover()).phase)
-            assertEquals(revision, f.controlRecord().revision)
+            assertEquals(revision + 1, f.controlRecord().revision)
             f.assertControlHasNoPlaintext(listOf(OWNER.actorId, ORIGIN, CREDENTIAL, target))
         }
     }
@@ -701,16 +712,20 @@ class LocalRetirementCoordinatorTest {
         }
     }
 
-    @Test fun setupDiscardEveryLostControlAcknowledgementReconcilesExactPayloadWithoutRepeatingCleanup() = runTest {
+    @Test fun setupDiscardLostAcknowledgementsPreserveTargetsAndStopAllCleanup() = runTest {
         withCoordinatorFixture(StandardTestDispatcher(testScheduler)) { f ->
             coordinatorValue(f.data.activate(OWNER))
             val target = coordinatorValue(f.data.captureRetirement(OWNER))!!
             val before = f.controlConnection.writeCommits
             f.controlConnection.failEveryWriteCommitAfter = true
-            assertEquals(LocalRetirementPhase.COMPLETE, coordinatorValue(discardSetup(
-                f.coordinator(supportsEmptyWork = true), f.controlRecord(), target)).phase)
-            assertEquals(5, f.controlConnection.writeCommits - before)
-            assertEquals(5, f.controlConnection.faultsInjected)
+            val coordinator = f.coordinator(supportsEmptyWork = true)
+            failure(FailureReason.OUTCOME_UNKNOWN, discardSetup(coordinator, f.controlRecord(), target))
+            failure(FailureReason.OUTCOME_UNKNOWN, coordinator.recover())
+            assertEquals(2, f.controlConnection.writeCommits - before)
+            assertEquals(2, f.controlConnection.faultsInjected)
+            assertTrue(f.emptyWorkCalls.isEmpty()); assertTrue(f.credentialCalls.isEmpty()); assertTrue(f.dataVault.deleted.isEmpty())
+            f.controlConnection.failEveryWriteCommitAfter = false
+            assertEquals(LocalRetirementPhase.COMPLETE, coordinatorValue(coordinator.recover()).phase)
             assertEquals(listOf(OWNER to ORIGIN), f.emptyWorkCalls)
             assertEquals(listOf(OWNER to CREDENTIAL), f.credentialCalls)
             assertEquals(1, f.dataVault.deleted.size)
@@ -830,9 +845,34 @@ class LocalRetirementCoordinatorTest {
             val coordinator = f.coordinator(supportsEmptyWork = true)
             assertIs<PortResult.Failure>(discardSetup(coordinator, expected, origin = null))
             assertTrue(f.credentialCalls.isEmpty()); assertTrue(f.emptyWorkCalls.isEmpty()); assertTrue(f.dataVault.deleted.isEmpty())
+            failure(FailureReason.STORAGE_FAILURE, f.control.read())
             assertSetupPending(f.controlRecord(), emptySet(), origin = null, hasData = false)
             assertEquals(LocalRetirementPhase.COMPLETE, coordinatorValue(coordinator.recover()).phase)
             assertEquals(listOf(OWNER to CREDENTIAL), f.credentialCalls)
+        }
+    }
+
+    @Test fun cancellationReturnedFromSuccessfulControlCasCannotStartCleanup() = runTest {
+        withCoordinatorFixture(StandardTestDispatcher(testScheduler)) { f ->
+            f.activate()
+            val wrapper = object : SessionControlStore {
+                override suspend fun read() = f.control.read()
+                override suspend fun compareAndSet(expectedRevision: Long?, payload: PrivateBytes): PortResult<SessionControlRecord> {
+                    val result = f.control.compareAndSet(expectedRevision, payload)
+                    currentCoroutineContext().cancel()
+                    return result
+                }
+            }
+            val coordinator = LocalRetirementCoordinator(wrapper, f.data, f.boundary, StandardTestDispatcher(testScheduler),
+                CredentialRetirementPort { scope, id -> f.credentialCalls += scope to id; PortResult.Value(Unit) },
+                SessionWorkRetirementPort { scope, id -> f.workCalls += scope to id; PortResult.Value(Unit) })
+            val binding = coordinatorValue(coordinator.capture(f.lease, ORIGIN, CREDENTIAL))
+            val job = async { coordinator.retire(binding, OPERATION) }
+            assertFailsWith<CancellationException> { job.await() }
+            assertPending(f.controlRecord(), emptySet())
+            assertNull(f.boundary.current())
+            assertTrue(f.workCalls.isEmpty()); assertTrue(f.credentialCalls.isEmpty()); assertTrue(f.dataVault.deleted.isEmpty())
+            assertEquals(LocalRetirementPhase.COMPLETE, coordinatorValue(f.coordinator().recover()).phase)
         }
     }
 
@@ -886,6 +926,47 @@ class LocalRetirementCoordinatorTest {
             assertRecord(newStore)
             assertEquals(1, f.credentialCalls.size)
             assertNull(f.boundary.current())
+        }
+    }
+
+    @Test fun compositeSetupIsNotOrdinaryRetirementOrConfirmedCredentialOnlyCleanup() = runTest {
+        for (abort in listOf(false, true)) withCoordinatorFixture(StandardTestDispatcher(testScheduler)) { f ->
+            val initial = f.controlRecord()
+            val pending = coordinatorValue(f.control.compareAndSet(initial.revision, syntheticSetupJournal(OWNER, "a".repeat(64), abort)))
+            val writes = f.controlConnection.writeCommits
+            assertFalse(coordinatorValue(f.coordinator().restorationAllowed()))
+            failure(FailureReason.CONFLICT, f.coordinator().recover())
+            assertEquals(writes, f.controlConnection.writeCommits)
+            assertEquals(pending.revision, f.controlRecord().revision)
+            assertContentEquals(pending.payload.copyForCodec(), f.controlRecord().payload.copyForCodec())
+            assertTrue(f.workCalls.isEmpty()); assertTrue(f.credentialCalls.isEmpty()); assertTrue(f.dataVault.deleted.isEmpty())
+            assertNull(f.boundary.current())
+        }
+    }
+
+    @Test fun retainedLegacyRetirementLatchCannotOverwriteCompositeSetupAtItsOriginalRevision() = runTest {
+        withCoordinatorFixture(StandardTestDispatcher(testScheduler)) { f ->
+            f.activate()
+            val coordinator = f.coordinator()
+            val binding = coordinatorValue(coordinator.capture(f.lease, ORIGIN, CREDENTIAL))
+            val initial = f.controlRecord()
+            f.controlConnection.nextWriteCommitFault = CoordinatorCommitFault.BEFORE
+            failure(FailureReason.STORAGE_FAILURE, coordinator.retire(binding, OPERATION))
+            assertEquals(initial.revision, f.controlRecord().revision)
+            val replacement = SessionControlRecord(initial.revision, syntheticSetupJournal(OWNER, "a".repeat(64)))
+            var writes = 0
+            val changed = object : SessionControlStore {
+                override suspend fun read(): PortResult<SessionControlRecord?> = PortResult.Value(replacement)
+                override suspend fun compareAndSet(expectedRevision: Long?, payload: PrivateBytes): PortResult<SessionControlRecord> {
+                    writes++; error("Legacy process latch must never overwrite composite setup")
+                }
+            }
+            failure(FailureReason.CONFLICT, f.coordinator(controlOverride = changed).recover())
+            assertEquals(0, writes)
+            assertTrue(f.workCalls.isEmpty()); assertTrue(f.credentialCalls.isEmpty()); assertTrue(f.dataVault.deleted.isEmpty())
+            assertRecord(f.store)
+            // Restore the real predecessor view and resolve only the original retained test latch.
+            assertEquals(LocalRetirementPhase.COMPLETE, coordinatorValue(coordinator.recover()).phase)
         }
     }
 

@@ -19,6 +19,12 @@ internal object RetirementCodec {
                 try { put("plan", hex(encoded)) } finally { encoded.fill(0) }
                 put("abortRequested", state.abortRequested)
             }
+            is RetirementState.PendingSetup -> {
+                put("state", "session-setup-pending")
+                val encoded = state.plan.copyForStorage().copyForCodec()
+                try { put("plan", hex(encoded)) } finally { encoded.fill(0) }
+                put("abortRequested", state.abortRequested)
+            }
             is RetirementState.InFlight -> {
                 put("state", if (state is RetirementState.Pending) "pending" else "setup-discard-pending")
                 put("operationId", state.operationId)
@@ -51,6 +57,14 @@ internal object RetirementCodec {
                 val plan = try { requireRetirement(CredentialCreatePlan.fromStorage(PrivateBytes(raw))) } finally { raw.fill(0) }
                 RetirementState.PendingCreate(plan, requested.boolean)
             }
+            "session-setup-pending" -> {
+                exact(root, setOf("version", "state", "plan", "abortRequested"))
+                val requested = root["abortRequested"] as? JsonPrimitive ?: invalid()
+                if (requested.isString || requested.booleanOrNull == null) invalid()
+                val raw = unhex(string(root["plan"]), SessionSetupPlanCodec.MAX_BYTES)
+                val plan = try { requireRetirement(SessionSetupPlan.fromStorage(PrivateBytes(raw))) } finally { raw.fill(0) }
+                RetirementState.PendingSetup(plan, requested.boolean)
+            }
             "pending", "setup-discard-pending" -> {
                 exact(root, setOf("version", "state", "operationId", "scope", "origin", "credentialIncarnation", "dataTarget", "done"))
                 val scope = root.getValue("scope") as? JsonObject ?: invalid()
@@ -79,8 +93,8 @@ internal object RetirementCodec {
     private fun hex(bytes: ByteArray): String = buildString(bytes.size * 2) {
         for (byte in bytes) { val n = byte.toInt() and 255; append(HEX[n ushr 4]); append(HEX[n and 15]) }
     }
-    private fun unhex(value: String): ByteArray {
-        if (value.length % 2 != 0 || value.length !in 2..8192 || value.any { it !in HEX }) invalid()
+    private fun unhex(value: String, maxBytes: Int = 4096): ByteArray {
+        if (value.length % 2 != 0 || value.length !in 2..maxBytes * 2 || value.any { it !in HEX }) invalid()
         return ByteArray(value.length / 2) { i -> ((HEX.indexOf(value[i * 2]) shl 4) or HEX.indexOf(value[i * 2 + 1])).toByte() }
     }
     private fun invalid(): Nothing = failRetirement(FailureReason.INVALID_DATA)

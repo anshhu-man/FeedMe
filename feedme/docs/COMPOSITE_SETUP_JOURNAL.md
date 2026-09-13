@@ -1,0 +1,52 @@
+# Composite setup journal — bounded format and control gates
+
+13 September 2026. **DONE — bounded format/control component**, verified at **2026-09-13T16:14:54.370Z**. M1.05d.5b.2b.3.3 in [composite session setup](COMPOSITE_SESSION_SETUP.md). The subsequent [session setup publication](SESSION_SETUP_PUBLICATION.md) implementation uses this journal through exact selection, binding, work seal and late runtime access; it is DONE bounded, verified at **2026-09-13T17:13:06.803Z**. Confirmed composite startup/abort and integrated failure acceptance remain tasks 6 and 7. Current verification is indexed in [Build status](BUILD_STATUS.md#current-verification); the counts and hashes below preserve this format component's historical snapshot.
+
+## What is retained
+
+`SessionSetupPlan` is an opaque, detached, redacted representation of one exact proposed setup. Its canonical version-1 JSON contains only purpose `session-setup`, operation UUID, non-DEMO owner scope, configuration-binding digest, credential CREATE plan, private-data activation plan and work-origin plan. Nested plans are preserved byte-for-byte as lowercase hex. No access/refresh token, password, provider response, arbitrary endpoint, native handle, cleanup target set or progress claims are accepted as additional fields.
+
+`RetirementState.PendingSetup(plan, abortRequested)` is a distinct independent-control state, encoded as `session-setup-pending`. It is not an `InFlight` retirement, legacy `PendingCreate`, readable-empty discard or terminal state. The explicit boolean is retained as metadata; no API in this slice treats it as permission to perform composite abort. That confirmed protocol is b.2b.3.6.
+
+The plan limit is 16,000 bytes; its hex control wrapper remains below the existing 32,768-byte encrypted ledger bound. Each credential/work subplan is limited to its existing 4,096-byte format; the data plan is exactly 170 bytes. The original legacy hex limit stays unchanged for other control variants. Exact keys, canonical IDs/digest, valid bounded Unicode, nesting, version/purpose, actual booleans and nested canonical encodings are checked. `SessionSetupPlan.fromStorage` rejects equivalent reordered/whitespace/escaped encodings rather than normalizing retained authority. The outer retirement protocol preserves its existing structural parsing compatibility; exact bytes still matter to CAS acknowledgement.
+
+## Structural validation is not authentication
+
+The codec verifies the visible work-origin scope agrees exactly with the outer environment, actor kind and actor ID. Credential/data plans deliberately hide their owner relationship behind native authentication; the codec cannot establish those relationships and does not pretend to do so. Arbitrary well-formed MAC bytes can pass structural decoding. Native issuing stores must authenticate each plan and its exact predecessor/scope before selection or recovery, under the serialized coordinator. A stored plan alone is not identity verification, permission to publish a lease or confirmation to delete anything.
+
+`StateActivationPlan.fromStorage(ByteArray)` adds a pure strict structural entry point through the existing storage codec. It validates version, flags, canonical padding, generations, key-ID relationships and fixed size, preserving the old size-only constructor for compatibility. It opens no database/vault, generates no keys and performs no MAC check. The session module already depends on storage, so no new dependency or native key exposure was introduced.
+
+The configuration field is the existing runtime's exact 64-lowercase-hex `configurationBinding`. There is no current typed issuer/client/callback configuration object or production digest pipeline to serialize. The trusted native configuration pipeline must bind the approved API environment, issuer, client/callback and owner-mapping contract. This work neither selects those providers/IDs nor establishes that an arbitrary supplied digest represents approved configuration. The selection coordinator compares the retained digest with its immutable configuration, but accepts credentials already verified by an external trusted caller; actual provider/bootstrap verification and approved configuration remain unimplemented integration requirements.
+
+## Safe integration with existing paths
+
+Every non-Idle/non-Complete control state already blocks access. The new state is now explicitly rejected by credential-only pending inspection and by ordinary retirement before process-latch handling, writes or the legacy cleanup cast. A retained logout latch cannot overwrite a new composite intent even if an adapter presents it at the old expected revision. Legacy credential-only abort proposals cannot overwrite a replacement composite record or extract its nested credential plan.
+
+Runtime diagnostics report `PARTIAL_STATE`/preserve-for-repair before inspecting lower resources; they do not report ordinary retirement, metadata-empty or verification-ready. Restore, readable-empty discard, leased storage, transport credentials and work admission remain behind the existing control gate. Live create now checks control before contacting the verifier, as well as after it returns: an earlier process-level SIGNED_OUT observation cannot bypass an already-persisted setup barrier.
+
+Existing `credential-create-pending` records keep their exact wire format and explicit legacy recovery path. No migration converts their authority into a composite setup, and no failed decode is treated as Idle. This slice introduces no automatic reset, selection, journal clearing or provider fallback.
+
+## Verification and remaining work
+
+For the current tree, use `node scripts/verify-startup-recovery-owners.mjs` and the established JDK17/Android SDK/local PostgreSQL/emulator environment; [Build status](BUILD_STATUS.md#current-verification) records the run's current status. The historical format run used `node scripts/verify-composite-setup-journal.mjs`; its [passing receipt](verification/composite-setup-journal/verification.json) retains the immutable attempt at `verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/`. The following totals, hashes and audit describe that snapshot. Common tests cover the composite codec and legacy/control wrapper rules. JVM storage/runtime tests cover structural binary data plans, preserved records, retained retirement latches and provider/restore barriers. Seven native tests use real Android credential/data/work plans and independent encrypted control without selecting any of those resources. Subsequent [read-only composite inspection](INTERRUPTED_SETUP_INSPECTION.md) and [exact abort primitives](SETUP_ABORT_PRIMITIVES.md) are DONE bounded; [already-open confirmed coordination](COMPOSITE_SETUP_ABORT.md) is now DONE bounded, while startup factory/close ownership remains open.
+
+| Check | Result |
+| --- | --- |
+| Shared Kotlin | 1,162 passed: 48 core, 119 contracts, 72 transport, 356 storage/integration, 103 sync, 142 kitchen, 322 session |
+| Server / isolated PostgreSQL | 46 + 45 passed; total Kotlin/server/database 1,253 |
+| Node | 112 passed |
+| Native Android | 158 passed on API35 arm64: storage94 and session64, including seven new journal checks |
+| Android libraries | Five fresh AARs and five lint reports with zero issues; both test APKs rebuilt |
+| Source-bound evidence | 236 source inputs, 13 artifacts and 123 retained evidence files; zero failures/errors/skips |
+
+Source-manifest SHA-256: `b6cb6a06a06225453b60ee43d20931eed2a4664c68d4d6e3d2c623677adc5080`. Receipt SHA-256: `fef229152ab8ea84a367bf66148ac8df45e8c9bfb0ae2bac3bb000947aa2de6f`.
+
+Independent read-only audits of that snapshot matched every listed source/artifact/evidence hash and the immutable receipt copy, 1,253 unique JUnit identities across 71 XML files against then-current declared methods, 112 paired TAP successes and 158 exact native start/success pairs. All five prior process stages and 21 VFS evidence labels were preserved. APK metadata/copies and actual four-ABI helper bytes agreed. No discrepancies were found.
+
+The storage test APK is 8,689,268 bytes (`4ace0a9abf410b1e07ca376a470f7dcba224233005b414f6424db78f4b1a9464`); the session test APK is 8,607,095 bytes (`92d360f83da80b05185df5f3fb42ff2bc584434c05a5cfb3169ed35f056b21a3`). Test-only failure injection remains confined to the storage test APK's four ABIs and absent from five libraries, the session test APK and the unchanged historical demo.
+
+The native suite checks byte-exact control close/reopen, unchanged resource files/aliases, unselected owners, metadata-only abort flags, malformed-state rejection and zero legacy/provider effects. It uses controlled native closure, not process hard-kill or physical power loss. Prior work-origin and VFS/process regressions passed again in the full run. A test-helper correction now inspects empty `state.lock` via stat instead of opening another descriptor, avoiding accidental release of process-wide POSIX locks; the new receipt covers this corrected helper rather than the previous snapshot. Existing-hardlink branches remain platform-denied and unexercised, not silently passed.
+
+Owned native fixture directories were checked clean. The task-owned emulator exited successfully after verification; test notification permission remained granted as before. No local port8789 listener or PID files remained across 98 retained synthetic PostgreSQL clusters. Retained diagnostic files were not deleted.
+
+The [ordered live selection component](LIVE_SESSION_SETUP.md) remains selection-only: `begin`/`retry` leave the journal pending and grant no access. Private-data selected replay still provides no fresh changed-write durability acknowledgement. The separate [publication implementation](SESSION_SETUP_PUBLICATION.md) now supplies changed activation-binding, work-seal and final control acknowledgements before runtime access; it is DONE bounded, verified at **2026-09-13T17:13:06.803Z**. Redacted exact startup/confirmed abort and integrated failure acceptance remain composite tasks 6 and 7. Provider/bootstrap/typed configuration, first-factory recovery, public rollback journals, refresh, physical devices, API26 credentials, full Xcode/iOS, production cooking/social/safety/billing/UI and release gates remain. The demo APK and public GitHub snapshot are unchanged; no whole feature/milestone or ship readiness is claimed.

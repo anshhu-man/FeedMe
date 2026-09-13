@@ -57,6 +57,10 @@ internal sealed interface RetirementState {
     class PendingCreate(val plan: CredentialCreatePlan, val abortRequested: Boolean) : RetirementState {
         override fun toString() = "PendingCredentialCreate(<redacted>)"
     }
+    /** Composite setup ownership. Never a legacy logout, empty discard or credential-only plan. */
+    class PendingSetup(val plan: SessionSetupPlan, val abortRequested: Boolean) : RetirementState {
+        override fun toString() = "PendingSessionSetup(<redacted>)"
+    }
     sealed interface InFlight : RetirementState {
         val operationId: String
         val scope: StorageScope

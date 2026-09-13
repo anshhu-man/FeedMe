@@ -6,6 +6,8 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
@@ -68,7 +70,7 @@ class CredentialCreateCoordinatorTest {
             f.status = CredentialCreateRecoveryStatus.ABORTED; f.abortFailure = reason
             failure(reason, f.coordinator.recoverAbort())
             assertTrue(f.pending().abortRequested)
-            assertEquals(1, f.aborts); assertEquals(1, f.closes); assertEquals(0, f.control.writes)
+            assertEquals(1, f.aborts); assertEquals(1, f.closes); assertEquals(1, f.control.writes)
         }
     }
 
@@ -80,13 +82,17 @@ class CredentialCreateCoordinatorTest {
         failure(FailureReason.CONFLICT, f.coordinator.recoverAbort())
     }
 
-    @Test fun unknownUncommittedBarrierStopsButExactCommittedReadbackAllowsAbort() = runTest {
+    @Test fun unknownBarrierNeverAllowsAbortEvenWhenExactConfirmationIsVisible() = runTest {
         val f = Fixture(StandardTestDispatcher(testScheduler)); f.seed()
         f.control.beforeFailures[1] = FailureReason.OUTCOME_UNKNOWN
         failure(FailureReason.OUTCOME_UNKNOWN, f.coordinator.requestAbort(value(f.coordinator.inspectPending())!!))
         assertFalse(f.pending().abortRequested); assertEquals(0, f.opens)
         f.control.afterFailures[2] = FailureReason.OUTCOME_UNKNOWN
-        value(f.coordinator.requestAbort(value(f.coordinator.inspectPending())!!))
+        failure(FailureReason.OUTCOME_UNKNOWN, f.coordinator.requestAbort(value(f.coordinator.inspectPending())!!))
+        assertTrue(f.pending().abortRequested); assertEquals(0, f.opens)
+        val unknownRevision = f.control.record!!.revision
+        f.afterOpen = { assertEquals(unknownRevision + 1, f.control.record!!.revision) }
+        value(f.reopened().recoverAbort())
         assertEquals(1, f.opens); assertIs<RetirementState.Complete>(f.state())
     }
 
@@ -178,7 +184,7 @@ class CredentialCreateCoordinatorTest {
                 else -> f.abortFailure = FailureReason.OUTCOME_UNKNOWN
             }
             failure(if (stage == "abort") FailureReason.OUTCOME_UNKNOWN else FailureReason.STORAGE_FAILURE, f.coordinator.recoverAbort())
-            assertEquals(original.revision, f.control.record!!.revision)
+            assertEquals(original.revision + 1, f.control.record!!.revision)
             assertContentEquals(original.payload.copyForCodec(), f.control.record!!.payload.copyForCodec())
             assertEquals(if (stage == "open") 0 else 1, f.closes)
         }
@@ -188,7 +194,7 @@ class CredentialCreateCoordinatorTest {
         val f = Fixture(StandardTestDispatcher(testScheduler)); f.seed(true)
         f.closeFailure = FailureReason.STORAGE_FAILURE
         failure(FailureReason.STORAGE_FAILURE, f.coordinator.recoverAbort())
-        assertTrue(f.pending().abortRequested); assertEquals(0, f.control.writes)
+        assertTrue(f.pending().abortRequested); assertEquals(1, f.control.writes)
         f.closeFailure = null
         value(f.reopened().recoverAbort())
         assertEquals(2, f.opens); assertEquals(2, f.aborts); assertEquals(2, f.closes)
@@ -204,7 +210,7 @@ class CredentialCreateCoordinatorTest {
             assertEquals(OTHER, CredentialCreatePlanCodec.decode(f.pending().plan.copyForStorage()).incarnation)
             assertFalse(f.pending().abortRequested)
             assertEquals(if (duringClose) 1 else 0, f.aborts); assertEquals(1, f.closes)
-            assertEquals(0, f.control.writes)
+            assertEquals(1, f.control.writes)
         }
     }
 
@@ -233,10 +239,10 @@ class CredentialCreateCoordinatorTest {
         assertTrue(f.pending().abortRequested); assertEquals(1, f.closes)
     }
 
-    @Test fun unknownCompletionReadbackAcceptsOnlyExactDurableCompletedOperation() = runTest {
+    @Test fun unknownCompletionCannotReturnSuccessEvenWhenCompletedOperationIsVisible() = runTest {
         val f = Fixture(StandardTestDispatcher(testScheduler)); f.seed(true)
-        f.control.afterFailures[1] = FailureReason.OUTCOME_UNKNOWN
-        value(f.coordinator.recoverAbort())
+        f.control.afterFailures[2] = FailureReason.OUTCOME_UNKNOWN
+        failure(FailureReason.OUTCOME_UNKNOWN, f.coordinator.recoverAbort())
         assertEquals(ID, assertIs<RetirementState.Complete>(f.state()).operationId)
         assertEquals(1, f.aborts)
     }
@@ -331,13 +337,77 @@ class CredentialCreateCoordinatorTest {
         assertFalse(f.pending().abortRequested); assertEquals(1, f.control.writes)
     }
 
-    @Test fun liveCreateExactUnknownJournalWritesReconcileButDoNotRepeatNativeCommit() = runTest {
+    @Test fun liveCreateUnknownPendingWriteDoesNotInvokeNativeCommitOrInventAnotherPlan() = runTest {
         val f = Fixture(StandardTestDispatcher(testScheduler)); val store = PlannedStore()
         f.control.afterFailures[1] = FailureReason.OUTCOME_UNKNOWN
+        failure(FailureReason.OUTCOME_UNKNOWN, commitCredentialCreate(f.control, store, 1, account()) { })
+        assertEquals(listOf("plan"), store.events)
+        assertFalse(f.pending().abortRequested)
+        failure(FailureReason.CONFLICT, commitCredentialCreate(f.control, store, 1, account()) { })
+        assertEquals(listOf("plan"), store.events)
+    }
+
+    @Test fun liveCreateUnknownCompletionNeverPublishesCredentialSnapshot() = runTest {
+        val f = Fixture(StandardTestDispatcher(testScheduler)); val store = PlannedStore()
         f.control.afterFailures[2] = FailureReason.OUTCOME_UNKNOWN
-        value(commitCredentialCreate(f.control, store, 1, account()) { })
+        failure(FailureReason.OUTCOME_UNKNOWN, commitCredentialCreate(f.control, store, 1, account()) { })
         assertEquals(listOf("plan", "commit"), store.events)
+        assertEquals(ID, assertIs<RetirementState.Complete>(f.state()).operationId)
+    }
+
+    @Test fun repeatedRecoveryBarrierFailureNeverOpensEvenAlreadyAbortedHandle() = runTest {
+        val f = Fixture(StandardTestDispatcher(testScheduler)); f.seed(true)
+        f.status = CredentialCreateRecoveryStatus.ABORTED
+        val original = f.pending().plan.copyForStorage().copyForCodec()
+        for (attempt in 1..3) {
+            f.control.afterFailures[attempt] = FailureReason.OUTCOME_UNKNOWN
+            failure(FailureReason.OUTCOME_UNKNOWN, f.reopened().recoverAbort())
+            assertEquals(0, f.opens)
+            assertContentEquals(original, f.pending().plan.copyForStorage().copyForCodec())
+        }
+        value(f.reopened().recoverAbort())
+        assertEquals(1, f.opens); assertEquals(1, f.aborts)
+    }
+
+    @Test fun recoveryAcknowledgementPreservesExactAcceptedPayloadBytesUntilCompletion() = runTest {
+        val f = Fixture(StandardTestDispatcher(testScheduler)); f.seed(true)
+        val prior = f.control.record!!
+        val original = " \n" + prior.payload.copyForCodec().decodeToString() + "\n  "
+        f.control.record = SessionControlRecord(prior.revision, bytes(original))
+        f.afterOpen = {
+            assertEquals(prior.revision + 1, f.control.record!!.revision)
+            assertEquals(original, f.control.record!!.payload.copyForCodec().decodeToString())
+        }
+        value(f.coordinator.recoverAbort())
+        assertEquals(1, f.aborts)
         assertIs<RetirementState.Complete>(f.state())
+    }
+
+    @Test fun cancellationReturnedFromConfirmationCasPreventsNativeOpen() = runTest {
+        val f = Fixture(StandardTestDispatcher(testScheduler)); f.seed()
+        val proposal = value(f.coordinator.inspectPending())!!
+        f.control.afterCas = { _, _ -> currentCoroutineContext().cancel() }
+        val running = async { f.coordinator.requestAbort(proposal) }
+        assertFailsWith<CancellationException> { running.await() }
+        assertTrue(f.pending().abortRequested); assertEquals(0, f.opens)
+    }
+
+    @Test fun cancellationReturnedFromRecoveryOpenClosesWithoutAbortOrCompletion() = runTest {
+        val f = Fixture(StandardTestDispatcher(testScheduler)); f.seed(true)
+        f.afterOpen = { currentCoroutineContext().cancel() }
+        val running = async { f.coordinator.recoverAbort() }
+        assertFailsWith<CancellationException> { running.await() }
+        assertEquals(listOf("open", "close"), f.events)
+        assertTrue(f.pending().abortRequested)
+    }
+
+    @Test fun liveCreateCancellationReturnedFromPendingCasPreventsNativeCommit() = runTest {
+        val f = Fixture(StandardTestDispatcher(testScheduler)); val store = PlannedStore()
+        f.control.afterCas = { _, _ -> currentCoroutineContext().cancel() }
+        val running = async { commitCredentialCreate(f.control, store, 1, account()) { } }
+        assertFailsWith<CancellationException> { running.await() }
+        assertEquals(listOf("plan"), store.events)
+        assertFalse(f.pending().abortRequested)
     }
 
     private class Fixture(private val dispatcher: CoroutineDispatcher) {

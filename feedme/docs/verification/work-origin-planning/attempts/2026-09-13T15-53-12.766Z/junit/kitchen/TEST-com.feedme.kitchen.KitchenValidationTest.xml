@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.kitchen.KitchenValidationTest" tests="20" skipped="0" failures="0" errors="0" timestamp="2026-09-13T15:53:25.078Z" hostname="ansachars-MacBook-Pro.local" time="0.013">
+  <properties/>
+  <testcase name="invalidEtagSyntaxLengthAndZeroAreRejected[jvm]" classname="com.feedme.kitchen.KitchenValidationTest" time="0.0"/>
+  <testcase name="documentVersionReadsOnlyRootVersionAndKeepsExactWire[jvm]" classname="com.feedme.kitchen.KitchenValidationTest" time="0.0"/>
+  <testcase name="metadataEncodingRoundTripsWithoutAliasingCallerBytes[jvm]" classname="com.feedme.kitchen.KitchenValidationTest" time="0.001"/>
+  <testcase name="strictMetadataRequiresExactRootKeysAndRejectsDuplicateMembers[jvm]" classname="com.feedme.kitchen.KitchenValidationTest" time="0.0"/>
+  <testcase name="wireLongReadsRequestedRootFieldNotNestedLookalike[jvm]" classname="com.feedme.kitchen.KitchenValidationTest" time="0.0"/>
+  <testcase name="wireLongRejectsOverflowFractionsStringsAndBelowMinimum[jvm]" classname="com.feedme.kitchen.KitchenValidationTest" time="0.001"/>
+  <testcase name="localMetadataIntegerParserIsStrictAndDoesNotAcceptWireExponentAliases[jvm]" classname="com.feedme.kitchen.KitchenValidationTest" time="0.0"/>
+  <testcase name="localMetadataHashesAndIdentifiersRequireCanonicalLowercaseSpelling[jvm]" classname="com.feedme.kitchen.KitchenValidationTest" time="0.0"/>
+  <testcase name="integerMetadataHasExplicit4096DigitLimit[jvm]" classname="com.feedme.kitchen.KitchenValidationTest" time="0.001"/>
+  <testcase name="integralJsonNumbersNormalizeExactlyWithoutFloatingPointRounding[jvm]" classname="com.feedme.kitchen.KitchenValidationTest" time="0.0"/>
+  <testcase name="strictMetadataRejectsMalformedUtf8LoneSurrogatesAndBounds[jvm]" classname="com.feedme.kitchen.KitchenValidationTest" time="0.0"/>
+  <testcase name="normalizedVersionComparisonIsExactAboveLongAndDoubleRanges[jvm]" classname="com.feedme.kitchen.KitchenValidationTest" time="0.0"/>
+  <testcase name="missingEtagPermitsReadOnlyWithoutInventingVersionHeader[jvm]" classname="com.feedme.kitchen.KitchenValidationTest" time="0.0"/>
+  <testcase name="documentVersionRejectsZeroStringsNonintegralAndNegativeValues[jvm]" classname="com.feedme.kitchen.KitchenValidationTest" time="0.001"/>
+  <testcase name="metadataStringsBooleansArraysAndNullableFieldsRejectWrongTypes[jvm]" classname="com.feedme.kitchen.KitchenValidationTest" time="0.0"/>
+  <testcase name="etagChecksExactNumericRootVersionButPreservesOriginalQuotedHeader[jvm]" classname="com.feedme.kitchen.KitchenValidationTest" time="0.001"/>
+  <testcase name="integerNormalizationRejectsMalformedFractionalAndNegativeValues[jvm]" classname="com.feedme.kitchen.KitchenValidationTest" time="0.001"/>
+  <testcase name="recipeMaskExcludesOnlyLifecycleReviewFieldsWithoutDroppingStoredWire[jvm]" classname="com.feedme.kitchen.KitchenValidationTest" time="0.001"/>
+  <testcase name="recipeMaskRetainsActualContentRightsAndPreparationEvidence[jvm]" classname="com.feedme.kitchen.KitchenValidationTest" time="0.006"/>
+  <testcase name="wireLongAcceptsExactNonnegativeIntegralRepresentationsThroughLongMaximum[jvm]" classname="com.feedme.kitchen.KitchenValidationTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

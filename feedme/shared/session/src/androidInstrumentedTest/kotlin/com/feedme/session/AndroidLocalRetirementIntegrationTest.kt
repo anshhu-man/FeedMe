@@ -466,11 +466,10 @@ class AndroidLocalRetirementIntegrationTest {
         }
     }
 
-    @Test fun runtimePlannedCreatePersistsIndependentControlBeforeNativeInterruptionAndExplicitAbort() = integration {
-        val verifier = SyntheticNativeSessionVerifier()
+    @Test fun legacyPlannedCreatePersistsIndependentControlBeforeNativeInterruptionAndExplicitAbort() = integration {
         var durablePlan: CredentialCreatePlan? = null
         var reachedNativeWrite = false
-        openRuntime(verifier, credentialFault = { point ->
+        openLegacyCreate(credentialFault = { point ->
             if (point == CredentialFileFaultPoint.AFTER_BLOB_TEMP_FORCE) {
                 // The real native callback runs on IO. Read the independent encrypted control
                 // engine at this exact checkpoint, before allowing any selection manifest write.
@@ -483,12 +482,14 @@ class AndroidLocalRetirementIntegrationTest {
                 throw IOException("synthetic-native-create-interruption")
             }
         })
-        assertEquals(PrivateSessionPhase.SIGNED_OUT, runtime.recover().integrationValue())
-        assertEquals(PortResult.Failure(FailureReason.STORAGE_FAILURE), runtime.create())
+        val verified = StoredCredentials.Account(SCOPE, SecretText("synthetic-legacy-access"),
+            SecretText("synthetic-legacy-refresh"), Long.MAX_VALUE, SecretText(UUID.randomUUID().toString()))
+        assertEquals(PortResult.Failure(FailureReason.STORAGE_FAILURE),
+            commitCredentialCreate(control, credentials, credentials.state().integrationValue().revision, verified) {
+                check(boundary.current() == null)
+            })
         assertTrue(reachedNativeWrite)
-        assertEquals(PrivateSessionPhase.RECOVERY_REQUIRED, runtime.phase())
-        assertNull(runtime.currentAccess()); assertNull(boundary.current())
-        assertEquals(1, verifier.acquisitions); assertEquals(0, verifier.restorations)
+        assertNull(boundary.current())
         assertEquals(0, runtimeCredentialReads + runtimeNativeCancellations)
         assertTrue(sandbox.dataOwnerAliases().isEmpty())
         assertEquals(1, sandbox.credentialAliases().size)
@@ -533,6 +534,61 @@ class AndroidLocalRetirementIntegrationTest {
         assertEquals(0, uncalledVerifier.acquisitions + uncalledVerifier.restorations + runtimeCredentialReads + runtimeNativeCancellations)
         assertTrue(sandbox.dataOwnerAliases().isEmpty())
         assertEquals(PortResult.Failure(FailureReason.CONFLICT), runtime.restore())
+    }
+
+    @Test fun runtimeCompositeNativeInterruptionRetainsAllPlansAndRejectsLegacyCredentialOnlyAbort() = integration {
+        val verifier = SyntheticNativeSessionVerifier()
+        var original: SessionSetupPlan? = null
+        openRuntime(verifier, credentialFault = { point ->
+            if (point == CredentialFileFaultPoint.AFTER_BLOB_TEMP_FORCE) {
+                val entry = runBlocking { checkNotNull(control.read().integrationValue()) }
+                val pending = RetirementCodec.decode(entry.payload) as RetirementState.PendingSetup
+                assertFalse(pending.abortRequested)
+                original = pending.plan
+                val plans = SessionSetupPlanCodec.decode(pending.plan.copyForStorage())
+                assertEquals(SCOPE, plans.scope)
+                assertEquals("4".repeat(64), plans.configurationBinding)
+                assertTrue(plans.dataPlan.copyForStorage().isNotEmpty())
+                assertTrue(plans.workOriginPlan.copyForStorage().copyForCodec().isNotEmpty())
+                assertNull(boundary.current())
+                throw IOException("synthetic-composite-native-create-interruption")
+            }
+        })
+        assertEquals(PrivateSessionPhase.SIGNED_OUT, runtime.recover().integrationValue())
+        assertEquals(PortResult.Failure(FailureReason.STORAGE_FAILURE), runtime.create())
+        val plan = checkNotNull(original)
+        assertEquals(PrivateSessionPhase.RECOVERY_REQUIRED, runtime.phase())
+        assertNull(runtime.currentAccess()); assertNull(boundary.current())
+        assertEquals(1, verifier.acquisitions); assertEquals(0, verifier.restorations)
+        assertTrue(sandbox.dataOwnerAliases().isEmpty())
+        assertEquals(SessionWorkState.Idle, SessionWorkCodec.decode(checkNotNull(workStore.read().integrationValue()).payload))
+        assertEquals(1, sandbox.credentialAliases().size)
+        assertEquals(PortResult.Failure(FailureReason.CONFLICT), runtime.prepareInterruptedSetupDiscard())
+        // The poisoned credential manager is not bypassed by a fresh create/provider response.
+        assertTrue(runtime.retryCreate() is PortResult.Failure)
+        assertEquals(1, verifier.acquisitions)
+        assertNull(boundary.current()); assertNull(runtime.currentAccess())
+        closeStores()
+        assertEquals(PortResult.Failure(FailureReason.STORAGE_FAILURE), AndroidCredentialStore.open(sandbox.context))
+        var opens = 0
+        val legacy = openCreateRecoveryCoordinator(CredentialCreateRecoveryFactory {
+            opens++
+            throw AssertionError("Legacy recovery cannot extract a composite credential subplan")
+        })
+        val before = checkNotNull(control.read().integrationValue())
+        val files = withContext(Dispatchers.IO) { sandbox.fileSnapshot() }
+        val aliases = sandbox.aliases()
+        assertEquals(PortResult.Failure(FailureReason.CONFLICT), legacy.inspectPending())
+        assertEquals(PortResult.Failure(FailureReason.CONFLICT), legacy.recoverAbort())
+        assertEquals(0, opens)
+        val after = checkNotNull(control.read().integrationValue())
+        assertEquals(before.revision, after.revision)
+        assertTrue(before.payload.copyForCodec().contentEquals(after.payload.copyForCodec()))
+        val retained = RetirementCodec.decode(after.payload) as RetirementState.PendingSetup
+        assertTrue(plan.copyForStorage().copyForCodec().contentEquals(retained.plan.copyForStorage().copyForCodec()))
+        assertEquals(aliases, sandbox.aliases())
+        withContext(Dispatchers.IO) { sandbox.assertFilesEqual(files) }
+        assertNull(boundary.current())
     }
 
     private fun integration(block: suspend Fixture.() -> Unit) = runBlocking {
@@ -596,6 +652,8 @@ class AndroidLocalRetirementIntegrationTest {
                     "com.feedme.session.credentials.v1", credentialFault))
                 .integrationValue().also { value -> closers += { value.close() } }
         }
+
+        suspend fun openLegacyCreate(credentialFault: (CredentialFileFaultPoint) -> Unit) = openStores(credentialFault)
 
         suspend fun openRuntime(verifier: NativeSessionVerifier, restoreOnly: Boolean = false,
             credentialFault: ((CredentialFileFaultPoint) -> Unit)? = null) {

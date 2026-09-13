@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.storage.PrivateSessionRuntimeTest" tests="67" skipped="0" failures="0" errors="0" timestamp="2026-09-13T15:53:47.612Z" hostname="ansachars-MacBook-Pro.local" time="26.079">
+  <properties/>
+  <testcase name="discardCancellationAfterExactCredentialErasureReplaysDurableTargetsAfterReopen[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.26"/>
+  <testcase name="configurationCredentialWorkAndDataIncarnationMismatchRejectBeforeCredentialReadOrVerifier[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.913"/>
+  <testcase name="offlineRestorationKeepsPrivateDraftsAndTimersButExposesNoTransportTokensOrWorkers[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.386"/>
+  <testcase name="recoveryInspectionMissingDataDoesNotRecreateAnErasedOwner[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.265"/>
+  <testcase name="recoveryInspectionUnreadablePrivateCiphertextOrKeyPreservesEvidenceWithoutReset[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.454"/>
+  <testcase name="missingRegisteredDeviceSessionOrExistingUnboundDataOwnerCannotCreateFreshAuthority[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.187"/>
+  <testcase name="discardRejectsMismatchedRetiringOrPopulatedWork[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.411"/>
+  <testcase name="discardConfirmationRejectsRefreshedOrReplacedCredentialIncarnation[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.249"/>
+  <testcase name="discardConfirmationRejectsChangedControlRevisionOrBytes[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.27"/>
+  <testcase name="lostBindingCommitAcknowledgementReadsBackExactRecordWithoutAnotherCredentialOrOrigin[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.231"/>
+  <testcase name="explicitRetirementCancelsExactWorkErasesOwnerAndCredentialsAndAllowsFreshLogin[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.45"/>
+  <testcase name="discardPreparationIsReadOnlyRedactedAndDescribesOnlySelectedEmptyFragments[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.772"/>
+  <testcase name="pendingRetirementBlocksCreateRestoreAndRecoversAfterPrivateDataWasAlreadyErased[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.456"/>
+  <testcase name="recoveryInspectionUnavailableCredentialOrWorkMetadataIsNotClassifiedAsEmpty[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.475"/>
+  <testcase name="failedPlanCompletionPreventsDataWorkAndRequiresExplicitExactAbortBeforeNewSetup[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.246"/>
+  <testcase name="openAndRecoveryDoNotSignInOrInitializeAnOwnerBeforeExplicitVerifiedCreate[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.114"/>
+  <testcase name="recoveryInspectionCoherentAccountAndGuestBindingsRequireVerificationWithoutReadingSecrets[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.347"/>
+  <testcase name="verifiedCreatePersistsExactEncryptedBindingAndPublishesOnlyBoundedLeasedViews[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.223"/>
+  <testcase name="delayedCredentialReadCannotPublishOldSecretsAfterLocalRetirement[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.314"/>
+  <testcase name="credentialPlanBarrierFailureNeverWritesCredentialsDataOrWork[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.093"/>
+  <testcase name="recoveryInspectionReverseReadFailureCannotReturnAnEarlierCoherentReport[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.571"/>
+  <testcase name="plannedNativeUnknownPersistsUnconfirmedPlanAcrossReopenAndEveryStartupGateStaysClosed[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.102"/>
+  <testcase name="cancellationAfterCredentialCommitLeavesPartialSetupBlockedWithoutAutomaticCompletionOrErase[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.108"/>
+  <testcase name="recoveryInspectionUnavailableControlShortCircuitsAllLowerEvidenceAndNeverRepairsIt[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.499"/>
+  <testcase name="ambiguousCredentialCompletionStopsBeforePrivateActivationAndWorkOrigin[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.13"/>
+  <testcase name="cancellationOrCloseDuringVerificationCannotPublishItsLateResultOrWriteInitialState[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.175"/>
+  <testcase name="discardBarrierFailureRetainsProcessFenceUntilExplicitRecoveryRetry[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.235"/>
+  <testcase name="plannedCreatePersistsIndependentIntentBeforeCredentialWriteAndClearsBeforeOwnerSetup[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.277"/>
+  <testcase name="discardProposalCannotCrossRuntimeRecoveryOrReplayAndRequiresValidNewOperationId[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.891"/>
+  <testcase name="restorationVerificationFailurePreservesPrivateBindingAndRequiresExplicitRecovery[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.191"/>
+  <testcase name="discardPreparationRejectsActiveVerifyingComposingClosedAndPreviouslyComposedSessions[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.469"/>
+  <testcase name="recoveryInspectionCancellationPropagatesWithoutChangingStateOrHoldingTheGate[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.561"/>
+  <testcase name="recoveryInspectionDoesNotJoinDifferentCredentialAndWorkScopes[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.221"/>
+  <testcase name="retirementDuringDelayedWorkAdmissionClosesLeaseBeforeRegistryWaitAndDoesNotDeadlock[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.314"/>
+  <testcase name="discardCannotInferAuthorityFromEmptyMetadataOrUnselectedPrivateOwner[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.243"/>
+  <testcase name="recoveryInspectionQueuedBehindAnotherLifecycleGenerationRejectsEvenWhenPhaseReturnsToSameValue[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.129"/>
+  <testcase name="discardConfirmationRechecksEvidenceInsideBothReadBrackets[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.245"/>
+  <testcase name="recoveryInspectionRejectsConfigurationAndEveryExactBindingDimensionBeforeSecretAccess[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="1.05"/>
+  <testcase name="recoveryInspectionRejectsUnexpectedBoundaryActivationWithoutClearingTheNewLease[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.112"/>
+  <testcase name="discardPreparationRejectsEvidenceChangedDuringReadBracketing[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.564"/>
+  <testcase name="discardConfirmationRejectsChangedWorkRevisionOriginAndEntries[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.56"/>
+  <testcase name="recoveryInspectionBusyOrClosedRuntimeRejectsBeforeDiagnosticIO[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="1.131"/>
+  <testcase name="existingGuestIsNeverOverwrittenByAnotherAcquireOrRestorationShortcut[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.226"/>
+  <testcase name="recoveryInspectionDoesNotCancelReservedOrCancellingWorkUnderAnOtherwiseExactBinding[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.459"/>
+  <testcase name="discardRejectsPrivateRowsTombstonesAndAnyActivationBinding[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.494"/>
+  <testcase name="recoveryInspectionPendingRetirementSurvivesErasedPrivateDataWithoutReadingOrCancelingLowerStores[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.369"/>
+  <testcase name="recoveryInspectionClassifiesPartialInitialSelectionsWithoutCompletingOrErasingThem[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.794"/>
+  <testcase name="recoveryInspectionLateDurableRetirementWinsOverEarlierCoherentLowerEvidence[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.181"/>
+  <testcase name="ambiguousPendingControlCommitCannotCreateNativeCredentialsOrPublishAccess[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.094"/>
+  <testcase name="unknownFinalControlAcknowledgementCannotPublishAndRestoreMustWriteAgain[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.248"/>
+  <testcase name="reservedActivationRecordCannotBeReadOverwrittenDeletedOrIncludedInMixedBatch[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.176"/>
+  <testcase name="closingDuringBlockedNativeRetirementCannotBeOverwrittenByItsLateCompletion[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.348"/>
+  <testcase name="callerBatchMutationDuringControlReadCannotInjectReservedBindingDeletion[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.204"/>
+  <testcase name="recoveryInspectionEmptyMetadataDoesNotClaimAbsenceOfUnselectedPrivateOwnerData[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.232"/>
+  <testcase name="recoveryInspectionDistinguishesMissingBindingFromMalformedDuplicateAndFutureSchema[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="1.054"/>
+  <testcase name="cancellingAfterPlanButBeforeJournalNeverWritesNativeCredentialMaterial[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.123"/>
+  <testcase name="recoveryInspectionCloseAtEverySuspendingMetadataReadCannotPublishOldReport[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.629"/>
+  <testcase name="closeReopenRestoreKeepsOriginalResourcesAndFreshlyAcknowledgesLedgers[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.225"/>
+  <testcase name="missingCorruptOrFutureSchemaBindingCannotBeRebuiltFromMatchingIndependentScopes[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.693"/>
+  <testcase name="recoveryInspectionProcessOnlyRetirementFenceWinsOverIdleOrUnreadableDurableControl[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.18"/>
+  <testcase name="discardConfirmationRejectsRecreatedOwnerOrNewRowsAndTombstones[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.503"/>
+  <testcase name="recoveryDiagnosticProjectionContainsOnlyBoundedFindingsNotIdentityOrRepairCapabilities[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.171"/>
+  <testcase name="cancelledAttemptDuringPublicationReadCannotStartAnotherControlWrite[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.19"/>
+  <testcase name="failedBindingCommitDoesNotPublishOrAutoHealAnAlreadyCreatedOwnerOnRestart[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.19"/>
+  <testcase name="legacyCredentialStoreCannotUseRuntimeCreateFallbackOrEvenInvokeVerifier[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.11"/>
+  <testcase name="confirmedDiscardErasesOnlyOptionalCapturedFragmentsAndRequiresFreshRecovery[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="1.442"/>
+  <testcase name="recoveryInspectionReverseChecksDetectControlCredentialWorkAndDataChanges[jvm]" classname="com.feedme.storage.PrivateSessionRuntimeTest" time="0.85"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

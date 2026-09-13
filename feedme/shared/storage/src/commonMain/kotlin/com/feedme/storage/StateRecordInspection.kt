@@ -8,7 +8,8 @@ import com.feedme.core.ports.PrivateRecord
  * A target with a null record means the active owner's requested record was absent or deleted.
  * Keep the authenticated retirement capability and decrypted record out of UI state and logs.
  */
-class StateRecordInspection internal constructor(
+// Constructing this observation never authenticates its contents or grants a native capability.
+class StateRecordInspection(
     val target: StateRetirementTarget?,
     val record: PrivateRecord?,
 ) {

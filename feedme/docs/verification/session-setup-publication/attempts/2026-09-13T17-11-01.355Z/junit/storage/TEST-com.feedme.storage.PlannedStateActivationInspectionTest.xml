@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.storage.PlannedStateActivationInspectionTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-09-13T17:12:04.108Z" hostname="ansachars-MacBook-Pro.local" time="0.749">
+  <properties/>
+  <testcase name="competingOwnerAndGarbageReferencesAreRejectedWithoutDeletingAnyKey[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.135"/>
+  <testcase name="competingAndNewerOwnerSelectionsFenceTheOldExactPlan[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.09"/>
+  <testcase name="preparedInspectionIsReadOnlyAndDoesNotCollectUnrelatedGarbage[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.018"/>
+  <testcase name="exactScopeAndNativeMacAreRequiredBeforeAnyDatabaseObservation[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.016"/>
+  <testcase name="selectedEmptyRemainsMetadataOnlyWhenItsKeyIsMissingOrUnusable[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.084"/>
+  <testcase name="tombstonesAlonePreventAnEmptySelectionObservation[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.028"/>
+  <testcase name="ordinaryRetirementIsNotReinterpretedAsPlanAbortCompletion[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.041"/>
+  <testcase name="malformedOwnerOrStrayPredecessorRowsNeverBecomePrepared[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.102"/>
+  <testcase name="foreignInstallCannotInterpretAnOtherwiseValidPlan[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.027"/>
+  <testcase name="liveUnknownAndCorruptRowsCountAsNonemptyWithoutPayloadDecryption[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.055"/>
+  <testcase name="closedAndCancelledQueuedInspectionsPerformNoVaultOrSqlCall[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.019"/>
+  <testcase name="partialCandidatePresenceIsObservedWithoutAllocatingSelectingOrTestingItsCipher[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.03"/>
+  <testcase name="observationIsRedactedDetachedAndReturnsNeitherStoreNorRecoveryHandle[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.015"/>
+  <testcase name="exactAbortingAndAbortedReceiptsAreObservedWithoutRetryingCleanupOrAcknowledgement[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.088"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,432 @@
+{
+  "startedAt": "2026-09-13T15:54:18.890Z",
+  "passed": true,
+  "serial": "emulator-5554",
+  "scope": "Isolated Android storage/control/work and authenticated private-data activation components. No-effect work-origin planning is bound to the exact native work store; setup-selected replay obtains a fresh changed-CAS acknowledgement without a lease, native effect or ordinary work binding. Three separate-process work stages retain an opaque plan in an independent encrypted test control store, select it and re-acknowledge it after controlled owner closes; this is not production composite journaling or hard-kill recovery. Three separate-invocation work-origin VFS tests exercise six initial/replay barriers. The existing nine independent-ledger and six private-data empty-abort VFS cases remain separately invoked. All use explicit URI-selected forwarding VFS errors in the actual bundled engine, not OS errno or physical power-loss failures. Direct owned-connection fixtures do not prove public recovery of rollback journals. Exact selection/recovery grants no lease or record access. Existing storage restart-write/read stages cover a persisted fixture. No composite setup journal, work-origin seal/abort, provider/UI integration, physical-device, iOS or release claim.",
+  "apk": {
+    "path": "shared/storage/build/outputs/apk/androidTest/debug/storage-debug-androidTest.apk",
+    "bytes": 8672884,
+    "sha256": "92d28f81703f863e52a7435e9abf6ec9c8e940d4de0471196809436a8ef048d9"
+  },
+  "apkMetadata": {
+    "path": "docs/verification/client-storage/android-attempts/2026-09-13T15-54-18.890Z/output-metadata.json",
+    "bytes": 429,
+    "sha256": "def5dc8ca9219547edb6ce42c831d996df0a557fa7f7b584b0d9e73da9bddbaa"
+  },
+  "attemptDirectory": "docs/verification/client-storage/android-attempts/2026-09-13T15-54-18.890Z",
+  "checks": [
+    {
+      "name": "regular",
+      "classes": "com.feedme.storage.AndroidStateVaultTest,com.feedme.storage.AndroidStateDatabaseTest,com.feedme.storage.AndroidSessionControlStoreTest,com.feedme.storage.AndroidSessionWorkStoreTest,com.feedme.storage.AndroidStateActivationPlanTest,com.feedme.storage.AndroidStateActivationRecoveryTest,com.feedme.storage.AndroidSessionWorkOriginPlanTest",
+      "passed": true,
+      "tests": 71,
+      "expected": 71,
+      "identities": [
+        "com.feedme.storage.AndroidStateVaultTest#existingDatabaseNeverRecreatesMissingIndexKey",
+        "com.feedme.storage.AndroidStateVaultTest#authenticationRejectsChangedPayloadTagNonceAadAndKey",
+        "com.feedme.storage.AndroidStateVaultTest#erasedOwnerKeyCannotDecryptAndOtherOwnerRemainsReadable",
+        "com.feedme.storage.AndroidStateVaultTest#nativeKeysAreNonExportableAndEncryptionUsesFreshNonces",
+        "com.feedme.storage.AndroidStateVaultTest#freshDatabaseReusesExistingIndexKey",
+        "com.feedme.storage.AndroidStateDatabaseTest#committedRecordsSurviveReopenAndErasedScopeStaysErased",
+        "com.feedme.storage.AndroidStateDatabaseTest#symlinkDirectoryIsRejectedWithoutChangingItsTarget",
+        "com.feedme.storage.AndroidStateDatabaseTest#existingDatabaseWithMissingIndexKeyFailsClosed",
+        "com.feedme.storage.AndroidStateDatabaseTest#secondManagerFailsWhileLockedAndReopensAfterClose",
+        "com.feedme.storage.AndroidStateDatabaseTest#preexistingWalIsPreservedAndFailureReleasesLock",
+        "com.feedme.storage.AndroidStateDatabaseTest#symlinkDatabaseIsRejectedWithoutChangingItsTargetAndReleasesLock",
+        "com.feedme.storage.AndroidStateDatabaseTest#preexistingSharedMemoryIsPreservedAndFailureReleasesLock",
+        "com.feedme.storage.AndroidStateDatabaseTest#invalidExistingSchemaFailureReleasesManagerCallbackLock",
+        "com.feedme.storage.AndroidSessionControlStoreTest#missingControlDatabaseWithSurvivingKeysFailsWithoutCreatingReplacement",
+        "com.feedme.storage.AndroidSessionControlStoreTest#missingControlIndexKeyFailsWithoutRebindingExistingState",
+        "com.feedme.storage.AndroidSessionControlStoreTest#existingEmptyLockOnlyAndLostAllStateDirectoriesCannotResetRetirementControl",
+        "com.feedme.storage.AndroidSessionControlStoreTest#duplicateControlOpenFailsWhileLifetimeLockIsHeldAndReopensAfterClose",
+        "com.feedme.storage.AndroidSessionControlStoreTest#missingControlOwnerKeyFailsWithoutGeneratingAnotherKey",
+        "com.feedme.storage.AndroidSessionControlStoreTest#existingDatabaseWithMissingLedgerFailsWithoutResettingItsOwner",
+        "com.feedme.storage.AndroidSessionControlStoreTest#existingDatabaseWithMissingControlOwnerFailsWithoutActivatingIt",
+        "com.feedme.storage.AndroidSessionControlStoreTest#nativeControlCasReopensAndSurvivesIndependentOwnerKeyErasure",
+        "com.feedme.storage.AndroidSessionWorkStoreTest#existingDatabaseWithMissingWorkOwnerFailsWithoutActivatingIt",
+        "com.feedme.storage.AndroidSessionWorkStoreTest#duplicateWorkOpenFailsWhileLifetimeLockIsHeldAndReopensAfterClose",
+        "com.feedme.storage.AndroidSessionWorkStoreTest#missingWorkOwnerKeyFailsWithoutGeneratingAnotherKey",
+        "com.feedme.storage.AndroidSessionWorkStoreTest#missingWorkDatabaseWithSurvivingKeysFailsWithoutCreatingReplacement",
+        "com.feedme.storage.AndroidSessionWorkStoreTest#nativeWorkCasReopensAndSurvivesIndependentControlWritesAndOwnerKeyErasure",
+        "com.feedme.storage.AndroidSessionWorkStoreTest#existingEmptyLockOnlyAndLostAllStateDirectoriesCannotInitializeAnIdleRegistry",
+        "com.feedme.storage.AndroidSessionWorkStoreTest#existingDatabaseWithMissingLedgerFailsWithoutResettingItsOwner",
+        "com.feedme.storage.AndroidSessionWorkStoreTest#missingWorkIndexKeyFailsWithoutRebindingExistingState",
+        "com.feedme.storage.AndroidStateActivationPlanTest#planningCommitAndSelectedReplayNeverExecuteUnrelatedKeyGarbageCollection",
+        "com.feedme.storage.AndroidStateActivationPlanTest#unfinishedRetiredKeyOrGarbageEntryCannotBeSilentlyCollectedByPlanning",
+        "com.feedme.storage.AndroidStateActivationPlanTest#fullyRetiredPredecessorCanBePlannedWithoutChangingOtherNativeOwners",
+        "com.feedme.storage.AndroidStateActivationPlanTest#cancellationAfterNativeKeyCreationPropagatesWithoutDeletingItsExactCandidate",
+        "com.feedme.storage.AndroidStateActivationPlanTest#planningIsReadOnlyDetachedOpaqueAndAllocatesNoNativeOwnerKey",
+        "com.feedme.storage.AndroidStateActivationPlanTest#commitAcknowledgesOnlyAndExactSelectedReplayPreservesRecordsAcrossNativeReopen",
+        "com.feedme.storage.AndroidStateActivationPlanTest#candidateReferencesAndOrphanRowsBlockCommitWithoutCreatingOrDeletingKeys",
+        "com.feedme.storage.AndroidStateActivationPlanTest#activeOrChangedOwnerPreconditionsPreserveTheWinningIncarnation",
+        "com.feedme.storage.AndroidStateActivationPlanTest#forgedWrongScopeAndForeignInstallPlansCannotChangeKeysOrFiles",
+        "com.feedme.storage.AndroidStateActivationPlanTest#selectedMissingNativeKeyCannotBeRegeneratedByExactReplay",
+        "com.feedme.storage.AndroidStateActivationPlanTest#interruptedExactKeyCreationRetainsAndReusesTheSameNativeKeyAfterReopen",
+        "com.feedme.storage.AndroidStateActivationPlanTest#nativeCandidateSelectionCreatesNoAliasAndExactCreationNeverOverwritesAnyAlias",
+        "com.feedme.storage.AndroidStateActivationPlanTest#beforeAndAfterRealSqliteCommitFailuresPreserveExactNativeReplay",
+        "com.feedme.storage.AndroidStateActivationPlanTest#selectedReplayDoesNotDecryptOrRewriteUnknownRowsAndTombstones",
+        "com.feedme.storage.AndroidStateActivationRecoveryTest#existingOnlyRefusesOldForeignOrUninitializedSchemaAndWrongIndexType",
+        "com.feedme.storage.AndroidStateActivationRecoveryTest#lostConsumedCommitReceiptNeverDeletesKeyUntilAnotherChangingCommitSucceeds",
+        "com.feedme.storage.AndroidStateActivationRecoveryTest#rollbackWalSharedMemoryAndUnknownChildrenArePreservedAndNeverRecovered",
+        "com.feedme.storage.AndroidStateActivationRecoveryTest#selectedEmptyAbortPreservesSiblingDataAndOldRecoveryCannotEraseNewerOwner",
+        "com.feedme.storage.AndroidStateActivationRecoveryTest#cancellationAndKeyDeletionFailureKeepConsumedPlanRetryableWithoutGarbageCollection",
+        "com.feedme.storage.AndroidStateActivationRecoveryTest#selectedMissingKeyRemainsInspectableAndExplicitlyAbortableWithoutRegeneration",
+        "com.feedme.storage.AndroidStateActivationRecoveryTest#selectedRowsIncludingOnlyTombstonesRejectAbortWithoutDecryptingOrDeleting",
+        "com.feedme.storage.AndroidStateActivationRecoveryTest#partialExactKeyIsConsumedBeforeDeletionAndRepeatedAbortChangesItsReceipt",
+        "com.feedme.storage.AndroidStateActivationRecoveryTest#recoveryAndOrdinaryManagersShareOneLockAndReleaseTheSingleOwnedDescriptor",
+        "com.feedme.storage.AndroidStateActivationRecoveryTest#preparedInspectionIsReadOnlyAndNeverAllocatesKeysOrPrivateHandles",
+        "com.feedme.storage.AndroidStateActivationRecoveryTest#exactUnusableAliasIsPresentForInspectionAndCanBeDeletedWithoutUsingIt",
+        "com.feedme.storage.AndroidStateActivationRecoveryTest#symlinksNonprivateFilesAndNonemptyLockAreRejectedWithoutChangingTargets",
+        "com.feedme.storage.AndroidStateActivationRecoveryTest#missingDirectoryDatabaseLockOrIndexNeverInitializesAnyReplacement",
+        "com.feedme.storage.AndroidStateActivationRecoveryTest#wrongMacScopeAndInstallAreRejectedBeforeOpeningEvenACorruptDatabase",
+        "com.feedme.storage.AndroidSessionWorkOriginPlanTest#selectedReplayChangesRevisionWithIdenticalPayloadAndNoOrdinarySnapshotAuthority",
+        "com.feedme.storage.AndroidSessionWorkOriginPlanTest#ordinaryEmptyRetiringAndEveryNativeEntryPhaseRejectSetupReplayEvenWithSameOrigin",
+        "com.feedme.storage.AndroidSessionWorkOriginPlanTest#equalRevisionIdenticalIdleInAnotherNativeStoreCannotAcceptForeignPlan",
+        "com.feedme.storage.AndroidSessionWorkOriginPlanTest#alteredValidPlanScopeOriginRevisionAndProofAreRejectedWithoutNativeWrites",
+        "com.feedme.storage.AndroidSessionWorkOriginPlanTest#planningAndInspectionPreserveExactNativeFilesRowsKeysAndInactiveBoundary",
+        "com.feedme.storage.AndroidSessionWorkOriginPlanTest#preparedAndSelectedPlansSurviveNativeCloseReopenWithoutNewKeysOrLease",
+        "com.feedme.storage.AndroidSessionWorkOriginPlanTest#selectedMarkerCannotBorrowAnotherPlanOrAcceptUnknownAndMalformedStoredMetadata",
+        "com.feedme.storage.AndroidSessionWorkOriginPlanTest#serializedPlanIsDetachedRedactedAndCanSelectWithoutAllocatingAnotherIdentity",
+        "com.feedme.storage.AndroidSessionWorkOriginPlanTest#changedIdleRevisionCannotBeSelectedByAnOlderPlanOrSilentlyReplanned",
+        "com.feedme.storage.AndroidSessionWorkOriginPlanTest#rejectedOrdinaryRetirementCannotEraseOrPoisonExactSetupSelection",
+        "com.feedme.storage.AndroidSessionWorkOriginPlanTest#liveBoundaryBlocksSetupMethodsWithoutClearingOrReplacingItsExistingLease",
+        "com.feedme.storage.AndroidSessionWorkOriginPlanTest#cancellationAfterRealSelectionCommitNeverReturnsAccessAndExactRetryAcknowledgesAgain",
+        "com.feedme.storage.AndroidSessionWorkOriginPlanTest#closedRegistryAndInvalidPlanningArgumentsCannotMutateNativeEvidence",
+        "com.feedme.storage.AndroidSessionWorkOriginPlanTest#missingSelectedNativeOwnerKeyFailsClosedWithoutRegenerationOrChangedFiles"
+      ],
+      "log": "docs/verification/client-storage/android-attempts/2026-09-13T15-54-18.890Z/regular.log"
+    },
+    {
+      "name": "sync-failure",
+      "classes": "com.feedme.storage.AndroidStateActivationSyncFailureTest",
+      "passed": true,
+      "tests": 6,
+      "expected": 6,
+      "identities": [
+        "com.feedme.storage.AndroidStateActivationSyncFailureTest#injectedVfsFaultIsRestrictedToExactOwnedDatabaseNotAnotherSandbox",
+        "com.feedme.storage.AndroidStateActivationSyncFailureTest#consumedReceiptReplayStillRequiresFreshSuccessfulSyncBeforeDeletingKey",
+        "com.feedme.storage.AndroidStateActivationSyncFailureTest#injectedDatabaseVfsSyncFailureRetainsExactKeyUntilFreshSuccessfulAbort",
+        "com.feedme.storage.AndroidStateActivationSyncFailureTest#observedAbortedReplayCannotAcknowledgeWhenItsNewJournalSyncFails",
+        "com.feedme.storage.AndroidStateActivationSyncFailureTest#injectedPostUnlinkVfsSyncFailureNeverTreatsVisibleConsumeAsDurableAcknowledgement",
+        "com.feedme.storage.AndroidStateActivationSyncFailureTest#injectedJournalVfsSyncFailureRetainsExactKeyUntilFreshSuccessfulAbort"
+      ],
+      "log": "docs/verification/client-storage/android-attempts/2026-09-13T15-54-18.890Z/sync-failure.log"
+    },
+    {
+      "name": "ledger-sync-failure",
+      "classes": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest",
+      "passed": true,
+      "tests": 9,
+      "expected": 9,
+      "identities": [
+        "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workRetirementDatabaseSyncFailureCannotCancelNativeWork",
+        "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#controlDirectorySyncFailureCannotAuthorizeCredentialAbort",
+        "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workReservationDirectorySyncFailureCannotInstallNativeWork",
+        "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workReservationJournalSyncFailureCannotInstallNativeWork",
+        "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workReservationDatabaseSyncFailureCannotInstallNativeWork",
+        "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workRetirementJournalSyncFailureCannotCancelNativeWork",
+        "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workRetirementDirectorySyncFailureCannotCancelNativeWork",
+        "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#controlJournalSyncFailureCannotAuthorizeCredentialAbort",
+        "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#controlDatabaseSyncFailureCannotAuthorizeCredentialAbort"
+      ],
+      "log": "docs/verification/client-storage/android-attempts/2026-09-13T15-54-18.890Z/ledger-sync-failure.log"
+    },
+    {
+      "name": "work-origin-sync-failure",
+      "classes": "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest",
+      "passed": true,
+      "tests": 3,
+      "expected": 3,
+      "identities": [
+        "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#journalSyncFailureCannotAcknowledgeInitialOrReplayedWorkOriginSelection",
+        "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#directorySyncFailureCannotPromoteVisibleWorkOriginSelectionOrReplayToAcknowledgement",
+        "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#databaseSyncFailureCannotAcknowledgeInitialOrReplayedWorkOriginSelection"
+      ],
+      "log": "docs/verification/client-storage/android-attempts/2026-09-13T15-54-18.890Z/work-origin-sync-failure.log"
+    },
+    {
+      "name": "restart-write",
+      "classes": "com.feedme.storage.AndroidStateProcessRestartTest#writeFixture",
+      "stage": "write",
+      "passed": true,
+      "tests": 1,
+      "expected": 1,
+      "identities": [
+        "com.feedme.storage.AndroidStateProcessRestartTest#writeFixture"
+      ],
+      "log": "docs/verification/client-storage/android-attempts/2026-09-13T15-54-18.890Z/restart-write.log"
+    },
+    {
+      "name": "restart-read",
+      "classes": "com.feedme.storage.AndroidStateProcessRestartTest#readFixtureAndCleanup",
+      "stage": "read",
+      "passed": true,
+      "tests": 1,
+      "expected": 1,
+      "identities": [
+        "com.feedme.storage.AndroidStateProcessRestartTest#readFixtureAndCleanup"
+      ],
+      "log": "docs/verification/client-storage/android-attempts/2026-09-13T15-54-18.890Z/restart-read.log"
+    },
+    {
+      "name": "work-origin-plan",
+      "classes": "com.feedme.storage.AndroidSessionWorkOriginProcessTest#preparePlanInFirstProcess",
+      "stage": "work-origin-plan",
+      "passed": true,
+      "tests": 1,
+      "expected": 1,
+      "identities": [
+        "com.feedme.storage.AndroidSessionWorkOriginProcessTest#preparePlanInFirstProcess"
+      ],
+      "log": "docs/verification/client-storage/android-attempts/2026-09-13T15-54-18.890Z/work-origin-plan.log"
+    },
+    {
+      "name": "work-origin-select",
+      "classes": "com.feedme.storage.AndroidSessionWorkOriginProcessTest#selectExactPlanInSecondProcess",
+      "stage": "work-origin-select",
+      "passed": true,
+      "tests": 1,
+      "expected": 1,
+      "identities": [
+        "com.feedme.storage.AndroidSessionWorkOriginProcessTest#selectExactPlanInSecondProcess"
+      ],
+      "log": "docs/verification/client-storage/android-attempts/2026-09-13T15-54-18.890Z/work-origin-select.log"
+    },
+    {
+      "name": "work-origin-replay",
+      "classes": "com.feedme.storage.AndroidSessionWorkOriginProcessTest#reacknowledgeSelectedPlanAndCleanInThirdProcess",
+      "stage": "work-origin-replay",
+      "passed": true,
+      "tests": 1,
+      "expected": 1,
+      "identities": [
+        "com.feedme.storage.AndroidSessionWorkOriginProcessTest#reacknowledgeSelectedPlanAndCleanInThirdProcess"
+      ],
+      "log": "docs/verification/client-storage/android-attempts/2026-09-13T15-54-18.890Z/work-origin-replay.log"
+    },
+    {
+      "name": "owned-test-directories-cleaned",
+      "passed": true
+    }
+  ],
+  "testJniLibraries": [
+    {
+      "entry": "lib/arm64-v8a/libfeedmeSqliteSyncFailure.so",
+      "bytes": 13168,
+      "sha256": "8183318eefd5a6a1bf91a9b43787c56ce5adaafff3373e7fb7fb8af3b4ce2c50"
+    },
+    {
+      "entry": "lib/armeabi-v7a/libfeedmeSqliteSyncFailure.so",
+      "bytes": 9944,
+      "sha256": "5dc7adba8d3bc47be54438f9d192a7519881bd7c654440f8a6611b2e24665617"
+    },
+    {
+      "entry": "lib/x86/libfeedmeSqliteSyncFailure.so",
+      "bytes": 11692,
+      "sha256": "5358f7182510c324829d3814a2fa6da754beb143f30c0e1eca4ab619bcc8d7a4"
+    },
+    {
+      "entry": "lib/x86_64/libfeedmeSqliteSyncFailure.so",
+      "bytes": 12920,
+      "sha256": "5505fdf2169e6b397a236e641dd84c5fee32e3e28fc23e3b69a959ce8705d9c8"
+    }
+  ],
+  "androidApi": "35",
+  "androidAbi": "arm64-v8a",
+  "syncFailures": {
+    "journal": {
+      "identity": "com.feedme.storage.AndroidStateActivationSyncFailureTest#injectedJournalVfsSyncFailureRetainsExactKeyUntilFreshSuccessfulAbort",
+      "mechanism": "injected-vfs-sync-failure",
+      "sqlite": 1034,
+      "failures": 1,
+      "keyDeletes": 0,
+      "vfs": 1,
+      "delegatedUnlink": 0
+    },
+    "database": {
+      "identity": "com.feedme.storage.AndroidStateActivationSyncFailureTest#injectedDatabaseVfsSyncFailureRetainsExactKeyUntilFreshSuccessfulAbort",
+      "mechanism": "injected-vfs-sync-failure",
+      "sqlite": 1034,
+      "failures": 1,
+      "keyDeletes": 0,
+      "vfs": 1,
+      "delegatedUnlink": 0
+    },
+    "directory": {
+      "identity": "com.feedme.storage.AndroidStateActivationSyncFailureTest#injectedPostUnlinkVfsSyncFailureNeverTreatsVisibleConsumeAsDurableAcknowledgement",
+      "mechanism": "injected-vfs-sync-failure",
+      "sqlite": 1290,
+      "failures": 1,
+      "keyDeletes": 0,
+      "vfs": 1,
+      "delegatedUnlink": 1
+    },
+    "consumed-replay": {
+      "identity": "com.feedme.storage.AndroidStateActivationSyncFailureTest#consumedReceiptReplayStillRequiresFreshSuccessfulSyncBeforeDeletingKey",
+      "mechanism": "injected-vfs-sync-failure",
+      "sqlite": 1290,
+      "failures": 1,
+      "keyDeletes": 0,
+      "vfs": 1,
+      "delegatedUnlink": 1
+    },
+    "aborted-replay": {
+      "identity": "com.feedme.storage.AndroidStateActivationSyncFailureTest#observedAbortedReplayCannotAcknowledgeWhenItsNewJournalSyncFails",
+      "mechanism": "injected-vfs-sync-failure",
+      "sqlite": 1034,
+      "failures": 1,
+      "keyDeletes": 0,
+      "vfs": 1,
+      "delegatedUnlink": 0
+    },
+    "exact-scope": {
+      "identity": "com.feedme.storage.AndroidStateActivationSyncFailureTest#injectedVfsFaultIsRestrictedToExactOwnedDatabaseNotAnotherSandbox",
+      "mechanism": "injected-vfs-sync-failure",
+      "sqlite": 1034,
+      "failures": 1,
+      "keyDeletes": 0,
+      "vfs": 1,
+      "delegatedUnlink": 0
+    }
+  },
+  "ledgerSyncFailures": {
+    "control-journal": {
+      "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#controlJournalSyncFailureCannotAuthorizeCredentialAbort",
+      "mechanism": "injected-vfs-sync-failure",
+      "sqlite": 1034,
+      "failures": 1,
+      "effects": 0,
+      "vfs": 1,
+      "delegatedUnlink": 0
+    },
+    "control-database": {
+      "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#controlDatabaseSyncFailureCannotAuthorizeCredentialAbort",
+      "mechanism": "injected-vfs-sync-failure",
+      "sqlite": 1034,
+      "failures": 1,
+      "effects": 0,
+      "vfs": 1,
+      "delegatedUnlink": 0
+    },
+    "control-directory": {
+      "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#controlDirectorySyncFailureCannotAuthorizeCredentialAbort",
+      "mechanism": "injected-vfs-sync-failure",
+      "sqlite": 1290,
+      "failures": 1,
+      "effects": 0,
+      "vfs": 1,
+      "delegatedUnlink": 1
+    },
+    "work-reservation-journal": {
+      "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workReservationJournalSyncFailureCannotInstallNativeWork",
+      "mechanism": "injected-vfs-sync-failure",
+      "sqlite": 1034,
+      "failures": 1,
+      "effects": 0,
+      "vfs": 1,
+      "delegatedUnlink": 0
+    },
+    "work-reservation-database": {
+      "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workReservationDatabaseSyncFailureCannotInstallNativeWork",
+      "mechanism": "injected-vfs-sync-failure",
+      "sqlite": 1034,
+      "failures": 1,
+      "effects": 0,
+      "vfs": 1,
+      "delegatedUnlink": 0
+    },
+    "work-reservation-directory": {
+      "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workReservationDirectorySyncFailureCannotInstallNativeWork",
+      "mechanism": "injected-vfs-sync-failure",
+      "sqlite": 1290,
+      "failures": 1,
+      "effects": 0,
+      "vfs": 1,
+      "delegatedUnlink": 1
+    },
+    "work-retirement-journal": {
+      "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workRetirementJournalSyncFailureCannotCancelNativeWork",
+      "mechanism": "injected-vfs-sync-failure",
+      "sqlite": 1034,
+      "failures": 1,
+      "effects": 0,
+      "vfs": 1,
+      "delegatedUnlink": 0
+    },
+    "work-retirement-database": {
+      "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workRetirementDatabaseSyncFailureCannotCancelNativeWork",
+      "mechanism": "injected-vfs-sync-failure",
+      "sqlite": 1034,
+      "failures": 1,
+      "effects": 0,
+      "vfs": 1,
+      "delegatedUnlink": 0
+    },
+    "work-retirement-directory": {
+      "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workRetirementDirectorySyncFailureCannotCancelNativeWork",
+      "mechanism": "injected-vfs-sync-failure",
+      "sqlite": 1290,
+      "failures": 1,
+      "effects": 0,
+      "vfs": 1,
+      "delegatedUnlink": 1
+    }
+  },
+  "workOriginSyncFailures": {
+    "select-journal": {
+      "identity": "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#journalSyncFailureCannotAcknowledgeInitialOrReplayedWorkOriginSelection",
+      "mechanism": "injected-vfs-sync-failure",
+      "sqlite": 1034,
+      "failures": 1,
+      "effects": 0,
+      "vfs": 1,
+      "delegatedUnlink": 0
+    },
+    "replay-journal": {
+      "identity": "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#journalSyncFailureCannotAcknowledgeInitialOrReplayedWorkOriginSelection",
+      "mechanism": "injected-vfs-sync-failure",
+      "sqlite": 1034,
+      "failures": 1,
+      "effects": 0,
+      "vfs": 1,
+      "delegatedUnlink": 0
+    },
+    "select-database": {
+      "identity": "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#databaseSyncFailureCannotAcknowledgeInitialOrReplayedWorkOriginSelection",
+      "mechanism": "injected-vfs-sync-failure",
+      "sqlite": 1034,
+      "failures": 1,
+      "effects": 0,
+      "vfs": 1,
+      "delegatedUnlink": 0
+    },
+    "replay-database": {
+      "identity": "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#databaseSyncFailureCannotAcknowledgeInitialOrReplayedWorkOriginSelection",
+      "mechanism": "injected-vfs-sync-failure",
+      "sqlite": 1034,
+      "failures": 1,
+      "effects": 0,
+      "vfs": 1,
+      "delegatedUnlink": 0
+    },
+    "select-directory": {
+      "identity": "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#directorySyncFailureCannotPromoteVisibleWorkOriginSelectionOrReplayToAcknowledgement",
+      "mechanism": "injected-vfs-sync-failure",
+      "sqlite": 1290,
+      "failures": 1,
+      "effects": 0,
+      "vfs": 1,
+      "delegatedUnlink": 1
+    },
+    "replay-directory": {
+      "identity": "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#directorySyncFailureCannotPromoteVisibleWorkOriginSelectionOrReplayToAcknowledgement",
+      "mechanism": "injected-vfs-sync-failure",
+      "sqlite": 1290,
+      "failures": 1,
+      "effects": 0,
+      "vfs": 1,
+      "delegatedUnlink": 1
+    }
+  },
+  "finishedAt": "2026-09-13T15:54:31.470Z"
+}

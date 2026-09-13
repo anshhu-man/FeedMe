@@ -6,6 +6,8 @@ import com.feedme.storage.StateRetirementTarget
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
@@ -54,6 +56,7 @@ class PrivateSessionRuntime private constructor(
     private val configurationBinding: String,
     private val verifier: NativeSessionVerifier,
     private val domainExecution: NativeWorkExecutionPolicy,
+    private val ids: NativeWorkIdSource,
 ) {
     private val mutex = Mutex()
     private lateinit var work: SessionWorkRegistry
@@ -61,10 +64,14 @@ class PrivateSessionRuntime private constructor(
     private var phase = PrivateSessionPhase.STARTUP
     private var active: PrivateSessionAccess? = null
     private var composingScope: StorageScope? = null
-    private var attempt: Any? = null
+    private var attempt: RuntimeAttempt? = null
+    private var liveSetup: LiveSessionSetupCoordinator? = null
+    private var liveSetupOwner: Any? = null
     private var wroteInitialState = false
     private var lifecycleGeneration: Any = Any()
     private val setupProposalOwner = Any()
+    private val compositeSetupProposalOwner = Any()
+    private var compositeAbort: Pair<Any, CompositeSetupAbortCoordinator>? = null
 
     suspend fun phase(): PrivateSessionPhase = withContext(dispatcher) { phase }
     suspend fun currentAccess(): PrivateSessionAccess? = withContext(dispatcher) {
@@ -88,6 +95,81 @@ class PrivateSessionRuntime private constructor(
             check()
             SessionRecoveryInspector(control, credentialStore, work, data, BINDING_KEY,
                 configurationBinding, retirement::hasProcessRetirement, check).inspect()
+        }
+    }
+
+    /**
+     * Exact pending-composite diagnostics on already-open resources only. Does not contact a
+     * verifier, read credential payloads, change phase, open recovery owners, write or propose
+     * deletion. A successful report is not confirmation or evidence of usable credentials.
+     */
+    suspend fun inspectInterruptedSetup(): PortResult<InterruptedSetupReport> = owned {
+        requireInspectable()
+        val generation = lifecycleGeneration
+        mutex.withLock {
+            val check = {
+                notClosed()
+                if (lifecycleGeneration !== generation) fail(FailureReason.STALE_SESSION)
+                requireInspectable()
+            }
+            check()
+            InterruptedSetupInspector(control, NativeInterruptedSetupResources(credentialStore, data, work),
+                configurationBinding, retirement::hasProcessRetirement, check).inspect()
+        }
+    }
+
+    /**
+     * Read-only, generation-bound proposal for the exact pending composite setup. Only existing
+     * parent-owned resources are inspected. The opaque result contains no public identity,
+     * deletion predicate or credential. Merely preparing it does not acknowledge abort intent.
+     */
+    suspend fun preparePendingSetupAbort(): PortResult<PreparedSessionSetupAbort> = owned {
+        requireInspectable()
+        val generation = lifecycleGeneration
+        mutex.withLock {
+            checkSetupGeneration(generation)
+            value(compositeSetupAbort(generation).prepare())
+        }
+    }
+
+    /**
+     * Trusted UI integration calls this only after the user explicitly confirms this proposal.
+     * Exact fresh evidence precedes durable confirmation, then work/data/credential cleanup.
+     * Failure retains recovery state; no lease, provider call or borrowed-store close is granted.
+     */
+    suspend fun confirmPendingSetupAbort(prepared: PreparedSessionSetupAbort): PortResult<Unit> =
+        runPendingSetupAbort { coordinator -> coordinator.confirm(prepared) }
+
+    /** Explicit retry of an already-confirmed durable composite intent; never infers consent. */
+    suspend fun retryPendingSetupAbort(): PortResult<Unit> =
+        runPendingSetupAbort { coordinator -> coordinator.retry() }
+
+    private fun compositeSetupAbort(generation: Any): CompositeSetupAbortCoordinator {
+        compositeAbort?.takeIf { it.first === generation }?.let { return it.second }
+        return CompositeSetupAbortCoordinator(
+            control, NativeCompositeSetupAbortResources(credentialStore, data, work), configurationBinding,
+            compositeSetupProposalOwner, generation, retirement::hasProcessRetirement,
+            checkCurrent = { checkSetupGeneration(generation) },
+        ).also { compositeAbort = generation to it }
+    }
+
+    private suspend fun runPendingSetupAbort(
+        action: suspend (CompositeSetupAbortCoordinator) -> PortResult<Unit>,
+    ): PortResult<Unit> = owned {
+        requireInspectable()
+        val generation = lifecycleGeneration
+        mutex.withLock {
+            checkSetupGeneration(generation)
+            value(action(compositeSetupAbort(generation)))
+            currentCoroutineContext().ensureActive()
+            checkSetupGeneration(generation)
+            discardLiveSetup()
+            currentCoroutineContext().ensureActive()
+            checkSetupGeneration(generation)
+            lifecycleGeneration = Any()
+            compositeAbort = null
+            // A completed abort does not establish authentication or open a fresh owner.
+            phase = PrivateSessionPhase.STARTUP
         }
     }
 
@@ -205,6 +287,8 @@ class PrivateSessionRuntime private constructor(
             lifecycleGeneration = Any()
             phase = PrivateSessionPhase.RECOVERY_REQUIRED
             active = null; composingScope = null; attempt = null
+            discardLiveSetup()
+            notClosed()
             val progress = value(retirement.recover())
             notClosed()
             if (progress.phase == LocalRetirementPhase.PENDING) return@withLock phase
@@ -225,53 +309,79 @@ class PrivateSessionRuntime private constructor(
     /** Calls the configured real verifier; no existing occupied slot or guest is overwritten. */
     suspend fun create(): PortResult<PrivateSessionAccess> = compose(PrivateSessionPhase.SIGNED_OUT) { token ->
         val plannedStore = credentialStore as? PlannedCredentialCreateStore ?: fail(FailureReason.NOT_CONFIGURED)
+        // Signed-out is a process observation, not permission to cross a newer durable setup
+        // barrier. Check before contacting the provider as well as after its response.
+        ensureControl()
+        checkAttempt(token)
         val verified = value(verifier.acquire())
         checkAttempt(token)
         validCredentials(verified)
         ensureControl()
         checkAttempt(token)
-        val slot = value(credentialStore.state())
-        val index = value(work.snapshot())
-        checkAttempt(token)
-        if (slot.owner != null || index.originBinding != null) fail(FailureReason.CONFLICT)
-        if (value(data.resume(verified.scope)) != null) fail(FailureReason.CONFLICT)
-        checkAttempt(token)
-        // From the first possibly committed write onward, cancellation is a repair state. These
-        // stores are not one transaction; do not claim rollback or retry with another identity.
+        val owner = Any()
+        liveSetupOwner = owner
+        val setup = LiveSessionSetupCoordinator(control, NativeLiveSessionSetupResources(plannedStore, data, work),
+            boundary, dispatcher, configurationBinding, ids, retirement::hasProcessRetirement,
+            isCurrent = { liveSetupOwner === owner && phase != PrivateSessionPhase.CLOSED })
+        liveSetup = setup
+        // Conservatively preserve repair state once planning begins. Cancellation never infers
+        // rollback; only explicit diagnostics/recovery may establish that no resource was selected.
         wroteInitialState = true
-        val credential = value(commitCredentialCreate(control, plannedStore, slot.revision, verified) { checkAttempt(token) })
+        observeAttempt(token) { setup.begin(verified) }
+        val completed = observeAttempt(token) { setup.complete() }
+        publishSetup(token, completed)
+    }
+
+    /** Explicit retry of this process's original verified setup; no provider call or new plans. */
+    suspend fun retryCreate(): PortResult<PrivateSessionAccess> = compose(PrivateSessionPhase.RECOVERY_REQUIRED) { token ->
+        val setup = liveSetup ?: fail(FailureReason.NOT_CONFIGURED)
+        wroteInitialState = true
+        val completed = observeAttempt(token) { setup.complete() }
+        publishSetup(token, completed)
+    }
+
+    private suspend fun publishSetup(token: RuntimeAttempt, completed: CompletedSessionSetup): PrivateSessionAccess {
+        val record = completed.activation
+        requireControlRecord(completed.control) { checkAttempt(token) }
+        val current = value(credentialStore.read(record.scope)) ?: fail(FailureReason.STORAGE_FAILURE)
         checkAttempt(token)
-        if (credential.scope != verified.scope) fail(FailureReason.STALE_SESSION)
-        val store = value(data.activate(credential.scope))
+        requireCredentialSnapshot(current, completed.credential)
+        val store = value(data.resumeBound(record.scope, record.dataTarget, completed.binding))
+        checkAttempt(token)
+        if (value(work.inspectOrigin(completed.workOriginPlan)) != SessionWorkOriginPlanStatus.SEALED)
+            fail(FailureReason.STALE_SESSION)
+        checkAttempt(token)
+        requireControlRecord(completed.control) { checkAttempt(token) }
+        // Ordinary resume consumes setup provenance. After this transition, an interrupted
+        // publication requires fresh verified restore, not sealing an already-used origin again.
+        discardLiveSetup()
         checkAttempt(token)
         phase = PrivateSessionPhase.COMPOSING
-        composingScope = credential.scope
-        val lease = boundary.activate(credential.scope)
-        val workBinding = value(work.createOrigin(lease, index.revision))
+        composingScope = record.scope
+        val lease = activateLease(token, record.scope)
+        val binding = value(work.resume(lease))
         checkAttempt(token, lease)
-        val target = value(data.captureRetirement(credential.scope)) ?: fail(FailureReason.STORAGE_FAILURE)
-        checkAttempt(token, lease)
-        val record = SessionActivationRecord(credential.scope, credential.incarnation, workBinding.originBinding, target, configurationBinding)
-        persistBinding(store, record)
-        checkAttempt(token, lease)
-        publish(token, credential, lease, store, workBinding, record, PrivateSessionAccessMode.ONLINE)
+        if (binding.originBinding != record.originBinding) fail(FailureReason.STALE_SESSION)
+        return publish(token, current, lease, store, binding, record, completed.binding, PrivateSessionAccessMode.ONLINE, completed.control)
     }
 
     /** Restores the exact durable binding, never joins independent stores by scope alone. */
     suspend fun restore(): PortResult<PrivateSessionAccess> = compose(PrivateSessionPhase.RESTORE_REQUIRED) { token ->
-        ensureControl()
+        val originalControl = ensureControl()
         checkAttempt(token)
         val slot = value(credentialStore.state())
         val scope = slot.owner ?: fail(FailureReason.STORAGE_FAILURE)
-        val store = value(data.resume(scope)) ?: fail(FailureReason.STORAGE_FAILURE)
-        val persisted = value(store.read(scope, BINDING_KEY)) ?: fail(FailureReason.STORAGE_FAILURE)
+        val inspection = value(data.inspectRecord(scope, BINDING_KEY))
+        val persisted = inspection.record ?: fail(FailureReason.STORAGE_FAILURE)
         checkAttempt(token)
-        if (persisted.schemaVersion != 1) fail(FailureReason.STORAGE_FAILURE)
         val record = try { SessionActivationCodec.decode(persisted.payload) }
             catch (_: SessionActivationFormatException) { fail(FailureReason.STORAGE_FAILURE) }
+        if (persisted.schemaVersion != record.schemaVersion) fail(FailureReason.STORAGE_FAILURE)
+        requireActivationControl(record, originalControl)
         if (record.scope != scope || record.credentialIncarnation != slot.incarnation ||
             record.configurationBinding != configurationBinding) fail(FailureReason.STALE_SESSION)
-        assertCurrentTarget(record)
+        val inspectedTarget = inspection.target ?: fail(FailureReason.STALE_SESSION)
+        if (!sameTarget(inspectedTarget, record.dataTarget)) fail(FailureReason.STALE_SESSION)
         val index = value(work.snapshot())
         checkAttempt(token)
         if (index.scope != scope || index.originBinding != record.originBinding || index.retiring) fail(FailureReason.STALE_SESSION)
@@ -283,26 +393,42 @@ class PrivateSessionRuntime private constructor(
         validCredentials(credential.credentials)
         val mode = value(verifier.restore(credential))
         checkAttempt(token)
+        // Stored Complete is an observation, not a previous invocation's acknowledgement.
+        // Obtain a fresh changed CAS before either a scoped handle or the first boundary lease.
+        requireControlRecord(originalControl) { checkAttempt(token) }
+        val acknowledged = value(control.acknowledge(originalControl, originalControl.payload) { checkAttempt(token) })
+        checkAttempt(token)
+        val store = value(data.resumeBound(scope, record.dataTarget, persisted))
+        checkAttempt(token)
+        requireCredentialSnapshot(value(credentialStore.read(scope)) ?: fail(FailureReason.STORAGE_FAILURE), credential)
+        checkAttempt(token)
+        val finalIndex = value(work.snapshot())
+        checkAttempt(token)
+        if (finalIndex.revision != index.revision || finalIndex.scope != scope ||
+            finalIndex.originBinding != record.originBinding || finalIndex.retiring) fail(FailureReason.STALE_SESSION)
+        requireControlRecord(acknowledged) { checkAttempt(token) }
         phase = PrivateSessionPhase.COMPOSING
         composingScope = scope
-        val lease = boundary.activate(scope)
+        val lease = activateLease(token, scope)
         val workBinding = value(work.resume(lease))
         checkAttempt(token, lease)
         if (workBinding.originBinding != record.originBinding) fail(FailureReason.STALE_SESSION)
         // Incomplete scheduling is cleaned, not implicitly re-enqueued. Execution still closed.
         value(work.reconcilePending(workBinding))
         checkAttempt(token, lease)
-        publish(token, credential, lease, store, workBinding, record, mode)
+        publish(token, credential, lease, store, workBinding, record, persisted, mode, acknowledged)
     }
 
     /** Cancel the current provider/restore attempt; never erase a guest or partial setup silently. */
     suspend fun cancelVerification(): PortResult<Unit> = owned {
         if (phase != PrivateSessionPhase.VERIFYING && phase != PrivateSessionPhase.COMPOSING) fail(FailureReason.CONFLICT)
         lifecycleGeneration = Any()
+        val previous = attempt
         attempt = null
-        boundary.clear()
+        previous?.lease?.let { if (boundary.isCurrent(it)) boundary.clear() }
         composingScope = null
         phase = if (wroteInitialState) PrivateSessionPhase.RECOVERY_REQUIRED else PrivateSessionPhase.STARTUP
+        discardLiveSetup()
     }
 
     /** Explicit user logout/account switch only; remote revocation is a separate canonical call. */
@@ -346,30 +472,44 @@ class PrivateSessionRuntime private constructor(
     /** No implicit logout; retain durable state for a future explicitly verified restore. */
     suspend fun close(): PortResult<Unit> = withContext(NonCancellable + dispatcher) {
         if (phase == PrivateSessionPhase.CLOSED) return@withContext PortResult.Value(Unit)
+        val lease = active?.lease ?: attempt?.lease
         lifecycleGeneration = Any()
         attempt = null; active = null; composingScope = null
         phase = PrivateSessionPhase.CLOSED
-        boundary.clear()
+        compositeAbort = null
+        lease?.let { if (boundary.isCurrent(it)) boundary.clear() }
+        discardLiveSetup()
         work.close()
     }
 
-    private suspend fun publish(token: Any, credential: CredentialSnapshot, lease: SessionLease,
+    private suspend fun publish(token: RuntimeAttempt, credential: CredentialSnapshot, lease: SessionLease,
         store: PrivateStateStore, workBinding: SessionWorkBinding, record: SessionActivationRecord,
-        mode: PrivateSessionAccessMode): PrivateSessionAccess {
-        ensureControl()
+        expectedBinding: PrivateRecord, mode: PrivateSessionAccessMode, acknowledged: SessionControlRecord): PrivateSessionAccess {
+        // The changed control acknowledgement already preceded the first lease. Do not accept
+        // another harmless-looking Complete that replaced this exact operation while suspended.
+        requireActivationControl(record, acknowledged)
+        requireControlRecord(acknowledged) { checkAttempt(token, lease) }
         checkAttempt(token, lease)
         val current = value(credentialStore.read(credential.scope)) ?: fail(FailureReason.STORAGE_FAILURE)
         checkAttempt(token, lease)
-        if (current.incarnation != credential.incarnation || current.revision != credential.revision || current.scope != credential.scope)
-            fail(FailureReason.STALE_SESSION)
+        requireCredentialSnapshot(current, credential)
         assertCurrentTarget(record)
         checkAttempt(token, lease)
+        val inspection = value(data.inspectRecord(record.scope, BINDING_KEY))
+        checkAttempt(token, lease)
+        val binding = inspection.record ?: fail(FailureReason.STALE_SESSION)
+        val inspectedTarget = inspection.target ?: fail(FailureReason.STALE_SESSION)
+        if (!sameTarget(inspectedTarget, record.dataTarget) ||
+            binding.revision != expectedBinding.revision || binding.schemaVersion != expectedBinding.schemaVersion ||
+            !sameBytes(binding.payload, expectedBinding.payload)) fail(FailureReason.STALE_SESSION)
         val captured = value(retirement.capture(lease, workBinding.originBinding, credential.incarnation))
         checkAttempt(token, lease)
         if (!sameTarget(captured.dataTarget, record.dataTarget)) fail(FailureReason.STALE_SESSION)
+        requireControlRecord(acknowledged) { checkAttempt(token, lease) }
         val transport = CredentialTransportView(credentialStore, boundary, lease, credential.incarnation)
         val result = PrivateSessionAccess(lease, workBinding.originBinding, mode,
             LeasedPrivateStore(store, lease), RuntimeCredentials(transport, lease, mode), workBinding, captured)
+        currentCoroutineContext().ensureActive()
         active = result
         phase = PrivateSessionPhase.ACTIVE
         composingScope = null
@@ -383,21 +523,42 @@ class PrivateSessionRuntime private constructor(
         value(data.validateRetirement(record.scope, record.dataTarget))
     }
 
-    private suspend fun persistBinding(store: PrivateStateStore, record: SessionActivationRecord) {
-        val payload = try { SessionActivationCodec.encode(record) }
-            catch (_: SessionActivationFormatException) { fail(FailureReason.INVALID_DATA) }
-        val result = store.commit(record.scope, listOf(StoreMutation.Put(BINDING_KEY, null, 1, payload)))
-        if (result is PortResult.Failure && result.reason != FailureReason.OUTCOME_UNKNOWN) fail(result.reason)
-        val observed = value(store.read(record.scope, BINDING_KEY)) ?: fail(FailureReason.OUTCOME_UNKNOWN)
-        if (observed.schemaVersion != 1 || !sameBytes(observed.payload, payload)) fail(FailureReason.OUTCOME_UNKNOWN)
-        if (result is PortResult.Value && result.value[BINDING_KEY] != observed.revision) fail(FailureReason.STORAGE_FAILURE)
+    private fun requireCredentialSnapshot(current: CredentialSnapshot, expected: CredentialSnapshot) {
+        if (!sameBytes(CredentialCodec.encodeSnapshot(current), CredentialCodec.encodeSnapshot(expected)))
+            fail(FailureReason.STALE_SESSION)
     }
 
-    private suspend fun ensureControl() {
+    private fun requireActivationControl(record: SessionActivationRecord, entry: SessionControlRecord) {
+        val state = try { RetirementCodec.decode(entry.payload) } catch (_: Exception) { fail(FailureReason.STORAGE_FAILURE) }
+        if (state.blocksAccess() || (record.setupOperationId != null &&
+                (state as? RetirementState.Complete)?.operationId != record.setupOperationId)) fail(FailureReason.CONFLICT)
+    }
+
+    private suspend fun requireControlRecord(expected: SessionControlRecord, checkCurrent: () -> Unit) {
+        currentCoroutineContext().ensureActive()
+        checkCurrent()
+        val pendingBefore = retirement.hasProcessRetirement()
+        currentCoroutineContext().ensureActive()
+        checkCurrent()
+        if (pendingBefore) fail(FailureReason.CONFLICT)
+        val observed = ensureControl(checkCurrent = checkCurrent)
+        if (observed.revision != expected.revision || !sameBytes(observed.payload, expected.payload)) fail(FailureReason.CONFLICT)
+        val pendingAfter = retirement.hasProcessRetirement()
+        currentCoroutineContext().ensureActive()
+        checkCurrent()
+        if (pendingAfter) fail(FailureReason.CONFLICT)
+    }
+
+    private suspend fun ensureControl(checkCurrent: () -> Unit = {}): SessionControlRecord {
+        currentCoroutineContext().ensureActive()
+        checkCurrent()
         val entry = value(control.read()) ?: fail(FailureReason.STORAGE_FAILURE)
+        currentCoroutineContext().ensureActive()
+        checkCurrent()
         if (entry.revision <= 0) fail(FailureReason.STORAGE_FAILURE)
         val state = try { RetirementCodec.decode(entry.payload) } catch (_: Exception) { fail(FailureReason.STORAGE_FAILURE) }
         if (state.blocksAccess()) fail(FailureReason.CONFLICT)
+        return entry
     }
 
     private suspend fun workAdmission(scope: StorageScope): PortResult<Boolean> = owned {
@@ -416,29 +577,77 @@ class PrivateSessionRuntime private constructor(
         allowed && isActive(selected)
     }
 
-    private suspend fun compose(required: PrivateSessionPhase, action: suspend (Any) -> PrivateSessionAccess): PortResult<PrivateSessionAccess> = owned {
-        mutex.withLock {
-            if (phase != required) fail(FailureReason.CONFLICT)
-            lifecycleGeneration = Any()
-            val token = Any()
-            attempt = token; wroteInitialState = false
-            phase = PrivateSessionPhase.VERIFYING
-            var succeeded = false
-            try { action(token).also { succeeded = true } }
-            finally {
-                withContext(NonCancellable) {
-                    if (!succeeded && attempt === token) {
-                        boundary.clear(); active = null; composingScope = null
-                        phase = PrivateSessionPhase.RECOVERY_REQUIRED
+    private suspend fun compose(required: PrivateSessionPhase, action: suspend (RuntimeAttempt) -> PrivateSessionAccess): PortResult<PrivateSessionAccess> {
+        var ownedGeneration: Any? = null
+        var ownedAttempt: RuntimeAttempt? = null
+        return try {
+            owned {
+                mutex.withLock {
+                    currentCoroutineContext().ensureActive()
+                    if (phase != required) fail(FailureReason.CONFLICT)
+                    lifecycleGeneration = Any()
+                    ownedGeneration = lifecycleGeneration
+                    val token = RuntimeAttempt().also { ownedAttempt = it }
+                    attempt = token; wroteInitialState = false
+                    phase = PrivateSessionPhase.VERIFYING
+                    var succeeded = false
+                    try { action(token).also { currentCoroutineContext().ensureActive(); checkAttempt(token); succeeded = true } }
+                    finally {
+                        withContext(NonCancellable) {
+                            if (!succeeded && attempt === token) {
+                                token.lease?.let { if (boundary.isCurrent(it)) boundary.clear() }
+                                active = null; composingScope = null
+                                phase = PrivateSessionPhase.RECOVERY_REQUIRED
+                            }
+                            if (attempt === token) attempt = null
+                        }
                     }
-                    if (attempt === token) attempt = null
                 }
             }
+        } catch (cancelled: CancellationException) {
+            // Also handles prompt cancellation after successful dispatcher work but before its
+            // result reaches the caller. A queued cancelled caller owns neither a newer attempt
+            // nor a newer external lease, so it must not revoke them.
+            withContext(NonCancellable + dispatcher) {
+                if (ownedGeneration != null && lifecycleGeneration === ownedGeneration) {
+                    lifecycleGeneration = Any()
+                    ownedAttempt?.lease?.let { if (boundary.isCurrent(it)) boundary.clear() }
+                    active = null; composingScope = null; attempt = null
+                    discardLiveSetup()
+                    if (phase != PrivateSessionPhase.CLOSED) phase = PrivateSessionPhase.RECOVERY_REQUIRED
+                }
+            }
+            throw cancelled
         }
     }
 
-    private fun checkAttempt(token: Any, lease: SessionLease? = null) {
-        if (attempt !== token || phase == PrivateSessionPhase.CLOSED || (lease != null && !boundary.isCurrent(lease))) fail(FailureReason.STALE_SESSION)
+    private suspend fun discardLiveSetup() {
+        liveSetupOwner = null
+        val setup = liveSetup
+        liveSetup = null
+        setup?.close()
+    }
+
+    private class RuntimeAttempt { var lease: SessionLease? = null }
+
+    private suspend fun <T> observeAttempt(token: RuntimeAttempt, action: suspend () -> PortResult<T>): T {
+        currentCoroutineContext().ensureActive()
+        checkAttempt(token)
+        val result = action()
+        currentCoroutineContext().ensureActive()
+        checkAttempt(token)
+        return value(result)
+    }
+
+    private suspend fun activateLease(token: RuntimeAttempt, scope: StorageScope): SessionLease {
+        currentCoroutineContext().ensureActive()
+        checkAttempt(token)
+        return boundary.activate(scope).also { token.lease = it }
+    }
+
+    private fun checkAttempt(token: RuntimeAttempt, lease: SessionLease? = token.lease) {
+        if (attempt !== token || phase == PrivateSessionPhase.CLOSED ||
+            (if (lease == null) boundary.current() != null else !boundary.isCurrent(lease))) fail(FailureReason.STALE_SESSION)
     }
     private fun notClosed() { if (phase == PrivateSessionPhase.CLOSED) fail(FailureReason.STORAGE_FAILURE) }
     private fun requireInspectable() {
@@ -513,7 +722,7 @@ class PrivateSessionRuntime private constructor(
             try {
                 return withContext(dispatcher) {
                     if (boundary.current() != null) return@withContext PortResult.Failure(FailureReason.CONFLICT)
-                    val runtime = PrivateSessionRuntime(control, data, credentials, boundary, dispatcher, configurationBinding, verifier, domainExecution)
+                    val runtime = PrivateSessionRuntime(control, data, credentials, boundary, dispatcher, configurationBinding, verifier, domainExecution, ids)
                     when (val index = SessionWorkRegistry.open(workControl, boundary, dispatcher, cancellation, ids,
                         NativeWorkAdmissionPolicy(runtime::workAdmission), NativeWorkExecutionPolicy(runtime::workExecution))) {
                         is PortResult.Failure -> index

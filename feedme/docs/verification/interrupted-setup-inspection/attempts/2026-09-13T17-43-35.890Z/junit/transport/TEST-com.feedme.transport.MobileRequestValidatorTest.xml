@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.transport.MobileRequestValidatorTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-09-13T17:43:42.204Z" hostname="ansachars-MacBook-Pro.local" time="0.106">
+  <properties/>
+  <testcase name="requiredKeyAndVersionRemainStrictWhileOnlyDeviceHeaderIsDeferred[jvm]" classname="com.feedme.transport.MobileRequestValidatorTest" time="0.009"/>
+  <testcase name="completeBodyAssertionsRejectSyntacticallyValidButInvalidQueuedPayloads[jvm]" classname="com.feedme.transport.MobileRequestValidatorTest" time="0.001"/>
+  <testcase name="missingUnknownAndUnsafePathParametersAreRejected[jvm]" classname="com.feedme.transport.MobileRequestValidatorTest" time="0.001"/>
+  <testcase name="publicTransportUsesCompleteIntentValidationWithoutSecureAccess[jvm]" classname="com.feedme.transport.MobileRequestValidatorTest" time="0.024"/>
+  <testcase name="pureValidationPreservesExactOwnedBytesAndDoesNotCreateDefaults[jvm]" classname="com.feedme.transport.MobileRequestValidatorTest" time="0.0"/>
+  <testcase name="malformedUtf8DuplicateMembersAndExcessiveNestingAreRejected[jvm]" classname="com.feedme.transport.MobileRequestValidatorTest" time="0.001"/>
+  <testcase name="unknownNonMobileAndWrongPrincipalIntentsAreRejected[jvm]" classname="com.feedme.transport.MobileRequestValidatorTest" time="0.0"/>
+  <testcase name="validAccountIntentNeedsNoCredentialsButActualPreparationStillNeedsDeviceBinding[jvm]" classname="com.feedme.transport.MobileRequestValidatorTest" time="0.008"/>
+  <testcase name="scalarQueryRulesAndBudgetsApplyWithoutDeviceOrNetworkAccess[jvm]" classname="com.feedme.transport.MobileRequestValidatorTest" time="0.0"/>
+  <testcase name="accountTransportRejectsInvalidIntentBeforeAnySecureStoreRead[jvm]" classname="com.feedme.transport.MobileRequestValidatorTest" time="0.036"/>
+  <testcase name="actualTransportRejectsMissingOrInvalidDeviceAndBindsOnlyRealDevice[jvm]" classname="com.feedme.transport.MobileRequestValidatorTest" time="0.024"/>
+  <testcase name="completionUsesItsOwnCanonicalPreconditionsWithoutInventedIfMatch[jvm]" classname="com.feedme.transport.MobileRequestValidatorTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

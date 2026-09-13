@@ -6,6 +6,8 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runCurrent
@@ -23,7 +25,7 @@ class SessionWorkRegistryTest {
             assertNull(value(f.registry.snapshot()).originBinding)
             val attempts = f.control.attempts
             value(f.registry.retireEmpty(ACCOUNT, binding.originBinding))
-            assertEquals(attempts, f.control.attempts)
+            assertEquals(attempts + 1, f.control.attempts)
             assertTrue(f.cancelled.isEmpty())
             assertEquals(0, f.executionCalls)
         }
@@ -68,12 +70,15 @@ class SessionWorkRegistryTest {
         }
     }
 
-    @Test fun emptyDiscardReconcilesExactAmbiguousCommitAndPreservesConcurrentNewEntry() = runTest {
+    @Test fun emptyDiscardRejectsAmbiguousCommitAndRequiresFreshIdleAcknowledgement() = runTest {
         withFixture { f ->
             val binding = f.bind()
             f.control.afterFailures[f.control.attempts + 1] = FailureReason.OUTCOME_UNKNOWN
-            value(f.registry.retireEmpty(ACCOUNT, binding.originBinding))
+            failure(FailureReason.OUTCOME_UNKNOWN, f.registry.retireEmpty(ACCOUNT, binding.originBinding))
             assertNull(value(f.registry.snapshot()).originBinding)
+            val revision = f.control.record!!.revision
+            value(f.registry.retireEmpty(ACCOUNT, binding.originBinding))
+            assertEquals(revision + 1, f.control.record!!.revision)
             assertTrue(f.cancelled.isEmpty())
         }
         withFixture { f ->
@@ -149,7 +154,7 @@ class SessionWorkRegistryTest {
             assertFalse(snapshot.retiring)
             assertEquals(binding.originBinding, value(f.registry.resume(f.lease)).originBinding)
             failure(FailureReason.CONFLICT, f.registry.createOrigin(f.lease, snapshot.revision))
-            assertEquals(1, f.control.attempts)
+            assertEquals(2, f.control.attempts)
             assertEquals(listOf(ACCOUNT, ACCOUNT, ACCOUNT, ACCOUNT, ACCOUNT), f.admitted.takeLast(5))
         }
     }
@@ -185,17 +190,19 @@ class SessionWorkRegistryTest {
         }
     }
 
-    @Test fun originCasFailureDoesNotInventOriginAndCommittedUnknownReadsBackExactIntent() = runTest {
+    @Test fun originCasFailureNeverPromotesReadbackAndResumeRequiresFreshAcknowledgement() = runTest {
         withFixture { f ->
             f.control.beforeFailures[1] = FailureReason.STORAGE_FAILURE
             failure(FailureReason.STORAGE_FAILURE, f.registry.createOrigin(f.lease, 1))
             assertSame(SessionWorkState.Idle, f.control.state())
             f.control.afterFailures[2] = FailureReason.OUTCOME_UNKNOWN
-            val binding = value(f.registry.createOrigin(f.lease, 1))
+            failure(FailureReason.OUTCOME_UNKNOWN, f.registry.createOrigin(f.lease, 1))
+            assertEquals(uuid(2), value(f.registry.snapshot()).originBinding)
+            val binding = value(f.registry.resume(f.lease))
             assertEquals(uuid(2), binding.originBinding)
             assertEquals(binding.originBinding, value(f.registry.snapshot()).originBinding)
-            assertEquals(2, f.control.attempts)
-            assertEquals(2, value(f.registry.snapshot()).revision)
+            assertEquals(3, f.control.attempts)
+            assertEquals(3, value(f.registry.snapshot()).revision)
         }
     }
 
@@ -226,7 +233,7 @@ class SessionWorkRegistryTest {
             value(f.registry.runLocalEffect(ticket) { effects++; PortResult.Value(Unit) })
             assertEquals(1, effects)
             assertTrue(f.cancelled.isEmpty())
-            assertEquals(3, f.control.attempts)
+            assertEquals(4, f.control.attempts)
         }
     }
 
@@ -401,11 +408,11 @@ class SessionWorkRegistryTest {
             val ticket = f.install(binding)
             f.control.beforeFailures[f.control.attempts + if (checkpoint == "barrier") 1 else 2] = FailureReason.STORAGE_FAILURE
             failure(FailureReason.STORAGE_FAILURE, f.registry.cancel(binding, ticket))
-            assertEquals(listOf(ticket.id), f.cancelled.map { it.id })
+            assertEquals(if (checkpoint == "barrier") emptyList() else listOf(ticket.id), f.cancelled.map { it.id })
             failure(FailureReason.STALE_SESSION, f.registry.runLocalEffect(ticket) { fail("Unconfirmed cancellation admitted callback") })
             assertEquals(ticket.id, value(f.registry.snapshot()).entries.single().ticket.id)
             value(f.registry.cancel(binding, ticket))
-            assertEquals(listOf(ticket.id, ticket.id), f.cancelled.map { it.id })
+            assertEquals(if (checkpoint == "barrier") listOf(ticket.id) else listOf(ticket.id, ticket.id), f.cancelled.map { it.id })
             assertTrue(value(f.registry.snapshot()).entries.isEmpty())
         }
     }
@@ -558,17 +565,22 @@ class SessionWorkRegistryTest {
         }
     }
 
-    @Test fun unknownCommittedReservationAndInstalledCheckpointsReconcileWithoutDuplicateInstaller() = runTest {
+    @Test fun unknownCommittedReservationAndInstalledCheckpointsRequireFreshCleanupAcknowledgement() = runTest {
         for (phase in listOf("reservation", "installed")) withFixture { f ->
             val binding = f.bind()
             f.control.afterFailures[f.control.attempts + if (phase == "reservation") 1 else 2] = FailureReason.OUTCOME_UNKNOWN
             var installs = 0
-            val ticket = value(f.registry.install(binding, NativeWorkKind.TIMER, "timer") { installs++; PortResult.Value(Unit) })
-            assertEquals(1, installs)
-            assertEquals(ticket.id, value(f.registry.snapshot()).entries.single().ticket.id)
-            assertEquals(NativeWorkPhase.INSTALLED, value(f.registry.snapshot()).entries.single().phase)
-            assertEquals(3, f.control.attempts)
-            assertTrue(f.cancelled.isEmpty())
+            failure(FailureReason.OUTCOME_UNKNOWN,
+                f.registry.install(binding, NativeWorkKind.TIMER, "timer") { installs++; PortResult.Value(Unit) })
+            assertEquals(if (phase == "reservation") 0 else 1, installs)
+            if (phase == "reservation") {
+                assertEquals(NativeWorkPhase.RESERVED, value(f.registry.snapshot()).entries.single().phase)
+                assertTrue(f.cancelled.isEmpty())
+                value(f.registry.reconcilePending(binding))
+            }
+            assertEquals(1, f.cancelled.size)
+            assertTrue(value(f.registry.snapshot()).entries.isEmpty())
+            assertEquals(5, f.control.attempts)
         }
     }
 
@@ -628,7 +640,7 @@ class SessionWorkRegistryTest {
         }
     }
 
-    @Test fun coroutineCancellationAfterFinalCommitStillCleansExactNativeWorkBeforePropagating() = runTest {
+    @Test fun coroutineCancellationAfterFinalCommitStopsCleanupAndRetainsExactEvidence() = runTest {
         withFixture { f ->
             val binding = f.bind()
             val finalAttempt = f.control.attempts + 2
@@ -638,14 +650,17 @@ class SessionWorkRegistryTest {
                 f.registry.install(binding, NativeWorkKind.TIMER, "timer") { installed = it; PortResult.Value(Unit) }
             }
             val ticket = installed!!
-            assertEquals(listOf(ticket.id), f.cancelled.map { it.id })
+            assertTrue(f.cancelled.isEmpty())
             failure(FailureReason.STALE_SESSION, f.registry.runLocalEffect(ticket) { fail("Cancelled result admitted callback") })
             f.reopen()
+            assertEquals(NativeWorkPhase.INSTALLED, value(f.registry.snapshot()).entries.single().phase)
+            value(f.registry.cancel(value(f.registry.resume(f.lease)), ticket))
+            assertEquals(listOf(ticket.id), f.cancelled.map { it.id })
             assertTrue(value(f.registry.snapshot()).entries.isEmpty())
         }
     }
 
-    @Test fun callerCancellationDuringMalformedFinalReceiptCompensationCannotAbandonNativeCleanup() = runTest {
+    @Test fun callerCancellationDuringCompensationReadStopsBeforeNativeCleanup() = runTest {
         withFixture { f ->
             val binding = f.bind()
             f.control.receipts[f.control.attempts + 2] = { actual -> SessionControlRecord(1, actual.payload) }
@@ -662,14 +677,16 @@ class SessionWorkRegistryTest {
             entered.await()
             install.cancel()
             runCurrent()
-            assertFalse(install.isCompleted, "Compensation remains owned despite caller cancellation")
+            assertTrue(install.isCompleted, "Cancellation must stop before any new native effect")
             release.complete(Unit)
             assertFailsWith<CancellationException> { install.await() }
             f.control.afterRead = { }
             val ticket = installed!!
-            assertEquals(listOf(ticket.id), f.cancelled.map { it.id })
+            assertTrue(f.cancelled.isEmpty())
             failure(FailureReason.STALE_SESSION, f.registry.runLocalEffect(ticket) { fail("Interrupted compensation admitted effect") })
             f.reopen()
+            value(f.registry.cancel(value(f.registry.resume(f.lease)), ticket))
+            assertEquals(listOf(ticket.id), f.cancelled.map { it.id })
             assertTrue(value(f.registry.snapshot()).entries.isEmpty())
         }
     }
@@ -806,6 +823,171 @@ class SessionWorkRegistryTest {
         }
     }
 
+    @Test fun everyFailedEffectBarrierRejectsMatchingVisibleStateWithoutReadbackPromotion() = runTest {
+        for (reason in listOf(FailureReason.OUTCOME_UNKNOWN, FailureReason.STORAGE_FAILURE)) {
+            for (action in listOf("create", "resume", "install", "callback", "cancel", "retire", "empty")) withFixture { f ->
+                val (binding, ticket) = f.prepareAction(action)
+                val priorReads = f.control.reads
+                val priorRevision = f.control.record!!.revision
+                f.control.afterFailures[f.control.attempts + 1] = reason
+                failure(reason, f.action(action, binding, ticket))
+                assertEquals(priorRevision + 1, f.control.record!!.revision, "Fixture exposes the committed bytes")
+                assertEquals(priorReads + 1, f.control.reads, "A failed CAS never requests an authority readback")
+                assertEquals(0, f.actionEffects)
+                assertTrue(f.cancelled.isEmpty())
+            }
+        }
+    }
+
+    @Test fun successfulReceiptStillRequiresExactCurrentReadbackBeforeInstaller() = runTest {
+        val cases = mapOf("missing" to FailureReason.STORAGE_FAILURE, "older" to FailureReason.OUTCOME_UNKNOWN,
+            "payload" to FailureReason.OUTCOME_UNKNOWN, "newer" to FailureReason.CONFLICT, "unreadable" to FailureReason.UNAVAILABLE)
+        for ((kind, reason) in cases) withFixture { f ->
+            val binding = f.bind()
+            f.control.afterCas = {
+                f.control.afterCas = { }
+                val actual = f.control.record!!
+                when (kind) {
+                    "missing" -> f.control.record = null
+                    "older" -> f.control.record = SessionControlRecord(actual.revision - 1, actual.payload)
+                    "payload" -> f.control.record = SessionControlRecord(actual.revision, SessionWorkCodec.encode(SessionWorkState.Idle))
+                    "newer" -> f.control.record = SessionControlRecord(actual.revision + 1, actual.payload)
+                    else -> f.control.readFailure = FailureReason.UNAVAILABLE
+                }
+            }
+            failure(reason, f.registry.install(binding, NativeWorkKind.TIMER, "timer") { fail("Unconfirmed readback installed work") })
+            assertTrue(f.cancelled.isEmpty())
+        }
+    }
+
+    @Test fun jumpedSuccessfulRevisionAndRevisionExhaustionNeverBecomeAuthority() = runTest {
+        withFixture { f ->
+            val binding = f.bind()
+            f.control.receipts[f.control.attempts + 1] = { SessionControlRecord(it.revision + 1, it.payload) }
+            val reads = f.control.reads
+            failure(FailureReason.STORAGE_FAILURE, f.registry.install(binding, NativeWorkKind.TIMER, "timer") { fail("Skipped CAS revision installed") })
+            assertEquals(reads + 1, f.control.reads)
+            assertTrue(f.cancelled.isEmpty())
+        }
+        withFixture { f ->
+            f.control.record = SessionControlRecord(Long.MAX_VALUE, SessionWorkCodec.encode(SessionWorkState.Idle))
+            failure(FailureReason.STORAGE_FAILURE, f.registry.createOrigin(f.lease, Long.MAX_VALUE))
+            assertEquals(0, f.control.attempts)
+        }
+    }
+
+    @Test fun restoredOriginAndInstalledCallbackEachAcknowledgeExactUnchangedPayloadAfresh() = runTest {
+        withFixture { f ->
+            val binding = f.bind()
+            val ticket = f.install(binding)
+            val original = f.control.record!!
+            f.reopen()
+            val resumed = value(f.registry.resume(f.lease))
+            assertEquals(binding.originBinding, resumed.originBinding)
+            assertEquals(original.revision + 1, f.control.record!!.revision)
+            assertContentEquals(original.payload.copyForCodec(), f.control.record!!.payload.copyForCodec())
+            value(f.registry.runLocalEffect(ticket) {
+                assertEquals(original.revision + 2, f.control.record!!.revision)
+                PortResult.Value(Unit)
+            })
+            assertContentEquals(original.payload.copyForCodec(), f.control.record!!.payload.copyForCodec())
+        }
+    }
+
+    @Test fun alreadyCancellingAndRetiringRetriesCannotSkipTheirChangedAcknowledgement() = runTest {
+        for (action in listOf("cancel", "reconcile", "retire")) withFixture { f ->
+            val origin = uuid(100)
+            val task = entry(10, NativeWorkPhase.CANCELLING)
+            f.control.replaceState(SessionWorkState.Origin(ACCOUNT, origin, action == "retire", listOf(task)))
+            val binding = if (action == "retire") null else value(f.registry.resume(f.lease))
+            suspend fun retry(): PortResult<*> = when (action) {
+                "cancel" -> f.registry.cancel(binding!!, task.ticket())
+                "reconcile" -> f.registry.reconcilePending(binding!!)
+                else -> f.registry.retire(ACCOUNT, origin)
+            }
+            f.control.afterFailures[f.control.attempts + 1] = FailureReason.OUTCOME_UNKNOWN
+            failure(FailureReason.OUTCOME_UNKNOWN, retry())
+            val failedRevision = f.control.record!!.revision
+            assertTrue(f.cancelled.isEmpty())
+            f.cancel = {
+                assertEquals(task.id, it.id)
+                assertTrue(f.control.record!!.revision > failedRevision)
+                PortResult.Value(Unit)
+            }
+            value(retry())
+            assertEquals(listOf(task.id), f.cancelled.map { it.id })
+        }
+    }
+
+    @Test fun observedIdleAndAbsentTicketRequireFreshAcknowledgementBeforeTerminalSuccess() = runTest {
+        for (action in listOf("retire", "empty", "cancel")) withFixture { f ->
+            val binding = f.bind()
+            val ticket = if (action == "cancel") f.install(binding) else null
+            if (action == "cancel") value(f.registry.cancel(binding, ticket!!))
+            else if (action == "retire") value(f.registry.retire(ACCOUNT, binding.originBinding))
+            else value(f.registry.retireEmpty(ACCOUNT, binding.originBinding))
+            val cancelled = f.cancelled.size
+            f.control.afterFailures[f.control.attempts + 1] = FailureReason.OUTCOME_UNKNOWN
+            failure(FailureReason.OUTCOME_UNKNOWN, f.action(action, binding, ticket))
+            val failedRevision = f.control.record!!.revision
+            value(f.action(action, binding, ticket))
+            assertEquals(failedRevision + 1, f.control.record!!.revision)
+            assertEquals(cancelled, f.cancelled.size)
+        }
+    }
+
+    @Test fun cancellationAfterCasOrDuringExactReadbackStopsEveryFollowingEffectAndBinding() = runTest {
+        for (point in listOf("cas", "readback")) {
+            for (action in listOf("create", "resume", "install", "callback", "cancel", "retire")) withFixture { f ->
+                val (binding, ticket) = f.prepareAction(action)
+                var committed = false
+                f.control.afterCas = {
+                    committed = true
+                    if (point == "cas") currentCoroutineContext().cancel()
+                }
+                f.control.afterRead = { if (point == "readback" && committed) currentCoroutineContext().cancel() }
+                val operation = async { f.action(action, binding, ticket) }
+                assertFailsWith<CancellationException> { operation.await() }
+                assertTrue(committed)
+                assertEquals(0, f.actionEffects)
+                assertTrue(f.cancelled.isEmpty())
+                f.control.afterCas = { }; f.control.afterRead = { }
+            }
+        }
+    }
+
+    @Test fun finalInstallFailureCannotBypassUnreadableOrUnacknowledgedCompensationBarrier() = runTest {
+        for (problem in listOf("read", "barrier")) withFixture { f ->
+            val binding = f.bind()
+            val finalAttempt = f.control.attempts + 2
+            f.control.afterFailures[finalAttempt] = FailureReason.OUTCOME_UNKNOWN
+            if (problem == "read") f.control.afterCas = { if (it == finalAttempt) f.control.readFailure = FailureReason.UNAVAILABLE }
+            else f.control.afterFailures[finalAttempt + 1] = FailureReason.STORAGE_FAILURE
+            var ticket: NativeWorkTicket? = null
+            failure(if (problem == "read") FailureReason.UNAVAILABLE else FailureReason.STORAGE_FAILURE,
+                f.registry.install(binding, NativeWorkKind.TIMER, "timer") { ticket = it; PortResult.Value(Unit) })
+            assertNotNull(ticket)
+            assertTrue(f.cancelled.isEmpty())
+            f.control.readFailure = null; f.control.afterCas = { }
+            failure(FailureReason.STALE_SESSION, f.registry.runLocalEffect(ticket!!) { fail("Failed compensation admitted effect") })
+            f.reopen()
+            value(f.registry.cancel(value(f.registry.resume(f.lease)), ticket!!))
+            assertEquals(listOf(ticket!!.id), f.cancelled.map { it.id })
+        }
+    }
+
+    @Test fun exactReadbackCannotHandAuthorityToReplacementLease() = runTest {
+        for (action in listOf("create", "resume", "install", "callback", "cancel")) withFixture { f ->
+            val (binding, ticket) = f.prepareAction(action)
+            var committed = false
+            f.control.afterCas = { committed = true }
+            f.control.afterRead = { if (committed) f.boundary.activate(ACCOUNT) }
+            failure(FailureReason.STALE_SESSION, f.action(action, binding, ticket))
+            assertEquals(0, f.actionEffects)
+            assertTrue(f.cancelled.isEmpty())
+        }
+    }
+
     private suspend fun TestScope.withFixture(block: suspend (Fixture) -> Unit) {
         val f = Fixture(StandardTestDispatcher(testScheduler))
         try { f.reopen(); block(f) } finally { if (f.hasRegistry) value(f.registry.close()) }
@@ -820,6 +1002,7 @@ class SessionWorkRegistryTest {
         val cancelled = mutableListOf<NativeWorkTicket>()
         val admitted = mutableListOf<StorageScope>()
         var executionCalls = 0
+        var actionEffects = 0
         var next = 0
         var nextId: () -> String = { uuid(++next) }
         var cancel: suspend (NativeWorkTicket) -> PortResult<Unit> = { PortResult.Value(Unit) }
@@ -838,12 +1021,27 @@ class SessionWorkRegistryTest {
         suspend fun bind() = value(registry.createOrigin(lease, value(registry.snapshot()).revision))
         suspend fun install(binding: SessionWorkBinding, kind: NativeWorkKind = NativeWorkKind.TIMER, logicalId: String = "timer") =
             value(registry.install(binding, kind, logicalId) { PortResult.Value(Unit) })
+        suspend fun prepareAction(action: String): Pair<SessionWorkBinding?, NativeWorkTicket?> {
+            val binding = if (action == "create") null else bind()
+            val ticket = if (action in setOf("callback", "cancel")) install(binding!!) else null
+            return binding to ticket
+        }
+        suspend fun action(name: String, binding: SessionWorkBinding?, ticket: NativeWorkTicket?): PortResult<*> = when (name) {
+            "create" -> registry.createOrigin(lease, control.record!!.revision)
+            "resume" -> registry.resume(lease)
+            "install" -> registry.install(binding!!, NativeWorkKind.TIMER, "new-timer") { actionEffects++; PortResult.Value(Unit) }
+            "callback" -> registry.runLocalEffect(ticket!!) { actionEffects++; PortResult.Value(Unit) }
+            "cancel" -> registry.cancel(binding!!, ticket!!)
+            "retire" -> registry.retire(ACCOUNT, binding!!.originBinding)
+            else -> registry.retireEmpty(ACCOUNT, binding!!.originBinding)
+        }
     }
 
     /** Detached opaque record, strict CAS, and separately controlled before/after-commit failures. */
     private class FakeWorkControl : SessionControlStore {
         var record: SessionControlRecord? = SessionControlRecord(1, SessionWorkCodec.encode(SessionWorkState.Idle))
         var attempts = 0
+        var reads = 0
         var readFailure: FailureReason? = null
         val beforeFailures = mutableMapOf<Int, FailureReason>()
         val afterFailures = mutableMapOf<Int, FailureReason>()
@@ -853,6 +1051,7 @@ class SessionWorkRegistryTest {
         var afterRead: suspend () -> Unit = { }
 
         override suspend fun read(): PortResult<SessionControlRecord?> {
+            reads++
             val result = readFailure?.let { PortResult.Failure(it) } ?: PortResult.Value(record?.detached())
             afterRead()
             return result

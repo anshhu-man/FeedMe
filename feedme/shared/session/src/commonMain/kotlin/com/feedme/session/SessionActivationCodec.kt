@@ -15,7 +15,9 @@ internal class SessionActivationRecord(
     val originBinding: String,
     val dataTarget: StateRetirementTarget,
     val configurationBinding: String,
+    val setupOperationId: String? = null,
 ) {
+    val schemaVersion: Int get() = if (setupOperationId == null) 1 else 2
     override fun toString() = "SessionActivationRecord(<redacted>)"
 }
 
@@ -31,10 +33,11 @@ internal object SessionActivationCodec {
         uuid(value.credentialIncarnation)
         uuid(value.originBinding)
         digest(value.configurationBinding)
+        value.setupOperationId?.let { uuid(it) }
         val target = value.dataTarget.copyForStorage()
         val targetHex = try { hex(target) } finally { target.fill(0) }
         val root = buildJsonObject {
-            put("version", 1)
+            put("version", value.schemaVersion)
             put("scope", buildJsonObject {
                 put("environment", value.scope.environment)
                 put("actorKind", value.scope.actorKind.name)
@@ -44,6 +47,7 @@ internal object SessionActivationCodec {
             put("originBinding", value.originBinding)
             put("dataTarget", targetHex)
             put("configurationBinding", value.configurationBinding)
+            value.setupOperationId?.let { put("setupOperationId", it) }
         }
         val bytes = root.toString().encodeToByteArray(throwOnInvalidSequence = true)
         try {
@@ -54,15 +58,17 @@ internal object SessionActivationCodec {
 
     fun decode(bytes: PrivateBytes): SessionActivationRecord = checked {
         val root = document(bytes)
-        exact(root, setOf("version", "scope", "credentialIncarnation", "originBinding", "dataTarget", "configurationBinding"))
         val version = root["version"] as? JsonPrimitive ?: invalid()
-        if (version.isString || version.content != "1") invalid()
+        if (version.isString || version.content !in setOf("1", "2")) invalid()
+        val keys = setOf("version", "scope", "credentialIncarnation", "originBinding", "dataTarget", "configurationBinding")
+        exact(root, if (version.content == "2") keys + "setupOperationId" else keys)
         SessionActivationRecord(
             decodeScope(root["scope"]),
             uuid(string(root["credentialIncarnation"])),
             uuid(string(root["originBinding"])),
             target(string(root["dataTarget"])),
             digest(string(root["configurationBinding"])),
+            if (version.content == "2") uuid(string(root["setupOperationId"])) else null,
         )
     }
 

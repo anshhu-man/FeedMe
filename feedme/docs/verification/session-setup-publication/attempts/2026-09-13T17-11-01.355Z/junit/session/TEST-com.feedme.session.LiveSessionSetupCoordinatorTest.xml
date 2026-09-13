@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.session.LiveSessionSetupCoordinatorTest" tests="29" skipped="0" failures="0" errors="0" timestamp="2026-09-13T17:11:16.234Z" hostname="ansachars-MacBook-Pro.local" time="0.151">
+  <properties/>
+  <testcase name="processRetirementOrNewLeaseAfterAwaitFencesRemainingSelections[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.018"/>
+  <testcase name="allPlansAndPreflightPrecedeOneRetainedIntentAndThreeOrderedSelections[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.004"/>
+  <testcase name="controlReplacementAfterEachSelectionStopsTheNextEffectAndNeverOverwrites[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.006"/>
+  <testcase name="activeBoundaryOrStaleOwnerRejectsBeforeResourceOrControlAccess[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.001"/>
+  <testcase name="cancellationAtSuccessfulDispatcherReturnDropsLiveRetryAuthority[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.004"/>
+  <testcase name="accountAndGuestRemainExactDistinctVerifiedScopes[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.006"/>
+  <testcase name="everyPendingControlKindAndMalformedOrMissingControlBlocksNewSetup[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.003"/>
+  <testcase name="failuresDuringAnyPlanningOrPreflightOperationLeaveNoJournalOrSelections[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.002"/>
+  <testcase name="malformedPlanRevisionScopeAndOperationIdentityStopBeforeJournal[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.001"/>
+  <testcase name="processRetirementLatchStopsIdleControlBeforeAnySetupEffect[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.002"/>
+  <testcase name="nonemptyOrConsumedDataPreflightRejectsWithoutCredentialSelection[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.002"/>
+  <testcase name="explicitCancelFencesSuspendedLateSelectionAndDoesNotEraseRetainedIntent[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.001"/>
+  <testcase name="credentialSuccessMustMatchExactPlanScopeIncarnationRevisionAndPayload[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.007"/>
+  <testcase name="coroutineCancellationAtEveryPlanningBarrierAndSelectionDropsRetryAuthority[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.008"/>
+  <testcase name="occupiedGuestAccountAndOrdinaryWorkNeverBecomeNewSetupPredecessors[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.002"/>
+  <testcase name="failedJournalCasAfterCommitNeverPromotesReadbackAndRetryRequiresNewAck[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.007"/>
+  <testcase name="failedJournalCasBeforeCommitRetriesOriginalPredecessorWithoutNewPlans[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.005"/>
+  <testcase name="cancellingQueuedRetryCannotInvalidateTheDifferentRunningAttempt[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.006"/>
+  <testcase name="callerCancellationCannotLetNonCancellableLateNativeReplyContinue[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.003"/>
+  <testcase name="closeFencesSuspendedPreparationAndIsPermanentWithoutOwningNativeCleanup[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.002"/>
+  <testcase name="successfulSelectionRemainsPendingAndExactReplayNeverReplansOrClearsIt[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.005"/>
+  <testcase name="changedOriginalPredecessorCannotBeReplacedAfterUncommittedJournalFailure[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.002"/>
+  <testcase name="invalidConfigurationAndCredentialShapeCannotReachPlanningOrWrites[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.001"/>
+  <testcase name="eachSelectionFailureStopsLaterEffectsAndReplaysOnlyOriginalIntent[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.019"/>
+  <testcase name="secondBeginNeverReplacesRetainedAttemptWithNewIdentityOrNewOperation[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.004"/>
+  <testcase name="retryRejectsReplacementJournalAbortRequestAndAdvancedTerminalPredecessor[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.016"/>
+  <testcase name="newCoordinatorCannotRecoverVerifiedCredentialsFromPersistedCompositeIntent[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.003"/>
+  <testcase name="thrownPrivateErrorsAreSanitizedAndNeverSelectLaterResources[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.006"/>
+  <testcase name="falseSuccessReceiptOrMissingExactReadbackCannotAuthorizeAnySelection[jvm]" classname="com.feedme.session.LiveSessionSetupCoordinatorTest" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

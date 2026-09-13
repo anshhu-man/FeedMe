@@ -7,6 +7,8 @@ import com.feedme.core.ports.PortResult
 import com.feedme.core.ports.PrivateBytes
 import com.feedme.core.ports.RecordKey
 import com.feedme.core.ports.SessionBoundary
+import com.feedme.core.ports.SessionControlRecord
+import com.feedme.core.ports.SessionControlStore
 import com.feedme.core.ports.StorageScope
 import com.feedme.core.ports.StoreMutation
 import com.feedme.session.NativeWorkAdmissionPolicy
@@ -237,6 +239,136 @@ class SessionWorkRegistryStorageTest {
         }
     }
 
+    @Test fun committedUnknownOriginAndReservationRequireFreshAcknowledgementsAcrossSqliteReopen() = runTest {
+        withFixture(StandardTestDispatcher(testScheduler)) { fixture ->
+            val boundary = SessionBoundary()
+            val lease = boundary.activate(scope)
+            val work = fixture.openWork(initialize = true)
+            val faults = WorkAcknowledgementFaultStore(work)
+            val cancellations = mutableListOf<Pair<String, NativeWorkKind>>()
+            val first = fixture.registry(faults, boundary, NativeWorkCancellationPort { cancellations += it.identity(); PortResult.Value(Unit) })
+            faults.nextFailure = FailureReason.OUTCOME_UNKNOWN
+            assertEquals(PortResult.Failure(FailureReason.OUTCOME_UNKNOWN), first.createOrigin(lease, registryValue(first.snapshot()).revision))
+            val selectedOrigin = registryValue(first.snapshot()).originBinding!!
+            registryValue(first.close()); registryValue(work.close())
+
+            val reopenedWork = fixture.openWork(initialize = false)
+            val replayFaults = WorkAcknowledgementFaultStore(reopenedWork)
+            val reopened = fixture.registry(replayFaults, boundary, NativeWorkCancellationPort { cancellations += it.identity(); PortResult.Value(Unit) })
+            replayFaults.nextFailure = FailureReason.OUTCOME_UNKNOWN
+            assertEquals(PortResult.Failure(FailureReason.OUTCOME_UNKNOWN), reopened.resume(lease))
+            val failedResume = registryValue(reopenedWork.read())!!
+            val binding = registryValue(reopened.resume(lease))
+            assertEquals(selectedOrigin, binding.originBinding)
+            val resumed = registryValue(reopenedWork.read())!!
+            assertEquals(failedResume.revision + 1, resumed.revision)
+            assertContentEquals(failedResume.payload.copyForCodec(), resumed.payload.copyForCodec())
+            replayFaults.nextFailure = FailureReason.OUTCOME_UNKNOWN
+            assertEquals(PortResult.Failure(FailureReason.OUTCOME_UNKNOWN), reopened.install(binding, NativeWorkKind.TIMER, "uncertain-reservation") {
+                fail("An unknown committed reservation cannot run the installer")
+            })
+            val pending = registryValue(reopened.snapshot()).entries.single()
+            assertEquals(NativeWorkPhase.RESERVED, pending.phase)
+            assertTrue(cancellations.isEmpty())
+            registryValue(reopened.close()); registryValue(reopenedWork.close())
+
+            val finalWork = fixture.openWork(initialize = false)
+            val finalFaults = WorkAcknowledgementFaultStore(finalWork)
+            var failedRevision = 0L
+            val finalRegistry = fixture.registry(finalFaults, boundary, NativeWorkCancellationPort {
+                assertEquals(pending.ticket.identity(), it.identity())
+                assertTrue(registryValue(finalWork.read())!!.revision > failedRevision)
+                cancellations += it.identity(); PortResult.Value(Unit)
+            }, ids = NativeWorkIdSource { fail("Retry must keep the original origin and ticket") })
+            val finalBinding = registryValue(finalRegistry.resume(lease))
+            finalFaults.nextFailure = FailureReason.OUTCOME_UNKNOWN
+            assertEquals(PortResult.Failure(FailureReason.OUTCOME_UNKNOWN), finalRegistry.reconcilePending(finalBinding))
+            failedRevision = registryValue(finalWork.read())!!.revision
+            assertTrue(cancellations.isEmpty())
+            registryValue(finalRegistry.reconcilePending(finalBinding))
+            assertEquals(listOf(pending.ticket.identity()), cancellations)
+            assertTrue(registryValue(finalRegistry.snapshot()).entries.isEmpty())
+        }
+    }
+
+    @Test fun retiringAndIdleReadbackCannotCompleteWithoutFreshChangedSqliteAcknowledgement() = runTest {
+        withFixture(StandardTestDispatcher(testScheduler)) { fixture ->
+            val boundary = SessionBoundary()
+            val lease = boundary.activate(scope)
+            val work = fixture.openWork(initialize = true)
+            val idleBytes = registryValue(work.read())!!.payload.copyForCodec()
+            val faults = WorkAcknowledgementFaultStore(work)
+            val canceled = mutableListOf<Pair<String, NativeWorkKind>>()
+            val first = fixture.registry(faults, boundary, NativeWorkCancellationPort { canceled += it.identity(); PortResult.Value(Unit) })
+            val binding = registryValue(first.createOrigin(lease, registryValue(first.snapshot()).revision))
+            val ticket = registryValue(first.install(binding, NativeWorkKind.WORKER, "retiring-worker") { PortResult.Value(Unit) })
+            boundary.clear()
+            faults.nextFailure = FailureReason.OUTCOME_UNKNOWN
+            assertEquals(PortResult.Failure(FailureReason.OUTCOME_UNKNOWN), first.retire(scope, binding.originBinding))
+            assertTrue(registryValue(first.snapshot()).retiring)
+            assertTrue(canceled.isEmpty())
+            registryValue(first.close()); registryValue(work.close())
+
+            val reopenedWork = fixture.openWork(initialize = false)
+            val replayFaults = WorkAcknowledgementFaultStore(reopenedWork)
+            var failedBarrierRevision = 0L
+            val reopened = fixture.registry(replayFaults, boundary, NativeWorkCancellationPort {
+                assertEquals(ticket.identity(), it.identity())
+                assertTrue(registryValue(reopenedWork.read())!!.revision > failedBarrierRevision)
+                canceled += it.identity(); PortResult.Value(Unit)
+            }, admission = NativeWorkAdmissionPolicy { fail("Retirement must not acquire a lease") })
+            replayFaults.nextFailure = FailureReason.STORAGE_FAILURE
+            assertEquals(PortResult.Failure(FailureReason.STORAGE_FAILURE), reopened.retire(scope, binding.originBinding))
+            failedBarrierRevision = registryValue(reopenedWork.read())!!.revision
+            assertTrue(canceled.isEmpty())
+            replayFaults.failMatching = { payload ->
+                if (payload.copyForCodec().contentEquals(idleBytes)) FailureReason.OUTCOME_UNKNOWN else null
+            }
+            assertEquals(PortResult.Failure(FailureReason.OUTCOME_UNKNOWN), reopened.retire(scope, binding.originBinding))
+            assertEquals(listOf(ticket.identity()), canceled)
+            assertNull(registryValue(reopened.snapshot()).originBinding)
+            val failedIdle = registryValue(reopenedWork.read())!!
+            replayFaults.nextFailure = FailureReason.OUTCOME_UNKNOWN
+            assertEquals(PortResult.Failure(FailureReason.OUTCOME_UNKNOWN), reopened.retire(scope, binding.originBinding))
+            assertEquals(failedIdle.revision + 1, registryValue(reopenedWork.read())!!.revision)
+            registryValue(reopened.retire(scope, binding.originBinding))
+            assertEquals(failedIdle.revision + 2, registryValue(reopenedWork.read())!!.revision)
+            assertEquals(listOf(ticket.identity()), canceled)
+            assertNull(boundary.current())
+        }
+    }
+
+    @Test fun readableInstalledWorkNeverExecutesUntilItsExactPayloadReceivesFreshSqliteAcknowledgement() = runTest {
+        withFixture(StandardTestDispatcher(testScheduler)) { fixture ->
+            val boundary = SessionBoundary()
+            val lease = boundary.activate(scope)
+            val work = fixture.openWork(initialize = true)
+            val first = fixture.registry(work, boundary, NativeWorkCancellationPort { fail("Callback must not invent cancellation") })
+            val binding = registryValue(first.createOrigin(lease, registryValue(first.snapshot()).revision))
+            val ticket = registryValue(first.install(binding, NativeWorkKind.TIMER, "acknowledged-callback") { PortResult.Value(Unit) })
+            registryValue(first.close()); registryValue(work.close())
+            val reopenedWork = fixture.openWork(initialize = false)
+            val faults = WorkAcknowledgementFaultStore(reopenedWork)
+            val reopened = fixture.registry(faults, boundary, NativeWorkCancellationPort { fail("Callback must not cancel native work") })
+            val original = registryValue(reopenedWork.read())!!
+            var effects = 0
+            for (reason in listOf(FailureReason.OUTCOME_UNKNOWN, FailureReason.STORAGE_FAILURE)) {
+                faults.nextFailure = reason
+                assertEquals(PortResult.Failure(reason), reopened.runLocalEffect(ticket) { effects++; PortResult.Value(Unit) })
+                assertEquals(0, effects)
+                assertContentEquals(original.payload.copyForCodec(), registryValue(reopenedWork.read())!!.payload.copyForCodec())
+            }
+            registryValue(reopened.runLocalEffect(ticket) {
+                effects++
+                assertEquals(original.revision + 3, faults.lastSuccessfulRevision)
+                PortResult.Value(Unit)
+            })
+            assertEquals(1, effects)
+            fixture.assertNoPlaintext("acknowledged-callback")
+            fixture.assertNoPlaintext(ticket.id)
+        }
+    }
+
     private suspend fun withFixture(dispatcher: CoroutineDispatcher, block: suspend (RegistrySqliteFixture) -> Unit) {
         val fixture = RegistrySqliteFixture(dispatcher)
         try { block(fixture) } finally { fixture.close() }
@@ -263,7 +395,7 @@ private class RegistrySqliteFixture(private val dispatcher: CoroutineDispatcher)
     suspend fun openWork(initialize: Boolean) = registryValue(EncryptedSessionWorkStore.open(openDatabase(), initialize))
 
     suspend fun registry(
-        store: EncryptedSessionWorkStore,
+        store: SessionControlStore,
         boundary: SessionBoundary,
         cancellation: NativeWorkCancellationPort,
         ids: NativeWorkIdSource = NativeWorkIdSource { UUID.randomUUID().toString() },
@@ -292,6 +424,25 @@ private class RegistrySqliteFixture(private val dispatcher: CoroutineDispatcher)
         } finally {
             Files.walk(directory).use { paths -> paths.sorted(Comparator.reverseOrder()).forEach { Files.deleteIfExists(it) } }
         }
+    }
+}
+
+/** Real encrypted SQLite commits followed by lost/failed port receipts. This is not a native
+ * VFS/fsync-failure simulation; separate instrumented coverage owns that stronger evidence. */
+private class WorkAcknowledgementFaultStore(private val delegate: SessionControlStore) : SessionControlStore {
+    var nextFailure: FailureReason? = null
+    var failMatching: ((PrivateBytes) -> FailureReason?)? = null
+    var lastSuccessfulRevision = 0L
+    override suspend fun read() = delegate.read()
+    override suspend fun compareAndSet(expectedRevision: Long?, payload: PrivateBytes): PortResult<SessionControlRecord> {
+        val result = delegate.compareAndSet(expectedRevision, payload)
+        if (result is PortResult.Value) {
+            val failure = nextFailure.also { nextFailure = null }
+                ?: failMatching?.invoke(payload)?.also { failMatching = null }
+            if (failure != null) return PortResult.Failure(failure)
+            lastSuccessfulRevision = result.value.revision
+        }
+        return result
     }
 }
 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.storage.EncryptedRetirementTest" tests="19" skipped="0" failures="0" errors="0" timestamp="2026-09-13T14:52:46.029Z" hostname="ansachars-MacBook-Pro.local" time="1.146">
+  <properties/>
+  <testcase name="sharedActiveOwnerKeyReferenceBlocksDestructionEvenForAuthenticTarget[jvm]" classname="com.feedme.storage.EncryptedRetirementTest" time="0.045"/>
+  <testcase name="serializedTargetOwnsItsBytesAndRedactsOpaqueIdentityMaterial[jvm]" classname="com.feedme.storage.EncryptedRetirementTest" time="0.023"/>
+  <testcase name="captureMissingOwnerDoesNotActivateWriteOrCreateKey[jvm]" classname="com.feedme.storage.EncryptedRetirementTest" time="0.021"/>
+  <testcase name="unavailableOwnerKeyCannotBeCapturedResumedOrSilentlyHealed[jvm]" classname="com.feedme.storage.EncryptedRetirementTest" time="0.058"/>
+  <testcase name="cancellationBeforeOwnerDispatcherStartsCannotDeleteKeyOrChangeSql[jvm]" classname="com.feedme.storage.EncryptedRetirementTest" time="0.042"/>
+  <testcase name="failedNativeKeyDeletionIsNotReportedAsRetirementSuccess[jvm]" classname="com.feedme.storage.EncryptedRetirementTest" time="0.067"/>
+  <testcase name="cancellationAfterKeyDeletionNeverRestoresReadableOldIncarnationAfterReopen[jvm]" classname="com.feedme.storage.EncryptedRetirementTest" time="0.062"/>
+  <testcase name="keyDeletedBeforeSqlCommitFailureRemainsUnreadableAfterReopenAndExactTargetFinishesCleanup[jvm]" classname="com.feedme.storage.EncryptedRetirementTest" time="0.058"/>
+  <testcase name="committedSqlResponseLossIsUnknownButExactRecoveryIsIdempotentAfterReopen[jvm]" classname="com.feedme.storage.EncryptedRetirementTest" time="0.052"/>
+  <testcase name="scopedEraseSharesKeyFirstFailureAndExactRecoveryProtocol[jvm]" classname="com.feedme.storage.EncryptedRetirementTest" time="0.06"/>
+  <testcase name="validatingExactAlreadyRetiredTargetIsReadOnlyAndDoesNotRepeatKeyDeletion[jvm]" classname="com.feedme.storage.EncryptedRetirementTest" time="0.043"/>
+  <testcase name="captureActiveOwnerIsReadOnlyDeterministicAndDoesNotInvalidateExistingStore[jvm]" classname="com.feedme.storage.EncryptedRetirementTest" time="0.042"/>
+  <testcase name="targetAuthenticatedByAnotherVaultCannotRetireMatchingScope[jvm]" classname="com.feedme.storage.EncryptedRetirementTest" time="0.075"/>
+  <testcase name="oldTargetCannotDeleteNewlyActivatedIncarnationOrItsPrivateState[jvm]" classname="com.feedme.storage.EncryptedRetirementTest" time="0.148"/>
+  <testcase name="repeatedExactRetiredTargetDoesNotAdvanceGenerationOrCreateAnOwner[jvm]" classname="com.feedme.storage.EncryptedRetirementTest" time="0.04"/>
+  <testcase name="exactRetirementDeletesKeyBeforeOwnerSqlMutationAndFencesRetainedHandles[jvm]" classname="com.feedme.storage.EncryptedRetirementTest" time="0.056"/>
+  <testcase name="validatingAuthenticTargetAgainstDifferentScopeHasNoRetirementSideEffects[jvm]" classname="com.feedme.storage.EncryptedRetirementTest" time="0.082"/>
+  <testcase name="swappingAuthenticatedOwnerAndKeyFieldsCannotDeleteForeignOwner[jvm]" classname="com.feedme.storage.EncryptedRetirementTest" time="0.126"/>
+  <testcase name="malformedAndUnauthenticatedTargetCannotDeleteAnyOwnerKeyOrRow[jvm]" classname="com.feedme.storage.EncryptedRetirementTest" time="0.044"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

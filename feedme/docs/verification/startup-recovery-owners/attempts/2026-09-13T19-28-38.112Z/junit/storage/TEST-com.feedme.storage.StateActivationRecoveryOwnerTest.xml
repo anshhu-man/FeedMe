@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.storage.StateActivationRecoveryOwnerTest" tests="22" skipped="0" failures="0" errors="0" timestamp="2026-09-13T19:30:08.209Z" hostname="ansachars-MacBook-Pro.local" time="1.293">
+  <properties/>
+  <testcase name="otherDomainRowsTombstonesAndCorruptBindingNeverBecomeGeneralPrivateDataAccess[jvm]" classname="com.feedme.storage.StateActivationRecoveryOwnerTest" time="0.177"/>
+  <testcase name="beforeOpenMethodsCannotReadDecryptAbortOrLazilyInitializeTheTransferredConnection[jvm]" classname="com.feedme.storage.StateActivationRecoveryOwnerTest" time="0.041"/>
+  <testcase name="closeBeforeOpenReleasesTransferredConnectionWithoutInitializingItAndIsIdempotent[jvm]" classname="com.feedme.storage.StateActivationRecoveryOwnerTest" time="0.015"/>
+  <testcase name="cancellationInsideInitializationCannotPublishReadyAfterNoncooperativeSqlReturns[jvm]" classname="com.feedme.storage.StateActivationRecoveryOwnerTest" time="0.045"/>
+  <testcase name="allAuthenticatedStagesCanOpenWithoutSelectingConsumingOrDeletingAnything[jvm]" classname="com.feedme.storage.StateActivationRecoveryOwnerTest" time="0.187"/>
+  <testcase name="ownerObservationsErrorsAndClosureDoNotExposePlanScopeKeyOrBindingMaterial[jvm]" classname="com.feedme.storage.StateActivationRecoveryOwnerTest" time="0.041"/>
+  <testcase name="cancelledCloseStillReleasesConnectionAndCallbackWithoutReactivatingTheOwner[jvm]" classname="com.feedme.storage.StateActivationRecoveryOwnerTest" time="0.021"/>
+  <testcase name="failedInitializationAndFailedConnectionCloseRetainTheSameOwnerUntilExplicitRetry[jvm]" classname="com.feedme.storage.StateActivationRecoveryOwnerTest" time="0.018"/>
+  <testcase name="failedAbortBeforeOrAfterRealCommitDoesNotDeleteAndSameReadyOwnerCanRetryOriginalPlan[jvm]" classname="com.feedme.storage.StateActivationRecoveryOwnerTest" time="0.128"/>
+  <testcase name="readyMetadataIsStableReadOnlyAndNeverRunsQueuedGarbageCollectionOrCipherProbes[jvm]" classname="com.feedme.storage.StateActivationRecoveryOwnerTest" time="0.033"/>
+  <testcase name="failedOwnershipReleaseRetriesOnlyTheCallbackAfterConnectionCloseAcknowledgement[jvm]" classname="com.feedme.storage.StateActivationRecoveryOwnerTest" time="0.015"/>
+  <testcase name="repeatedAndConcurrentOpenNeverRerunInitializationOrInvalidateTheFirstReadyOwner[jvm]" classname="com.feedme.storage.StateActivationRecoveryOwnerTest" time="0.03"/>
+  <testcase name="missingLegacyFutureAndForeignSchemaAreNotCreatedMigratedOrRepairedDuringOpen[jvm]" classname="com.feedme.storage.StateActivationRecoveryOwnerTest" time="0.082"/>
+  <testcase name="closingReadyOwnerPermanentlyFencesEveryCapabilityWithoutFurtherSqlOrVaultIo[jvm]" classname="com.feedme.storage.StateActivationRecoveryOwnerTest" time="0.038"/>
+  <testcase name="readyBindingReturnsOnlyTheExactReservedRecordAndCurrentRetirementTarget[jvm]" classname="com.feedme.storage.StateActivationRecoveryOwnerTest" time="0.039"/>
+  <testcase name="constructionTransfersOwnershipWithoutSqlVaultOrCallbackIoAndPinsDetachedPlan[jvm]" classname="com.feedme.storage.StateActivationRecoveryOwnerTest" time="0.014"/>
+  <testcase name="selectedEmptyBindingHasExactTargetButNoInventedRecordAndPreparedBindingDoesNotActivate[jvm]" classname="com.feedme.storage.StateActivationRecoveryOwnerTest" time="0.049"/>
+  <testcase name="wrongPlanMacScopeAndInstallationFailWithoutMutationAndRemainExplicitlyClosable[jvm]" classname="com.feedme.storage.StateActivationRecoveryOwnerTest" time="0.076"/>
+  <testcase name="readyAbortDelegatesStrictEmptyOrExactBindingOnlyAndReacknowledgesEveryReplay[jvm]" classname="com.feedme.storage.StateActivationRecoveryOwnerTest" time="0.111"/>
+  <testcase name="failedInitializationPermanentlyBecomesCloseOnlyEvenWhenTheSqlFaultIsRemoved[jvm]" classname="com.feedme.storage.StateActivationRecoveryOwnerTest" time="0.028"/>
+  <testcase name="cancellationBeforeAdmissionOrDuringReadyHandoffRetainsCloseOnlyOwnershipWithoutAutoClose[jvm]" classname="com.feedme.storage.StateActivationRecoveryOwnerTest" time="0.074"/>
+  <testcase name="changedOwnerAfterReadyNeverLetsThePinnedOldPlanReadOrDeleteTheNewIncarnation[jvm]" classname="com.feedme.storage.StateActivationRecoveryOwnerTest" time="0.03"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

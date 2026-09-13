@@ -1,0 +1,57 @@
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidStateBindingAbortSyncFailureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+com.feedme.storage.AndroidStateBindingAbortSyncFailureTest:
+INSTRUMENTATION_STATUS: test=databaseSyncFailureCannotDeleteKeyDuringInitialOrReplayedBindingAbort
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidStateBindingAbortSyncFailureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=databaseSyncFailureCannotDeleteKeyDuringInitialOrReplayedBindingAbort
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidStateBindingAbortSyncFailureTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=directorySyncFailureCannotPromoteVisibleBindingRemovalToKeyDeletion
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidStateBindingAbortSyncFailureTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=directorySyncFailureCannotPromoteVisibleBindingRemovalToKeyDeletion
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidStateBindingAbortSyncFailureTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=journalSyncFailureCannotDeleteKeyDuringInitialOrReplayedBindingAbort
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidStateBindingAbortSyncFailureTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=journalSyncFailureCannotDeleteKeyDuringInitialOrReplayedBindingAbort
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: data_binding_abort_sync_initial-database=sqlite=1034;failures=1;keyDeletes=0;vfs=1;delegatedUnlink=0
+INSTRUMENTATION_RESULT: data_binding_abort_sync_initial-directory=sqlite=1290;failures=1;keyDeletes=0;vfs=1;delegatedUnlink=1
+INSTRUMENTATION_RESULT: data_binding_abort_sync_initial-journal=sqlite=1034;failures=1;keyDeletes=0;vfs=1;delegatedUnlink=0
+INSTRUMENTATION_RESULT: data_binding_abort_sync_replay-database=sqlite=1034;failures=1;keyDeletes=0;vfs=1;delegatedUnlink=0
+INSTRUMENTATION_RESULT: data_binding_abort_sync_replay-directory=sqlite=1290;failures=1;keyDeletes=0;vfs=1;delegatedUnlink=1
+INSTRUMENTATION_RESULT: data_binding_abort_sync_replay-journal=sqlite=1034;failures=1;keyDeletes=0;vfs=1;delegatedUnlink=0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 0.325
+
+OK (3 tests)
+
+
+INSTRUMENTATION_CODE: -1

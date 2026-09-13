@@ -37,6 +37,23 @@ class SessionControlStoreTest {
     private val controlScope = StorageScope("feedme-session-control-v1", ActorKind.DEMO, "install-control")
     private val controlKey = RecordKey("session-control", "retirement-ledger")
 
+    @Test fun identicalPayloadStillMakesChangedCasRevisionAndSurvivesReopen() = runTest {
+        withFixture(StandardTestDispatcher(testScheduler)) { fixture ->
+            val control = controlValue(EncryptedSessionControlStore.open(fixture.open(), allowInitialize = true))
+            val original = assertNotNull(controlValue(control.read()))
+            val first = controlValue(control.compareAndSet(original.revision, original.payload))
+            assertEquals(original.revision + 1, first.revision)
+            val second = controlValue(control.compareAndSet(first.revision, first.payload))
+            assertEquals(first.revision + 1, second.revision)
+            assertContentEquals(original.payload.copyForCodec(), second.payload.copyForCodec())
+            controlValue(control.close())
+            val reopened = controlValue(EncryptedSessionControlStore.open(fixture.open(), allowInitialize = false))
+            val durable = assertNotNull(controlValue(reopened.read()))
+            assertEquals(second.revision, durable.revision)
+            assertContentEquals(original.payload.copyForCodec(), durable.payload.copyForCodec())
+        }
+    }
+
     @Test fun initializesOnlyNewStoreAndReopensExactEncryptedPayloadAndRevision() = runTest {
         withFixture(StandardTestDispatcher(testScheduler)) { fixture ->
             val control = controlValue(EncryptedSessionControlStore.open(fixture.open(), allowInitialize = true))

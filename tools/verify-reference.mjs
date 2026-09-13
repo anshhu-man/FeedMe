@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
+import {sanitizeDiagnostics} from './sanitize-diagnostics.mjs';
 
 // Repository/reference integrity only; never a native build or release certification.
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -59,6 +60,9 @@ for (const filename of files) {
     const text = bytes.toString('utf8');
     assert(!/\/Users\/(?!LOCAL_USER(?:\/|\b))[\p{L}\p{N}._-]+/u.test(text), `Personal home path: ${relative}`);
     assert(!/-----BEGIN (?:[A-Z ]+ )?PRIVATE KEY-----|\bgh[pousr]_[A-Za-z0-9]{30,}\b|\bgithub_pat_[A-Za-z0-9_]{40,}\b|\bAKIA[A-Z0-9]{16}\b|\bAIza[0-9A-Za-z_-]{30,}\b/.test(text), `Potential credential: ${relative}`);
+    if (relative.startsWith('feedme/docs/verification/') && relative.endsWith('.log')) {
+      assert(sanitizeDiagnostics(relative, text).unrelatedInstrumentationRedactions === 0, `Unrelated app inventory: ${relative}`);
+    }
     // Check the new human index, not historical reports referring to excluded build outputs.
     if (relative === 'README.md' || (relative.startsWith('Reference/') && relative.endsWith('.md'))) {
       for (const match of text.matchAll(/\]\(([^)]+)\)|\bsrc="([^"]+)"/g)) {

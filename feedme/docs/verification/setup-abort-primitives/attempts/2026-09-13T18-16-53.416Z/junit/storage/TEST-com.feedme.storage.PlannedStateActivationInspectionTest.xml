@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.storage.PlannedStateActivationInspectionTest" tests="24" skipped="0" failures="0" errors="0" timestamp="2026-09-13T18:17:26.189Z" hostname="ansachars-MacBook-Pro.local" time="1.345">
+  <properties/>
+  <testcase name="selectedMissingKeyChangesSameStatusFingerprintWithoutRegeneratingIt[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.043"/>
+  <testcase name="competingOwnerAndGarbageReferencesAreRejectedWithoutDeletingAnyKey[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.28"/>
+  <testcase name="sameEmptyPredecessorDoesNotGiveDistinctPlansTheSameFingerprint[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.02"/>
+  <testcase name="metadataFingerprintIsStableReadOnlyAcrossRepeatedInspectionAndReopen[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.041"/>
+  <testcase name="competingAndNewerOwnerSelectionsFenceTheOldExactPlan[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.085"/>
+  <testcase name="preparedInspectionIsReadOnlyAndDoesNotCollectUnrelatedGarbage[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.02"/>
+  <testcase name="alreadyAbortedReceiptReacknowledgementChangesFingerprintDespiteSameStatus[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.07"/>
+  <testcase name="exactScopeAndNativeMacAreRequiredBeforeAnyDatabaseObservation[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.017"/>
+  <testcase name="fingerprintInspectionHonorsClosedAndQueuedCancellationGuards[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.017"/>
+  <testcase name="newerMalformedAndConflictingMetadataCannotProduceAFingerprint[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.119"/>
+  <testcase name="selectedEmptyRemainsMetadataOnlyWhenItsKeyIsMissingOrUnusable[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.09"/>
+  <testcase name="tombstonesAlonePreventAnEmptySelectionObservation[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.03"/>
+  <testcase name="fingerprintRequiresExactScopePlanMacAndIssuingInstallBeforeSql[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.028"/>
+  <testcase name="ordinaryRetirementIsNotReinterpretedAsPlanAbortCompletion[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.037"/>
+  <testcase name="malformedOwnerOrStrayPredecessorRowsNeverBecomePrepared[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.104"/>
+  <testcase name="foreignInstallCannotInterpretAnOtherwiseValidPlan[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.037"/>
+  <testcase name="liveUnknownAndCorruptRowsCountAsNonemptyWithoutPayloadDecryption[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.064"/>
+  <testcase name="fingerprintObservationIsBoundedDetachedRedactedAndNotAuthority[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.0"/>
+  <testcase name="closedAndCancelledQueuedInspectionsPerformNoVaultOrSqlCall[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.018"/>
+  <testcase name="recordPayloadRevisionSchemaAndTombstonesAreNotFingerprintUsabilityEvidence[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.036"/>
+  <testcase name="partialCandidatePresenceIsObservedWithoutAllocatingSelectingOrTestingItsCipher[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.037"/>
+  <testcase name="observationIsRedactedDetachedAndReturnsNeitherStoreNorRecoveryHandle[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.015"/>
+  <testcase name="exactAbortingAndAbortedReceiptsAreObservedWithoutRetryingCleanupOrAcknowledgement[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.119"/>
+  <testcase name="partialKeyPresenceChangesFingerprintButCipherUsabilityDoesNot[jvm]" classname="com.feedme.storage.PlannedStateActivationInspectionTest" time="0.018"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

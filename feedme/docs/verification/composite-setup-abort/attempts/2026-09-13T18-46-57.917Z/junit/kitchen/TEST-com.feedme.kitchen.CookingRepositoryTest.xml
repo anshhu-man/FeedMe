@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.kitchen.CookingRepositoryTest" tests="26" skipped="0" failures="0" errors="0" timestamp="2026-09-13T18:47:08.102Z" hostname="ansachars-MacBook-Pro.local" time="2.487">
+  <properties/>
+  <testcase name="corruptedExactPlanOrActionBytesFailClosedWithoutDispatch[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.197"/>
+  <testcase name="differentNewerConflictCannotBeOverwrittenByAnOlderSuccessfulReceipt[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.117"/>
+  <testcase name="nestedRecipeLifecycleRequiresItsOwnIncreasingVersionAndRecallStillWins[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.058"/>
+  <testcase name="failedEditCasLeavesNoProgressActionOrUsedCommandTombstone[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.051"/>
+  <testcase name="twoOfflineEditsDispatchAndApplySequentiallyUsingOnlyReceivedEtags[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.175"/>
+  <testcase name="changedOriginAndTamperedRequestsCannotPassTheRealExecutionGate[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.086"/>
+  <testcase name="preconditionProblemDoesNotAcknowledgeOrRewriteTheOfflinePatch[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.128"/>
+  <testcase name="failedReceiptCasPreservesBothRecoverableReceiptAndLocalDomainIntent[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.125"/>
+  <testcase name="refreshWithPendingEditsRetainsLocalAndRemoteConflictAndRejectsOlderCandidate[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.042"/>
+  <testcase name="existingPinCannotChangeItsMaterializedRecipeOrPlanIdentity[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.029"/>
+  <testcase name="downloadBindsOwnedSessionToItsExactMaterializedPlan[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.049"/>
+  <testcase name="receivedPlanRecallIsStickyAndPreventsAnAlreadyMaterializedPatchFromSending[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.096"/>
+  <testcase name="successfulButNonmatchingReceiptPreservesBothStatesForExplicitConflictChoice[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.096"/>
+  <testcase name="downloadedConflictMatchingTheExactHeadReceiptCanBeAtomicallyAcknowledged[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.069"/>
+  <testcase name="completionPersistsAnExplicitMakeAgainChoiceWithoutFabricatingASave[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.156"/>
+  <testcase name="wrongReturnedIdsAndCrossVersionSnapshotFailBeforeAnyBundleCommit[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.056"/>
+  <testcase name="incompletePersonalAndRetiredPinsHaveDistinctReadAndEditAvailability[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.242"/>
+  <testcase name="absentEtagAllowsPrivateReadingAndLocalIntentButNeverGuessedPatchPreconditions[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.071"/>
+  <testcase name="recallCannotBeHiddenByAChangedImmutablePlanOrMismatchedEtag[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.078"/>
+  <testcase name="localEditsAndCanonicalPendingBodiesSurviveRepositoryAndQueueRecreation[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.13"/>
+  <testcase name="appliedCommandIdsCannotBeReusedForANewLocalIntent[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.077"/>
+  <testcase name="timerDeadlineRequirementsRejectInvalidEditsWhileMultipleStepTimersPersist[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.093"/>
+  <testcase name="accountRetirementAcrossReadAwaitPreventsCachingOrExposure[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.029"/>
+  <testcase name="unknownStepDuplicateCompletionAndTimerReferencesAreRejected[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.045"/>
+  <testcase name="terminalRemoteSessionCannotBeReopenedByANewerHydration[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.065"/>
+  <testcase name="mutationRecallObserverInvalidatesBothCookAndSavedPinButOrdinaryGoneDoesNot[jvm]" classname="com.feedme.kitchen.CookingRepositoryTest" time="0.118"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

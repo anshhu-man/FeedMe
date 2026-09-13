@@ -1,0 +1,3544 @@
+{
+  "startedAt": "2026-09-13T16:13:14.525Z",
+  "passed": true,
+  "scope": "M1.05d.5b.2b.3.3 bounded structural codec and control gates only: one canonical, bounded composite intent retains exact credential CREATE, private-data activation and work-origin plan bytes, operation UUID, owner scope and the existing configuration-binding digest. Decoding checks nested structure and the visible work-scope relationship, not native MACs or the opaque credential/data scope relationship. Persisted pending setup blocks ordinary runtime restoration, activation, retirement and work effects; inspection is not confirmation or authentication. The actual native journal suite verifies encrypted control retention, reopen and conservative gates with synthetic test fixtures. No live composite coordinator, setup sealing, composite abort, verified provider, active session lease, credential use or OS work is granted by this slice. All prior work-origin component, exact-process and actual-engine VFS regressions remain included; injected SQLite VFS errors are not OS errno failures or physical power loss, and direct owned-connection fixtures do not prove public hot-journal recovery. Trusted typed configuration/digest production, cross-store native preflight and ordered setup orchestration remain separate gates. Provider/bootstrap/UI, first-factory repair, hard-kill/power-loss, physical devices, API26 recovery, iOS and release acceptance remain open. Fresh shared/server/isolated PostgreSQL/Node regressions, five Android library builds/lint, and test-only four-ABI JNI provenance are included. The historical demo APK and public GitHub snapshot are unchanged; no new deployment or publication.",
+  "sourceManifestSha256": "b6cb6a06a06225453b60ee43d20931eed2a4664c68d4d6e3d2c623677adc5080",
+  "sourceFiles": [
+    {
+      "path": "../outputs/biteclub_blueprint/architecture/04_API_Contract.json",
+      "bytes": 801361,
+      "sha256": "f0a5f20c4a84822813137c3e6b1ef31ec22afd1d7ee384f7f29b5df09e10aba0"
+    },
+    {
+      "path": "../outputs/biteclub_blueprint/registry/screen_registry.json",
+      "bytes": 1210445,
+      "sha256": "cd3e517f9e4efd2a2c55dec6a7bfdcc39ec06d03d1617841d8bfa48e90997a70"
+    },
+    {
+      "path": "build.gradle.kts",
+      "bytes": 579,
+      "sha256": "69d3edb5744a165479078e128dcb7f45be6e9198edae951163e776348db3b3cc"
+    },
+    {
+      "path": "docs/verification/canonical-validation/format-corpus.json",
+      "bytes": 42689,
+      "sha256": "53b5cdc8d11dfc37bdfb9a8c6d08231fb20ab879d13cd7a0474badbdff200397"
+    },
+    {
+      "path": "gradle/libs.versions.toml",
+      "bytes": 2875,
+      "sha256": "596e75bca6cb75f2eafb49754d55ff776d5bf9704970462d5f7c467b9b3db5a7"
+    },
+    {
+      "path": "gradle/wrapper/gradle-wrapper.jar",
+      "bytes": 43764,
+      "sha256": "7d3a4ac4de1c32b59bc6a4eb8ecb8e612ccd0cf1ae1e99f66902da64df296172"
+    },
+    {
+      "path": "gradle/wrapper/gradle-wrapper.properties",
+      "bytes": 338,
+      "sha256": "779ae2c24776dfbc873f2dc0669aa990d8990cca9e0519056422fa50c5991566"
+    },
+    {
+      "path": "scripts/android-backup-policy.test.mjs",
+      "bytes": 2908,
+      "sha256": "761b05b79d9df1ef4d17d5f3bd19bfe67357fb386b09a0637dac1161ed54a636"
+    },
+    {
+      "path": "scripts/android-credential-smoke.mjs",
+      "bytes": 9996,
+      "sha256": "2fdab3458a1202bbfa2ee2da0894c024e89873f4a5c6dc2b563f94a2435bac09"
+    },
+    {
+      "path": "scripts/android-smoke.mjs",
+      "bytes": 6321,
+      "sha256": "a3e4b3e2cd43d10a40240611e43ae1b3786d8ee9108d2a86bf3c9e5ba6cd5cfb"
+    },
+    {
+      "path": "scripts/android-storage-smoke.mjs",
+      "bytes": 17301,
+      "sha256": "a34dde31659b2bddbf3a03ece4b547f55faad19f80ebe052c61c564421ee0141"
+    },
+    {
+      "path": "scripts/contract-generator-spike-probe.kt",
+      "bytes": 5399,
+      "sha256": "6030bfc817118751780a15c599c163f8f2ec1b4ddfc8e60d732279be15497e50"
+    },
+    {
+      "path": "scripts/contract-generator-spike.mjs",
+      "bytes": 8090,
+      "sha256": "23312c666e4e48e677b85b5c928b7590957fd7851771f989246028480a731068"
+    },
+    {
+      "path": "scripts/contract-source.lock.json",
+      "bytes": 255,
+      "sha256": "ec8fa21255f47eae1763075b596e922e904053971a7803325abdf6b06922dc9e"
+    },
+    {
+      "path": "scripts/generate-contract-artifacts.mjs",
+      "bytes": 14680,
+      "sha256": "ea39a40da5dbe0e511ddf90c2e267eec593ed969093f98a81a7f51a88c91c2ab"
+    },
+    {
+      "path": "scripts/generate-contract-artifacts.test.mjs",
+      "bytes": 24992,
+      "sha256": "59190d50b8b5c0393e738b946864f8a5895faf36c343ec74b7e33b3c8193e09f"
+    },
+    {
+      "path": "scripts/jvm-schema-validator-spike.mjs",
+      "bytes": 8700,
+      "sha256": "d68df61e623ac70ee3b5a5c6cb845b85a8746c919265224ad67c12417a64983d"
+    },
+    {
+      "path": "scripts/schema-validator-spike.mjs",
+      "bytes": 10896,
+      "sha256": "a18558792d5093e2b689ca62ccfa501d90e8d9fefa3973097acda2db37b64e35"
+    },
+    {
+      "path": "scripts/session-ledger-evidence.test.mjs",
+      "bytes": 4155,
+      "sha256": "4cf7e5116dfb2240f551d7195b30e30723d2273f9deb9785858d672ae31fb487"
+    },
+    {
+      "path": "scripts/verify-client-storage.mjs",
+      "bytes": 8377,
+      "sha256": "ed6f648ceb598a224a31bb113c85ee237b02dac4be1f02812a1cdf8da762eeca"
+    },
+    {
+      "path": "scripts/verify-command-recovery.mjs",
+      "bytes": 8387,
+      "sha256": "0e165fb1b504b221b76098ca444b065a7870a2b1ccafb9bbe1590eb47aadc60e"
+    },
+    {
+      "path": "scripts/verify-composite-setup-journal.mjs",
+      "bytes": 36353,
+      "sha256": "944fce9979510d02f0e3d26a29763b9440deaba0c67fe20096e23bf94267fa71"
+    },
+    {
+      "path": "scripts/verify-delivery-plan.mjs",
+      "bytes": 6322,
+      "sha256": "44b86050c1c71680e358315a8ad2cdd0cb21f40d9e743915cdbf3425134ab944"
+    },
+    {
+      "path": "scripts/verify-delivery-plan.test.mjs",
+      "bytes": 4231,
+      "sha256": "d844a44161529fca525757622c29a876974868edb49aa0297055c9ef90f82012"
+    },
+    {
+      "path": "scripts/verify-empty-setup-discard.mjs",
+      "bytes": 24536,
+      "sha256": "1c918751c2abe95194d246daed321d2007cbaa09fc0b8c8d257e8370c4288557"
+    },
+    {
+      "path": "scripts/verify-kitchen-repositories.mjs",
+      "bytes": 8603,
+      "sha256": "af06a3fdc6a032d77df140b9af10aab70e2354cd8ea9dd8fac6b1e5e4bf81a5e"
+    },
+    {
+      "path": "scripts/verify-native-credentials.mjs",
+      "bytes": 22027,
+      "sha256": "0c44154a867a850c2363b1bdc7c121abd2350e9bd56242acea4175b169cefeba"
+    },
+    {
+      "path": "scripts/verify-planned-credential-create.mjs",
+      "bytes": 24520,
+      "sha256": "a6bed53c81b4e861ddf061865591398f5cd5079543ec7d8fa67545c9e27e876b"
+    },
+    {
+      "path": "scripts/verify-planned-state-activation.mjs",
+      "bytes": 24694,
+      "sha256": "e6dc3405936b9012762220e693aff4e1d0baab49c7ed37ea7bdcf42dcedbb4d6"
+    },
+    {
+      "path": "scripts/verify-planned-state-recovery.mjs",
+      "bytes": 30985,
+      "sha256": "229a2f9ea9c3617a87069be17233352bc084b03855b00cb8e8395e2b3af154f5"
+    },
+    {
+      "path": "scripts/verify-recovery-diagnostics.mjs",
+      "bytes": 24268,
+      "sha256": "898ab735c3d2dbf20b35f4db12d1abc4c3d3d84519e8ae2b52bde6e1af8900e0"
+    },
+    {
+      "path": "scripts/verify-session-composition.mjs",
+      "bytes": 23986,
+      "sha256": "120594dda81ea6ba08f2a55bd2f5c76940260b751baa696ae3fffd131b3c390e"
+    },
+    {
+      "path": "scripts/verify-session-ledger-acknowledgements.mjs",
+      "bytes": 33342,
+      "sha256": "c12b32134dd6eb9adc1ef137ef98fb56bb88463c5259fde54ef2ce4e09c6e717"
+    },
+    {
+      "path": "scripts/verify-session-retirement.mjs",
+      "bytes": 14501,
+      "sha256": "8195832e8c6a10e6edcf20600e761ea8817be55638eb649407e17ca9578d8db2"
+    },
+    {
+      "path": "scripts/verify-session-work.mjs",
+      "bytes": 23958,
+      "sha256": "5a93fa256398893ca4f3e7e396078e981cb85ffc037b1a4b7f7050fbafbc6105"
+    },
+    {
+      "path": "scripts/verify-work-origin-planning.mjs",
+      "bytes": 35828,
+      "sha256": "af6bed91ee9eb832fb230af02c5a5bda453fb2da73373ff9f8ff0d25d3851b0c"
+    },
+    {
+      "path": "scripts/work-origin-sync-evidence.test.mjs",
+      "bytes": 5618,
+      "sha256": "8369df3c42d061b3a51d095bdba4eed036774efe3ecc604b71b32700a0d026fe"
+    },
+    {
+      "path": "server/build.gradle.kts",
+      "bytes": 2307,
+      "sha256": "8593da3ca7b253749f3a21d7faa6202adab4bff6e2e51538be1b060cdcef523e"
+    },
+    {
+      "path": "server/src/integrationTest/kotlin/com/feedme/server/db/CommitAndRetentionIntegrationTest.kt",
+      "bytes": 6873,
+      "sha256": "6f5369aa1aeee86e5614e2f407b402764d919f72ded05769ecca91ffadee3c8e"
+    },
+    {
+      "path": "server/src/integrationTest/kotlin/com/feedme/server/db/DurableCommandsIntegrationTest.kt",
+      "bytes": 30536,
+      "sha256": "938dd169373ae6caef5a9c1e0c87fc64885ca89efca09a695f43b514d98895df"
+    },
+    {
+      "path": "server/src/integrationTest/kotlin/com/feedme/server/db/DurableEventsIntegrationTest.kt",
+      "bytes": 12796,
+      "sha256": "bb620bb58857515538f3da23474d493c8017208508b402911eea8772defe5d7c"
+    },
+    {
+      "path": "server/src/integrationTest/kotlin/com/feedme/server/db/PlatformMigrationsIntegrationTest.kt",
+      "bytes": 11933,
+      "sha256": "bb5a272dd7f29e4b10f2c765335487022b735fef9db3eaf8be8ac93da165ebc7"
+    },
+    {
+      "path": "server/src/integrationTest/kotlin/com/feedme/server/db/PostgresTestCluster.kt",
+      "bytes": 12729,
+      "sha256": "643917f603eee3712d2b795490d1228067ddbe635bd4a979082aebb342471bf3"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/Main.kt",
+      "bytes": 663,
+      "sha256": "23943735a7d0379eaa815b3793b47a281fccd798c2d26fd75feb02f4c4d92281"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/config/LocalServerConfig.kt",
+      "bytes": 1778,
+      "sha256": "1138e265d3a92f634cecb4c0109b633a5b07aaecc1efbb1362dc6b1d5c0bbd71"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/contract/ContractBodyValidator.kt",
+      "bytes": 17478,
+      "sha256": "5a92a4b9fdff309e8ca13f51dcd4fa8bebaede7bc930f1fa2c888833af62dac7"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/contract/ContractCatalog.kt",
+      "bytes": 2880,
+      "sha256": "6bd5f52e81214e345bd8bc8e03c3eec7be0a114c33a99d5dd434798d1d434a86"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/db/DurableCommands.kt",
+      "bytes": 10670,
+      "sha256": "00aa64778ea76a0ed4f735cdc97857b9f7de3ed74497a08ae58b2c009928d5ec"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/db/DurableEvents.kt",
+      "bytes": 11246,
+      "sha256": "9d2a4d2c6816c3c379854d2e31b6b88b757f3d431013209ded434219e8534c74"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/db/PgTransactions.kt",
+      "bytes": 2229,
+      "sha256": "ded0596efcab54040ba05c1f75900ca08199992a29aecc8247953d01bad317c5"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/db/PlatformMigrations.kt",
+      "bytes": 6006,
+      "sha256": "258b6164443b225aa0ad03d81d0103022804f2ee4ba3156c08bd21cf8c05e181"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/http/FeedMeApplication.kt",
+      "bytes": 5202,
+      "sha256": "91bb2e84a4b2e89411124bbf434cd184944e5e7a3ac06aca0ec33deb611c375c"
+    },
+    {
+      "path": "server/src/main/resources/db/migration/V001__durable_platform.sql",
+      "bytes": 4146,
+      "sha256": "343fa1e0ad66b2c2db12bd9e38ea64aee65df8ae7c8829fe5ab7d9308abfdbb9"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/CanonicalValidatorParityTest.kt",
+      "bytes": 29848,
+      "sha256": "2c15083d7b0e1ae6cf979b63bfe20af0eca254866fdc3c5b521a95f2a5b1749a"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/CommandIdentityTest.kt",
+      "bytes": 3000,
+      "sha256": "e0ca281469262e8dd18c64a4ba95830db0a6428d45e9d7dcc1f4e234b1d50c6f"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/ContractCatalogTest.kt",
+      "bytes": 2707,
+      "sha256": "4f0f82c5cd75652f73422a1f3e26570f37e7fee3eb29806616723bd9109be451"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/EventDraftTest.kt",
+      "bytes": 903,
+      "sha256": "cc9fbb4149bde9bcfea39583d09ebd001e8e11765e2b749e9bfb50cac415ae51"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/LocalServerConfigTest.kt",
+      "bytes": 2654,
+      "sha256": "f7e76575500e4509bf46e844b1d4d0957d749668cac252266e5ed190f6374a99"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/LocalServiceTest.kt",
+      "bytes": 7538,
+      "sha256": "821f550d2b32eb26f763c77d4fb4a62122a8e60607afddf988b683e37d138ecc"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/LoopbackEngineTest.kt",
+      "bytes": 2542,
+      "sha256": "9a02d3ec6f0948c188946e6ebbb51aeaec71a1539ed10c81e232d5a0fa2d2be1"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/TransportIntegrationTest.kt",
+      "bytes": 8379,
+      "sha256": "b50419e89d05e901b8e09ac89a9b8f11ad2df3c707c104bca9a4e027728ed7ee"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/contract/ContractBodyValidatorTest.kt",
+      "bytes": 12612,
+      "sha256": "77733b28d815f4c8e9c2beda41ee9341ad49a74ce29a517ed5eb8813185ccd08"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/contract/SharedContractParityTest.kt",
+      "bytes": 1089,
+      "sha256": "964170081a78358e334d404af35511d8e4a36bdad9c4dfde2d4556f3a16c0ab7"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/contract/WireContractIntegrationTest.kt",
+      "bytes": 8917,
+      "sha256": "ee22b39e422fd1731c9a7187489281f7f5a07a4ae6f2b2141c73c8e0df1487ab"
+    },
+    {
+      "path": "settings.gradle.kts",
+      "bytes": 492,
+      "sha256": "0ce4490ae01cf3292e840118e49685d6691ce1a39895781bd30813598c89f9e6"
+    },
+    {
+      "path": "shared/contracts/build.gradle.kts",
+      "bytes": 1085,
+      "sha256": "4475e87a518bef6c8fe0da0dbac65ed0744b5d1562004de8d9362eebb20af094"
+    },
+    {
+      "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/CanonicalBodyValidator.kt",
+      "bytes": 7470,
+      "sha256": "c6a58ff43c42693b03b32aa0138be41d861c166c0b050c22fbf499fdea987acc"
+    },
+    {
+      "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/CanonicalFormats.kt",
+      "bytes": 11398,
+      "sha256": "5e8daf874bf2a2dd9c29fc436ef5f77d31ace39c09e97d5cdcdb294fc5755a7d"
+    },
+    {
+      "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/CanonicalResponseBinder.kt",
+      "bytes": 2460,
+      "sha256": "fea7c7ac5eed45776012e2b968746f6c8166d24f32a9495897be1dfa163d2b76"
+    },
+    {
+      "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/CanonicalSchemaProgram.kt",
+      "bytes": 10737,
+      "sha256": "08fb5c88ef5c32c68df84572cc5b33f9648bc42c6ddbb460871ad695f09ef21b"
+    },
+    {
+      "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/ContractCatalog.kt",
+      "bytes": 10484,
+      "sha256": "adb82efa39a485baec82581b2e2860b5e8b7c53d98e65bee6cb189d610cf5d36"
+    },
+    {
+      "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/CookingWireModels.kt",
+      "bytes": 16206,
+      "sha256": "20cf43990f84a71713afb49b5b878236c1b2bd0a4f6a6b89b0354993daa44d5d"
+    },
+    {
+      "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/ExactDecimal.kt",
+      "bytes": 4703,
+      "sha256": "bd5cfb626d146e22841a3be10c3480a57de29612bdde8c12b5d498e8cba4d036"
+    },
+    {
+      "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/WireDocument.kt",
+      "bytes": 9165,
+      "sha256": "16aedbb81a98ad55160b6a8beb0e74c3775a0d417adef00f5a251ff37e5b172c"
+    },
+    {
+      "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/generated/GeneratedContract.kt",
+      "bytes": 1030089,
+      "sha256": "c27913390fd1e8d3af3d19d83f522851eb9ec7fbf76d96c28a9d0379bb92d8ac"
+    },
+    {
+      "path": "shared/contracts/src/commonTest/kotlin/com/feedme/contracts/CanonicalFormatsTest.kt",
+      "bytes": 10112,
+      "sha256": "08480652264811278c3c0021a7f91a7cd0721a1414e3a6ed455aa960c488aeff"
+    },
+    {
+      "path": "shared/contracts/src/commonTest/kotlin/com/feedme/contracts/CanonicalResponseBinderTest.kt",
+      "bytes": 3519,
+      "sha256": "c7614375daccd29b66951e31b0bffa990fb52355c39ca38ccaecc679d1700ebc"
+    },
+    {
+      "path": "shared/contracts/src/commonTest/kotlin/com/feedme/contracts/CanonicalSchemaProgramTest.kt",
+      "bytes": 9374,
+      "sha256": "335f53d9676f3d0b9244f73186850abedb22fd2a0b3693b96818a486ca39b478"
+    },
+    {
+      "path": "shared/contracts/src/commonTest/kotlin/com/feedme/contracts/ContractCatalogTest.kt",
+      "bytes": 19872,
+      "sha256": "0975e1e50a7a2cad1a4cf449b15677818409bcba6949c3108fbb5e205733ec6b"
+    },
+    {
+      "path": "shared/contracts/src/commonTest/kotlin/com/feedme/contracts/CookingWireModelsTest.kt",
+      "bytes": 16447,
+      "sha256": "aa41f16c6d678abe806364c212245fdb8375997b4cb5faddc3f1d5edad8e58a3"
+    },
+    {
+      "path": "shared/contracts/src/commonTest/kotlin/com/feedme/contracts/ExactDecimalTest.kt",
+      "bytes": 8822,
+      "sha256": "9bd8e0dcc122cd17746f2e1fa54d29081c64ec1cbd7d523ee9cfad04ff0ee394"
+    },
+    {
+      "path": "shared/contracts/src/commonTest/kotlin/com/feedme/contracts/WireDocumentTest.kt",
+      "bytes": 20353,
+      "sha256": "e6e27d85f989323b066bf3ce09a0191fc5db59ca594878c48fa02719b9b3db80"
+    },
+    {
+      "path": "shared/contracts/src/jvmTest/kotlin/com/feedme/contracts/OfficialFormatCorpusTest.kt",
+      "bytes": 1499,
+      "sha256": "0e7c4a273fea61e2b3b66a578a5b2fb6c982e88d41ddb90351081d172eea016a"
+    },
+    {
+      "path": "shared/core/build.gradle.kts",
+      "bytes": 230,
+      "sha256": "14c367fc49d2e3a5bd4b64843053cb7f61c09c0f7a3a54834a722ac029620bb0"
+    },
+    {
+      "path": "shared/core/src/commonMain/kotlin/com/feedme/core/DemoFixtures.kt",
+      "bytes": 4289,
+      "sha256": "c7a2c3b96760e532f9776e2708c5dc199a9e9914134b08e6fe55da5cf3f44961"
+    },
+    {
+      "path": "shared/core/src/commonMain/kotlin/com/feedme/core/KitchenRuntime.kt",
+      "bytes": 886,
+      "sha256": "3439d9a75b820f221180593db8be7d232ade59be5bef80ec20d9446026d4c62e"
+    },
+    {
+      "path": "shared/core/src/commonMain/kotlin/com/feedme/core/Models.kt",
+      "bytes": 5109,
+      "sha256": "49428e7e76828efcf0f84e4a050fcf69212f8d4e40e01bb2a3601bebb5c80b8b"
+    },
+    {
+      "path": "shared/core/src/commonMain/kotlin/com/feedme/core/PlateVisibility.kt",
+      "bytes": 1240,
+      "sha256": "4cd4898a5f2304ce0b3f6850d8e432c10129419149f998f5b6ffc6ca2924bce1"
+    },
+    {
+      "path": "shared/core/src/commonMain/kotlin/com/feedme/core/Reducer.kt",
+      "bytes": 14690,
+      "sha256": "b737a5f945902411803a124fabfff2fc4114d1a5e50b54a0b5914120ef51efb6"
+    },
+    {
+      "path": "shared/core/src/commonMain/kotlin/com/feedme/core/ports/ClientPorts.kt",
+      "bytes": 11001,
+      "sha256": "5d6ccb825879dae216947fc068813d4104b969b7972c69da7563379bd0a28298"
+    },
+    {
+      "path": "shared/core/src/commonMain/kotlin/com/feedme/core/ports/SessionControlStore.kt",
+      "bytes": 1412,
+      "sha256": "30d68335de39de3ab63d2bb7f1ead17cad1f4e1e062a90710f371c59cc1bda99"
+    },
+    {
+      "path": "shared/core/src/commonMain/kotlin/com/feedme/core/ports/WorkOriginPlanAuthentication.kt",
+      "bytes": 1716,
+      "sha256": "f47940f14f34aafd41a4d31f19b0bcedf637647f9bb612af8d0cb928851fae05"
+    },
+    {
+      "path": "shared/core/src/commonTest/kotlin/com/feedme/core/ClientPortsTest.kt",
+      "bytes": 12304,
+      "sha256": "f97f7ecbaebea50858de65b8a4129bb5eea2362e430d6e5c9ebf179d734455c1"
+    },
+    {
+      "path": "shared/core/src/commonTest/kotlin/com/feedme/core/KitchenRuntimeTest.kt",
+      "bytes": 1775,
+      "sha256": "137ec270ebede9b881f39f2aa908da007de904bf9c37ae58b7bb94b1299586b5"
+    },
+    {
+      "path": "shared/core/src/commonTest/kotlin/com/feedme/core/ReducerTest.kt",
+      "bytes": 16530,
+      "sha256": "42ee2a58391f5a0bae27527ad41f50e364e1801c5d9e529f6dd0dbb9e179e3a8"
+    },
+    {
+      "path": "shared/kitchen/build.gradle.kts",
+      "bytes": 892,
+      "sha256": "f5a9c8afa81885b8cf1a25dd24c85382270837e7de5e8acbe310a5a962b42257"
+    },
+    {
+      "path": "shared/kitchen/src/androidMain/kotlin/com/feedme/kitchen/ContentDigest.kt",
+      "bytes": 259,
+      "sha256": "fe19799aa684d8a9ddf649f8447ca22401d0f425ef1e193a5701018a26d33c21"
+    },
+    {
+      "path": "shared/kitchen/src/commonMain/kotlin/com/feedme/kitchen/ContentDigest.kt",
+      "bytes": 371,
+      "sha256": "5d51fe41b46f331b990203af87305ac7740aa9a84e3282ae67e1998c36e9e12e"
+    },
+    {
+      "path": "shared/kitchen/src/commonMain/kotlin/com/feedme/kitchen/CookingRecords.kt",
+      "bytes": 10830,
+      "sha256": "a4d3ec1ae425077120cb1159fc7e52d04deb72d680df80eed96c2785981b2757"
+    },
+    {
+      "path": "shared/kitchen/src/commonMain/kotlin/com/feedme/kitchen/CookingRepository.kt",
+      "bytes": 30838,
+      "sha256": "fadeba5057cf367d57f26345b9e19947976ffe6cc5de7bc999af638073e1ccf3"
+    },
+    {
+      "path": "shared/kitchen/src/commonMain/kotlin/com/feedme/kitchen/KitchenContext.kt",
+      "bytes": 5449,
+      "sha256": "f15d89be142ea3b2f6d5f43616c4e9817114cce0f1e0043e028c5df59c1b27c8"
+    },
+    {
+      "path": "shared/kitchen/src/commonMain/kotlin/com/feedme/kitchen/KitchenValidation.kt",
+      "bytes": 2589,
+      "sha256": "eb92c2138ec6e695187d5814fa68c41981ff81e80a615ac5329b90c73540a818"
+    },
+    {
+      "path": "shared/kitchen/src/commonMain/kotlin/com/feedme/kitchen/PrivateJson.kt",
+      "bytes": 3372,
+      "sha256": "6baa03a4d6e72f340992b82894bf3f11ee72d127cddd9c7741289c435a7a6504"
+    },
+    {
+      "path": "shared/kitchen/src/commonMain/kotlin/com/feedme/kitchen/PrivateKitchenSession.kt",
+      "bytes": 1621,
+      "sha256": "d81d041a2414a7d2c7138740fa78d5e40e72464be4112f0dea5eecb1df9b41ee"
+    },
+    {
+      "path": "shared/kitchen/src/commonMain/kotlin/com/feedme/kitchen/RecallFence.kt",
+      "bytes": 2728,
+      "sha256": "5be69371a56c9071883befa7dfca61ae021de11d3388573753c91596e92c055d"
+    },
+    {
+      "path": "shared/kitchen/src/commonMain/kotlin/com/feedme/kitchen/SavedRecipeRepository.kt",
+      "bytes": 15710,
+      "sha256": "b7ad3af25109b5587b19c4a09aba107161e70564843aa9eaf0d6af73e7cb2b00"
+    },
+    {
+      "path": "shared/kitchen/src/commonTest/kotlin/com/feedme/kitchen/ContentDigestTest.kt",
+      "bytes": 2878,
+      "sha256": "0b88fa4030686e10bb2bdf42ce73c92cbe39ac49c29ec435173f0d6ca58a96d1"
+    },
+    {
+      "path": "shared/kitchen/src/commonTest/kotlin/com/feedme/kitchen/CookingRecordsTest.kt",
+      "bytes": 27186,
+      "sha256": "ee3db7735f884f82ad4ef62c5f0384b0c87e731f6348dfad09c6e926d8a21768"
+    },
+    {
+      "path": "shared/kitchen/src/commonTest/kotlin/com/feedme/kitchen/CookingRepositoryTest.kt",
+      "bytes": 42108,
+      "sha256": "170b3faefd6ef28e6985974d7c122909c6f945b92c590731b032fde6cdde4471"
+    },
+    {
+      "path": "shared/kitchen/src/commonTest/kotlin/com/feedme/kitchen/KitchenContextTest.kt",
+      "bytes": 23977,
+      "sha256": "cbeafe1dcf3e7a9986d9b57bd4ff17145a1a536fdb8cae9c5df08c25ec99fe97"
+    },
+    {
+      "path": "shared/kitchen/src/commonTest/kotlin/com/feedme/kitchen/KitchenValidationTest.kt",
+      "bytes": 13086,
+      "sha256": "7b9e88dae9e7464d8d1d6cfdef37de37751b47fef8c5c92def10601e09475381"
+    },
+    {
+      "path": "shared/kitchen/src/commonTest/kotlin/com/feedme/kitchen/SavedRecipeRepositoryTest.kt",
+      "bytes": 30718,
+      "sha256": "7619d79bfda5dd951ffc48ee9b6aa322d3fd804f13e189f49de0af5bc5f68f6c"
+    },
+    {
+      "path": "shared/kitchen/src/iosMain/kotlin/com/feedme/kitchen/ContentDigest.kt",
+      "bytes": 1015,
+      "sha256": "d344519a682904559bf844df44da1a447ce1b60fdb79aed69651d82b51a13bbb"
+    },
+    {
+      "path": "shared/kitchen/src/jvmMain/kotlin/com/feedme/kitchen/ContentDigest.kt",
+      "bytes": 259,
+      "sha256": "fe19799aa684d8a9ddf649f8447ca22401d0f425ef1e193a5701018a26d33c21"
+    },
+    {
+      "path": "shared/session/build.gradle.kts",
+      "bytes": 1567,
+      "sha256": "2aa9d09cbf453ec33b2abcb770022e98d2f644566cb9bd6b3319dd998cf406a4"
+    },
+    {
+      "path": "shared/session/src/androidInstrumentedTest/AndroidManifest.xml",
+      "bytes": 1026,
+      "sha256": "012bc44b09a8d26024442d671a1897a4a45b8e7156a3c25f24adfbafbd321e1d"
+    },
+    {
+      "path": "shared/session/src/androidInstrumentedTest/kotlin/com/feedme/session/AndroidCredentialCreatePlanTest.kt",
+      "bytes": 33423,
+      "sha256": "539ba9bcddb058468eaef045ce0eaad842ff53ed8ea7d2a4cd0defccd06baae5"
+    },
+    {
+      "path": "shared/session/src/androidInstrumentedTest/kotlin/com/feedme/session/AndroidCredentialStoreTest.kt",
+      "bytes": 29922,
+      "sha256": "1b25a921067f49ff1c4010ebb5f2abf76c9fd5a3be4cb2bced08563749cc3f08"
+    },
+    {
+      "path": "shared/session/src/androidInstrumentedTest/kotlin/com/feedme/session/AndroidCredentialTestSandbox.kt",
+      "bytes": 1729,
+      "sha256": "a8f34b206968faf4b3cb0acde7a808adce94e346601690fe7692a9ecd69e3648"
+    },
+    {
+      "path": "shared/session/src/androidInstrumentedTest/kotlin/com/feedme/session/AndroidLocalRetirementIntegrationTest.kt",
+      "bytes": 49538,
+      "sha256": "5fe9991126d52adcedeb827c40925211b279b4b8d18aca21a5224104fba63b42"
+    },
+    {
+      "path": "shared/session/src/androidInstrumentedTest/kotlin/com/feedme/session/AndroidNativeWorkCancellationTest.kt",
+      "bytes": 15142,
+      "sha256": "4a9a76d1b7cc44eae24b18cb8c9a1ffb936e885ad5587659e774dd95c8c919f8"
+    },
+    {
+      "path": "shared/session/src/androidInstrumentedTest/kotlin/com/feedme/session/AndroidRetirementIntegrationSandbox.kt",
+      "bytes": 7882,
+      "sha256": "dbe3c0b2c6c145387d5bf4df2cefb332abc2be49ca7a73c349c7002a87d8efb2"
+    },
+    {
+      "path": "shared/session/src/androidInstrumentedTest/kotlin/com/feedme/session/AndroidSessionSetupJournalTest.kt",
+      "bytes": 19347,
+      "sha256": "373e0b70fe17bbc38076506401517fc3d7341889fafe3fba574a6b68b26f4554"
+    },
+    {
+      "path": "shared/session/src/androidMain/AndroidManifest.xml",
+      "bytes": 678,
+      "sha256": "2155bcce06c78e8aa541c8e511527443216d500a95a5a04c0c3bb45deb10aa40"
+    },
+    {
+      "path": "shared/session/src/androidMain/kotlin/com/feedme/session/AndroidCredentialFiles.kt",
+      "bytes": 15556,
+      "sha256": "b2bd58c7edd7abf9f928bd37d27312a018c3dda832f05f9e45a9a8273c58edf9"
+    },
+    {
+      "path": "shared/session/src/androidMain/kotlin/com/feedme/session/AndroidCredentialStore.kt",
+      "bytes": 32792,
+      "sha256": "48c51271a240985971bbbd07cfd78d42caa305a49d7063808bbedf798cc330cc"
+    },
+    {
+      "path": "shared/session/src/androidMain/kotlin/com/feedme/session/AndroidCredentialVault.kt",
+      "bytes": 9497,
+      "sha256": "b50cf998d4d148cc3b19b4f23500a543758cda2afe41471183c0f5a9ca5ad458"
+    },
+    {
+      "path": "shared/session/src/androidMain/kotlin/com/feedme/session/AndroidNativeWorkCancellation.kt",
+      "bytes": 6534,
+      "sha256": "dcabffefc29261197b29d57e37405470bcc07347a4e5b6202a5dc0ed5d39b6ab"
+    },
+    {
+      "path": "shared/session/src/commonMain/kotlin/com/feedme/session/CredentialCodec.kt",
+      "bytes": 6965,
+      "sha256": "31b46f37fa7f07c1cf8d3f69c5099d28bb7f57876d8095468f92df0051f90eea"
+    },
+    {
+      "path": "shared/session/src/commonMain/kotlin/com/feedme/session/CredentialCreateCoordinator.kt",
+      "bytes": 10564,
+      "sha256": "75037fb20ef3879633d5faec4f9b9595ae7495091be1da7bf78a47f456698a03"
+    },
+    {
+      "path": "shared/session/src/commonMain/kotlin/com/feedme/session/CredentialCreatePlan.kt",
+      "bytes": 3285,
+      "sha256": "4615a043648eea60bebe7622931e0b7532c65b22607101a5c272adf152a30840"
+    },
+    {
+      "path": "shared/session/src/commonMain/kotlin/com/feedme/session/CredentialCreatePlanCodec.kt",
+      "bytes": 3436,
+      "sha256": "aa2ea7ea0f1cbd6b86ed519d764818cdf88112708afdc1dd59794e0cba3e8cc7"
+    },
+    {
+      "path": "shared/session/src/commonMain/kotlin/com/feedme/session/IncarnationCredentialStore.kt",
+      "bytes": 5123,
+      "sha256": "1b356082336ed0fa180d11edad6941391555daa2646520726f8236b9609294fa"
+    },
+    {
+      "path": "shared/session/src/commonMain/kotlin/com/feedme/session/LocalRetirementCoordinator.kt",
+      "bytes": 15978,
+      "sha256": "62442cb87975f8e5c6f15dc7cb38aacffce61fcfefb55dc7dbb069b3a4e5ca0e"
+    },
+    {
+      "path": "shared/session/src/commonMain/kotlin/com/feedme/session/PreparedSetupDiscard.kt",
+      "bytes": 1317,
+      "sha256": "c14f6961b35291bc34ff986fd2f850d340898116f60acdb4acf8078bdac52d40"
+    },
+    {
+      "path": "shared/session/src/commonMain/kotlin/com/feedme/session/PrivateSessionRuntime.kt",
+      "bytes": 32825,
+      "sha256": "af2b3d5b6b904e05ad3d93a613a7f3c60fbc584d4acd5fae43e3b34d2dc685ce"
+    },
+    {
+      "path": "shared/session/src/commonMain/kotlin/com/feedme/session/RetirementCodec.kt",
+      "bytes": 6885,
+      "sha256": "c274870bd28399e104eefe28d61b85f5442b7ea50030114ab34006cf076e29b6"
+    },
+    {
+      "path": "shared/session/src/commonMain/kotlin/com/feedme/session/RetirementModels.kt",
+      "bytes": 5931,
+      "sha256": "efc39cedae140bd5ae3a8f4a582781e6601d9aa88b88319a2e387ce44b8fe28b"
+    },
+    {
+      "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionActivationCodec.kt",
+      "bytes": 5132,
+      "sha256": "c10455aa34e52d887c622f35ed6f319e35a271bd38acc749878e3592b370dead"
+    },
+    {
+      "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionControlAcknowledgements.kt",
+      "bytes": 2317,
+      "sha256": "989a6ba6068b92cde5272813a4ca14e5169a9efdb11b1bc3bf887d3a09861464"
+    },
+    {
+      "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionRecoveryInspector.kt",
+      "bytes": 8763,
+      "sha256": "2e5d86b2f4efc98298ee4de8da1b794568d0e3b6775335ba68c024c90755ae30"
+    },
+    {
+      "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionRecoveryReport.kt",
+      "bytes": 2123,
+      "sha256": "65ba9dc2c5a8d7828924e16f4c5f38ef4cd2263f4d42a6b73457023338cde008"
+    },
+    {
+      "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionSetupPlan.kt",
+      "bytes": 2120,
+      "sha256": "91993ea8d80a1e29e537d391aac371df03294aaf6012c063b2cba219fb556c11"
+    },
+    {
+      "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionSetupPlanCodec.kt",
+      "bytes": 6327,
+      "sha256": "a2161d4fa512c98edf228f8b27a2905a9631c96d204c369a67a2e3f221793d54"
+    },
+    {
+      "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionWorkCodec.kt",
+      "bytes": 7104,
+      "sha256": "797eb7cc07e2dd1c0b5fe6253aadf64f516ea4623c00a9d9a4434de1d72da71f"
+    },
+    {
+      "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionWorkModels.kt",
+      "bytes": 3901,
+      "sha256": "1fc35b5193568d8528f2a350ef64659c139d534f27c50af948b5cbcb68391f6a"
+    },
+    {
+      "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionWorkOriginPlan.kt",
+      "bytes": 2077,
+      "sha256": "6ba14f693114697dc9f112cf1af2ef3e8e9980af59fce43e6070f6caef137091"
+    },
+    {
+      "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionWorkOriginPlanCodec.kt",
+      "bytes": 4835,
+      "sha256": "a795e6ecca252e7d91ad9763b1570b65e913134019c4be56ca864617488b2a1b"
+    },
+    {
+      "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionWorkRegistry.kt",
+      "bytes": 29306,
+      "sha256": "c97446d306b0564c5b4521f2a34848b48c597f5bd81063f642e061aff5e1a53d"
+    },
+    {
+      "path": "shared/session/src/commonTest/kotlin/com/feedme/session/CredentialCodecTest.kt",
+      "bytes": 27290,
+      "sha256": "34812a941d901bc17dfa9ebe2967b604ec597a8109ae9f1773c0655620f6a508"
+    },
+    {
+      "path": "shared/session/src/commonTest/kotlin/com/feedme/session/CredentialCreateCoordinatorTest.kt",
+      "bytes": 31021,
+      "sha256": "bcb4864e7440b6e7e0f52d984ffee0ee3a767a9cb9497fc7fe2d13c4fa36dba7"
+    },
+    {
+      "path": "shared/session/src/commonTest/kotlin/com/feedme/session/CredentialCreatePlanCodecTest.kt",
+      "bytes": 11923,
+      "sha256": "1b2bd611ffca261e60d02b92486f7feafe08735126f914e2f13a767eecbd8bc2"
+    },
+    {
+      "path": "shared/session/src/commonTest/kotlin/com/feedme/session/CredentialTransportViewTest.kt",
+      "bytes": 15364,
+      "sha256": "9b3d3ce2820db1fa3affb8ffce62a238286b230e288c35cbff5d719804df2646"
+    },
+    {
+      "path": "shared/session/src/commonTest/kotlin/com/feedme/session/RetirementCodecTest.kt",
+      "bytes": 17695,
+      "sha256": "4a6129ec56fe862bd2356f85fd516945c467d046541294b2daa546103f202c13"
+    },
+    {
+      "path": "shared/session/src/commonTest/kotlin/com/feedme/session/SessionActivationCodecTest.kt",
+      "bytes": 14842,
+      "sha256": "89b5854f4b49b1352d7cd41e1926355937644dd21bd509d1cd20389fbc4688b2"
+    },
+    {
+      "path": "shared/session/src/commonTest/kotlin/com/feedme/session/SessionControlAcknowledgementsTest.kt",
+      "bytes": 7244,
+      "sha256": "be0ef4d2ef3128b2fb2e2f09c0f67714ff12d64496cf7de3878b054f49599264"
+    },
+    {
+      "path": "shared/session/src/commonTest/kotlin/com/feedme/session/SessionSetupControlTest.kt",
+      "bytes": 8739,
+      "sha256": "2411b898b6ffd290135c2e6a6530ed25e3c9ab8785082ab1c1d5ae2e5ca4c58e"
+    },
+    {
+      "path": "shared/session/src/commonTest/kotlin/com/feedme/session/SessionSetupPlanCodecTest.kt",
+      "bytes": 20211,
+      "sha256": "1582f4aec6c260ed330321c29b4e0281d7b0e6f73bc41dbc3df923b8aba315e5"
+    },
+    {
+      "path": "shared/session/src/commonTest/kotlin/com/feedme/session/SessionWorkCodecTest.kt",
+      "bytes": 21803,
+      "sha256": "6fb59b6809efd2d0cbdabda9c26bec862febebabdc7816a3d200d9d8b7b9eef9"
+    },
+    {
+      "path": "shared/session/src/commonTest/kotlin/com/feedme/session/SessionWorkOriginPlanCodecTest.kt",
+      "bytes": 17393,
+      "sha256": "ee89fa717151b9149e841b15c8dea0504bf33e44015f917992e8e4aa86535fad"
+    },
+    {
+      "path": "shared/session/src/commonTest/kotlin/com/feedme/session/SessionWorkOriginPlanRegistryTest.kt",
+      "bytes": 26334,
+      "sha256": "696f7b95c284857e847240e48695c174c590c870a7c9f3481cf5fa64965e12a3"
+    },
+    {
+      "path": "shared/session/src/commonTest/kotlin/com/feedme/session/SessionWorkRegistryTest.kt",
+      "bytes": 62166,
+      "sha256": "1415307fb5013ce9a5c6e0e8751f7fb832a56be4810877d1dd771589c171d261"
+    },
+    {
+      "path": "shared/storage/build.gradle.kts",
+      "bytes": 3813,
+      "sha256": "afbcaf31b211dc18ab84ad37ff79f0edaf2eeb802677711f00757ed3050d7761"
+    },
+    {
+      "path": "shared/storage/src/androidInstrumentedTest/cpp/sqlite_sync_failure.c",
+      "bytes": 16046,
+      "sha256": "e5081446f4ad5ad12070a6b7c59c4ea8b37c67f9e6b3b1dc88226dc0f2574510"
+    },
+    {
+      "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidSessionControlStoreTest.kt",
+      "bytes": 12542,
+      "sha256": "ebafd983708c7d1386c10817c62ebb77d1f0d180ec5dcab20ebfe71bedb5ab54"
+    },
+    {
+      "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidSessionLedgerSyncFailureTest.kt",
+      "bytes": 26747,
+      "sha256": "fff79b5f6a7c2f330047fdf45be3ecb45e6c1a382f54ef825384a82920c6c421"
+    },
+    {
+      "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidSessionWorkOriginPlanSyncFailureTest.kt",
+      "bytes": 5654,
+      "sha256": "688e41f2ca4defcd64f42f9ae824467e3121a968f61fe83194ca69f1f9312241"
+    },
+    {
+      "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidSessionWorkOriginPlanTest.kt",
+      "bytes": 15226,
+      "sha256": "f1634d73810d90d5c79df7c90470bb0aec722788ebbe2499182282062237e115"
+    },
+    {
+      "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidSessionWorkOriginProcessTest.kt",
+      "bytes": 10562,
+      "sha256": "6e13790c75a6330dea325a44722bbf4f4ab3657f06a345d64600dfea1a61b668"
+    },
+    {
+      "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidSessionWorkStoreTest.kt",
+      "bytes": 13005,
+      "sha256": "4a168f3f0882d6c98ba72dc65f5a379ccaf96173fbf62a8b2b0e8173c6bf24a5"
+    },
+    {
+      "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidStateActivationPlanTest.kt",
+      "bytes": 23652,
+      "sha256": "abc9ec6ec50eecbb595d3070f7b6ec3a6ed7e98a68c35eef28ec19fb8a290095"
+    },
+    {
+      "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidStateActivationRecoveryTest.kt",
+      "bytes": 24273,
+      "sha256": "ad0d1bf23447cb3098d17447273177c9d0a00d01702ebd55fad6cb5bfbee6a96"
+    },
+    {
+      "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidStateActivationSyncFailureTest.kt",
+      "bytes": 13077,
+      "sha256": "e2a496ed8674b1bfeec1fc5449fad83a7980539d36d48b3c8bc29ae0c3fc7de8"
+    },
+    {
+      "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidStateDatabaseTest.kt",
+      "bytes": 8935,
+      "sha256": "f9daa74403fdba8e3e854a497a1441685bb7d4e41cf8965ef76bd36106c3a4b5"
+    },
+    {
+      "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidStateProcessRestartTest.kt",
+      "bytes": 4753,
+      "sha256": "e2fbcb27804723f0261ac61a33dbceb18a5ce57789c272e0e4bf34c570ca2e27"
+    },
+    {
+      "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidStateTestSandbox.kt",
+      "bytes": 1503,
+      "sha256": "c7f154511170a15a6b525dc2369a1c02168b1c0c56763b92b1dfb66ad73afc36"
+    },
+    {
+      "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidStateVaultTest.kt",
+      "bytes": 6190,
+      "sha256": "5899210d212816339cdb9f2ddc6acc02bd9eac352f4c212c6a9e63171880feaf"
+    },
+    {
+      "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidWorkOriginPlanFixture.kt",
+      "bytes": 8372,
+      "sha256": "3211e4bb4344dadab7b55300a7b97422d8c3ef252bb6a32f00b87dca28fdea63"
+    },
+    {
+      "path": "shared/storage/src/androidMain/kotlin/com/feedme/storage/AndroidSessionControlStore.kt",
+      "bytes": 1153,
+      "sha256": "a0c63347829254b9c055bf6a540d8dbae96c43ea880b8f6e3b8b1c210ee9f052"
+    },
+    {
+      "path": "shared/storage/src/androidMain/kotlin/com/feedme/storage/AndroidSessionWorkStore.kt",
+      "bytes": 1143,
+      "sha256": "45e6f7a1d444ebb57cc7c14e91300b15982c98172c7c0f05fee6f7a50dd32588"
+    },
+    {
+      "path": "shared/storage/src/androidMain/kotlin/com/feedme/storage/AndroidStateDatabase.kt",
+      "bytes": 20669,
+      "sha256": "f5dff62fb38b238d94624ddd73fe5603865b16b5da3248b3d8852c2f84789bb4"
+    },
+    {
+      "path": "shared/storage/src/androidMain/kotlin/com/feedme/storage/AndroidStateVault.kt",
+      "bytes": 8337,
+      "sha256": "db13c855d88758aacc0e9055c6e5c459ef2ff58d2e32ced8a4db5560ed08f27c"
+    },
+    {
+      "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/EncryptedSessionControlStore.kt",
+      "bytes": 6390,
+      "sha256": "6456c1a41b08b563f66be3a3f077751f2927e9759baf48c6addede965330d759"
+    },
+    {
+      "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/EncryptedSessionWorkStore.kt",
+      "bytes": 7699,
+      "sha256": "72c10d4eff246f6554a368c1cf3fc8e09e10bbdde094dea74681b81dc76bf902"
+    },
+    {
+      "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/EncryptedStateDatabase.kt",
+      "bytes": 59758,
+      "sha256": "9523d2ee1ceab02428a1cc35ad7ae6bf2f45612c11c17d7f0f5c78ea95433ee6"
+    },
+    {
+      "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/StateActivationPlan.kt",
+      "bytes": 2884,
+      "sha256": "fa25a86cc0115cacbc8009142a33643be5c9689fddd37dfe9ace5c08c08b385c"
+    },
+    {
+      "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/StateActivationPlanAuthentication.kt",
+      "bytes": 2125,
+      "sha256": "0a6af5da54976a86d88dfd960fc27fe21742fe7f83ab4baaec993c1d94c78483"
+    },
+    {
+      "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/StateActivationPlanCodec.kt",
+      "bytes": 3196,
+      "sha256": "a021661244b3f08cb459256ef9cefab037855da92298426caa7ab1ce4be83856"
+    },
+    {
+      "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/StateActivationRecoveryHandle.kt",
+      "bytes": 1017,
+      "sha256": "fb3192eeb77ff791e3679f96bc4d9c95836f9abfa9b0ae99e26a5e6db8b0f26a"
+    },
+    {
+      "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/StateOwnerInspection.kt",
+      "bytes": 604,
+      "sha256": "363f4b9b026e97185ffd311288a2ef4b796fa29ad6d48bced8ab80db6268b8f5"
+    },
+    {
+      "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/StateRecordInspection.kt",
+      "bytes": 665,
+      "sha256": "4d095651bdca199647f6d0ec6c57a3b2b83f8014081ca45a8f04252a28720396"
+    },
+    {
+      "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/StateRetirementTarget.kt",
+      "bytes": 782,
+      "sha256": "4f7357f9de799ddfc2f24d31d6a0f73105eb730aec763163325d11198cc0ab35"
+    },
+    {
+      "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/StateVault.kt",
+      "bytes": 1823,
+      "sha256": "6b202361c77bf806870c5c485231af1cd23fa7643409eab482f34b8a232e1dd9"
+    },
+    {
+      "path": "shared/storage/src/commonTest/kotlin/com/feedme/storage/StateActivationPlanCodecTest.kt",
+      "bytes": 10134,
+      "sha256": "257be313ae42d44533546222b80147ae2f00522608b52f044f2f3cf8a01a856a"
+    },
+    {
+      "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/DurableCommandStorageTest.kt",
+      "bytes": 22709,
+      "sha256": "9cfa2aff03318a58bae432fcc9fa2b57fcfd9ec208e93cca79fe52cf5a0e4dea"
+    },
+    {
+      "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/EmptyStateRetirementTest.kt",
+      "bytes": 27472,
+      "sha256": "e67def287430c3a0569f0f1028a1a9611d1a400d2e42271ac1ba203fa05cc8e4"
+    },
+    {
+      "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/EncryptedRetirementTest.kt",
+      "bytes": 30532,
+      "sha256": "660cf56036000032292d116487c803e578f9592bf77dbf43462ac28e67702161"
+    },
+    {
+      "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/EncryptedStateDatabaseTest.kt",
+      "bytes": 43062,
+      "sha256": "c867062a28fad917e9aadb9d4c2eb45f001518a7da3da2398096b5655fc3941d"
+    },
+    {
+      "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/KitchenStorageTest.kt",
+      "bytes": 37049,
+      "sha256": "15a99b6e423fdfe7b09e9fc6d1e4da23114bf4f329d9a76014ae3dd8d7803bdf"
+    },
+    {
+      "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/LocalRetirementCoordinatorTest.kt",
+      "bytes": 73805,
+      "sha256": "afd31b30ec8744dc635f6775cb843ca6bcd4ea7a5885ee6b0e99d0aae29deb40"
+    },
+    {
+      "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/PlannedStateActivationRecoveryTest.kt",
+      "bytes": 53063,
+      "sha256": "81bdf2eb63b7c354c6f7b54a585107733f30c72d2af21b580c41492009a2b4ae"
+    },
+    {
+      "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/PlannedStateActivationTest.kt",
+      "bytes": 33430,
+      "sha256": "4ffa124b22bb1b8ebde14029f03bfa94affb7841ae2d273ece1fa5af69926e42"
+    },
+    {
+      "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/PrivateSessionRuntimeTest.kt",
+      "bytes": 108859,
+      "sha256": "5d0b9927734bd7071123fa1ed521c0e0e79b1e34f138cb54623a7e0e7692f3a5"
+    },
+    {
+      "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/SessionControlStoreTest.kt",
+      "bytes": 16100,
+      "sha256": "15a56fe1433a32bfcc9d9b19f2309d4ca6cb21cde56db685b4b262ead0a0b236"
+    },
+    {
+      "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/SessionSetupJournalTestFixtures.kt",
+      "bytes": 1899,
+      "sha256": "153f22aa4796905424bd9c520f37fe528cf0a75843b6e11919967e350dfc7c25"
+    },
+    {
+      "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/SessionWorkRegistryStorageTest.kt",
+      "bytes": 28772,
+      "sha256": "fdc2e0d600ca21166b9bb219d0d1f7c4eb707e1f975946e9debb5622ada59350"
+    },
+    {
+      "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/SessionWorkStoreTest.kt",
+      "bytes": 15796,
+      "sha256": "2cb6fefc88b4729dc77e5f04a5a19114216977d07080baad19d78979b52287da"
+    },
+    {
+      "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/StateActivationPlanStorageCodecTest.kt",
+      "bytes": 6859,
+      "sha256": "8db64056ff9962914f8a1fae7c164aed3bdb6068fba7b900b344b72f01b31ae0"
+    },
+    {
+      "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/StateRecordInspectionTest.kt",
+      "bytes": 25067,
+      "sha256": "64add197b321782c4916d0a1fc3d5c7be5f77a63ca10143e42dd080c63cabab7"
+    },
+    {
+      "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/WorkOriginPlanAuthenticationTest.kt",
+      "bytes": 23372,
+      "sha256": "d103c781be68c45251edb15429bc015614eccb8257485efac92d56d91a347e9e"
+    },
+    {
+      "path": "shared/sync/build.gradle.kts",
+      "bytes": 916,
+      "sha256": "84c1539e3e163dd013d90b563174392b5da70339494edd3aeb95b7e0df806baa"
+    },
+    {
+      "path": "shared/sync/src/commonMain/kotlin/com/feedme/sync/CommandModels.kt",
+      "bytes": 4926,
+      "sha256": "80d9af3189c9c59f814ab89f08d3b2fa6c1c06026c4090404ad3b569777db7d7"
+    },
+    {
+      "path": "shared/sync/src/commonMain/kotlin/com/feedme/sync/CommandPolicy.kt",
+      "bytes": 2823,
+      "sha256": "28d784a980b892303c90481ce9fb82f015662fc79e7c298223e3e1dc9f324c66"
+    },
+    {
+      "path": "shared/sync/src/commonMain/kotlin/com/feedme/sync/DurableCommandQueue.kt",
+      "bytes": 35678,
+      "sha256": "263ad8f8daeeb0c4196f876bcbc6a377d01869fecab77196675310480aab7399"
+    },
+    {
+      "path": "shared/sync/src/commonMain/kotlin/com/feedme/sync/JournalCodec.kt",
+      "bytes": 13050,
+      "sha256": "2f905f4b7139cbdf3a68c71da849f581e454fe9a01de7697b9891b2de8d23c4d"
+    },
+    {
+      "path": "shared/sync/src/commonMain/kotlin/com/feedme/sync/ProcessCommandClaims.kt",
+      "bytes": 1247,
+      "sha256": "9588b436914ece6b3941fa47c43ada991ab5f01969a7ce28deab392e80e352a1"
+    },
+    {
+      "path": "shared/sync/src/commonMain/kotlin/com/feedme/sync/RetrySeconds.kt",
+      "bytes": 1346,
+      "sha256": "1c093a61bf7f22e3fa6e73ff06df937bfc31b05c1fb911b7ed760bb2cbb704cd"
+    },
+    {
+      "path": "shared/sync/src/commonTest/kotlin/com/feedme/sync/DurableCommandQueueTest.kt",
+      "bytes": 58861,
+      "sha256": "0c8a7858b5b15712303b28d4c31863b1fbcf5b741a40b9de1e04b9e572bbf4d5"
+    },
+    {
+      "path": "shared/sync/src/commonTest/kotlin/com/feedme/sync/JournalCodecTest.kt",
+      "bytes": 18365,
+      "sha256": "84404e2e9809be1f70201e01739c48d5474a1486dd7f282163cfbfc4b3e0a10f"
+    },
+    {
+      "path": "shared/sync/src/commonTest/kotlin/com/feedme/sync/RetrySecondsTest.kt",
+      "bytes": 1477,
+      "sha256": "b965468d4235ec6b92ab8a5213c97ab30928f2e9b409a7e1b0cf931554b3a206"
+    },
+    {
+      "path": "shared/sync/src/commonTest/kotlin/com/feedme/sync/TargetedAutomaticDispatchTest.kt",
+      "bytes": 25848,
+      "sha256": "8880196fe1a89111e4916423e4d3b4ad26024afeb15be94507d4225bce987c32"
+    },
+    {
+      "path": "shared/transport/build.gradle.kts",
+      "bytes": 1176,
+      "sha256": "39783f03ff6362742461907903aa17b50dc1b76470b7a23f5d614153dbc10c0f"
+    },
+    {
+      "path": "shared/transport/src/androidMain/kotlin/com/feedme/transport/PlatformHttpClient.kt",
+      "bytes": 4135,
+      "sha256": "92c28065156a42b790081dc45b5e3f9c771968937334a6c50bc149d9eefd18f1"
+    },
+    {
+      "path": "shared/transport/src/commonMain/kotlin/com/feedme/transport/ApiEndpoint.kt",
+      "bytes": 1506,
+      "sha256": "e1b9d70288fceda0bd8fd179e683e0f17d21065f25f6b360ee7a6f744a6e12ac"
+    },
+    {
+      "path": "shared/transport/src/commonMain/kotlin/com/feedme/transport/FeedMeTransport.kt",
+      "bytes": 7629,
+      "sha256": "aea4cbc2a9e5e657b519591342b9bc5f2ecb4215094d2cf41bff1be1cf5bbdb4"
+    },
+    {
+      "path": "shared/transport/src/commonMain/kotlin/com/feedme/transport/HttpExchange.kt",
+      "bytes": 5956,
+      "sha256": "8fffaa06695d880e4282ec2d0bae5b0df61c1b152ffccc665c9319778be9cf07"
+    },
+    {
+      "path": "shared/transport/src/commonMain/kotlin/com/feedme/transport/MobileRequestValidator.kt",
+      "bytes": 1352,
+      "sha256": "bc601b612cdaeb06b9357dd4c125709878861f1e3ae9f6b519b6221cd7cf0fb9"
+    },
+    {
+      "path": "shared/transport/src/commonMain/kotlin/com/feedme/transport/RequestPreparation.kt",
+      "bytes": 12339,
+      "sha256": "cd3eb35072f9728f7ececa16508f2c0b53a2122dcbd85d139ce8e118fc0a567b"
+    },
+    {
+      "path": "shared/transport/src/commonTest/kotlin/com/feedme/transport/ContractTransportTest.kt",
+      "bytes": 10198,
+      "sha256": "70a4c3a53a2bc1939ac49bc0c0b6ebb19cc54987864d542a9002eb4ea90d5517"
+    },
+    {
+      "path": "shared/transport/src/commonTest/kotlin/com/feedme/transport/FeedMeTransportTest.kt",
+      "bytes": 12445,
+      "sha256": "35d271d70e6c3f9386ab420b4f109df99005d39b5778a2842a7ce5b411ac4eb3"
+    },
+    {
+      "path": "shared/transport/src/commonTest/kotlin/com/feedme/transport/HttpExchangeTest.kt",
+      "bytes": 6069,
+      "sha256": "1249b086cd879b560f2ca89e6707e9ae615dcf696b1955469cfd95176b4c4d13"
+    },
+    {
+      "path": "shared/transport/src/commonTest/kotlin/com/feedme/transport/MobileRequestValidatorTest.kt",
+      "bytes": 11770,
+      "sha256": "154f94808870d4e6b63f70471d7ad8db43caf5d347b268b8d71167cd1f18a7a7"
+    },
+    {
+      "path": "shared/transport/src/commonTest/kotlin/com/feedme/transport/RequestPreparationTest.kt",
+      "bytes": 15722,
+      "sha256": "ceffc0f99f8459b43792bc4162e4030b545f3e23cd3deb03d3f9da08cd4103f1"
+    },
+    {
+      "path": "shared/transport/src/iosMain/kotlin/com/feedme/transport/PlatformHttpClient.kt",
+      "bytes": 2071,
+      "sha256": "a88bbb1c52f8b92a1a1b63d70b051e31a9282d13db6f851a2f03e7c5e62fdb08"
+    },
+    {
+      "path": "shared/transport/src/jvmMain/kotlin/com/feedme/transport/PlatformHttpClient.kt",
+      "bytes": 4135,
+      "sha256": "92c28065156a42b790081dc45b5e3f9c771968937334a6c50bc149d9eefd18f1"
+    },
+    {
+      "path": "shared/transport/src/jvmTest/kotlin/com/feedme/transport/RealHttpTransportTest.kt",
+      "bytes": 14104,
+      "sha256": "3de851fe5385e3abbb5c245345f24e8561b45b5f5a97568c336352965d2550ea"
+    }
+  ],
+  "commands": [
+    {
+      "name": "gradle",
+      "startedAt": "2026-09-13T16:13:14.584Z",
+      "finishedAt": "2026-09-13T16:14:22.678Z",
+      "exitCode": 0,
+      "log": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/gradle.log"
+    },
+    {
+      "name": "android-storage-instrumentation",
+      "startedAt": "2026-09-13T16:14:22.678Z",
+      "finishedAt": "2026-09-13T16:14:35.177Z",
+      "exitCode": 0,
+      "log": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage-instrumentation.log"
+    },
+    {
+      "name": "android-session-instrumentation",
+      "startedAt": "2026-09-13T16:14:35.201Z",
+      "finishedAt": "2026-09-13T16:14:53.317Z",
+      "exitCode": 0,
+      "log": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session-instrumentation.log"
+    },
+    {
+      "name": "node-tests",
+      "startedAt": "2026-09-13T16:14:53.336Z",
+      "finishedAt": "2026-09-13T16:14:54.157Z",
+      "exitCode": 0,
+      "log": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/node-tests.log"
+    }
+  ],
+  "tests": [
+    {
+      "name": "core",
+      "tests": 48,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "contracts",
+      "tests": 119,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "transport",
+      "tests": 72,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "storage",
+      "tests": 356,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "sync",
+      "tests": 103,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "kitchen",
+      "tests": 142,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "session",
+      "tests": 322,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "server",
+      "tests": 46,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "postgresql",
+      "tests": 45,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "shared/session/build/libs/session-jvm.jar",
+      "bytes": 502206,
+      "sha256": "28cec4f7985b1f4bde30e0a2882b8e6052bb71eee9d78e96dc7d2d3a2b2d5a13"
+    },
+    {
+      "path": "shared/session/build/outputs/aar/session-debug.aar",
+      "bytes": 604328,
+      "sha256": "0e8ea6f642569c3bc0d5289969aaaaf0e9c18af698d4677e661ea75c341cc14d"
+    },
+    {
+      "path": "shared/session/build/outputs/apk/androidTest/debug/session-debug-androidTest.apk",
+      "bytes": 8607095,
+      "sha256": "92d360f83da80b05185df5f3fb42ff2bc584434c05a5cfb3169ed35f056b21a3"
+    },
+    {
+      "path": "shared/kitchen/build/libs/kitchen-jvm.jar",
+      "bytes": 192499,
+      "sha256": "3e54e3c0e92721bcd53897da0769d8eed701d818b63aebd8dfc21bd9eb6d04cb"
+    },
+    {
+      "path": "shared/kitchen/build/outputs/aar/kitchen-debug.aar",
+      "bytes": 197087,
+      "sha256": "c3a495ac941d229eb10bbe1e8d41cc1bfd3aea29b2d0e17d70818aeb0861a296"
+    },
+    {
+      "path": "shared/sync/build/libs/sync-jvm.jar",
+      "bytes": 150969,
+      "sha256": "890b11bb01d790984db9bfdb25492d3cf06b764f61cf80de59d3c0689c7d3be8"
+    },
+    {
+      "path": "shared/sync/build/outputs/aar/sync-debug.aar",
+      "bytes": 154282,
+      "sha256": "f9822373114b8f63421458a7513a31ee79fe061d66813a523f62504e62931888"
+    },
+    {
+      "path": "shared/storage/build/libs/storage-jvm.jar",
+      "bytes": 121721,
+      "sha256": "4b45971464ffd3f625f2b4f5d668982c8e7227c66b8a1e7299478b6d0aacc724"
+    },
+    {
+      "path": "shared/storage/build/outputs/aar/storage-debug.aar",
+      "bytes": 180811,
+      "sha256": "9d4d9fffe300f6145b6dfc621995b641d3c296bfd38d295b02d6296a8c3e76a0"
+    },
+    {
+      "path": "shared/storage/build/outputs/apk/androidTest/debug/storage-debug-androidTest.apk",
+      "bytes": 8689268,
+      "sha256": "4ace0a9abf410b1e07ca376a470f7dcba224233005b414f6424db78f4b1a9464"
+    },
+    {
+      "path": "shared/transport/build/libs/transport-jvm.jar",
+      "bytes": 67242,
+      "sha256": "4020f6f8de6e9fe1406af80a953b3f904073766d187916c1c11712c1906dd482"
+    },
+    {
+      "path": "shared/transport/build/outputs/aar/transport-debug.aar",
+      "bytes": 68039,
+      "sha256": "221af91a5c97b7e198ea2a34a26328bff92a2b476c1111bf7e03c2e47d7031f7"
+    },
+    {
+      "path": "apps/android/build/outputs/apk/debug/android-debug.apk",
+      "bytes": 18981844,
+      "sha256": "bf6dd07e31a4fd49b798672ba82edcee7f958b9d5c12ae0d7a89491d20ff3805"
+    }
+  ],
+  "native": [
+    {
+      "name": "storage",
+      "android": {
+        "startedAt": "2026-09-13T16:14:22.736Z",
+        "passed": true,
+        "serial": "emulator-5554",
+        "scope": "Isolated Android storage/control/work and authenticated private-data activation components. No-effect work-origin planning is bound to the exact native work store; setup-selected replay obtains a fresh changed-CAS acknowledgement without a lease, native effect or ordinary work binding. Three separate-process work stages retain an opaque plan in an independent encrypted test control store, select it and re-acknowledge it after controlled owner closes; this is not production composite journaling or hard-kill recovery. Three separate-invocation work-origin VFS tests exercise six initial/replay barriers. The existing nine independent-ledger and six private-data empty-abort VFS cases remain separately invoked. All use explicit URI-selected forwarding VFS errors in the actual bundled engine, not OS errno or physical power-loss failures. Direct owned-connection fixtures do not prove public recovery of rollback journals. Exact selection/recovery grants no lease or record access. Existing storage restart-write/read stages cover a persisted fixture. No composite setup journal, work-origin seal/abort, provider/UI integration, physical-device, iOS or release claim.",
+        "apk": {
+          "path": "shared/storage/build/outputs/apk/androidTest/debug/storage-debug-androidTest.apk",
+          "bytes": 8689268,
+          "sha256": "4ace0a9abf410b1e07ca376a470f7dcba224233005b414f6424db78f4b1a9464"
+        },
+        "apkMetadata": {
+          "path": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/output-metadata.json",
+          "bytes": 429,
+          "sha256": "def5dc8ca9219547edb6ce42c831d996df0a557fa7f7b584b0d9e73da9bddbaa"
+        },
+        "attemptDirectory": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z",
+        "checks": [
+          {
+            "name": "regular",
+            "classes": "com.feedme.storage.AndroidStateVaultTest,com.feedme.storage.AndroidStateDatabaseTest,com.feedme.storage.AndroidSessionControlStoreTest,com.feedme.storage.AndroidSessionWorkStoreTest,com.feedme.storage.AndroidStateActivationPlanTest,com.feedme.storage.AndroidStateActivationRecoveryTest,com.feedme.storage.AndroidSessionWorkOriginPlanTest",
+            "passed": true,
+            "tests": 71,
+            "expected": 71,
+            "identities": [
+              "com.feedme.storage.AndroidStateVaultTest#existingDatabaseNeverRecreatesMissingIndexKey",
+              "com.feedme.storage.AndroidStateVaultTest#authenticationRejectsChangedPayloadTagNonceAadAndKey",
+              "com.feedme.storage.AndroidStateVaultTest#erasedOwnerKeyCannotDecryptAndOtherOwnerRemainsReadable",
+              "com.feedme.storage.AndroidStateVaultTest#nativeKeysAreNonExportableAndEncryptionUsesFreshNonces",
+              "com.feedme.storage.AndroidStateVaultTest#freshDatabaseReusesExistingIndexKey",
+              "com.feedme.storage.AndroidStateDatabaseTest#committedRecordsSurviveReopenAndErasedScopeStaysErased",
+              "com.feedme.storage.AndroidStateDatabaseTest#symlinkDirectoryIsRejectedWithoutChangingItsTarget",
+              "com.feedme.storage.AndroidStateDatabaseTest#existingDatabaseWithMissingIndexKeyFailsClosed",
+              "com.feedme.storage.AndroidStateDatabaseTest#secondManagerFailsWhileLockedAndReopensAfterClose",
+              "com.feedme.storage.AndroidStateDatabaseTest#preexistingWalIsPreservedAndFailureReleasesLock",
+              "com.feedme.storage.AndroidStateDatabaseTest#symlinkDatabaseIsRejectedWithoutChangingItsTargetAndReleasesLock",
+              "com.feedme.storage.AndroidStateDatabaseTest#preexistingSharedMemoryIsPreservedAndFailureReleasesLock",
+              "com.feedme.storage.AndroidStateDatabaseTest#invalidExistingSchemaFailureReleasesManagerCallbackLock",
+              "com.feedme.storage.AndroidSessionControlStoreTest#missingControlDatabaseWithSurvivingKeysFailsWithoutCreatingReplacement",
+              "com.feedme.storage.AndroidSessionControlStoreTest#missingControlIndexKeyFailsWithoutRebindingExistingState",
+              "com.feedme.storage.AndroidSessionControlStoreTest#existingEmptyLockOnlyAndLostAllStateDirectoriesCannotResetRetirementControl",
+              "com.feedme.storage.AndroidSessionControlStoreTest#duplicateControlOpenFailsWhileLifetimeLockIsHeldAndReopensAfterClose",
+              "com.feedme.storage.AndroidSessionControlStoreTest#missingControlOwnerKeyFailsWithoutGeneratingAnotherKey",
+              "com.feedme.storage.AndroidSessionControlStoreTest#existingDatabaseWithMissingLedgerFailsWithoutResettingItsOwner",
+              "com.feedme.storage.AndroidSessionControlStoreTest#existingDatabaseWithMissingControlOwnerFailsWithoutActivatingIt",
+              "com.feedme.storage.AndroidSessionControlStoreTest#nativeControlCasReopensAndSurvivesIndependentOwnerKeyErasure",
+              "com.feedme.storage.AndroidSessionWorkStoreTest#existingDatabaseWithMissingWorkOwnerFailsWithoutActivatingIt",
+              "com.feedme.storage.AndroidSessionWorkStoreTest#duplicateWorkOpenFailsWhileLifetimeLockIsHeldAndReopensAfterClose",
+              "com.feedme.storage.AndroidSessionWorkStoreTest#missingWorkOwnerKeyFailsWithoutGeneratingAnotherKey",
+              "com.feedme.storage.AndroidSessionWorkStoreTest#missingWorkDatabaseWithSurvivingKeysFailsWithoutCreatingReplacement",
+              "com.feedme.storage.AndroidSessionWorkStoreTest#nativeWorkCasReopensAndSurvivesIndependentControlWritesAndOwnerKeyErasure",
+              "com.feedme.storage.AndroidSessionWorkStoreTest#existingEmptyLockOnlyAndLostAllStateDirectoriesCannotInitializeAnIdleRegistry",
+              "com.feedme.storage.AndroidSessionWorkStoreTest#existingDatabaseWithMissingLedgerFailsWithoutResettingItsOwner",
+              "com.feedme.storage.AndroidSessionWorkStoreTest#missingWorkIndexKeyFailsWithoutRebindingExistingState",
+              "com.feedme.storage.AndroidStateActivationPlanTest#planningCommitAndSelectedReplayNeverExecuteUnrelatedKeyGarbageCollection",
+              "com.feedme.storage.AndroidStateActivationPlanTest#unfinishedRetiredKeyOrGarbageEntryCannotBeSilentlyCollectedByPlanning",
+              "com.feedme.storage.AndroidStateActivationPlanTest#fullyRetiredPredecessorCanBePlannedWithoutChangingOtherNativeOwners",
+              "com.feedme.storage.AndroidStateActivationPlanTest#cancellationAfterNativeKeyCreationPropagatesWithoutDeletingItsExactCandidate",
+              "com.feedme.storage.AndroidStateActivationPlanTest#planningIsReadOnlyDetachedOpaqueAndAllocatesNoNativeOwnerKey",
+              "com.feedme.storage.AndroidStateActivationPlanTest#commitAcknowledgesOnlyAndExactSelectedReplayPreservesRecordsAcrossNativeReopen",
+              "com.feedme.storage.AndroidStateActivationPlanTest#candidateReferencesAndOrphanRowsBlockCommitWithoutCreatingOrDeletingKeys",
+              "com.feedme.storage.AndroidStateActivationPlanTest#activeOrChangedOwnerPreconditionsPreserveTheWinningIncarnation",
+              "com.feedme.storage.AndroidStateActivationPlanTest#forgedWrongScopeAndForeignInstallPlansCannotChangeKeysOrFiles",
+              "com.feedme.storage.AndroidStateActivationPlanTest#selectedMissingNativeKeyCannotBeRegeneratedByExactReplay",
+              "com.feedme.storage.AndroidStateActivationPlanTest#interruptedExactKeyCreationRetainsAndReusesTheSameNativeKeyAfterReopen",
+              "com.feedme.storage.AndroidStateActivationPlanTest#nativeCandidateSelectionCreatesNoAliasAndExactCreationNeverOverwritesAnyAlias",
+              "com.feedme.storage.AndroidStateActivationPlanTest#beforeAndAfterRealSqliteCommitFailuresPreserveExactNativeReplay",
+              "com.feedme.storage.AndroidStateActivationPlanTest#selectedReplayDoesNotDecryptOrRewriteUnknownRowsAndTombstones",
+              "com.feedme.storage.AndroidStateActivationRecoveryTest#existingOnlyRefusesOldForeignOrUninitializedSchemaAndWrongIndexType",
+              "com.feedme.storage.AndroidStateActivationRecoveryTest#lostConsumedCommitReceiptNeverDeletesKeyUntilAnotherChangingCommitSucceeds",
+              "com.feedme.storage.AndroidStateActivationRecoveryTest#rollbackWalSharedMemoryAndUnknownChildrenArePreservedAndNeverRecovered",
+              "com.feedme.storage.AndroidStateActivationRecoveryTest#selectedEmptyAbortPreservesSiblingDataAndOldRecoveryCannotEraseNewerOwner",
+              "com.feedme.storage.AndroidStateActivationRecoveryTest#cancellationAndKeyDeletionFailureKeepConsumedPlanRetryableWithoutGarbageCollection",
+              "com.feedme.storage.AndroidStateActivationRecoveryTest#selectedMissingKeyRemainsInspectableAndExplicitlyAbortableWithoutRegeneration",
+              "com.feedme.storage.AndroidStateActivationRecoveryTest#selectedRowsIncludingOnlyTombstonesRejectAbortWithoutDecryptingOrDeleting",
+              "com.feedme.storage.AndroidStateActivationRecoveryTest#partialExactKeyIsConsumedBeforeDeletionAndRepeatedAbortChangesItsReceipt",
+              "com.feedme.storage.AndroidStateActivationRecoveryTest#recoveryAndOrdinaryManagersShareOneLockAndReleaseTheSingleOwnedDescriptor",
+              "com.feedme.storage.AndroidStateActivationRecoveryTest#preparedInspectionIsReadOnlyAndNeverAllocatesKeysOrPrivateHandles",
+              "com.feedme.storage.AndroidStateActivationRecoveryTest#exactUnusableAliasIsPresentForInspectionAndCanBeDeletedWithoutUsingIt",
+              "com.feedme.storage.AndroidStateActivationRecoveryTest#symlinksNonprivateFilesAndNonemptyLockAreRejectedWithoutChangingTargets",
+              "com.feedme.storage.AndroidStateActivationRecoveryTest#missingDirectoryDatabaseLockOrIndexNeverInitializesAnyReplacement",
+              "com.feedme.storage.AndroidStateActivationRecoveryTest#wrongMacScopeAndInstallAreRejectedBeforeOpeningEvenACorruptDatabase",
+              "com.feedme.storage.AndroidSessionWorkOriginPlanTest#selectedReplayChangesRevisionWithIdenticalPayloadAndNoOrdinarySnapshotAuthority",
+              "com.feedme.storage.AndroidSessionWorkOriginPlanTest#ordinaryEmptyRetiringAndEveryNativeEntryPhaseRejectSetupReplayEvenWithSameOrigin",
+              "com.feedme.storage.AndroidSessionWorkOriginPlanTest#equalRevisionIdenticalIdleInAnotherNativeStoreCannotAcceptForeignPlan",
+              "com.feedme.storage.AndroidSessionWorkOriginPlanTest#alteredValidPlanScopeOriginRevisionAndProofAreRejectedWithoutNativeWrites",
+              "com.feedme.storage.AndroidSessionWorkOriginPlanTest#planningAndInspectionPreserveExactNativeFilesRowsKeysAndInactiveBoundary",
+              "com.feedme.storage.AndroidSessionWorkOriginPlanTest#preparedAndSelectedPlansSurviveNativeCloseReopenWithoutNewKeysOrLease",
+              "com.feedme.storage.AndroidSessionWorkOriginPlanTest#selectedMarkerCannotBorrowAnotherPlanOrAcceptUnknownAndMalformedStoredMetadata",
+              "com.feedme.storage.AndroidSessionWorkOriginPlanTest#serializedPlanIsDetachedRedactedAndCanSelectWithoutAllocatingAnotherIdentity",
+              "com.feedme.storage.AndroidSessionWorkOriginPlanTest#changedIdleRevisionCannotBeSelectedByAnOlderPlanOrSilentlyReplanned",
+              "com.feedme.storage.AndroidSessionWorkOriginPlanTest#rejectedOrdinaryRetirementCannotEraseOrPoisonExactSetupSelection",
+              "com.feedme.storage.AndroidSessionWorkOriginPlanTest#liveBoundaryBlocksSetupMethodsWithoutClearingOrReplacingItsExistingLease",
+              "com.feedme.storage.AndroidSessionWorkOriginPlanTest#cancellationAfterRealSelectionCommitNeverReturnsAccessAndExactRetryAcknowledgesAgain",
+              "com.feedme.storage.AndroidSessionWorkOriginPlanTest#closedRegistryAndInvalidPlanningArgumentsCannotMutateNativeEvidence",
+              "com.feedme.storage.AndroidSessionWorkOriginPlanTest#missingSelectedNativeOwnerKeyFailsClosedWithoutRegenerationOrChangedFiles"
+            ],
+            "log": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/regular.log"
+          },
+          {
+            "name": "sync-failure",
+            "classes": "com.feedme.storage.AndroidStateActivationSyncFailureTest",
+            "passed": true,
+            "tests": 6,
+            "expected": 6,
+            "identities": [
+              "com.feedme.storage.AndroidStateActivationSyncFailureTest#injectedVfsFaultIsRestrictedToExactOwnedDatabaseNotAnotherSandbox",
+              "com.feedme.storage.AndroidStateActivationSyncFailureTest#consumedReceiptReplayStillRequiresFreshSuccessfulSyncBeforeDeletingKey",
+              "com.feedme.storage.AndroidStateActivationSyncFailureTest#injectedDatabaseVfsSyncFailureRetainsExactKeyUntilFreshSuccessfulAbort",
+              "com.feedme.storage.AndroidStateActivationSyncFailureTest#observedAbortedReplayCannotAcknowledgeWhenItsNewJournalSyncFails",
+              "com.feedme.storage.AndroidStateActivationSyncFailureTest#injectedPostUnlinkVfsSyncFailureNeverTreatsVisibleConsumeAsDurableAcknowledgement",
+              "com.feedme.storage.AndroidStateActivationSyncFailureTest#injectedJournalVfsSyncFailureRetainsExactKeyUntilFreshSuccessfulAbort"
+            ],
+            "log": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/sync-failure.log"
+          },
+          {
+            "name": "ledger-sync-failure",
+            "classes": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest",
+            "passed": true,
+            "tests": 9,
+            "expected": 9,
+            "identities": [
+              "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workRetirementDatabaseSyncFailureCannotCancelNativeWork",
+              "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#controlDirectorySyncFailureCannotAuthorizeCredentialAbort",
+              "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workReservationDirectorySyncFailureCannotInstallNativeWork",
+              "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workReservationJournalSyncFailureCannotInstallNativeWork",
+              "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workReservationDatabaseSyncFailureCannotInstallNativeWork",
+              "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workRetirementJournalSyncFailureCannotCancelNativeWork",
+              "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workRetirementDirectorySyncFailureCannotCancelNativeWork",
+              "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#controlJournalSyncFailureCannotAuthorizeCredentialAbort",
+              "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#controlDatabaseSyncFailureCannotAuthorizeCredentialAbort"
+            ],
+            "log": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/ledger-sync-failure.log"
+          },
+          {
+            "name": "work-origin-sync-failure",
+            "classes": "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest",
+            "passed": true,
+            "tests": 3,
+            "expected": 3,
+            "identities": [
+              "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#journalSyncFailureCannotAcknowledgeInitialOrReplayedWorkOriginSelection",
+              "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#directorySyncFailureCannotPromoteVisibleWorkOriginSelectionOrReplayToAcknowledgement",
+              "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#databaseSyncFailureCannotAcknowledgeInitialOrReplayedWorkOriginSelection"
+            ],
+            "log": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/work-origin-sync-failure.log"
+          },
+          {
+            "name": "restart-write",
+            "classes": "com.feedme.storage.AndroidStateProcessRestartTest#writeFixture",
+            "stage": "write",
+            "passed": true,
+            "tests": 1,
+            "expected": 1,
+            "identities": [
+              "com.feedme.storage.AndroidStateProcessRestartTest#writeFixture"
+            ],
+            "log": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/restart-write.log"
+          },
+          {
+            "name": "restart-read",
+            "classes": "com.feedme.storage.AndroidStateProcessRestartTest#readFixtureAndCleanup",
+            "stage": "read",
+            "passed": true,
+            "tests": 1,
+            "expected": 1,
+            "identities": [
+              "com.feedme.storage.AndroidStateProcessRestartTest#readFixtureAndCleanup"
+            ],
+            "log": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/restart-read.log"
+          },
+          {
+            "name": "work-origin-plan",
+            "classes": "com.feedme.storage.AndroidSessionWorkOriginProcessTest#preparePlanInFirstProcess",
+            "stage": "work-origin-plan",
+            "passed": true,
+            "tests": 1,
+            "expected": 1,
+            "identities": [
+              "com.feedme.storage.AndroidSessionWorkOriginProcessTest#preparePlanInFirstProcess"
+            ],
+            "log": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/work-origin-plan.log"
+          },
+          {
+            "name": "work-origin-select",
+            "classes": "com.feedme.storage.AndroidSessionWorkOriginProcessTest#selectExactPlanInSecondProcess",
+            "stage": "work-origin-select",
+            "passed": true,
+            "tests": 1,
+            "expected": 1,
+            "identities": [
+              "com.feedme.storage.AndroidSessionWorkOriginProcessTest#selectExactPlanInSecondProcess"
+            ],
+            "log": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/work-origin-select.log"
+          },
+          {
+            "name": "work-origin-replay",
+            "classes": "com.feedme.storage.AndroidSessionWorkOriginProcessTest#reacknowledgeSelectedPlanAndCleanInThirdProcess",
+            "stage": "work-origin-replay",
+            "passed": true,
+            "tests": 1,
+            "expected": 1,
+            "identities": [
+              "com.feedme.storage.AndroidSessionWorkOriginProcessTest#reacknowledgeSelectedPlanAndCleanInThirdProcess"
+            ],
+            "log": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/work-origin-replay.log"
+          },
+          {
+            "name": "owned-test-directories-cleaned",
+            "passed": true
+          }
+        ],
+        "testJniLibraries": [
+          {
+            "entry": "lib/arm64-v8a/libfeedmeSqliteSyncFailure.so",
+            "bytes": 13168,
+            "sha256": "8183318eefd5a6a1bf91a9b43787c56ce5adaafff3373e7fb7fb8af3b4ce2c50"
+          },
+          {
+            "entry": "lib/armeabi-v7a/libfeedmeSqliteSyncFailure.so",
+            "bytes": 9944,
+            "sha256": "5dc7adba8d3bc47be54438f9d192a7519881bd7c654440f8a6611b2e24665617"
+          },
+          {
+            "entry": "lib/x86/libfeedmeSqliteSyncFailure.so",
+            "bytes": 11692,
+            "sha256": "5358f7182510c324829d3814a2fa6da754beb143f30c0e1eca4ab619bcc8d7a4"
+          },
+          {
+            "entry": "lib/x86_64/libfeedmeSqliteSyncFailure.so",
+            "bytes": 12920,
+            "sha256": "5505fdf2169e6b397a236e641dd84c5fee32e3e28fc23e3b69a959ce8705d9c8"
+          }
+        ],
+        "androidApi": "35",
+        "androidAbi": "arm64-v8a",
+        "syncFailures": {
+          "journal": {
+            "identity": "com.feedme.storage.AndroidStateActivationSyncFailureTest#injectedJournalVfsSyncFailureRetainsExactKeyUntilFreshSuccessfulAbort",
+            "mechanism": "injected-vfs-sync-failure",
+            "sqlite": 1034,
+            "failures": 1,
+            "keyDeletes": 0,
+            "vfs": 1,
+            "delegatedUnlink": 0
+          },
+          "database": {
+            "identity": "com.feedme.storage.AndroidStateActivationSyncFailureTest#injectedDatabaseVfsSyncFailureRetainsExactKeyUntilFreshSuccessfulAbort",
+            "mechanism": "injected-vfs-sync-failure",
+            "sqlite": 1034,
+            "failures": 1,
+            "keyDeletes": 0,
+            "vfs": 1,
+            "delegatedUnlink": 0
+          },
+          "directory": {
+            "identity": "com.feedme.storage.AndroidStateActivationSyncFailureTest#injectedPostUnlinkVfsSyncFailureNeverTreatsVisibleConsumeAsDurableAcknowledgement",
+            "mechanism": "injected-vfs-sync-failure",
+            "sqlite": 1290,
+            "failures": 1,
+            "keyDeletes": 0,
+            "vfs": 1,
+            "delegatedUnlink": 1
+          },
+          "consumed-replay": {
+            "identity": "com.feedme.storage.AndroidStateActivationSyncFailureTest#consumedReceiptReplayStillRequiresFreshSuccessfulSyncBeforeDeletingKey",
+            "mechanism": "injected-vfs-sync-failure",
+            "sqlite": 1290,
+            "failures": 1,
+            "keyDeletes": 0,
+            "vfs": 1,
+            "delegatedUnlink": 1
+          },
+          "aborted-replay": {
+            "identity": "com.feedme.storage.AndroidStateActivationSyncFailureTest#observedAbortedReplayCannotAcknowledgeWhenItsNewJournalSyncFails",
+            "mechanism": "injected-vfs-sync-failure",
+            "sqlite": 1034,
+            "failures": 1,
+            "keyDeletes": 0,
+            "vfs": 1,
+            "delegatedUnlink": 0
+          },
+          "exact-scope": {
+            "identity": "com.feedme.storage.AndroidStateActivationSyncFailureTest#injectedVfsFaultIsRestrictedToExactOwnedDatabaseNotAnotherSandbox",
+            "mechanism": "injected-vfs-sync-failure",
+            "sqlite": 1034,
+            "failures": 1,
+            "keyDeletes": 0,
+            "vfs": 1,
+            "delegatedUnlink": 0
+          }
+        },
+        "ledgerSyncFailures": {
+          "control-journal": {
+            "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#controlJournalSyncFailureCannotAuthorizeCredentialAbort",
+            "mechanism": "injected-vfs-sync-failure",
+            "sqlite": 1034,
+            "failures": 1,
+            "effects": 0,
+            "vfs": 1,
+            "delegatedUnlink": 0
+          },
+          "control-database": {
+            "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#controlDatabaseSyncFailureCannotAuthorizeCredentialAbort",
+            "mechanism": "injected-vfs-sync-failure",
+            "sqlite": 1034,
+            "failures": 1,
+            "effects": 0,
+            "vfs": 1,
+            "delegatedUnlink": 0
+          },
+          "control-directory": {
+            "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#controlDirectorySyncFailureCannotAuthorizeCredentialAbort",
+            "mechanism": "injected-vfs-sync-failure",
+            "sqlite": 1290,
+            "failures": 1,
+            "effects": 0,
+            "vfs": 1,
+            "delegatedUnlink": 1
+          },
+          "work-reservation-journal": {
+            "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workReservationJournalSyncFailureCannotInstallNativeWork",
+            "mechanism": "injected-vfs-sync-failure",
+            "sqlite": 1034,
+            "failures": 1,
+            "effects": 0,
+            "vfs": 1,
+            "delegatedUnlink": 0
+          },
+          "work-reservation-database": {
+            "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workReservationDatabaseSyncFailureCannotInstallNativeWork",
+            "mechanism": "injected-vfs-sync-failure",
+            "sqlite": 1034,
+            "failures": 1,
+            "effects": 0,
+            "vfs": 1,
+            "delegatedUnlink": 0
+          },
+          "work-reservation-directory": {
+            "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workReservationDirectorySyncFailureCannotInstallNativeWork",
+            "mechanism": "injected-vfs-sync-failure",
+            "sqlite": 1290,
+            "failures": 1,
+            "effects": 0,
+            "vfs": 1,
+            "delegatedUnlink": 1
+          },
+          "work-retirement-journal": {
+            "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workRetirementJournalSyncFailureCannotCancelNativeWork",
+            "mechanism": "injected-vfs-sync-failure",
+            "sqlite": 1034,
+            "failures": 1,
+            "effects": 0,
+            "vfs": 1,
+            "delegatedUnlink": 0
+          },
+          "work-retirement-database": {
+            "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workRetirementDatabaseSyncFailureCannotCancelNativeWork",
+            "mechanism": "injected-vfs-sync-failure",
+            "sqlite": 1034,
+            "failures": 1,
+            "effects": 0,
+            "vfs": 1,
+            "delegatedUnlink": 0
+          },
+          "work-retirement-directory": {
+            "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workRetirementDirectorySyncFailureCannotCancelNativeWork",
+            "mechanism": "injected-vfs-sync-failure",
+            "sqlite": 1290,
+            "failures": 1,
+            "effects": 0,
+            "vfs": 1,
+            "delegatedUnlink": 1
+          }
+        },
+        "workOriginSyncFailures": {
+          "select-journal": {
+            "identity": "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#journalSyncFailureCannotAcknowledgeInitialOrReplayedWorkOriginSelection",
+            "mechanism": "injected-vfs-sync-failure",
+            "sqlite": 1034,
+            "failures": 1,
+            "effects": 0,
+            "vfs": 1,
+            "delegatedUnlink": 0
+          },
+          "replay-journal": {
+            "identity": "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#journalSyncFailureCannotAcknowledgeInitialOrReplayedWorkOriginSelection",
+            "mechanism": "injected-vfs-sync-failure",
+            "sqlite": 1034,
+            "failures": 1,
+            "effects": 0,
+            "vfs": 1,
+            "delegatedUnlink": 0
+          },
+          "select-database": {
+            "identity": "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#databaseSyncFailureCannotAcknowledgeInitialOrReplayedWorkOriginSelection",
+            "mechanism": "injected-vfs-sync-failure",
+            "sqlite": 1034,
+            "failures": 1,
+            "effects": 0,
+            "vfs": 1,
+            "delegatedUnlink": 0
+          },
+          "replay-database": {
+            "identity": "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#databaseSyncFailureCannotAcknowledgeInitialOrReplayedWorkOriginSelection",
+            "mechanism": "injected-vfs-sync-failure",
+            "sqlite": 1034,
+            "failures": 1,
+            "effects": 0,
+            "vfs": 1,
+            "delegatedUnlink": 0
+          },
+          "select-directory": {
+            "identity": "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#directorySyncFailureCannotPromoteVisibleWorkOriginSelectionOrReplayToAcknowledgement",
+            "mechanism": "injected-vfs-sync-failure",
+            "sqlite": 1290,
+            "failures": 1,
+            "effects": 0,
+            "vfs": 1,
+            "delegatedUnlink": 1
+          },
+          "replay-directory": {
+            "identity": "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#directorySyncFailureCannotPromoteVisibleWorkOriginSelectionOrReplayToAcknowledgement",
+            "mechanism": "injected-vfs-sync-failure",
+            "sqlite": 1290,
+            "failures": 1,
+            "effects": 0,
+            "vfs": 1,
+            "delegatedUnlink": 1
+          }
+        },
+        "finishedAt": "2026-09-13T16:14:35.173Z"
+      },
+      "report": {
+        "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage-smoke.json",
+        "bytes": 25214,
+        "sha256": "e6c4334b681599d9bfd3f1da7632cc4f002d87c92bacf07505ee415e310f1b9c"
+      },
+      "evidence": [
+        {
+          "source": {
+            "path": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/abi.log",
+            "bytes": 10,
+            "sha256": "7f10c3cd4593d1d6ded27d658e7c05216011c955c200aac551caad0c979d4d90"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/abi.log",
+            "bytes": 10,
+            "sha256": "7f10c3cd4593d1d6ded27d658e7c05216011c955c200aac551caad0c979d4d90"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/api.log",
+            "bytes": 3,
+            "sha256": "90d7ec0f0acef104d8b6252794295f661a0149634868d02a1ae0c358099638f5"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/api.log",
+            "bytes": 3,
+            "sha256": "90d7ec0f0acef104d8b6252794295f661a0149634868d02a1ae0c358099638f5"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/boot.log",
+            "bytes": 2,
+            "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/boot.log",
+            "bytes": 2,
+            "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/fixture-cleanup.log",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/fixture-cleanup.log",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/install.log",
+            "bytes": 36,
+            "sha256": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/install.log",
+            "bytes": 36,
+            "sha256": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/ledger-sync-failure.log",
+            "bytes": 7546,
+            "sha256": "a66634db8a0ded07e653b6543e01bee6c3f3f2ac9022ce899042cbb89e833626"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/ledger-sync-failure.log",
+            "bytes": 7546,
+            "sha256": "a66634db8a0ded07e653b6543e01bee6c3f3f2ac9022ce899042cbb89e833626"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/output-metadata.json",
+            "bytes": 429,
+            "sha256": "def5dc8ca9219547edb6ce42c831d996df0a557fa7f7b584b0d9e73da9bddbaa"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/output-metadata.json",
+            "bytes": 429,
+            "sha256": "def5dc8ca9219547edb6ce42c831d996df0a557fa7f7b584b0d9e73da9bddbaa"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/regular.log",
+            "bytes": 50885,
+            "sha256": "f6f3d5c830f884578641eba0ea0253d944662c327274afbecd03cd5c69434472"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/regular.log",
+            "bytes": 50885,
+            "sha256": "f6f3d5c830f884578641eba0ea0253d944662c327274afbecd03cd5c69434472"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/report.json",
+            "bytes": 25214,
+            "sha256": "e6c4334b681599d9bfd3f1da7632cc4f002d87c92bacf07505ee415e310f1b9c"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/report.json",
+            "bytes": 25214,
+            "sha256": "e6c4334b681599d9bfd3f1da7632cc4f002d87c92bacf07505ee415e310f1b9c"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/restart-read.log",
+            "bytes": 754,
+            "sha256": "1da3f6c96036a5a409eba7b7a084a8c20a09871329994d06751cdc9ca2938efa"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/restart-read.log",
+            "bytes": 754,
+            "sha256": "1da3f6c96036a5a409eba7b7a084a8c20a09871329994d06751cdc9ca2938efa"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/restart-write.log",
+            "bytes": 737,
+            "sha256": "038e6030e45319db487ca0d19da1b58e2d1e9d899d6d57f481a98e00a877d262"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/restart-write.log",
+            "bytes": 737,
+            "sha256": "038e6030e45319db487ca0d19da1b58e2d1e9d899d6d57f481a98e00a877d262"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/runner.log",
+            "bytes": 342,
+            "sha256": "5529a753a109e9efcc35e7ee6ed2f5d86f72364634c837ccbc37c770f3a19845"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/runner.log",
+            "bytes": 342,
+            "sha256": "5529a753a109e9efcc35e7ee6ed2f5d86f72364634c837ccbc37c770f3a19845"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/sync-failure.log",
+            "bytes": 5234,
+            "sha256": "1be8d11b79ea4416f0066700c7114dfd4d32a22ff62e09ab5e428777184ac4f4"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/sync-failure.log",
+            "bytes": 5234,
+            "sha256": "1be8d11b79ea4416f0066700c7114dfd4d32a22ff62e09ab5e428777184ac4f4"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/work-origin-plan.log",
+            "bytes": 778,
+            "sha256": "4b2135c47fe6f740505d5e16166a0bb9be9d00d8160b240f2dc39ece5ba0de93"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/work-origin-plan.log",
+            "bytes": 778,
+            "sha256": "4b2135c47fe6f740505d5e16166a0bb9be9d00d8160b240f2dc39ece5ba0de93"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/work-origin-replay.log",
+            "bytes": 822,
+            "sha256": "ae60190e3f0ba339a8229f3bd74be935ccffc5425a2cc765c1f4d21708f4b901"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/work-origin-replay.log",
+            "bytes": 822,
+            "sha256": "ae60190e3f0ba339a8229f3bd74be935ccffc5425a2cc765c1f4d21708f4b901"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/work-origin-select.log",
+            "bytes": 788,
+            "sha256": "68f498c2d6414ab832969497d54be5996008b283115d4fa6b3841dbc647aea9c"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/work-origin-select.log",
+            "bytes": 788,
+            "sha256": "68f498c2d6414ab832969497d54be5996008b283115d4fa6b3841dbc647aea9c"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/client-storage/android-attempts/2026-09-13T16-14-22.736Z/work-origin-sync-failure.log",
+            "bytes": 3097,
+            "sha256": "3a4264630a6e8afcb4fa180d62726b93d41a41ed5522413bb845358cf1a4f162"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/work-origin-sync-failure.log",
+            "bytes": 3097,
+            "sha256": "3a4264630a6e8afcb4fa180d62726b93d41a41ed5522413bb845358cf1a4f162"
+          }
+        }
+      ],
+      "completedTests": [
+        {
+          "name": "regular",
+          "identities": [
+            "com.feedme.storage.AndroidStateVaultTest#existingDatabaseNeverRecreatesMissingIndexKey",
+            "com.feedme.storage.AndroidStateVaultTest#authenticationRejectsChangedPayloadTagNonceAadAndKey",
+            "com.feedme.storage.AndroidStateVaultTest#erasedOwnerKeyCannotDecryptAndOtherOwnerRemainsReadable",
+            "com.feedme.storage.AndroidStateVaultTest#nativeKeysAreNonExportableAndEncryptionUsesFreshNonces",
+            "com.feedme.storage.AndroidStateVaultTest#freshDatabaseReusesExistingIndexKey",
+            "com.feedme.storage.AndroidStateDatabaseTest#committedRecordsSurviveReopenAndErasedScopeStaysErased",
+            "com.feedme.storage.AndroidStateDatabaseTest#symlinkDirectoryIsRejectedWithoutChangingItsTarget",
+            "com.feedme.storage.AndroidStateDatabaseTest#existingDatabaseWithMissingIndexKeyFailsClosed",
+            "com.feedme.storage.AndroidStateDatabaseTest#secondManagerFailsWhileLockedAndReopensAfterClose",
+            "com.feedme.storage.AndroidStateDatabaseTest#preexistingWalIsPreservedAndFailureReleasesLock",
+            "com.feedme.storage.AndroidStateDatabaseTest#symlinkDatabaseIsRejectedWithoutChangingItsTargetAndReleasesLock",
+            "com.feedme.storage.AndroidStateDatabaseTest#preexistingSharedMemoryIsPreservedAndFailureReleasesLock",
+            "com.feedme.storage.AndroidStateDatabaseTest#invalidExistingSchemaFailureReleasesManagerCallbackLock",
+            "com.feedme.storage.AndroidSessionControlStoreTest#missingControlDatabaseWithSurvivingKeysFailsWithoutCreatingReplacement",
+            "com.feedme.storage.AndroidSessionControlStoreTest#missingControlIndexKeyFailsWithoutRebindingExistingState",
+            "com.feedme.storage.AndroidSessionControlStoreTest#existingEmptyLockOnlyAndLostAllStateDirectoriesCannotResetRetirementControl",
+            "com.feedme.storage.AndroidSessionControlStoreTest#duplicateControlOpenFailsWhileLifetimeLockIsHeldAndReopensAfterClose",
+            "com.feedme.storage.AndroidSessionControlStoreTest#missingControlOwnerKeyFailsWithoutGeneratingAnotherKey",
+            "com.feedme.storage.AndroidSessionControlStoreTest#existingDatabaseWithMissingLedgerFailsWithoutResettingItsOwner",
+            "com.feedme.storage.AndroidSessionControlStoreTest#existingDatabaseWithMissingControlOwnerFailsWithoutActivatingIt",
+            "com.feedme.storage.AndroidSessionControlStoreTest#nativeControlCasReopensAndSurvivesIndependentOwnerKeyErasure",
+            "com.feedme.storage.AndroidSessionWorkStoreTest#existingDatabaseWithMissingWorkOwnerFailsWithoutActivatingIt",
+            "com.feedme.storage.AndroidSessionWorkStoreTest#duplicateWorkOpenFailsWhileLifetimeLockIsHeldAndReopensAfterClose",
+            "com.feedme.storage.AndroidSessionWorkStoreTest#missingWorkOwnerKeyFailsWithoutGeneratingAnotherKey",
+            "com.feedme.storage.AndroidSessionWorkStoreTest#missingWorkDatabaseWithSurvivingKeysFailsWithoutCreatingReplacement",
+            "com.feedme.storage.AndroidSessionWorkStoreTest#nativeWorkCasReopensAndSurvivesIndependentControlWritesAndOwnerKeyErasure",
+            "com.feedme.storage.AndroidSessionWorkStoreTest#existingEmptyLockOnlyAndLostAllStateDirectoriesCannotInitializeAnIdleRegistry",
+            "com.feedme.storage.AndroidSessionWorkStoreTest#existingDatabaseWithMissingLedgerFailsWithoutResettingItsOwner",
+            "com.feedme.storage.AndroidSessionWorkStoreTest#missingWorkIndexKeyFailsWithoutRebindingExistingState",
+            "com.feedme.storage.AndroidStateActivationPlanTest#planningCommitAndSelectedReplayNeverExecuteUnrelatedKeyGarbageCollection",
+            "com.feedme.storage.AndroidStateActivationPlanTest#unfinishedRetiredKeyOrGarbageEntryCannotBeSilentlyCollectedByPlanning",
+            "com.feedme.storage.AndroidStateActivationPlanTest#fullyRetiredPredecessorCanBePlannedWithoutChangingOtherNativeOwners",
+            "com.feedme.storage.AndroidStateActivationPlanTest#cancellationAfterNativeKeyCreationPropagatesWithoutDeletingItsExactCandidate",
+            "com.feedme.storage.AndroidStateActivationPlanTest#planningIsReadOnlyDetachedOpaqueAndAllocatesNoNativeOwnerKey",
+            "com.feedme.storage.AndroidStateActivationPlanTest#commitAcknowledgesOnlyAndExactSelectedReplayPreservesRecordsAcrossNativeReopen",
+            "com.feedme.storage.AndroidStateActivationPlanTest#candidateReferencesAndOrphanRowsBlockCommitWithoutCreatingOrDeletingKeys",
+            "com.feedme.storage.AndroidStateActivationPlanTest#activeOrChangedOwnerPreconditionsPreserveTheWinningIncarnation",
+            "com.feedme.storage.AndroidStateActivationPlanTest#forgedWrongScopeAndForeignInstallPlansCannotChangeKeysOrFiles",
+            "com.feedme.storage.AndroidStateActivationPlanTest#selectedMissingNativeKeyCannotBeRegeneratedByExactReplay",
+            "com.feedme.storage.AndroidStateActivationPlanTest#interruptedExactKeyCreationRetainsAndReusesTheSameNativeKeyAfterReopen",
+            "com.feedme.storage.AndroidStateActivationPlanTest#nativeCandidateSelectionCreatesNoAliasAndExactCreationNeverOverwritesAnyAlias",
+            "com.feedme.storage.AndroidStateActivationPlanTest#beforeAndAfterRealSqliteCommitFailuresPreserveExactNativeReplay",
+            "com.feedme.storage.AndroidStateActivationPlanTest#selectedReplayDoesNotDecryptOrRewriteUnknownRowsAndTombstones",
+            "com.feedme.storage.AndroidStateActivationRecoveryTest#existingOnlyRefusesOldForeignOrUninitializedSchemaAndWrongIndexType",
+            "com.feedme.storage.AndroidStateActivationRecoveryTest#lostConsumedCommitReceiptNeverDeletesKeyUntilAnotherChangingCommitSucceeds",
+            "com.feedme.storage.AndroidStateActivationRecoveryTest#rollbackWalSharedMemoryAndUnknownChildrenArePreservedAndNeverRecovered",
+            "com.feedme.storage.AndroidStateActivationRecoveryTest#selectedEmptyAbortPreservesSiblingDataAndOldRecoveryCannotEraseNewerOwner",
+            "com.feedme.storage.AndroidStateActivationRecoveryTest#cancellationAndKeyDeletionFailureKeepConsumedPlanRetryableWithoutGarbageCollection",
+            "com.feedme.storage.AndroidStateActivationRecoveryTest#selectedMissingKeyRemainsInspectableAndExplicitlyAbortableWithoutRegeneration",
+            "com.feedme.storage.AndroidStateActivationRecoveryTest#selectedRowsIncludingOnlyTombstonesRejectAbortWithoutDecryptingOrDeleting",
+            "com.feedme.storage.AndroidStateActivationRecoveryTest#partialExactKeyIsConsumedBeforeDeletionAndRepeatedAbortChangesItsReceipt",
+            "com.feedme.storage.AndroidStateActivationRecoveryTest#recoveryAndOrdinaryManagersShareOneLockAndReleaseTheSingleOwnedDescriptor",
+            "com.feedme.storage.AndroidStateActivationRecoveryTest#preparedInspectionIsReadOnlyAndNeverAllocatesKeysOrPrivateHandles",
+            "com.feedme.storage.AndroidStateActivationRecoveryTest#exactUnusableAliasIsPresentForInspectionAndCanBeDeletedWithoutUsingIt",
+            "com.feedme.storage.AndroidStateActivationRecoveryTest#symlinksNonprivateFilesAndNonemptyLockAreRejectedWithoutChangingTargets",
+            "com.feedme.storage.AndroidStateActivationRecoveryTest#missingDirectoryDatabaseLockOrIndexNeverInitializesAnyReplacement",
+            "com.feedme.storage.AndroidStateActivationRecoveryTest#wrongMacScopeAndInstallAreRejectedBeforeOpeningEvenACorruptDatabase",
+            "com.feedme.storage.AndroidSessionWorkOriginPlanTest#selectedReplayChangesRevisionWithIdenticalPayloadAndNoOrdinarySnapshotAuthority",
+            "com.feedme.storage.AndroidSessionWorkOriginPlanTest#ordinaryEmptyRetiringAndEveryNativeEntryPhaseRejectSetupReplayEvenWithSameOrigin",
+            "com.feedme.storage.AndroidSessionWorkOriginPlanTest#equalRevisionIdenticalIdleInAnotherNativeStoreCannotAcceptForeignPlan",
+            "com.feedme.storage.AndroidSessionWorkOriginPlanTest#alteredValidPlanScopeOriginRevisionAndProofAreRejectedWithoutNativeWrites",
+            "com.feedme.storage.AndroidSessionWorkOriginPlanTest#planningAndInspectionPreserveExactNativeFilesRowsKeysAndInactiveBoundary",
+            "com.feedme.storage.AndroidSessionWorkOriginPlanTest#preparedAndSelectedPlansSurviveNativeCloseReopenWithoutNewKeysOrLease",
+            "com.feedme.storage.AndroidSessionWorkOriginPlanTest#selectedMarkerCannotBorrowAnotherPlanOrAcceptUnknownAndMalformedStoredMetadata",
+            "com.feedme.storage.AndroidSessionWorkOriginPlanTest#serializedPlanIsDetachedRedactedAndCanSelectWithoutAllocatingAnotherIdentity",
+            "com.feedme.storage.AndroidSessionWorkOriginPlanTest#changedIdleRevisionCannotBeSelectedByAnOlderPlanOrSilentlyReplanned",
+            "com.feedme.storage.AndroidSessionWorkOriginPlanTest#rejectedOrdinaryRetirementCannotEraseOrPoisonExactSetupSelection",
+            "com.feedme.storage.AndroidSessionWorkOriginPlanTest#liveBoundaryBlocksSetupMethodsWithoutClearingOrReplacingItsExistingLease",
+            "com.feedme.storage.AndroidSessionWorkOriginPlanTest#cancellationAfterRealSelectionCommitNeverReturnsAccessAndExactRetryAcknowledgesAgain",
+            "com.feedme.storage.AndroidSessionWorkOriginPlanTest#closedRegistryAndInvalidPlanningArgumentsCannotMutateNativeEvidence",
+            "com.feedme.storage.AndroidSessionWorkOriginPlanTest#missingSelectedNativeOwnerKeyFailsClosedWithoutRegenerationOrChangedFiles"
+          ]
+        },
+        {
+          "name": "sync-failure",
+          "identities": [
+            "com.feedme.storage.AndroidStateActivationSyncFailureTest#injectedVfsFaultIsRestrictedToExactOwnedDatabaseNotAnotherSandbox",
+            "com.feedme.storage.AndroidStateActivationSyncFailureTest#consumedReceiptReplayStillRequiresFreshSuccessfulSyncBeforeDeletingKey",
+            "com.feedme.storage.AndroidStateActivationSyncFailureTest#injectedDatabaseVfsSyncFailureRetainsExactKeyUntilFreshSuccessfulAbort",
+            "com.feedme.storage.AndroidStateActivationSyncFailureTest#observedAbortedReplayCannotAcknowledgeWhenItsNewJournalSyncFails",
+            "com.feedme.storage.AndroidStateActivationSyncFailureTest#injectedPostUnlinkVfsSyncFailureNeverTreatsVisibleConsumeAsDurableAcknowledgement",
+            "com.feedme.storage.AndroidStateActivationSyncFailureTest#injectedJournalVfsSyncFailureRetainsExactKeyUntilFreshSuccessfulAbort"
+          ]
+        },
+        {
+          "name": "ledger-sync-failure",
+          "identities": [
+            "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workRetirementDatabaseSyncFailureCannotCancelNativeWork",
+            "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#controlDirectorySyncFailureCannotAuthorizeCredentialAbort",
+            "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workReservationDirectorySyncFailureCannotInstallNativeWork",
+            "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workReservationJournalSyncFailureCannotInstallNativeWork",
+            "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workReservationDatabaseSyncFailureCannotInstallNativeWork",
+            "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workRetirementJournalSyncFailureCannotCancelNativeWork",
+            "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workRetirementDirectorySyncFailureCannotCancelNativeWork",
+            "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#controlJournalSyncFailureCannotAuthorizeCredentialAbort",
+            "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#controlDatabaseSyncFailureCannotAuthorizeCredentialAbort"
+          ]
+        },
+        {
+          "name": "work-origin-sync-failure",
+          "identities": [
+            "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#journalSyncFailureCannotAcknowledgeInitialOrReplayedWorkOriginSelection",
+            "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#directorySyncFailureCannotPromoteVisibleWorkOriginSelectionOrReplayToAcknowledgement",
+            "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#databaseSyncFailureCannotAcknowledgeInitialOrReplayedWorkOriginSelection"
+          ]
+        },
+        {
+          "name": "work-origin-plan",
+          "identities": [
+            "com.feedme.storage.AndroidSessionWorkOriginProcessTest#preparePlanInFirstProcess"
+          ]
+        },
+        {
+          "name": "work-origin-select",
+          "identities": [
+            "com.feedme.storage.AndroidSessionWorkOriginProcessTest#selectExactPlanInSecondProcess"
+          ]
+        },
+        {
+          "name": "work-origin-replay",
+          "identities": [
+            "com.feedme.storage.AndroidSessionWorkOriginProcessTest#reacknowledgeSelectedPlanAndCleanInThirdProcess"
+          ]
+        },
+        {
+          "name": "restart-write",
+          "identities": [
+            "com.feedme.storage.AndroidStateProcessRestartTest#writeFixture"
+          ]
+        },
+        {
+          "name": "restart-read",
+          "identities": [
+            "com.feedme.storage.AndroidStateProcessRestartTest#readFixtureAndCleanup"
+          ]
+        }
+      ],
+      "syncFailures": {
+        "journal": {
+          "identity": "com.feedme.storage.AndroidStateActivationSyncFailureTest#injectedJournalVfsSyncFailureRetainsExactKeyUntilFreshSuccessfulAbort",
+          "mechanism": "injected-vfs-sync-failure",
+          "sqlite": 1034,
+          "failures": 1,
+          "keyDeletes": 0,
+          "vfs": 1,
+          "delegatedUnlink": 0
+        },
+        "database": {
+          "identity": "com.feedme.storage.AndroidStateActivationSyncFailureTest#injectedDatabaseVfsSyncFailureRetainsExactKeyUntilFreshSuccessfulAbort",
+          "mechanism": "injected-vfs-sync-failure",
+          "sqlite": 1034,
+          "failures": 1,
+          "keyDeletes": 0,
+          "vfs": 1,
+          "delegatedUnlink": 0
+        },
+        "directory": {
+          "identity": "com.feedme.storage.AndroidStateActivationSyncFailureTest#injectedPostUnlinkVfsSyncFailureNeverTreatsVisibleConsumeAsDurableAcknowledgement",
+          "mechanism": "injected-vfs-sync-failure",
+          "sqlite": 1290,
+          "failures": 1,
+          "keyDeletes": 0,
+          "vfs": 1,
+          "delegatedUnlink": 1
+        },
+        "consumed-replay": {
+          "identity": "com.feedme.storage.AndroidStateActivationSyncFailureTest#consumedReceiptReplayStillRequiresFreshSuccessfulSyncBeforeDeletingKey",
+          "mechanism": "injected-vfs-sync-failure",
+          "sqlite": 1290,
+          "failures": 1,
+          "keyDeletes": 0,
+          "vfs": 1,
+          "delegatedUnlink": 1
+        },
+        "aborted-replay": {
+          "identity": "com.feedme.storage.AndroidStateActivationSyncFailureTest#observedAbortedReplayCannotAcknowledgeWhenItsNewJournalSyncFails",
+          "mechanism": "injected-vfs-sync-failure",
+          "sqlite": 1034,
+          "failures": 1,
+          "keyDeletes": 0,
+          "vfs": 1,
+          "delegatedUnlink": 0
+        },
+        "exact-scope": {
+          "identity": "com.feedme.storage.AndroidStateActivationSyncFailureTest#injectedVfsFaultIsRestrictedToExactOwnedDatabaseNotAnotherSandbox",
+          "mechanism": "injected-vfs-sync-failure",
+          "sqlite": 1034,
+          "failures": 1,
+          "keyDeletes": 0,
+          "vfs": 1,
+          "delegatedUnlink": 0
+        }
+      },
+      "ledgerSyncFailures": {
+        "control-journal": {
+          "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#controlJournalSyncFailureCannotAuthorizeCredentialAbort",
+          "mechanism": "injected-vfs-sync-failure",
+          "sqlite": 1034,
+          "failures": 1,
+          "effects": 0,
+          "vfs": 1,
+          "delegatedUnlink": 0
+        },
+        "control-database": {
+          "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#controlDatabaseSyncFailureCannotAuthorizeCredentialAbort",
+          "mechanism": "injected-vfs-sync-failure",
+          "sqlite": 1034,
+          "failures": 1,
+          "effects": 0,
+          "vfs": 1,
+          "delegatedUnlink": 0
+        },
+        "control-directory": {
+          "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#controlDirectorySyncFailureCannotAuthorizeCredentialAbort",
+          "mechanism": "injected-vfs-sync-failure",
+          "sqlite": 1290,
+          "failures": 1,
+          "effects": 0,
+          "vfs": 1,
+          "delegatedUnlink": 1
+        },
+        "work-reservation-journal": {
+          "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workReservationJournalSyncFailureCannotInstallNativeWork",
+          "mechanism": "injected-vfs-sync-failure",
+          "sqlite": 1034,
+          "failures": 1,
+          "effects": 0,
+          "vfs": 1,
+          "delegatedUnlink": 0
+        },
+        "work-reservation-database": {
+          "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workReservationDatabaseSyncFailureCannotInstallNativeWork",
+          "mechanism": "injected-vfs-sync-failure",
+          "sqlite": 1034,
+          "failures": 1,
+          "effects": 0,
+          "vfs": 1,
+          "delegatedUnlink": 0
+        },
+        "work-reservation-directory": {
+          "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workReservationDirectorySyncFailureCannotInstallNativeWork",
+          "mechanism": "injected-vfs-sync-failure",
+          "sqlite": 1290,
+          "failures": 1,
+          "effects": 0,
+          "vfs": 1,
+          "delegatedUnlink": 1
+        },
+        "work-retirement-journal": {
+          "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workRetirementJournalSyncFailureCannotCancelNativeWork",
+          "mechanism": "injected-vfs-sync-failure",
+          "sqlite": 1034,
+          "failures": 1,
+          "effects": 0,
+          "vfs": 1,
+          "delegatedUnlink": 0
+        },
+        "work-retirement-database": {
+          "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workRetirementDatabaseSyncFailureCannotCancelNativeWork",
+          "mechanism": "injected-vfs-sync-failure",
+          "sqlite": 1034,
+          "failures": 1,
+          "effects": 0,
+          "vfs": 1,
+          "delegatedUnlink": 0
+        },
+        "work-retirement-directory": {
+          "identity": "com.feedme.storage.AndroidSessionLedgerSyncFailureTest#workRetirementDirectorySyncFailureCannotCancelNativeWork",
+          "mechanism": "injected-vfs-sync-failure",
+          "sqlite": 1290,
+          "failures": 1,
+          "effects": 0,
+          "vfs": 1,
+          "delegatedUnlink": 1
+        }
+      },
+      "workOriginSyncFailures": {
+        "select-journal": {
+          "identity": "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#journalSyncFailureCannotAcknowledgeInitialOrReplayedWorkOriginSelection",
+          "mechanism": "injected-vfs-sync-failure",
+          "sqlite": 1034,
+          "failures": 1,
+          "effects": 0,
+          "vfs": 1,
+          "delegatedUnlink": 0
+        },
+        "replay-journal": {
+          "identity": "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#journalSyncFailureCannotAcknowledgeInitialOrReplayedWorkOriginSelection",
+          "mechanism": "injected-vfs-sync-failure",
+          "sqlite": 1034,
+          "failures": 1,
+          "effects": 0,
+          "vfs": 1,
+          "delegatedUnlink": 0
+        },
+        "select-database": {
+          "identity": "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#databaseSyncFailureCannotAcknowledgeInitialOrReplayedWorkOriginSelection",
+          "mechanism": "injected-vfs-sync-failure",
+          "sqlite": 1034,
+          "failures": 1,
+          "effects": 0,
+          "vfs": 1,
+          "delegatedUnlink": 0
+        },
+        "replay-database": {
+          "identity": "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#databaseSyncFailureCannotAcknowledgeInitialOrReplayedWorkOriginSelection",
+          "mechanism": "injected-vfs-sync-failure",
+          "sqlite": 1034,
+          "failures": 1,
+          "effects": 0,
+          "vfs": 1,
+          "delegatedUnlink": 0
+        },
+        "select-directory": {
+          "identity": "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#directorySyncFailureCannotPromoteVisibleWorkOriginSelectionOrReplayToAcknowledgement",
+          "mechanism": "injected-vfs-sync-failure",
+          "sqlite": 1290,
+          "failures": 1,
+          "effects": 0,
+          "vfs": 1,
+          "delegatedUnlink": 1
+        },
+        "replay-directory": {
+          "identity": "com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest#directorySyncFailureCannotPromoteVisibleWorkOriginSelectionOrReplayToAcknowledgement",
+          "mechanism": "injected-vfs-sync-failure",
+          "sqlite": 1290,
+          "failures": 1,
+          "effects": 0,
+          "vfs": 1,
+          "delegatedUnlink": 1
+        }
+      },
+      "apkMetadata": {
+        "source": {
+          "path": "shared/storage/build/outputs/apk/androidTest/debug/output-metadata.json",
+          "bytes": 429,
+          "sha256": "def5dc8ca9219547edb6ce42c831d996df0a557fa7f7b584b0d9e73da9bddbaa"
+        },
+        "retained": {
+          "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/output-metadata.json",
+          "bytes": 429,
+          "sha256": "def5dc8ca9219547edb6ce42c831d996df0a557fa7f7b584b0d9e73da9bddbaa"
+        }
+      },
+      "tests": {
+        "tests": 94,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "name": "session",
+      "android": {
+        "startedAt": "2026-09-13T16:14:35.245Z",
+        "passed": true,
+        "serial": "emulator-5554",
+        "scope": "Isolated native credential/private-file and authenticated CREATE-plan tests, exact timer/worker cancellation and separate real native-store/OS integration, including private runtime, read-only diagnostics, confirmed readable-empty setup discard and independent-control planned-create abort with a synthetic verifier. Seven separately invoked composite-journal tests persist real credential/data/work plans in actual encrypted independent control without selecting those resources, creating a lease, reading credentials or invoking provider/OS effects. They cover exact controlled close/reopen, strict malformed-state rejection, legacy cleanup refusal and a journal introduced after SIGNED_OUT blocking provider acquisition. These are codec/persistence/barrier checks, not the composite select/seal/abort coordinator. CREATE recovery uses only an authenticated exact plan and an existing-only inspect/abort handle; explicit abort intent precedes native cleanup, with durable consumption before completion. Diagnostics inspect already-open stores only; they do not initialize factories, prove usable credentials or grant authority. Discard revalidates exact incomplete targets and empty native-work/private-record state. Controlled close/reopen and injected native boundaries are covered; notification and hardlink branches are reported explicitly. No refresh-plan, integrated composite setup, full first-factory initialization or generalized orphan recovery. Not actual provider sign-in, production timer receiver/worker or app scheduling/recovery wiring, FeedMe UI/auth/confirmation integration, process-hard-kill, physical-device, power-loss or iOS proof.",
+        "apk": {
+          "path": "shared/session/build/outputs/apk/androidTest/debug/session-debug-androidTest.apk",
+          "bytes": 8607095,
+          "sha256": "92d360f83da80b05185df5f3fb42ff2bc584434c05a5cfb3169ed35f056b21a3"
+        },
+        "apkMetadata": {
+          "path": "docs/verification/native-credentials/android-attempts/2026-09-13T16-14-35.245Z/output-metadata.json",
+          "bytes": 429,
+          "sha256": "295c766680d7ebd3b5a40643eca570d09c34efb22974faac3b8734c19c7a38d9"
+        },
+        "attemptDirectory": "docs/verification/native-credentials/android-attempts/2026-09-13T16-14-35.245Z",
+        "checks": [
+          {
+            "name": "regular",
+            "classes": "com.feedme.session.AndroidCredentialStoreTest,com.feedme.session.AndroidNativeWorkCancellationTest,com.feedme.session.AndroidCredentialCreatePlanTest",
+            "passed": true,
+            "tests": 47,
+            "expected": 47,
+            "identities": [
+              "com.feedme.session.AndroidCredentialStoreTest#missingActiveKeyOrBlobBlocksReadsButExactRetirementCanFinish",
+              "com.feedme.session.AndroidCredentialStoreTest#createAcknowledgementLossAfterManifestRenameReopensExactCommittedIncarnation",
+              "com.feedme.session.AndroidCredentialStoreTest#retirementAcknowledgementLossOccursOnlyAfterKeyErasureAndReopensEmpty",
+              "com.feedme.session.AndroidCredentialStoreTest#refreshCannotChangeOwnerKindOrBootstrappedDeviceAndAttachmentIsExactCas",
+              "com.feedme.session.AndroidCredentialStoreTest#oneActiveSlotAndExactRevisionCasRejectOtherLoginAndCompetingRefresh",
+              "com.feedme.session.AndroidCredentialStoreTest#guestCredentialsRemainGuestAcrossReopenAndCannotAcceptDeviceBootstrap",
+              "com.feedme.session.AndroidCredentialStoreTest#symlinkDirectoryCannotRedirectCredentialFilesOrModifyItsTarget",
+              "com.feedme.session.AndroidCredentialStoreTest#createRefreshBootstrapAndReopenPreserveExactIncarnationAndSecrets",
+              "com.feedme.session.AndroidCredentialStoreTest#preexistingEmptyDirectoryOrLostRetiredSlotCannotResetToInitialRevision",
+              "com.feedme.session.AndroidCredentialStoreTest#permissiveDirectoryAndManifestModesFailInsteadOfSilentlyRepairingThem",
+              "com.feedme.session.AndroidCredentialStoreTest#duplicateOpenRespectsLifetimeLockAndCloseAllowsExactReopen",
+              "com.feedme.session.AndroidCredentialStoreTest#symlinkManifestAndCredentialBlobAreRejectedWithoutChangingTargets",
+              "com.feedme.session.AndroidCredentialStoreTest#ownedLockDescriptorIsClosedAfterEveryOpenAndDuplicateFailureCycle",
+              "com.feedme.session.AndroidCredentialStoreTest#refreshInterruptionLeavesOrphanEvidenceAsExplicitRepairGate",
+              "com.feedme.session.AndroidCredentialStoreTest#exactRetirementErasesKeyAndOldRetirementCannotTouchNewSameAccountLogin",
+              "com.feedme.session.AndroidCredentialStoreTest#missingInstallKeysNeverRecreateOrRebindExistingCredentialFiles",
+              "com.feedme.session.AndroidCredentialStoreTest#missingOrCorruptManifestFailsClosedWithoutResettingKeysOrFiles",
+              "com.feedme.session.AndroidCredentialStoreTest#corruptedCredentialCiphertextCannotBeOverwrittenByRefresh",
+              "com.feedme.session.AndroidCredentialStoreTest#hardlinksAreDeniedByPlatformOrRejectedByStoreWithoutChangingCredentials",
+              "com.feedme.session.AndroidNativeWorkCancellationTest#timerIdentityIsOpaqueExplicitImmutableAndDefensivelyRecreated",
+              "com.feedme.session.AndroidNativeWorkCancellationTest#callerCancellationDoesNotBecomeSuccessfulNativeCancellation",
+              "com.feedme.session.AndroidNativeWorkCancellationTest#notificationCancellationIsExactWhenPermissionAvailableOtherwiseReportsGate",
+              "com.feedme.session.AndroidNativeWorkCancellationTest#workManagerInitializerIsDisabledAndTestCompositionInitializesExplicitly",
+              "com.feedme.session.AndroidNativeWorkCancellationTest#timerCancellationInvalidatesOnlyExactPendingIntentAndIsIdempotent",
+              "com.feedme.session.AndroidNativeWorkCancellationTest#malformedTicketsAndNonTimerIdentityAreRejectedWithoutNativeInstallation",
+              "com.feedme.session.AndroidNativeWorkCancellationTest#nonexistentWorkCancellationIsIdempotentAndDoesNotCreateWork",
+              "com.feedme.session.AndroidNativeWorkCancellationTest#cancellationOfNeverInstalledTimerDoesNotCreatePendingIntent",
+              "com.feedme.session.AndroidNativeWorkCancellationTest#foreignExportedAndUnresolvableReceiversCannotConfigureAdapter",
+              "com.feedme.session.AndroidNativeWorkCancellationTest#realDelayedWorkCancellationWaitsForCancelledStateAndRetainsSibling",
+              "com.feedme.session.AndroidCredentialCreatePlanTest#exactOwnedZeroLengthOrCorruptPartialCiphertextCanBeAbortedWithoutDecryption",
+              "com.feedme.session.AndroidCredentialCreatePlanTest#abortingPreparedPlanConsumesItPermanentlyAndRepeatedAbortDoesNotAdvanceRevision",
+              "com.feedme.session.AndroidCredentialCreatePlanTest#recoveryHandlesAreExclusiveReadOnlyToInspectAndReleaseOwnedLockDescriptors",
+              "com.feedme.session.AndroidCredentialCreatePlanTest#unsafeModesAndSymlinkTargetsFailClosedWithoutFollowingOrDeletingForeignData",
+              "com.feedme.session.AndroidCredentialCreatePlanTest#consumedEmptyReplayMustReacknowledgeDurabilityBeforeRemainingKeyDeletion",
+              "com.feedme.session.AndroidCredentialCreatePlanTest#selectedReplayAndAbortRequireDurabilityAcknowledgmentBeforeSuccessOrDeletion",
+              "com.feedme.session.AndroidCredentialCreatePlanTest#invalidPlanningAndCompetingCreatesPreserveTheWinningSelection",
+              "com.feedme.session.AndroidCredentialCreatePlanTest#interruptedUnselectedAbortConsumesRevisionBeforeErasingItsIncarnationKey",
+              "com.feedme.session.AndroidCredentialCreatePlanTest#refreshedOrNewerIncarnationCannotBeReadOrErasedThroughAnOldCreatePlan",
+              "com.feedme.session.AndroidCredentialCreatePlanTest#recoveryIsExistingOnlyAndNeverInitializesMissingLockManifestOrInstallKeys",
+              "com.feedme.session.AndroidCredentialCreatePlanTest#committedAccountAndGuestReplayExactSnapshotAcrossCloseWithoutNewKeyOrWrite",
+              "com.feedme.session.AndroidCredentialCreatePlanTest#cancellationAtNativeWriteAndAbortCheckpointsPreservesExactRecoverableIntent",
+              "com.feedme.session.AndroidCredentialCreatePlanTest#payloadChangesAndStructurallyValidForgedPlansCannotWriteOrDelete",
+              "com.feedme.session.AndroidCredentialCreatePlanTest#selectedAbortDeletesKeyFirstAndResumesWithoutReadingLostSelectedSecrets",
+              "com.feedme.session.AndroidCredentialCreatePlanTest#planningUsesOnlyExistingInstallKeysAndDoesNotWriteCredentialMaterial",
+              "com.feedme.session.AndroidCredentialCreatePlanTest#selectedMissingOrCorruptMaterialNeverRegeneratesAKeyDuringExactReplay",
+              "com.feedme.session.AndroidCredentialCreatePlanTest#unknownArtifactsAndOtherIncarnationKeysAreNeverAdoptedOrErasedByAPlan",
+              "com.feedme.session.AndroidCredentialCreatePlanTest#everyCreateInterruptionRetainsExactPlanArtifactsUntilExplicitAbort"
+            ],
+            "log": "docs/verification/native-credentials/android-attempts/2026-09-13T16-14-35.245Z/regular.log"
+          },
+          {
+            "name": "integration",
+            "classes": "com.feedme.session.AndroidLocalRetirementIntegrationTest",
+            "passed": true,
+            "tests": 10,
+            "expected": 10,
+            "identities": [
+              "com.feedme.session.AndroidLocalRetirementIntegrationTest#runtimeCreatesRestoresExactNativeBindingAndRetiresAllRealResources",
+              "com.feedme.session.AndroidLocalRetirementIntegrationTest#delayedPriorTargetsCannotEraseNewSameOwnerCredentialsDataOrNativeOrigin",
+              "com.feedme.session.AndroidLocalRetirementIntegrationTest#emptySetupDiscardRequiresExplicitConfirmationAndPreservesUnselectedOwner",
+              "com.feedme.session.AndroidLocalRetirementIntegrationTest#realLogoutErasesExactIdentityAndCancelsOnlyItsNativeTickets",
+              "com.feedme.session.AndroidLocalRetirementIntegrationTest#discardConfirmationRejectsChangedEvidenceAndProposalFromClosedRuntime",
+              "com.feedme.session.AndroidLocalRetirementIntegrationTest#coherentMetadataDoesNotClaimMissingOrDamagedCredentialMaterialIsUsable",
+              "com.feedme.session.AndroidLocalRetirementIntegrationTest#recoveryInspectionAfterReopenPreservesNativeEvidenceWithoutVerificationOrActivation",
+              "com.feedme.session.AndroidLocalRetirementIntegrationTest#lostNativeCancellationAcknowledgementKeepsBarrierAndRecoversAfterAllStoresReopenWithoutLease",
+              "com.feedme.session.AndroidLocalRetirementIntegrationTest#discardPreparationRejectsPrivateRowsTombstonesBindingAndNativeTickets",
+              "com.feedme.session.AndroidLocalRetirementIntegrationTest#runtimePlannedCreatePersistsIndependentControlBeforeNativeInterruptionAndExplicitAbort"
+            ],
+            "log": "docs/verification/native-credentials/android-attempts/2026-09-13T16-14-35.245Z/integration.log"
+          },
+          {
+            "name": "setup-journal",
+            "classes": "com.feedme.session.AndroidSessionSetupJournalTest",
+            "passed": true,
+            "tests": 7,
+            "expected": 7,
+            "identities": [
+              "com.feedme.session.AndroidSessionSetupJournalTest#realNativePlansRoundTripThroughIndependentEncryptedControlWithoutSelectingResources",
+              "com.feedme.session.AndroidSessionSetupJournalTest#legacyCredentialAbortCannotConsumeEitherUnconfirmedOrConfirmedCompositeJournal",
+              "com.feedme.session.AndroidSessionSetupJournalTest#ordinaryRetirementCannotOverwriteCompositeSetupOrTreatItAsEmptyDiscard",
+              "com.feedme.session.AndroidSessionSetupJournalTest#startupRuntimeReportsPartialCompositeStateWithoutProviderReadbackRepairOrAccess",
+              "com.feedme.session.AndroidSessionSetupJournalTest#compositeBarrierIntroducedAfterSignedOutBlocksProviderAcquisitionAndLiveCreate",
+              "com.feedme.session.AndroidSessionSetupJournalTest#malformedCompositeControlIsRejectedWithoutLegacyFallbackWritesOrNativeEffects",
+              "com.feedme.session.AndroidSessionSetupJournalTest#explicitAbortFlagPersistsAsMetadataOnlyAndNeverSelectsOrCleansAnyPlannedResource"
+            ],
+            "log": "docs/verification/native-credentials/android-attempts/2026-09-13T16-14-35.245Z/setup-journal.log"
+          },
+          {
+            "name": "owned-test-directories-cleaned",
+            "passed": true
+          }
+        ],
+        "androidApi": "35",
+        "androidAbi": "arm64-v8a",
+        "branches": {
+          "hardlinkManifest": "platform-denied:13; existing-hardlink-branch-unexercised",
+          "hardlinkBlob": "platform-denied:13; existing-hardlink-branch-unexercised",
+          "notification": "NATIVE_WORK_NOTIFICATION_EXACT_CANCELLATION_VERIFIED"
+        },
+        "finishedAt": "2026-09-13T16:14:53.314Z"
+      },
+      "report": {
+        "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session-smoke.json",
+        "bytes": 12289,
+        "sha256": "6f7fc780491467c24030cbbe047fe55f9fb63e3d93786b79bdd4146e732c7572"
+      },
+      "evidence": [
+        {
+          "source": {
+            "path": "docs/verification/native-credentials/android-attempts/2026-09-13T16-14-35.245Z/abi.log",
+            "bytes": 10,
+            "sha256": "7f10c3cd4593d1d6ded27d658e7c05216011c955c200aac551caad0c979d4d90"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session/abi.log",
+            "bytes": 10,
+            "sha256": "7f10c3cd4593d1d6ded27d658e7c05216011c955c200aac551caad0c979d4d90"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/native-credentials/android-attempts/2026-09-13T16-14-35.245Z/api.log",
+            "bytes": 3,
+            "sha256": "90d7ec0f0acef104d8b6252794295f661a0149634868d02a1ae0c358099638f5"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session/api.log",
+            "bytes": 3,
+            "sha256": "90d7ec0f0acef104d8b6252794295f661a0149634868d02a1ae0c358099638f5"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/native-credentials/android-attempts/2026-09-13T16-14-35.245Z/boot.log",
+            "bytes": 2,
+            "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session/boot.log",
+            "bytes": 2,
+            "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/native-credentials/android-attempts/2026-09-13T16-14-35.245Z/fixture-cleanup.log",
+            "bytes": 71,
+            "sha256": "06ecf56960c01c91d4d57e0fe6fe99139c9a8e906fb56537293e0e1d74cc8bf7"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session/fixture-cleanup.log",
+            "bytes": 71,
+            "sha256": "06ecf56960c01c91d4d57e0fe6fe99139c9a8e906fb56537293e0e1d74cc8bf7"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/native-credentials/android-attempts/2026-09-13T16-14-35.245Z/install.log",
+            "bytes": 36,
+            "sha256": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session/install.log",
+            "bytes": 36,
+            "sha256": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/native-credentials/android-attempts/2026-09-13T16-14-35.245Z/integration.log",
+            "bytes": 7551,
+            "sha256": "ff448a5d22f3084d9412333a7936daaf10d51240d3e31bd6855c59984b9bfab6"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session/integration.log",
+            "bytes": 7551,
+            "sha256": "ff448a5d22f3084d9412333a7936daaf10d51240d3e31bd6855c59984b9bfab6"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/native-credentials/android-attempts/2026-09-13T16-14-35.245Z/output-metadata.json",
+            "bytes": 429,
+            "sha256": "295c766680d7ebd3b5a40643eca570d09c34efb22974faac3b8734c19c7a38d9"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session/output-metadata.json",
+            "bytes": 429,
+            "sha256": "295c766680d7ebd3b5a40643eca570d09c34efb22974faac3b8734c19c7a38d9"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/native-credentials/android-attempts/2026-09-13T16-14-35.245Z/regular.log",
+            "bytes": 34141,
+            "sha256": "d62602c64845bf729edca51571b3e4c169a4959ec578df01b257216dca0ed9b3"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session/regular.log",
+            "bytes": 34141,
+            "sha256": "d62602c64845bf729edca51571b3e4c169a4959ec578df01b257216dca0ed9b3"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/native-credentials/android-attempts/2026-09-13T16-14-35.245Z/report.json",
+            "bytes": 12289,
+            "sha256": "6f7fc780491467c24030cbbe047fe55f9fb63e3d93786b79bdd4146e732c7572"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session/report.json",
+            "bytes": 12289,
+            "sha256": "6f7fc780491467c24030cbbe047fe55f9fb63e3d93786b79bdd4146e732c7572"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/native-credentials/android-attempts/2026-09-13T16-14-35.245Z/runner.log",
+            "bytes": 342,
+            "sha256": "5529a753a109e9efcc35e7ee6ed2f5d86f72364634c837ccbc37c770f3a19845"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session/runner.log",
+            "bytes": 342,
+            "sha256": "5529a753a109e9efcc35e7ee6ed2f5d86f72364634c837ccbc37c770f3a19845"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/verification/native-credentials/android-attempts/2026-09-13T16-14-35.245Z/setup-journal.log",
+            "bytes": 5266,
+            "sha256": "7ce669552684494e338c9669ad6d2e055c2f88c8bfb09af8739ade3e3c58ecfc"
+          },
+          "retained": {
+            "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session/setup-journal.log",
+            "bytes": 5266,
+            "sha256": "7ce669552684494e338c9669ad6d2e055c2f88c8bfb09af8739ade3e3c58ecfc"
+          }
+        }
+      ],
+      "completedTests": [
+        {
+          "name": "regular",
+          "identities": [
+            "com.feedme.session.AndroidCredentialStoreTest#missingActiveKeyOrBlobBlocksReadsButExactRetirementCanFinish",
+            "com.feedme.session.AndroidCredentialStoreTest#createAcknowledgementLossAfterManifestRenameReopensExactCommittedIncarnation",
+            "com.feedme.session.AndroidCredentialStoreTest#retirementAcknowledgementLossOccursOnlyAfterKeyErasureAndReopensEmpty",
+            "com.feedme.session.AndroidCredentialStoreTest#refreshCannotChangeOwnerKindOrBootstrappedDeviceAndAttachmentIsExactCas",
+            "com.feedme.session.AndroidCredentialStoreTest#oneActiveSlotAndExactRevisionCasRejectOtherLoginAndCompetingRefresh",
+            "com.feedme.session.AndroidCredentialStoreTest#guestCredentialsRemainGuestAcrossReopenAndCannotAcceptDeviceBootstrap",
+            "com.feedme.session.AndroidCredentialStoreTest#symlinkDirectoryCannotRedirectCredentialFilesOrModifyItsTarget",
+            "com.feedme.session.AndroidCredentialStoreTest#createRefreshBootstrapAndReopenPreserveExactIncarnationAndSecrets",
+            "com.feedme.session.AndroidCredentialStoreTest#preexistingEmptyDirectoryOrLostRetiredSlotCannotResetToInitialRevision",
+            "com.feedme.session.AndroidCredentialStoreTest#permissiveDirectoryAndManifestModesFailInsteadOfSilentlyRepairingThem",
+            "com.feedme.session.AndroidCredentialStoreTest#duplicateOpenRespectsLifetimeLockAndCloseAllowsExactReopen",
+            "com.feedme.session.AndroidCredentialStoreTest#symlinkManifestAndCredentialBlobAreRejectedWithoutChangingTargets",
+            "com.feedme.session.AndroidCredentialStoreTest#ownedLockDescriptorIsClosedAfterEveryOpenAndDuplicateFailureCycle",
+            "com.feedme.session.AndroidCredentialStoreTest#refreshInterruptionLeavesOrphanEvidenceAsExplicitRepairGate",
+            "com.feedme.session.AndroidCredentialStoreTest#exactRetirementErasesKeyAndOldRetirementCannotTouchNewSameAccountLogin",
+            "com.feedme.session.AndroidCredentialStoreTest#missingInstallKeysNeverRecreateOrRebindExistingCredentialFiles",
+            "com.feedme.session.AndroidCredentialStoreTest#missingOrCorruptManifestFailsClosedWithoutResettingKeysOrFiles",
+            "com.feedme.session.AndroidCredentialStoreTest#corruptedCredentialCiphertextCannotBeOverwrittenByRefresh",
+            "com.feedme.session.AndroidCredentialStoreTest#hardlinksAreDeniedByPlatformOrRejectedByStoreWithoutChangingCredentials",
+            "com.feedme.session.AndroidNativeWorkCancellationTest#timerIdentityIsOpaqueExplicitImmutableAndDefensivelyRecreated",
+            "com.feedme.session.AndroidNativeWorkCancellationTest#callerCancellationDoesNotBecomeSuccessfulNativeCancellation",
+            "com.feedme.session.AndroidNativeWorkCancellationTest#notificationCancellationIsExactWhenPermissionAvailableOtherwiseReportsGate",
+            "com.feedme.session.AndroidNativeWorkCancellationTest#workManagerInitializerIsDisabledAndTestCompositionInitializesExplicitly",
+            "com.feedme.session.AndroidNativeWorkCancellationTest#timerCancellationInvalidatesOnlyExactPendingIntentAndIsIdempotent",
+            "com.feedme.session.AndroidNativeWorkCancellationTest#malformedTicketsAndNonTimerIdentityAreRejectedWithoutNativeInstallation",
+            "com.feedme.session.AndroidNativeWorkCancellationTest#nonexistentWorkCancellationIsIdempotentAndDoesNotCreateWork",
+            "com.feedme.session.AndroidNativeWorkCancellationTest#cancellationOfNeverInstalledTimerDoesNotCreatePendingIntent",
+            "com.feedme.session.AndroidNativeWorkCancellationTest#foreignExportedAndUnresolvableReceiversCannotConfigureAdapter",
+            "com.feedme.session.AndroidNativeWorkCancellationTest#realDelayedWorkCancellationWaitsForCancelledStateAndRetainsSibling",
+            "com.feedme.session.AndroidCredentialCreatePlanTest#exactOwnedZeroLengthOrCorruptPartialCiphertextCanBeAbortedWithoutDecryption",
+            "com.feedme.session.AndroidCredentialCreatePlanTest#abortingPreparedPlanConsumesItPermanentlyAndRepeatedAbortDoesNotAdvanceRevision",
+            "com.feedme.session.AndroidCredentialCreatePlanTest#recoveryHandlesAreExclusiveReadOnlyToInspectAndReleaseOwnedLockDescriptors",
+            "com.feedme.session.AndroidCredentialCreatePlanTest#unsafeModesAndSymlinkTargetsFailClosedWithoutFollowingOrDeletingForeignData",
+            "com.feedme.session.AndroidCredentialCreatePlanTest#consumedEmptyReplayMustReacknowledgeDurabilityBeforeRemainingKeyDeletion",
+            "com.feedme.session.AndroidCredentialCreatePlanTest#selectedReplayAndAbortRequireDurabilityAcknowledgmentBeforeSuccessOrDeletion",
+            "com.feedme.session.AndroidCredentialCreatePlanTest#invalidPlanningAndCompetingCreatesPreserveTheWinningSelection",
+            "com.feedme.session.AndroidCredentialCreatePlanTest#interruptedUnselectedAbortConsumesRevisionBeforeErasingItsIncarnationKey",
+            "com.feedme.session.AndroidCredentialCreatePlanTest#refreshedOrNewerIncarnationCannotBeReadOrErasedThroughAnOldCreatePlan",
+            "com.feedme.session.AndroidCredentialCreatePlanTest#recoveryIsExistingOnlyAndNeverInitializesMissingLockManifestOrInstallKeys",
+            "com.feedme.session.AndroidCredentialCreatePlanTest#committedAccountAndGuestReplayExactSnapshotAcrossCloseWithoutNewKeyOrWrite",
+            "com.feedme.session.AndroidCredentialCreatePlanTest#cancellationAtNativeWriteAndAbortCheckpointsPreservesExactRecoverableIntent",
+            "com.feedme.session.AndroidCredentialCreatePlanTest#payloadChangesAndStructurallyValidForgedPlansCannotWriteOrDelete",
+            "com.feedme.session.AndroidCredentialCreatePlanTest#selectedAbortDeletesKeyFirstAndResumesWithoutReadingLostSelectedSecrets",
+            "com.feedme.session.AndroidCredentialCreatePlanTest#planningUsesOnlyExistingInstallKeysAndDoesNotWriteCredentialMaterial",
+            "com.feedme.session.AndroidCredentialCreatePlanTest#selectedMissingOrCorruptMaterialNeverRegeneratesAKeyDuringExactReplay",
+            "com.feedme.session.AndroidCredentialCreatePlanTest#unknownArtifactsAndOtherIncarnationKeysAreNeverAdoptedOrErasedByAPlan",
+            "com.feedme.session.AndroidCredentialCreatePlanTest#everyCreateInterruptionRetainsExactPlanArtifactsUntilExplicitAbort"
+          ]
+        },
+        {
+          "name": "integration",
+          "identities": [
+            "com.feedme.session.AndroidLocalRetirementIntegrationTest#runtimeCreatesRestoresExactNativeBindingAndRetiresAllRealResources",
+            "com.feedme.session.AndroidLocalRetirementIntegrationTest#delayedPriorTargetsCannotEraseNewSameOwnerCredentialsDataOrNativeOrigin",
+            "com.feedme.session.AndroidLocalRetirementIntegrationTest#emptySetupDiscardRequiresExplicitConfirmationAndPreservesUnselectedOwner",
+            "com.feedme.session.AndroidLocalRetirementIntegrationTest#realLogoutErasesExactIdentityAndCancelsOnlyItsNativeTickets",
+            "com.feedme.session.AndroidLocalRetirementIntegrationTest#discardConfirmationRejectsChangedEvidenceAndProposalFromClosedRuntime",
+            "com.feedme.session.AndroidLocalRetirementIntegrationTest#coherentMetadataDoesNotClaimMissingOrDamagedCredentialMaterialIsUsable",
+            "com.feedme.session.AndroidLocalRetirementIntegrationTest#recoveryInspectionAfterReopenPreservesNativeEvidenceWithoutVerificationOrActivation",
+            "com.feedme.session.AndroidLocalRetirementIntegrationTest#lostNativeCancellationAcknowledgementKeepsBarrierAndRecoversAfterAllStoresReopenWithoutLease",
+            "com.feedme.session.AndroidLocalRetirementIntegrationTest#discardPreparationRejectsPrivateRowsTombstonesBindingAndNativeTickets",
+            "com.feedme.session.AndroidLocalRetirementIntegrationTest#runtimePlannedCreatePersistsIndependentControlBeforeNativeInterruptionAndExplicitAbort"
+          ]
+        },
+        {
+          "name": "setup-journal",
+          "identities": [
+            "com.feedme.session.AndroidSessionSetupJournalTest#realNativePlansRoundTripThroughIndependentEncryptedControlWithoutSelectingResources",
+            "com.feedme.session.AndroidSessionSetupJournalTest#legacyCredentialAbortCannotConsumeEitherUnconfirmedOrConfirmedCompositeJournal",
+            "com.feedme.session.AndroidSessionSetupJournalTest#ordinaryRetirementCannotOverwriteCompositeSetupOrTreatItAsEmptyDiscard",
+            "com.feedme.session.AndroidSessionSetupJournalTest#startupRuntimeReportsPartialCompositeStateWithoutProviderReadbackRepairOrAccess",
+            "com.feedme.session.AndroidSessionSetupJournalTest#compositeBarrierIntroducedAfterSignedOutBlocksProviderAcquisitionAndLiveCreate",
+            "com.feedme.session.AndroidSessionSetupJournalTest#malformedCompositeControlIsRejectedWithoutLegacyFallbackWritesOrNativeEffects",
+            "com.feedme.session.AndroidSessionSetupJournalTest#explicitAbortFlagPersistsAsMetadataOnlyAndNeverSelectsOrCleansAnyPlannedResource"
+          ]
+        }
+      ],
+      "branches": {
+        "hardlinkManifest": "platform-denied:13; existing-hardlink-branch-unexercised",
+        "hardlinkBlob": "platform-denied:13; existing-hardlink-branch-unexercised",
+        "notification": "NATIVE_WORK_NOTIFICATION_EXACT_CANCELLATION_VERIFIED"
+      },
+      "deliveredNotificationCancellationProven": true,
+      "apkMetadata": {
+        "source": {
+          "path": "shared/session/build/outputs/apk/androidTest/debug/output-metadata.json",
+          "bytes": 429,
+          "sha256": "295c766680d7ebd3b5a40643eca570d09c34efb22974faac3b8734c19c7a38d9"
+        },
+        "retained": {
+          "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session/output-metadata.json",
+          "bytes": 429,
+          "sha256": "295c766680d7ebd3b5a40643eca570d09c34efb22974faac3b8734c19c7a38d9"
+        }
+      },
+      "tests": {
+        "tests": 64,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    }
+  ],
+  "nativeTests": {
+    "tests": 158,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "node": {
+    "tests": 112,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "androidLint": [
+    {
+      "module": "storage",
+      "issues": 0
+    },
+    {
+      "module": "transport",
+      "issues": 0
+    },
+    {
+      "module": "sync",
+      "issues": 0
+    },
+    {
+      "module": "kitchen",
+      "issues": 0
+    },
+    {
+      "module": "session",
+      "issues": 0
+    }
+  ],
+  "nativeInjectionPackaging": {
+    "helper": "libfeedmeSqliteSyncFailure.so",
+    "testApk": {
+      "path": "shared/storage/build/outputs/apk/androidTest/debug/storage-debug-androidTest.apk",
+      "bytes": 8689268,
+      "sha256": "4ace0a9abf410b1e07ca376a470f7dcba224233005b414f6424db78f4b1a9464"
+    },
+    "libraries": [
+      {
+        "abi": "arm64-v8a",
+        "entry": "lib/arm64-v8a/libfeedmeSqliteSyncFailure.so",
+        "bytes": 13168,
+        "sha256": "8183318eefd5a6a1bf91a9b43787c56ce5adaafff3373e7fb7fb8af3b4ce2c50",
+        "source": {
+          "path": "shared/storage/build/intermediates/stripped_native_libs/debugAndroidTest/stripDebugAndroidTestDebugSymbols/out/lib/arm64-v8a/libfeedmeSqliteSyncFailure.so",
+          "bytes": 13168,
+          "sha256": "8183318eefd5a6a1bf91a9b43787c56ce5adaafff3373e7fb7fb8af3b4ce2c50"
+        },
+        "retained": {
+          "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/native-packaging/arm64-v8a-libfeedmeSqliteSyncFailure.so",
+          "bytes": 13168,
+          "sha256": "8183318eefd5a6a1bf91a9b43787c56ce5adaafff3373e7fb7fb8af3b4ce2c50"
+        }
+      },
+      {
+        "abi": "armeabi-v7a",
+        "entry": "lib/armeabi-v7a/libfeedmeSqliteSyncFailure.so",
+        "bytes": 9944,
+        "sha256": "5dc7adba8d3bc47be54438f9d192a7519881bd7c654440f8a6611b2e24665617",
+        "source": {
+          "path": "shared/storage/build/intermediates/stripped_native_libs/debugAndroidTest/stripDebugAndroidTestDebugSymbols/out/lib/armeabi-v7a/libfeedmeSqliteSyncFailure.so",
+          "bytes": 9944,
+          "sha256": "5dc7adba8d3bc47be54438f9d192a7519881bd7c654440f8a6611b2e24665617"
+        },
+        "retained": {
+          "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/native-packaging/armeabi-v7a-libfeedmeSqliteSyncFailure.so",
+          "bytes": 9944,
+          "sha256": "5dc7adba8d3bc47be54438f9d192a7519881bd7c654440f8a6611b2e24665617"
+        }
+      },
+      {
+        "abi": "x86",
+        "entry": "lib/x86/libfeedmeSqliteSyncFailure.so",
+        "bytes": 11692,
+        "sha256": "5358f7182510c324829d3814a2fa6da754beb143f30c0e1eca4ab619bcc8d7a4",
+        "source": {
+          "path": "shared/storage/build/intermediates/stripped_native_libs/debugAndroidTest/stripDebugAndroidTestDebugSymbols/out/lib/x86/libfeedmeSqliteSyncFailure.so",
+          "bytes": 11692,
+          "sha256": "5358f7182510c324829d3814a2fa6da754beb143f30c0e1eca4ab619bcc8d7a4"
+        },
+        "retained": {
+          "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/native-packaging/x86-libfeedmeSqliteSyncFailure.so",
+          "bytes": 11692,
+          "sha256": "5358f7182510c324829d3814a2fa6da754beb143f30c0e1eca4ab619bcc8d7a4"
+        }
+      },
+      {
+        "abi": "x86_64",
+        "entry": "lib/x86_64/libfeedmeSqliteSyncFailure.so",
+        "bytes": 12920,
+        "sha256": "5505fdf2169e6b397a236e641dd84c5fee32e3e28fc23e3b69a959ce8705d9c8",
+        "source": {
+          "path": "shared/storage/build/intermediates/stripped_native_libs/debugAndroidTest/stripDebugAndroidTestDebugSymbols/out/lib/x86_64/libfeedmeSqliteSyncFailure.so",
+          "bytes": 12920,
+          "sha256": "5505fdf2169e6b397a236e641dd84c5fee32e3e28fc23e3b69a959ce8705d9c8"
+        },
+        "retained": {
+          "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/native-packaging/x86_64-libfeedmeSqliteSyncFailure.so",
+          "bytes": 12920,
+          "sha256": "5505fdf2169e6b397a236e641dd84c5fee32e3e28fc23e3b69a959ce8705d9c8"
+        }
+      }
+    ],
+    "excluded": [
+      {
+        "archive": {
+          "path": "shared/storage/build/outputs/aar/storage-debug.aar",
+          "bytes": 180811,
+          "sha256": "9d4d9fffe300f6145b6dfc621995b641d3c296bfd38d295b02d6296a8c3e76a0"
+        },
+        "helperEntries": 0,
+        "listing": {
+          "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/native-packaging/excluded-0-entries.txt",
+          "bytes": 96,
+          "sha256": "c3f932c8b4b4aba7e080418c2ef3bf4275eadd41233845c63ee1be736e796f92"
+        }
+      },
+      {
+        "archive": {
+          "path": "shared/transport/build/outputs/aar/transport-debug.aar",
+          "bytes": 68039,
+          "sha256": "221af91a5c97b7e198ea2a34a26328bff92a2b476c1111bf7e03c2e47d7031f7"
+        },
+        "helperEntries": 0,
+        "listing": {
+          "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/native-packaging/excluded-1-entries.txt",
+          "bytes": 96,
+          "sha256": "c3f932c8b4b4aba7e080418c2ef3bf4275eadd41233845c63ee1be736e796f92"
+        }
+      },
+      {
+        "archive": {
+          "path": "shared/sync/build/outputs/aar/sync-debug.aar",
+          "bytes": 154282,
+          "sha256": "f9822373114b8f63421458a7513a31ee79fe061d66813a523f62504e62931888"
+        },
+        "helperEntries": 0,
+        "listing": {
+          "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/native-packaging/excluded-2-entries.txt",
+          "bytes": 96,
+          "sha256": "c3f932c8b4b4aba7e080418c2ef3bf4275eadd41233845c63ee1be736e796f92"
+        }
+      },
+      {
+        "archive": {
+          "path": "shared/kitchen/build/outputs/aar/kitchen-debug.aar",
+          "bytes": 197087,
+          "sha256": "c3a495ac941d229eb10bbe1e8d41cc1bfd3aea29b2d0e17d70818aeb0861a296"
+        },
+        "helperEntries": 0,
+        "listing": {
+          "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/native-packaging/excluded-3-entries.txt",
+          "bytes": 96,
+          "sha256": "c3f932c8b4b4aba7e080418c2ef3bf4275eadd41233845c63ee1be736e796f92"
+        }
+      },
+      {
+        "archive": {
+          "path": "shared/session/build/outputs/aar/session-debug.aar",
+          "bytes": 604328,
+          "sha256": "0e8ea6f642569c3bc0d5289969aaaaf0e9c18af698d4677e661ea75c341cc14d"
+        },
+        "helperEntries": 0,
+        "listing": {
+          "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/native-packaging/excluded-4-entries.txt",
+          "bytes": 96,
+          "sha256": "c3f932c8b4b4aba7e080418c2ef3bf4275eadd41233845c63ee1be736e796f92"
+        }
+      },
+      {
+        "archive": {
+          "path": "shared/session/build/outputs/apk/androidTest/debug/session-debug-androidTest.apk",
+          "bytes": 8607095,
+          "sha256": "92d360f83da80b05185df5f3fb42ff2bc584434c05a5cfb3169ed35f056b21a3"
+        },
+        "helperEntries": 0,
+        "listing": {
+          "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/native-packaging/excluded-5-entries.txt",
+          "bytes": 5374,
+          "sha256": "a57c2838684d9c2c3205a516ea100e3e9ea0ad663b8f41290f399ae4d0cfc5da"
+        }
+      },
+      {
+        "archive": {
+          "path": "apps/android/build/outputs/apk/debug/android-debug.apk",
+          "bytes": 18981844,
+          "sha256": "bf6dd07e31a4fd49b798672ba82edcee7f958b9d5c12ae0d7a89491d20ff3805"
+        },
+        "helperEntries": 0,
+        "listing": {
+          "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/native-packaging/excluded-6-entries.txt",
+          "bytes": 6268,
+          "sha256": "1f74c3f3abb16f8af6e4c398efa196f6fe15b90acef8f580dd4cf9a937e33559"
+        }
+      }
+    ],
+    "scope": "Actual four-ABI ELF test helper in storage test APK only; absent from five current Android AARs, session test APK and unchanged historical demo. No newly built demo or release artifact claim."
+  },
+  "finishedAt": "2026-09-13T16:14:54.370Z",
+  "receiptArtifacts": [
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-kitchen-lint.xml",
+      "bytes": 87,
+      "sha256": "3782329f5ec7fc80243d071df4885364697fe238cd16d0fd49637d3010e96025"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session-instrumentation.log",
+      "bytes": 12425,
+      "sha256": "bc4308c315cead4bb454c8b28a86dafdc7a276df0e4b0ce5729403e8f1540778"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session-lint.xml",
+      "bytes": 87,
+      "sha256": "3782329f5ec7fc80243d071df4885364697fe238cd16d0fd49637d3010e96025"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session-smoke.json",
+      "bytes": 12289,
+      "sha256": "6f7fc780491467c24030cbbe047fe55f9fb63e3d93786b79bdd4146e732c7572"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session/abi.log",
+      "bytes": 10,
+      "sha256": "7f10c3cd4593d1d6ded27d658e7c05216011c955c200aac551caad0c979d4d90"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session/api.log",
+      "bytes": 3,
+      "sha256": "90d7ec0f0acef104d8b6252794295f661a0149634868d02a1ae0c358099638f5"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session/boot.log",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session/fixture-cleanup.log",
+      "bytes": 71,
+      "sha256": "06ecf56960c01c91d4d57e0fe6fe99139c9a8e906fb56537293e0e1d74cc8bf7"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session/install.log",
+      "bytes": 36,
+      "sha256": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session/integration.log",
+      "bytes": 7551,
+      "sha256": "ff448a5d22f3084d9412333a7936daaf10d51240d3e31bd6855c59984b9bfab6"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session/output-metadata.json",
+      "bytes": 429,
+      "sha256": "295c766680d7ebd3b5a40643eca570d09c34efb22974faac3b8734c19c7a38d9"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session/regular.log",
+      "bytes": 34141,
+      "sha256": "d62602c64845bf729edca51571b3e4c169a4959ec578df01b257216dca0ed9b3"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session/report.json",
+      "bytes": 12289,
+      "sha256": "6f7fc780491467c24030cbbe047fe55f9fb63e3d93786b79bdd4146e732c7572"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session/runner.log",
+      "bytes": 342,
+      "sha256": "5529a753a109e9efcc35e7ee6ed2f5d86f72364634c837ccbc37c770f3a19845"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-session/setup-journal.log",
+      "bytes": 5266,
+      "sha256": "7ce669552684494e338c9669ad6d2e055c2f88c8bfb09af8739ade3e3c58ecfc"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage-instrumentation.log",
+      "bytes": 25507,
+      "sha256": "f41251dd58f9a09345034382082734a0c4171aa266f0fd9f467b969f0a3d696e"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage-lint.xml",
+      "bytes": 87,
+      "sha256": "3782329f5ec7fc80243d071df4885364697fe238cd16d0fd49637d3010e96025"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage-smoke.json",
+      "bytes": 25214,
+      "sha256": "e6c4334b681599d9bfd3f1da7632cc4f002d87c92bacf07505ee415e310f1b9c"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/abi.log",
+      "bytes": 10,
+      "sha256": "7f10c3cd4593d1d6ded27d658e7c05216011c955c200aac551caad0c979d4d90"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/api.log",
+      "bytes": 3,
+      "sha256": "90d7ec0f0acef104d8b6252794295f661a0149634868d02a1ae0c358099638f5"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/boot.log",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/fixture-cleanup.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/install.log",
+      "bytes": 36,
+      "sha256": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/ledger-sync-failure.log",
+      "bytes": 7546,
+      "sha256": "a66634db8a0ded07e653b6543e01bee6c3f3f2ac9022ce899042cbb89e833626"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/output-metadata.json",
+      "bytes": 429,
+      "sha256": "def5dc8ca9219547edb6ce42c831d996df0a557fa7f7b584b0d9e73da9bddbaa"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/regular.log",
+      "bytes": 50885,
+      "sha256": "f6f3d5c830f884578641eba0ea0253d944662c327274afbecd03cd5c69434472"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/report.json",
+      "bytes": 25214,
+      "sha256": "e6c4334b681599d9bfd3f1da7632cc4f002d87c92bacf07505ee415e310f1b9c"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/restart-read.log",
+      "bytes": 754,
+      "sha256": "1da3f6c96036a5a409eba7b7a084a8c20a09871329994d06751cdc9ca2938efa"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/restart-write.log",
+      "bytes": 737,
+      "sha256": "038e6030e45319db487ca0d19da1b58e2d1e9d899d6d57f481a98e00a877d262"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/runner.log",
+      "bytes": 342,
+      "sha256": "5529a753a109e9efcc35e7ee6ed2f5d86f72364634c837ccbc37c770f3a19845"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/sync-failure.log",
+      "bytes": 5234,
+      "sha256": "1be8d11b79ea4416f0066700c7114dfd4d32a22ff62e09ab5e428777184ac4f4"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/work-origin-plan.log",
+      "bytes": 778,
+      "sha256": "4b2135c47fe6f740505d5e16166a0bb9be9d00d8160b240f2dc39ece5ba0de93"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/work-origin-replay.log",
+      "bytes": 822,
+      "sha256": "ae60190e3f0ba339a8229f3bd74be935ccffc5425a2cc765c1f4d21708f4b901"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/work-origin-select.log",
+      "bytes": 788,
+      "sha256": "68f498c2d6414ab832969497d54be5996008b283115d4fa6b3841dbc647aea9c"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-storage/work-origin-sync-failure.log",
+      "bytes": 3097,
+      "sha256": "3a4264630a6e8afcb4fa180d62726b93d41a41ed5522413bb845358cf1a4f162"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-sync-lint.xml",
+      "bytes": 87,
+      "sha256": "3782329f5ec7fc80243d071df4885364697fe238cd16d0fd49637d3010e96025"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/android-transport-lint.xml",
+      "bytes": 87,
+      "sha256": "3782329f5ec7fc80243d071df4885364697fe238cd16d0fd49637d3010e96025"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/gradle.log",
+      "bytes": 26075,
+      "sha256": "c6e723ae233a86c06ae0b8c8905e220d05a57e1290393a2b0f6eda8b19b194b8"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/contracts/TEST-com.feedme.contracts.CanonicalFormatsTest.xml",
+      "bytes": 2270,
+      "sha256": "a35a27e519a81a9ca95797069a4e610e76c050c5cb671d5ac3815c5093c85b8d"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/contracts/TEST-com.feedme.contracts.CanonicalResponseBinderTest.xml",
+      "bytes": 1144,
+      "sha256": "5271cd53cfe5fffbe098f9301c14c83195dd208da172abbc41fded5baacedd94"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/contracts/TEST-com.feedme.contracts.CanonicalSchemaProgramTest.xml",
+      "bytes": 2782,
+      "sha256": "cf27797cde9b6f482913ad4186f66da366d04412cbe113e6781eeaa78adda020"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/contracts/TEST-com.feedme.contracts.ContractCatalogTest.xml",
+      "bytes": 2396,
+      "sha256": "3db7cecef4c4bec186eb5cf20a026bf1c18b867825cdd591adf5835425d7976f"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/contracts/TEST-com.feedme.contracts.CookingWireModelsTest.xml",
+      "bytes": 2384,
+      "sha256": "8151e53317aae5892f282200ec227ae3443d4c1bb650faa8b2c54f41a43de725"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/contracts/TEST-com.feedme.contracts.ExactDecimalTest.xml",
+      "bytes": 4052,
+      "sha256": "6fb1e0ba893ed60c1a69db06763779d29dc9c63b2369daaf4e57c60f2b8a2652"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/contracts/TEST-com.feedme.contracts.OfficialFormatCorpusTest.xml",
+      "bytes": 506,
+      "sha256": "20d2b1eafdbbb3cc8ec59a2452df1d2d5ba5d70909277cd9e7db21ca9d983352"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/contracts/TEST-com.feedme.contracts.WireDocumentTest.xml",
+      "bytes": 4145,
+      "sha256": "7feef64be79bafd6e28dcfcb239ff11b8e7bd97c9a759fbf55c72f966853697e"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/core/TEST-com.feedme.core.ClientPortsTest.xml",
+      "bytes": 2844,
+      "sha256": "8c8069cb0549555fbebbca0f9010c9624e60493560a32fc1f9b8594fb3e7bd76"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/core/TEST-com.feedme.core.KitchenRuntimeTest.xml",
+      "bytes": 743,
+      "sha256": "4adb236ff9de8b1ce95d8fd038423fd273037fa1cd28271d9bb812f7fd151ff8"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/core/TEST-com.feedme.core.ReducerTest.xml",
+      "bytes": 3616,
+      "sha256": "0bd5b322a0d82e889148b59ccbcd1830e21b82d8a280aa74f157190270edf20a"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/kitchen/TEST-com.feedme.kitchen.ContentDigestTest.xml",
+      "bytes": 933,
+      "sha256": "7463f878bbcb0654d27bb2089353f28b0004212eac8931016ca4da970a2bf8cb"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/kitchen/TEST-com.feedme.kitchen.CookingRecordsTest.xml",
+      "bytes": 4722,
+      "sha256": "205f44f6623de5c5a3621d642440381e84ad2d104b73c8459532174ddb546038"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/kitchen/TEST-com.feedme.kitchen.CookingRepositoryTest.xml",
+      "bytes": 4438,
+      "sha256": "c1828e880cdf2e370b46eec7a6e53619188050dbe4442c545ced497942b52706"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/kitchen/TEST-com.feedme.kitchen.KitchenContextTest.xml",
+      "bytes": 5034,
+      "sha256": "1ca9e02ca0f83b133abc8289cfd06fa4880fef1d01df50e789659756ed8e05e8"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/kitchen/TEST-com.feedme.kitchen.KitchenValidationTest.xml",
+      "bytes": 3345,
+      "sha256": "a52a422a08ca7164cbbca9c8e0d7eb98a781b0b1988d995f72dc592d68f8b759"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/kitchen/TEST-com.feedme.kitchen.SavedRecipeRepositoryTest.xml",
+      "bytes": 5226,
+      "sha256": "5767826301e50b3f0f30e565e428b5c1cd0fcb589ff8bbddc0fa84496a2be2ff"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/postgresql/TEST-com.feedme.server.db.CommitAndRetentionIntegrationTest.xml",
+      "bytes": 1293,
+      "sha256": "c9b6b15022a46abd1f47378bbef975799b10fae09185a9e2a67c4a47bc28ba83"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/postgresql/TEST-com.feedme.server.db.DurableCommandsIntegrationTest.xml",
+      "bytes": 3314,
+      "sha256": "761edc373f1078b7945c114f44cc120962d2d70885be3e0651b34d288ed8b684"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/postgresql/TEST-com.feedme.server.db.DurableEventsIntegrationTest.xml",
+      "bytes": 2631,
+      "sha256": "488ca50a3b9f8d2ef3c5e0f5d46e6278ad89d76750037dcd062d72b0a954c99b"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/postgresql/TEST-com.feedme.server.db.PlatformMigrationsIntegrationTest.xml",
+      "bytes": 1171,
+      "sha256": "b2df148e2a048e9aef5da8f03eb7db21999680ecd911d5fd9c762e4e7470b885"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/server/TEST-com.feedme.server.CanonicalValidatorParityTest.xml",
+      "bytes": 1698,
+      "sha256": "da7ee25fb783b06673f26a26d23b67e2f20c700f15ece08825eb34dae22d13b6"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/server/TEST-com.feedme.server.CommandIdentityTest.xml",
+      "bytes": 1187,
+      "sha256": "98dc96a4aca55a04c556ea928a7a3f20c0dfc9e165a9ac6f0ab540357ac30ce6"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/server/TEST-com.feedme.server.ContractCatalogTest.xml",
+      "bytes": 853,
+      "sha256": "b43b0507c9d9d24777d9c3043cd7c34e360d1752a01241d2020e6307c01956b3"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/server/TEST-com.feedme.server.EventDraftTest.xml",
+      "bytes": 468,
+      "sha256": "9c904f70ac965400656cc37ff6657b1f27bc83bd29e4d7ea5c88529b10e01f13"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/server/TEST-com.feedme.server.LocalServerConfigTest.xml",
+      "bytes": 1004,
+      "sha256": "2f79cd3a7dd2737fddb9b10c9ae0a72600526b0f0cb7708d37bd5128605bdf2c"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/server/TEST-com.feedme.server.LocalServiceTest.xml",
+      "bytes": 1358,
+      "sha256": "7e0270fc5ff04fdecb99d60081e937d941d8f0a1e12c8ef3e806837f9e065928"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/server/TEST-com.feedme.server.LoopbackEngineTest.xml",
+      "bytes": 475,
+      "sha256": "453a72cb15ab8f4ae8f7a3862b49dfd9b4fd48869528015b2ef2655a8796bd40"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/server/TEST-com.feedme.server.TransportIntegrationTest.xml",
+      "bytes": 653,
+      "sha256": "d4d153890149587450439e67788fe68b917e7d15914da083297cbf083f7250a2"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/server/TEST-com.feedme.server.contract.ContractBodyValidatorTest.xml",
+      "bytes": 1561,
+      "sha256": "b3558e19c769d0b2c58f52bbfa04dd28d4f2c336827ab08c297fb099110a9fbd"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/server/TEST-com.feedme.server.contract.SharedContractParityTest.xml",
+      "bytes": 506,
+      "sha256": "7cfa57c1082fa30753e49507862365c05ecf5218212e04e1b3b308e43326f0c0"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/server/TEST-com.feedme.server.contract.WireContractIntegrationTest.xml",
+      "bytes": 1026,
+      "sha256": "560dc22b73236502abba9a0a491f4180657294351ea55b075ffe58c0f6ac8c19"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/session/TEST-com.feedme.session.CredentialCodecTest.xml",
+      "bytes": 4326,
+      "sha256": "8636955c59e3b97d3307f8dd068d0dcf4b4b1df0fb1b9b70e686dca1d7564240"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/session/TEST-com.feedme.session.CredentialCreateCoordinatorTest.xml",
+      "bytes": 6816,
+      "sha256": "48e2bcd4e65f2ea8ee2225e724af1d32488d731bfa2ee8d5c4b2f8d9cecd0386"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/session/TEST-com.feedme.session.CredentialCreatePlanCodecTest.xml",
+      "bytes": 3154,
+      "sha256": "e125c0aa48f01983b30021e009ef1c5c516480fee1a136f8e1ee7e6504dc21db"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/session/TEST-com.feedme.session.CredentialTransportViewTest.xml",
+      "bytes": 3748,
+      "sha256": "727c1b42f098f81783de6bb1ce5c769e8670e9ea3f9c00b754cfbcaf46293afb"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/session/TEST-com.feedme.session.RetirementCodecTest.xml",
+      "bytes": 4145,
+      "sha256": "8aab8ac793814aa9940f4670384fb352bbaa5cdf5305e6647672c8227d1425fb"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/session/TEST-com.feedme.session.SessionActivationCodecTest.xml",
+      "bytes": 3782,
+      "sha256": "01d83036e0d4f04e214db3886b0a654dafb8489832fff563a1581edf3faa47aa"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/session/TEST-com.feedme.session.SessionControlAcknowledgementsTest.xml",
+      "bytes": 2608,
+      "sha256": "6cfc247bc3289e73ff80b6e0da4e4ad6947443eb81e427e9e0c00175b6669354"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/session/TEST-com.feedme.session.SessionSetupControlTest.xml",
+      "bytes": 1799,
+      "sha256": "363cc5b0f54c0b53f57bff1d82f2e7e8ac45e0321bdf405b676c334871fb7b7f"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/session/TEST-com.feedme.session.SessionSetupPlanCodecTest.xml",
+      "bytes": 4037,
+      "sha256": "7d57d66b9e25ebe585d3c176e34b032968e7d6c9d20a00fbf8e9682007a574f1"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/session/TEST-com.feedme.session.SessionWorkCodecTest.xml",
+      "bytes": 4843,
+      "sha256": "82abbe00316e82a1d50282e3885c1773e8bf689531972d50da5acf72872c5460"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/session/TEST-com.feedme.session.SessionWorkOriginPlanCodecTest.xml",
+      "bytes": 3811,
+      "sha256": "a671ee415f4248dd6d00efa2f682033c4e19ca1410116e94497679673454fcfb"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/session/TEST-com.feedme.session.SessionWorkOriginPlanRegistryTest.xml",
+      "bytes": 3737,
+      "sha256": "ae7678e8e29b151ec0e0ac66da36108b429793836566731e99526f283639017e"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/session/TEST-com.feedme.session.SessionWorkRegistryTest.xml",
+      "bytes": 9132,
+      "sha256": "c4db652592fc1d668040d1eda1001c35cc95cb500d12c854a4a3cd2335865f6c"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/storage/TEST-com.feedme.storage.DurableCommandStorageTest.xml",
+      "bytes": 1332,
+      "sha256": "03173848a4adb9019ad9f42284bdccc4028154e0c12f4a6ea3594a8642d2e743"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/storage/TEST-com.feedme.storage.EmptyStateRetirementTest.xml",
+      "bytes": 4180,
+      "sha256": "a905cb98e7bc05727db71e97fff58b4f53583474bdb10f0bb346e993a77a5442"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/storage/TEST-com.feedme.storage.EncryptedRetirementTest.xml",
+      "bytes": 3396,
+      "sha256": "9a9be944621305d0e89ecf2d365e7e48f2d8ca30d7a5a98997a3e7e808b3d95b"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/storage/TEST-com.feedme.storage.EncryptedStateDatabaseTest.xml",
+      "bytes": 5731,
+      "sha256": "06427c4592d2d249a3b0b526d564a4bad51b0ddae2de505c3b9d7226eecede02"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/storage/TEST-com.feedme.storage.KitchenStorageTest.xml",
+      "bytes": 1772,
+      "sha256": "a7dd2b705f46805277b6ab0887b233cf8b9d158b21b93d11e0034fd7f19b70da"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/storage/TEST-com.feedme.storage.LocalRetirementCoordinatorTest.xml",
+      "bytes": 7632,
+      "sha256": "d79ec26263861cbd5ac56d763bf6ba4e4f20bab57cec2c134ed39baf01ffabec"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/storage/TEST-com.feedme.storage.PlannedStateActivationRecoveryTest.xml",
+      "bytes": 7477,
+      "sha256": "2ab199760878dd39d8a9b6e2046f842f33482b74200b8ba615ff153c25a37251"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/storage/TEST-com.feedme.storage.PlannedStateActivationTest.xml",
+      "bytes": 4624,
+      "sha256": "4f4cec8cfc5008e6f9830a23306372c387201c01bec4cfc4224b11a75076429c"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/storage/TEST-com.feedme.storage.PrivateSessionRuntimeTest.xml",
+      "bytes": 12340,
+      "sha256": "84bd3366d3294aa102c8d9814eba6956244d76b934be3ff2b9bb0e420bf8f56f"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/storage/TEST-com.feedme.storage.SessionControlStoreTest.xml",
+      "bytes": 1758,
+      "sha256": "81311acc236390d219ddef89a8d7c6ab3a7703f73fbebdef682df7c4b055d64f"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/storage/TEST-com.feedme.storage.SessionWorkRegistryStorageTest.xml",
+      "bytes": 1590,
+      "sha256": "9cbabf77ef29170dc91ef455a50397779d204470d931281099315fda1ed88640"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/storage/TEST-com.feedme.storage.SessionWorkStoreTest.xml",
+      "bytes": 1579,
+      "sha256": "f9de757095181aee155fb915d057d7dbe5537363f5dbba3d9c005d5e8384fc5a"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/storage/TEST-com.feedme.storage.StateActivationPlanCodecTest.xml",
+      "bytes": 2831,
+      "sha256": "73b6f5a7c828ef84d89048243e9ecc8c1809f175446c8bdd47a1f2fec37caf2d"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/storage/TEST-com.feedme.storage.StateActivationPlanStorageCodecTest.xml",
+      "bytes": 2369,
+      "sha256": "be784e4bf98cd4f1cd5ab77e48670bd7767aedf0c73ff1aeca1ce63d0330607f"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/storage/TEST-com.feedme.storage.StateRecordInspectionTest.xml",
+      "bytes": 3373,
+      "sha256": "c7c9ff53cd2940845c2d12935cd8f6565ec33c4f838385babee2f4be94d05356"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/storage/TEST-com.feedme.storage.WorkOriginPlanAuthenticationTest.xml",
+      "bytes": 2992,
+      "sha256": "8a5c38f9b51af366155a38d60358166bcabec124440b2e45fee6edede8a3e63d"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/sync/TEST-com.feedme.sync.DurableCommandQueueTest.xml",
+      "bytes": 9919,
+      "sha256": "f1a5e5993b987b8685db1342ce1d04197192196dfd2a80046f320ee817415d4a"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/sync/TEST-com.feedme.sync.JournalCodecTest.xml",
+      "bytes": 2345,
+      "sha256": "6fbe582082c2a18996dec6494a3ce86b765e523a79890bd077b488ab18132980"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/sync/TEST-com.feedme.sync.RetrySecondsTest.xml",
+      "bytes": 944,
+      "sha256": "9ce642b80efd122ece0930b4829ff92a708651543518f8080a1466bf484cd533"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/sync/TEST-com.feedme.sync.TargetedAutomaticDispatchTest.xml",
+      "bytes": 3338,
+      "sha256": "f79e6ac7e98cfd4524d765110c1aed0ad10e45a9ca313e7199a2579faab3f560"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/transport/TEST-com.feedme.transport.ContractTransportTest.xml",
+      "bytes": 2097,
+      "sha256": "f1ad6719d85d04c19c88960568a8124e807a5a8e4156644c84b61ca77ecb83d2"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/transport/TEST-com.feedme.transport.FeedMeTransportTest.xml",
+      "bytes": 1878,
+      "sha256": "d83479c49156069f709ebd942dc8ebd8e0efa6e06ced995e188aa6afaa6e034c"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/transport/TEST-com.feedme.transport.HttpExchangeTest.xml",
+      "bytes": 1885,
+      "sha256": "1595ea96486ebc90b567ffa731c1d9f64463084bd81cc986f8084ec05d79263a"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/transport/TEST-com.feedme.transport.MobileRequestValidatorTest.xml",
+      "bytes": 2286,
+      "sha256": "41be10131ec931f33e7dd16baa67e9f3a8679cb10cafc5088aeb1943b5aa1511"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/transport/TEST-com.feedme.transport.RealHttpTransportTest.xml",
+      "bytes": 1365,
+      "sha256": "4cf95aaf533f92e1513ff8962d49bb3dd99e9c02e8fba54354702cc03e83b7c1"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/junit/transport/TEST-com.feedme.transport.RequestPreparationTest.xml",
+      "bytes": 3508,
+      "sha256": "053079e3f834b1032eacd1291dacde5eafc05d8282e0f8e2f53f1e4e23a18c1f"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/native-packaging/arm64-v8a-libfeedmeSqliteSyncFailure.so",
+      "bytes": 13168,
+      "sha256": "8183318eefd5a6a1bf91a9b43787c56ce5adaafff3373e7fb7fb8af3b4ce2c50"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/native-packaging/armeabi-v7a-libfeedmeSqliteSyncFailure.so",
+      "bytes": 9944,
+      "sha256": "5dc7adba8d3bc47be54438f9d192a7519881bd7c654440f8a6611b2e24665617"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/native-packaging/excluded-0-entries.txt",
+      "bytes": 96,
+      "sha256": "c3f932c8b4b4aba7e080418c2ef3bf4275eadd41233845c63ee1be736e796f92"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/native-packaging/excluded-1-entries.txt",
+      "bytes": 96,
+      "sha256": "c3f932c8b4b4aba7e080418c2ef3bf4275eadd41233845c63ee1be736e796f92"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/native-packaging/excluded-2-entries.txt",
+      "bytes": 96,
+      "sha256": "c3f932c8b4b4aba7e080418c2ef3bf4275eadd41233845c63ee1be736e796f92"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/native-packaging/excluded-3-entries.txt",
+      "bytes": 96,
+      "sha256": "c3f932c8b4b4aba7e080418c2ef3bf4275eadd41233845c63ee1be736e796f92"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/native-packaging/excluded-4-entries.txt",
+      "bytes": 96,
+      "sha256": "c3f932c8b4b4aba7e080418c2ef3bf4275eadd41233845c63ee1be736e796f92"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/native-packaging/excluded-5-entries.txt",
+      "bytes": 5374,
+      "sha256": "a57c2838684d9c2c3205a516ea100e3e9ea0ad663b8f41290f399ae4d0cfc5da"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/native-packaging/excluded-6-entries.txt",
+      "bytes": 6268,
+      "sha256": "1f74c3f3abb16f8af6e4c398efa196f6fe15b90acef8f580dd4cf9a937e33559"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/native-packaging/storage-test-apk-entries.txt",
+      "bytes": 5543,
+      "sha256": "832adee1359534425e7d3227af9b7108994124b8549486937d7c7330f489340e"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/native-packaging/x86-libfeedmeSqliteSyncFailure.so",
+      "bytes": 11692,
+      "sha256": "5358f7182510c324829d3814a2fa6da754beb143f30c0e1eca4ab619bcc8d7a4"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/native-packaging/x86_64-libfeedmeSqliteSyncFailure.so",
+      "bytes": 12920,
+      "sha256": "5505fdf2169e6b397a236e641dd84c5fee32e3e28fc23e3b69a959ce8705d9c8"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/node-tests.log",
+      "bytes": 20601,
+      "sha256": "5c3bb298a0bfd2059f4eb9888db9dc8aeb51a022c0616f427455c3a5f9ebd277"
+    },
+    {
+      "path": "docs/verification/composite-setup-journal/attempts/2026-09-13T16-13-14.525Z/source-manifest.json",
+      "bytes": 46552,
+      "sha256": "f55d5dbf1e889de8cbfb6e366317e93c69fc1e3becadb9d86c4c91cf280cd5a1"
+    }
+  ]
+}

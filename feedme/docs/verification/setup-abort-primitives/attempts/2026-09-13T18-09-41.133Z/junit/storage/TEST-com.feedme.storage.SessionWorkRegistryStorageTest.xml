@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.storage.SessionWorkRegistryStorageTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-09-13T18:10:58.811Z" hostname="ansachars-MacBook-Pro.local" time="1.35">
+  <properties/>
+  <testcase name="latePriorOriginRetirementCannotAlterNewSameOwnerOriginAfterReopen[jvm]" classname="com.feedme.storage.SessionWorkRegistryStorageTest" time="0.215"/>
+  <testcase name="independentWorkRegistryCanRetireAfterDomainErasureAndDatabaseClosure[jvm]" classname="com.feedme.storage.SessionWorkRegistryStorageTest" time="0.258"/>
+  <testcase name="partiallyRetiredOriginReplaysOnlyRemainingTicketWithoutLeaseOrAdmission[jvm]" classname="com.feedme.storage.SessionWorkRegistryStorageTest" time="0.219"/>
+  <testcase name="committedUnknownOriginAndReservationRequireFreshAcknowledgementsAcrossSqliteReopen[jvm]" classname="com.feedme.storage.SessionWorkRegistryStorageTest" time="0.162"/>
+  <testcase name="cancellingExactTicketSurvivesReopenAndReconcilesWithoutReplacementIdentity[jvm]" classname="com.feedme.storage.SessionWorkRegistryStorageTest" time="0.185"/>
+  <testcase name="readableInstalledWorkNeverExecutesUntilItsExactPayloadReceivesFreshSqliteAcknowledgement[jvm]" classname="com.feedme.storage.SessionWorkRegistryStorageTest" time="0.124"/>
+  <testcase name="retiringAndIdleReadbackCannotCompleteWithoutFreshChangedSqliteAcknowledgement[jvm]" classname="com.feedme.storage.SessionWorkRegistryStorageTest" time="0.187"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

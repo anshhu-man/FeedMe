@@ -9,6 +9,7 @@ import com.feedme.core.ports.*
 import com.feedme.session.*
 import java.nio.file.Files
 import java.security.SecureRandom
+import java.security.MessageDigest
 import java.util.Comparator
 import java.util.UUID
 import javax.crypto.Cipher
@@ -21,7 +22,9 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runCurrent
@@ -60,6 +63,8 @@ class PrivateSessionRuntimeTest {
             assertEquals(1, f.dataVault.creates)
             val binding = f.binding(ACCOUNT)
             assertEquals(1, binding.revision)
+            assertEquals(2, binding.schemaVersion)
+            assertEquals(field(value(f.control.read())!!.payload, "operationId"), field(binding.payload, "setupOperationId"))
             assertEquals(CONFIGURATION, field(binding.payload, "configurationBinding"))
             assertEquals(access.originBinding, field(binding.payload, "originBinding"))
             assertEquals(f.credentials.current!!.incarnation, field(binding.payload, "credentialIncarnation"))
@@ -80,7 +85,7 @@ class PrivateSessionRuntimeTest {
         }
     }
 
-    @Test fun closeReopenRestoreKeepsOriginalOriginDataAndCredentialIncarnationsWithoutNewWrites() = runTest {
+    @Test fun closeReopenRestoreKeepsOriginalResourcesAndFreshlyAcknowledgesLedgers() = runTest {
         fixture { f ->
             val first = f.create()
             value(first.store.commit(ACCOUNT, listOf(StoreMutation.Put(DRAFT, null, 1, bytes("offline-owner-draft")))))
@@ -101,7 +106,9 @@ class PrivateSessionRuntimeTest {
             assertEquals(1, f.acquireCalls)
             assertEquals(1, f.restoreCalls)
             assertContentEquals(binding.payload.copyForCodec(), f.binding(ACCOUNT).payload.copyForCodec())
-            assertEquals(work.revision, value(f.workControl.read())!!.revision)
+            val acknowledgedWork = value(f.workControl.read())!!
+            assertEquals(work.revision + 2, acknowledgedWork.revision)
+            assertContentEquals(work.payload.copyForCodec(), acknowledgedWork.payload.copyForCodec())
             assertEquals("offline-owner-draft", value(restored.store.read(ACCOUNT, DRAFT))!!.payload.copyForCodec().decodeToString())
             assertIs<PortResult.Failure>(first.store.read(ACCOUNT, DRAFT))
             assertIs<PortResult.Failure>(first.credentials.read(ACCOUNT))
@@ -222,7 +229,7 @@ class PrivateSessionRuntimeTest {
                     val replacement = value(f.data.activate(ACCOUNT))
                     // Replaying an old encrypted binding into a new active generation cannot
                     // turn its authentic-but-retired data target into restoration authority.
-                    value(replacement.commit(ACCOUNT, listOf(StoreMutation.Put(BINDING, null, 1, binding.payload))))
+                    value(replacement.commit(ACCOUNT, listOf(StoreMutation.Put(BINDING, null, binding.schemaVersion, binding.payload))))
                 }
             }
             val creates = f.dataVault.creates
@@ -249,7 +256,7 @@ class PrivateSessionRuntimeTest {
             when (damage) {
                 "missing" -> value(rawOwner.commit(ACCOUNT, listOf(StoreMutation.Delete(BINDING, binding.revision))))
                 "payload" -> f.replaceBinding(ACCOUNT, bytes("{\"version\":2,\"private\":\"not-authority\"}"))
-                "schema" -> f.replaceBinding(ACCOUNT, binding.payload, 2)
+                "schema" -> f.replaceBinding(ACCOUNT, binding.payload, 3)
             }
             f.reopen()
             assertEquals(PrivateSessionPhase.RESTORE_REQUIRED, value(f.runtime.recover()))
@@ -349,7 +356,7 @@ class PrivateSessionRuntimeTest {
             assertEquals(1, f.credentials.creates)
             assertEquals(0, f.dataVault.creates)
             assertEquals("idle", field(value(f.workControl.read())!!.payload, "state"))
-            assertEquals("credential-create-pending", field(value(f.control.read())!!.payload, "state"))
+            assertEquals("session-setup-pending", field(value(f.control.read())!!.payload, "state"))
             f.reopen()
             failure(FailureReason.CONFLICT, f.runtime.recover())
             assertEquals(PrivateSessionPhase.RECOVERY_REQUIRED, f.runtime.phase())
@@ -360,16 +367,26 @@ class PrivateSessionRuntimeTest {
         }
     }
 
-    @Test fun lostBindingCommitAcknowledgementReadsBackExactRecordWithoutAnotherCredentialOrOrigin() = runTest {
+    @Test fun lostBindingCommitAcknowledgementCannotPublishAndExactLiveRetryWritesBindingAgain() = runTest {
         fixture { f ->
-            f.nextIdHook = { f.dataConnection.failNextWriteCommitAfter = true; f.nextIdHook = { } }
-            val access = f.create()
+            value(f.runtime.recover())
+            f.dataConnection.failNextBindingCommitAfter = true
+            failure(FailureReason.OUTCOME_UNKNOWN, f.runtime.create())
+            assertNull(f.boundary.current()); assertNull(f.runtime.currentAccess())
+            val original = f.binding(ACCOUNT)
+            val pending = value(f.control.read())!!
+            assertEquals("session-setup-pending", field(pending.payload, "state"))
+            assertEquals("setup-selected", field(value(f.workControl.read())!!.payload, "state"))
+            val access = value(f.runtime.retryCreate())
             assertEquals(PrivateSessionPhase.ACTIVE, f.runtime.phase())
             assertEquals(access.originBinding, field(f.binding(ACCOUNT).payload, "originBinding"))
-            assertEquals(1, f.binding(ACCOUNT).revision)
+            assertEquals(original.revision + 1, f.binding(ACCOUNT).revision)
+            assertContentEquals(original.payload.copyForCodec(), f.binding(ACCOUNT).payload.copyForCodec())
             assertEquals(1, f.credentials.creates)
             assertEquals(1, f.dataVault.creates)
-            assertEquals(2, value(f.workControl.read())!!.revision)
+            assertEquals(1, f.credentials.plans)
+            assertEquals(1, f.acquireCalls)
+            assertEquals(setupOperation(pending.payload), field(value(f.control.read())!!.payload, "operationId"))
             f.reopen()
             value(f.runtime.recover())
             assertEquals(access.originBinding, value(f.runtime.restore()).originBinding)
@@ -380,7 +397,7 @@ class PrivateSessionRuntimeTest {
     @Test fun failedBindingCommitDoesNotPublishOrAutoHealAnAlreadyCreatedOwnerOnRestart() = runTest {
         fixture { f ->
             value(f.runtime.recover())
-            f.nextIdHook = { f.dataConnection.failNextWriteCommitBefore = true; f.nextIdHook = { } }
+            f.dataConnection.failNextBindingCommitBefore = true
             failure(FailureReason.STORAGE_FAILURE, f.runtime.create())
             assertEquals(PrivateSessionPhase.RECOVERY_REQUIRED, f.runtime.phase())
             assertNull(f.runtime.currentAccess())
@@ -389,9 +406,13 @@ class PrivateSessionRuntimeTest {
             assertEquals(1, f.dataVault.creates)
             val owner = value(f.data.resume(ACCOUNT))!!
             assertNull(value(owner.read(ACCOUNT, BINDING)))
+            val pending = value(f.control.read())!!
+            assertEquals("session-setup-pending", field(pending.payload, "state"))
             f.reopen()
-            assertEquals(PrivateSessionPhase.RESTORE_REQUIRED, value(f.runtime.recover()))
-            failure(FailureReason.STORAGE_FAILURE, f.runtime.restore())
+            failure(FailureReason.CONFLICT, f.runtime.recover())
+            failure(FailureReason.CONFLICT, f.runtime.restore())
+            assertIs<PortResult.Failure>(f.runtime.retryCreate())
+            assertContentEquals(pending.payload.copyForCodec(), value(f.control.read())!!.payload.copyForCodec())
             assertEquals(0, f.restoreCalls)
             assertEquals(1, f.credentials.creates)
             assertEquals(1, f.dataVault.creates)
@@ -601,9 +622,9 @@ class PrivateSessionRuntimeTest {
             when (damage) {
                 "missing" -> value(value(f.data.resume(ACCOUNT))!!.commit(ACCOUNT, listOf(StoreMutation.Delete(BINDING, binding.revision))))
                 "malformed" -> f.replaceBinding(ACCOUNT, bytes("not-json-private-owner-data"))
-                "duplicate" -> f.replaceBinding(ACCOUNT, bytes(binding.payload.copyForCodec().decodeToString().replace("\"version\":1", "\"version\":1,\"version\":1")))
-                "schema" -> f.replaceBinding(ACCOUNT, binding.payload, 2)
-                "future-version" -> f.replaceBinding(ACCOUNT, bytes(binding.payload.copyForCodec().decodeToString().replace("\"version\":1", "\"version\":2")))
+                "duplicate" -> f.replaceBinding(ACCOUNT, bytes(binding.payload.copyForCodec().decodeToString().replace("\"version\":2", "\"version\":2,\"version\":2")))
+                "schema" -> f.replaceBinding(ACCOUNT, binding.payload, 3)
+                "future-version" -> f.replaceBinding(ACCOUNT, bytes(binding.payload.copyForCodec().decodeToString().replace("\"version\":2", "\"version\":3")))
             }
             f.reopen()
             val before = f.nonObservationCounts()
@@ -624,7 +645,7 @@ class PrivateSessionRuntimeTest {
                 "work" -> f.rewriteWork { it.replace(old.originBinding, uuid(9501)) }
                 "data" -> {
                     value(value(f.data.resume(ACCOUNT))!!.eraseScope(ACCOUNT))
-                    value(value(f.data.activate(ACCOUNT)).commit(ACCOUNT, listOf(StoreMutation.Put(BINDING, null, 1, binding.payload))))
+                    value(value(f.data.activate(ACCOUNT)).commit(ACCOUNT, listOf(StoreMutation.Put(BINDING, null, binding.schemaVersion, binding.payload))))
                 }
             }
             f.reopen(if (mismatch == "configuration") OTHER_CONFIGURATION else CONFIGURATION)
@@ -1275,28 +1296,42 @@ class PrivateSessionRuntimeTest {
         }
     }
 
-    @Test fun plannedCreatePersistsIndependentIntentBeforeCredentialWriteAndClearsBeforeOwnerSetup() = runTest {
+    @Test fun compositeCreateRetainsAllPlansUntilBindingAndWorkSealThenPublishesExactCompletion() = runTest {
         fixture { f ->
+            var operation: String? = null
             f.credentials.beforePlannedCommit = {
                 val pending = value(f.control.read())!!
-                assertEquals("credential-create-pending", field(pending.payload, "state"))
-                assertEquals(0, f.dataVault.creates)
-                assertEquals("idle", field(value(f.workControl.read())!!.payload, "state"))
+                assertEquals("session-setup-pending", field(pending.payload, "state"))
+                val currentOperation = setupOperation(pending.payload)
+                if (operation == null) operation = currentOperation else assertEquals(operation, currentOperation)
+                assertNull(f.boundary.current()); assertNull(f.runtime.currentAccess())
             }
             f.credentials.afterCreate = {
-                assertEquals("credential-create-pending", field(value(f.control.read())!!.payload, "state"))
+                assertEquals("session-setup-pending", field(value(f.control.read())!!.payload, "state"))
                 assertEquals(0, f.dataVault.creates)
+                assertEquals("idle", field(value(f.workControl.read())!!.payload, "state"))
+                assertNull(f.boundary.current())
+            }
+            f.beforeControlWrite = { _, payload ->
+                if (field(payload, "state") == "complete") {
+                    assertNull(f.boundary.current()); assertNull(f.runtime.currentAccess())
+                    assertEquals(operation, field(f.binding(ACCOUNT).payload, "setupOperationId"))
+                    assertEquals("active", field(value(f.workControl.read())!!.payload, "state"))
+                }
+                null
             }
             val access = f.create()
             val completed = value(f.control.read())!!
             assertEquals("complete", field(completed.payload, "state"))
-            assertEquals(f.credentials.current!!.incarnation, field(completed.payload, "operationId"))
-            assertEquals(1, f.credentials.plans); assertEquals(1, f.credentials.plannedCommits)
+            assertEquals(operation, field(completed.payload, "operationId"))
+            assertNotEquals(f.credentials.current!!.incarnation, operation)
+            assertEquals(1, f.credentials.plans); assertEquals(2, f.credentials.plannedCommits)
+            f.beforeControlWrite = { _, _ -> null }
             f.assertNoPlaintext(listOf(ACCOUNT.actorId, "access-runtime-secret", "refresh-runtime-secret"))
             f.reopen()
             assertEquals(PrivateSessionPhase.RESTORE_REQUIRED, value(f.runtime.recover()))
             assertEquals(access.originBinding, value(f.runtime.restore()).originBinding)
-            assertEquals(1, f.credentials.plans); assertEquals(1, f.credentials.plannedCommits)
+            assertEquals(1, f.credentials.plans); assertEquals(2, f.credentials.plannedCommits)
         }
     }
 
@@ -1306,7 +1341,7 @@ class PrivateSessionRuntimeTest {
             f.credentials.plannedCommitFailure = FailureReason.OUTCOME_UNKNOWN
             failure(FailureReason.OUTCOME_UNKNOWN, f.runtime.create())
             val original = value(f.control.read())!!
-            assertEquals("credential-create-pending", field(original.payload, "state"))
+            assertEquals("session-setup-pending", field(original.payload, "state"))
             assertNull(f.credentials.current); assertEquals(0, f.dataVault.creates)
             assertEquals("idle", field(value(f.workControl.read())!!.payload, "state"))
             f.reopen()
@@ -1321,7 +1356,7 @@ class PrivateSessionRuntimeTest {
             assertEquals(before, f.nonObservationCounts())
             val recovery = CredentialCreateCoordinator(f.control, f.boundary, StandardTestDispatcher(testScheduler),
                 CredentialCreateRecoveryFactory { fail("Inspection or unconfirmed recovery opened native handle") })
-            assertFalse(value(recovery.inspectPending())!!.abortRequested)
+            failure(FailureReason.CONFLICT, recovery.inspectPending())
             failure(FailureReason.CONFLICT, recovery.recoverAbort())
             assertContentEquals(original.payload.copyForCodec(), value(f.control.read())!!.payload.copyForCodec())
             assertEquals(original.revision, value(f.control.read())!!.revision)
@@ -1344,37 +1379,35 @@ class PrivateSessionRuntimeTest {
         }
     }
 
-    @Test fun failedPlanCompletionPreventsDataWorkAndRequiresExplicitExactAbortBeforeNewSetup() = runTest {
+    @Test fun failedCompositeCompletionPreservesSelectedResourcesAndLegacyAbortCannotConsumeThem() = runTest {
         fixture { f ->
             value(f.runtime.recover())
-            f.credentials.afterCreate = { f.controlWriteFailure = FailureReason.STORAGE_FAILURE }
+            f.beforeControlWrite = { _, payload ->
+                if (field(payload, "state") == "complete") FailureReason.STORAGE_FAILURE else null
+            }
             failure(FailureReason.STORAGE_FAILURE, f.runtime.create())
             val original = f.credentials.current!!
-            assertEquals("credential-create-pending", field(value(f.control.read())!!.payload, "state"))
-            assertEquals(0, f.dataVault.creates)
-            assertEquals("idle", field(value(f.workControl.read())!!.payload, "state"))
-            f.controlWriteFailure = null; f.credentials.afterCreate = { }
+            val pending = value(f.control.read())!!
+            assertEquals("session-setup-pending", field(pending.payload, "state"))
+            assertEquals(1, f.dataVault.creates)
+            assertEquals("active", field(value(f.workControl.read())!!.payload, "state"))
+            assertNotNull(f.binding(ACCOUNT))
+            assertNull(f.boundary.current()); assertNull(f.runtime.currentAccess())
+            f.beforeControlWrite = { _, _ -> null }
             f.reopen()
             failure(FailureReason.CONFLICT, f.runtime.recover())
-            var aborts = 0; var closes = 0
+            var opens = 0
             val recovery = CredentialCreateCoordinator(f.control, f.boundary, StandardTestDispatcher(testScheduler),
-                CredentialCreateRecoveryFactory { plan ->
-                    assertEquals(original.incarnation, field(plan.copyForStorage(), "incarnation"))
-                    PortResult.Value(object : CredentialCreateRecoveryHandle {
-                        override suspend fun inspect() = PortResult.Value(if (f.credentials.current == null)
-                            CredentialCreateRecoveryStatus.ABORTED else CredentialCreateRecoveryStatus.SELECTED)
-                        override suspend fun abort(): PortResult<Unit> { aborts++; return f.credentials.retire(original.scope, original.incarnation) }
-                        override suspend fun close(): PortResult<Unit> { closes++; return PortResult.Value(Unit) }
-                    })
-                })
-            value(recovery.requestAbort(value(recovery.inspectPending())!!))
-            assertEquals(1, aborts); assertEquals(1, closes)
-            assertEquals(listOf(original.scope to original.incarnation), f.credentials.retired)
+                CredentialCreateRecoveryFactory { opens++; fail("Composite setup cannot grant legacy abort authority") })
+            failure(FailureReason.CONFLICT, recovery.inspectPending())
+            failure(FailureReason.CONFLICT, recovery.recoverAbort())
+            assertEquals(0, opens)
+            assertTrue(f.credentials.retired.isEmpty())
             assertEquals(0, f.credentials.reads)
-            assertEquals(PrivateSessionPhase.SIGNED_OUT, value(f.runtime.recover()))
-            val created = value(f.runtime.create())
-            assertEquals(ACCOUNT, created.scope)
-            assertNotEquals(original.incarnation, f.credentials.current!!.incarnation)
+            failure(FailureReason.CONFLICT, f.runtime.create())
+            assertIs<PortResult.Failure>(f.runtime.retryCreate())
+            assertEquals(original.incarnation, f.credentials.current!!.incarnation)
+            assertContentEquals(pending.payload.copyForCodec(), value(f.control.read())!!.payload.copyForCodec())
         }
     }
 
@@ -1406,18 +1439,964 @@ class PrivateSessionRuntimeTest {
         }
     }
 
-    @Test fun exactAmbiguousPlanAndCompletionSqliteCommitsDoNotDuplicateNativeCreate() = runTest {
+    @Test fun ambiguousPendingControlCommitCannotCreateNativeCredentialsOrPublishAccess() = runTest {
         fixture { f ->
-            f.controlAfterWriteFailures[1] = FailureReason.OUTCOME_UNKNOWN
-            f.controlAfterWriteFailures[2] = FailureReason.OUTCOME_UNKNOWN
-            val access = f.create()
-            assertEquals(1, f.credentials.plans); assertEquals(1, f.credentials.plannedCommits)
-            assertEquals(2, f.controlWrites)
-            assertEquals("complete", field(value(f.control.read())!!.payload, "state"))
+            f.afterControlWrite = { _, payload ->
+                if (field(payload, "state") == "session-setup-pending") FailureReason.OUTCOME_UNKNOWN else null
+            }
+            value(f.runtime.recover())
+            failure(FailureReason.OUTCOME_UNKNOWN, f.runtime.create())
+            assertEquals(1, f.credentials.plans); assertEquals(0, f.credentials.plannedCommits)
+            assertEquals(1, f.controlWrites)
+            assertEquals("session-setup-pending", field(value(f.control.read())!!.payload, "state"))
+            assertNull(f.runtime.currentAccess()); assertNull(f.boundary.current())
+            assertNull(f.credentials.current)
+        }
+    }
+
+    @Test fun ambiguousCompletionPreparationCannotWriteBindingSealWorkOrPublish() = runTest {
+        fixture { f ->
+            value(f.runtime.recover())
+            f.afterControlWrite = { before, payload ->
+                if (field(before.payload, "state") == "session-setup-pending" &&
+                    field(payload, "state") == "session-setup-pending") FailureReason.OUTCOME_UNKNOWN else null
+            }
+            failure(FailureReason.OUTCOME_UNKNOWN, f.runtime.create())
+            assertEquals(1, f.credentials.plannedCommits)
+            assertEquals(1, f.dataVault.creates)
+            assertEquals("setup-selected", field(value(f.workControl.read())!!.payload, "state"))
+            assertNull(value(value(f.data.resume(ACCOUNT))!!.read(ACCOUNT, BINDING)))
+            assertNull(f.runtime.currentAccess()); assertNull(f.boundary.current())
+            assertEquals("session-setup-pending", field(value(f.control.read())!!.payload, "state"))
+            f.reopen()
+            failure(FailureReason.CONFLICT, f.runtime.recover())
+            assertEquals(1, f.credentials.plannedCommits)
+        }
+    }
+
+    @Test fun unknownFinalControlAcknowledgementCannotPublishAndRestoreMustWriteAgain() = runTest {
+        fixture { f ->
+            value(f.runtime.recover())
+            f.afterControlWrite = { before, payload ->
+                if (field(before.payload, "state") == "session-setup-pending" &&
+                    field(payload, "state") == "complete") FailureReason.OUTCOME_UNKNOWN else null
+            }
+            failure(FailureReason.OUTCOME_UNKNOWN, f.runtime.create())
+            assertNull(f.runtime.currentAccess()); assertNull(f.boundary.current())
+            val credential = f.credentials.current!!
+            val work = value(f.workControl.read())!!
+            val failed = value(f.control.read())!!
+            f.afterControlWrite = { _, _ -> null }
             f.reopen()
             assertEquals(PrivateSessionPhase.RESTORE_REQUIRED, value(f.runtime.recover()))
-            assertEquals(access.originBinding, value(f.runtime.restore()).originBinding)
-            assertEquals(1, f.credentials.creates)
+            val recoveredControl = value(f.control.read())!!
+            assertEquals(failed.revision + 1, recoveredControl.revision)
+            assertContentEquals(failed.payload.copyForCodec(), recoveredControl.payload.copyForCodec())
+            val access = value(f.runtime.restore())
+            assertEquals(credential.incarnation, f.credentials.current!!.incarnation)
+            val restoredWork = value(f.workControl.read())!!
+            assertEquals(field(work.payload, "origin"), field(restoredWork.payload, "origin"))
+            assertEquals(work.revision + 2, restoredWork.revision)
+            assertTrue(work.payload.copyForCodec().decodeToString().contains("\"setupPlan\""))
+            assertFalse(restoredWork.payload.copyForCodec().decodeToString().contains("\"setupPlan\""))
+            val restoredControl = value(f.control.read())!!
+            assertEquals(recoveredControl.revision + 1, restoredControl.revision)
+            assertContentEquals(recoveredControl.payload.copyForCodec(), restoredControl.payload.copyForCodec())
+            assertEquals(1, f.credentials.creates); assertEquals(1, f.dataVault.creates)
+            assertSame(access, f.runtime.currentAccess())
+        }
+    }
+
+    @Test fun cancelledAttemptDuringPublicationReadCannotStartAnotherControlWrite() = runTest {
+        fixture { f ->
+            value(f.runtime.recover())
+            val entered = CompletableDeferred<Unit>(); val release = CompletableDeferred<Unit>()
+            var pause = true
+            var writesAtPause = -1
+            f.afterControlRead = {
+                if (pause && f.runtime.phase() == PrivateSessionPhase.COMPOSING &&
+                    value(value(f.data.resume(ACCOUNT))!!.read(ACCOUNT, BINDING)) != null) {
+                    pause = false; writesAtPause = f.controlWrites; entered.complete(Unit); release.await()
+                }
+            }
+            val creating = async { f.runtime.create() }
+            entered.await()
+            assertTrue(writesAtPause > 0)
+            assertEquals(writesAtPause, f.controlWrites)
+            value(f.runtime.cancelVerification())
+            release.complete(Unit)
+            failure(FailureReason.STALE_SESSION, creating.await())
+            assertEquals(writesAtPause, f.controlWrites)
+            assertNull(f.runtime.currentAccess()); assertNull(f.boundary.current())
+            assertEquals(2, f.credentials.plannedCommits)
+        }
+    }
+
+    @Test fun compositeSetupWrittenAfterSignedOutBlocksProviderAndEverySelection() = runTest {
+        for (abort in listOf(false, true)) fixture { f ->
+            assertEquals(PrivateSessionPhase.SIGNED_OUT, value(f.runtime.recover()))
+            val before = value(f.control.read())!!
+            val pending = value(f.control.compareAndSet(before.revision, syntheticSetupJournal(ACCOUNT, CONFIGURATION, abort)))
+            val counts = f.nonObservationCounts()
+            failure(FailureReason.CONFLICT, f.runtime.create())
+            assertEquals(counts, f.nonObservationCounts())
+            assertEquals(0, f.acquireCalls)
+            assertNull(f.boundary.current()); assertNull(f.runtime.currentAccess())
+            val retained = value(f.control.read())!!
+            assertEquals(pending.revision, retained.revision)
+            assertContentEquals(pending.payload.copyForCodec(), retained.payload.copyForCodec())
+        }
+    }
+
+    @Test fun compositeSetupDiagnosticsAndLegacyRecoveryNeverOpenLowerAuthorityOrRewriteIntent() = runTest {
+        for (abort in listOf(false, true)) fixture { f ->
+            val before = value(f.control.read())!!
+            val pending = value(f.control.compareAndSet(before.revision, syntheticSetupJournal(ACCOUNT, CONFIGURATION, abort)))
+            val counts = f.nonObservationCounts()
+            val lowerReads = listOf(f.credentials.states, f.workReads)
+            diagnostic(SessionRecoveryFinding.PARTIAL_STATE, f.runtime.inspectRecovery())
+            failure(FailureReason.CONFLICT, f.runtime.prepareInterruptedSetupDiscard())
+            failure(FailureReason.CONFLICT, f.runtime.recover())
+            assertEquals(counts, f.nonObservationCounts())
+            assertEquals(lowerReads, listOf(f.credentials.states, f.workReads))
+            assertNull(f.boundary.current()); assertNull(f.runtime.currentAccess())
+            val retained = value(f.control.read())!!
+            assertEquals(pending.revision, retained.revision)
+            assertContentEquals(pending.payload.copyForCodec(), retained.payload.copyForCodec())
+        }
+    }
+
+    @Test fun pendingCompositeSetupPreventsStoredCredentialRestoreAfterProcessReopen() = runTest {
+        fixture { f ->
+            f.create()
+            f.reopen()
+            assertEquals(PrivateSessionPhase.RESTORE_REQUIRED, value(f.runtime.recover()))
+            val before = value(f.control.read())!!
+            value(f.control.compareAndSet(before.revision, syntheticSetupJournal(ACCOUNT, CONFIGURATION)))
+            val counts = f.nonObservationCounts()
+            failure(FailureReason.CONFLICT, f.runtime.restore())
+            assertEquals(counts, f.nonObservationCounts())
+            assertEquals(0, f.restoreCalls)
+            assertNull(f.boundary.current()); assertNull(f.runtime.currentAccess())
+        }
+    }
+
+    @Test fun sameLiveRetryAfterUncommittedBindingUsesOriginalIdentityAndAllOriginalPlans() = runTest {
+        fixture { f ->
+            value(f.runtime.recover())
+            f.dataConnection.failNextBindingCommitBefore = true
+            failure(FailureReason.STORAGE_FAILURE, f.runtime.create())
+            val pending = value(f.control.read())!!
+            val credential = f.credentials.current!!
+            val work = value(f.workControl.read())!!
+            assertNull(f.boundary.current()); assertNull(f.runtime.currentAccess())
+            val access = value(f.runtime.retryCreate())
+            assertEquals(credential.incarnation, f.credentials.current!!.incarnation)
+            assertEquals(1, f.credentials.creates); assertEquals(1, f.credentials.plans)
+            assertEquals(1, f.dataVault.creates); assertEquals(1, f.acquireCalls)
+            assertEquals(1, f.binding(ACCOUNT).revision)
+            assertEquals(setupOperation(pending.payload), field(f.binding(ACCOUNT).payload, "setupOperationId"))
+            assertEquals(setupOrigin(work.payload), access.originBinding)
+            assertSame(access.lease, f.boundary.current())
+        }
+    }
+
+    @Test fun workSealBeforeAndAfterWriteFailuresCannotCompleteAndRetryAcknowledgesBindingAgain() = runTest {
+        for (after in listOf(false, true)) fixture { f ->
+            value(f.runtime.recover())
+            val failSeal: suspend (SessionControlRecord, PrivateBytes) -> FailureReason? = { before, next ->
+                if (field(before.payload, "state") == "setup-selected" && field(next, "state") == "active") {
+                    assertNull(f.boundary.current()); assertNull(f.runtime.currentAccess())
+                    if (after) FailureReason.OUTCOME_UNKNOWN else FailureReason.STORAGE_FAILURE
+                } else null
+            }
+            if (after) f.afterWorkWrite = failSeal else f.beforeWorkWrite = failSeal
+            failure(if (after) FailureReason.OUTCOME_UNKNOWN else FailureReason.STORAGE_FAILURE, f.runtime.create())
+            val binding = f.binding(ACCOUNT)
+            val pending = value(f.control.read())!!
+            assertEquals("session-setup-pending", field(pending.payload, "state"))
+            assertEquals(if (after) "active" else "setup-selected", field(value(f.workControl.read())!!.payload, "state"))
+            assertNull(f.boundary.current()); assertNull(f.runtime.currentAccess())
+            f.beforeWorkWrite = { _, _ -> null }; f.afterWorkWrite = { _, _ -> null }
+            value(f.runtime.retryCreate())
+            assertEquals(binding.revision + 1, f.binding(ACCOUNT).revision)
+            assertContentEquals(binding.payload.copyForCodec(), f.binding(ACCOUNT).payload.copyForCodec())
+            assertEquals(setupOperation(pending.payload), field(value(f.control.read())!!.payload, "operationId"))
+            assertEquals(1, f.credentials.plans); assertEquals(1, f.credentials.creates)
+            assertEquals(1, f.dataVault.creates); assertEquals(1, f.acquireCalls)
+        }
+    }
+
+    @Test fun completionBeforeAndAfterCommitFailuresKeepLeaseAbsentAndExactRetryFreshlyAcknowledgesAllStages() = runTest {
+        for (after in listOf(false, true)) fixture { f ->
+            value(f.runtime.recover())
+            val failComplete: suspend (SessionControlRecord, PrivateBytes) -> FailureReason? = { before, next ->
+                if (field(before.payload, "state") == "session-setup-pending" && field(next, "state") == "complete") {
+                    assertNull(f.boundary.current()); assertNull(f.runtime.currentAccess())
+                    assertEquals(field(f.binding(ACCOUNT).payload, "setupOperationId"), field(next, "operationId"))
+                    if (after) FailureReason.OUTCOME_UNKNOWN else FailureReason.STORAGE_FAILURE
+                } else null
+            }
+            if (after) f.afterControlWrite = failComplete else f.beforeControlWrite = failComplete
+            failure(if (after) FailureReason.OUTCOME_UNKNOWN else FailureReason.STORAGE_FAILURE, f.runtime.create())
+            val binding = f.binding(ACCOUNT)
+            val control = value(f.control.read())!!
+            assertEquals(if (after) "complete" else "session-setup-pending", field(control.payload, "state"))
+            assertNull(f.boundary.current()); assertNull(f.runtime.currentAccess())
+            f.beforeControlWrite = { _, _ -> null }; f.afterControlWrite = { _, _ -> null }
+            val access = value(f.runtime.retryCreate())
+            assertEquals(binding.revision + 1, f.binding(ACCOUNT).revision)
+            assertContentEquals(binding.payload.copyForCodec(), f.binding(ACCOUNT).payload.copyForCodec())
+            assertEquals(field(binding.payload, "setupOperationId"), field(value(f.control.read())!!.payload, "operationId"))
+            assertEquals(1, f.acquireCalls); assertEquals(1, f.credentials.plans)
+            assertEquals(1, f.credentials.creates); assertEquals(1, f.dataVault.creates)
+            assertSame(access, f.runtime.currentAccess())
+        }
+    }
+
+    @Test fun cancellingAfterAcknowledgedBindingBeforeSealDropsLiveRetryWithoutClearingDurablePlan() = runTest {
+        fixture { f ->
+            value(f.runtime.recover())
+            val entered = CompletableDeferred<Unit>(); val release = CompletableDeferred<Unit>()
+            var paused = false
+            f.beforeWorkWrite = { before, next ->
+                if (!paused && field(before.payload, "state") == "setup-selected" && field(next, "state") == "active") {
+                    paused = true
+                    assertNull(f.boundary.current()); assertNull(f.runtime.currentAccess())
+                    entered.complete(Unit); release.await()
+                }
+                null
+            }
+            val creating = async { f.runtime.create() }
+            entered.await()
+            val original = value(f.control.read())!!
+            value(f.runtime.cancelVerification()); release.complete(Unit)
+            assertIs<PortResult.Failure>(creating.await())
+            assertIs<PortResult.Failure>(f.runtime.retryCreate())
+            assertContentEquals(original.payload.copyForCodec(), value(f.control.read())!!.payload.copyForCodec())
+            assertEquals(original.revision, value(f.control.read())!!.revision)
+            assertNull(f.boundary.current()); assertNull(f.runtime.currentAccess())
+            assertTrue(f.credentials.retired.isEmpty()); assertEquals(0, f.dataVault.deletes)
+            f.beforeWorkWrite = { _, _ -> null }
+            f.reopen()
+            failure(FailureReason.CONFLICT, f.runtime.recover())
+            assertEquals(1, f.acquireCalls); assertEquals(0, f.restoreCalls)
+        }
+    }
+
+    @Test fun replacementCompletionOperationCannotRestoreVersionTwoBindingOrExposeSecrets() = runTest {
+        fixture { f ->
+            f.create(); f.reopen()
+            val current = value(f.control.read())!!
+            value(f.control.compareAndSet(current.revision,
+                bytes("""{"version":1,"state":"complete","operationId":"${uuid(9911)}"}""")))
+            value(f.runtime.recover())
+            val reads = f.credentials.reads
+            failure(FailureReason.CONFLICT, f.runtime.restore())
+            assertEquals(reads, f.credentials.reads); assertEquals(0, f.restoreCalls)
+            assertNull(f.boundary.current()); assertNull(f.runtime.currentAccess())
+            assertTrue(f.credentials.retired.isEmpty())
+        }
+    }
+
+    @Test fun aNewBoundaryLeaseDuringCompletionIsPreservedAndOldSetupCannotPublish() = runTest {
+        fixture { f ->
+            value(f.runtime.recover())
+            var external: SessionLease? = null
+            f.afterControlWrite = { before, next ->
+                if (field(before.payload, "state") == "session-setup-pending" && field(next, "state") == "complete")
+                    external = f.boundary.activate(ACCOUNT)
+                null
+            }
+            failure(FailureReason.STALE_SESSION, f.runtime.create())
+            assertSame(external, f.boundary.current())
+            assertNull(f.runtime.currentAccess())
+            assertEquals("complete", field(value(f.control.read())!!.payload, "state"))
+            f.afterControlWrite = { _, _ -> null }
+            f.boundary.clear()
+        }
+    }
+
+    @Test fun cancellationAfterOrdinaryWorkResumeConsumesLiveAuthorityAndRequiresVerifiedRestore() = runTest {
+        fixture { f ->
+            value(f.runtime.recover())
+            val entered = CompletableDeferred<Unit>(); val release = CompletableDeferred<Unit>()
+            var paused = false
+            f.afterWorkWrite = { before, next ->
+                if (!paused && field(before.payload, "state") == "active" &&
+                    before.payload.copyForCodec().decodeToString().contains("\"setupPlan\"") &&
+                    !next.copyForCodec().decodeToString().contains("\"setupPlan\"")) {
+                    paused = true; entered.complete(Unit); release.await()
+                }
+                null
+            }
+            val creating = async { f.runtime.create() }
+            entered.await(); value(f.runtime.cancelVerification()); release.complete(Unit)
+            assertIs<PortResult.Failure>(creating.await())
+            assertIs<PortResult.Failure>(f.runtime.retryCreate())
+            assertNull(f.boundary.current()); assertNull(f.runtime.currentAccess())
+            assertEquals("complete", field(value(f.control.read())!!.payload, "state"))
+            assertFalse(value(f.workControl.read())!!.payload.copyForCodec().decodeToString().contains("\"setupPlan\""))
+            f.afterWorkWrite = { _, _ -> null }
+            assertEquals(PrivateSessionPhase.RESTORE_REQUIRED, value(f.runtime.recover()))
+            val restored = value(f.runtime.restore())
+            assertSame(restored, f.runtime.currentAccess())
+            assertEquals(1, f.acquireCalls); assertEquals(1, f.restoreCalls)
+            assertEquals(1, f.credentials.plans); assertEquals(1, f.credentials.creates)
+        }
+    }
+
+    @Test fun recoveryExplicitlyDiscardsLiveRetryEvenWhenTheExactPendingPlanIsStillReadable() = runTest {
+        fixture { f ->
+            value(f.runtime.recover())
+            f.dataConnection.failNextBindingCommitBefore = true
+            failure(FailureReason.STORAGE_FAILURE, f.runtime.create())
+            val original = value(f.control.read())!!
+            failure(FailureReason.CONFLICT, f.runtime.recover())
+            val before = f.nonObservationCounts()
+            assertIs<PortResult.Failure>(f.runtime.retryCreate())
+            assertEquals(before, f.nonObservationCounts())
+            assertContentEquals(original.payload.copyForCodec(), value(f.control.read())!!.payload.copyForCodec())
+            assertNull(f.boundary.current()); assertNull(f.runtime.currentAccess())
+        }
+    }
+
+    @Test fun interruptedSetupInspectionWithoutCompositeIntentDoesNotProbeResourcesOrChangeLifecycle() = runTest {
+        for (completed in listOf(false, true)) fixture { f ->
+            if (completed) { f.create(); f.reopen() }
+            val before = f.nonObservationCounts()
+            f.credentials.inspectionOverride = { fail("No composite plan to inspect") }
+            val report = interrupted(InterruptedSetupFinding.NONE, f.runtime.inspectInterruptedSetup())
+            assertEquals(SessionRecoveryNextStep.RECHECK_STARTUP, report.nextStep)
+            assertEquals(0, f.credentials.inspections)
+            assertEquals(before, f.nonObservationCounts())
+            assertEquals(PrivateSessionPhase.STARTUP, f.runtime.phase())
+        }
+    }
+
+    @Test fun interruptedSetupInspectionObservesEveryExactCreateStageWithoutFinishingOrAcknowledgingIt() = runTest {
+        for (stage in listOf("prepared", "credential", "data", "work", "binding", "sealed")) fixture { f ->
+            val pending = f.interruptSetup(stage)
+            val work = value(f.workControl.read())!!
+            val before = f.nonObservationCounts()
+            repeat(3) {
+                val report = interrupted(InterruptedSetupFinding.UNCONFIRMED_SETUP, f.runtime.inspectInterruptedSetup())
+                assertStage(stage, report)
+                assertEquals(SessionRecoveryNextStep.PRESERVE_FOR_REPAIR, report.nextStep)
+                assertNull(f.boundary.current()); assertNull(f.runtime.currentAccess())
+            }
+            assertEquals(before, f.nonObservationCounts())
+            assertEquals(pending.revision, value(f.control.read())!!.revision)
+            assertContentEquals(pending.payload.copyForCodec(), value(f.control.read())!!.payload.copyForCodec())
+            assertEquals(work.revision, value(f.workControl.read())!!.revision)
+            assertEquals(PrivateSessionPhase.RECOVERY_REQUIRED, f.runtime.phase())
+        }
+    }
+
+    @Test fun interruptedSetupInspectionReopensPreparedSelectedBoundAndSealedPlansWithoutRecoveringThem() = runTest {
+        for (stage in listOf("prepared", "credential", "data", "work", "binding", "sealed")) fixture { f ->
+            val pending = f.interruptSetup(stage)
+            f.reopen()
+            val before = f.nonObservationCounts()
+            assertStage(stage, interrupted(InterruptedSetupFinding.UNCONFIRMED_SETUP, f.runtime.inspectInterruptedSetup()))
+            assertEquals(before, f.nonObservationCounts())
+            assertEquals(pending.revision, value(f.control.read())!!.revision)
+            assertEquals(PrivateSessionPhase.STARTUP, f.runtime.phase())
+            failure(FailureReason.CONFLICT, f.runtime.retryCreate())
+        }
+    }
+
+    @Test fun interruptedSetupInspectionDistinguishesConfirmedFlagWithoutExecutingAbortOrChangingIntent() = runTest {
+        fixture { f ->
+            val old = f.interruptSetup("sealed")
+            val requested = bytes(old.payload.copyForCodec().decodeToString().replace("\"abortRequested\":false", "\"abortRequested\":true"))
+            val pending = value(f.control.compareAndSet(old.revision, requested))
+            val before = f.nonObservationCounts()
+            assertStage("sealed", interrupted(InterruptedSetupFinding.ABORT_REQUESTED, f.runtime.inspectInterruptedSetup()))
+            assertEquals(before, f.nonObservationCounts())
+            assertEquals(pending.revision, value(f.control.read())!!.revision)
+            assertTrue(f.credentials.retired.isEmpty()); assertTrue(f.cancelled.isEmpty())
+        }
+    }
+
+    @Test fun interruptedSetupConfigurationAndMissingCapabilityFailBeforeInventingPlanAuthentication() = runTest {
+        for (configuration in listOf(false, true)) fixture { f ->
+            f.interruptSetup("prepared")
+            if (configuration) f.credentials.inspectionOverride = { fail("Configuration mismatch must precede native probes") }
+            else f.legacyCredentialsOnly = true
+            f.reopen(if (configuration) OTHER_CONFIGURATION else CONFIGURATION)
+            val before = f.nonObservationCounts()
+            val report = interrupted(if (configuration) InterruptedSetupFinding.CONFIGURATION_CHANGED else InterruptedSetupFinding.EVIDENCE_UNAVAILABLE,
+                f.runtime.inspectInterruptedSetup(), if (configuration) null else InterruptedSetupComponent.CREDENTIAL_METADATA)
+            if (!configuration) assertEquals(FailureReason.NOT_CONFIGURED, report.failureReason)
+            assertEquals(0, f.credentials.inspections)
+            assertEquals(before, f.nonObservationCounts())
+        }
+    }
+
+    @Test fun interruptedSetupInspectionRejectsStructurallyValidCredentialPlanChangesWithoutReadingSecrets() = runTest {
+        fixture { f ->
+            val pending = f.interruptSetup("prepared")
+            val setup = PrivateBytes(unhex(field(pending.payload, "plan")))
+            val originalCredential = field(setup, "credentialPlan")
+            val credential = unhex(originalCredential).decodeToString().replace("\"authenticationMac\":\"${"c".repeat(64)}\"", "\"authenticationMac\":\"${"d".repeat(64)}\"")
+            val changedSetup = setup.copyForCodec().decodeToString().replace(originalCredential, hex(credential.encodeToByteArray()))
+            val changed = pending.payload.copyForCodec().decodeToString().replace(field(pending.payload, "plan"), hex(changedSetup.encodeToByteArray()))
+            value(f.control.compareAndSet(pending.revision, bytes(changed)))
+            val before = f.nonObservationCounts()
+            interrupted(InterruptedSetupFinding.RESOURCE_MISMATCH, f.runtime.inspectInterruptedSetup(), InterruptedSetupComponent.CREDENTIAL_METADATA)
+            assertEquals(before, f.nonObservationCounts())
+        }
+    }
+
+    @Test fun interruptedSetupInspectionRejectsUnrelatedRowsTombstonesAndUsedWorkWithoutCleanup() = runTest {
+        for (damage in listOf("row", "tombstone", "used-work", "wrong-binding")) fixture { f ->
+            f.interruptSetup("sealed")
+            when (damage) {
+                "row", "tombstone" -> {
+                    val store = value(f.data.resume(ACCOUNT))!!
+                    val put = value(store.commit(ACCOUNT, listOf(StoreMutation.Put(DRAFT, null, 1, bytes("private-interrupted-extra")))))
+                    if (damage == "tombstone") value(store.commit(ACCOUNT, listOf(StoreMutation.Delete(DRAFT, put[DRAFT]!!))))
+                }
+                "used-work" -> f.rewriteWork { it.replace(Regex(",\"setupPlan\":\"[0-9a-f]+\""), "") }
+                else -> {
+                    val old = f.binding(ACCOUNT)
+                    f.replaceBinding(ACCOUNT, bytes(old.payload.copyForCodec().decodeToString().replace(CONFIGURATION, OTHER_CONFIGURATION)))
+                }
+            }
+            val before = f.nonObservationCounts()
+            val report = value(f.runtime.inspectInterruptedSetup())
+            assertEquals(InterruptedSetupFinding.RESOURCE_MISMATCH, report.finding)
+            assertNull(report.credentialStage); assertNull(report.dataStage); assertNull(report.workStage)
+            assertEquals(before, f.nonObservationCounts())
+            assertTrue(f.credentials.retired.isEmpty()); assertTrue(f.cancelled.isEmpty())
+        }
+    }
+
+    @Test fun interruptedSetupInspectionFingerprintsDetectChangedArtifactsWithUnchangedSelectedStatus() = runTest {
+        fixture { f ->
+            f.interruptSetup("credential")
+            var once = true
+            f.credentials.afterInspection = { if (once) { once = false; f.credentials.artifactRevision++ } }
+            val before = f.nonObservationCounts()
+            interrupted(InterruptedSetupFinding.EVIDENCE_CHANGED, f.runtime.inspectInterruptedSetup(), InterruptedSetupComponent.CREDENTIAL_METADATA)
+            assertEquals(before, f.nonObservationCounts())
+            assertEquals(2, f.credentials.inspections)
+        }
+    }
+
+    @Test fun interruptedSetupInspectionWorkReacknowledgementWithSameStatusCannotPassTheOuterReadBracket() = runTest {
+        fixture { f ->
+            f.interruptSetup("sealed")
+            var reads = 0
+            f.afterWorkRead = { if (++reads == 2) f.rewriteWork { it } }
+            val credentials = f.credentials.reads
+            interrupted(InterruptedSetupFinding.EVIDENCE_CHANGED, f.runtime.inspectInterruptedSetup(), InterruptedSetupComponent.WORK_METADATA)
+            assertEquals(credentials, f.credentials.reads)
+            assertNull(f.boundary.current())
+        }
+    }
+
+    @Test fun interruptedSetupInspectionChangedControlRevisionCannotPromoteEarlierCoherentStages() = runTest {
+        fixture { f ->
+            f.interruptSetup("sealed")
+            var once = true
+            f.credentials.afterInspection = { if (once) {
+                once = false; val old = value(f.control.read())!!; value(f.control.compareAndSet(old.revision, old.payload))
+            } }
+            interrupted(InterruptedSetupFinding.EVIDENCE_CHANGED, f.runtime.inspectInterruptedSetup(), InterruptedSetupComponent.CONTROL)
+            assertNull(f.boundary.current())
+        }
+    }
+
+    @Test fun interruptedSetupInspectionReverseFailureAndThrownPrivateErrorsAreSanitized() = runTest {
+        for (site in listOf("control", "credential", "work", "throw")) fixture { f ->
+            f.interruptSetup("sealed")
+            var reads = 0
+            when (site) {
+                "control" -> f.controlReadOverride = { if (++reads == 1) f.control.read() else PortResult.Failure(FailureReason.UNAVAILABLE) }
+                "work" -> f.workReadOverride = { if (++reads <= 2) f.workControl.read() else PortResult.Failure(FailureReason.UNAVAILABLE) }
+                "throw" -> f.credentials.inspectionOverride = { error("private-path/access-runtime-secret") }
+                else -> f.credentials.afterInspection = { if (++reads == 1) f.credentials.inspectionOverride = { PortResult.Failure(FailureReason.UNAVAILABLE) } }
+            }
+            val component = when (site) { "control" -> InterruptedSetupComponent.CONTROL; "work" -> InterruptedSetupComponent.WORK_METADATA; else -> InterruptedSetupComponent.CREDENTIAL_METADATA }
+            val before = f.nonObservationCounts()
+            val report = interrupted(InterruptedSetupFinding.EVIDENCE_UNAVAILABLE, f.runtime.inspectInterruptedSetup(), component)
+            assertEquals(if (site == "throw") FailureReason.STORAGE_FAILURE else FailureReason.UNAVAILABLE, report.failureReason)
+            assertFalse(report.toString().contains("private-path")); assertFalse(report.toString().contains("access-runtime-secret"))
+            assertEquals(before, f.nonObservationCounts())
+        }
+    }
+
+    @Test fun interruptedSetupInspectionCloseAtEverySuspendingStoreReadCannotReturnOldStages() = runTest {
+        for (site in listOf("control", "credential", "work")) fixture { f ->
+            f.interruptSetup("sealed")
+            val entered = CompletableDeferred<Unit>(); val release = CompletableDeferred<Unit>(); var once = true
+            val hook: suspend () -> Unit = { if (once) { once = false; entered.complete(Unit); release.await() } }
+            when (site) { "control" -> f.afterControlRead = hook; "credential" -> f.credentials.afterInspection = hook; else -> f.afterWorkRead = hook }
+            val inspecting = async { f.runtime.inspectInterruptedSetup() }; entered.await()
+            val closing = async { f.runtime.close() }; runCurrent()
+            release.complete(Unit)
+            failure(FailureReason.STORAGE_FAILURE, inspecting.await()); value(closing.await())
+            assertNull(f.boundary.current()); assertTrue(f.credentials.retired.isEmpty())
+        }
+    }
+
+    @Test fun interruptedSetupInspectionCancellationReleasesTheGateWithoutDroppingLiveCreateRetry() = runTest {
+        for (site in listOf("control", "credential", "work")) fixture { f ->
+            f.interruptSetup("sealed")
+            val entered = CompletableDeferred<Unit>(); val never = CompletableDeferred<Unit>(); var once = true
+            val hook: suspend () -> Unit = { if (once) { once = false; entered.complete(Unit); never.await() } }
+            when (site) { "control" -> f.afterControlRead = hook; "credential" -> f.credentials.afterInspection = hook; else -> f.afterWorkRead = hook }
+            val before = f.nonObservationCounts()
+            val inspecting = async { f.runtime.inspectInterruptedSetup() }; entered.await(); inspecting.cancel()
+            assertFailsWith<CancellationException> { inspecting.await() }
+            assertEquals(PrivateSessionPhase.RECOVERY_REQUIRED, f.runtime.phase())
+            interrupted(InterruptedSetupFinding.UNCONFIRMED_SETUP, f.runtime.inspectInterruptedSetup())
+            assertEquals(before, f.nonObservationCounts())
+            value(f.runtime.retryCreate())
+            assertEquals(1, f.acquireCalls); assertEquals(1, f.credentials.plans)
+        }
+    }
+
+    @Test fun interruptedSetupInspectionCannotClearAnUnrelatedLeaseIntroducedDuringAnyRead() = runTest {
+        for (site in listOf("control", "credential", "work", "data")) fixture { f ->
+            f.interruptSetup("work")
+            var external: SessionLease? = null
+            val hook: suspend () -> Unit = { if (external == null) external = f.boundary.activate(ACCOUNT) }
+            when (site) {
+                "control" -> f.afterControlRead = hook
+                "credential" -> f.credentials.afterInspection = hook
+                "work" -> f.afterWorkRead = hook
+                else -> f.dataConnection.afterNextReadCommit = { external = f.boundary.activate(ACCOUNT) }
+            }
+            failure(FailureReason.CONFLICT, f.runtime.inspectInterruptedSetup())
+            assertSame(external, f.boundary.current()); assertNotNull(external)
+            f.boundary.clear()
+        }
+    }
+
+    @Test fun interruptedSetupInspectionProcessRetirementLatchWinsWithoutReadingBrokenControl() = runTest {
+        fixture { f ->
+            val access = f.create()
+            f.controlWriteFailure = FailureReason.STORAGE_FAILURE
+            failure(FailureReason.STORAGE_FAILURE, f.runtime.retire(access, OPERATION))
+            f.controlReadOverride = { fail("Process retirement latch must precede disk probes") }
+            val before = f.nonObservationCounts()
+            val report = interrupted(InterruptedSetupFinding.RETIREMENT_PENDING, f.runtime.inspectInterruptedSetup())
+            assertEquals(SessionRecoveryNextStep.RETRY_EXISTING_RETIREMENT, report.nextStep)
+            assertEquals(before, f.nonObservationCounts())
+        }
+    }
+
+    @Test fun interruptedSetupReportExposesOnlyRedactedAdvisoryEnumsAndNoRepairCapability() = runTest {
+        fixture { f ->
+            val pending = f.interruptSetup("sealed")
+            val report = interrupted(InterruptedSetupFinding.UNCONFIRMED_SETUP, f.runtime.inspectInterruptedSetup())
+            assertEquals(setOf("finding", "component", "failureReason", "credentialStage", "dataStage", "workStage"),
+                report.javaClass.declaredFields.filterNot { java.lang.reflect.Modifier.isStatic(it.modifiers) }.map { it.name }.toSet())
+            for (secret in listOf(ACCOUNT.actorId, ACCOUNT.environment, CONFIGURATION, setupOperation(pending.payload),
+                field(pending.payload, "plan"), f.credentials.current!!.incarnation, "access-runtime-secret", "refresh-runtime-secret"))
+                assertFalse(report.toString().contains(secret))
+            assertNull(f.boundary.current()); assertNull(f.runtime.currentAccess())
+        }
+    }
+
+    @Test fun interruptedSetupInspectionRejectsQueuedOldGenerationEvenWhenTheRuntimeReturnsToSamePhase() = runTest {
+        fixture { f ->
+            val entered = CompletableDeferred<Unit>(); val release = CompletableDeferred<Unit>(); var once = true
+            f.afterControlRead = { if (once) { once = false; entered.complete(Unit); release.await() } }
+            val first = async { f.runtime.recover() }; entered.await()
+            val second = async { f.runtime.recover() }; runCurrent()
+            val inspecting = async { f.runtime.inspectInterruptedSetup() }; runCurrent()
+            assertFalse(inspecting.isCompleted)
+            release.complete(Unit)
+            assertEquals(PrivateSessionPhase.SIGNED_OUT, value(first.await()))
+            assertEquals(PrivateSessionPhase.SIGNED_OUT, value(second.await()))
+            failure(FailureReason.STALE_SESSION, inspecting.await())
+            interrupted(InterruptedSetupFinding.NONE, f.runtime.inspectInterruptedSetup())
+        }
+    }
+
+    @Test fun interruptedSetupInspectionCallerCancellationAfterNonCooperativeReadStopsFurtherNativeIO() = runTest {
+        fixture { f ->
+            f.interruptSetup("sealed")
+            val entered = CompletableDeferred<Unit>(); val release = CompletableDeferred<Unit>()
+            f.credentials.afterInspection = { withContext(NonCancellable) { entered.complete(Unit); release.await() } }
+            val before = f.nonObservationCounts(); val workReads = f.workReads
+            val inspecting = async { f.runtime.inspectInterruptedSetup() }; entered.await()
+            inspecting.cancel(); release.complete(Unit)
+            assertFailsWith<CancellationException> { inspecting.await() }
+            assertEquals(workReads, f.workReads)
+            assertEquals(1, f.credentials.inspections)
+            assertEquals(before, f.nonObservationCounts())
+            assertEquals(PrivateSessionPhase.RECOVERY_REQUIRED, f.runtime.phase())
+            assertNull(f.boundary.current())
+        }
+    }
+
+    @Test fun confirmedCompositeAbortUsesOriginalPlansAtEveryLiveStageWithoutPublishingAccess() = runTest {
+        for (stage in listOf("prepared", "credential", "data", "work", "binding", "sealed")) fixture { f ->
+            val pending = f.interruptSetup(stage)
+            val before = f.nonObservationCounts()
+            val proposal = value(f.runtime.preparePendingSetupAbort())
+            assertEquals(before, f.nonObservationCounts())
+            val reads = f.credentials.reads
+            value(f.runtime.confirmPendingSetupAbort(proposal))
+            val completed = value(f.control.read())!!
+            assertEquals("complete", field(completed.payload, "state"))
+            assertEquals(setupOperation(pending.payload), field(completed.payload, "operationId"))
+            assertEquals(pending.revision + 2, completed.revision)
+            assertEquals("setup-aborted", field(value(f.workControl.read())!!.payload, "state"))
+            assertNull(f.credentials.current); assertEquals(1, f.credentials.aborts)
+            assertEquals(reads, f.credentials.reads); assertEquals(1, f.acquireCalls); assertEquals(0, f.restoreCalls)
+            assertTrue(f.dataVault.keys.isEmpty()); assertTrue(f.cancelled.isEmpty())
+            assertNull(f.boundary.current()); assertNull(f.runtime.currentAccess())
+            assertEquals(PrivateSessionPhase.STARTUP, f.runtime.phase())
+        }
+    }
+
+    @Test fun compositeAbortProposalIsOpaqueAndUnconfirmedRetryHasNoEffects() = runTest {
+        fixture { f ->
+            val pending = f.interruptSetup("sealed")
+            val before = f.nonObservationCounts()
+            val proposal = value(f.runtime.preparePendingSetupAbort())
+            for (secret in listOf(ACCOUNT.actorId, CONFIGURATION, setupOperation(pending.payload), field(pending.payload, "plan")))
+                assertFalse(proposal.toString().contains(secret))
+            failure(FailureReason.CONFLICT, f.runtime.retryPendingSetupAbort())
+            assertEquals(before, f.nonObservationCounts())
+            assertContentEquals(pending.payload.copyForCodec(), value(f.control.read())!!.payload.copyForCodec())
+        }
+    }
+
+    @Test fun foreignRuntimeAndStaleGenerationCannotConfirmCompositeProposal() = runTest {
+        fixture { first -> fixture { second ->
+            first.interruptSetup("work"); second.interruptSetup("work")
+            val proposal = value(first.runtime.preparePendingSetupAbort())
+            val untouched = second.nonObservationCounts()
+            failure(FailureReason.STALE_SESSION, second.runtime.confirmPendingSetupAbort(proposal))
+            assertEquals(untouched, second.nonObservationCounts())
+            assertIs<PortResult.Failure>(first.runtime.recover())
+            val before = first.nonObservationCounts()
+            failure(FailureReason.STALE_SESSION, first.runtime.confirmPendingSetupAbort(proposal))
+            assertEquals(before, first.nonObservationCounts())
+        } }
+    }
+
+    @Test fun samePayloadControlRevisionChangeInvalidatesCompositeProposalWithoutCleanup() = runTest {
+        fixture { f ->
+            f.interruptSetup("sealed")
+            val proposal = value(f.runtime.preparePendingSetupAbort())
+            val control = value(f.control.read())!!
+            value(f.control.compareAndSet(control.revision, control.payload))
+            val before = f.nonObservationCounts()
+            failure(FailureReason.CONFLICT, f.runtime.confirmPendingSetupAbort(proposal))
+            assertEquals(before, f.nonObservationCounts()); assertEquals(0, f.credentials.aborts)
+        }
+    }
+
+    @Test fun changedCredentialWorkOrBindingEvidenceInvalidatesCompositeProposal() = runTest {
+        for (component in listOf("credentials", "work", "binding")) fixture { f ->
+            f.interruptSetup("sealed")
+            val proposal = value(f.runtime.preparePendingSetupAbort())
+            when (component) {
+                "credentials" -> f.credentials.artifactRevision++
+                "work" -> f.rewriteWork { it }
+                else -> f.replaceBinding(ACCOUNT, f.binding(ACCOUNT).payload)
+            }
+            val before = f.nonObservationCounts()
+            failure(FailureReason.CONFLICT, f.runtime.confirmPendingSetupAbort(proposal))
+            assertEquals(before, f.nonObservationCounts()); assertEquals(0, f.credentials.aborts)
+        }
+    }
+
+    @Test fun domainRowsTombstonesAndWrongCanonicalBindingBlockCompositeAbortPreparation() = runTest {
+        for (damage in listOf("row", "tombstone", "binding")) fixture { f ->
+            f.interruptSetup("sealed")
+            val store = value(f.data.resume(ACCOUNT))!!
+            when (damage) {
+                "row" -> value(store.commit(ACCOUNT, listOf(StoreMutation.Put(DRAFT, null, 1, bytes("keep-me")))))
+                "tombstone" -> {
+                    val revision = value(store.commit(ACCOUNT, listOf(StoreMutation.Put(DRAFT, null, 1, bytes("keep-tombstone")))))[DRAFT]!!
+                    value(store.commit(ACCOUNT, listOf(StoreMutation.Delete(DRAFT, revision))))
+                }
+                else -> f.replaceBinding(ACCOUNT, bytes(f.binding(ACCOUNT).payload.copyForCodec().decodeToString().replace(CONFIGURATION, OTHER_CONFIGURATION)))
+            }
+            val before = f.nonObservationCounts()
+            assertIs<PortResult.Failure>(f.runtime.preparePendingSetupAbort())
+            assertEquals(before, f.nonObservationCounts()); assertEquals(0, f.credentials.aborts)
+            assertTrue(value(f.data.inspectOwnerState(ACCOUNT)).hasRecords)
+        }
+    }
+
+    @Test fun missingCredentialAbortCapabilityStopsBeforeAnyConfirmationOrCleanup() = runTest {
+        fixture { f ->
+            f.interruptSetup("work"); f.legacyCredentialsOnly = true; f.reopen()
+            val before = f.nonObservationCounts()
+            failure(FailureReason.NOT_CONFIGURED, f.runtime.preparePendingSetupAbort())
+            assertEquals(before, f.nonObservationCounts()); assertEquals(0, f.credentials.aborts)
+        }
+    }
+
+    @Test fun failedOrUnknownConfirmationStopsWorkAndNeedsFreshExplicitRetryAcknowledgement() = runTest {
+        for (after in listOf(false, true)) fixture { f ->
+            val pending = f.interruptSetup("sealed")
+            val proposal = value(f.runtime.preparePendingSetupAbort())
+            val work = value(f.workControl.read())!!; val keys = f.dataVault.keys.keys.toSet()
+            val reject: suspend (SessionControlRecord, PrivateBytes) -> FailureReason? = { _, next ->
+                if (field(next, "state") == "session-setup-pending") FailureReason.OUTCOME_UNKNOWN else null
+            }
+            if (after) f.afterControlWrite = reject else f.beforeControlWrite = reject
+            failure(FailureReason.OUTCOME_UNKNOWN, f.runtime.confirmPendingSetupAbort(proposal))
+            assertEquals(work.revision, value(f.workControl.read())!!.revision)
+            assertEquals(keys, f.dataVault.keys.keys); assertEquals(0, f.credentials.aborts)
+            f.afterControlWrite = { _, _ -> null }; f.beforeControlWrite = { _, _ -> null }
+            if (after) value(f.runtime.retryPendingSetupAbort()) else {
+                failure(FailureReason.CONFLICT, f.runtime.retryPendingSetupAbort())
+                value(f.runtime.confirmPendingSetupAbort(proposal))
+            }
+            assertEquals(setupOperation(pending.payload), field(value(f.control.read())!!.payload, "operationId"))
+        }
+    }
+
+    @Test fun failedOrUnknownWorkAbortStopsDataAndCredentialCleanupThenFreshlyReplays() = runTest {
+        for (after in listOf(false, true)) fixture { f ->
+            f.interruptSetup("sealed")
+            val proposal = value(f.runtime.preparePendingSetupAbort())
+            val keys = f.dataVault.keys.keys.toSet()
+            val reject: suspend (SessionControlRecord, PrivateBytes) -> FailureReason? = { _, next ->
+                if (field(next, "state") == "setup-aborted") FailureReason.OUTCOME_UNKNOWN else null
+            }
+            if (after) f.afterWorkWrite = reject else f.beforeWorkWrite = reject
+            failure(FailureReason.OUTCOME_UNKNOWN, f.runtime.confirmPendingSetupAbort(proposal))
+            assertEquals(keys, f.dataVault.keys.keys); assertNotNull(f.credentials.current); assertEquals(0, f.credentials.aborts)
+            assertNotNull(f.binding(ACCOUNT))
+            val work = value(f.workControl.read())!!
+            f.afterWorkWrite = { _, _ -> null }; f.beforeWorkWrite = { _, _ -> null }
+            value(f.runtime.retryPendingSetupAbort())
+            assertEquals(work.revision + 1, value(f.workControl.read())!!.revision)
+            assertEquals(1, f.credentials.aborts); assertTrue(f.dataVault.keys.isEmpty())
+        }
+    }
+
+    @Test fun dataAbortBeforeAndAfterCommitLossNeverDeletesTheKeyOrCredentialsWithoutAcknowledgement() = runTest {
+        for (after in listOf(false, true)) fixture { f ->
+            f.interruptSetup("sealed")
+            val proposal = value(f.runtime.preparePendingSetupAbort())
+            val keys = f.dataVault.keys.keys.toSet(); val deletions = f.dataVault.deletes
+            if (after) f.dataConnection.failNextAbortCommitAfter = true else f.dataConnection.failNextAbortCommitBefore = true
+            assertIs<PortResult.Failure>(f.runtime.confirmPendingSetupAbort(proposal))
+            assertEquals("setup-aborted", field(value(f.workControl.read())!!.payload, "state"))
+            assertEquals(keys, f.dataVault.keys.keys); assertEquals(deletions, f.dataVault.deletes)
+            assertNotNull(f.credentials.current); assertEquals(0, f.credentials.aborts)
+            value(f.runtime.retryPendingSetupAbort())
+            assertTrue(f.dataVault.keys.isEmpty()); assertEquals(1, f.credentials.aborts)
+        }
+    }
+
+    @Test fun credentialAbortFailureKeepsIntentAndRetriesAllAlreadyAbortedComponents() = runTest {
+        for (after in listOf(false, true)) fixture { f ->
+            f.interruptSetup("sealed")
+            val proposal = value(f.runtime.preparePendingSetupAbort())
+            if (after) f.credentials.afterAbort = { error("Synthetic credential acknowledgement loss") }
+            else f.credentials.abortFailure = FailureReason.STORAGE_FAILURE
+            failure(FailureReason.STORAGE_FAILURE, f.runtime.confirmPendingSetupAbort(proposal))
+            assertEquals("session-setup-pending", field(value(f.control.read())!!.payload, "state"))
+            assertTrue(f.dataVault.keys.isEmpty())
+            val work = value(f.workControl.read())!!; val writes = f.dataConnection.writeStatements
+            f.credentials.afterAbort = { }; f.credentials.abortFailure = null
+            value(f.runtime.retryPendingSetupAbort())
+            assertEquals(work.revision + 1, value(f.workControl.read())!!.revision)
+            assertTrue(f.dataConnection.writeStatements > writes); assertEquals(2, f.credentials.aborts)
+        }
+    }
+
+    @Test fun pendingAbortRetriesAfterControlledStoreReopenWithoutCallingTheVerifier() = runTest {
+        fixture { f ->
+            f.interruptSetup("sealed")
+            val proposal = value(f.runtime.preparePendingSetupAbort())
+            f.credentials.abortFailure = FailureReason.STORAGE_FAILURE
+            failure(FailureReason.STORAGE_FAILURE, f.runtime.confirmPendingSetupAbort(proposal))
+            f.credentials.abortFailure = null; f.reopen()
+            val reads = f.credentials.reads
+            value(f.runtime.retryPendingSetupAbort())
+            assertEquals(reads, f.credentials.reads); assertEquals(1, f.acquireCalls); assertEquals(0, f.restoreCalls)
+            assertNull(f.boundary.current()); assertEquals(PrivateSessionPhase.STARTUP, f.runtime.phase())
+        }
+    }
+
+    @Test fun finalControlReceiptFailureUsesRetainedExactFinalizationAndNotArbitraryComplete() = runTest {
+        for (after in listOf(false, true)) fixture { f ->
+            f.interruptSetup("sealed")
+            val proposal = value(f.runtime.preparePendingSetupAbort())
+            val reject: suspend (SessionControlRecord, PrivateBytes) -> FailureReason? = { _, next ->
+                if (field(next, "state") == "complete") FailureReason.OUTCOME_UNKNOWN else null
+            }
+            if (after) f.afterControlWrite = reject else f.beforeControlWrite = reject
+            failure(FailureReason.OUTCOME_UNKNOWN, f.runtime.confirmPendingSetupAbort(proposal))
+            val control = value(f.control.read())!!; val work = value(f.workControl.read())!!; val aborts = f.credentials.aborts
+            assertEquals(if (after) "complete" else "session-setup-pending", field(control.payload, "state"))
+            f.afterControlWrite = { _, _ -> null }; f.beforeControlWrite = { _, _ -> null }
+            value(f.runtime.retryPendingSetupAbort())
+            assertEquals(control.revision + if (after) 1 else 2, value(f.control.read())!!.revision)
+            assertEquals(work.revision + if (after) 0 else 1, value(f.workControl.read())!!.revision)
+            assertEquals(aborts + if (after) 0 else 1, f.credentials.aborts)
+            failure(FailureReason.CONFLICT, f.runtime.retryPendingSetupAbort())
+        }
+    }
+
+    @Test fun reopenedRuntimeCannotTreatVisibleCompleteAsRetainedAbortAuthority() = runTest {
+        fixture { f ->
+            f.interruptSetup("sealed")
+            val proposal = value(f.runtime.preparePendingSetupAbort())
+            f.afterControlWrite = { _, next -> if (field(next, "state") == "complete") FailureReason.OUTCOME_UNKNOWN else null }
+            failure(FailureReason.OUTCOME_UNKNOWN, f.runtime.confirmPendingSetupAbort(proposal))
+            f.afterControlWrite = { _, _ -> null }; f.reopen()
+            val before = f.nonObservationCounts()
+            failure(FailureReason.CONFLICT, f.runtime.retryPendingSetupAbort())
+            assertEquals(before, f.nonObservationCounts())
+            assertEquals(PrivateSessionPhase.SIGNED_OUT, value(f.runtime.recover()))
+        }
+    }
+
+    @Test fun changedUntouchedCredentialEvidenceAfterWorkAbortStopsBeforeDataCleanup() = runTest {
+        fixture { f ->
+            f.interruptSetup("sealed")
+            val proposal = value(f.runtime.preparePendingSetupAbort())
+            f.afterWorkWrite = { _, next ->
+                if (field(next, "state") == "setup-aborted") f.credentials.artifactRevision++
+                null
+            }
+            val keys = f.dataVault.keys.keys.toSet()
+            failure(FailureReason.CONFLICT, f.runtime.confirmPendingSetupAbort(proposal))
+            assertEquals(keys, f.dataVault.keys.keys); assertEquals(0, f.credentials.aborts)
+            assertEquals("session-setup-pending", field(value(f.control.read())!!.payload, "state"))
+        }
+    }
+
+    @Test fun callerCancellationDuringNonCooperativeWorkAbortStopsLaterCleanup() = runTest {
+        fixture { f ->
+            f.interruptSetup("sealed")
+            val proposal = value(f.runtime.preparePendingSetupAbort())
+            val entered = CompletableDeferred<Unit>(); val release = CompletableDeferred<Unit>()
+            f.afterWorkWrite = { _, next ->
+                if (field(next, "state") == "setup-aborted") withContext(NonCancellable) { entered.complete(Unit); release.await() }
+                null
+            }
+            val keys = f.dataVault.keys.keys.toSet()
+            val aborting = async { f.runtime.confirmPendingSetupAbort(proposal) }; entered.await()
+            aborting.cancel(); release.complete(Unit)
+            assertFailsWith<CancellationException> { aborting.await() }
+            assertEquals(keys, f.dataVault.keys.keys); assertEquals(0, f.credentials.aborts)
+            assertNull(f.boundary.current())
+            f.afterWorkWrite = { _, _ -> null }; value(f.runtime.retryPendingSetupAbort())
+        }
+    }
+
+    @Test fun runtimeCloseDuringConfirmationReadCannotWriteIntentOrLaterCleanup() = runTest {
+        fixture { f ->
+            f.interruptSetup("sealed")
+            val proposal = value(f.runtime.preparePendingSetupAbort())
+            val entered = CompletableDeferred<Unit>(); val release = CompletableDeferred<Unit>()
+            var once = true
+            f.credentials.afterInspection = { if (once) { once = false; entered.complete(Unit); release.await() } }
+            val before = f.nonObservationCounts()
+            val aborting = async { f.runtime.confirmPendingSetupAbort(proposal) }; entered.await()
+            value(f.runtime.close()); release.complete(Unit)
+            failure(FailureReason.STORAGE_FAILURE, aborting.await())
+            assertEquals(before, f.nonObservationCounts()); assertEquals(PrivateSessionPhase.CLOSED, f.runtime.phase())
+        }
+    }
+
+    @Test fun unrelatedLeaseIntroducedAfterWorkAbortIsPreservedAndStopsDataCleanup() = runTest {
+        fixture { f ->
+            f.interruptSetup("sealed")
+            val proposal = value(f.runtime.preparePendingSetupAbort())
+            var external: SessionLease? = null
+            f.afterWorkWrite = { _, next ->
+                if (field(next, "state") == "setup-aborted") external = f.boundary.activate(ACCOUNT)
+                null
+            }
+            val keys = f.dataVault.keys.keys.toSet()
+            assertIs<PortResult.Failure>(f.runtime.confirmPendingSetupAbort(proposal))
+            assertNotNull(external); assertSame(external, f.boundary.current())
+            assertEquals(keys, f.dataVault.keys.keys); assertEquals(0, f.credentials.aborts)
+            f.boundary.clear()
+        }
+    }
+
+    @Test fun successfulAbortFencesOldProposalAndLiveAttemptBeforeARealNewCreate() = runTest {
+        fixture { f ->
+            val original = f.interruptSetup("work")
+            val proposal = value(f.runtime.preparePendingSetupAbort())
+            value(f.runtime.confirmPendingSetupAbort(proposal))
+            failure(FailureReason.CONFLICT, f.runtime.retryCreate())
+            failure(FailureReason.STALE_SESSION, f.runtime.confirmPendingSetupAbort(proposal))
+            assertEquals(PrivateSessionPhase.SIGNED_OUT, value(f.runtime.recover()))
+            val access = value(f.runtime.create())
+            assertEquals(2, f.acquireCalls); assertEquals(2, f.credentials.plans)
+            assertNotEquals(setupOperation(original.payload), field(value(f.control.read())!!.payload, "operationId"))
+            assertSame(access.lease, f.boundary.current()); assertEquals(PrivateSessionPhase.ACTIVE, f.runtime.phase())
+        }
+    }
+
+    @Test fun activeRuntimeRejectsAbortOperationsWithoutChangingItsLeaseOrData() = runTest {
+        fixture { f ->
+            val access = f.create(); val before = f.nonObservationCounts()
+            failure(FailureReason.CONFLICT, f.runtime.preparePendingSetupAbort())
+            failure(FailureReason.CONFLICT, f.runtime.retryPendingSetupAbort())
+            assertSame(access.lease, f.boundary.current()); assertSame(access, f.runtime.currentAccess())
+            assertEquals(before, f.nonObservationCounts())
+        }
+    }
+
+    @Test fun queuedOldConfirmationAndCancelledWaiterCannotReuseOrInvalidateSuccessfulAbort() = runTest {
+        fixture { f ->
+            val pending = f.interruptSetup("sealed")
+            val proposal = value(f.runtime.preparePendingSetupAbort())
+            val entered = CompletableDeferred<Unit>(); val release = CompletableDeferred<Unit>(); var once = true
+            f.beforeControlWrite = { _, next ->
+                if (once && field(next, "state") == "complete") { once = false; entered.complete(Unit); release.await() }
+                null
+            }
+            val first = async { f.runtime.confirmPendingSetupAbort(proposal) }; entered.await()
+            val queued = async { f.runtime.confirmPendingSetupAbort(proposal) }; runCurrent()
+            val cancelled = async { f.runtime.retryPendingSetupAbort() }; runCurrent()
+            assertFalse(queued.isCompleted); assertFalse(cancelled.isCompleted)
+            cancelled.cancel(); assertFailsWith<CancellationException> { cancelled.await() }
+            release.complete(Unit); value(first.await())
+            failure(FailureReason.STALE_SESSION, queued.await())
+            assertEquals(pending.revision + 2, value(f.control.read())!!.revision)
+            assertEquals(1, f.credentials.aborts); assertNull(f.boundary.current())
+            assertEquals(PrivateSessionPhase.STARTUP, f.runtime.phase())
+        }
+    }
+
+    @Test fun cancelledFinalDispatcherReturnDoesNotUndoCompletedAbortOrClearANewerLease() = runTest {
+        fixture { f ->
+            f.interruptSetup("sealed")
+            val proposal = value(f.runtime.preparePendingSetupAbort())
+            val delegate = StandardTestDispatcher(testScheduler)
+            val held = java.util.ArrayDeque<Pair<kotlin.coroutines.CoroutineContext, Runnable>>()
+            var hold = false
+            val caller = object : CoroutineDispatcher() {
+                override fun dispatch(context: kotlin.coroutines.CoroutineContext, block: Runnable) {
+                    if (hold) held.addLast(context to block) else delegate.dispatch(context, block)
+                }
+            }
+            f.afterControlWrite = { _, next -> if (field(next, "state") == "complete") hold = true; null }
+            val aborting = async(caller) { f.runtime.confirmPendingSetupAbort(proposal) }; runCurrent()
+            assertFalse(aborting.isCompleted); assertFalse(held.isEmpty())
+            assertEquals(PrivateSessionPhase.STARTUP, f.runtime.phase())
+            assertEquals("complete", field(value(f.control.read())!!.payload, "state"))
+            val before = f.nonObservationCounts()
+            val external = f.boundary.activate(ACCOUNT)
+            aborting.cancel(); hold = false
+            while (!held.isEmpty()) held.removeFirst().let { delegate.dispatch(it.first, it.second) }
+            assertFailsWith<CancellationException> { aborting.await() }
+            assertSame(external, f.boundary.current()); assertEquals(before, f.nonObservationCounts())
+            f.boundary.clear()
+            assertEquals(PrivateSessionPhase.SIGNED_OUT, value(f.runtime.recover()))
         }
     }
 
@@ -1454,12 +2433,14 @@ class PrivateSessionRuntimeTest {
         var controlReadOverride: (suspend () -> PortResult<SessionControlRecord?>)? = null
         var workReadOverride: (suspend () -> PortResult<SessionControlRecord?>)? = null
         var controlWriteFailure: FailureReason? = null
-        val controlAfterWriteFailures = mutableMapOf<Int, FailureReason>()
+        var beforeControlWrite: suspend (SessionControlRecord, PrivateBytes) -> FailureReason? = { _, _ -> null }
+        var afterControlWrite: suspend (SessionControlRecord, PrivateBytes) -> FailureReason? = { _, _ -> null }
+        var beforeWorkWrite: suspend (SessionControlRecord, PrivateBytes) -> FailureReason? = { _, _ -> null }
+        var afterWorkWrite: suspend (SessionControlRecord, PrivateBytes) -> FailureReason? = { _, _ -> null }
         var controlReads = 0
         var workReads = 0
         var controlWrites = 0
         var workWrites = 0
-        var nextIdHook: () -> Unit = { }
         private var nextId = 0
         private val dataManagers = mutableListOf<EncryptedStateDatabase>()
         private val controlManagers = mutableListOf<EncryptedSessionControlStore>()
@@ -1470,6 +2451,32 @@ class PrivateSessionRuntimeTest {
         suspend fun create(): PrivateSessionAccess {
             assertEquals(PrivateSessionPhase.SIGNED_OUT, value(runtime.recover()))
             return value(runtime.create())
+        }
+        suspend fun interruptSetup(stage: String): SessionControlRecord {
+            value(runtime.recover())
+            when (stage) {
+                "prepared" -> credentials.plannedCommitFailure = FailureReason.STORAGE_FAILURE
+                "credential" -> credentials.afterCreate = { error("Test-only post-selection receipt loss") }
+                "data" -> beforeWorkWrite = { _, next ->
+                    if (field(next, "state") == "setup-selected") FailureReason.STORAGE_FAILURE else null
+                }
+                "work" -> dataConnection.failNextBindingCommitBefore = true
+                "binding" -> beforeWorkWrite = { before, next ->
+                    if (field(before.payload, "state") == "setup-selected" && field(next, "state") == "active")
+                        FailureReason.STORAGE_FAILURE else null
+                }
+                "sealed" -> beforeControlWrite = { _, next ->
+                    if (field(next, "state") == "complete") FailureReason.STORAGE_FAILURE else null
+                }
+                else -> error("Unknown test stage")
+            }
+            failure(FailureReason.STORAGE_FAILURE, runtime.create())
+            credentials.plannedCommitFailure = null; credentials.afterCreate = { }
+            beforeWorkWrite = { _, _ -> null }; beforeControlWrite = { _, _ -> null }
+            return value(control.read())!!.also {
+                assertEquals("session-setup-pending", field(it.payload, "state"))
+                assertNull(boundary.current())
+            }
         }
         suspend fun seedEmptySetup(withCredentials: Boolean = true, withData: Boolean = true, withWork: Boolean = true) {
             if (withCredentials) value(credentials.create(credentials.revision, account()))
@@ -1508,11 +2515,13 @@ class PrivateSessionRuntimeTest {
                 override suspend fun compareAndSet(expectedRevision: Long?, payload: PrivateBytes): PortResult<SessionControlRecord> {
                     controlWrites++
                     controlWriteFailure?.let { return PortResult.Failure(it) }
+                    val before = value(control.read())!!
+                    beforeControlWrite(before, payload)?.let { return PortResult.Failure(it) }
                     val result = control.compareAndSet(expectedRevision, payload)
-                    return controlAfterWriteFailures[controlWrites]?.let { PortResult.Failure(it) } ?: result
+                    return afterControlWrite(before, payload)?.let { PortResult.Failure(it) } ?: result
                 }
             }
-            val guardedWork = object : SessionControlStore {
+            val guardedWork = object : SessionControlStore, WorkOriginPlanAuthentication by workControl {
                 override suspend fun read(): PortResult<SessionControlRecord?> {
                     workReads++
                     val result = workReadOverride?.invoke() ?: workControl.read()
@@ -1521,7 +2530,10 @@ class PrivateSessionRuntimeTest {
                 }
                 override suspend fun compareAndSet(expectedRevision: Long?, payload: PrivateBytes): PortResult<SessionControlRecord> {
                     workWrites++
-                    return workControl.compareAndSet(expectedRevision, payload)
+                    val before = value(workControl.read())!!
+                    beforeWorkWrite(before, payload)?.let { return PortResult.Failure(it) }
+                    val result = workControl.compareAndSet(expectedRevision, payload)
+                    return afterWorkWrite(before, payload)?.let { PortResult.Failure(it) } ?: result
                 }
             }
             val selectedCredentials = if (legacyCredentialsOnly) object : IncarnationCredentialStore by credentials { } else credentials
@@ -1530,21 +2542,21 @@ class PrivateSessionRuntimeTest {
                     override suspend fun acquire(): PortResult<StoredCredentials> { acquireCalls++; return this@RuntimeFixture.acquire() }
                     override suspend fun restore(snapshot: CredentialSnapshot): PortResult<PrivateSessionAccessMode> { restoreCalls++; return this@RuntimeFixture.restore(snapshot) }
                 }, NativeWorkCancellationPort { cancelled += it; cancel(it) },
-                NativeWorkIdSource { nextIdHook(); uuid(1_000 + ++nextId) },
+                NativeWorkIdSource { uuid(1_000 + ++nextId) },
                 NativeWorkExecutionPolicy { _, _, _, _ -> PortResult.Value(true) })).also { runtimes += it }
         }
         suspend fun binding(scope: StorageScope): PrivateRecord = value(value(data.resume(scope))!!.read(scope, BINDING))!!
-        suspend fun replaceBinding(scope: StorageScope, payload: PrivateBytes, schema: Int = 1) {
+        suspend fun replaceBinding(scope: StorageScope, payload: PrivateBytes, schema: Int? = null) {
             val store = value(data.resume(scope))!!
             val previous = value(store.read(scope, BINDING))!!
-            value(store.commit(scope, listOf(StoreMutation.Put(BINDING, previous.revision, schema, payload))))
+            value(store.commit(scope, listOf(StoreMutation.Put(BINDING, previous.revision, schema ?: previous.schemaVersion, payload))))
         }
         suspend fun rewriteWork(transform: (String) -> String) {
             val record = value(workControl.read())!!
             value(workControl.compareAndSet(record.revision, bytes(transform(record.payload.copyForCodec().decodeToString()))))
         }
         fun nonObservationCounts() = listOf(acquireCalls, restoreCalls, credentials.reads, credentials.creates, credentials.plans, credentials.plannedCommits,
-            credentials.replacements, credentials.retired.size, cancelled.size, nextId,
+            credentials.replacements, credentials.retired.size, credentials.aborts, cancelled.size, nextId,
             controlWrites, workWrites, dataConnection.writeStatements, dataVault.creates, dataVault.deletes,
             dataVault.seals, controlVault.creates, controlVault.deletes, controlVault.seals,
             workVault.creates, workVault.deletes, workVault.seals)
@@ -1574,7 +2586,7 @@ class PrivateSessionRuntimeTest {
     }
 
     /** Test fake only. Reflection avoids adding a production constructor/authority API for tests. */
-    private class RuntimeTestCredentials : PlannedCredentialCreateStore {
+    private class RuntimeTestCredentials : PlannedCredentialCreateStore, CredentialCreatePlanInspection, CredentialCreatePlanAbort {
         var current: CredentialSnapshot? = null
         var revision = 1L
         var creates = 0
@@ -1594,12 +2606,60 @@ class PrivateSessionRuntimeTest {
         var afterCreate: suspend () -> Unit = { }
         var afterRead: suspend () -> Unit = { }
         var afterRetire: suspend () -> Unit = { }
+        var inspections = 0
+        var artifactRevision = 0
+        var inspectionOverride: (suspend () -> PortResult<CredentialCreatePlanObservation>)? = null
+        var afterInspection: suspend () -> Unit = { }
+        var aborts = 0
+        var abortFailure: FailureReason? = null
+        var afterAbort: suspend () -> Unit = { }
         val retired = mutableListOf<Pair<StorageScope, String>>()
         override suspend fun state(): PortResult<CredentialSlotState> {
             states++
             val result = stateOverride?.invoke() ?: PortResult.Value(CredentialSlotState(revision, current?.scope, current?.incarnation))
             afterState()
             return result
+        }
+        override suspend fun inspectPlannedCreate(scope: StorageScope, plan: CredentialCreatePlan): PortResult<CredentialCreatePlanObservation> {
+            inspections++
+            val result = inspectionOverride?.invoke() ?: run {
+                val original = planned
+                if (original == null || scope != original.third.scope ||
+                    !original.first.copyForStorage().copyForCodec().contentEquals(plan.copyForStorage().copyForCodec())) {
+                    PortResult.Failure(FailureReason.INVALID_DATA)
+                } else {
+                    val status = if (current == null && revision == plannedRevision) {
+                        if (artifactRevision == 0) CredentialCreateRecoveryStatus.PREPARED else CredentialCreateRecoveryStatus.PARTIAL
+                    } else if (current?.scope == scope && current?.incarnation == original.second && revision == plannedRevision + 1)
+                        CredentialCreateRecoveryStatus.SELECTED
+                    else if (current == null && revision == plannedRevision + 2) CredentialCreateRecoveryStatus.ABORTED
+                    else null
+                    if (status == null) PortResult.Failure(FailureReason.CONFLICT) else {
+                        // Test metadata only: never encode, inspect or hash token/credential contents.
+                        val metadata = "$revision|${scope.environment}|${scope.actorKind}|${scope.actorId}|${original.second}|$artifactRevision"
+                        PortResult.Value(CredentialCreatePlanObservation(status,
+                            PrivateBytes(MessageDigest.getInstance("SHA-256").digest(metadata.encodeToByteArray()))))
+                    }
+                }
+            }
+            afterInspection()
+            return result
+        }
+        override suspend fun abortPlannedCreate(scope: StorageScope, plan: CredentialCreatePlan): PortResult<Unit> {
+            aborts++
+            abortFailure?.let { return PortResult.Failure(it) }
+            val original = planned ?: return PortResult.Failure(FailureReason.CONFLICT)
+            if (scope != original.third.scope ||
+                !original.first.copyForStorage().copyForCodec().contentEquals(plan.copyForStorage().copyForCodec()))
+                return PortResult.Failure(FailureReason.CONFLICT)
+            val selected = current
+            if (selected == null) {
+                if (revision != plannedRevision && revision != plannedRevision + 2) return PortResult.Failure(FailureReason.CONFLICT)
+            } else if (selected.scope != scope || selected.incarnation != original.second || revision != plannedRevision + 1)
+                return PortResult.Failure(FailureReason.CONFLICT)
+            current = null; revision = plannedRevision + 2; artifactRevision = 0
+            afterAbort()
+            return PortResult.Value(Unit)
         }
         override suspend fun read(scope: StorageScope): PortResult<CredentialSnapshot?> {
             reads++
@@ -1629,9 +2689,14 @@ class PrivateSessionRuntimeTest {
             beforePlannedCommit()
             plannedCommitFailure?.let { return PortResult.Failure(it) }
             val selected = planned ?: return PortResult.Failure(FailureReason.CONFLICT)
-            if (current != null || selected.third !== credentials ||
+            if (!sameCredentials(selected.third, credentials) ||
                 !selected.first.copyForStorage().copyForCodec().contentEquals(plan.copyForStorage().copyForCodec()))
                 return PortResult.Failure(FailureReason.CONFLICT)
+            current?.let {
+                return if (it.incarnation == selected.second && it.revision == plannedRevision + 1 &&
+                    revision == it.revision && sameCredentials(it.credentials, credentials)) PortResult.Value(it)
+                else PortResult.Failure(FailureReason.CONFLICT)
+            }
             if (revision != plannedRevision) return PortResult.Failure(FailureReason.CONFLICT)
             creates++
             val snapshot = snapshot(selected.second, ++revision, credentials)
@@ -1670,27 +2735,50 @@ class PrivateSessionRuntimeTest {
         private fun snapshot(incarnation: String, revision: Long, credentials: StoredCredentials): CredentialSnapshot =
             CredentialSnapshot::class.java.getDeclaredConstructor(String::class.java, java.lang.Long.TYPE, StoredCredentials::class.java)
                 .newInstance(incarnation, revision, credentials)
+
+        private fun sameCredentials(first: StoredCredentials, second: StoredCredentials): Boolean {
+            if (first.scope != second.scope || first.expiresAtMillis != second.expiresAtMillis) return false
+            return when {
+                first is StoredCredentials.Account && second is StoredCredentials.Account ->
+                    first.accessToken.use { a -> second.accessToken.use { b -> a == b } } &&
+                        first.refreshToken?.use { it } == second.refreshToken?.use { it } &&
+                        first.deviceSessionId?.use { it } == second.deviceSessionId?.use { it }
+                first is StoredCredentials.Guest && second is StoredCredentials.Guest ->
+                    first.guestSessionId.use { a -> second.guestSessionId.use { b -> a == b } } &&
+                        first.guestToken.use { a -> second.guestToken.use { b -> a == b } }
+                else -> false
+            }
+        }
     }
 
     private class RuntimeTestConnection(private val delegate: SQLiteConnection) : SQLiteConnection by delegate {
-        var failNextWriteCommitAfter = false
-        var failNextWriteCommitBefore = false
+        var failNextBindingCommitAfter = false
+        var failNextBindingCommitBefore = false
+        var failNextAbortCommitBefore = false
+        var failNextAbortCommitAfter = false
         var afterNextReadCommit: (() -> Unit)? = null
         var writeStatements = 0
         private var write = false
+        private var recordWrite = false
+        private var abortWrite = false
         override fun prepare(sql: String): SQLiteStatement {
             val normalized = sql.trim().uppercase()
             val statement = delegate.prepare(sql)
             return object : SQLiteStatement by statement {
                 override fun step(): Boolean {
-                    if (normalized.startsWith("BEGIN")) write = normalized == "BEGIN IMMEDIATE"
-                    val commit = normalized == "COMMIT" && write
+                    if (normalized.startsWith("BEGIN")) { write = normalized == "BEGIN IMMEDIATE"; recordWrite = false; abortWrite = false }
+                    if ((normalized.startsWith("INSERT ") || normalized.startsWith("UPDATE ")) && normalized.contains("FEEDME_RECORDS")) recordWrite = true
+                    if (normalized.startsWith("INSERT INTO FEEDME_ACTIVATION_ABORTS")) abortWrite = true
+                    val commit = normalized == "COMMIT" && write && recordWrite
+                    val abortCommit = normalized == "COMMIT" && write && abortWrite
                     val readCommit = normalized == "COMMIT" && !write
                     if (normalized.startsWith("INSERT ") || normalized.startsWith("UPDATE ") || normalized.startsWith("DELETE ")) writeStatements++
-                    if (commit && failNextWriteCommitBefore) { failNextWriteCommitBefore = false; error("Injected runtime binding precommit failure") }
+                    if (commit && failNextBindingCommitBefore) { failNextBindingCommitBefore = false; error("Injected runtime binding precommit failure") }
+                    if (abortCommit && failNextAbortCommitBefore) { failNextAbortCommitBefore = false; error("Injected runtime abort precommit failure") }
                     val result = statement.step()
                     if (normalized == "COMMIT" || normalized == "ROLLBACK") write = false
-                    if (commit && failNextWriteCommitAfter) { failNextWriteCommitAfter = false; error("Injected runtime binding acknowledgement failure") }
+                    if (commit && failNextBindingCommitAfter) { failNextBindingCommitAfter = false; error("Injected runtime binding acknowledgement failure") }
+                    if (abortCommit && failNextAbortCommitAfter) { failNextAbortCommitAfter = false; error("Injected runtime abort acknowledgement failure") }
                     if (readCommit) afterNextReadCommit?.also { afterNextReadCommit = null }?.invoke()
                     return result
                 }
@@ -1698,7 +2786,7 @@ class PrivateSessionRuntimeTest {
         }
     }
 
-    private class RuntimeTestVault : StateVault {
+    private class RuntimeTestVault : PlannedStateVault {
         private val random = SecureRandom()
         private val index = SecretKeySpec(ByteArray(32).also(random::nextBytes), "HmacSHA256")
         val keys = mutableMapOf<String, SecretKey>()
@@ -1706,9 +2794,12 @@ class PrivateSessionRuntimeTest {
         var deletes = 0
         var seals = 0
         override fun index(input: ByteArray) = Mac.getInstance("HmacSHA256").run { init(index); doFinal(input) }
-        override fun createOwnerKey(): String = UUID.randomUUID().toString().replace("-", "").also { id ->
+        override fun newOwnerKeyId(): String = UUID.randomUUID().toString().replace("-", "")
+        override fun createOwnerKey(): String = newOwnerKeyId().also(::createOwnerKey)
+        override fun createOwnerKey(keyId: String) {
+            check(keyId.matches(Regex("[0-9a-f]{32}")) && keyId !in keys)
             creates++
-            keys[id] = KeyGenerator.getInstance("AES").apply { init(256, random) }.generateKey()
+            keys[keyId] = KeyGenerator.getInstance("AES").apply { init(256, random) }.generateKey()
         }
         override fun hasOwnerKey(keyId: String) = keyId in keys
         override fun deleteOwnerKey(keyId: String) { deletes++; keys.remove(keyId) }
@@ -1745,6 +2836,9 @@ class PrivateSessionRuntimeTest {
         private fun bytes(value: String) = PrivateBytes(value.encodeToByteArray())
         private fun field(payload: PrivateBytes, name: String) = assertNotNull(assertIs<WireField.Value<WireDocument>>(WireDocument.decode(payload.copyForCodec()).field(name)).value.stringOrNull())
         private fun hex(bytes: ByteArray) = bytes.joinToString("") { "%02x".format(it.toInt() and 255) }
+        private fun unhex(value: String) = ByteArray(value.length / 2) { index -> value.substring(index * 2, index * 2 + 2).toInt(16).toByte() }
+        private fun setupOperation(payload: PrivateBytes) = field(PrivateBytes(unhex(field(payload, "plan"))), "operationId")
+        private fun setupOrigin(payload: PrivateBytes) = field(PrivateBytes(unhex(field(payload, "plan"))), "origin")
         private fun <T> value(result: PortResult<T>): T = when (result) {
             is PortResult.Value -> result.value
             is PortResult.Failure -> fail("Expected runtime success, got ${result.reason}")
@@ -1755,6 +2849,26 @@ class PrivateSessionRuntimeTest {
             assertEquals(finding, it.finding)
             assertEquals(component, it.component)
             if (finding != SessionRecoveryFinding.EVIDENCE_UNAVAILABLE) assertNull(it.failureReason)
+        }
+        private fun interrupted(finding: InterruptedSetupFinding, result: PortResult<InterruptedSetupReport>,
+            component: InterruptedSetupComponent? = null): InterruptedSetupReport = value(result).also {
+            assertEquals(finding, it.finding); assertEquals(component, it.component)
+            if (finding !in setOf(InterruptedSetupFinding.UNCONFIRMED_SETUP, InterruptedSetupFinding.ABORT_REQUESTED)) {
+                assertNull(it.credentialStage); assertNull(it.dataStage); assertNull(it.workStage)
+            }
+        }
+        private fun assertStage(stage: String, report: InterruptedSetupReport) {
+            assertEquals(if (stage == "prepared") CredentialCreateRecoveryStatus.PREPARED else CredentialCreateRecoveryStatus.SELECTED, report.credentialStage)
+            assertEquals(when (stage) {
+                "prepared", "credential" -> InterruptedSetupDataStage.PREPARED
+                "data", "work" -> InterruptedSetupDataStage.SELECTED_EMPTY
+                else -> InterruptedSetupDataStage.BOUND
+            }, report.dataStage)
+            assertEquals(when (stage) {
+                "prepared", "credential", "data" -> SessionWorkOriginPlanStatus.PREPARED
+                "work", "binding" -> SessionWorkOriginPlanStatus.SELECTED
+                else -> SessionWorkOriginPlanStatus.SEALED
+            }, report.workStage)
         }
     }
 }

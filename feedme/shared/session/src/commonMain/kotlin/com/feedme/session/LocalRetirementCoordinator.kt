@@ -5,6 +5,8 @@ import com.feedme.storage.EncryptedStateDatabase
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
@@ -120,20 +122,24 @@ class LocalRetirementCoordinator(
     }
 
     private suspend fun resumeLatched(record: Entry): LocalRetirementProgress {
-        // A credential plan is neither a logout nor permission to abort a failed create.
-        if (record.state is RetirementState.PendingCreate) failRetirement(FailureReason.CONFLICT)
+        // Setup ownership is neither a logout nor permission for legacy cleanup. Reject it
+        // before a retained process latch could re-acknowledge or overwrite the control record.
+        if (record.state is RetirementState.PendingCreate || record.state is RetirementState.PendingSetup)
+            failRetirement(FailureReason.CONFLICT)
         val latch = ProcessRetirements.get(boundary)
         if (latch == null) {
             val pending = record.state as? RetirementState.InFlight
             if (pending != null) ProcessRetirements.install(boundary, PendingLatch(pending, record.record.revision))
-            return finish(record)
+            // Startup readback is not acknowledgement of an earlier possibly failed commit.
+            return finish(if (record.state == RetirementState.Idle) record else write(record, record.state))
         }
         val state = record.state
         if (state is RetirementState.InFlight) {
             if (!sameIntent(state, latch.state)) failRetirement(FailureReason.CONFLICT)
-            return finish(record)
+            return finish(write(record, state))
         }
         if (state is RetirementState.Complete && state.operationId == latch.state.operationId && record.record.revision > latch.expectedRevision) {
+            write(record, state)
             ProcessRetirements.remove(boundary, latch.state.operationId)
             return progress(state)
         }
@@ -143,6 +149,7 @@ class LocalRetirementCoordinator(
     }
 
     private suspend fun finish(initial: Entry): LocalRetirementProgress {
+        inactive()
         var entry = initial
         val initialState = entry.state
         if (initialState == RetirementState.Idle) return progress(initialState)
@@ -158,6 +165,10 @@ class LocalRetirementCoordinator(
         for (step in RetirementStep.entries) {
             val pending = entry.state as RetirementState.InFlight
             if (step !in pending.requiredSteps || step in pending.done) continue
+            val current = read()
+            inactive()
+            if (current.record.revision != entry.record.revision || !samePayload(current.record.payload, entry.record.payload))
+                failRetirement(FailureReason.CONFLICT)
             // All are exact-incarnation, idempotent local cleanup. Independent cleanup continues
             // after a typed failure; a cancellation leaves the durable barrier for restart.
             val outcome = try {
@@ -172,6 +183,7 @@ class LocalRetirementCoordinator(
                 }
             } catch (cancelled: CancellationException) { throw cancelled }
             catch (_: Exception) { PortResult.Failure(FailureReason.STORAGE_FAILURE) }
+            inactive()
             when (outcome) {
                 is PortResult.Failure -> failures[step] = outcome.reason
                 is PortResult.Value -> entry = write(entry, pending.withDone(step))
@@ -189,35 +201,33 @@ class LocalRetirementCoordinator(
         RetirementState.Idle -> LocalRetirementProgress(LocalRetirementPhase.IDLE, null, emptySet())
         is RetirementState.Complete -> LocalRetirementProgress(LocalRetirementPhase.COMPLETE, state.operationId, emptySet())
         is RetirementState.InFlight -> LocalRetirementProgress(LocalRetirementPhase.PENDING, state.operationId, state.requiredSteps - state.done, failures)
-        is RetirementState.PendingCreate -> failRetirement(FailureReason.CONFLICT)
+        is RetirementState.PendingCreate, is RetirementState.PendingSetup -> failRetirement(FailureReason.CONFLICT)
     }
 
     private suspend fun read(): Entry {
+        currentCoroutineContext().ensureActive()
         val record = requireRetirement(control.read()) ?: failRetirement(FailureReason.STORAGE_FAILURE)
+        currentCoroutineContext().ensureActive()
         return Entry(record, RetirementCodec.decode(record.payload))
     }
     private suspend fun write(expected: Entry, state: RetirementState): Entry {
-        val payload = RetirementCodec.encode(state)
-        val result = control.compareAndSet(expected.record.revision, payload)
-        if (result is PortResult.Value) {
-            if (result.value.revision <= expected.record.revision || !result.value.payload.copyForCodec().contentEquals(payload.copyForCodec()))
-                failRetirement(FailureReason.STORAGE_FAILURE)
-            return Entry(result.value, state)
-        }
-        val reason = (result as PortResult.Failure).reason
-        if (reason == FailureReason.OUTCOME_UNKNOWN) {
-            // Reconcile this exact possibly committed CAS; never create another logout ID.
-            val observed = read()
-            if (observed.record.revision > expected.record.revision && observed.record.payload.copyForCodec().contentEquals(payload.copyForCodec())) return observed
-        }
-        failRetirement(reason)
+        // Same-state retry preserves the exact bytes, including accepted legacy formatting.
+        val payload = if (state === expected.state) expected.record.payload else RetirementCodec.encode(state)
+        val record = requireRetirement(control.acknowledge(expected.record, payload) {
+            if (boundary.current() != null) failRetirement(FailureReason.STALE_SESSION)
+        })
+        return Entry(record, state)
+    }
+    private suspend fun inactive() {
+        currentCoroutineContext().ensureActive()
+        if (boundary.current() != null) failRetirement(FailureReason.STALE_SESSION)
     }
     private fun current(lease: SessionLease) {
         if (!boundary.isCurrent(lease)) failRetirement(FailureReason.STALE_SESSION)
         if (lease.scope.actorKind == ActorKind.DEMO) failRetirement(FailureReason.UNAUTHENTICATED)
     }
     private suspend fun <T> guarded(action: suspend () -> T): PortResult<T> = withContext(dispatcher) {
-        try { PortResult.Value(action()) }
+        try { currentCoroutineContext().ensureActive(); PortResult.Value(action()) }
         catch (cancelled: CancellationException) { throw cancelled }
         catch (failure: RetirementFailure) { PortResult.Failure(failure.reason) }
         catch (_: Exception) { PortResult.Failure(FailureReason.STORAGE_FAILURE) }

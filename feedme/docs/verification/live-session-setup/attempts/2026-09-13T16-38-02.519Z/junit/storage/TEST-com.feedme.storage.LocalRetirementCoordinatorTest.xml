@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.storage.LocalRetirementCoordinatorTest" tests="41" skipped="0" failures="0" errors="0" timestamp="2026-09-13T16:38:24.522Z" hostname="ansachars-MacBook-Pro.local" time="7.088">
+  <properties/>
+  <testcase name="partialNativeFailureKeepsDurableBarrierWhileIndependentDataCleanupCompletes[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.133"/>
+  <testcase name="setupDiscardNeverFallsBackToOrdinaryWorkRetirementWhenEmptyCapabilityIsUnavailable[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.161"/>
+  <testcase name="failureToPersistInitialBarrierClearsAuthorityButDoesNotStartCleanup[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.158"/>
+  <testcase name="setupDiscardEmptyWorkFailureRemainsPendingWhileIndependentOptionalCredentialCleanupCompletes[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.161"/>
+  <testcase name="malformedEncryptedControlPayloadFailsClosedWithoutCleanupOrAutomaticReset[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.388"/>
+  <testcase name="retainedLegacyRetirementLatchCannotOverwriteCompositeSetupAtItsOriginalRevision[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.161"/>
+  <testcase name="setupDiscardDataCommitLossRecoversEmptyMissingKeyTargetWithoutRepeatingNativeSteps[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.186"/>
+  <testcase name="nativeExceptionIsSanitizedAsPendingWhileIndependentStepsStillComplete[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.144"/>
+  <testcase name="setupDiscardRejectsActiveBoundaryAndChangedControlWithoutInstallingCleanupIntent[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.163"/>
+  <testcase name="completionRemovesOwnerOriginCredentialAndDataTargetFromCurrentControlPayload[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.179"/>
+  <testcase name="pendingBarrierRejectsNewBindingAndDoesNotInventReplacementCleanupTargets[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.129"/>
+  <testcase name="repeatedUnknownControlCommitsCannotStartCleanupUntilFreshAcknowledgement[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.191"/>
+  <testcase name="compositeSetupIsNotOrdinaryRetirementOrConfirmedCredentialOnlyCleanup[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.141"/>
+  <testcase name="privateDataPrecommitFailureReopensMissingKeyThenRecoversAuthenticatedTargetFromControlLedger[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.158"/>
+  <testcase name="captureWithoutPrivateDataOwnerRejectsUnconfiguredSessionWithoutCreatingCleanupTargets[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.05"/>
+  <testcase name="setupDiscardRecoveryCannotRetargetNewerSameScopePrivateOwner[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.162"/>
+  <testcase name="cancellationReturnedFromSuccessfulControlCasCannotStartCleanup[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.17"/>
+  <testcase name="setupDiscardCheckpointFailureRetriesOnlyTheUnacknowledgedExactEmptyStep[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.108"/>
+  <testcase name="setupDiscardLostAcknowledgementsPreserveTargetsAndStopAllCleanup[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.16"/>
+  <testcase name="logoutClearsBoundaryBeforeFirstIoAndPersistsBarrierBeforeEveryCleanup[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.17"/>
+  <testcase name="setupDiscardProcessIntentCannotBeReinterpretedAsOrdinaryLogoutWithTheSameIds[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.089"/>
+  <testcase name="cancellationAtFirstControlIoKeepsPreinstalledLatchAndExactIntentForSameBoundaryRecovery[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.156"/>
+  <testcase name="suspendedOldIdleReadCannotPermitRestoreAfterAnotherCoordinatorInstallsRetirementLatch[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.176"/>
+  <testcase name="setupDiscardUnknownBarrierWithUnavailableReadbackPerformsNoCleanupUntilExactRecovery[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.109"/>
+  <testcase name="setupDiscardPersistsDistinctBarrierBeforeAnyExactEmptyCleanupWithoutActivatingLease[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.135"/>
+  <testcase name="confirmedEmptySetupDiscardSupportsEveryAnchoredOptionalTargetCombination[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.679"/>
+  <testcase name="cancellationDuringNativeCleanupLeavesBarrierForExactRecoveryAfterReopen[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.161"/>
+  <testcase name="setupDiscardRejectsPriorCompletedOperationAndExistingPendingBarrierRatherThanReplacingThem[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.17"/>
+  <testcase name="retirementFencesLeaseBeforeWaitingForItsOwnReadinessOrCaptureMutex[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.328"/>
+  <testcase name="setupDiscardFirstBarrierFailurePreservesAllArtifactsAndSameProcessRecoveryUsesOriginalTargets[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.141"/>
+  <testcase name="missingIndependentControlKeyDoesNotRecreateItOrDeletePrivateOwnerKeys[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.072"/>
+  <testcase name="setupDiscardRefusesNonemptyOrTombstonedDataBeforeAnyOtherCleanup[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.197"/>
+  <testcase name="missingOrCiphertextCorruptControlRecordCannotPermitRestoreOrStartCleanup[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.166"/>
+  <testcase name="setupDiscardWrongScopeOrUnauthenticatedDataTargetCannotTouchNativeResources[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.158"/>
+  <testcase name="closeBothDatabasesAndNewBoundaryRecoversOnlyExactCapturedNativeTargetsWithoutNewKeys[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.159"/>
+  <testcase name="captureAndRestoreReadinessDoNotRetireKeysWorkOrCredentials[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.069"/>
+  <testcase name="lastCompletedOperationIdCannotBeReusedToClearFreshSessionAuthority[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.168"/>
+  <testcase name="staleCapturedLeaseCannotClearNewIdentityOrRetireNewOwnerIncarnation[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.191"/>
+  <testcase name="setupDiscardCancellationRetainsDistinctBarrierAndRecoversAfterReopenWithoutCredentialsOrLease[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.164"/>
+  <testcase name="failedFirstControlReadLeavesSameBoundaryLatchThatRecoversExactIntentFromOlderIdleRecord[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.155"/>
+  <testcase name="lostCompletedAcknowledgementKeepsLatchUntilExactCompleteIsWrittenAgain[jvm]" classname="com.feedme.storage.LocalRetirementCoordinatorTest" time="0.171"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

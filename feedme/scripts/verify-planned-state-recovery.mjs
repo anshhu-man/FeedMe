@@ -43,7 +43,7 @@ const sourceFiles = () => [
 const before = sourceFiles();
 const report = {
   startedAt, passed: false,
-  scope: 'M1.05d.5b.2b.2 component only: an existing-only native recovery opener authenticates one exact private-data activation plan without initializing, migrating, activating, creating keys or running unrelated GC. Explicit empty-only abort preserves the exact consumed generation/key, changes a dedicated receipt on every attempt and requires successful SQLite COMMIT before exact key deletion. Readback of consumed/aborted state is not a fresh durability acknowledgement. The caller must durably record explicit abort intent independently; the complete session-create journal and runtime/data/work planning integration remain absent. Schema-v1 migration belongs to the ordinary serialized opener, not recovery. The strict Android factory rejects rollback journals/WAL/SHM/unknown children. Six isolated-process tests inject actual EIO into the bundled SQLite VFS sync syscalls; their direct owned connection fixtures may use SQLite crash recovery and do not prove the public factory accepts journals. Successful changed-row commits rely on documented SQLite synchronous=EXTRA and functioning OS/storage flush semantics; syscall fault injection is not physical power-loss or hard-kill-in-transaction proof. Selected activation replay still acknowledges selection only, not fresh fsync. Fresh shared/server/isolated-PostgreSQL/Node regressions, five Android library builds/lint, 65 native storage tests and 57 native session tests; the JNI injector is verified in all four test-APK ABIs and absent from all five production AARs, the session test APK and the unchanged historical demo. Hardlink and notification branch limits remain explicit; identity verification is synthetic, not provider/UI proof. No generic orphan inventory/reset, app recovery confirmation, whole-session crash-safe setup, work-origin planning, physical-device, iOS or release claim.',
+  scope: 'M1.05d.5b.2b.2 component only: an existing-only native recovery opener authenticates one exact private-data activation plan without initializing, migrating, activating, creating keys or running unrelated GC. Explicit empty-only abort preserves the exact consumed generation/key, changes a dedicated receipt on every attempt and requires successful SQLite COMMIT before exact key deletion. Readback of consumed/aborted state is not a fresh durability acknowledgement. The caller must durably record explicit abort intent independently; the complete session-create journal and runtime/data/work planning integration remain absent. Schema-v1 migration belongs to the ordinary serialized opener, not recovery. The strict Android factory rejects rollback journals/WAL/SHM/unknown children. Six tests in a separate instrumentation process inject VFS sync errors into the actual bundled SQLite engine through an explicitly URI-selected registered forwarding VFS, not OS errno failures; their direct owned connection fixtures may use SQLite crash recovery and do not prove the public factory accepts journals. Successful changed-row commits rely on documented SQLite synchronous=EXTRA and functioning OS/storage flush semantics; VFS error injection is not physical power-loss or hard-kill-in-transaction proof. Selected activation replay still acknowledges selection only, not fresh fsync. Fresh shared/server/isolated-PostgreSQL/Node regressions, five Android library builds/lint, 65 native storage tests and 57 native session tests; the JNI injector is verified in all four test-APK ABIs and absent from all five production AARs, the session test APK and the unchanged historical demo. Hardlink and notification branch limits remain explicit; identity verification is synthetic, not provider/UI proof. No generic orphan inventory/reset, app recovery confirmation, whole-session crash-safe setup, work-origin planning, physical-device, iOS or release claim.',
   sourceManifestSha256: hash(JSON.stringify(before)), sourceFiles: before,
   commands: [], tests: [], artifacts: [], native: [],
 };
@@ -180,22 +180,23 @@ function nativeBranches(log) {
 
 function syncFailureEvidence(log, identities) {
   const expected = {
-    journal: ['realJournalSyncEioRetainsExactKeyUntilFreshSuccessfulAbort', 1034],
-    database: ['realDatabaseSyncEioRetainsExactKeyUntilFreshSuccessfulAbort', 1034],
-    directory: ['realPostUnlinkDirectorySyncEioNeverTreatsVisibleConsumeAsDurableAcknowledgement', 1290],
+    journal: ['injectedJournalVfsSyncFailureRetainsExactKeyUntilFreshSuccessfulAbort', 1034],
+    database: ['injectedDatabaseVfsSyncFailureRetainsExactKeyUntilFreshSuccessfulAbort', 1034],
+    directory: ['injectedPostUnlinkVfsSyncFailureNeverTreatsVisibleConsumeAsDurableAcknowledgement', 1290],
     'consumed-replay': ['consumedReceiptReplayStillRequiresFreshSuccessfulSyncBeforeDeletingKey', 1290],
     'aborted-replay': ['observedAbortedReplayCannotAcknowledgeWhenItsNewJournalSyncFails', 1034],
-    'exact-scope': ['nativeFaultIsRestrictedToExactOwnedDatabaseNotAnotherSandbox', 1034],
+    'exact-scope': ['injectedVfsFaultIsRestrictedToExactOwnedDatabaseNotAnotherSandbox', 1034],
   };
   const rows = [...log.matchAll(/^INSTRUMENTATION_RESULT: state_activation_sync_([^=]+)=(.*)$/gm)];
   if (rows.length !== 6 || new Set(rows.map(row => row[1])).size !== 6)
-    throw new Error('Expected six unique actual-engine sync failure evidence labels.');
+    throw new Error('Expected six unique injected-VFS sync failure evidence labels.');
   return Object.fromEntries(Object.entries(expected).map(([label, [method, sqlite]]) => {
     const identity = `com.feedme.storage.AndroidStateActivationSyncFailureTest#${method}`;
     const row = rows.find(value => value[1] === label);
-    const match = row?.[2].match(new RegExp(`^sqlite=${sqlite};errno=5;failures=1;keyDeletes=0;hooks=(1|3)$`));
+    const delegatedUnlink = sqlite === 1290 ? 1 : 0;
+    const match = row?.[2].match(new RegExp(`^sqlite=${sqlite};failures=1;keyDeletes=0;vfs=1;delegatedUnlink=${delegatedUnlink}$`));
     if (!match || !identities.includes(identity)) throw new Error('Native sync evidence is absent, wrong or lacks its successful source test.');
-    return [label, {identity, sqlite, errno: 5, failures: 1, keyDeletes: 0, hooks: Number(match[1])}];
+    return [label, {identity, mechanism: 'injected-vfs-sync-failure', sqlite, failures: 1, keyDeletes: 0, vfs: 1, delegatedUnlink}];
   }));
 }
 

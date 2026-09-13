@@ -37,7 +37,7 @@ The blueprint covers **54 features, 98 screens, 900 canonical actions and 201 AP
 
 The Android demo supports a local journey from welcome through Make Mine, saving, guided cooking and local post preview. Separate shared-Kotlin storage, transport, session, kitchen and server foundations have extensive tests. Real login, product backend routes, social delivery, reviewed cooking content, billing, iOS compilation and store release remain open.
 
-The latest native SQLite failure-test replacement is **unfinished work-in-progress**: its C wrapper, Kotlin hookup and verifier labels are not yet aligned. Prior passing receipts do not verify this complete snapshot. Read [the exact checkpoint and export limitations](Reference/SNAPSHOT_STATUS.md) and [build status](feedme/docs/BUILD_STATUS.md).
+This snapshot includes the latest retained credential/private-data recovery foundations. The source workspace passed **1,592 Kotlin/server/database tests, 142 Node checks and 280 isolated Android tests** on 14 September 2026 (India time). These are component results, not completed product features; iOS remains uncompiled. Public evidence is path-redacted and is not a fresh native acceptance receipt for a clone. Read [the exact checkpoint and export limitations](Reference/SNAPSHOT_STATUS.md) and [build status](feedme/docs/BUILD_STATUS.md).
 
 No app-store release, live backend, hosted UI or Devpost submission is implied by this public repository.
 

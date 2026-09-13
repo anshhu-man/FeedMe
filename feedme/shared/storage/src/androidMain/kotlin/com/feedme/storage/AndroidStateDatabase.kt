@@ -15,6 +15,7 @@ import androidx.sqlite.driver.bundled.SQLITE_OPEN_READWRITE
 import androidx.sqlite.SQLiteConnection
 import com.feedme.core.ports.FailureReason
 import com.feedme.core.ports.PortResult
+import com.feedme.core.ports.PrivateBytes
 import com.feedme.core.ports.StorageScope
 import java.io.File
 import java.io.FileDescriptor
@@ -29,7 +30,14 @@ import java.security.KeyStore
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+
+/** Test-only pre-stage failures; not native errno, SQLite VFS faults or power-loss simulation. */
+internal fun interface StateActivationRecoveryFaults { fun at(stage: String) }
 
 /** Explicit development storage factory. Calling it does not authenticate or activate an account. */
 object AndroidStateDatabase {
@@ -65,6 +73,178 @@ object AndroidStateDatabase {
         scope: StorageScope,
         plan: StateActivationPlan,
     ): PortResult<StateActivationRecoveryHandle> = openExistingRecovery(scope, plan) { directory to keyPrefix }
+
+    /**
+     * Allocate and retain before calling open. Construction does no location/Keystore/file work.
+     * Even failed or cancelled opens remain owned by this object until close acknowledges release.
+     * API 27+, existing exact files/schema only; rollback journals remain a separate recovery gate.
+     */
+    fun createActivationRecoveryOwner(
+        context: Context,
+        scope: StorageScope,
+        plan: StateActivationPlan,
+    ): StateActivationRecoveryOwner = NativeActivationRecoveryOwner(scope, plan, StateActivationRecoveryFaults {}) {
+        val base = context.applicationContext.noBackupFilesDir
+        require(!java.nio.file.Files.isSymbolicLink(base.toPath()))
+        File(base.canonicalFile, DIRECTORY_NAME) to KEY_PREFIX
+    }
+
+    internal fun createActivationRecoveryOwnerForTests(
+        directory: File,
+        keyPrefix: String,
+        scope: StorageScope,
+        plan: StateActivationPlan,
+        faults: StateActivationRecoveryFaults = StateActivationRecoveryFaults {},
+    ): StateActivationRecoveryOwner = NativeActivationRecoveryOwner(scope, plan, faults) { directory to keyPrefix }
+
+    private class NativeActivationRecoveryOwner(
+        private val scope: StorageScope,
+        plan: StateActivationPlan,
+        private val faults: StateActivationRecoveryFaults,
+        private val location: () -> Pair<File, String>,
+    ) : StateActivationRecoveryOwner {
+        private val plan = StateActivationPlan(plan.copyForStorage())
+        private val mutex = Mutex()
+        private var attempted = false
+        private var ready = false
+        private var closeRequested = false
+        private var closed = false
+        private var ownership: DatabaseOwnership? = null
+        private var connection: SQLiteConnection? = null
+        private var recovery: StateActivationRecoveryOwner? = null
+
+        override suspend fun open(): PortResult<Unit> {
+            var admitted = false
+            try {
+                val result = withContext(Dispatchers.IO) {
+                    mutex.withLock {
+                        if (attempted) return@withLock PortResult.Failure(FailureReason.CONFLICT)
+                        attempted = true
+                        admitted = true
+                        // Before even invoking location: no native I/O on unsupported devices.
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O_MR1)
+                            return@withLock PortResult.Failure(FailureReason.NOT_CONFIGURED)
+                        try {
+                            val (requested, keyPrefix) = location()
+                            val directory = privateDirectory(requested, create = false).first
+                            val initialDirectory = checkNotNull(statOrNull(directory))
+                            require(initialDirectory.st_mode and PERMISSION_MASK == OWNER_DIRECTORY_MODE)
+                            requireRecoveryInventory(directory)
+                            val database = privateChild(directory, DATABASE_NAME)
+                            val initialDatabase = requireExistingPrivateFile(database)
+                            val lockFile = privateChild(directory, LOCK_NAME)
+                            require(requireExistingPrivateFile(lockFile).st_size == 0L)
+                            // Install lifetime before opening/acquiring any native descriptor.
+                            val lifetime = DatabaseOwnership.prepare(lockFile, faults).also { ownership = it }
+                            lifetime.openExisting(lockFile)
+                            currentCoroutineContext().ensureActive()
+                            val vault = AndroidStateVault.openExisting(keyPrefix)
+                            validateStateActivationPlan(scope, plan, vault)
+                            requireRecoveryInventory(directory)
+                            require(sameIdentity(initialDirectory, checkNotNull(statOrNull(directory))))
+                            require(sameIdentity(initialDatabase, requireExistingPrivateFile(database)))
+                            faults.at("before_sqlite_open")
+                            val opened = RetainedRecoveryConnection(BundledSQLiteDriver().open(database.path,
+                                SQLITE_OPEN_READWRITE or SQLITE_OPEN_FULLMUTEX or SQLITE_OPEN_NOFOLLOW), faults)
+                                .also { connection = it }
+                            faults.at("after_sqlite_open")
+                            currentCoroutineContext().ensureActive()
+                            require(sameIdentity(initialDirectory, checkNotNull(statOrNull(directory))))
+                            require(sameIdentity(initialDatabase, requireExistingPrivateFile(database)))
+                            requireRecoveryInventory(directory)
+                            // Common owner creation is synchronous. Retain it before its first await.
+                            val owned = EncryptedStateDatabase.createActivationRecoveryOwner(
+                                opened, vault, scope, plan, Dispatchers.IO, lifetime::close)
+                                .also { recovery = it }
+                            connection = null
+                            faults.at("before_initialize")
+                            val result = owned.open()
+                            currentCoroutineContext().ensureActive()
+                            result
+                        } catch (cancelled: CancellationException) { throw cancelled }
+                        catch (_: StateActivationPlanFormatException) { PortResult.Failure(FailureReason.INVALID_DATA) }
+                        catch (_: Exception) { PortResult.Failure(FailureReason.STORAGE_FAILURE) }
+                        catch (_: LinkageError) { PortResult.Failure(FailureReason.STORAGE_FAILURE) }
+                    }
+                }
+                if (!admitted || result is PortResult.Failure) return result
+                // No recovery capability is published during the cancellable dispatcher handoff.
+                return mutex.withLock {
+                    currentCoroutineContext().ensureActive()
+                    if (closeRequested) PortResult.Failure(FailureReason.STALE_SESSION)
+                    else { ready = true; result }
+                }
+            } catch (cancelled: CancellationException) {
+                withContext(NonCancellable + Dispatchers.IO) {
+                    mutex.withLock {
+                        if (admitted || !attempted) { attempted = true; ready = false; closeRequested = true }
+                    }
+                }
+                throw cancelled
+            }
+        }
+
+        private suspend fun <T> whenReady(action: suspend (StateActivationRecoveryOwner) -> PortResult<T>): PortResult<T> =
+            withContext(Dispatchers.IO) {
+                mutex.withLock {
+                    if (!ready) PortResult.Failure(FailureReason.STALE_SESSION) else action(checkNotNull(recovery))
+                }
+            }
+
+        override suspend fun inspect() = whenReady { it.inspect() }
+        override suspend fun binding() = whenReady { it.binding() }
+        override suspend fun abort(expectedBinding: PrivateBytes?) = whenReady { it.abort(expectedBinding) }
+        override suspend fun close(): PortResult<Unit> = withContext(NonCancellable + Dispatchers.IO) {
+            mutex.withLock {
+                attempted = true
+                ready = false
+                closeRequested = true
+                if (closed) return@withLock PortResult.Value(Unit)
+                val owned = recovery
+                if (owned != null) {
+                    val result = owned.close()
+                    if (result is PortResult.Value) closed = true
+                    result
+                } else try {
+                    // Never release the sibling lock until SQLite has acknowledged its close.
+                    connection?.let { it.close(); connection = null }
+                    ownership?.close()
+                    closed = true
+                    PortResult.Value(Unit)
+                } catch (_: Exception) { PortResult.Failure(FailureReason.STORAGE_FAILURE) }
+                  catch (_: LinkageError) { PortResult.Failure(FailureReason.STORAGE_FAILURE) }
+            }
+        }
+        override fun toString() = "StateActivationRecoveryOwner(<redacted>)"
+    }
+
+    /**
+     * Bundled driver close can mark itself closed before its native call returns. A later no-op
+     * cannot acknowledge a failed native close. Only explicit faults BEFORE admission are safely
+     * retryable; any exception after admission is terminal and must keep the sibling owner held.
+     */
+    internal class RetainedRecoveryConnection(
+        private val native: SQLiteConnection,
+        private val faults: StateActivationRecoveryFaults,
+    ) : SQLiteConnection by native {
+        private var closed = false
+        private var terminalCloseFailure = false
+
+        @Synchronized
+        override fun close() {
+            if (closed) return
+            check(!terminalCloseFailure) { "Private storage release requires process repair" }
+            faults.at("before_sqlite_close")
+            try {
+                native.close()
+                faults.at("after_sqlite_close")
+                closed = true
+            } catch (failure: Throwable) {
+                terminalCloseFailure = true
+                throw failure
+            }
+        }
+    }
 
     private suspend fun openExistingRecovery(
         scope: StorageScope,
@@ -288,47 +468,116 @@ object AndroidStateDatabase {
     }
 
     private class DatabaseOwnership private constructor(
-        private val channel: FileChannel,
-        private val lock: FileLock,
         private val reservedPath: String,
-        private val descriptor: FileDescriptor? = null,
+        private val faults: StateActivationRecoveryFaults,
     ) {
+        private var channel: FileChannel? = null
+        private var lock: FileLock? = null
+        private var descriptor: FileDescriptor? = null
+        private var lockReleased = false
+        private var channelClosed = false
+        private var descriptorClosed = false
+        private var terminalCloseFailure = false
         private var closed = false
 
         @Synchronized
         fun close() {
             if (closed) return
-            var failure: Throwable? = null
-            fun attempt(action: () -> Unit) {
-                try { action() } catch (error: Throwable) {
-                    val primary = failure
-                    if (primary == null) failure = error else primary.addSuppressed(error)
+            check(!terminalCloseFailure) { "Private storage release requires process repair" }
+            if (!lockReleased) {
+                faults.at("before_lock_release")
+                val owned = lock
+                if (owned != null && !owned.isValid) {
+                    terminalCloseFailure = true
+                    error("Private storage release requires process repair")
                 }
+                try { if (owned?.isValid == true) owned.release() }
+                catch (failure: Exception) {
+                    if (owned?.isValid == false) terminalCloseFailure = true
+                    throw failure
+                }
+                lockReleased = true
             }
-            attempt { if (lock.isValid) lock.release() }
-            attempt { channel.close() }
+            if (!channelClosed) {
+                faults.at("before_channel_close")
+                val owned = channel
+                if (owned != null && !owned.isOpen) {
+                    terminalCloseFailure = true
+                    error("Private storage release requires process repair")
+                }
+                try { owned?.close() }
+                catch (failure: Exception) {
+                    // A channel can mark itself closed before the native close failed. A later
+                    // no-op close is not a new acknowledgement of that unresolved release.
+                    if (owned?.isOpen == false) terminalCloseFailure = true
+                    throw failure
+                }
+                channelClosed = true
+            }
             // Android FileOutputStream(FileDescriptor) borrows its descriptor. Os.open ownership
             // remains here; a channel close alone does not release the recovery lock descriptor.
-            attempt { descriptor?.let { if (it.valid()) Os.close(it) } }
-            val released = descriptor?.let { !it.valid() } ?: !channel.isOpen
-            if (released) releaseReservation(reservedPath)
-            closed = released && !channel.isOpen
-            failure?.let { throw it }
+            if (!descriptorClosed) {
+                faults.at("before_descriptor_close")
+                val owned = descriptor
+                if (owned != null) {
+                    if (!owned.valid()) {
+                        terminalCloseFailure = true
+                        error("Private storage release requires process repair")
+                    }
+                    try { Os.close(owned) }
+                    catch (failure: Exception) {
+                        // Never recover/retry a saved numeric FD: it may already be reused.
+                        if (!owned.valid()) terminalCloseFailure = true
+                        throw failure
+                    }
+                    try { faults.at("after_descriptor_close") }
+                    catch (failure: Exception) { terminalCloseFailure = true; throw failure }
+                }
+                descriptorClosed = true
+            }
+            faults.at("before_reservation_release")
+            synchronized(reservedOwners) {
+                check(reservedOwners[reservedPath] === this)
+                reservedOwners.remove(reservedPath)
+            }
+            closed = true
+        }
+
+        /** The caller has already retained this lifetime before the first acquisition stage. */
+        fun openExisting(file: File) {
+            val before = requireExistingPrivateFile(file)
+            require(before.st_size == 0L)
+            faults.at("before_lock_open")
+            val openedDescriptor = openExistingLockDescriptor(file.path).also { descriptor = it }
+            faults.at("after_lock_open")
+            val openedStat = Os.fstat(openedDescriptor)
+            requirePrivateFile(openedStat)
+            require(openedStat.st_size == 0L && sameIdentity(before, openedStat))
+            require(sameIdentity(openedStat, requireExistingPrivateFile(file)))
+            val openedChannel = FileOutputStream(openedDescriptor).channel.also { channel = it }
+            faults.at("before_lock_acquire")
+            lock = checkNotNull(openedChannel.tryLock())
+            faults.at("after_lock_acquire")
         }
 
         companion object {
-            private val reservedPaths = mutableSetOf<String>()
+            // Strongly retain the actual owner, not just a path string, on failed legacy cleanup.
+            // Legacy value-returning factories remain fail-closed but cannot expose retry ownership.
+            private val reservedOwners = mutableMapOf<String, DatabaseOwnership>()
 
-            private fun releaseReservation(path: String) = synchronized(reservedPaths) {
-                reservedPaths.remove(path)
+            fun prepare(file: File, faults: StateActivationRecoveryFaults = StateActivationRecoveryFaults {}): DatabaseOwnership {
+                val owner = DatabaseOwnership(file.path, faults)
+                synchronized(reservedOwners) {
+                    check(!reservedOwners.containsKey(file.path))
+                    reservedOwners[file.path] = owner
+                }
+                return owner
             }
 
             fun acquire(file: File): DatabaseOwnership {
-                val path = file.path
                 // POSIX locks belong to a process: closing a second descriptor for this inode can
                 // release its first descriptor's lock. Reject duplicates before opening another FD.
-                synchronized(reservedPaths) { check(reservedPaths.add(path)) }
-                var channel: FileChannel? = null
+                val owner = prepare(file)
                 try {
                     val opened = FileChannel.open(
                         file.toPath(),
@@ -339,40 +588,22 @@ object AndroidStateDatabase {
                             LinkOption.NOFOLLOW_LINKS,
                         ),
                         PosixFilePermissions.asFileAttribute(PosixFilePermissions.fromString("rw-------")),
-                    ).also { channel = it }
-                    val lock = opened.tryLock() ?: throw IllegalStateException()
-                    return DatabaseOwnership(opened, lock, path)
+                    ).also { owner.channel = it }
+                    owner.lock = opened.tryLock() ?: throw IllegalStateException()
+                    return owner
                 } catch (error: Throwable) {
-                    try {
-                        channel?.close()
-                    } finally {
-                        if (channel?.isOpen != true) releaseReservation(path)
-                    }
+                    try { owner.close() } catch (closeError: Throwable) { error.addSuppressed(closeError) }
                     throw error
                 }
             }
 
             fun acquireExisting(file: File): DatabaseOwnership {
-                val path = file.path
-                synchronized(reservedPaths) { check(reservedPaths.add(path)) }
-                var descriptor: FileDescriptor? = null
-                var channel: FileChannel? = null
+                val owner = prepare(file)
                 try {
-                    val before = requireExistingPrivateFile(file)
-                    require(before.st_size == 0L)
-                    val openedDescriptor = openExistingLockDescriptor(path).also { descriptor = it }
-                    val openedStat = Os.fstat(openedDescriptor)
-                    requirePrivateFile(openedStat)
-                    require(openedStat.st_size == 0L && sameIdentity(before, openedStat))
-                    require(sameIdentity(openedStat, requireExistingPrivateFile(file)))
-                    val openedChannel = FileOutputStream(openedDescriptor).channel.also { channel = it }
-                    val lock = checkNotNull(openedChannel.tryLock())
-                    return DatabaseOwnership(openedChannel, lock, path, openedDescriptor)
+                    owner.openExisting(file)
+                    return owner
                 } catch (error: Throwable) {
-                    try { channel?.close() } catch (closeError: Throwable) { error.addSuppressed(closeError) }
-                    try { descriptor?.let { if (it.valid()) Os.close(it) } }
-                    catch (closeError: Throwable) { error.addSuppressed(closeError) }
-                    if (descriptor?.valid() != true) releaseReservation(path)
+                    try { owner.close() } catch (closeError: Throwable) { error.addSuppressed(closeError) }
                     throw error
                 }
             }

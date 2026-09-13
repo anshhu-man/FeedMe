@@ -11,6 +11,7 @@ import com.feedme.core.ports.SessionControlRecord
 import com.feedme.core.ports.SessionControlStore
 import com.feedme.core.ports.StorageScope
 import com.feedme.core.ports.StoreMutation
+import com.feedme.core.ports.WorkOriginPlanAuthentication
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -27,7 +28,7 @@ import kotlinx.coroutines.withContext
 class EncryptedSessionWorkStore private constructor(
     private val database: EncryptedStateDatabase,
     private val store: PrivateStateStore,
-) : SessionControlStore {
+) : SessionControlStore, WorkOriginPlanAuthentication {
     private val mutex = Mutex()
 
     override suspend fun read(): PortResult<SessionControlRecord?> = mutex.withLock {
@@ -36,6 +37,25 @@ class EncryptedSessionWorkStore private constructor(
             is PortResult.Failure -> result
         }
     }
+
+    override suspend fun signOriginPlan(expected: SessionControlRecord, proposal: PrivateBytes): PortResult<PrivateBytes> =
+        mutex.withLock { database.authenticateWorkOriginPlan(store, expected.revision, proposal, null, expected) }
+
+    override suspend fun verifyOriginPlan(expectedRevision: Long, proposal: PrivateBytes, proof: PrivateBytes): PortResult<Unit> =
+        mutex.withLock {
+            when (val result = database.authenticateWorkOriginPlan(store, expectedRevision, proposal, proof, null)) {
+                is PortResult.Value -> PortResult.Value(Unit)
+                is PortResult.Failure -> result
+            }
+        }
+
+    override suspend fun verifyOriginPredecessor(expected: SessionControlRecord, proposal: PrivateBytes, proof: PrivateBytes): PortResult<Unit> =
+        mutex.withLock {
+            when (val result = database.authenticateWorkOriginPlan(store, expected.revision, proposal, proof, expected)) {
+                is PortResult.Value -> PortResult.Value(Unit)
+                is PortResult.Failure -> result
+            }
+        }
 
     override suspend fun compareAndSet(
         expectedRevision: Long?,
@@ -50,13 +70,14 @@ class EncryptedSessionWorkStore private constructor(
                 is PortResult.Failure -> return@withLock result
             }
             if (expectedRevision != current.revision) return@withLock PortResult.Failure(FailureReason.CONFLICT)
+            if (current.revision == Long.MAX_VALUE) return@withLock PortResult.Failure(FailureReason.STORAGE_FAILURE)
             when (val result = store.commit(WORK_SCOPE, listOf(
                 StoreMutation.Put(WORK_KEY, expectedRevision, SCHEMA_VERSION, payload),
             ))) {
                 is PortResult.Failure -> result
                 is PortResult.Value -> {
                     val revision = result.value[WORK_KEY]
-                    if (revision == null || revision <= current.revision) PortResult.Failure(FailureReason.STORAGE_FAILURE)
+                    if (revision != current.revision + 1) PortResult.Failure(FailureReason.STORAGE_FAILURE)
                     else PortResult.Value(SessionControlRecord(revision, payload))
                 }
             }

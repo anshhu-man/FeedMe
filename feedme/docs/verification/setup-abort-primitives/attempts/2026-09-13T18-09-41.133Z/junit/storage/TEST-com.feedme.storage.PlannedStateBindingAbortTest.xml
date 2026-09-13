@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.storage.PlannedStateBindingAbortTest" tests="20" skipped="0" failures="0" errors="0" timestamp="2026-09-13T18:10:18.913Z" hostname="ansachars-MacBook-Pro.local" time="1.833">
+  <properties/>
+  <testcase name="reservedTombstoneCorruptCiphertextAndUnknownSchemaRemainFailClosed[jvm]" classname="com.feedme.storage.PlannedStateBindingAbortTest" time="0.134"/>
+  <testcase name="schemaOneAndDifferentExpectedPayloadCannotAuthorizeBindingDeletion[jvm]" classname="com.feedme.storage.PlannedStateBindingAbortTest" time="0.078"/>
+  <testcase name="invalidExpectedBindingSizeIsRejectedBeforeSqlOrNativeKeyCalls[jvm]" classname="com.feedme.storage.PlannedStateBindingAbortTest" time="0.041"/>
+  <testcase name="changedReceiptOrNewRowBetweenConsumeAndDeletionKeepsTheKey[jvm]" classname="com.feedme.storage.PlannedStateBindingAbortTest" time="0.201"/>
+  <testcase name="failedCommitBeforeOrAfterSqliteAcknowledgementNeverDeletesAndExactRetryRewritesReceipt[jvm]" classname="com.feedme.storage.PlannedStateBindingAbortTest" time="0.131"/>
+  <testcase name="nullExpectedBindingRetainsStrictEmptyOnlyRejectionWithoutDecrypting[jvm]" classname="com.feedme.storage.PlannedStateBindingAbortTest" time="0.031"/>
+  <testcase name="keyDeletionFailureRetainsConsumedFenceAndReopenRetriesOnlyOriginalKeyAfterFreshCommit[jvm]" classname="com.feedme.storage.PlannedStateBindingAbortTest" time="0.07"/>
+  <testcase name="exactOpaquePayloadComparisonDoesNotPretendToValidateSessionJsonOrProviderConsent[jvm]" classname="com.feedme.storage.PlannedStateBindingAbortTest" time="0.109"/>
+  <testcase name="everyAbortedReplayStillRequiresAChangedAcknowledgedReceipt[jvm]" classname="com.feedme.storage.PlannedStateBindingAbortTest" time="0.089"/>
+  <testcase name="unrelatedQueuedGarbageAndSiblingRecordsSurviveBoundAbortAndItsReplay[jvm]" classname="com.feedme.storage.PlannedStateBindingAbortTest" time="0.085"/>
+  <testcase name="wrongScopeBadMacAndForeignInstallCannotConsumeOrEraseAnything[jvm]" classname="com.feedme.storage.PlannedStateBindingAbortTest" time="0.055"/>
+  <testcase name="closedDirectOwnerCannotReadDeleteOrConsumeAnyFurtherBinding[jvm]" classname="com.feedme.storage.PlannedStateBindingAbortTest" time="0.06"/>
+  <testcase name="anyOtherPrivateRowOrTombstoneBlocksBoundAbortWithoutTouchingKeys[jvm]" classname="com.feedme.storage.PlannedStateBindingAbortTest" time="0.108"/>
+  <testcase name="exhaustedAbortReceiptCannotWrapOrDeleteEvenWhenBindingWasAlreadyRemoved[jvm]" classname="com.feedme.storage.PlannedStateBindingAbortTest" time="0.055"/>
+  <testcase name="cancellationBeforeAndAfterConsumeNeverDeletesKeyAndExactIntentRemainsRetryable[jvm]" classname="com.feedme.storage.PlannedStateBindingAbortTest" time="0.126"/>
+  <testcase name="preparedPartialAndSelectedEmptyStagesAcceptExpectedBytesWithoutInventingABinding[jvm]" classname="com.feedme.storage.PlannedStateBindingAbortTest" time="0.093"/>
+  <testcase name="exactBindingIsRemovedWithConsumedOwnerAndReceiptBeforeKeyDeletion[jvm]" classname="com.feedme.storage.PlannedStateBindingAbortTest" time="0.065"/>
+  <testcase name="newlyActivatedOwnerCannotBeErasedThroughAnOldConsumedBindingPlan[jvm]" classname="com.feedme.storage.PlannedStateBindingAbortTest" time="0.079"/>
+  <testcase name="existingOnlyRecoveryHandleRequiresExactBindingAndCloseFailureRetainsOwnershipUntilRetry[jvm]" classname="com.feedme.storage.PlannedStateBindingAbortTest" time="0.067"/>
+  <testcase name="selectedMissingOrUnusableBindingKeyPreservesTheBindingWhileEmptyMissingKeyCanBeConsumed[jvm]" classname="com.feedme.storage.PlannedStateBindingAbortTest" time="0.154"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

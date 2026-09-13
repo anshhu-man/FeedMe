@@ -1,0 +1,742 @@
+TAP version 13
+# Subtest: manifest explicitly disables backups and references both Android policy formats
+ok 1 - manifest explicitly disables backups and references both Android policy formats
+  ---
+  duration_ms: 85.787209
+  type: 'test'
+  ...
+# Subtest: Android 8–11 policy excludes all credential- and device-protected storage domains
+ok 2 - Android 8–11 policy excludes all credential- and device-protected storage domains
+  ---
+  duration_ms: 83.512333
+  type: 'test'
+  ...
+# Subtest: Android 12+ cloud and device-transfer policies match the older exclusion policy
+ok 3 - Android 12+ cloud and device-transfer policies match the older exclusion policy
+  ---
+  duration_ms: 209.662417
+  type: 'test'
+  ...
+# Subtest: private-binding smoke and verifier agree on all six source-bound initial and replay VFS results
+ok 4 - private-binding smoke and verifier agree on all six source-bound initial and replay VFS results
+  ---
+  duration_ms: 1.375958
+  type: 'test'
+  ...
+# Subtest: private-binding evidence requires both initial binding and replay labels for every sync stage
+ok 5 - private-binding evidence requires both initial binding and replay labels for every sync stage
+  ---
+  duration_ms: 0.308375
+  type: 'test'
+  ...
+# Subtest: private-binding evidence rejects duplicate labels even when the total count is still six
+ok 6 - private-binding evidence rejects duplicate labels even when the total count is still six
+  ---
+  duration_ms: 0.089541
+  type: 'test'
+  ...
+# Subtest: private-binding evidence rejects forged or additional result labels
+ok 7 - private-binding evidence rejects forged or additional result labels
+  ---
+  duration_ms: 0.0795
+  type: 'test'
+  ...
+# Subtest: private-binding result bytes cannot substitute for a missing paired-success source identity
+ok 8 - private-binding result bytes cannot substitute for a missing paired-success source identity
+  ---
+  duration_ms: 0.7315
+  type: 'test'
+  ...
+# Subtest: private-binding evidence rejects successful identities borrowed from another class or method
+ok 9 - private-binding evidence rejects successful identities borrowed from another class or method
+  ---
+  duration_ms: 0.30825
+  type: 'test'
+  ...
+# Subtest: private-binding evidence rejects an incorrect SQLite extended error for the exact stage
+ok 10 - private-binding evidence rejects an incorrect SQLite extended error for the exact stage
+  ---
+  duration_ms: 1.803833
+  type: 'test'
+  ...
+# Subtest: private-binding evidence requires one actual failure and zero returned binding receipts
+ok 11 - private-binding evidence requires one actual failure and zero returned binding receipts
+  ---
+  duration_ms: 0.254042
+  type: 'test'
+  ...
+# Subtest: private-binding evidence preserves the explicit VFS mechanism and delegated-unlink stage
+ok 12 - private-binding evidence preserves the explicit VFS mechanism and delegated-unlink stage
+  ---
+  duration_ms: 0.362042
+  type: 'test'
+  ...
+# Subtest: private-binding evidence rejects truncated reordered or extra result fields
+ok 13 - private-binding evidence rejects truncated reordered or extra result fields
+  ---
+  duration_ms: 0.21575
+  type: 'test'
+  ...
+# Subtest: generation is reproducible and checked-in artifacts match the locked inputs byte for byte
+ok 14 - generation is reproducible and checked-in artifacts match the locked inputs byte for byte
+  ---
+  duration_ms: 23.997833
+  type: 'test'
+  ...
+# Subtest: Kotlin chunks reconstruct exact canonical bytes and the full normalized document without losing any key or value
+ok 15 - Kotlin chunks reconstruct exact canonical bytes and the full normalized document without losing any key or value
+  ---
+  duration_ms: 18.281083
+  type: 'test'
+  ...
+# Subtest: missing, null, false, empty, and default values retain distinct meanings
+ok 16 - missing, null, false, empty, and default values retain distinct meanings
+  ---
+  duration_ms: 0.234208
+  type: 'test'
+  ...
+# Subtest: Kotlin escaping round-trips interpolation markers, JSON quotes, slashes, controls, and Unicode
+ok 17 - Kotlin escaping round-trips interpolation markers, JSON quotes, slashes, controls, and Unicode
+  ---
+  duration_ms: 0.089792
+  type: 'test'
+  ...
+# Subtest: long descriptions and example data survive chunk boundaries and literal example references
+ok 18 - long descriptions and example data survive chunk boundaries and literal example references
+  ---
+  duration_ms: 29.920625
+  type: 'test'
+  ...
+# Subtest: all operation methods, routes, headers, statuses, security alternatives, and guard metadata are retained
+ok 19 - all operation methods, routes, headers, statuses, security alternatives, and guard metadata are retained
+  ---
+  duration_ms: 12.174833
+  type: 'test'
+  ...
+# Subtest: all 900 actions and 131 hydrations retain identity, request, operation and screen association
+ok 20 - all 900 actions and 131 hydrations retain identity, request, operation and screen association
+  ---
+  duration_ms: 10.297333
+  type: 'test'
+  ...
+# Subtest: canonical bytes cannot change without intentionally updating the source lock
+ok 21 - canonical bytes cannot change without intentionally updating the source lock
+  ---
+  duration_ms: 0.941541
+  type: 'test'
+  ...
+# Subtest: generator identity and OpenAPI lock mismatches fail before emitting artifacts
+ok 22 - generator identity and OpenAPI lock mismatches fail before emitting artifacts
+  ---
+  duration_ms: 2.11225
+  type: 'test'
+  ...
+# Subtest: registry byte changes appear in the receipt even if binding meaning is unchanged
+ok 23 - registry byte changes appear in the receipt even if binding meaning is unchanged
+  ---
+  duration_ms: 13.1985
+  type: 'test'
+  ...
+# Subtest: unreviewed OpenAPI version is rejected
+ok 24 - unreviewed OpenAPI version is rejected
+  ---
+  duration_ms: 6.221166
+  type: 'test'
+  ...
+# Subtest: unreviewed schema keyword is rejected
+ok 25 - unreviewed schema keyword is rejected
+  ---
+  duration_ms: 7.455625
+  type: 'test'
+  ...
+# Subtest: nested unreviewed schema keyword is rejected
+ok 26 - nested unreviewed schema keyword is rejected
+  ---
+  duration_ms: 7.87675
+  type: 'test'
+  ...
+# Subtest: unreviewed schema format is rejected
+ok 27 - unreviewed schema format is rejected
+  ---
+  duration_ms: 8.326667
+  type: 'test'
+  ...
+# Subtest: unsupported boolean schema is rejected
+ok 28 - unsupported boolean schema is rejected
+  ---
+  duration_ms: 7.178833
+  type: 'test'
+  ...
+# Subtest: invalid schema type is rejected
+ok 29 - invalid schema type is rejected
+  ---
+  duration_ms: 7.373375
+  type: 'test'
+  ...
+# Subtest: unused parameter component schemas are audited
+ok 30 - unused parameter component schemas are audited
+  ---
+  duration_ms: 8.8115
+  type: 'test'
+  ...
+# Subtest: unused response component schemas are audited
+ok 31 - unused response component schemas are audited
+  ---
+  duration_ms: 7.961625
+  type: 'test'
+  ...
+# Subtest: default response selector requires review
+ok 32 - default response selector requires review
+  ---
+  duration_ms: 6.978375
+  type: 'test'
+  ...
+# Subtest: wildcard response selector requires review
+ok 33 - wildcard response selector requires review
+  ---
+  duration_ms: 7.33
+  type: 'test'
+  ...
+# Subtest: 204 response cannot gain a body
+ok 34 - 204 response cannot gain a body
+  ---
+  duration_ms: 7.994041
+  type: 'test'
+  ...
+# Subtest: unreviewed response media is rejected
+ok 35 - unreviewed response media is rejected
+  ---
+  duration_ms: 7.176167
+  type: 'test'
+  ...
+# Subtest: response header schemas are audited
+ok 36 - response header schemas are audited
+  ---
+  duration_ms: 7.570042
+  type: 'test'
+  ...
+# Subtest: optional request bodies require review
+ok 37 - optional request bodies require review
+  ---
+  duration_ms: 7.761333
+  type: 'test'
+  ...
+# Subtest: unreviewed request media is rejected
+ok 38 - unreviewed request media is rejected
+  ---
+  duration_ms: 7.459916
+  type: 'test'
+  ...
+# Subtest: inline request schemas are audited
+ok 39 - inline request schemas are audited
+  ---
+  duration_ms: 7.512458
+  type: 'test'
+  ...
+# Subtest: unresolved schema reference is rejected
+ok 40 - unresolved schema reference is rejected
+  ---
+  duration_ms: 6.73975
+  type: 'test'
+  ...
+# Subtest: remote schema references are rejected
+ok 41 - remote schema references are rejected
+  ---
+  duration_ms: 7.202708
+  type: 'test'
+  ...
+# Subtest: schema references outside the schema namespace are rejected
+ok 42 - schema references outside the schema namespace are rejected
+  ---
+  duration_ms: 6.812459
+  type: 'test'
+  ...
+# Subtest: cyclic schema alias references are rejected
+ok 43 - cyclic schema alias references are rejected
+  ---
+  duration_ms: 6.894167
+  type: 'test'
+  ...
+# Subtest: unresolved parameter references are rejected
+ok 44 - unresolved parameter references are rejected
+  ---
+  duration_ms: 7.188959
+  type: 'test'
+  ...
+# Subtest: remote parameter references are rejected
+ok 45 - remote parameter references are rejected
+  ---
+  duration_ms: 7.021333
+  type: 'test'
+  ...
+# Subtest: unresolved response references are rejected
+ok 46 - unresolved response references are rejected
+  ---
+  duration_ms: 7.753417
+  type: 'test'
+  ...
+# Subtest: remote response references are rejected
+ok 47 - remote response references are rejected
+  ---
+  duration_ms: 7.079042
+  type: 'test'
+  ...
+# Subtest: unknown principal is rejected
+ok 48 - unknown principal is rejected
+  ---
+  duration_ms: 7.199291
+  type: 'test'
+  ...
+# Subtest: operation cannot inherit an implicit default security policy
+ok 49 - operation cannot inherit an implicit default security policy
+  ---
+  duration_ms: 7.239291
+  type: 'test'
+  ...
+# Subtest: public security cannot grant anonymous access to a user operation
+ok 50 - public security cannot grant anonymous access to a user operation
+  ---
+  duration_ms: 7.690333
+  type: 'test'
+  ...
+# Subtest: guest and user alternatives cannot become a combined requirement
+ok 51 - guest and user alternatives cannot become a combined requirement
+  ---
+  duration_ms: 6.940459
+  type: 'test'
+  ...
+# Subtest: staff operation cannot use consumer credentials
+ok 52 - staff operation cannot use consumer credentials
+  ---
+  duration_ms: 10.559875
+  type: 'test'
+  ...
+# Subtest: root default security drift requires review
+ok 53 - root default security drift requires review
+  ---
+  duration_ms: 7.597333
+  type: 'test'
+  ...
+# Subtest: missing referenced security scheme is rejected
+ok 54 - missing referenced security scheme is rejected
+  ---
+  duration_ms: 6.660625
+  type: 'test'
+  ...
+# Subtest: operation callbacks require explicit review
+ok 55 - operation callbacks require explicit review
+  ---
+  duration_ms: 7.3505
+  type: 'test'
+  ...
+# Subtest: missing required device session is rejected
+ok 56 - missing required device session is rejected
+  ---
+  duration_ms: 7.265916
+  type: 'test'
+  ...
+# Subtest: optional device session cannot weaken user-only operations
+ok 57 - optional device session cannot weaken user-only operations
+  ---
+  duration_ms: 7.897292
+  type: 'test'
+  ...
+# Subtest: guest alternative retains conditional device-session policy
+ok 58 - guest alternative retains conditional device-session policy
+  ---
+  duration_ms: 7.041667
+  type: 'test'
+  ...
+# Subtest: public operation cannot gain a device session requirement
+ok 59 - public operation cannot gain a device session requirement
+  ---
+  duration_ms: 7.232417
+  type: 'test'
+  ...
+# Subtest: device session name in query cannot satisfy the header requirement
+ok 60 - device session name in query cannot satisfy the header requirement
+  ---
+  duration_ms: 7.230667
+  type: 'test'
+  ...
+# Subtest: missing idempotency declaration is rejected
+ok 61 - missing idempotency declaration is rejected
+  ---
+  duration_ms: 7.375667
+  type: 'test'
+  ...
+# Subtest: idempotency declaration cannot contradict required header
+ok 62 - idempotency declaration cannot contradict required header
+  ---
+  duration_ms: 7.151875
+  type: 'test'
+  ...
+# Subtest: optional idempotency header cannot satisfy durable command requirement
+ok 63 - optional idempotency header cannot satisfy durable command requirement
+  ---
+  duration_ms: 6.998459
+  type: 'test'
+  ...
+# Subtest: idempotency name in query cannot satisfy the header requirement
+ok 64 - idempotency name in query cannot satisfy the header requirement
+  ---
+  duration_ms: 7.028541
+  type: 'test'
+  ...
+# Subtest: unexpected route namespace is rejected
+ok 65 - unexpected route namespace is rejected
+  ---
+  duration_ms: 12.052125
+  type: 'test'
+  ...
+# Subtest: path-item fields cannot be silently interpreted as operations
+ok 66 - path-item fields cannot be silently interpreted as operations
+  ---
+  duration_ms: 7.228708
+  type: 'test'
+  ...
+# Subtest: path template and parameter names must match
+ok 67 - path template and parameter names must match
+  ---
+  duration_ms: 7.389958
+  type: 'test'
+  ...
+# Subtest: path parameter must remain required
+ok 68 - path parameter must remain required
+  ---
+  duration_ms: 7.553541
+  type: 'test'
+  ...
+# Subtest: operation IDs must be valid
+ok 69 - operation IDs must be valid
+  ---
+  duration_ms: 7.008625
+  type: 'test'
+  ...
+# Subtest: operation IDs must be globally unique
+ok 70 - operation IDs must be globally unique
+  ---
+  duration_ms: 11.888417
+  type: 'test'
+  ...
+# Subtest: cookie parameter requires review
+ok 71 - cookie parameter requires review
+  ---
+  duration_ms: 7.475208
+  type: 'test'
+  ...
+# Subtest: header duplicate detection is case insensitive
+ok 72 - header duplicate detection is case insensitive
+  ---
+  duration_ms: 6.931583
+  type: 'test'
+  ...
+# Subtest: unknown feature ID in an operation is rejected
+ok 73 - unknown feature ID in an operation is rejected
+  ---
+  duration_ms: 11.421667
+  type: 'test'
+  ...
+# Subtest: duplicate feature ID is rejected
+ok 74 - duplicate feature ID is rejected
+  ---
+  duration_ms: 9.751666
+  type: 'test'
+  ...
+# Subtest: duplicate screen ID is rejected
+ok 75 - duplicate screen ID is rejected
+  ---
+  duration_ms: 9.542625
+  type: 'test'
+  ...
+# Subtest: duplicate action ID is rejected without changing counts
+ok 76 - duplicate action ID is rejected without changing counts
+  ---
+  duration_ms: 9.937667
+  type: 'test'
+  ...
+# Subtest: action IDs cannot collide with generated hydration IDs
+ok 77 - action IDs cannot collide with generated hydration IDs
+  ---
+  duration_ms: 10.644292
+  type: 'test'
+  ...
+# Subtest: HTTP action with unresolved operation is rejected
+ok 78 - HTTP action with unresolved operation is rejected
+  ---
+  duration_ms: 10.448125
+  type: 'test'
+  ...
+# Subtest: HTTP action with missing operation is rejected
+ok 79 - HTTP action with missing operation is rejected
+  ---
+  duration_ms: 10.394458
+  type: 'test'
+  ...
+# Subtest: HTTP action with wrong method is rejected
+ok 80 - HTTP action with wrong method is rejected
+  ---
+  duration_ms: 10.171708
+  type: 'test'
+  ...
+# Subtest: HTTP action with wrong path is rejected
+ok 81 - HTTP action with wrong path is rejected
+  ---
+  duration_ms: 9.854458
+  type: 'test'
+  ...
+# Subtest: swapping operation bindings is rejected even when all binding counts remain equal
+ok 82 - swapping operation bindings is rejected even when all binding counts remain equal
+  ---
+  duration_ms: 9.85775
+  type: 'test'
+  ...
+# Subtest: HTTP hydration with wrong operation is rejected
+ok 83 - HTTP hydration with wrong operation is rejected
+  ---
+  duration_ms: 9.749667
+  type: 'test'
+  ...
+# Subtest: LOCAL action cannot acquire an HTTP operation
+ok 84 - LOCAL action cannot acquire an HTTP operation
+  ---
+  duration_ms: 9.811708
+  type: 'test'
+  ...
+# Subtest: EXTERNAL action cannot acquire an HTTP operation
+ok 85 - EXTERNAL action cannot acquire an HTTP operation
+  ---
+  duration_ms: 10.398875
+  type: 'test'
+  ...
+# Subtest: LOCAL hydration cannot acquire an HTTP operation
+ok 86 - LOCAL hydration cannot acquire an HTTP operation
+  ---
+  duration_ms: 9.909083
+  type: 'test'
+  ...
+# Subtest: EXTERNAL hydration cannot acquire an HTTP operation
+ok 87 - EXTERNAL hydration cannot acquire an HTTP operation
+  ---
+  duration_ms: 10.491208
+  type: 'test'
+  ...
+# Subtest: unreviewed binding kinds are rejected
+ok 88 - unreviewed binding kinds are rejected
+  ---
+  duration_ms: 10.09225
+  type: 'test'
+  ...
+# Subtest: ledger evidence accepts only nine identity-bound VFS results with zero downstream effects
+ok 89 - ledger evidence accepts only nine identity-bound VFS results with zero downstream effects
+  ---
+  duration_ms: 1.207625
+  type: 'test'
+  ...
+# Subtest: ledger evidence rejects a missing native result even when all test identities passed
+ok 90 - ledger evidence rejects a missing native result even when all test identities passed
+  ---
+  duration_ms: 0.148
+  type: 'test'
+  ...
+# Subtest: ledger evidence rejects duplicate labels disguised as the required result count
+ok 91 - ledger evidence rejects duplicate labels disguised as the required result count
+  ---
+  duration_ms: 0.066583
+  type: 'test'
+  ...
+# Subtest: ledger evidence rejects additional unrecognized result labels
+ok 92 - ledger evidence rejects additional unrecognized result labels
+  ---
+  duration_ms: 0.058542
+  type: 'test'
+  ...
+# Subtest: ledger evidence rejects the wrong SQLite error for its exact failure stage
+ok 93 - ledger evidence rejects the wrong SQLite error for its exact failure stage
+  ---
+  duration_ms: 0.081667
+  type: 'test'
+  ...
+# Subtest: ledger evidence rejects native effects after the failed acknowledgement
+ok 94 - ledger evidence rejects native effects after the failed acknowledgement
+  ---
+  duration_ms: 0.062417
+  type: 'test'
+  ...
+# Subtest: ledger evidence rejects an OS errno claim instead of the explicit VFS mechanism
+ok 95 - ledger evidence rejects an OS errno claim instead of the explicit VFS mechanism
+  ---
+  duration_ms: 0.063041
+  type: 'test'
+  ...
+# Subtest: ledger evidence rejects a delegated-unlink claim on a pre-delegation journal failure
+ok 96 - ledger evidence rejects a delegated-unlink claim on a pre-delegation journal failure
+  ---
+  duration_ms: 0.059875
+  type: 'test'
+  ...
+# Subtest: ledger evidence rejects a result whose exact source method did not pass
+ok 97 - ledger evidence rejects a result whose exact source method did not pass
+  ---
+  duration_ms: 0.67325
+  type: 'test'
+  ...
+# Subtest: ledger evidence rejects success identities borrowed from another instrumentation class
+ok 98 - ledger evidence rejects success identities borrowed from another instrumentation class
+  ---
+  duration_ms: 0.145083
+  type: 'test'
+  ...
+# Subtest: complete structural fixture passes without claiming production readiness
+ok 99 - complete structural fixture passes without claiming production readiness
+  ---
+  duration_ms: 2.7255
+  type: 'test'
+  ...
+# Subtest: missing feature is rejected
+ok 100 - missing feature is rejected
+  ---
+  duration_ms: 0.958166
+  type: 'test'
+  ...
+# Subtest: duplicate feature is rejected
+ok 101 - duplicate feature is rejected
+  ---
+  duration_ms: 0.2845
+  type: 'test'
+  ...
+# Subtest: missing screen mapping is rejected without partial-ID matches
+ok 102 - missing screen mapping is rejected without partial-ID matches
+  ---
+  duration_ms: 0.306292
+  type: 'test'
+  ...
+# Subtest: unknown primary milestone is rejected
+ok 103 - unknown primary milestone is rejected
+  ---
+  duration_ms: 0.598416
+  type: 'test'
+  ...
+# Subtest: unchecked implementation work must be broken down
+ok 104 - unchecked implementation work must be broken down
+  ---
+  duration_ms: 0.351167
+  type: 'test'
+  ...
+# Subtest: duplicate task is rejected
+ok 105 - duplicate task is rejected
+  ---
+  duration_ms: 0.288083
+  type: 'test'
+  ...
+# Subtest: duplicate feature task is rejected
+ok 106 - duplicate feature task is rejected
+  ---
+  duration_ms: 0.276208
+  type: 'test'
+  ...
+# Subtest: feature task assigned to wrong owner is rejected
+ok 107 - feature task assigned to wrong owner is rejected
+  ---
+  duration_ms: 0.326291
+  type: 'test'
+  ...
+# Subtest: unknown task status is rejected
+ok 108 - unknown task status is rejected
+  ---
+  duration_ms: 0.650541
+  type: 'test'
+  ...
+# Subtest: user blocker without action ID is rejected
+ok 109 - user blocker without action ID is rejected
+  ---
+  duration_ms: 0.322792
+  type: 'test'
+  ...
+# Subtest: unknown user action reference is rejected
+ok 110 - unknown user action reference is rejected
+  ---
+  duration_ms: 0.280542
+  type: 'test'
+  ...
+# Subtest: known user action resolves
+ok 111 - known user action resolves
+  ---
+  duration_ms: 0.257834
+  type: 'test'
+  ...
+# Subtest: missing milestone heading is rejected
+ok 112 - missing milestone heading is rejected
+  ---
+  duration_ms: 0.212917
+  type: 'test'
+  ...
+# Subtest: work-origin smoke and verifier agree on all six source-bound select and replay VFS results
+ok 113 - work-origin smoke and verifier agree on all six source-bound select and replay VFS results
+  ---
+  duration_ms: 1.421292
+  type: 'test'
+  ...
+# Subtest: work-origin evidence requires both selection and replay labels for every sync stage
+ok 114 - work-origin evidence requires both selection and replay labels for every sync stage
+  ---
+  duration_ms: 0.205958
+  type: 'test'
+  ...
+# Subtest: work-origin evidence rejects duplicate labels even when the total count is still six
+ok 115 - work-origin evidence rejects duplicate labels even when the total count is still six
+  ---
+  duration_ms: 0.077333
+  type: 'test'
+  ...
+# Subtest: work-origin evidence rejects forged or additional result labels
+ok 116 - work-origin evidence rejects forged or additional result labels
+  ---
+  duration_ms: 0.078458
+  type: 'test'
+  ...
+# Subtest: work-origin result bytes cannot substitute for a missing paired-success source identity
+ok 117 - work-origin result bytes cannot substitute for a missing paired-success source identity
+  ---
+  duration_ms: 0.155
+  type: 'test'
+  ...
+# Subtest: work-origin evidence rejects successful identities borrowed from another class or method
+ok 118 - work-origin evidence rejects successful identities borrowed from another class or method
+  ---
+  duration_ms: 0.090167
+  type: 'test'
+  ...
+# Subtest: work-origin evidence rejects an incorrect SQLite extended error for the exact stage
+ok 119 - work-origin evidence rejects an incorrect SQLite extended error for the exact stage
+  ---
+  duration_ms: 0.535375
+  type: 'test'
+  ...
+# Subtest: work-origin evidence requires one actual failure and zero downstream effects
+ok 120 - work-origin evidence requires one actual failure and zero downstream effects
+  ---
+  duration_ms: 0.133625
+  type: 'test'
+  ...
+# Subtest: work-origin evidence preserves the explicit VFS mechanism and delegated-unlink stage
+ok 121 - work-origin evidence preserves the explicit VFS mechanism and delegated-unlink stage
+  ---
+  duration_ms: 0.144708
+  type: 'test'
+  ...
+# Subtest: work-origin evidence rejects truncated reordered or extra result fields
+ok 122 - work-origin evidence rejects truncated reordered or extra result fields
+  ---
+  duration_ms: 0.149459
+  type: 'test'
+  ...
+1..122
+# tests 122
+# suites 0
+# pass 122
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 831.931584

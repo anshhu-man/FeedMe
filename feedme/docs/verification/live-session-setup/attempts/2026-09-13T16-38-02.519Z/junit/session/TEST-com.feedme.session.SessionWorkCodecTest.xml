@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.session.SessionWorkCodecTest" tests="30" skipped="0" failures="0" errors="0" timestamp="2026-09-13T16:38:14.828Z" hostname="ansachars-MacBook-Pro.local" time="0.044">
+  <properties/>
+  <testcase name="idleHasOnlyVersionAndDiscriminatorAndRoundTripsAsTheSingleton[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.006"/>
+  <testcase name="malformedJsonUtf8AndSurrogateStringsFailClosedWithSanitizedErrors[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.002"/>
+  <testcase name="nativeIdsMustBeExactLowercaseUuidStrings[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.001"/>
+  <testcase name="originMustBeAnExactLowercaseUuidString[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.001"/>
+  <testcase name="originFieldsAreAllRequiredAndCredentialExecutionOrDeadlineFieldsAreRejected[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.0"/>
+  <testcase name="differentKindsMayShareAnExactLogicalIdWithoutBeingDeduplicated[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.001"/>
+  <testcase name="encodingRejectsInvalidUnvalidatedModelsInsteadOfRepairingThem[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.0"/>
+  <testcase name="entryOrderIsPreservedRatherThanSortedOrGroupedByKindAndPhase[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.0"/>
+  <testcase name="activeAccountAndGuestRoundTripExactOwnerOriginAndAllEntryFields[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.001"/>
+  <testcase name="emptyActiveAndRetiringOriginsAreValidWithoutInventingEntries[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.0"/>
+  <testcase name="rootAndDiscriminatorHaveNoLenientOrUnknownFallback[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.0"/>
+  <testcase name="logicalIdLimitCountsUtf8BytesAndPreservesOpaqueSpelling[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.003"/>
+  <testcase name="idleRejectsExtraOrMissingFieldsEvenIfTheyWouldBeValidForAnOrigin[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.0"/>
+  <testcase name="encodingEnforcesWholeDocumentBoundAfterEscapingWithoutTruncation[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.007"/>
+  <testcase name="decodedAndEncodedBytesDoNotAliasOrWipeCallerOwnedBuffers[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.0"/>
+  <testcase name="duplicateKindAndLogicalIdRejectsDistinctNativeIdsAndDifferentPhases[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.0"/>
+  <testcase name="entriesAreDetachedAndPhaseChangesDoNotMutateEarlierState[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.001"/>
+  <testcase name="sixtyFourEntriesAreAllowedButASecondPageIsNeverSilentlyDropped[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.008"/>
+  <testcase name="scopeRequiresExactStringFieldsAndRejectsDemoOrUnknownActorKinds[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.0"/>
+  <testcase name="everyEntryFieldIsRequiredAndExtraNativeConfigurationIsNeverStored[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.001"/>
+  <testcase name="retiringPreservesEveryPhaseIncludingPartiallyCancelledCheckpoints[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.001"/>
+  <testcase name="logicalIdsMustBeNonblankControlFreeStringScalars[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.0"/>
+  <testcase name="versionIsTheExactLocalIntegerOneNotAnEquivalentRemoteNumber[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.004"/>
+  <testcase name="wireByteLimitIsInclusiveAndDepthRemainsBounded[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.002"/>
+  <testcase name="diagnosticModelsAndFormatExceptionsDoNotEchoPrivateIdentity[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.002"/>
+  <testcase name="duplicateNativeIdsAreRejectedEvenWhenKindsLogicalIdsAndPhasesDiffer[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.001"/>
+  <testcase name="duplicatePlainAndEscapedJsonKeysFailAtEveryObjectLevel[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.0"/>
+  <testcase name="kindsAndPhasesUseExactEnumsWithoutDefaultsOrCaseFolding[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.0"/>
+  <testcase name="entriesMustBeAnArrayOfObjectsWithoutNullOrScalarPlaceholders[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.001"/>
+  <testcase name="scopeOwnershipBoundsAreStrictButValidSpellingAndUnicodeArePreserved[jvm]" classname="com.feedme.session.SessionWorkCodecTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

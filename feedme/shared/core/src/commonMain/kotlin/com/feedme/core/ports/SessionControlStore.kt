@@ -14,5 +14,12 @@ class SessionControlRecord(val revision: Long, val payload: PrivateBytes) {
  */
 interface SessionControlStore {
     suspend fun read(): PortResult<SessionControlRecord?>
+    /**
+     * Value acknowledges this invocation's successful durable commit, with revision exactly one
+     * greater than the expected revision (1 on initialization). Even identical payloads must make
+     * a changed write; no read-only/no-op success. Overflow fails closed. Failure, including
+     * OUTCOME_UNKNOWN, is not an acknowledgement: matching readback alone cannot authorize
+     * effects. An exact recovery retry must CAS the freshly observed revision/payload again.
+     */
     suspend fun compareAndSet(expectedRevision: Long?, payload: PrivateBytes): PortResult<SessionControlRecord>
 }

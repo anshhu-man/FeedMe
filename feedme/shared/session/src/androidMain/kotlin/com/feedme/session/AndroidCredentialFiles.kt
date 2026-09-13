@@ -13,7 +13,6 @@ import java.io.FileOutputStream
 import java.nio.ByteBuffer
 import java.nio.channels.FileChannel
 import java.nio.channels.FileLock
-import java.util.concurrent.atomic.AtomicBoolean
 import kotlinx.coroutines.CancellationException
 
 /** Instrumentation-only failure points. No production caller supplies an injector. */
@@ -23,6 +22,9 @@ internal enum class CredentialFileFaultPoint {
     AFTER_CREATE_MANIFEST_TEMP_FORCE, AFTER_ABORT_MANIFEST_TEMP_FORCE,
     AFTER_ABORT_CONSUMED, AFTER_KEY_DELETE,
     BEFORE_DURABILITY_SYNC, AFTER_DURABILITY_SYNC,
+    AFTER_LOCK_DESCRIPTOR_OPEN, AFTER_LOCK_ACQUIRED,
+    BEFORE_LOCK_RELEASE, BEFORE_LOCK_CHANNEL_CLOSE, BEFORE_LOCK_DESCRIPTOR_CLOSE,
+    AFTER_LOCK_DESCRIPTOR_CLOSE, AFTER_RECOVERY_FILES_OPEN, AFTER_RECOVERY_AUTHENTICATED,
 }
 
 internal class CredentialFileException(val outcomeUnknown: Boolean = false) :
@@ -166,55 +168,115 @@ internal class AndroidCredentialFiles private constructor(
         return file
     }
 
-    private class Ownership private constructor(
-        private val descriptor: FileDescriptor,
-        private val channel: FileChannel,
-        private val lock: FileLock,
-        private val path: String,
+    /** Construct before acquisition, so failed opening never discards its only native owner. */
+    internal class Opening internal constructor(
+        private val requested: File,
+        private val faultInjector: (CredentialFileFaultPoint) -> Unit,
+        private val existingOnly: Boolean,
     ) {
-        private val closed = AtomicBoolean(false)
-        fun close() {
-            if (!closed.compareAndSet(false, true)) return
-            var failure: Throwable? = null
-            fun attempt(action: () -> Unit) {
-                try { action() } catch (error: Throwable) {
-                    val primary = failure
-                    if (primary == null) failure = error else primary.addSuppressed(error)
-                }
-            }
-            attempt { lock.release() }
-            attempt { channel.close() }
-            // Android FileOutputStream(FileDescriptor) borrows the descriptor. Closing its
-            // channel does not release our Os.open fd; the lifetime owner must do that itself.
-            attempt { if (descriptor.valid()) Os.close(descriptor) }
-            if (!descriptor.valid()) synchronized(reservations) { reservations.remove(path) }
-            failure?.let { throw it }
+        private val ownership = Ownership(faultInjector)
+        private var started = false
+        private var closing = false
+
+        fun open(): AndroidCredentialFiles {
+            check(!started && !closing)
+            started = true
+            return openPrepared(requested, faultInjector, existingOnly, ownership)
         }
 
-        companion object {
-            private val reservations = mutableSetOf<String>()
-            fun acquire(file: File, create: Boolean): Ownership {
-                val path = file.path
-                synchronized(reservations) { require(reservations.add(path)) }
-                var descriptor: FileDescriptor? = null
-                var channel: FileChannel? = null
-                try {
-                    val ownedDescriptor = openDescriptor(path, OsConstants.O_WRONLY or
-                        (if (create) OsConstants.O_CREAT else 0) or OsConstants.O_NOFOLLOW, FILE_MODE)
-                    descriptor = ownedDescriptor
-                    requirePrivateFile(Os.fstat(ownedDescriptor))
-                    channel = FileOutputStream(ownedDescriptor).channel
-                    val owned = checkNotNull(channel)
-                    val lock = checkNotNull(owned.tryLock())
-                    return Ownership(ownedDescriptor, owned, lock, path)
-                } catch (error: Throwable) {
-                    try { channel?.close() } catch (closeError: Throwable) { error.addSuppressed(closeError) }
-                    try { descriptor?.let { if (it.valid()) Os.close(it) } }
-                    catch (closeError: Throwable) { error.addSuppressed(closeError) }
-                    if (descriptor?.valid() != true) synchronized(reservations) { reservations.remove(path) }
+        fun close() { closing = true; ownership.close() }
+    }
+
+    private class Ownership(private val faultInjector: (CredentialFileFaultPoint) -> Unit) {
+        private var descriptor: FileDescriptor? = null
+        private var channel: FileChannel? = null
+        private var lock: FileLock? = null
+        private var path: String? = null
+        private var released = false
+        private var terminalCloseFailure = false
+        private var lockReleased = true
+        private var channelClosed = true
+        private var descriptorClosed = true
+
+        fun acquire(file: File, create: Boolean) {
+            check(path == null && !released)
+            val selectedPath = file.path
+            synchronized(reservations) {
+                require(!reservations.containsKey(selectedPath))
+                reservations[selectedPath] = this
+                path = selectedPath
+            }
+            // Each resource is attached before any subsequent check/callback can fail.
+            descriptor = openDescriptor(selectedPath, OsConstants.O_WRONLY or
+                (if (create) OsConstants.O_CREAT else 0) or OsConstants.O_NOFOLLOW, FILE_MODE)
+            descriptorClosed = false
+            val ownedDescriptor = checkNotNull(descriptor)
+            faultInjector(CredentialFileFaultPoint.AFTER_LOCK_DESCRIPTOR_OPEN)
+            requirePrivateFile(Os.fstat(ownedDescriptor))
+            channel = FileOutputStream(ownedDescriptor).channel
+            channelClosed = false
+            lock = checkNotNull(checkNotNull(channel).tryLock())
+            lockReleased = false
+            faultInjector(CredentialFileFaultPoint.AFTER_LOCK_ACQUIRED)
+        }
+
+        @Synchronized
+        fun close() {
+            if (released) return
+            // Native close may invalidate the descriptor before reporting an error. It must
+            // never be retried by saved number or promoted into a later success. Preserve this
+            // explicit process-only failure boundary until the process releases the owner.
+            if (terminalCloseFailure) throw CredentialFileException()
+            // Stop at a failed stage. The retained owner and reservation remain available for
+            // another close, with no new descriptor opened on this POSIX-lock inode.
+            if (!lockReleased) {
+                val ownedLock = checkNotNull(lock)
+                if (!ownedLock.isValid) { terminalCloseFailure = true; throw CredentialFileException() }
+                faultInjector(CredentialFileFaultPoint.BEFORE_LOCK_RELEASE)
+                try { ownedLock.release(); lockReleased = true } catch (error: Throwable) {
+                    if (!ownedLock.isValid) terminalCloseFailure = true
                     throw error
                 }
             }
+            if (!channelClosed) {
+                val ownedChannel = checkNotNull(channel)
+                if (!ownedChannel.isOpen) { terminalCloseFailure = true; throw CredentialFileException() }
+                faultInjector(CredentialFileFaultPoint.BEFORE_LOCK_CHANNEL_CLOSE)
+                try { ownedChannel.close(); channelClosed = true } catch (error: Throwable) {
+                    if (!ownedChannel.isOpen) terminalCloseFailure = true
+                    throw error
+                }
+            }
+            if (!descriptorClosed) {
+                val ownedDescriptor = checkNotNull(descriptor)
+                if (!ownedDescriptor.valid()) { terminalCloseFailure = true; throw CredentialFileException() }
+                faultInjector(CredentialFileFaultPoint.BEFORE_LOCK_DESCRIPTOR_CLOSE)
+                // Android streams borrow this descriptor. Os.close clears this descriptor
+                // object even on native close errors; never retry a saved numeric fd.
+                try {
+                    Os.close(ownedDescriptor)
+                    // A test callback here models a platform close error after invalidation;
+                    // it is distinct from the retryable BEFORE_* stage callbacks above.
+                    faultInjector(CredentialFileFaultPoint.AFTER_LOCK_DESCRIPTOR_CLOSE)
+                    descriptorClosed = true
+                } catch (error: Throwable) {
+                    if (!ownedDescriptor.valid()) terminalCloseFailure = true
+                    throw error
+                }
+            }
+            check(lockReleased && channelClosed && descriptorClosed)
+            check(descriptor?.valid() != true && channel?.isOpen != true)
+            path?.let { selectedPath -> synchronized(reservations) {
+                check(reservations[selectedPath] === this)
+                reservations.remove(selectedPath)
+            } }
+            released = true
+        }
+
+        companion object {
+            // Keep the actual close owner, not just a pathname. Legacy factories cannot expose
+            // a failed cleanup owner; such a reservation remains a process-only recovery gate.
+            private val reservations = mutableMapOf<String, Ownership>()
         }
     }
 
@@ -246,6 +308,22 @@ internal class AndroidCredentialFiles private constructor(
             faultInjector: (CredentialFileFaultPoint) -> Unit,
             existingOnly: Boolean = false,
         ): AndroidCredentialFiles {
+            val opening = prepareOpen(requested, faultInjector, existingOnly)
+            return try { opening.open() } catch (error: Throwable) {
+                try { opening.close() } catch (closeError: Throwable) { error.addSuppressed(closeError) }
+                throw error
+            }
+        }
+
+        fun prepareOpen(requested: File, faultInjector: (CredentialFileFaultPoint) -> Unit,
+            existingOnly: Boolean): Opening = Opening(requested, faultInjector, existingOnly)
+
+        private fun openPrepared(
+            requested: File,
+            faultInjector: (CredentialFileFaultPoint) -> Unit,
+            existingOnly: Boolean,
+            ownership: Ownership,
+        ): AndroidCredentialFiles {
             // Public atomic O_CLOEXEC is API 27+. Never substitute a weaker native-open path.
             require(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1)
             val absolute = requested.absoluteFile
@@ -272,8 +350,8 @@ internal class AndroidCredentialFiles private constructor(
             val lockAttributes = statOrNull(lockFile)
             if (existingOnly) require(lockAttributes != null)
             lockAttributes?.let(::requirePrivateFile)
-            return AndroidCredentialFiles(directory, Ownership.acquire(lockFile, create = !existingOnly),
-                faultInjector, wasCreatedByThisOpen)
+            ownership.acquire(lockFile, create = !existingOnly)
+            return AndroidCredentialFiles(directory, ownership, faultInjector, wasCreatedByThisOpen)
         }
 
         private fun requirePrivateFile(attributes: StructStat) {

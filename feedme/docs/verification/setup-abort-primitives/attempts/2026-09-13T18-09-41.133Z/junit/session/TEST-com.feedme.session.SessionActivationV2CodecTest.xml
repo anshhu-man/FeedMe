@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.session.SessionActivationV2CodecTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-09-13T18:09:57.206Z" hostname="ansachars-MacBook-Pro.local" time="0.002">
+  <properties/>
+  <testcase name="legacyVersionOneKeepsByteExactEncodingAndNeverInfersSetupOperation[jvm]" classname="com.feedme.session.SessionActivationV2CodecTest" time="0.0"/>
+  <testcase name="versionRequiresExactSupportedIntegerTokenWithoutNormalization[jvm]" classname="com.feedme.session.SessionActivationV2CodecTest" time="0.001"/>
+  <testcase name="recordAndFormatErrorsNeverExposeOperationIdentityOrPrivatePayload[jvm]" classname="com.feedme.session.SessionActivationV2CodecTest" time="0.0"/>
+  <testcase name="operationIsRequiredCanonicalStringAndNeverNullOrCoerced[jvm]" classname="com.feedme.session.SessionActivationV2CodecTest" time="0.0"/>
+  <testcase name="duplicateKeysAndMalformedUnicodeCannotBeNormalizedIntoVersionTwo[jvm]" classname="com.feedme.session.SessionActivationV2CodecTest" time="0.001"/>
+  <testcase name="boundedPayloadAndOpaqueTargetRemainDetachedWithoutClaimingAuthentication[jvm]" classname="com.feedme.session.SessionActivationV2CodecTest" time="0.0"/>
+  <testcase name="crossVersionFieldsAndUnknownProgressAuthorityAreRejected[jvm]" classname="com.feedme.session.SessionActivationV2CodecTest" time="0.0"/>
+  <testcase name="versionTwoPreservesExactOperationAndAllOriginalBindingFields[jvm]" classname="com.feedme.session.SessionActivationV2CodecTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

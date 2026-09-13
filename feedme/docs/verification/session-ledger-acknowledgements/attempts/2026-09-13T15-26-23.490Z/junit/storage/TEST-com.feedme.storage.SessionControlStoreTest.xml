@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.storage.SessionControlStoreTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-09-13T15:27:23.425Z" hostname="ansachars-MacBook-Pro.local" time="0.691">
+  <properties/>
+  <testcase name="ownerDataRetirementDoesNotEraseSeparateControlKeyOrEvidence[jvm]" classname="com.feedme.storage.SessionControlStoreTest" time="0.134"/>
+  <testcase name="initializesOnlyNewStoreAndReopensExactEncryptedPayloadAndRevision[jvm]" classname="com.feedme.storage.SessionControlStoreTest" time="0.07"/>
+  <testcase name="simultaneousExactCasHasOneWinnerAndNoLostUpdate[jvm]" classname="com.feedme.storage.SessionControlStoreTest" time="0.052"/>
+  <testcase name="missingControlKeyFailsClosedWithoutGeneratingReplacement[jvm]" classname="com.feedme.storage.SessionControlStoreTest" time="0.047"/>
+  <testcase name="existingDatabaseWithoutControlOwnerFailsClosedAndDoesNotCreateKey[jvm]" classname="com.feedme.storage.SessionControlStoreTest" time="0.012"/>
+  <testcase name="identicalPayloadStillMakesChangedCasRevisionAndSurvivesReopen[jvm]" classname="com.feedme.storage.SessionControlStoreTest" time="0.056"/>
+  <testcase name="interruptedSetupMissingRecordAndRetiredOwnerCannotReinitializeOnReopen[jvm]" classname="com.feedme.storage.SessionControlStoreTest" time="0.067"/>
+  <testcase name="missingDeletedOrInvalidRecordCannotBeRepairedByReadOrCas[jvm]" classname="com.feedme.storage.SessionControlStoreTest" time="0.198"/>
+  <testcase name="acceptsExact32KiBBoundAndRejectsOversizeEmptyAndInvalidRevisionsWithoutMutation[jvm]" classname="com.feedme.storage.SessionControlStoreTest" time="0.055"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

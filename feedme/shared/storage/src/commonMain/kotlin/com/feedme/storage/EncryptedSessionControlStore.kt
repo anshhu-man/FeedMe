@@ -50,13 +50,14 @@ class EncryptedSessionControlStore private constructor(
                 is PortResult.Failure -> return@withLock result
             }
             if (expectedRevision != current.revision) return@withLock PortResult.Failure(FailureReason.CONFLICT)
+            if (current.revision == Long.MAX_VALUE) return@withLock PortResult.Failure(FailureReason.STORAGE_FAILURE)
             when (val result = store.commit(CONTROL_SCOPE, listOf(
                 StoreMutation.Put(CONTROL_KEY, expectedRevision, SCHEMA_VERSION, payload),
             ))) {
                 is PortResult.Failure -> result
                 is PortResult.Value -> {
                     val revision = result.value[CONTROL_KEY]
-                    if (revision == null || revision <= current.revision) PortResult.Failure(FailureReason.STORAGE_FAILURE)
+                    if (revision != current.revision + 1) PortResult.Failure(FailureReason.STORAGE_FAILURE)
                     else PortResult.Value(SessionControlRecord(revision, payload))
                 }
             }

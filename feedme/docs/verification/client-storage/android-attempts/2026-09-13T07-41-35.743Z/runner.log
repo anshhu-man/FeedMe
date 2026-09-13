@@ -1,2 +1,1 @@
 instrumentation:com.feedme.storage.test/androidx.test.runner.AndroidJUnitRunner (target=com.feedme.storage.test)
-instrumentation:local.callready.remote.test/androidx.test.runner.AndroidJUnitRunner (target=local.callready.remote)

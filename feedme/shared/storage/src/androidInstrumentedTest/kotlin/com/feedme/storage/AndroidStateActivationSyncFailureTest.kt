@@ -23,9 +23,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 /**
- * Run this class in its own instrumentation invocation: the bundled VFS syscall table is global.
- * The C helper fails the actual engine syscall for this exact owned fd only. No synthetic SQLite
- * build, post-COMMIT Kotlin exception, provider/UI claim or physical power-loss claim is involved.
+ * Run this class in its own instrumentation invocation. Test connections explicitly select a
+ * registered forwarding VFS; neither the default VFS nor the production driver is changed.
+ * The C helper injects a VFS sync error for an exact owned file into the actual bundled engine.
+ * It is not an OS errno, synthetic SQLite build, post-COMMIT Kotlin exception or power-loss proof.
  * Reopen here deliberately uses the internal owned connection seam: SQLite may recover its own
  * rollback journal. This is NOT evidence that the strict Android recovery factory accepts journals.
  */
@@ -35,23 +36,24 @@ class AndroidStateActivationSyncFailureTest {
     private val handles = mutableListOf<StateActivationRecoveryHandle>()
 
     @After fun cleanup() = runBlocking {
-        // Always restore the process-global table before close/recovery/owned-fixture deletion.
+        // Disarm before cleanup, then retain the registered VFS/library until every file closes.
         SqliteSyncFailureInjector.restore()
         handles.asReversed().forEach { it.close().valueOrFail() }
         handles.clear()
+        SqliteSyncFailureInjector.unregisterVfs()
         sandboxes.asReversed().forEach { it.close() }
         sandboxes.clear()
     }
 
-    @Test fun realJournalSyncEioRetainsExactKeyUntilFreshSuccessfulAbort() = runBlocking {
+    @Test fun injectedJournalVfsSyncFailureRetainsExactKeyUntilFreshSuccessfulAbort() = runBlocking {
         failFirstAbort(SyncPoint.JOURNAL, "journal")
     }
 
-    @Test fun realDatabaseSyncEioRetainsExactKeyUntilFreshSuccessfulAbort() = runBlocking {
+    @Test fun injectedDatabaseVfsSyncFailureRetainsExactKeyUntilFreshSuccessfulAbort() = runBlocking {
         failFirstAbort(SyncPoint.DATABASE, "database")
     }
 
-    @Test fun realPostUnlinkDirectorySyncEioNeverTreatsVisibleConsumeAsDurableAcknowledgement() = runBlocking {
+    @Test fun injectedPostUnlinkVfsSyncFailureNeverTreatsVisibleConsumeAsDurableAcknowledgement() = runBlocking {
         failFirstAbort(SyncPoint.DIRECTORY_AFTER_UNLINK, "directory")
     }
 
@@ -92,7 +94,7 @@ class AndroidStateActivationSyncFailureTest {
         assertEquals(listOf(f.key), reopened.vault.deleted) // Exact idempotent deletion, never a new key.
     }
 
-    @Test fun nativeFaultIsRestrictedToExactOwnedDatabaseNotAnotherSandbox() = runBlocking {
+    @Test fun injectedVfsFaultIsRestrictedToExactOwnedDatabaseNotAnotherSandbox() = runBlocking {
         val target = fixture()
         val independent = fixture()
         SqliteSyncFailureInjector.install(target.file.path, SyncPoint.DATABASE.nativeKind, 1)
@@ -145,23 +147,24 @@ class AndroidStateActivationSyncFailureTest {
     }
 
     private fun assertFault(f: Fixture, result: PortResult<Unit>, stats: LongArray, point: SyncPoint, label: String) {
-        assertTrue("A true native sync failure must not acknowledge cleanup", result is PortResult.Failure)
+        assertTrue("An injected VFS sync failure must not acknowledge cleanup", result is PortResult.Failure)
         val failed = result as PortResult.Failure
         assertTrue(failed.reason in setOf(FailureReason.STORAGE_FAILURE, FailureReason.OUTCOME_UNKNOWN))
         assertEquals(null, failed.retryAfterSeconds)
         assertEquals(7, stats.size)
-        assertEquals("The exact native syscall fault must actually execute", 1L, stats[4])
-        assertEquals(5L, stats[5]) // EIO, not a substituted Java exception.
+        assertEquals("The exact VFS fault must actually execute", 1L, stats[4])
+        assertEquals(point.sqliteCode.toLong(), stats[5])
         assertTrue(stats[point.nativeKind - 1] >= 1L)
-        assertTrue(stats[6] == 1L || stats[6] == 3L)
+        val delegatedUnlink = if (point == SyncPoint.DIRECTORY_AFTER_UNLINK) 1L else 0L
+        assertEquals(delegatedUnlink, stats[6])
         assertTrue("The actual bundled engine must surface its extended numeric sync error",
             f.sql.nativeCodes.contains(point.sqliteCode))
         assertTrue("No key deletion may precede a fresh successful barrier", f.vault.deleted.isEmpty())
         for (privateValue in listOf(OWNER.environment, OWNER.actorId, f.file.path, f.key,
                 f.box.keyPrefix, point.sqliteCode.toString())) assertFalse(failed.toString().contains(privateValue))
-        // Machine-readable numeric evidence only; do not expose fd paths, aliases or SQL text.
+        // Explicit VFS-injection evidence only: no OS errno, paths, aliases or raw SQL text.
         InstrumentationRegistry.getInstrumentation().addResults(Bundle().apply {
-            putString("state_activation_sync_$label", "sqlite=${point.sqliteCode};errno=${stats[5]};failures=${stats[4]};keyDeletes=0;hooks=${stats[6]}")
+            putString("state_activation_sync_$label", "sqlite=${point.sqliteCode};failures=${stats[4]};keyDeletes=0;vfs=1;delegatedUnlink=$delegatedUnlink")
         })
     }
 
@@ -184,8 +187,12 @@ class AndroidStateActivationSyncFailureTest {
     private suspend fun recover(box: AndroidStateTestSandbox, plan: StateActivationPlan): Fixture {
         val file = File(box.directory, "state.sqlite").canonicalFile
         val vault = NativeTrace(AndroidStateVault.createOrOpen(box.keyPrefix, databaseExisted = true))
-        val sql = NativeSqlTrace(BundledSQLiteDriver().open(file.path,
-            SQLITE_OPEN_READWRITE or SQLITE_OPEN_FULLMUTEX or SQLITE_OPEN_NOFOLLOW))
+        SqliteSyncFailureInjector.registerVfs()
+        // SQLITE_OPEN_URI is a documented SQLite flag. URI VFS selection is test-only; the
+        // ordinary native factory and production BundledSQLiteDriver calls remain unchanged.
+        val uri = "${file.toURI()}?vfs=feedme-test-sync-failure-v1"
+        val sql = NativeSqlTrace(BundledSQLiteDriver().open(uri,
+            SQLITE_OPEN_READWRITE or SQLITE_OPEN_FULLMUTEX or SQLITE_OPEN_NOFOLLOW or 0x00000040))
         val handle = EncryptedStateDatabase.openActivationRecovery(sql, vault, OWNER, plan)
             .valueOrFail().also(handles::add)
         return Fixture(box, plan, file, StateActivationPlanCodec.decode(plan).keyId, vault, sql, handle)
@@ -236,7 +243,9 @@ class AndroidStateActivationSyncFailureTest {
 /** Never loaded by production sources; the corresponding .so belongs only to androidTest JNI. */
 internal object SqliteSyncFailureInjector {
     init { System.loadLibrary("feedmeSqliteSyncFailure") }
+    external fun registerVfs()
     external fun install(databasePath: String, target: Int, nthMatch: Int)
     external fun statistics(): LongArray
     external fun restore()
+    external fun unregisterVfs()
 }

@@ -13,12 +13,15 @@ import java.io.ByteArrayOutputStream
 import java.io.DataOutputStream
 import java.io.File
 import java.nio.ByteBuffer
+import java.nio.charset.CharacterCodingException
 import java.nio.file.Files
 import java.security.MessageDigest
 import java.util.UUID
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
@@ -36,9 +39,10 @@ class AndroidCredentialStore private constructor(
     private val files: AndroidCredentialFiles,
     private val vault: AndroidCredentialVault,
     private val keyPrefix: String,
-) : PlannedCredentialCreateStore {
+) : PlannedCredentialCreateStore, CredentialCreatePlanInspection, CredentialCreatePlanAbort {
     private val mutex = Mutex()
     private var closed = false
+    private var closing = false
     private var poisoned = false
 
     override suspend fun state(): PortResult<CredentialSlotState> = guarded {
@@ -143,8 +147,29 @@ class AndroidCredentialStore private constructor(
         createState(authenticatePlan(plan)).status
     }
 
+    override suspend fun inspectPlannedCreate(
+        scope: StorageScope,
+        plan: CredentialCreatePlan,
+    ): PortResult<CredentialCreatePlanObservation> = guarded {
+        val record = authenticateScopePlan(scope, plan)
+        val state = createState(record)
+        CredentialCreatePlanObservation(state.status, observationFingerprint(record, state))
+    }
+
     private suspend fun abortPlannedCreate(plan: CredentialCreatePlan): PortResult<Unit> = guarded { mutation ->
-        val record = authenticatePlan(plan)
+        abortCreate(authenticatePlan(plan), mutation)
+    }
+
+    override suspend fun abortPlannedCreate(
+        scope: StorageScope,
+        plan: CredentialCreatePlan,
+    ): PortResult<Unit> = guarded { mutation ->
+        // Both native authentication and scope binding belong to this same mutex acquisition.
+        // No temporary recovery handle may close or bypass the already-open parent owner.
+        abortCreate(authenticateScopePlan(scope, plan), mutation)
+    }
+
+    private fun abortCreate(record: CredentialCreatePlanRecord, mutation: Mutation) {
         val state = createState(record)
         val selected = state.manifest.scope != null
         val abortPending = AndroidCredentialFiles.abortManifestPending(record.incarnation)
@@ -183,7 +208,6 @@ class AndroidCredentialStore private constructor(
             mutation.committed = true
             files.checkpoint(CredentialFileFaultPoint.AFTER_ABORT_CONSUMED)
         }
-        Unit
     }
 
     override suspend fun replace(
@@ -243,9 +267,10 @@ class AndroidCredentialStore private constructor(
     suspend fun close(): PortResult<Unit> = withContext(NonCancellable + Dispatchers.IO) {
         mutex.withLock {
             if (closed) return@withLock PortResult.Value(Unit)
-            closed = true
+            closing = true
             try {
                 files.close()
+                closed = true
                 PortResult.Value(Unit)
             } catch (_: Exception) {
                 PortResult.Failure(FailureReason.STORAGE_FAILURE)
@@ -348,6 +373,20 @@ class AndroidCredentialStore private constructor(
         return record
     }
 
+    private fun authenticateScopePlan(scope: StorageScope, plan: CredentialCreatePlan): CredentialCreatePlanRecord {
+        val record = authenticatePlan(plan)
+        validScope(scope)
+        // StorageScope bounds characters but intentionally is not a Unicode codec. Reject
+        // malformed UTF-16 before deriving a target, rather than folding it into replacement text.
+        for (field in listOf(scope.environment, scope.actorId)) {
+            val encoded = try { field.encodeToByteArray(throwOnInvalidSequence = true) }
+            catch (_: CharacterCodingException) { reject(FailureReason.INVALID_DATA) }
+            encoded.fill(0)
+        }
+        if (!sameMac(target(scope, record.incarnation), record.target)) reject(FailureReason.INVALID_DATA)
+        return record
+    }
+
     private fun planMac(record: CredentialCreatePlanRecord): String {
         val unsigned = CredentialCreatePlanCodec.encodeUnsigned(record).copyForCodec()
         try { return indexedHex("feedme.credentials.create-plan-auth.v1", unsigned) }
@@ -380,6 +419,8 @@ class AndroidCredentialStore private constructor(
         val manifest: CredentialManifest,
         val status: CredentialCreateRecoveryStatus,
         val hasKey: Boolean,
+        val names: Set<String>,
+        val keyTargets: Set<String>,
     )
 
     /** Exact prior, exact selected, or exact consumed slot only; never a general orphan permit. */
@@ -411,7 +452,22 @@ class AndroidCredentialStore private constructor(
             hasArtifacts -> CredentialCreateRecoveryStatus.PARTIAL
             else -> CredentialCreateRecoveryStatus.PREPARED
         }
-        return CreateState(manifest, status, hasKey)
+        return CreateState(manifest, status, hasKey, names, targets)
+    }
+
+    private fun observationFingerprint(record: CredentialCreatePlanRecord, state: CreateState): PrivateBytes {
+        val manifest = CredentialCodec.encodeManifest(state.manifest).copyForCodec()
+        // Bind the exact authenticated plan as well as the captured inventory. No second
+        // inventory scan, credential blob read or key-usability probe enters this observation.
+        val metadata = frame("feedme.credentials.create-observation.v1", keyPrefix, record.authenticationMac,
+            state.names.size.toString(), *state.names.sorted().toTypedArray(),
+            state.keyTargets.size.toString(), *state.keyTargets.sorted().toTypedArray())
+        val input = ByteArray(metadata.size + Int.SIZE_BYTES + manifest.size)
+        try {
+            ByteBuffer.wrap(input).put(metadata).putInt(manifest.size).put(manifest)
+            val digest = vault.index(input)
+            try { return PrivateBytes(digest) } finally { digest.fill(0) }
+        } finally { manifest.fill(0); metadata.fill(0); input.fill(0) }
     }
 
     private class CreateRecoveryHandle(
@@ -422,6 +478,117 @@ class AndroidCredentialStore private constructor(
         override suspend fun abort() = store.abortPlannedCreate(plan)
         override suspend fun close() = store.close()
         override fun toString() = "CredentialCreateRecoveryHandle(<redacted>)"
+    }
+
+    /** The caller owns this object before opening starts, including cancelled dispatch back. */
+    private class RetainedCreateRecoveryOwner(
+        private val scope: StorageScope,
+        private val plan: CredentialCreatePlan,
+        private val location: () -> Pair<File, String>,
+        private val faultInjector: (CredentialFileFaultPoint) -> Unit,
+    ) : CredentialCreateRecoveryOwner {
+        private enum class Phase { NEW, OPENING, READY, CLOSE_ONLY, CLOSED }
+        private val mutex = Mutex()
+        private var phase = Phase.NEW
+        private var opening: AndroidCredentialFiles.Opening? = null
+        private var files: AndroidCredentialFiles? = null
+        private var store: AndroidCredentialStore? = null
+
+        override suspend fun open(): PortResult<Unit> {
+            var admitted = false
+            return try {
+                val initialized = withContext(Dispatchers.IO) {
+                    mutex.withLock {
+                        if (phase != Phase.NEW) return@withLock PortResult.Failure(FailureReason.CONFLICT)
+                        admitted = true
+                        phase = Phase.OPENING
+                        try {
+                            // Even Context directory access is deferred until this supported-API gate.
+                            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O_MR1) reject(FailureReason.NOT_CONFIGURED)
+                            val (directory, prefix) = location()
+                            val retained = AndroidCredentialFiles.prepareOpen(directory, faultInjector, existingOnly = true)
+                            opening = retained
+                            val ownedFiles = retained.open()
+                            files = ownedFiles
+                            faultInjector(CredentialFileFaultPoint.AFTER_RECOVERY_FILES_OPEN)
+                            require(AndroidCredentialFiles.MANIFEST in ownedFiles.names())
+                            val vault = AndroidCredentialVault.open(prefix, initialize = false)
+                            val manager = AndroidCredentialStore(ownedFiles, vault, prefix)
+                            store = manager
+                            manager.createState(manager.authenticateScopePlan(scope, plan))
+                            faultInjector(CredentialFileFaultPoint.AFTER_RECOVERY_AUTHENTICATED)
+                            currentCoroutineContext().ensureActive()
+                            PortResult.Value(Unit)
+                        } catch (cancelled: CancellationException) {
+                            phase = Phase.CLOSE_ONLY
+                            throw cancelled
+                        } catch (rejected: Rejected) {
+                            phase = Phase.CLOSE_ONLY
+                            PortResult.Failure(rejected.reason)
+                        } catch (_: Exception) {
+                            phase = Phase.CLOSE_ONLY
+                            PortResult.Failure(FailureReason.STORAGE_FAILURE)
+                        } catch (_: LinkageError) {
+                            phase = Phase.CLOSE_ONLY
+                            PortResult.Failure(FailureReason.STORAGE_FAILURE)
+                        }
+                    }
+                }
+                if (initialized is PortResult.Failure) return initialized
+                // Publish only after the IO result reaches the caller dispatcher. There is no
+                // ready capability during a cancellable return handoff or after close began.
+                mutex.withLock {
+                    currentCoroutineContext().ensureActive()
+                    if (phase != Phase.OPENING) return@withLock PortResult.Failure(FailureReason.STALE_SESSION)
+                    phase = Phase.READY
+                    PortResult.Value(Unit)
+                }
+            } catch (cancelled: CancellationException) {
+                withContext(NonCancellable + Dispatchers.IO) {
+                    mutex.withLock {
+                        // A cancelled queued/rejected second open cannot revoke the first opener.
+                        if (phase != Phase.CLOSED && (admitted || phase == Phase.NEW)) phase = Phase.CLOSE_ONLY
+                    }
+                }
+                throw cancelled
+            }
+        }
+
+        override suspend fun inspect(): PortResult<CredentialCreatePlanObservation> = operation {
+            it.inspectPlannedCreate(scope, plan)
+        }
+
+        override suspend fun abort(): PortResult<Unit> = operation { it.abortPlannedCreate(scope, plan) }
+
+        private suspend fun <T> operation(action: suspend (AndroidCredentialStore) -> PortResult<T>): PortResult<T> =
+            withContext(Dispatchers.IO) {
+                mutex.withLock {
+                    if (phase != Phase.READY) return@withLock PortResult.Failure(FailureReason.STALE_SESSION)
+                    // Only failed opening or close makes this owner close-only. Mutation
+                    // poisoning belongs to the store; a lost successful reply may be retried.
+                    val result = action(checkNotNull(store))
+                    currentCoroutineContext().ensureActive()
+                    result
+                }
+            }
+
+        override suspend fun close(): PortResult<Unit> = withContext(NonCancellable + Dispatchers.IO) {
+            mutex.withLock {
+                if (phase == Phase.CLOSED) return@withLock PortResult.Value(Unit)
+                phase = Phase.CLOSE_ONLY
+                val result = try {
+                    store?.close() ?: run { opening?.close(); PortResult.Value(Unit) }
+                } catch (_: Exception) { PortResult.Failure(FailureReason.STORAGE_FAILURE) }
+                catch (_: LinkageError) { PortResult.Failure(FailureReason.STORAGE_FAILURE) }
+                if (result is PortResult.Value) {
+                    phase = Phase.CLOSED
+                    store = null; files = null; opening = null
+                }
+                result
+            }
+        }
+
+        override fun toString() = "CredentialCreateRecoveryOwner(<redacted>)"
     }
 
     /** Missing selected material is recoverable retirement, not authorization to restore a token. */
@@ -441,7 +608,7 @@ class AndroidCredentialStore private constructor(
 
     private suspend fun <T> guarded(operation: (Mutation) -> T): PortResult<T> = withContext(Dispatchers.IO) {
         mutex.withLock {
-            if (closed || poisoned) return@withLock PortResult.Failure(FailureReason.STORAGE_FAILURE)
+            if (closed || closing || poisoned) return@withLock PortResult.Failure(FailureReason.STORAGE_FAILURE)
             val mutation = Mutation()
             try {
                 PortResult.Value(operation(mutation))
@@ -478,6 +645,29 @@ class AndroidCredentialStore private constructor(
             keyPrefix: String,
             faultInjector: (CredentialFileFaultPoint) -> Unit = {},
         ): PortResult<AndroidCredentialStore> = openOwned({ directory to keyPrefix }, faultInjector)
+
+        /**
+         * No I/O during construction. Retain this exact owner before calling open, and through
+         * every open/close failure or cancellation. It never exposes the underlying store.
+         */
+        fun createRecoveryOwner(context: Context, scope: StorageScope,
+            plan: CredentialCreatePlan): CredentialCreateRecoveryOwner = RetainedCreateRecoveryOwner(
+                scope, detachedPlan(plan), {
+                    val base = context.applicationContext.noBackupFilesDir
+                    require(!Files.isSymbolicLink(base.toPath()))
+                    File(base.canonicalFile, DIRECTORY_NAME) to KEY_PREFIX
+                }, {},
+            )
+
+        internal fun createRecoveryOwnerForTests(directory: File, keyPrefix: String, scope: StorageScope,
+            plan: CredentialCreatePlan, faultInjector: (CredentialFileFaultPoint) -> Unit = {}): CredentialCreateRecoveryOwner =
+            RetainedCreateRecoveryOwner(scope, detachedPlan(plan), { directory to keyPrefix }, faultInjector)
+
+        private fun detachedPlan(plan: CredentialCreatePlan): CredentialCreatePlan =
+            when (val copied = CredentialCreatePlan.fromStorage(plan.copyForStorage())) {
+                is PortResult.Value -> copied.value
+                is PortResult.Failure -> throw IllegalArgumentException("Credential create plan unavailable")
+            }
 
         /** Existing-only, one authenticated plan, no credential reads or activation surface. */
         suspend fun openCreateRecovery(

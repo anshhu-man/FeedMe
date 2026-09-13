@@ -42,7 +42,7 @@ class CredentialCreateCoordinator(
             when (val state = RetirementCodec.decode(record.payload)) {
                 RetirementState.Idle, is RetirementState.Complete -> null
                 is RetirementState.PendingCreate -> PendingCredentialCreate(owner, record, state.plan, state.abortRequested)
-                is RetirementState.InFlight -> createFail(FailureReason.CONFLICT)
+                is RetirementState.InFlight, is RetirementState.PendingSetup -> createFail(FailureReason.CONFLICT)
             }
         }
     }
@@ -68,7 +68,9 @@ class CredentialCreateCoordinator(
             val record = protocol.read()
             val state = RetirementCodec.decode(record.payload) as? RetirementState.PendingCreate ?: createFail(FailureReason.CONFLICT)
             if (!state.abortRequested) createFail(FailureReason.CONFLICT)
-            finishAbort(record)
+            // A readable confirmation may be the result of an uncertain prior commit. Re-ack
+            // the same exact plan with a changed revision before acquiring any native handle.
+            finishAbort(protocol.reacknowledge(record))
         }
     }
 
@@ -80,12 +82,15 @@ class CredentialCreateCoordinator(
         val handle = createValue(opened)
         var closeFailure: FailureReason? = null
         try {
+            currentCoroutineContext().ensureActive()
             inactive()
             observed { handle.inspect() }
             if (!sameCreateRecord(record, protocol.read())) createFail(FailureReason.CONFLICT)
             // A read-only ABORTED observation is not a durable acknowledgement of an earlier
             // uncertain rename. Native abort is idempotent and must re-acknowledge consumption.
+            currentCoroutineContext().ensureActive()
             val result = native { handle.abort() }
+            currentCoroutineContext().ensureActive()
             inactive()
             if (result is PortResult.Failure) createFail(result.reason)
             if (observed { handle.inspect() } != CredentialCreateRecoveryStatus.ABORTED)
@@ -106,12 +111,14 @@ class CredentialCreateCoordinator(
 
     private fun inactive() { if (boundary.current() != null) createFail(FailureReason.STALE_SESSION) }
     private suspend fun <T> observed(action: suspend () -> PortResult<T>): T {
+        currentCoroutineContext().ensureActive()
         val result = native(action)
+        currentCoroutineContext().ensureActive()
         inactive()
         return createValue(result)
     }
     private suspend fun <T> owned(action: suspend () -> T): PortResult<T> = withContext(dispatcher) {
-        try { inactive(); PortResult.Value(action()) }
+        try { currentCoroutineContext().ensureActive(); inactive(); PortResult.Value(action()) }
         catch (cancelled: CancellationException) { throw cancelled }
         catch (failure: CredentialCreateFailure) { PortResult.Failure(failure.reason) }
         catch (_: Exception) { PortResult.Failure(FailureReason.STORAGE_FAILURE) }
@@ -126,10 +133,12 @@ internal suspend fun commitCredentialCreate(
     credentials: StoredCredentials,
     checkCurrent: () -> Unit,
 ): PortResult<CredentialSnapshot> = try {
+    currentCoroutineContext().ensureActive()
     val protocol = CredentialCreateControl(control, checkCurrent)
     val initial = protocol.read()
     if (RetirementCodec.decode(initial.payload).blocksAccess()) createFail(FailureReason.CONFLICT)
     val planned = native { store.planCreate(expectedSlotRevision, credentials) }
+    currentCoroutineContext().ensureActive()
     checkCurrent()
     val plan = createValue(planned)
     val details = CredentialCreatePlanCodec.decode(plan.copyForStorage())
@@ -137,6 +146,7 @@ internal suspend fun commitCredentialCreate(
     if (!sameCreateRecord(initial, protocol.read())) createFail(FailureReason.CONFLICT)
     val pending = protocol.write(initial, RetirementState.PendingCreate(plan, false))
     val result = native { store.commitPlannedCreate(plan, credentials) }
+    currentCoroutineContext().ensureActive()
     checkCurrent()
     val snapshot = createValue(result)
     if (snapshot.scope != credentials.scope || snapshot.incarnation != details.incarnation || snapshot.revision != details.snapshotRevision)
@@ -151,22 +161,18 @@ catch (failure: CredentialCreateFailure) { PortResult.Failure(failure.reason) }
 
 /** Exact readback is mandatory even when the CAS adapter returned a success receipt. */
 private class CredentialCreateControl(private val control: SessionControlStore, private val checkCurrent: () -> Unit) {
+    suspend fun reacknowledge(expected: SessionControlRecord): SessionControlRecord =
+        createValue(control.acknowledge(expected, expected.payload, checkCurrent))
     suspend fun read(): SessionControlRecord {
+        currentCoroutineContext().ensureActive()
         val result = native { control.read() }
+        currentCoroutineContext().ensureActive()
         checkCurrent()
         return (createValue(result) ?: createFail(FailureReason.STORAGE_FAILURE)).also { RetirementCodec.decode(it.payload) }
     }
     suspend fun write(expected: SessionControlRecord, state: RetirementState): SessionControlRecord {
         val payload = RetirementCodec.encode(state)
-        val outcome = native { control.compareAndSet(expected.revision, payload) }
-        checkCurrent()
-        if (outcome is PortResult.Failure && outcome.reason != FailureReason.OUTCOME_UNKNOWN) createFail(outcome.reason)
-        if (outcome is PortResult.Value && (outcome.value.revision <= expected.revision || !sameCreateBytes(outcome.value.payload, payload)))
-            createFail(FailureReason.STORAGE_FAILURE)
-        val current = read()
-        if (current.revision <= expected.revision || !sameCreateBytes(current.payload, payload)) createFail(FailureReason.OUTCOME_UNKNOWN)
-        if (outcome is PortResult.Value && outcome.value.revision != current.revision) createFail(FailureReason.CONFLICT)
-        return current
+        return createValue(control.acknowledge(expected, payload, checkCurrent))
     }
 }
 

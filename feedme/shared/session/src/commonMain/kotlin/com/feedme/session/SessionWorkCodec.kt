@@ -20,6 +20,18 @@ internal object SessionWorkCodec {
             put("version", 1)
             when (state) {
                 SessionWorkState.Idle -> put("state", "idle")
+                is SessionWorkState.SetupSelected -> {
+                    put("state", "setup-selected")
+                    val bytes = state.plan.copyForStorage().copyForCodec()
+                    try { put("plan", bytes.joinToString("") { (it.toInt() and 255).toString(16).padStart(2, '0') }) }
+                    finally { bytes.fill(0) }
+                }
+                is SessionWorkState.SetupAborted -> {
+                    put("state", "setup-aborted")
+                    val bytes = state.plan.copyForStorage().copyForCodec()
+                    try { put("plan", bytes.joinToString("") { (it.toInt() and 255).toString(16).padStart(2, '0') }) }
+                    finally { bytes.fill(0) }
+                }
                 is SessionWorkState.Origin -> {
                     put("state", if (state.retiring) "retiring" else "active")
                     put("scope", buildJsonObject {
@@ -36,6 +48,11 @@ internal object SessionWorkCodec {
                             put("phase", entry.phase.name)
                         }
                     }))
+                    state.setupPlan?.let { plan ->
+                        val bytes = plan.copyForStorage().copyForCodec()
+                        try { put("setupPlan", bytes.joinToString("") { (it.toInt() and 255).toString(16).padStart(2, '0') }) }
+                        finally { bytes.fill(0) }
+                    }
                 }
             }
         }
@@ -55,8 +72,17 @@ internal object SessionWorkCodec {
                 exact(root, setOf("version", "state"))
                 SessionWorkState.Idle
             }
+            "setup-selected" -> {
+                exact(root, setOf("version", "state", "plan"))
+                SessionWorkState.SetupSelected(decodePlan(root["plan"]))
+            }
+            "setup-aborted" -> {
+                exact(root, setOf("version", "state", "plan"))
+                SessionWorkState.SetupAborted(decodePlan(root["plan"]))
+            }
             "active", "retiring" -> {
-                exact(root, setOf("version", "state", "scope", "origin", "entries"))
+                val keys = setOf("version", "state", "scope", "origin", "entries")
+                exact(root, if ("setupPlan" in root) keys + "setupPlan" else keys)
                 val scope = decodeScope(root["scope"])
                 val origin = uuid(string(root["origin"]))
                 val array = root["entries"] as? JsonArray ?: invalid()
@@ -71,7 +97,8 @@ internal object SessionWorkCodec {
                         NativeWorkPhase.entries.firstOrNull { it.name == string(entry["phase"]) } ?: invalid(),
                     )
                 }
-                SessionWorkState.Origin(scope, origin, string(root["state"]) == "retiring", entries).also(::validateOrigin)
+                val plan = if ("setupPlan" in root) decodePlan(root["setupPlan"]) else null
+                SessionWorkState.Origin(scope, origin, string(root["state"]) == "retiring", entries, plan).also(::validateOrigin)
             }
             else -> invalid()
         }
@@ -97,6 +124,11 @@ internal object SessionWorkCodec {
     private fun validateOrigin(state: SessionWorkState.Origin) {
         if (state.scope.actorKind == ActorKind.DEMO || state.entries.size > MAX_ENTRIES) invalid()
         uuid(state.origin)
+        state.setupPlan?.let { plan ->
+            if (state.retiring || state.entries.isNotEmpty()) invalid()
+            val details = SessionWorkOriginPlanCodec.decode(plan.copyForStorage())
+            if (details.scope != state.scope || details.origin != state.origin) invalid()
+        }
         val ids = mutableSetOf<String>()
         val logicalIds = mutableSetOf<Pair<NativeWorkKind, String>>()
         for (entry in state.entries) {
@@ -104,6 +136,19 @@ internal object SessionWorkCodec {
             logicalId(entry.logicalId)
             if (!ids.add(entry.id) || !logicalIds.add(entry.kind to entry.logicalId)) invalid()
         }
+    }
+
+    private fun decodePlan(value: JsonElement?): SessionWorkOriginPlan {
+        val hex = string(value)
+        if (hex.length !in 2..SessionWorkOriginPlanCodec.MAX_BYTES * 2 || hex.length % 2 != 0 ||
+            hex.any { it !in "0123456789abcdef" }) invalid()
+        val bytes = ByteArray(hex.length / 2) { index -> hex.substring(index * 2, index * 2 + 2).toInt(16).toByte() }
+        return try {
+            when (val plan = SessionWorkOriginPlan.fromStorage(PrivateBytes(bytes))) {
+                is com.feedme.core.ports.PortResult.Value -> plan.value
+                is com.feedme.core.ports.PortResult.Failure -> invalid()
+            }
+        } finally { bytes.fill(0) }
     }
 
     private fun uuid(value: String): String {

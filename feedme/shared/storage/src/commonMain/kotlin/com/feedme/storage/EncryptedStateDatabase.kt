@@ -13,6 +13,7 @@ import com.feedme.core.ports.PrivateBytes
 import com.feedme.core.ports.PrivateRecord
 import com.feedme.core.ports.PrivateStateStore
 import com.feedme.core.ports.RecordKey
+import com.feedme.core.ports.SessionControlRecord
 import com.feedme.core.ports.StorageScope
 import com.feedme.core.ports.StoreMutation
 import kotlinx.coroutines.CancellationException
@@ -72,6 +73,198 @@ class EncryptedStateDatabase private constructor(
             try { StateActivationPlanCodec.encode(StateActivationPlanRecord(tag, generation, prior?.keyId, key, mac)) }
             finally { mac.fill(0) }
         }
+    }
+
+    /**
+     * Read-only observation of this exact native-authenticated plan and scope on the live store.
+     * No key creation/deletion, garbage collection, selection or scoped handle is performed.
+     * Selected/partial status does not prove key usability, record integrity or durable selection;
+     * in particular this observation cannot replace a required write acknowledgement.
+     */
+    suspend fun inspectPlannedActivation(
+        scope: StorageScope,
+        plan: StateActivationPlan,
+    ): PortResult<StateActivationInspection> = guarded {
+        val intended = recoveryPlan(scope, plan)
+        transaction(writes = false) { StateActivationInspection(activationRecoveryState(intended)) }
+    }
+
+    /**
+     * Already-open owner metadata for a wider read-only setup bracket. No GC, file factory,
+     * cipher/key-usability probe, record decryption or write is performed. The comparison MAC
+     * includes the abort receipt revision even when an acknowledged replay leaves status intact.
+     * Record payloads are deliberately outside this metadata observation; inspectPlannedBinding
+     * must independently validate the sole exact binding when the selected owner is nonempty.
+     */
+    suspend fun inspectPlannedActivationState(scope: StorageScope, plan: StateActivationPlan): PortResult<StateActivationPlanObservation> = guarded {
+        val inventory = vault as? PlannedStateVault ?: fail(FailureReason.NOT_CONFIGURED)
+        val intended = recoveryPlan(scope, plan)
+        transaction(writes = false) {
+            val status = activationRecoveryState(intended)
+            val current = owner(intended.ownerTag)
+            val receipt = activationAbortReceipt(intended.ownerTag)
+            val present = inventory.containsOwnerKey(intended.keyId)
+            if ((status == StateActivationStatus.PREPARED || status == StateActivationStatus.ABORTED) && present ||
+                (status == StateActivationStatus.PARTIAL || status == StateActivationStatus.ABORTING) && !present)
+                fail(FailureReason.CONFLICT)
+            val input = frame("feedme.activation-observation.v1", intended.ownerTag,
+                intended.priorGeneration.toString(), intended.priorKeyId ?: "", intended.keyId, status.name,
+                current?.generation?.toString() ?: "", current?.active?.toString() ?: "", current?.keyId ?: "",
+                receipt?.generation?.toString() ?: "", receipt?.keyId ?: "", receipt?.revision?.toString() ?: "", present.toString())
+            val fingerprint = try { vault.index(input) } finally { input.fill(0) }
+            try {
+                if (fingerprint.size != 32) fail(FailureReason.STORAGE_FAILURE)
+                StateActivationPlanObservation(status, PrivateBytes(fingerprint))
+            } finally { fingerprint.fill(0) }
+        }
+    }
+
+    /**
+     * Exact selected-plan binding observation, without GC, a scoped handle or write authority.
+     * The returned target is for this plan's current incarnation. Only zero rows or one reserved,
+     * authenticated non-tombstoned binding is accepted; this is not a durability acknowledgement.
+     */
+    suspend fun inspectPlannedBinding(
+        scope: StorageScope,
+        plan: StateActivationPlan,
+    ): PortResult<StateRecordInspection> = guarded {
+        val intended = recoveryPlan(scope, plan)
+        transaction(writes = false) { inspectBinding(selectedBindingOwner(intended), soleRecord = true) }
+    }
+
+    /**
+     * Purpose-fixed pre-publication binding write. The trusted identity owner must already hold
+     * an acknowledged exact composite intent. No lease, ordinary store or completion is granted.
+     * Every call changes the reserved record revision and encryption AAD, including exact replay;
+     * replay cannot replace a different schema/body or any other row/tombstone. A successful real
+     * COMMIT and a separate exact readback are both required before returning the detached receipt.
+     */
+    suspend fun bindPlannedActivation(
+        scope: StorageScope,
+        plan: StateActivationPlan,
+        schemaVersion: Int,
+        payload: PrivateBytes,
+    ): PortResult<StateRecordInspection> {
+        val plaintext = payload.copyForCodec()
+        if (schemaVersion !in 1..2 || plaintext.size !in 1..MAX_BINDING_BYTES) {
+            plaintext.fill(0)
+            return PortResult.Failure(FailureReason.INVALID_DATA)
+        }
+        val caller = currentCoroutineContext()
+        return try {
+            guarded {
+                caller.ensureActive()
+                val intended = recoveryPlan(scope, plan)
+                val revision = transaction(writes = true) {
+                    val target = selectedBindingOwner(intended)
+                    val prior = inspectBinding(target, soleRecord = true).record
+                    if (prior != null && (prior.schemaVersion != schemaVersion || !bindingPayloadEquals(prior, plaintext)))
+                        fail(FailureReason.CONFLICT)
+                    val nextRevision = next(prior?.revision ?: 0)
+                    val tag = recordTag(target.tag, ACTIVATION_BINDING_KEY)
+                    val encrypted = vault.seal(target.keyId, plaintext,
+                        aad(target.tag, target.generation, tag, nextRevision, schemaVersion))
+                    try {
+                        if (encrypted.size !in MIN_CIPHERTEXT_BYTES..MAX_BINDING_BYTES + 64)
+                            fail(FailureReason.STORAGE_FAILURE)
+                        caller.ensureActive()
+                        execute("INSERT INTO feedme_records(owner_tag,record_tag,revision,schema_version,payload) VALUES(?,?,?,?,?) " +
+                            "ON CONFLICT(owner_tag,record_tag) DO UPDATE SET revision=excluded.revision,schema_version=excluded.schema_version,payload=excluded.payload") {
+                            bindText(1, target.tag); bindText(2, tag); bindLong(3, nextRevision)
+                            bindLong(4, schemaVersion.toLong()); bindBlob(5, encrypted)
+                        }
+                        caller.ensureActive()
+                    } finally { encrypted.fill(0) }
+                    nextRevision
+                }
+                // A failed/unknown COMMIT exits before readback. Matching bytes cannot give it credit.
+                caller.ensureActive()
+                val receipt = transaction(writes = false) {
+                    val observed = inspectBinding(selectedBindingOwner(intended), soleRecord = true)
+                    val record = observed.record ?: fail(FailureReason.OUTCOME_UNKNOWN)
+                    if (record.revision > revision) fail(FailureReason.CONFLICT)
+                    if (record.revision != revision || record.schemaVersion != schemaVersion ||
+                        !bindingPayloadEquals(record, plaintext)) fail(FailureReason.OUTCOME_UNKNOWN)
+                    observed
+                }
+                caller.ensureActive()
+                receipt
+            }
+        } finally { plaintext.fill(0) }
+    }
+
+    /**
+     * Trusted session-owner publication/restore only, AFTER independent identity verification
+     * and acknowledged control completion. This method cannot verify either prerequisite itself.
+     * It checks the exact current target and reserved binding receipt without GC or writes, and
+     * permits later ordinary domain records. Never expose it as a caller-controlled login API.
+     */
+    suspend fun resumeBound(
+        scope: StorageScope,
+        target: StateRetirementTarget,
+        expectedBinding: PrivateRecord,
+    ): PortResult<PrivateStateStore> {
+        val expected = expectedBinding.payload.copyForCodec()
+        if (expectedBinding.schemaVersion !in 1..2 || expected.size !in 1..MAX_BINDING_BYTES) {
+            expected.fill(0)
+            return PortResult.Failure(FailureReason.INVALID_DATA)
+        }
+        val caller = currentCoroutineContext()
+        return try {
+            guarded {
+                caller.ensureActive()
+                validateActivationScope(scope)
+                val exact = decodeRetirement(target)
+                if (ownerTag(scope) != exact.tag) fail(FailureReason.STALE_SESSION)
+                val result = transaction(writes = false) {
+                    val current = owner(exact.tag)
+                    if (current != Owner(exact.generation, true, exact.keyId) ||
+                        (exact.tag to exact.generation) in locallyRetired) fail(FailureReason.STALE_SESSION)
+                    validateActivationReferences(exact.tag, exact.keyId, selected = true)
+                    requireKey(exact.keyId)
+                    val record = inspectBinding(exact, soleRecord = false).record ?: fail(FailureReason.STALE_SESSION)
+                    if (record.revision != expectedBinding.revision || record.schemaVersion != expectedBinding.schemaVersion ||
+                        !bindingPayloadEquals(record, expected)) fail(FailureReason.STALE_SESSION)
+                    ScopedStore(scope, exact.tag, exact.generation, exact.keyId)
+                }
+                caller.ensureActive()
+                result
+            }
+        } finally { expected.fill(0) }
+    }
+
+    private fun selectedBindingOwner(intended: StateActivationPlanRecord): Retirement {
+        val state = activationRecoveryState(intended)
+        if (state != StateActivationStatus.SELECTED_EMPTY && state != StateActivationStatus.SELECTED_NONEMPTY)
+            fail(FailureReason.STALE_SESSION)
+        requireKey(intended.keyId)
+        return Retirement(intended.ownerTag, intended.selectedGeneration, intended.keyId)
+    }
+
+    /** Caller holds this manager mutex and an exact-owner transaction. Never decrypt other rows. */
+    private fun inspectBinding(target: Retirement, soleRecord: Boolean): StateRecordInspection {
+        val tag = recordTag(target.tag, ACTIVATION_BINDING_KEY)
+        if (soleRecord) query("SELECT count(*) FROM feedme_records WHERE owner_tag=? AND record_tag<>?", {
+            bindText(1, target.tag); bindText(2, tag)
+        }) { if (!step() || getLong(0) != 0L) fail(FailureReason.CONFLICT) }
+        val row = record(target.tag, tag)
+        if (row != null && (row.payload == null || row.schemaVersion !in 1..2)) fail(FailureReason.CONFLICT)
+        if (row?.payload != null && row.payload.size > MAX_BINDING_BYTES + 64) fail(FailureReason.STORAGE_FAILURE)
+        val binding = if (row == null) null else {
+            readRecord(target.tag, target.generation, target.keyId, ACTIVATION_BINDING_KEY)
+                ?: fail(FailureReason.STORAGE_FAILURE)
+        }
+        if (binding != null) {
+            val bytes = binding.payload.copyForCodec()
+            try { if (bytes.size !in 1..MAX_BINDING_BYTES) fail(FailureReason.STORAGE_FAILURE) }
+            finally { bytes.fill(0) }
+        }
+        return StateRecordInspection(encodeRetirement(target), binding)
+    }
+
+    private fun bindingPayloadEquals(record: PrivateRecord, expected: ByteArray): Boolean {
+        val current = record.payload.copyForCodec()
+        return try { equalBytes(current, expected) } finally { current.fill(0) }
     }
 
     /**
@@ -266,6 +459,121 @@ class EncryptedStateDatabase private constructor(
         retire(decodeRetirement(target), emptyOnly = true)
     }
 
+    /**
+     * Purpose-fixed internal seam for the independently owned work wrapper. No database/vault or
+     * owner capability escapes. The captured scoped handle must belong to this exact manager;
+     * re-querying an owner must never silently rebind a stale wrapper to a newer incarnation.
+     * A null proof signs only an exact-current predecessor; a non-null proof authenticates it.
+     */
+    internal suspend fun authenticateWorkOriginPlan(
+        store: PrivateStateStore,
+        expectedRevision: Long,
+        proposal: PrivateBytes,
+        proof: PrivateBytes?,
+        predecessor: SessionControlRecord?,
+    ): PortResult<PrivateBytes> {
+        val caller = currentCoroutineContext()
+        return guarded {
+            caller.ensureActive()
+            val proposed = proposal.copyForCodec()
+            val supplied = proof?.copyForCodec()
+            val previous = predecessor?.payload?.copyForCodec()
+            try {
+                if (expectedRevision !in 1..Long.MAX_VALUE - 2 || proposed.size !in 1..4096 ||
+                    (supplied != null && supplied.size != 64) ||
+                    (predecessor != null && (predecessor.revision != expectedRevision || previous!!.size !in 1..32_768)) ||
+                    (supplied == null && predecessor == null)) fail(FailureReason.INVALID_DATA)
+                val owned = store as? ScopedStore ?: fail(FailureReason.INVALID_DATA)
+                if (!owned.belongsTo(this)) fail(FailureReason.INVALID_DATA)
+                val result = transaction(writes = false) {
+                    owned.workOriginProof(expectedRevision, proposed, supplied, previous)
+                }
+                caller.ensureActive()
+                result
+            } finally { proposed.fill(0); supplied?.fill(0); previous?.fill(0) }
+        }
+    }
+
+    /**
+     * Trusted composite owner only, AFTER acknowledgement of the exact independent abort intent.
+     * Null preserves empty-only recovery. Non-null permits only the sole reserved schema2 binding
+     * with these byte-exact expected contents; the session layer must derive them from the original
+     * operation/scope/configuration/credential/work/native-data identities. This primitive neither
+     * decodes that session contract nor authenticates confirmation and must not be exposed to UI.
+     * Binding validation/removal and the changed consumed-plan receipt share one write transaction.
+     * Every retry, even ABORTED, requires a fresh COMMIT before deleting only the exact planned key.
+     * No GC, allocation, ordinary scoped handle or deletion of any other row/tombstone is allowed.
+     */
+    suspend fun abortPlannedActivation(
+        scope: StorageScope,
+        plan: StateActivationPlan,
+        expectedBinding: PrivateBytes? = null,
+    ): PortResult<Unit> {
+        val expected = expectedBinding?.copyForCodec()
+        if (expected != null && expected.size !in 1..MAX_BINDING_BYTES) {
+            expected.fill(0)
+            return PortResult.Failure(FailureReason.INVALID_DATA)
+        }
+        val caller = currentCoroutineContext()
+        return try {
+            guarded {
+                caller.ensureActive()
+                val intended = recoveryPlan(scope, plan)
+                val revision = transaction(writes = true) {
+                    val state = activationRecoveryState(intended)
+                    if (state == StateActivationStatus.SELECTED_NONEMPTY) {
+                        if (expected == null) fail(FailureReason.CONFLICT)
+                        val binding = inspectBinding(selectedBindingOwner(intended), soleRecord = true).record
+                            ?: fail(FailureReason.CONFLICT)
+                        if (binding.schemaVersion != 2 || !bindingPayloadEquals(binding, expected))
+                            fail(FailureReason.CONFLICT)
+                        caller.ensureActive()
+                        val tag = recordTag(intended.ownerTag, ACTIVATION_BINDING_KEY)
+                        execute("DELETE FROM feedme_records WHERE owner_tag=? AND record_tag=? AND revision=? AND schema_version=2") {
+                            bindText(1, intended.ownerTag); bindText(2, tag); bindLong(3, binding.revision)
+                        }
+                        if (scalarLong("SELECT changes()") != 1L || hasOwnerRecords(intended.ownerTag))
+                            fail(FailureReason.CONFLICT)
+                    }
+                    caller.ensureActive()
+                    val previous = activationAbortReceipt(intended.ownerTag)
+                    val changed = if (previous?.generation == intended.consumedGeneration &&
+                        previous.keyId == intended.keyId) next(previous.revision) else 1L
+                    execute(
+                        "INSERT INTO feedme_owners(owner_tag,generation,active,key_id) VALUES(?,?,0,?) " +
+                            "ON CONFLICT(owner_tag) DO UPDATE SET generation=excluded.generation,active=0,key_id=excluded.key_id",
+                    ) { bindText(1, intended.ownerTag); bindLong(2, intended.consumedGeneration); bindText(3, intended.keyId) }
+                    execute(
+                        "INSERT INTO feedme_activation_aborts(owner_tag,generation,key_id,revision) VALUES(?,?,?,?) " +
+                            "ON CONFLICT(owner_tag) DO UPDATE SET generation=excluded.generation,key_id=excluded.key_id,revision=excluded.revision",
+                    ) {
+                        bindText(1, intended.ownerTag); bindLong(2, intended.consumedGeneration)
+                        bindText(3, intended.keyId); bindLong(4, changed)
+                    }
+                    caller.ensureActive()
+                    changed
+                }
+                // Failed/unknown COMMIT never reaches readback or key deletion. Matching visible
+                // rows cannot promote an uncertain result to an acknowledgement.
+                caller.ensureActive()
+                transaction(writes = true) {
+                    val state = activationRecoveryState(intended)
+                    if (state != StateActivationStatus.ABORTING && state != StateActivationStatus.ABORTED)
+                        fail(FailureReason.STALE_SESSION)
+                    val receipt = activationAbortReceipt(intended.ownerTag)
+                    if (receipt != ActivationAbortReceipt(intended.consumedGeneration, intended.keyId, revision))
+                        fail(FailureReason.CONFLICT)
+                    caller.ensureActive()
+                    locallyRetired += intended.ownerTag to intended.selectedGeneration
+                    vault.deleteOwnerKey(intended.keyId)
+                    if (containsActivationKey(intended.keyId)) fail(FailureReason.STORAGE_FAILURE)
+                    caller.ensureActive()
+                }
+                caller.ensureActive()
+            }
+        } finally { expected?.fill(0) }
+    }
+
     /** Never release native ownership until SQLite close acknowledges; failed close stays retryable. */
     suspend fun close(): PortResult<Unit> = withContext(NonCancellable + dispatcher) {
         mutex.withLock {
@@ -287,48 +595,84 @@ class EncryptedStateDatabase private constructor(
             transaction(writes = false) { StateActivationInspection(activationRecoveryState(intended)) }
         }
 
-        override suspend fun abort(): PortResult<Unit> {
-            val callerContext = currentCoroutineContext()
-            return guarded {
-                callerContext.ensureActive()
-                val intended = recoveryPlan(scope, plan)
-                // A real changed receipt is required on EVERY attempt, including observed ABORTED.
-                // Readback after an uncertain COMMIT cannot substitute for this acknowledgement.
-                transaction(writes = true) {
-                    if (activationRecoveryState(intended) == StateActivationStatus.SELECTED_NONEMPTY)
-                        fail(FailureReason.CONFLICT)
-                    val priorReceipt = activationAbortReceipt(intended.ownerTag)
-                    val revision = if (priorReceipt?.generation == intended.consumedGeneration &&
-                        priorReceipt.keyId == intended.keyId) next(priorReceipt.revision) else 1L
-                    execute(
-                        "INSERT INTO feedme_owners(owner_tag,generation,active,key_id) VALUES(?,?,0,?) " +
-                            "ON CONFLICT(owner_tag) DO UPDATE SET generation=excluded.generation,active=0,key_id=excluded.key_id",
-                    ) { bindText(1, intended.ownerTag); bindLong(2, intended.consumedGeneration); bindText(3, intended.keyId) }
-                    execute(
-                        "INSERT INTO feedme_activation_aborts(owner_tag,generation,key_id,revision) VALUES(?,?,?,?) " +
-                            "ON CONFLICT(owner_tag) DO UPDATE SET generation=excluded.generation,key_id=excluded.key_id,revision=excluded.revision",
-                    ) {
-                        bindText(1, intended.ownerTag); bindLong(2, intended.consumedGeneration)
-                        bindText(3, intended.keyId); bindLong(4, revision)
-                    }
-                }
-                callerContext.ensureActive()
-                // Any preceding exception/cancellation exits before this irreversible operation.
-                // Revalidate inside a fresh write lock in case the preceding COMMIT exposed a race.
-                transaction(writes = true) {
-                    val current = activationRecoveryState(intended)
-                    if (current != StateActivationStatus.ABORTING && current != StateActivationStatus.ABORTED)
-                        fail(FailureReason.STALE_SESSION)
-                    callerContext.ensureActive()
-                    locallyRetired += intended.ownerTag to intended.selectedGeneration
-                    vault.deleteOwnerKey(intended.keyId)
-                    if (containsActivationKey(intended.keyId)) fail(FailureReason.STORAGE_FAILURE)
-                }
-            }
-        }
+        override suspend fun abort(): PortResult<Unit> = abortPlannedActivation(scope, plan)
+
+        override suspend fun abortBound(expectedBinding: PrivateBytes): PortResult<Unit> =
+            abortPlannedActivation(scope, plan, expectedBinding)
 
         override suspend fun close(): PortResult<Unit> = this@EncryptedStateDatabase.close()
         override fun toString(): String = "StateActivationRecoveryHandle(<redacted>)"
+    }
+
+    /** Allocated before any suspended initialization; failed open never drops the close owner. */
+    private inner class RetainedActivationRecovery(
+        private val scope: StorageScope,
+        plan: StateActivationPlan,
+    ) : StateActivationRecoveryOwner {
+        private val plan = StateActivationPlan(plan.copyForStorage())
+        private val ownerMutex = Mutex()
+        private var attempted = false
+        private var ready = false
+        private var closeRequested = false
+
+        override suspend fun open(): PortResult<Unit> {
+            var admitted = false
+            try {
+                val result = withContext(dispatcher) {
+                    ownerMutex.withLock {
+                        if (attempted) return@withLock PortResult.Failure(FailureReason.CONFLICT)
+                        attempted = true
+                        admitted = true
+                        val result = guarded {
+                            val intended = recoveryPlan(scope, plan)
+                            initializeExistingRecovery()
+                            transaction(writes = false) { activationRecoveryState(intended) }
+                            Unit
+                        }
+                        currentCoroutineContext().ensureActive()
+                        result
+                    }
+                }
+                if (!admitted || result is PortResult.Failure) return result
+                // Publish only after returning to the caller dispatcher. Other coroutines cannot
+                // use READY during a prompt-cancelled initialization handoff. Close wins the gap.
+                return ownerMutex.withLock {
+                    currentCoroutineContext().ensureActive()
+                    if (closeRequested) PortResult.Failure(FailureReason.STALE_SESSION)
+                    else { ready = true; result }
+                }
+            } catch (cancelled: CancellationException) {
+                // Also cover prompt cancellation while handing READY back to the caller.
+                withContext(NonCancellable + dispatcher) {
+                    ownerMutex.withLock {
+                        if (admitted || !attempted) { attempted = true; ready = false; closeRequested = true }
+                    }
+                }
+                throw cancelled
+            }
+        }
+
+        private suspend fun <T> whenReady(action: suspend () -> PortResult<T>): PortResult<T> =
+            withContext(dispatcher) {
+                ownerMutex.withLock {
+                    if (!ready) PortResult.Failure(FailureReason.STALE_SESSION) else action()
+                }
+            }
+
+        override suspend fun inspect() = whenReady { inspectPlannedActivationState(scope, plan) }
+        override suspend fun binding() = whenReady { inspectPlannedBinding(scope, plan) }
+        override suspend fun abort(expectedBinding: PrivateBytes?) = whenReady {
+            abortPlannedActivation(scope, plan, expectedBinding)
+        }
+        override suspend fun close(): PortResult<Unit> = withContext(NonCancellable + dispatcher) {
+            ownerMutex.withLock {
+                attempted = true
+                ready = false
+                closeRequested = true
+                this@EncryptedStateDatabase.close()
+            }
+        }
+        override fun toString() = "StateActivationRecoveryOwner(<redacted>)"
     }
 
     private fun recoveryPlan(scope: StorageScope, plan: StateActivationPlan): StateActivationPlanRecord {
@@ -401,6 +745,39 @@ class EncryptedStateDatabase private constructor(
         private val generation: Long,
         private val keyId: String,
     ) : PrivateStateStore {
+        fun belongsTo(database: EncryptedStateDatabase): Boolean = this@EncryptedStateDatabase === database
+
+        /** Caller owns this database mutex and one read transaction. Never calls resume/activate/GC. */
+        fun workOriginProof(revision: Long, proposal: ByteArray, supplied: ByteArray?, predecessor: ByteArray?): PrivateBytes {
+            if (scope != WORK_ORIGIN_SCOPE) fail(FailureReason.INVALID_DATA)
+            assertCurrent()
+            val current = readRecord(tag, generation, keyId, WORK_ORIGIN_KEY) ?: fail(FailureReason.STORAGE_FAILURE)
+            val actual = current.payload.copyForCodec()
+            var predecessorMac: ByteArray? = null
+            var planMac: ByteArray? = null
+            try {
+                if (current.schemaVersion != 1 || actual.size !in 1..32_768) fail(FailureReason.STORAGE_FAILURE)
+                if (predecessor != null && (revision != current.revision || !equalBytes(predecessor, actual)))
+                    fail(FailureReason.CONFLICT)
+                predecessorMac = if (supplied == null) {
+                    workOriginMac("feedme.work-origin-predecessor.v1", tag, generation, keyId, revision, actual)
+                } else supplied.copyOfRange(0, 32)
+                planMac = workOriginMac("feedme.work-origin-plan.v1", tag, generation, keyId, revision, proposal, predecessorMac)
+                if (supplied != null) {
+                    var mismatch = 0
+                    for (index in 0 until 32) mismatch = mismatch or (planMac[index].toInt() xor supplied[index + 32].toInt())
+                    if (mismatch != 0) fail(FailureReason.INVALID_DATA)
+                    if (predecessor != null) {
+                        val expectedMac = workOriginMac("feedme.work-origin-predecessor.v1", tag, generation, keyId, revision, actual)
+                        try { if (!equalBytes(expectedMac, predecessorMac)) fail(FailureReason.INVALID_DATA) }
+                        finally { expectedMac.fill(0) }
+                    }
+                }
+                val result = predecessorMac + planMac
+                return try { PrivateBytes(result) } finally { result.fill(0) }
+            } finally { actual.fill(0); predecessorMac?.fill(0); planMac?.fill(0) }
+        }
+
         override suspend fun read(scope: StorageScope, key: RecordKey): PortResult<PrivateRecord?> {
             if (scope != this.scope) return PortResult.Failure(FailureReason.STALE_SESSION)
             if (!validKey(key)) return PortResult.Failure(FailureReason.INVALID_DATA)
@@ -764,6 +1141,21 @@ class EncryptedStateDatabase private constructor(
         finally { unsigned.fill(0); purpose.fill(0); input.fill(0) }
     }
 
+    /** Only the two literal work-origin domains above use this internal framing operation. */
+    private fun workOriginMac(domain: String, tag: String, generation: Long, keyId: String, revision: Long,
+        vararg values: ByteArray): ByteArray {
+        val prefix = frame(domain, tag, generation.toString(), keyId, recordTag(tag, WORK_ORIGIN_KEY), revision.toString())
+        val input = ByteArray(prefix.size + 4 + values.sumOf { 4 + it.size })
+        return try {
+            prefix.copyInto(input)
+            var offset = prefix.size
+            fun length(value: Int) { for (shift in 24 downTo 0 step 8) input[offset++] = (value ushr shift).toByte() }
+            length(values.size)
+            values.forEach { value -> length(value.size); value.copyInto(input, offset); offset += value.size }
+            vault.index(input).also { if (it.size != 32) fail(FailureReason.STORAGE_FAILURE) }
+        } finally { prefix.fill(0); input.fill(0) }
+    }
+
     private fun hasOwnerRecords(tag: String): Boolean = query(
         "SELECT EXISTS(SELECT 1 FROM feedme_records WHERE owner_tag=?)", { bindText(1, tag) },
     ) {
@@ -871,6 +1263,16 @@ class EncryptedStateDatabase private constructor(
     }
 
     companion object {
+        private val ACTIVATION_BINDING_KEY = RecordKey("session-activation", "binding-v1")
+        private const val MAX_BINDING_BYTES = 4096
+        private val WORK_ORIGIN_SCOPE = StorageScope("feedme-session-work-v1", ActorKind.DEMO, "install-work")
+        private val WORK_ORIGIN_KEY = RecordKey("session-work", "native-work-ledger")
+        private fun equalBytes(left: ByteArray, right: ByteArray): Boolean {
+            if (left.size != right.size) return false
+            var mismatch = 0
+            for (index in left.indices) mismatch = mismatch or (left[index].toInt() xor right[index].toInt())
+            return mismatch == 0
+        }
         internal const val MAX_RECORD_BYTES = 1_048_576
         private const val MAX_BATCH_BYTES = 4_194_304L
         private const val MIN_CIPHERTEXT_BYTES = 29
@@ -884,6 +1286,25 @@ class EncryptedStateDatabase private constructor(
             "feedme_key_gc" to "CREATE TABLE feedme_key_gc(key_id TEXT PRIMARY KEY NOT NULL CHECK(length(key_id)=32))",
         )
         private val TABLES = LinkedHashMap(LEGACY_TABLES).apply { put("feedme_activation_aborts", ABORT_TABLE) }
+
+        /**
+         * Synchronous ownership transfer, before any SQL or suspended work. The caller must retain
+         * the returned owner and explicitly close it on every outcome, even a failed/cancelled open.
+         * Only platform factories/tests may supply this exclusively owned existing connection.
+         * Platform factories must guard driver close admission: an internal closed flag/no-op must
+         * never turn an earlier failed native close into a successful retry acknowledgement.
+         */
+        internal fun createActivationRecoveryOwner(
+            connection: SQLiteConnection,
+            vault: StateVault,
+            scope: StorageScope,
+            plan: StateActivationPlan,
+            dispatcher: CoroutineDispatcher = Dispatchers.IO,
+            onClosed: () -> Unit = {},
+        ): StateActivationRecoveryOwner {
+            val database = EncryptedStateDatabase(connection, vault, dispatcher, onClosed)
+            return database.RetainedActivationRecovery(scope, plan)
+        }
 
         /** Existing schema only: no creation, migration, ordinary activation or garbage collection. */
         internal suspend fun openActivationRecovery(

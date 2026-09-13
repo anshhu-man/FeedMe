@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.session.SessionSetupControlTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-09-13T19:28:58.221Z" hostname="ansachars-MacBook-Pro.local" time="0.015">
+  <properties/>
+  <testcase name="legacyCredentialCoordinatorNeverExtractsSubplanOrInfersAbortFromComposite[jvm]" classname="com.feedme.session.SessionSetupControlTest" time="0.003"/>
+  <testcase name="oldCredentialOnlyProposalCannotOverwriteNewCompositeAtTheSameRevision[jvm]" classname="com.feedme.session.SessionSetupControlTest" time="0.002"/>
+  <testcase name="nestedCanonicalBytesAndScopeAgreementRemainRequiredInsideControl[jvm]" classname="com.feedme.session.SessionSetupControlTest" time="0.002"/>
+  <testcase name="roundTripCopiesCannotMutatePendingSetupIdentityOrNestedPlanBytes[jvm]" classname="com.feedme.session.SessionSetupControlTest" time="0.001"/>
+  <testcase name="legacyCredentialCreateRetainsItsExactWireFormatAndExplicitRecoveryType[jvm]" classname="com.feedme.session.SessionSetupControlTest" time="0.0"/>
+  <testcase name="outerStateRequiresExactFieldsAndActualBooleanWithoutLegacyProgressTargets[jvm]" classname="com.feedme.session.SessionSetupControlTest" time="0.002"/>
+  <testcase name="setupAlwaysBlocksAccessAndIsNeverALegacyCleanupProgressType[jvm]" classname="com.feedme.session.SessionSetupControlTest" time="0.0"/>
+  <testcase name="malformedOrOversizedOpaqueSetupCannotBeDecodedAsEmptyOrLegacyIntent[jvm]" classname="com.feedme.session.SessionSetupControlTest" time="0.003"/>
+  <testcase name="pendingSetupRoundTripsEveryOriginalPlanAndOnlyExplicitAbortFlag[jvm]" classname="com.feedme.session.SessionSetupControlTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

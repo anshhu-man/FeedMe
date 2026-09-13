@@ -72,9 +72,11 @@ internal class SessionRecoveryInspector(
         val inspection = observe(SessionRecoveryComponent.PRIVATE_BINDING) { data.inspectRecord(scope, bindingKey) }.also { firstData = it }
         val target = inspection.target ?: return report(SessionRecoveryFinding.DATA_MISSING)
         val record = inspection.record ?: return report(SessionRecoveryFinding.BINDING_MISSING)
-        if (record.schemaVersion != 1) return report(SessionRecoveryFinding.BINDING_INVALID)
         val binding = try { SessionActivationCodec.decode(record.payload) }
             catch (_: SessionActivationFormatException) { return report(SessionRecoveryFinding.BINDING_INVALID) }
+        if (record.schemaVersion != binding.schemaVersion) return report(SessionRecoveryFinding.BINDING_INVALID)
+        if (binding.setupOperationId != null && (state as? RetirementState.Complete)?.operationId != binding.setupOperationId)
+            return report(SessionRecoveryFinding.BINDING_MISMATCH)
         if (binding.configurationBinding != configuration) return report(SessionRecoveryFinding.CONFIGURATION_CHANGED)
         if (binding.scope != scope || binding.credentialIncarnation != slot.incarnation ||
             binding.originBinding != registry.originBinding || !sameTarget(binding.dataTarget, target))

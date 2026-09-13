@@ -79,13 +79,24 @@ internal class SessionWorkEntry(
 
 internal sealed interface SessionWorkState {
     data object Idle : SessionWorkState
+    /** Retained setup provenance, never ordinary origin or callback admission. */
+    class SetupSelected(val plan: SessionWorkOriginPlan) : SessionWorkState {
+        override fun toString() = "SessionWorkSetupSelected(<redacted>)"
+    }
+    /** Exact consumed setup plan. Empty metadata, but never interchangeable with generic Idle. */
+    class SetupAborted(val plan: SessionWorkOriginPlan) : SessionWorkState {
+        override fun toString() = "SessionWorkSetupAborted(<redacted>)"
+    }
     class Origin(
         val scope: StorageScope,
         val origin: String,
         val retiring: Boolean,
         entries: List<SessionWorkEntry>,
+        val setupPlan: SessionWorkOriginPlan? = null,
     ) : SessionWorkState {
         val entries = entries.toList()
+        /** Any ordinary lifecycle use permanently consumes setup replay provenance. */
+        fun used() = if (setupPlan == null) this else Origin(scope, origin, retiring, entries)
         fun withEntries(values: List<SessionWorkEntry>) = Origin(scope, origin, retiring, values)
         fun retiring() = Origin(scope, origin, true, entries)
         override fun toString() = "SessionWorkOrigin(retiring=$retiring, details=<redacted>)"

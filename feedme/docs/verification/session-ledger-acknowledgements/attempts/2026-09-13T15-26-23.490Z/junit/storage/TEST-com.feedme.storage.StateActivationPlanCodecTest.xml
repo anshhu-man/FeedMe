@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.storage.StateActivationPlanCodecTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-09-13T15:27:26.128Z" hostname="ansachars-MacBook-Pro.local" time="0.006">
+  <properties/>
+  <testcase name="repeatedCanonicalEncodingIsDeterministicAndRoundTripsExactly[jvm]" classname="com.feedme.storage.StateActivationPlanCodecTest" time="0.0"/>
+  <testcase name="retiredPredecessorBindsBothGenerationAndExactOldKey[jvm]" classname="com.feedme.storage.StateActivationPlanCodecTest" time="0.0"/>
+  <testcase name="allNonExactCapabilityLengthsAreRejectedWithoutPayloadEcho[jvm]" classname="com.feedme.storage.StateActivationPlanCodecTest" time="0.0"/>
+  <testcase name="publicConstructorOnlyBoundsAndNeverClaimsAuthentication[jvm]" classname="com.feedme.storage.StateActivationPlanCodecTest" time="0.0"/>
+  <testcase name="unsignedEncodingExcludesMacAndContainsEveryOtherBoundField[jvm]" classname="com.feedme.storage.StateActivationPlanCodecTest" time="0.0"/>
+  <testcase name="retiredPriorRequiresPositiveGenerationAndValidKeyBytes[jvm]" classname="com.feedme.storage.StateActivationPlanCodecTest" time="0.001"/>
+  <testcase name="publicCapabilityDetachesConstructorAndEveryReturnedCopy[jvm]" classname="com.feedme.storage.StateActivationPlanCodecTest" time="0.0"/>
+  <testcase name="absentPredecessorHasOneCanonicalFixedEncoding[jvm]" classname="com.feedme.storage.StateActivationPlanCodecTest" time="0.0"/>
+  <testcase name="generationEncodingIsBigEndianAndReservesTwoIncrements[jvm]" classname="com.feedme.storage.StateActivationPlanCodecTest" time="0.0"/>
+  <testcase name="encodeAndDecodeDetachMacBuffersWithoutMutatingTheCaller[jvm]" classname="com.feedme.storage.StateActivationPlanCodecTest" time="0.0"/>
+  <testcase name="nonLowercaseHexAndNonAsciiFieldsCannotAliasCanonicalIdentity[jvm]" classname="com.feedme.storage.StateActivationPlanCodecTest" time="0.001"/>
+  <testcase name="absentPriorRequiresZeroGenerationAndCanonicalZeroKeyPadding[jvm]" classname="com.feedme.storage.StateActivationPlanCodecTest" time="0.001"/>
+  <testcase name="encoderRejectsInvalidRecordFieldsRatherThanTruncatingOrNormalizing[jvm]" classname="com.feedme.storage.StateActivationPlanCodecTest" time="0.001"/>
+  <testcase name="unknownVersionOrPriorKindCannotBeDecodedAsCurrentFormat[jvm]" classname="com.feedme.storage.StateActivationPlanCodecTest" time="0.0"/>
+  <testcase name="signedNegativeAndUnrepresentableGenerationsAreRejected[jvm]" classname="com.feedme.storage.StateActivationPlanCodecTest" time="0.0"/>
+  <testcase name="capabilitiesAndFormatFailuresAreRedactedAndDistinctFromRetirement[jvm]" classname="com.feedme.storage.StateActivationPlanCodecTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
