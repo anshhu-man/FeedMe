@@ -1,0 +1,82 @@
+{
+  "canonical": "/Users/LOCAL_USER/Documents/ChatGPT/Career/outputs/biteclub_blueprint/architecture/04_API_Contract.json",
+  "canonicalSha256": "f0a5f20c4a84822813137c3e6b1ef31ec22afd1d7ee384f7f29b5df09e10aba0",
+  "baselineCasesSha256": "35dc360294a61a8553cb22675d70cb0544b246fac9eab89f48b15af05c142989",
+  "library": "com.networknt:json-schema-validator:3.0.7",
+  "kotlin": "2.3.21",
+  "jdk": 17,
+  "command": [
+    "/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/gradlew",
+    "-p",
+    "/private/tmp/feedme-jvm-schema-validator.ha8LsP",
+    "--no-daemon",
+    "--console=plain",
+    "run",
+    "resolvedDependencies"
+  ],
+  "total": 158,
+  "exit": 0,
+  "logSha256": "c09a5f73c16dfc009531ec8b1778c13b38fc4a0c91c03fb8c46133f2ea9d7283",
+  "artifacts": [
+    {
+      "id": "org.jetbrains.kotlin:kotlin-stdlib:2.3.21",
+      "file": "/Users/LOCAL_USER/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/2.3.21/a2ee2c4e220fee522f0451b723bab2a43f3481a7/kotlin-stdlib-2.3.21.jar",
+      "sha256": "6f64eac736db9434dd6925b4a518b9d1d17177652320c37916cf9ba3ce7d7d7a"
+    },
+    {
+      "id": "com.networknt:json-schema-validator:3.0.7",
+      "file": "/Users/LOCAL_USER/.gradle/caches/modules-2/files-2.1/com.networknt/json-schema-validator/3.0.7/5e755525565bf48be0049c129b4005c2ca6a43eb/json-schema-validator-3.0.7.jar",
+      "sha256": "27b90bce60845f353b203b735cda2e0cb9a32c4962550e249141a2b065b9be5c"
+    },
+    {
+      "id": "org.jruby.joni:joni:2.2.6",
+      "file": "/Users/LOCAL_USER/.gradle/caches/modules-2/files-2.1/org.jruby.joni/joni/2.2.6/864217ab7dcece78ad7bf3c045a602d871ff309a/joni-2.2.6.jar",
+      "sha256": "fb33f60ab43e38653317bbf41a1fec89cbee270c48e53b0b56d1165c00de0e07"
+    },
+    {
+      "id": "org.jetbrains:annotations:13.0",
+      "file": "/Users/LOCAL_USER/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar",
+      "sha256": "ace2a10dc8e2d5fd34925ecac03e4988b2c0f851650c94b8cef49ba1bd111478"
+    },
+    {
+      "id": "com.ethlo.time:itu:1.14.0",
+      "file": "/Users/LOCAL_USER/.gradle/caches/modules-2/files-2.1/com.ethlo.time/itu/1.14.0/c0f9f9d4f4404787e992ab3af5ae95f2fad79e47/itu-1.14.0.jar",
+      "sha256": "5cf40ab0cc77828ab2b875b1f3ecd71c8295d7721933476abc2e08fddcea164a"
+    },
+    {
+      "id": "tools.jackson.core:jackson-core:3.2.1",
+      "file": "/Users/LOCAL_USER/.gradle/caches/modules-2/files-2.1/tools.jackson.core/jackson-core/3.2.1/5bff2a525073cff8a8206751f6f6bc4650b81b94/jackson-core-3.2.1.jar",
+      "sha256": "2688aaa60b207403287e16a71fb5644bf2f9cfc464cc601ae95c6c86a5af1f94"
+    },
+    {
+      "id": "tools.jackson.dataformat:jackson-dataformat-yaml:3.2.1",
+      "file": "/Users/LOCAL_USER/.gradle/caches/modules-2/files-2.1/tools.jackson.dataformat/jackson-dataformat-yaml/3.2.1/2e71c35d099e8837affd1709d9dca326d58e7eab/jackson-dataformat-yaml-3.2.1.jar",
+      "sha256": "b6a748ca9aab640f647079b6bfa53f16a5b65b815a19581c4afe0601e754854e"
+    },
+    {
+      "id": "tools.jackson.core:jackson-databind:3.2.1",
+      "file": "/Users/LOCAL_USER/.gradle/caches/modules-2/files-2.1/tools.jackson.core/jackson-databind/3.2.1/363dc46ceb44a97cba68cb0e9da4a3cb5bf723d4/jackson-databind-3.2.1.jar",
+      "sha256": "8d005c5626b1839e2eea6bd33a437287e7a24d54e1bb3746b8f861193262b519"
+    },
+    {
+      "id": "org.slf4j:slf4j-api:2.0.17",
+      "file": "/Users/LOCAL_USER/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/2.0.17/d9e58ac9c7779ba3bf8142aff6c830617a7fe60f/slf4j-api-2.0.17.jar",
+      "sha256": "7b751d952061954d5abfed7181c1f645d336091b679891591d63329c622eb832"
+    },
+    {
+      "id": "org.jruby.jcodings:jcodings:1.0.63",
+      "file": "/Users/LOCAL_USER/.gradle/caches/modules-2/files-2.1/org.jruby.jcodings/jcodings/1.0.63/b8c386790e72f0bad666c8f1a8af12d0528992e0/jcodings-1.0.63.jar",
+      "sha256": "ef11e1741a65160c5619cd2c3c79c40ee0affda847062f012616034b9d10e719"
+    },
+    {
+      "id": "com.fasterxml.jackson.core:jackson-annotations:2.22",
+      "file": "/Users/LOCAL_USER/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-annotations/2.22/15c67f9498d6934cff9510fc70c5a12e52290457/jackson-annotations-2.22.jar",
+      "sha256": "21ddb598807d3a51a876704eb979d9296e1c6a6f47ab1826ff88c6d6a127a2d0"
+    },
+    {
+      "id": "org.snakeyaml:snakeyaml-engine:3.0.1",
+      "file": "/Users/LOCAL_USER/.gradle/caches/modules-2/files-2.1/org.snakeyaml/snakeyaml-engine/3.0.1/aaa97268dd9fcf97a3e44c96e6a50961d65199dd/snakeyaml-engine-3.0.1.jar",
+      "sha256": "0b638c8806112215e02e58e95cbd9e9a69d4bd540991f47553d053919994cc94"
+    }
+  ]
+}

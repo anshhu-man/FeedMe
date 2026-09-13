@@ -1,0 +1,41 @@
+{
+  "verifiedAt": "2026-09-13T07:00:01.242Z",
+  "scope": "Actual rebuilt local distribution; no product feature is enabled.",
+  "artifact": "server/build/install/server/lib/server.jar",
+  "sha256": "daf955dc141c45b39e3ac613ec3632abaf5e6afa7bdaa78c5a318eac59d36a2f",
+  "passed": true,
+  "results": [
+    {
+      "method": "GET",
+      "path": "/v1/health",
+      "status": 200,
+      "contentType": "application/json",
+      "tracePresent": true,
+      "passed": true
+    },
+    {
+      "method": "GET",
+      "path": "/v1/config",
+      "status": 503,
+      "contentType": "application/problem+json",
+      "tracePresent": true,
+      "passed": true
+    },
+    {
+      "method": "POST",
+      "path": "/v1/plans",
+      "status": 503,
+      "contentType": "application/problem+json",
+      "tracePresent": true,
+      "passed": true
+    },
+    {
+      "method": "GET",
+      "path": "/missing",
+      "status": 404,
+      "contentType": "application/problem+json",
+      "tracePresent": true,
+      "passed": true
+    }
+  ]
+}

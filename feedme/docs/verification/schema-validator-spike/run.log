@@ -1,0 +1,186 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :processResources NO-SOURCE
+> Task :compileKotlin
+> Task :compileJava NO-SOURCE
+> Task :classes UP-TO-DATE
+
+> Task :run FAILED
+PROBE PantryItem.confirmedAt:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PantryItem.confirmedAt:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [confirmedAt], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/PantryItem/required))] exception=null
+PROBE PantryItem.confirmedAt:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PantryWrite.confirmedAt:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PantryWrite.confirmedAt:absent expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PantryWrite.confirmedAt:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE Constraint.householdParticipantIds:unique expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE Constraint.householdParticipantIds:duplicate expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/properties/householdParticipantIds/uniqueItems, objectPath=/householdParticipantIds, message=array contains duplicate values: ["12345678-1234-4234-8234-123456789abc"], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/Constraint/properties/householdParticipantIds/uniqueItems))] exception=null
+PROBE PlanRequest:conditional-0-improve-missing expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/allOf/0/then/required, objectPath=, message=missing required properties: [baseMeal], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/PlanRequest/allOf/0/then/required))] exception=null
+PROBE PlanRequest:conditional-0-improve-present expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE Plan.nextAlternativeCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE Plan.nextAlternativeCursor:absent expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE Plan.nextAlternativeCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE AdaptRequest.excludeRecipeVersionIds:unique expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE AdaptRequest.excludeRecipeVersionIds:duplicate expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/properties/excludeRecipeVersionIds/uniqueItems, objectPath=/excludeRecipeVersionIds, message=array contains duplicate values: ["12345678-1234-4234-8234-123456789abc"], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/AdaptRequest/properties/excludeRecipeVersionIds/uniqueItems))] exception=null
+PROBE Feedback:anyOf-none expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/anyOf/0/required, objectPath=, message=missing required properties: [cookSessionId], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/Feedback/anyOf/0/required)), ValidationError(schemaPath=/$ref/anyOf/1/required, objectPath=, message=missing required properties: [target], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/Feedback/anyOf/1/required))] exception=null
+PROBE Feedback:anyOf-0 expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE Feedback:anyOf-1 expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE FeedbackWrite:anyOf-none expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/anyOf/0/required, objectPath=, message=missing required properties: [cookSessionId], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/FeedbackWrite/anyOf/0/required)), ValidationError(schemaPath=/$ref/anyOf/1/required, objectPath=, message=missing required properties: [target], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/FeedbackWrite/anyOf/1/required))] exception=null
+PROBE FeedbackWrite:anyOf-0 expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE FeedbackWrite:anyOf-1 expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE SaveRecipeRequest:anyOf-none expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/anyOf/0/required, objectPath=, message=missing required properties: [planId], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/SaveRecipeRequest/anyOf/0/required)), ValidationError(schemaPath=/$ref/anyOf/1/required, objectPath=, message=missing required properties: [recipeVersionId], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/SaveRecipeRequest/anyOf/1/required))] exception=null
+PROBE SaveRecipeRequest:anyOf-0 expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE SaveRecipeRequest:anyOf-1 expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ThreadCreate:conditional-0-direct-missing expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/allOf/0/then/required, objectPath=, message=missing required properties: [recipientUserId], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/ThreadCreate/allOf/0/then/required))] exception=null
+PROBE ThreadCreate:conditional-0-direct-present expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ThreadCreate:conditional-1-pact-missing expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/allOf/1/then/required, objectPath=, message=missing required properties: [contextId, contextType], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/ThreadCreate/allOf/1/then/required))] exception=null
+PROBE ThreadCreate:conditional-1-pact-present expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ThreadCreate:conditional-1-potluck-missing expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/allOf/1/then/required, objectPath=, message=missing required properties: [contextId, contextType], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/ThreadCreate/allOf/1/then/required))] exception=null
+PROBE ThreadCreate:conditional-1-potluck-present expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE IngredientPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE IngredientPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/IngredientPage/required))] exception=null
+PROBE IngredientPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PantryItemPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PantryItemPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/PantryItemPage/required))] exception=null
+PROBE PantryItemPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE RecipeVersionPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE RecipeVersionPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/RecipeVersionPage/required))] exception=null
+PROBE RecipeVersionPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ReasonPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ReasonPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/ReasonPage/required))] exception=null
+PROBE ReasonPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ReuseOptionPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ReuseOptionPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/ReuseOptionPage/required))] exception=null
+PROBE ReuseOptionPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE MemoryPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE MemoryPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/MemoryPage/required))] exception=null
+PROBE MemoryPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE SavedRecipePage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE SavedRecipePage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/SavedRecipePage/required))] exception=null
+PROBE SavedRecipePage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE CollectionPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE CollectionPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/CollectionPage/required))] exception=null
+PROBE CollectionPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PostPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PostPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/PostPage/required))] exception=null
+PROBE PostPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE RemixNodePage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE RemixNodePage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/RemixNodePage/required))] exception=null
+PROBE RemixNodePage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE CirclePage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE CirclePage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/CirclePage/required))] exception=null
+PROBE CirclePage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE MemberPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE MemberPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/MemberPage/required))] exception=null
+PROBE MemberPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ThreadPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ThreadPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/ThreadPage/required))] exception=null
+PROBE ThreadPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE MessagePage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE MessagePage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/MessagePage/required))] exception=null
+PROBE MessagePage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE NotificationPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE NotificationPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/NotificationPage/required))] exception=null
+PROBE NotificationPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE BlockPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE BlockPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/BlockPage/required))] exception=null
+PROBE BlockPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE MutePage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE MutePage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/MutePage/required))] exception=null
+PROBE MutePage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ContributionPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ContributionPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/ContributionPage/required))] exception=null
+PROBE ContributionPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE HouseholdPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE HouseholdPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/HouseholdPage/required))] exception=null
+PROBE HouseholdPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE HouseholdPreferencePage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE HouseholdPreferencePage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/HouseholdPreferencePage/required))] exception=null
+PROBE HouseholdPreferencePage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PackPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PackPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/PackPage/required))] exception=null
+PROBE PackPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE EntitlementPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE EntitlementPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/EntitlementPage/required))] exception=null
+PROBE EntitlementPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE DeviceSessionPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE DeviceSessionPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/DeviceSessionPage/required))] exception=null
+PROBE DeviceSessionPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE FeatureFlagPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE FeatureFlagPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/FeatureFlagPage/required))] exception=null
+PROBE FeatureFlagPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE SubstitutionPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE SubstitutionPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/SubstitutionPage/required))] exception=null
+PROBE SubstitutionPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ReportPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ReportPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/ReportPage/required))] exception=null
+PROBE ReportPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE AuditPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE AuditPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/AuditPage/required))] exception=null
+PROBE AuditPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE IncidentPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE IncidentPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/IncidentPage/required))] exception=null
+PROBE IncidentPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PostDraftPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PostDraftPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/PostDraftPage/required))] exception=null
+PROBE PostDraftPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE FeedbackTarget:conditional-0-cookSession-missing expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/allOf/0/then/required, objectPath=, message=missing required properties: [resourceId], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/FeedbackTarget/allOf/0/then/required))] exception=null
+PROBE FeedbackTarget:conditional-0-cookSession-present expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE FeedbackTarget:conditional-0-plan-missing expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/allOf/0/then/required, objectPath=, message=missing required properties: [resourceId], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/FeedbackTarget/allOf/0/then/required))] exception=null
+PROBE FeedbackTarget:conditional-0-plan-present expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE FeedbackTarget:conditional-0-recipeVersion-missing expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/allOf/0/then/required, objectPath=, message=missing required properties: [resourceId], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/FeedbackTarget/allOf/0/then/required))] exception=null
+PROBE FeedbackTarget:conditional-0-recipeVersion-present expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE FeedbackTarget:conditional-0-ingredient-missing expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/allOf/0/then/required, objectPath=, message=missing required properties: [resourceId], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/FeedbackTarget/allOf/0/then/required))] exception=null
+PROBE FeedbackTarget:conditional-0-ingredient-present expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE FeedbackTarget:conditional-1-taste-missing expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/allOf/1/then/required, objectPath=, message=missing required properties: [tag], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/FeedbackTarget/allOf/1/then/required))] exception=null
+PROBE FeedbackTarget:conditional-1-taste-present expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE FeedbackTarget:conditional-1-preparation-missing expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/allOf/1/then/required, objectPath=, message=missing required properties: [tag], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/FeedbackTarget/allOf/1/then/required))] exception=null
+PROBE FeedbackTarget:conditional-1-preparation-present expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE CollectionOrder.orderedSavedRecipeIds:unique expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE CollectionOrder.orderedSavedRecipeIds:duplicate expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/properties/orderedSavedRecipeIds/uniqueItems, objectPath=/orderedSavedRecipeIds, message=array contains duplicate values: ["12345678-1234-4234-8234-123456789abc"], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/CollectionOrder/properties/orderedSavedRecipeIds/uniqueItems))] exception=null
+PROBE PlanPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PlanPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/required, objectPath=, message=missing required properties: [nextCursor], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/PlanPage/required))] exception=null
+PROBE PlanPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PantryWrite.ingredientId:invalid-uuid expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/properties/ingredientId/format, objectPath=/ingredientId, message=value does not match 'uuid' format, details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/PantryWrite/properties/ingredientId/format))] exception=null
+PROBE PantryWrite.confirmedAt:invalid-calendar-date expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/properties/confirmedAt/format, objectPath=/confirmedAt, message=value does not match 'date-time' format, details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/PantryWrite/properties/confirmedAt/format))] exception=null
+PROBE PantryWrite.confirmedAt:missing-time expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/properties/confirmedAt/format, objectPath=/confirmedAt, message=value does not match 'date-time' format, details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/PantryWrite/properties/confirmedAt/format))] exception=null
+PROBE Upload.uploadUrl:invalid-uri expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/properties/uploadUrl/format, objectPath=/uploadUrl, message=value does not match 'uri' format, details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/Upload/properties/uploadUrl/format))] exception=null
+PROBE Upload.uploadFields:typed-map expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE Upload.uploadFields:typed-map-number expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/properties/uploadFields/additionalProperties/type, objectPath=/uploadFields/a, message=element is not a string, details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/Upload/properties/uploadFields/additionalProperties/type))] exception=null
+PROBE PantryWrite.quantity:below-minimum expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/properties/quantity/minimum, objectPath=/quantity, message=-1 must be greater or equal to 0, details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/PantryWrite/properties/quantity/minimum))] exception=null
+PROBE PantryWrite.unexpected:unknown-property expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/additionalProperties, objectPath=/unexpected, message=all values fail against the false schema, details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/PantryWrite/additionalProperties))] exception=null
+PROBE PantryWrite.presence:unknown-enum expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/properties/presence/enum, objectPath=/presence, message=element is not in enum, details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/PantryWrite/properties/presence/enum))] exception=null
+PROBE RevenueCatWebhook.unexpected:unrestricted expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE numeric:below-large-min expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/minimum, objectPath=, message=9007199254740991 must be greater or equal to 9007199254740992, details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/__SpikeExactMinimum/minimum))] exception=null
+PROBE numeric:large-min-equal expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE numeric:decimal-multiple expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE numeric:almost-decimal-multiple expected=false actual=true unchanged=true pass=false errors=[] exception=null
+PROBE unicode:astral-codepoint expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE unicode:combining-two-codepoints expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/maxLength, objectPath=, message=string length (2) must be less or equal to 1, details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/__SpikeUnicode/maxLength))] exception=null
+PROBE unique:numeric-equivalence expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/uniqueItems, objectPath=, message=array contains duplicate values: [1.0], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/__SpikeNumericUnique/uniqueItems))] exception=null
+PROBE unique:object-numeric-equivalence expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/uniqueItems, objectPath=, message=array contains duplicate values: [{"a":1.0}], details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/__SpikeNumericUnique/uniqueItems))] exception=null
+PROBE unique:large-distinct expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE Constraint.servings:exact-below-minimum expected=false actual=true unchanged=true pass=false errors=[] exception=null
+PROBE PantryWrite.quantity:tiny-negative expected=false actual=true unchanged=true pass=false errors=[] exception=null
+PROBE PantryWrite.expectedVersion:fractional-integer expected=false actual=false unchanged=true pass=true errors=[ValidationError(schemaPath=/$ref/properties/expectedVersion/type, objectPath=/expectedVersion, message=element is not a integer, details={}, absoluteLocation=AbsoluteLocation(uri=, path=/$defs/PantryWrite/properties/expectedVersion/type))] exception=null
+PROBE PantryWrite.expectedVersion:integer-beyond-long expected=true actual=null unchanged=true pass=false errors=[] exception=java.lang.NumberFormatException: For input string: "9223372036854775808"
+PROBE PantryWrite.expectedVersion:integer-exponent-overflow expected=true actual=true unchanged=true pass=true errors=[] exception=null
+TOTAL=158 FAILURES=4
+2 actionable tasks: 2 executed
+Exception in thread "main" java.lang.IllegalStateException: Compatibility probes failed: 4
+	at SpikeKt.main(Spike.kt:31)
+	at SpikeKt.main(Spike.kt)
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':run'.
+> Process 'command '/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home/bin/java'' finished with non-zero exit value 1
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 5s

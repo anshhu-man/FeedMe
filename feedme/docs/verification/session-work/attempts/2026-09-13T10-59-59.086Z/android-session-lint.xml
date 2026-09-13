@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.13.2">
+
+    <issue
+        id="ExportedContentProvider"
+        severity="Warning"
+        message="Exported content providers can provide access to potentially sensitive data"
+        category="Security"
+        priority="5"
+        summary="Content provider does not require permission"
+        explanation="Content providers are exported by default and any application on the system can potentially use them to read and write data. If the content provider provides access to sensitive data, it should be protected by specifying `export=false` in the manifest or by protecting it with a permission that can be granted to other applications."
+        url="https://goo.gle/ExportedContentProvider"
+        urls="https://goo.gle/ExportedContentProvider"
+        errorLine1="        &lt;provider"
+        errorLine2="         ~~~~~~~~">
+        <location
+            file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/shared/session/src/androidMain/AndroidManifest.xml"
+            line="6"
+            column="10"/>
+    </issue>
+
+</issues>

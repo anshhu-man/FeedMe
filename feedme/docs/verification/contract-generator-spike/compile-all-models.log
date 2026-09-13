@@ -1,0 +1,42 @@
+default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Feedback.kt:38:21: error: data class must have at least one primary constructor parameter.
+data class Feedback (
+                    ^
+default-generated/src/commonMain/kotlin/feedme/contract/spike/models/FeedbackWrite.kt:38:26: error: data class must have at least one primary constructor parameter.
+data class FeedbackWrite (
+                         ^
+default-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhook.kt:46:53: error: syntax error: Expecting a top level declaration.
+) : kotlin.collections.HashMap<String, kotlin.Any>()() {
+                                                    ^
+default-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhook.kt:46:54: error: syntax error: Expecting a top level declaration.
+) : kotlin.collections.HashMap<String, kotlin.Any>()() {
+                                                     ^
+default-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhook.kt:46:56: error: syntax error: Expecting a top level declaration.
+) : kotlin.collections.HashMap<String, kotlin.Any>()() {
+                                                       ^
+default-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhook.kt:46:56: error: function declaration must have a name.
+) : kotlin.collections.HashMap<String, kotlin.Any>()() {
+                                                       ^
+default-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhookEvent.kt:50:67: error: serializer has not been found for type '??? (Unresolved qualified name: RevenueCatWebhookEvent.Environment)'. To use context serializer as fallback, explicitly annotate type or property with @Contextual
+    @SerialName(value = "environment") @Required val environment: RevenueCatWebhookEvent.Environment,
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+default-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhookEvent.kt:50:90: error: unresolved reference 'Environment'.
+    @SerialName(value = "environment") @Required val environment: RevenueCatWebhookEvent.Environment,
+                                                                                         ^^^^^^^^^^^
+default-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhookEvent.kt:54:53: error: syntax error: Expecting a top level declaration.
+) : kotlin.collections.HashMap<String, kotlin.Any>()() {
+                                                    ^
+default-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhookEvent.kt:54:54: error: syntax error: Expecting a top level declaration.
+) : kotlin.collections.HashMap<String, kotlin.Any>()() {
+                                                     ^
+default-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhookEvent.kt:54:56: error: syntax error: Expecting a top level declaration.
+) : kotlin.collections.HashMap<String, kotlin.Any>()() {
+                                                       ^
+default-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhookEvent.kt:54:56: error: function declaration must have a name.
+) : kotlin.collections.HashMap<String, kotlin.Any>()() {
+                                                       ^
+default-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhookEvent.kt:62:5: error: modifier 'enum' is not applicable to 'local class'.
+    enum class Environment(val value: kotlin.String) {
+    ^^^^
+default-generated/src/commonMain/kotlin/feedme/contract/spike/models/SaveRecipeRequest.kt:37:30: error: data class must have at least one primary constructor parameter.
+data class SaveRecipeRequest (
+                             ^

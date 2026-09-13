@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.db.DurableEventsIntegrationTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2026-09-13T05:03:14.118Z" hostname="ansachars-MacBook-Pro.local" time="3.153">
+  <properties/>
+  <testcase name="retryWaitsThenFifthFailureQuarantines" classname="com.feedme.server.db.DurableEventsIntegrationTest" time="0.256"/>
+  <testcase name="concurrentConsumerDuplicatesAndFollowupEventsAreAtomic" classname="com.feedme.server.db.DurableEventsIntegrationTest" time="0.174"/>
+  <testcase name="unknownTypeQuarantinesBeforePublishingAndKnownFailureRemainsPending" classname="com.feedme.server.db.DurableEventsIntegrationTest" time="0.239"/>
+  <testcase name="fiveCrashedLeasesQuarantineWithoutUnboundedRetries" classname="com.feedme.server.db.DurableEventsIntegrationTest" time="0.225"/>
+  <testcase name="consumerCanPreventOutOfOrderRegressionAndResurrectionUsingCurrentRows" classname="com.feedme.server.db.DurableEventsIntegrationTest" time="0.223"/>
+  <testcase name="twoWorkersReceiveDisjointBoundedClaims" classname="com.feedme.server.db.DurableEventsIntegrationTest" time="0.269"/>
+  <testcase name="lockedRowDoesNotBlockAnotherWorkersBatch" classname="com.feedme.server.db.DurableEventsIntegrationTest" time="0.159"/>
+  <testcase name="committedEnvelopeHasEveryCanonicalFieldAndRollbackEmitsNothing" classname="com.feedme.server.db.DurableEventsIntegrationTest" time="0.176"/>
+  <testcase name="crashAfterSendAllowsRedeliveryButInboxEffectOccursOnce" classname="com.feedme.server.db.DurableEventsIntegrationTest" time="0.201"/>
+  <testcase name="malformedImportedRowIsQuarantinedWithoutPoisoningHealthyClaims" classname="com.feedme.server.db.DurableEventsIntegrationTest" time="0.214"/>
+  <testcase name="commandDomainEffectReceiptAndOutboxShareOneCommit" classname="com.feedme.server.db.DurableEventsIntegrationTest" time="0.205"/>
+  <testcase name="sqlConstraintsRejectDuplicateEventAndBrokenEnvelopeAndLeaseState" classname="com.feedme.server.db.DurableEventsIntegrationTest" time="0.178"/>
+  <testcase name="slowPublishDoesNotReserveOrSendStaleClaimsForRemainingEvents" classname="com.feedme.server.db.DurableEventsIntegrationTest" time="0.217"/>
+  <testcase name="consumerFailureRollsBackInboxEffectAndFollowupEvent" classname="com.feedme.server.db.DurableEventsIntegrationTest" time="0.203"/>
+  <testcase name="expiredLeaseRecoversAndStaleWorkerCannotAcknowledgeOrFailNewOwner" classname="com.feedme.server.db.DurableEventsIntegrationTest" time="0.211"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,166 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {createHash} from 'node:crypto';
+import {spawnSync} from 'node:child_process';
+
+// Installs only this module's development test APK. Never clears the FeedMe demo or other apps.
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const serial = process.env.FEEDME_TEST_DEVICE || 'emulator-5554';
+if (!/^emulator-\d+$/.test(serial)) throw new Error('Storage smoke is restricted to a local emulator.');
+if (!process.env.ANDROID_HOME) throw new Error('Set ANDROID_HOME to the local Android SDK.');
+const adb = path.join(process.env.ANDROID_HOME, 'platform-tools/adb');
+const apkDirectory = path.join(root, 'shared/storage/build/outputs/apk/androidTest/debug');
+const metadataBytes = fs.readFileSync(path.join(apkDirectory, 'output-metadata.json'));
+const metadata = JSON.parse(metadataBytes.toString('utf8'));
+const testPackage = 'com.feedme.storage.test';
+const runner = `${testPackage}/androidx.test.runner.AndroidJUnitRunner`;
+if (metadata.applicationId !== testPackage || metadata.variantName !== 'debugAndroidTest' ||
+    metadata.artifactType?.type !== 'APK' || metadata.elements?.length !== 1) throw new Error('Unexpected test artifact identity.');
+const fileName = metadata.elements[0].outputFile;
+if (fileName !== 'storage-debug-androidTest.apk') throw new Error('Unexpected test artifact filename.');
+const apk = path.join(apkDirectory, fileName);
+const apkBytes = fs.readFileSync(apk);
+const reportDirectory = path.join(root, 'docs/verification/client-storage');
+const startedAt = new Date().toISOString();
+const attemptDirectory = path.join(reportDirectory, 'android-attempts', startedAt.replaceAll(':', '-'));
+fs.mkdirSync(attemptDirectory, {recursive: true});
+fs.writeFileSync(path.join(attemptDirectory, 'output-metadata.json'), metadataBytes);
+const report = {
+  startedAt, passed: false, serial,
+  scope: 'Isolated Android storage/control/work and authenticated private-data activation components. Existing-only recovery rejects sidecars and exposes exact empty-only abort, whose changed receipt must commit before native key deletion. Six separate-process tests inject actual bundled SQLite sync EIO through test-only VFS hooks; their direct owned-connection fixtures do not prove public recovery of rollback journals, physical power-loss durability or whole-runtime setup-journal integration. Selected activation replay remains selection-only. Separate historical restart-write/read stages cover a persisted fixture. No work-origin planning, FeedMe UI/provider/auth integration, physical-device, iOS or release claim.',
+  apk: {path: path.relative(root, apk), bytes: apkBytes.length, sha256: createHash('sha256').update(apkBytes).digest('hex')},
+  apkMetadata: {path: path.relative(root, path.join(attemptDirectory, 'output-metadata.json')),
+    bytes: metadataBytes.length, sha256: createHash('sha256').update(metadataBytes).digest('hex')},
+  attemptDirectory: path.relative(root, attemptDirectory), checks: [],
+};
+
+function run(name, args, timeout = 120000) {
+  const result = spawnSync(adb, ['-s', serial, ...args], {encoding: 'utf8', timeout, maxBuffer: 4 * 1024 * 1024});
+  const output = (result.stdout || '') + (result.stderr || '');
+  fs.writeFileSync(path.join(attemptDirectory, `${name}.log`), output);
+  if (result.error || result.status !== 0) throw new Error(`${name} failed; inspect its bounded local log.`);
+  return output;
+}
+
+function instrument(name, classes, expected, stage) {
+  const allowed = classes.split(',').map(selector => selector.split('#'));
+  const declared = allowed.flatMap(([className, method]) => {
+    const file = path.join(root, 'shared/storage/src/androidInstrumentedTest/kotlin', `${className.replaceAll('.', '/')}.kt`);
+    const methods = [...fs.readFileSync(file, 'utf8').matchAll(/@Test\s+fun\s+([A-Za-z_][A-Za-z0-9_]*)\s*\(/g)]
+      .map(match => `${className}#${match[1]}`);
+    if (!method) return methods;
+    const selected = `${className}#${method}`;
+    if (!methods.includes(selected)) throw new Error('Storage selector is not a declared source test.');
+    return [selected];
+  }).sort();
+  if (declared.length !== expected || new Set(declared).size !== expected)
+    throw new Error('Storage selectors do not match the exact current source test declarations.');
+  const args = ['shell', 'am', 'instrument', '-w', '-r', '-e', 'class', classes];
+  if (stage) args.push('-e', 'processRestartStage', stage);
+  args.push(runner);
+  const output = run(name, args);
+  const summaries = [...output.matchAll(/^OK \((\d+) tests?\)\s*$/gm)];
+  const endings = [...output.matchAll(/^INSTRUMENTATION_CODE: (-?\d+)\s*$/gm)];
+  const count = Number(summaries[0]?.[1]);
+  const events = [], invalid = [], completed = [];
+  let fields = {};
+  for (const line of output.split(/\r?\n/)) {
+    const field = line.match(/^INSTRUMENTATION_STATUS: (class|test|current|numtests|id)=(.*)$/);
+    if (field) {
+      if (Object.hasOwn(fields, field[1])) invalid.push('duplicate-field');
+      fields[field[1]] = field[2];
+    }
+    const status = line.match(/^INSTRUMENTATION_STATUS_CODE: (-?\d+)\s*$/);
+    if (status) { events.push({...fields, code: Number(status[1])}); fields = {}; }
+  }
+  for (let index = 0; index < expected; index++) {
+    const start = events[index * 2], finish = events[index * 2 + 1];
+    for (const event of [start, finish]) {
+      if (!event || !allowed.some(([className, method]) => event.class === className && (!method || event.test === method)) ||
+          !/^[A-Za-z_][A-Za-z0-9_]*$/.test(event.test || '') || event.id !== 'AndroidJUnitRunner' ||
+          event.current !== String(index + 1) || event.numtests !== String(expected)) invalid.push('identity');
+    }
+    if (!start || !finish || start.code !== 1 || finish.code !== 0 || start.class !== finish.class || start.test !== finish.test)
+      invalid.push('unmatched-pair');
+    else completed.push(`${finish.class}#${finish.test}`);
+  }
+  const passed = summaries.length === 1 && count === expected && endings.length === 1 && endings[0][1] === '-1' &&
+    Object.keys(fields).length === 0 && events.length === expected * 2 && invalid.length === 0 &&
+    JSON.stringify([...completed].sort()) === JSON.stringify(declared) &&
+    !/FAILURES!!!|INSTRUMENTATION_FAILED|Process crashed/.test(output);
+  report.checks.push({name, classes, ...(stage ? {stage} : {}), passed, tests: count || 0, expected, identities: completed,
+    log: path.relative(root, path.join(attemptDirectory, `${name}.log`))});
+  if (!passed) throw new Error(`${name} did not pass every expected non-skipped test.`);
+  console.log(`${name}: ${count} tests passed`);
+  return {output, identities: completed};
+}
+
+function syncFailureEvidence(log, identities) {
+  const expected = {
+    journal: ['realJournalSyncEioRetainsExactKeyUntilFreshSuccessfulAbort', 1034],
+    database: ['realDatabaseSyncEioRetainsExactKeyUntilFreshSuccessfulAbort', 1034],
+    directory: ['realPostUnlinkDirectorySyncEioNeverTreatsVisibleConsumeAsDurableAcknowledgement', 1290],
+    'consumed-replay': ['consumedReceiptReplayStillRequiresFreshSuccessfulSyncBeforeDeletingKey', 1290],
+    'aborted-replay': ['observedAbortedReplayCannotAcknowledgeWhenItsNewJournalSyncFails', 1034],
+    'exact-scope': ['nativeFaultIsRestrictedToExactOwnedDatabaseNotAnotherSandbox', 1034],
+  };
+  const rows = [...log.matchAll(/^INSTRUMENTATION_RESULT: state_activation_sync_([^=]+)=(.*)$/gm)];
+  if (rows.length !== 6 || new Set(rows.map(row => row[1])).size !== 6)
+    throw new Error('Expected six unique actual-engine sync failure evidence labels.');
+  return Object.fromEntries(Object.entries(expected).map(([label, [method, sqlite]]) => {
+    const identity = `com.feedme.storage.AndroidStateActivationSyncFailureTest#${method}`;
+    const row = rows.find(value => value[1] === label);
+    const match = row?.[2].match(new RegExp(`^sqlite=${sqlite};errno=5;failures=1;keyDeletes=0;hooks=(1|3)$`));
+    if (!match || !identities.includes(identity)) throw new Error('Native sync evidence is absent, wrong or lacks its successful source test.');
+    return [label, {identity, sqlite, errno: 5, failures: 1, keyDeletes: 0, hooks: Number(match[1])}];
+  }));
+}
+
+function testJniLibraries() {
+  const list = spawnSync('unzip', ['-Z1', apk], {encoding: 'utf8', maxBuffer: 4 * 1024 * 1024});
+  if (list.error || list.status !== 0) throw new Error('Cannot inspect test APK native entries.');
+  const expected = ['arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64']
+    .map(abi => `lib/${abi}/libfeedmeSqliteSyncFailure.so`).sort();
+  const actual = list.stdout.split(/\r?\n/).filter(name => name.includes('feedmeSqliteSyncFailure')).sort();
+  if (JSON.stringify(actual) !== JSON.stringify(expected)) throw new Error('Test APK must include exactly four ABI-specific sync injectors.');
+  return expected.map(entry => {
+    const result = spawnSync('unzip', ['-p', apk, entry], {maxBuffer: 4 * 1024 * 1024});
+    if (result.error || result.status !== 0 || !result.stdout.subarray(0, 4).equals(Buffer.from([127, 69, 76, 70])))
+      throw new Error('Native test helper is missing or is not an ELF library.');
+    return {entry, bytes: result.stdout.length, sha256: createHash('sha256').update(result.stdout).digest('hex')};
+  });
+}
+
+try {
+  report.testJniLibraries = testJniLibraries();
+  if (run('boot', ['shell', 'getprop', 'sys.boot_completed'], 10000).trim() !== '1') throw new Error('Start the emulator and wait for boot first.');
+  report.androidApi = run('api', ['shell', 'getprop', 'ro.build.version.sdk'], 10000).trim();
+  report.androidAbi = run('abi', ['shell', 'getprop', 'ro.product.cpu.abi'], 10000).trim();
+  run('install', ['install', '-r', '-t', apk]);
+  const runners = run('runner', ['shell', 'pm', 'list', 'instrumentation'], 10000);
+  if (!runners.includes(runner)) throw new Error('Expected isolated instrumentation runner unavailable.');
+  instrument('regular', 'com.feedme.storage.AndroidStateVaultTest,com.feedme.storage.AndroidStateDatabaseTest,com.feedme.storage.AndroidSessionControlStoreTest,com.feedme.storage.AndroidSessionWorkStoreTest,com.feedme.storage.AndroidStateActivationPlanTest,com.feedme.storage.AndroidStateActivationRecoveryTest', 57);
+  // Deliberately separate am instrument invocation/process: these tests alter the bundled VFS
+  // syscall table, scope every fault to an exact owned fd and restore it in finally.
+  const sync = instrument('sync-failure', 'com.feedme.storage.AndroidStateActivationSyncFailureTest', 6);
+  report.syncFailures = syncFailureEvidence(sync.output, sync.identities);
+  instrument('restart-write', 'com.feedme.storage.AndroidStateProcessRestartTest#writeFixture', 1, 'write');
+  instrument('restart-read', 'com.feedme.storage.AndroidStateProcessRestartTest#readFixtureAndCleanup', 1, 'read');
+  const remaining = run('fixture-cleanup', ['shell', 'run-as', testPackage, 'ls', 'no_backup'], 10000).trim();
+  if (/private-state-instrumented-|feedme-state-instrumented-process-restart-v1|Permission denied|run-as:|No such file or directory|error:/i.test(remaining))
+    throw new Error('Owned test fixture directory remains or cleanup inspection failed.');
+  report.checks.push({name: 'owned-test-directories-cleaned', passed: true});
+  if (!fs.readFileSync(apk).equals(apkBytes) ||
+      !fs.readFileSync(path.join(apkDirectory, 'output-metadata.json')).equals(metadataBytes))
+    throw new Error('Storage test APK or metadata changed during the native run.');
+  report.passed = true;
+} catch (failure) {
+  report.failure = failure.message;
+  process.exitCode = 1;
+} finally {
+  report.finishedAt = new Date().toISOString();
+  fs.writeFileSync(path.join(attemptDirectory, 'report.json'), JSON.stringify(report, null, 2) + '\n');
+  fs.writeFileSync(path.join(reportDirectory, 'android-smoke.json'), JSON.stringify(report, null, 2) + '\n');
+  console.log(JSON.stringify(report, null, 2));
+}

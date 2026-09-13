@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.sync.TargetedAutomaticDispatchTest" tests="19" skipped="0" failures="0" errors="0" timestamp="2026-09-13T10:28:41.844Z" hostname="ansachars-MacBook-Pro.local" time="0.598">
+  <properties/>
+  <testcase name="exactTargetCannotSkipEarlierSameSessionEvenWhenHeadNeedsResolution[jvm]" classname="com.feedme.sync.TargetedAutomaticDispatchTest" time="0.03"/>
+  <testcase name="preflightCannotManufactureAValidatedProtocolRecall[jvm]" classname="com.feedme.sync.TargetedAutomaticDispatchTest" time="0.019"/>
+  <testcase name="expiredReplayWindowHoldsTargetInsteadOfSendingAnotherModule[jvm]" classname="com.feedme.sync.TargetedAutomaticDispatchTest" time="0.039"/>
+  <testcase name="typedObserverFailureLeavesSentAttemptInFlightWithoutReceiptOrRetry[jvm]" classname="com.feedme.sync.TargetedAutomaticDispatchTest" time="0.064"/>
+  <testcase name="automaticTargetRespectsRetryDeadlineWithoutFallingBack[jvm]" classname="com.feedme.sync.TargetedAutomaticDispatchTest" time="0.033"/>
+  <testcase name="staleLeaseBeforeOrDuringTargetPreflightNeverSends[jvm]" classname="com.feedme.sync.TargetedAutomaticDispatchTest" time="0.037"/>
+  <testcase name="invalidOrWronglyBoundBodiesNeverReachObserverOrProduceRecallIssue[jvm]" classname="com.feedme.sync.TargetedAutomaticDispatchTest" time="0.095"/>
+  <testcase name="boundRecallIsObservedOutsideMutexBeforePersistingTypedDurableHold[jvm]" classname="com.feedme.sync.TargetedAutomaticDispatchTest" time="0.016"/>
+  <testcase name="staleReplyNeverReachesObserverAndObserverLeaseRetirementPreventsOutcomeCommit[jvm]" classname="com.feedme.sync.TargetedAutomaticDispatchTest" time="0.037"/>
+  <testcase name="boundSuccessObserverRunsBeforeSuccessfulReceiptBecomesVisible[jvm]" classname="com.feedme.sync.TargetedAutomaticDispatchTest" time="0.015"/>
+  <testcase name="targetWaitsForDependencyApplicationAndNeverSendsItsParentInstead[jvm]" classname="com.feedme.sync.TargetedAutomaticDispatchTest" time="0.015"/>
+  <testcase name="targetStillRequiresUnchangedPreflightCas[jvm]" classname="com.feedme.sync.TargetedAutomaticDispatchTest" time="0.016"/>
+  <testcase name="discardedDependencyHoldsOnlyTargetWithoutSendingAnotherLane[jvm]" classname="com.feedme.sync.TargetedAutomaticDispatchTest" time="0.016"/>
+  <testcase name="targetingManualPolicyDoesNotConfirmInitialOrRetriedAttempt[jvm]" classname="com.feedme.sync.TargetedAutomaticDispatchTest" time="0.015"/>
+  <testcase name="exactReadOnlyLookupFindsReadyAndTerminalIdentitiesWithoutDispatch[jvm]" classname="com.feedme.sync.TargetedAutomaticDispatchTest" time="0.016"/>
+  <testcase name="unknownMalformedAndCompletedTargetsNeverFallBack[jvm]" classname="com.feedme.sync.TargetedAutomaticDispatchTest" time="0.016"/>
+  <testcase name="targetsCookingCommandWithoutSendingEarlierUnrelatedModule[jvm]" classname="com.feedme.sync.TargetedAutomaticDispatchTest" time="0.015"/>
+  <testcase name="observerExceptionIsSanitizedAndCancellationIsPropagated[jvm]" classname="com.feedme.sync.TargetedAutomaticDispatchTest" time="0.031"/>
+  <testcase name="onlyExactValidatedProblemCodeProducesRecallInsteadOfGenericGoneOrRetry[jvm]" classname="com.feedme.sync.TargetedAutomaticDispatchTest" time="0.071"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

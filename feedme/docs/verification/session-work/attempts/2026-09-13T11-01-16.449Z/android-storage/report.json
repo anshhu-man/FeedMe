@@ -1,0 +1,47 @@
+{
+  "startedAt": "2026-09-13T11:01:50.990Z",
+  "passed": true,
+  "serial": "emulator-5554",
+  "scope": "Isolated Android library tests only; not FeedMe UI/auth integration, hard-kill-in-transaction, physical-device, power-loss or iOS proof.",
+  "apk": {
+    "path": "shared/storage/build/outputs/apk/androidTest/debug/storage-debug-androidTest.apk",
+    "bytes": 6257487,
+    "sha256": "e6b1d152bf56c64ebd022e5dde2d4772dac4dd832bee4972f135c68123d19200"
+  },
+  "attemptDirectory": "docs/verification/client-storage/android-attempts/2026-09-13T11-01-50.988Z",
+  "checks": [
+    {
+      "name": "regular",
+      "classes": "com.feedme.storage.AndroidStateVaultTest,com.feedme.storage.AndroidStateDatabaseTest,com.feedme.storage.AndroidSessionControlStoreTest,com.feedme.storage.AndroidSessionWorkStoreTest",
+      "passed": true,
+      "tests": 28,
+      "expected": 28,
+      "log": "docs/verification/client-storage/android-attempts/2026-09-13T11-01-50.988Z/regular.log"
+    },
+    {
+      "name": "restart-write",
+      "classes": "com.feedme.storage.AndroidStateProcessRestartTest#writeFixture",
+      "stage": "write",
+      "passed": true,
+      "tests": 1,
+      "expected": 1,
+      "log": "docs/verification/client-storage/android-attempts/2026-09-13T11-01-50.988Z/restart-write.log"
+    },
+    {
+      "name": "restart-read",
+      "classes": "com.feedme.storage.AndroidStateProcessRestartTest#readFixtureAndCleanup",
+      "stage": "read",
+      "passed": true,
+      "tests": 1,
+      "expected": 1,
+      "log": "docs/verification/client-storage/android-attempts/2026-09-13T11-01-50.988Z/restart-read.log"
+    },
+    {
+      "name": "owned-test-directories-cleaned",
+      "passed": true
+    }
+  ],
+  "androidApi": "35",
+  "androidAbi": "arm64-v8a",
+  "finishedAt": "2026-09-13T11:01:53.214Z"
+}

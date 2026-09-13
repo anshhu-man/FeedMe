@@ -1,0 +1,14 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const source=JSON.parse(fs.readFileSync(path.resolve(root,'../biteclub_blueprint/registry/screen_registry.json'),'utf8'));
+const read=p=>fs.readFileSync(path.join(root,p),'utf8');
+const files=['src/core.js','src/views-access.js','src/views-kitchen.js','src/views-social.js','src/views-systems.js','src/app.js'];
+const optional=['src/kitchen.css','src/social.css','src/systems.css','src/final-polish.css'];
+const css=read('src/ui.css')+optional.filter(p=>fs.existsSync(path.join(root,p))).map(read).join('\n');
+const js=files.map(read).join('\n');
+const html='<!doctype html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#304ffe"><title>FeedMe — Your kitchen. Your rules.</title><style>'+css+'</style></head><body><div id="root"></div><div id="announce" class="sr-only" role="status" aria-live="polite"></div><script id="ui-data" type="application/json">'+JSON.stringify(source).replaceAll('<','\\u003c')+'</script><script>(()=>{\n'+js+'\n})();</script></body></html>';
+fs.writeFileSync(path.join(root,'index.html'),html);
+fs.mkdirSync(path.join(root,'data'),{recursive:true});fs.copyFileSync(path.resolve(root,'../biteclub_blueprint/registry/screen_registry.json'),path.join(root,'data/screen_registry.json'));
+console.log(JSON.stringify({screens:source.screens.length,actions:source.screens.reduce((n,s)=>n+s.actions.length,0),htmlBytes:Buffer.byteLength(html),renderers:files}));

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.core.ClientPortsTest" tests="19" skipped="0" failures="0" errors="0" timestamp="2026-09-13T09:43:55.154Z" hostname="ansachars-MacBook-Pro.local" time="0.117">
+  <properties/>
+  <testcase name="apiCallStoresIndependentSnapshotsOfInitialMapsAndNestedLists[jvm]" classname="com.feedme.core.ClientPortsTest" time="0.031"/>
+  <testcase name="cancellationOrAdapterExceptionIsNotConvertedToSuccess[jvm]" classname="com.feedme.core.ClientPortsTest" time="0.028"/>
+  <testcase name="apiCallReturnedMapsAndQueryListsCannotMutateStoredIntent[jvm]" classname="com.feedme.core.ClientPortsTest" time="0.001"/>
+  <testcase name="defaultDebugStringsDoNotExposePrivateMaterial[jvm]" classname="com.feedme.core.ClientPortsTest" time="0.022"/>
+  <testcase name="reloginToSameAccountDoesNotAcceptOldTicket[jvm]" classname="com.feedme.core.ClientPortsTest" time="0.001"/>
+  <testcase name="noCurrentSessionExistsByDefault[jvm]" classname="com.feedme.core.ClientPortsTest" time="0.0"/>
+  <testcase name="scopeSeparatesActorKindAndEnvironment[jvm]" classname="com.feedme.core.ClientPortsTest" time="0.0"/>
+  <testcase name="uncertainMutationReceiptIsDistinctFromUnsentFailure[jvm]" classname="com.feedme.core.ClientPortsTest" time="0.002"/>
+  <testcase name="ticketFromAnotherBoundaryIsNeverAccepted[jvm]" classname="com.feedme.core.ClientPortsTest" time="0.0"/>
+  <testcase name="currentTransportPreservesStatusEtagAndOpaqueBody[jvm]" classname="com.feedme.core.ClientPortsTest" time="0.006"/>
+  <testcase name="httpErrorAndMetadataSurviveWithoutLeakingIntoDebugString[jvm]" classname="com.feedme.core.ClientPortsTest" time="0.004"/>
+  <testcase name="transportDetachesParametersAndDoesNotLogThem[jvm]" classname="com.feedme.core.ClientPortsTest" time="0.001"/>
+  <testcase name="delayedReplyIsDiscardedAfterAccountSwitch[jvm]" classname="com.feedme.core.ClientPortsTest" time="0.004"/>
+  <testcase name="transportPreservesFailuresAndBodylessSuccess[jvm]" classname="com.feedme.core.ClientPortsTest" time="0.002"/>
+  <testcase name="invalidOwnershipAndCredentialInputsAreRejected[jvm]" classname="com.feedme.core.ClientPortsTest" time="0.001"/>
+  <testcase name="clearingSessionImmediatelyRejectsOutstandingLeaseWithoutDispatch[jvm]" classname="com.feedme.core.ClientPortsTest" time="0.002"/>
+  <testcase name="guestAndPreBootstrapCredentialsNeedNoFabricatedDeviceSession[jvm]" classname="com.feedme.core.ClientPortsTest" time="0.002"/>
+  <testcase name="storeMutationValidationDoesNotPermitUnconditionalOverwrite[jvm]" classname="com.feedme.core.ClientPortsTest" time="0.006"/>
+  <testcase name="serializedPrivateBuffersAreDetachedAtBothBoundaries[jvm]" classname="com.feedme.core.ClientPortsTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

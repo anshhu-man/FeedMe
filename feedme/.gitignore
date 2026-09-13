@@ -1,0 +1,11 @@
+.gradle/
+.kotlin/
+.local/
+**/build/
+local.properties
+*.keystore
+*.jks
+**/xcuserdata/
+**/.DS_Store
+Pods/
+

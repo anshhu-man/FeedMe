@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.LocalServiceTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-09-13T05:56:43.154Z" hostname="ansachars-MacBook-Pro.local" time="0.644">
+  <properties/>
+  <testcase name="unknownPathsAndMethodsDoNotExposeRequestDetails" classname="com.feedme.server.LocalServiceTest" time="0.426"/>
+  <testcase name="configurationAndStaffHealthDenyEvenWithNoCredentials" classname="com.feedme.server.LocalServiceTest" time="0.013"/>
+  <testcase name="everyUnimplementedCanonicalRouteReturns503WithoutSuccessfulMutation" classname="com.feedme.server.LocalServiceTest" time="0.153"/>
+  <testcase name="tracesAreServerGeneratedUniqueAndNotReflected" classname="com.feedme.server.LocalServiceTest" time="0.008"/>
+  <testcase name="invalidGeneratedHealthFallsBackToRedactedProblem" classname="com.feedme.server.LocalServiceTest" time="0.019"/>
+  <testcase name="healthIsPublicAndHonestlyDegraded" classname="com.feedme.server.LocalServiceTest" time="0.008"/>
+  <testcase name="malformedHandlerInputsUseCanonicalProblem" classname="com.feedme.server.LocalServiceTest" time="0.008"/>
+  <testcase name="unexpectedHandlerErrorsAreRedacted" classname="com.feedme.server.LocalServiceTest" time="0.009"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+]]></system-err>
+</testsuite>

@@ -1,0 +1,215 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :processResources NO-SOURCE
+
+> Task :resolvedDependencies
+DEPENDENCY org.jetbrains.kotlin:kotlin-stdlib:2.3.21 /Users/LOCAL_USER/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/2.3.21/a2ee2c4e220fee522f0451b723bab2a43f3481a7/kotlin-stdlib-2.3.21.jar
+DEPENDENCY com.networknt:json-schema-validator:3.0.7 /Users/LOCAL_USER/.gradle/caches/modules-2/files-2.1/com.networknt/json-schema-validator/3.0.7/5e755525565bf48be0049c129b4005c2ca6a43eb/json-schema-validator-3.0.7.jar
+DEPENDENCY org.jruby.joni:joni:2.2.6 /Users/LOCAL_USER/.gradle/caches/modules-2/files-2.1/org.jruby.joni/joni/2.2.6/864217ab7dcece78ad7bf3c045a602d871ff309a/joni-2.2.6.jar
+DEPENDENCY org.jetbrains:annotations:13.0 /Users/LOCAL_USER/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar
+DEPENDENCY com.ethlo.time:itu:1.14.0 /Users/LOCAL_USER/.gradle/caches/modules-2/files-2.1/com.ethlo.time/itu/1.14.0/c0f9f9d4f4404787e992ab3af5ae95f2fad79e47/itu-1.14.0.jar
+DEPENDENCY tools.jackson.core:jackson-core:3.2.1 /Users/LOCAL_USER/.gradle/caches/modules-2/files-2.1/tools.jackson.core/jackson-core/3.2.1/5bff2a525073cff8a8206751f6f6bc4650b81b94/jackson-core-3.2.1.jar
+DEPENDENCY tools.jackson.dataformat:jackson-dataformat-yaml:3.2.1 /Users/LOCAL_USER/.gradle/caches/modules-2/files-2.1/tools.jackson.dataformat/jackson-dataformat-yaml/3.2.1/2e71c35d099e8837affd1709d9dca326d58e7eab/jackson-dataformat-yaml-3.2.1.jar
+DEPENDENCY tools.jackson.core:jackson-databind:3.2.1 /Users/LOCAL_USER/.gradle/caches/modules-2/files-2.1/tools.jackson.core/jackson-databind/3.2.1/363dc46ceb44a97cba68cb0e9da4a3cb5bf723d4/jackson-databind-3.2.1.jar
+DEPENDENCY org.slf4j:slf4j-api:2.0.17 /Users/LOCAL_USER/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/2.0.17/d9e58ac9c7779ba3bf8142aff6c830617a7fe60f/slf4j-api-2.0.17.jar
+DEPENDENCY org.jruby.jcodings:jcodings:1.0.63 /Users/LOCAL_USER/.gradle/caches/modules-2/files-2.1/org.jruby.jcodings/jcodings/1.0.63/b8c386790e72f0bad666c8f1a8af12d0528992e0/jcodings-1.0.63.jar
+DEPENDENCY com.fasterxml.jackson.core:jackson-annotations:2.22 /Users/LOCAL_USER/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-annotations/2.22/15c67f9498d6934cff9510fc70c5a12e52290457/jackson-annotations-2.22.jar
+DEPENDENCY org.snakeyaml:snakeyaml-engine:3.0.1 /Users/LOCAL_USER/.gradle/caches/modules-2/files-2.1/org.snakeyaml/snakeyaml-engine/3.0.1/aaa97268dd9fcf97a3e44c96e6a50961d65199dd/snakeyaml-engine-3.0.1.jar
+
+> Task :compileKotlin
+> Task :compileJava NO-SOURCE
+> Task :classes UP-TO-DATE
+
+> Task :run
+PROBE PantryItem.confirmedAt:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PantryItem.confirmedAt:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'confirmedAt' not found] exception=null
+PROBE PantryItem.confirmedAt:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PantryWrite.confirmedAt:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PantryWrite.confirmedAt:absent expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PantryWrite.confirmedAt:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE Constraint.householdParticipantIds:unique expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE Constraint.householdParticipantIds:duplicate expected=false actual=false unchanged=true pass=true errors=[/householdParticipantIds: must have only unique items in the array] exception=null
+PROBE PlanRequest:conditional-0-improve-missing expected=false actual=false unchanged=true pass=true errors=[: required property 'baseMeal' not found] exception=null
+PROBE PlanRequest:conditional-0-improve-present expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE Plan.nextAlternativeCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE Plan.nextAlternativeCursor:absent expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE Plan.nextAlternativeCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE AdaptRequest.excludeRecipeVersionIds:unique expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE AdaptRequest.excludeRecipeVersionIds:duplicate expected=false actual=false unchanged=true pass=true errors=[/excludeRecipeVersionIds: must have only unique items in the array] exception=null
+PROBE Feedback:anyOf-none expected=false actual=false unchanged=true pass=true errors=[: required property 'cookSessionId' not found, : required property 'target' not found] exception=null
+PROBE Feedback:anyOf-0 expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE Feedback:anyOf-1 expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE FeedbackWrite:anyOf-none expected=false actual=false unchanged=true pass=true errors=[: required property 'cookSessionId' not found, : required property 'target' not found] exception=null
+PROBE FeedbackWrite:anyOf-0 expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE FeedbackWrite:anyOf-1 expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE SaveRecipeRequest:anyOf-none expected=false actual=false unchanged=true pass=true errors=[: required property 'planId' not found, : required property 'recipeVersionId' not found] exception=null
+PROBE SaveRecipeRequest:anyOf-0 expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE SaveRecipeRequest:anyOf-1 expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ThreadCreate:conditional-0-direct-missing expected=false actual=false unchanged=true pass=true errors=[: required property 'recipientUserId' not found] exception=null
+PROBE ThreadCreate:conditional-0-direct-present expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ThreadCreate:conditional-1-pact-missing expected=false actual=false unchanged=true pass=true errors=[: required property 'contextType' not found, : required property 'contextId' not found] exception=null
+PROBE ThreadCreate:conditional-1-pact-present expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ThreadCreate:conditional-1-potluck-missing expected=false actual=false unchanged=true pass=true errors=[: required property 'contextType' not found, : required property 'contextId' not found] exception=null
+PROBE ThreadCreate:conditional-1-potluck-present expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE IngredientPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE IngredientPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE IngredientPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PantryItemPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PantryItemPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE PantryItemPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE RecipeVersionPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE RecipeVersionPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE RecipeVersionPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ReasonPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ReasonPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE ReasonPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ReuseOptionPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ReuseOptionPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE ReuseOptionPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE MemoryPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE MemoryPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE MemoryPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE SavedRecipePage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE SavedRecipePage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE SavedRecipePage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE CollectionPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE CollectionPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE CollectionPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PostPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PostPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE PostPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE RemixNodePage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE RemixNodePage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE RemixNodePage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE CirclePage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE CirclePage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE CirclePage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE MemberPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE MemberPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE MemberPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ThreadPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ThreadPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE ThreadPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE MessagePage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE MessagePage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE MessagePage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE NotificationPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE NotificationPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE NotificationPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE BlockPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE BlockPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE BlockPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE MutePage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE MutePage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE MutePage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ContributionPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ContributionPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE ContributionPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE HouseholdPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE HouseholdPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE HouseholdPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE HouseholdPreferencePage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE HouseholdPreferencePage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE HouseholdPreferencePage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PackPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PackPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE PackPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE EntitlementPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE EntitlementPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE EntitlementPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE DeviceSessionPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE DeviceSessionPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE DeviceSessionPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE FeatureFlagPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE FeatureFlagPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE FeatureFlagPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE SubstitutionPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE SubstitutionPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE SubstitutionPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ReportPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE ReportPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE ReportPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE AuditPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE AuditPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE AuditPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE IncidentPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE IncidentPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE IncidentPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PostDraftPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PostDraftPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE PostDraftPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE FeedbackTarget:conditional-0-cookSession-missing expected=false actual=false unchanged=true pass=true errors=[: required property 'resourceId' not found] exception=null
+PROBE FeedbackTarget:conditional-0-cookSession-present expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE FeedbackTarget:conditional-0-plan-missing expected=false actual=false unchanged=true pass=true errors=[: required property 'resourceId' not found] exception=null
+PROBE FeedbackTarget:conditional-0-plan-present expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE FeedbackTarget:conditional-0-recipeVersion-missing expected=false actual=false unchanged=true pass=true errors=[: required property 'resourceId' not found] exception=null
+PROBE FeedbackTarget:conditional-0-recipeVersion-present expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE FeedbackTarget:conditional-0-ingredient-missing expected=false actual=false unchanged=true pass=true errors=[: required property 'resourceId' not found] exception=null
+PROBE FeedbackTarget:conditional-0-ingredient-present expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE FeedbackTarget:conditional-1-taste-missing expected=false actual=false unchanged=true pass=true errors=[: required property 'tag' not found] exception=null
+PROBE FeedbackTarget:conditional-1-taste-present expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE FeedbackTarget:conditional-1-preparation-missing expected=false actual=false unchanged=true pass=true errors=[: required property 'tag' not found] exception=null
+PROBE FeedbackTarget:conditional-1-preparation-present expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE CollectionOrder.orderedSavedRecipeIds:unique expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE CollectionOrder.orderedSavedRecipeIds:duplicate expected=false actual=false unchanged=true pass=true errors=[/orderedSavedRecipeIds: must have only unique items in the array] exception=null
+PROBE PlanPage.nextCursor:null expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PlanPage.nextCursor:absent expected=false actual=false unchanged=true pass=true errors=[: required property 'nextCursor' not found] exception=null
+PROBE PlanPage.nextCursor:value expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PantryWrite.ingredientId:invalid-uuid expected=false actual=false unchanged=true pass=true errors=[/ingredientId: does not match the uuid pattern must be a valid RFC 4122 UUID] exception=null
+PROBE PantryWrite.confirmedAt:invalid-calendar-date expected=false actual=false unchanged=true pass=true errors=[/confirmedAt: does not match the date-time pattern must be a valid RFC 3339 date-time] exception=null
+PROBE PantryWrite.confirmedAt:missing-time expected=false actual=false unchanged=true pass=true errors=[/confirmedAt: does not match the date-time pattern must be a valid RFC 3339 date-time] exception=null
+PROBE Upload.uploadUrl:invalid-uri expected=false actual=false unchanged=true pass=true errors=[/uploadUrl: does not match the uri pattern must be a valid RFC 3986 URI] exception=null
+PROBE Upload.uploadFields:typed-map expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE Upload.uploadFields:typed-map-number expected=false actual=false unchanged=true pass=true errors=[/uploadFields/a: integer found, string expected] exception=null
+PROBE PantryWrite.quantity:below-minimum expected=false actual=false unchanged=true pass=true errors=[/quantity: must have a minimum value of 0] exception=null
+PROBE PantryWrite.unexpected:unknown-property expected=false actual=false unchanged=true pass=true errors=[: property 'unexpected' is not defined in the schema and the schema does not allow additional properties] exception=null
+PROBE PantryWrite.presence:unknown-enum expected=false actual=false unchanged=true pass=true errors=[/presence: does not have a value in the enumeration ["available", "low", "out", "usuallyHave", "uncertain"]] exception=null
+PROBE RevenueCatWebhook.unexpected:unrestricted expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE numeric:below-large-min expected=false actual=false unchanged=true pass=true errors=[: must have a minimum value of 9007199254740992] exception=null
+PROBE numeric:large-min-equal expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE numeric:decimal-multiple expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE numeric:almost-decimal-multiple expected=false actual=false unchanged=true pass=true errors=[: must be multiple of 0.1] exception=null
+PROBE unicode:astral-codepoint expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE unicode:combining-two-codepoints expected=false actual=false unchanged=true pass=true errors=[: must be at most 1 characters long] exception=null
+PROBE unique:numeric-equivalence expected=false actual=false unchanged=true pass=true errors=[: must have only unique items in the array] exception=null
+PROBE unique:object-numeric-equivalence expected=false actual=false unchanged=true pass=true errors=[: must have only unique items in the array] exception=null
+PROBE unique:large-distinct expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE Constraint.servings:exact-below-minimum expected=false actual=false unchanged=true pass=true errors=[/servings: must have a minimum value of 0.1] exception=null
+PROBE PantryWrite.quantity:tiny-negative expected=false actual=false unchanged=true pass=true errors=[/quantity: must have a minimum value of 0] exception=null
+PROBE PantryWrite.expectedVersion:fractional-integer expected=false actual=false unchanged=true pass=true errors=[/expectedVersion: number found, integer expected] exception=null
+PROBE PantryWrite.expectedVersion:integer-beyond-long expected=true actual=true unchanged=true pass=true errors=[] exception=null
+PROBE PantryWrite.expectedVersion:integer-exponent-overflow expected=true actual=true unchanged=true pass=true errors=[] exception=null
+GUARD duplicate-key rejected=true exception=tools.jackson.core.exc.StreamReadException: Duplicate Object property "a"
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #UNKNOWN]
+GUARD trailing-document rejected=true exception=tools.jackson.databind.exc.MismatchedInputException: Trailing token (`JsonToken.START_OBJECT`) found after value (bound as `tools.jackson.databind.JsonNode`): not allowed as per `DeserializationFeature.FAIL_ON_TRAILING_TOKENS`
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #UNKNOWN]
+GUARD NaN rejected=true exception=tools.jackson.core.exc.StreamReadException: Non-standard token 'NaN': enable `JsonReadFeature.ALLOW_NON_NUMERIC_NUMBERS` to allow
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #UNKNOWN]
+GUARD Infinity rejected=true exception=tools.jackson.core.exc.StreamReadException: Non-standard token 'Infinity': enable `JsonReadFeature.ALLOW_NON_NUMERIC_NUMBERS` to allow
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #UNKNOWN]
+GUARD empty rejected=true exception=java.lang.IllegalArgumentException: JSON document is empty
+GUARD whitespace rejected=true exception=java.lang.IllegalArgumentException: JSON document is empty
+GUARD comment rejected=true exception=tools.jackson.core.exc.StreamReadException: Unexpected character ('/' (code 47)): maybe a (non-standard) comment? (not recognized as one since Feature 'ALLOW_COMMENTS' not enabled for parser)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #UNKNOWN]
+GUARD trailing-comma rejected=true exception=tools.jackson.core.exc.StreamReadException: Unexpected character (']' (code 93)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #UNKNOWN]
+GUARD leading-zero rejected=true exception=tools.jackson.core.exc.StreamReadException: Invalid numeric value: Leading zeroes not allowed
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #UNKNOWN]
+GUARD depth rejected=true exception=tools.jackson.core.exc.StreamConstraintsException: Document nesting depth (65) exceeds the maximum allowed (64, from `StreamReadConstraints.getMaxNestingDepth()`)
+GUARD document-size rejected=true exception=java.lang.IllegalArgumentException: JSON exceeds byte limit
+GUARD number-length rejected=true exception=tools.jackson.core.exc.StreamConstraintsException: Number value length (1025) exceeds the maximum allowed (1024, from `StreamReadConstraints.getMaxNumberLength()`)
+GUARD decimal-positive-exponent-bound rejected=true exception=java.lang.IllegalArgumentException: JSON decimal scale exceeds resource limit
+GUARD decimal-negative-exponent-bound rejected=true exception=java.lang.IllegalArgumentException: JSON decimal scale exceeds resource limit
+GUARD external-ref:https://example.invalid/schema rejected=true exception=com.networknt.schema.InvalidSchemaException: Schema from 'https://example.invalid/schema' is not allowed to be loaded.
+GUARD external-ref:http://127.0.0.1:9/schema rejected=true exception=com.networknt.schema.InvalidSchemaException: Schema from 'http://127.0.0.1:9/schema' is not allowed to be loaded.
+GUARD external-ref:file:///private/tmp/forbidden-schema.json rejected=true exception=com.networknt.schema.InvalidSchemaException: Schema from 'file:///private/tmp/forbidden-schema.json' is not allowed to be loaded.
+GUARD external-ref:classpath:forbidden-schema.json rejected=true exception=com.networknt.schema.InvalidSchemaException: Schema from 'classpath:forbidden-schema.json' is not allowed to be loaded.
+NUMERIC_NODES [BigIntegerNode:9223372036854775808, DecimalNode:0.099999999999999999999, DecimalNode:-1E-400, DecimalNode:1E+400]
+TOTAL=158 GUARDS=18 FAILURES=0
+
+BUILD SUCCESSFUL in 5s
+3 actionable tasks: 3 executed
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.

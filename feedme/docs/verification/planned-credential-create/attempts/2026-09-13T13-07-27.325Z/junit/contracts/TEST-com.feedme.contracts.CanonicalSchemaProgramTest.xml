@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.contracts.CanonicalSchemaProgramTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-09-13T13:07:31.795Z" hostname="ansachars-MacBook-Pro.local" time="0.092">
+  <properties/>
+  <testcase name="exactMinimumAndMaximumRetainTinyFractionsAndLargeValues[jvm]" classname="com.feedme.contracts.CanonicalSchemaProgramTest" time="0.002"/>
+  <testcase name="refSiblingsAreAppliedAndReferencesNeverFetchOrLoop[jvm]" classname="com.feedme.contracts.CanonicalSchemaProgramTest" time="0.001"/>
+  <testcase name="arrayBoundsAndItemSchemasApplyToEachElement[jvm]" classname="com.feedme.contracts.CanonicalSchemaProgramTest" time="0.003"/>
+  <testcase name="bodyBoundaryRejectsSyntaxMissingUnexpectedAndWrongMedia[jvm]" classname="com.feedme.contracts.CanonicalSchemaProgramTest" time="0.02"/>
+  <testcase name="additionalPropertiesHasBooleanAndTypedMapSemantics[jvm]" classname="com.feedme.contracts.CanonicalSchemaProgramTest" time="0.0"/>
+  <testcase name="canonicalCatalogCompilesWithoutDroppingAssertions[jvm]" classname="com.feedme.contracts.CanonicalSchemaProgramTest" time="0.011"/>
+  <testcase name="stringLengthsCountUnicodeScalarsNotCodeUnitsOrGraphemes[jvm]" classname="com.feedme.contracts.CanonicalSchemaProgramTest" time="0.0"/>
+  <testcase name="pinnedAnchorsNeverAcceptPrefixBeforeFinalLineTerminators[jvm]" classname="com.feedme.contracts.CanonicalSchemaProgramTest" time="0.0"/>
+  <testcase name="requiredAndNullAreIndependentAndDefaultsNeverFillMissing[jvm]" classname="com.feedme.contracts.CanonicalSchemaProgramTest" time="0.001"/>
+  <testcase name="budgetAndNumericProfileApplyEvenToUnrestrictedContent[jvm]" classname="com.feedme.contracts.CanonicalSchemaProgramTest" time="0.0"/>
+  <testcase name="conditionalBranchesDoNotBecomeExclusiveAndIfMissingPropertyMatches[jvm]" classname="com.feedme.contracts.CanonicalSchemaProgramTest" time="0.0"/>
+  <testcase name="uniqueItemsUsesNumericObjectAndNestedArrayEquality[jvm]" classname="com.feedme.contracts.CanonicalSchemaProgramTest" time="0.014"/>
+  <testcase name="unsupportedOrMalformedSchemasFailVisiblyInsteadOfPassing[jvm]" classname="com.feedme.contracts.CanonicalSchemaProgramTest" time="0.001"/>
+  <testcase name="integersAreMathematicalNotLexicalAndNeverRounded[jvm]" classname="com.feedme.contracts.CanonicalSchemaProgramTest" time="0.0"/>
+  <testcase name="mediaLexerSupportsQuotedDelimitersAndRejectsMalformedSuffixes[jvm]" classname="com.feedme.contracts.CanonicalSchemaProgramTest" time="0.036"/>
+  <testcase name="enumAndConstUseStructuralNumericEquality[jvm]" classname="com.feedme.contracts.CanonicalSchemaProgramTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,79 @@
+{
+  "passed": true,
+  "scope": "Execution-board structural coverage only; not native implementation, production testing, milestone completion or release certification.",
+  "counts": {
+    "milestones": 10,
+    "milestoneTasks": 72,
+    "features": 54,
+    "featureTasks": 162,
+    "screens": 98,
+    "checks": 14
+  },
+  "tasksByStatus": {
+    "TODO": 48,
+    "READY": 4,
+    "IN_PROGRESS": 3,
+    "USER_BLOCKED": 8,
+    "DONE": 9
+  },
+  "checks": [
+    {
+      "name": "M0–M9 each have one task section",
+      "passed": true
+    },
+    {
+      "name": "Every milestone has small tasks",
+      "passed": true
+    },
+    {
+      "name": "Task identifiers are unique",
+      "passed": true
+    },
+    {
+      "name": "Every task has a known milestone, status, action and acceptance evidence",
+      "passed": true
+    },
+    {
+      "name": "Every user-blocked task identifies a user action",
+      "passed": true
+    },
+    {
+      "name": "All user-action references resolve",
+      "passed": true
+    },
+    {
+      "name": "F01–F54 each have one delivery section",
+      "passed": true
+    },
+    {
+      "name": "Feature task identifiers are unique",
+      "passed": true
+    },
+    {
+      "name": "Each feature owns at least three correctly identified tasks",
+      "passed": true
+    },
+    {
+      "name": "Canonical registry retains 54 features and 98 screens",
+      "passed": true
+    },
+    {
+      "name": "Every feature includes all its canonical screen IDs",
+      "passed": true
+    },
+    {
+      "name": "Every feature has a valid primary milestone",
+      "passed": true
+    },
+    {
+      "name": "Every feature has at least three checkable implementation tasks",
+      "passed": true
+    },
+    {
+      "name": "Feature mapping covers all 98 canonical screens",
+      "passed": true
+    }
+  ],
+  "verifiedAt": "2026-09-13T14:42:02.320Z",
+  "sourceSha256": "ad92942159ed665448cee6125c62231f15d4ee0ffd1010f5c330e551b520a572"
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.contract.WireContractIntegrationTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-09-13T11:53:45.285Z" hostname="ansachars-MacBook-Pro.local" time="0.032">
+  <properties/>
+  <testcase name="typedCommandsUsePlanIdentityAndKeepNonexclusiveSaveSelectors" classname="com.feedme.server.contract.WireContractIntegrationTest" time="0.025"/>
+  <testcase name="recipePlanCookAndPrivateSnapshotKeepTheirDistinctProductionIdentities" classname="com.feedme.server.contract.WireContractIntegrationTest" time="0.004"/>
+  <testcase name="everyDocumentedRequestExamplePassesItsActualOperationSchema" classname="com.feedme.server.contract.WireContractIntegrationTest" time="0.0"/>
+  <testcase name="everyCanonicalValidationFixtureSurvivesSharedWireRoundTripWithoutCoercion" classname="com.feedme.server.contract.WireContractIntegrationTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

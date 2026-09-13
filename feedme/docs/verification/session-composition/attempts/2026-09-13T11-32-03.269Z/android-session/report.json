@@ -1,0 +1,42 @@
+{
+  "startedAt": "2026-09-13T11:32:44.684Z",
+  "passed": true,
+  "serial": "emulator-5554",
+  "scope": "Isolated native credential/private-file tests, exact timer/worker cancellation and separate real native-store/OS integration, including a private-runtime path with a synthetic verifier. Controlled close/reopen and injected post-rename acknowledgement loss are covered; notification and hardlink branches are reported explicitly. Not actual provider sign-in, production timer receiver/worker or app scheduling/recovery wiring, FeedMe UI/auth integration, process-hard-kill, physical-device, power-loss or iOS proof.",
+  "apk": {
+    "path": "shared/session/build/outputs/apk/androidTest/debug/session-debug-androidTest.apk",
+    "bytes": 8377719,
+    "sha256": "48d3726bc43a13e10ef4a0fa23737a7df27f2a58e7b7f50f91ea4826297616ab"
+  },
+  "attemptDirectory": "docs/verification/native-credentials/android-attempts/2026-09-13T11-32-44.684Z",
+  "checks": [
+    {
+      "name": "regular",
+      "classes": "com.feedme.session.AndroidCredentialStoreTest,com.feedme.session.AndroidNativeWorkCancellationTest",
+      "passed": true,
+      "tests": 29,
+      "expected": 29,
+      "log": "docs/verification/native-credentials/android-attempts/2026-09-13T11-32-44.684Z/regular.log"
+    },
+    {
+      "name": "integration",
+      "classes": "com.feedme.session.AndroidLocalRetirementIntegrationTest",
+      "passed": true,
+      "tests": 4,
+      "expected": 4,
+      "log": "docs/verification/native-credentials/android-attempts/2026-09-13T11-32-44.684Z/integration.log"
+    },
+    {
+      "name": "owned-test-directories-cleaned",
+      "passed": true
+    }
+  ],
+  "androidApi": "35",
+  "androidAbi": "arm64-v8a",
+  "branches": {
+    "hardlinkManifest": "platform-denied:13; existing-hardlink-branch-unexercised",
+    "hardlinkBlob": "platform-denied:13; existing-hardlink-branch-unexercised",
+    "notification": "NATIVE_WORK_NOTIFICATION_EXACT_CANCELLATION_VERIFIED"
+  },
+  "finishedAt": "2026-09-13T11:32:49.414Z"
+}

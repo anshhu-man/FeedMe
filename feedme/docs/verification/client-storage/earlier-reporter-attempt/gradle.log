@@ -1,0 +1,183 @@
+
+> Configure project :shared:app
+w: file:///Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/shared/app/build.gradle.kts:20:36: 'runtime: String' is deprecated. Specify dependency directly
+w: file:///Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/shared/app/build.gradle.kts:21:36: 'foundation: String' is deprecated. Specify dependency directly
+w: file:///Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/shared/app/build.gradle.kts:22:36: 'material3: String' is deprecated. Specify dependency directly
+w: file:///Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/shared/app/build.gradle.kts:23:36: 'ui: String' is deprecated. Specify dependency directly
+w: file:///Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/shared/app/build.gradle.kts:24:36: 'components: ComposePlugin.CommonComponentsDependencies' is deprecated. Specify dependency directly
+w: file:///Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/shared/app/build.gradle.kts:24:47: 'resources: String' is deprecated. Specify dependency directly
+
+> Task :server:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:contracts:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:core:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:contracts:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :server:processResources
+> Task :server:processTestResources
+> Task :server:processIntegrationTestResources NO-SOURCE
+
+> Task :shared:contracts:verifyContractArtifacts
+feedme-contract-artifacts-v1: no drift; {"schemas":188,"paths":155,"operations":201,"features":54,"screens":98,"actions":900,"httpActions":152,"httpHydrations":99,"localExternalHydrations":32}
+
+> Task :shared:contracts:jvmProcessResources NO-SOURCE
+> Task :shared:core:jvmProcessResources NO-SOURCE
+> Task :shared:contracts:processJvmMainResources SKIPPED
+> Task :shared:core:processJvmMainResources SKIPPED
+> Task :shared:core:jvmTestProcessResources NO-SOURCE
+> Task :shared:core:processJvmTestResources SKIPPED
+> Task :shared:contracts:jvmTestProcessResources
+> Task :shared:contracts:processJvmTestResources SKIPPED
+> Task :shared:storage:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:storage:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:storage:jvmProcessResources NO-SOURCE
+> Task :shared:storage:processJvmMainResources SKIPPED
+> Task :shared:storage:jvmTestProcessResources NO-SOURCE
+> Task :shared:storage:processJvmTestResources SKIPPED
+> Task :shared:storage:preBuild UP-TO-DATE
+> Task :shared:storage:preDebugBuild UP-TO-DATE
+> Task :shared:transport:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:transport:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:transport:jvmProcessResources NO-SOURCE
+> Task :shared:transport:processJvmMainResources SKIPPED
+> Task :shared:transport:jvmTestProcessResources NO-SOURCE
+> Task :shared:transport:processJvmTestResources SKIPPED
+> Task :shared:storage:checkDebugAarMetadata
+> Task :shared:storage:mergeDebugJniLibFolders
+> Task :shared:storage:mergeDebugNativeLibs NO-SOURCE
+> Task :shared:storage:stripDebugDebugSymbols NO-SOURCE
+> Task :shared:storage:copyDebugJniLibsProjectAndLocalJars
+> Task :shared:storage:generateDebugResValues
+> Task :shared:storage:generateDebugResources
+> Task :shared:storage:packageDebugResources
+> Task :shared:storage:processDebugNavigationResources
+> Task :shared:storage:extractDeepLinksForAarDebug
+> Task :shared:storage:mergeDebugShaders
+> Task :shared:storage:compileDebugShaders NO-SOURCE
+> Task :shared:storage:debugAssetsCopyForAGP NO-SOURCE
+> Task :shared:storage:generateDebugAssets UP-TO-DATE
+> Task :shared:storage:mergeDebugAssets
+> Task :shared:storage:prepareDebugArtProfile
+> Task :shared:storage:javaPreCompileDebug
+> Task :shared:storage:prepareLintJarForPublish
+> Task :shared:storage:preDebugAndroidTestBuild UP-TO-DATE
+> Task :shared:storage:writeDebugAarMetadata
+> Task :shared:storage:processDebugAndroidTestNavigationResources
+> Task :shared:storage:parseDebugLocalResources
+> Task :shared:storage:processDebugManifest
+> Task :shared:storage:checkDebugAndroidTestAarMetadata
+> Task :shared:storage:generateDebugRFile
+> Task :shared:storage:compileDebugAndroidTestNavigationResources
+> Task :shared:storage:generateDebugAndroidTestResValues
+> Task :shared:storage:compileDebugLibraryResources
+> Task :shared:storage:mapDebugAndroidTestSourceSetPaths
+> Task :shared:storage:generateDebugAndroidTestResources
+> Task :shared:storage:extractDeepLinksDebug
+> Task :shared:storage:processDebugAndroidTestManifest
+> Task :shared:storage:mergeDebugAndroidTestShaders
+> Task :shared:storage:javaPreCompileDebugAndroidTest
+> Task :shared:storage:compileDebugAndroidTestShaders NO-SOURCE
+> Task :shared:storage:generateDebugAndroidTestAssets UP-TO-DATE
+> Task :shared:storage:mergeDebugAndroidTestAssets
+> Task :shared:storage:compressDebugAndroidTestAssets
+> Task :shared:storage:mergeDebugAndroidTestResources
+> Task :shared:storage:desugarDebugAndroidTestFileDependencies
+> Task :shared:storage:copyDebugJniLibsProjectOnly
+> Task :shared:storage:mergeDebugAndroidTestJniLibFolders
+> Task :shared:storage:checkDebugAndroidTestDuplicateClasses
+> Task :shared:storage:validateSigningDebugAndroidTest
+> Task :shared:core:compileKotlinJvm
+> Task :shared:core:compileJvmMainJava NO-SOURCE
+> Task :shared:core:jvmMainClasses
+> Task :shared:core:jvmJar
+> Task :shared:contracts:compileKotlinJvm
+> Task :shared:contracts:compileJvmMainJava NO-SOURCE
+> Task :shared:contracts:jvmMainClasses
+> Task :shared:contracts:jvmJar
+> Task :shared:storage:processDebugAndroidTestResources
+
+> Task :shared:core:compileTestKotlinJvm
+w: file:///Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/shared/core/src/commonTest/kotlin/com/feedme/core/ReducerTest.kt:25:34 Unnecessary non-null assertion (!!) on a non-null receiver of type 'Session'.
+w: file:///Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/shared/core/src/commonTest/kotlin/com/feedme/core/ReducerTest.kt:91:31 Unnecessary non-null assertion (!!) on a non-null receiver of type 'AppError'.
+w: file:///Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/shared/core/src/commonTest/kotlin/com/feedme/core/ReducerTest.kt:145:54 Unnecessary non-null assertion (!!) on a non-null receiver of type 'Session'.
+w: file:///Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/shared/core/src/commonTest/kotlin/com/feedme/core/ReducerTest.kt:197:38 Unnecessary non-null assertion (!!) on a non-null receiver of type 'CookingSession'.
+w: file:///Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/shared/core/src/commonTest/kotlin/com/feedme/core/ReducerTest.kt:198:33 Unnecessary non-null assertion (!!) on a non-null receiver of type 'CookingSession'.
+
+> Task :shared:core:compileJvmTestJava NO-SOURCE
+> Task :shared:core:jvmTestClasses
+> Task :shared:contracts:compileTestKotlinJvm
+> Task :shared:contracts:compileJvmTestJava NO-SOURCE
+> Task :shared:contracts:jvmTestClasses
+> Task :shared:core:jvmTest
+> Task :shared:transport:compileKotlinJvm
+> Task :shared:transport:compileJvmMainJava NO-SOURCE
+> Task :shared:transport:jvmMainClasses
+> Task :shared:transport:jvmJar
+> Task :server:compileKotlin
+> Task :server:compileJava NO-SOURCE
+> Task :server:classes
+> Task :server:jar
+> Task :shared:contracts:jvmTest
+> Task :shared:transport:compileTestKotlinJvm
+> Task :shared:transport:compileJvmTestJava NO-SOURCE
+> Task :shared:transport:jvmTestClasses
+> Task :server:compileIntegrationTestKotlin
+> Task :server:compileIntegrationTestJava NO-SOURCE
+> Task :server:integrationTestClasses UP-TO-DATE
+> Task :server:compileTestKotlin
+> Task :shared:transport:jvmTest
+> Task :shared:storage:writeDebugAndroidTestSigningConfigVersions
+> Task :shared:storage:writeDebugLintModelMetadata
+> Task :shared:storage:mergeDebugAndroidTestNativeLibs
+> Task :shared:storage:extractProguardFiles
+> Task :shared:storage:preDebugUnitTestBuild UP-TO-DATE
+> Task :shared:storage:compileKotlinJvm
+> Task :shared:storage:compileJvmMainJava NO-SOURCE
+> Task :shared:storage:jvmMainClasses
+> Task :shared:storage:jvmJar
+> Task :shared:storage:stripDebugAndroidTestDebugSymbols
+> Task :shared:storage:compileDebugKotlinAndroid
+> Task :shared:storage:mergeExtDexDebugAndroidTest
+> Task :shared:storage:extractDebugAnnotations
+> Task :shared:storage:compileDebugJavaWithJavac NO-SOURCE
+> Task :shared:storage:mergeDebugGeneratedProguardFiles
+> Task :shared:storage:mergeDebugConsumerProguardFiles
+> Task :shared:storage:processDebugJavaRes
+> Task :shared:storage:bundleLibRuntimeToJarDebug
+> Task :shared:storage:bundleLibCompileToJarDebug
+> Task :shared:storage:bundleLibRuntimeToDirDebug
+> Task :shared:storage:mergeDebugJavaResource
+> Task :shared:storage:generateDebugLintReportModel
+> Task :shared:storage:syncDebugLibJars
+> Task :shared:storage:bundleDebugAar
+> Task :shared:storage:assembleDebug
+> Task :shared:storage:bundleDebugLocalLintAar
+> Task :shared:storage:createFullJarDebug
+> Task :shared:storage:generateDebugAndroidTestLintModel
+> Task :shared:storage:generateDebugUnitTestLintModel
+> Task :shared:storage:compileTestKotlinJvm
+> Task :shared:storage:compileJvmTestJava NO-SOURCE
+> Task :shared:storage:jvmTestClasses
+> Task :shared:storage:mergeLibDexDebugAndroidTest
+> Task :shared:storage:lintAnalyzeDebugUnitTest
+> Task :shared:storage:compileDebugAndroidTestKotlinAndroid
+> Task :shared:storage:lintAnalyzeDebug
+> Task :shared:storage:lintAnalyzeDebugAndroidTest
+> Task :shared:storage:jvmTest
+> Task :shared:storage:compileDebugAndroidTestJavaWithJavac NO-SOURCE
+> Task :shared:storage:dexBuilderDebugAndroidTest
+> Task :shared:storage:mergeDebugAndroidTestGlobalSynthetics
+> Task :shared:storage:processDebugAndroidTestJavaRes
+> Task :shared:storage:lintReportDebug
+> Task :shared:storage:lintDebug
+> Task :shared:storage:mergeProjectDexDebugAndroidTest
+> Task :shared:storage:mergeDebugAndroidTestJavaResource
+> Task :shared:storage:packageDebugAndroidTest
+> Task :shared:storage:createDebugAndroidTestApkListingFileRedirect
+> Task :shared:storage:assembleDebugAndroidTest
+> Task :server:integrationTest
+> Task :server:compileTestJava NO-SOURCE
+> Task :server:testClasses
+> Task :server:test
+
+BUILD SUCCESSFUL in 31s
+103 actionable tasks: 103 executed

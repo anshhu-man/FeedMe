@@ -1,0 +1,1144 @@
+[main] WARN  o.o.codegen.DefaultCodegen - OpenAPI 3.1 support is still in beta. To report an issue related to 3.1 spec, please kindly open an issue in the Github repo: https://github.com/openAPITools/openapi-generator.
+[main] INFO  o.o.codegen.DefaultGenerator - Generating with dryRun=false
+[main] INFO  o.o.codegen.DefaultGenerator - OpenAPI Generator: kotlin (client)
+[main] INFO  o.o.codegen.DefaultGenerator - Generator 'kotlin' is considered stable.
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Environment variable KOTLIN_POST_PROCESS_FILE not defined so the Kotlin code may not be properly formatted. To define it, try 'export KOTLIN_POST_PROCESS_FILE="/usr/local/bin/ktlint -F"' (Linux/Mac)
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+[main] WARN  o.o.codegen.utils.ModelUtils - Failed to get the schema name: null
+[main] INFO  o.o.codegen.OpenAPINormalizer - Unset/Removed allOf after cleaning up allOf sub-schemas that are not yet supported.
+[main] INFO  o.o.codegen.OpenAPINormalizer - Unset/Removed allOf after cleaning up allOf sub-schemas that are not yet supported.
+[main] INFO  o.o.codegen.OpenAPINormalizer - Unset/Removed allOf after cleaning up allOf sub-schemas that are not yet supported.
+[main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as Problem_fieldErrors_inner. To have complete control of the model name, set the `title` field or use the modelNameMapping option (e.g. --model-name-mappings Problem_fieldErrors_inner=NewModel,ModelA=NewModelA in CLI) or inlineSchemaNameMapping option (--inline-schema-name-mappings Problem_fieldErrors_inner=NewModel,ModelA=NewModelA in CLI).
+[main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as PlanRequest_baseMeal. To have complete control of the model name, set the `title` field or use the modelNameMapping option (e.g. --model-name-mappings PlanRequest_baseMeal=NewModel,ModelA=NewModelA in CLI) or inlineSchemaNameMapping option (--inline-schema-name-mappings PlanRequest_baseMeal=NewModel,ModelA=NewModelA in CLI).
+[main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as Plan_changes_inner. To have complete control of the model name, set the `title` field or use the modelNameMapping option (e.g. --model-name-mappings Plan_changes_inner=NewModel,ModelA=NewModelA in CLI) or inlineSchemaNameMapping option (--inline-schema-name-mappings Plan_changes_inner=NewModel,ModelA=NewModelA in CLI).
+[main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as Plan_interpretationCandidates_inner. To have complete control of the model name, set the `title` field or use the modelNameMapping option (e.g. --model-name-mappings Plan_interpretationCandidates_inner=NewModel,ModelA=NewModelA in CLI) or inlineSchemaNameMapping option (--inline-schema-name-mappings Plan_interpretationCandidates_inner=NewModel,ModelA=NewModelA in CLI).
+[main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as CookSession_personalNotes_inner. To have complete control of the model name, set the `title` field or use the modelNameMapping option (e.g. --model-name-mappings CookSession_personalNotes_inner=NewModel,ModelA=NewModelA in CLI) or inlineSchemaNameMapping option (--inline-schema-name-mappings CookSession_personalNotes_inner=NewModel,ModelA=NewModelA in CLI).
+[main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as Audience_bindings_inner. To have complete control of the model name, set the `title` field or use the modelNameMapping option (e.g. --model-name-mappings Audience_bindings_inner=NewModel,ModelA=NewModelA in CLI) or inlineSchemaNameMapping option (--inline-schema-name-mappings Audience_bindings_inner=NewModel,ModelA=NewModelA in CLI).
+[main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as Post_reactionCounts_inner. To have complete control of the model name, set the `title` field or use the modelNameMapping option (e.g. --model-name-mappings Post_reactionCounts_inner=NewModel,ModelA=NewModelA in CLI) or inlineSchemaNameMapping option (--inline-schema-name-mappings Post_reactionCounts_inner=NewModel,ModelA=NewModelA in CLI).
+[main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as Pact_participantStates_inner. To have complete control of the model name, set the `title` field or use the modelNameMapping option (e.g. --model-name-mappings Pact_participantStates_inner=NewModel,ModelA=NewModelA in CLI) or inlineSchemaNameMapping option (--inline-schema-name-mappings Pact_participantStates_inner=NewModel,ModelA=NewModelA in CLI).
+[main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as RevenueCatWebhook_event. To have complete control of the model name, set the `title` field or use the modelNameMapping option (e.g. --model-name-mappings RevenueCatWebhook_event=NewModel,ModelA=NewModelA in CLI) or inlineSchemaNameMapping option (--inline-schema-name-mappings RevenueCatWebhook_event=NewModel,ModelA=NewModelA in CLI).
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Problem implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Accepted implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Job implements interface(s): []
+[main] INFO  o.o.codegen.DefaultGenerator - Model Empty not generated since it's a free-form object
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Profile implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ProfilePatch implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Preference implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PreferencePatch implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model GuestRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model GuestSession implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MergeRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MergeResult implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model BootstrapRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Bootstrap implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model DeviceSession implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Ingredient implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PantryItem implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PantryWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model IngredientAmount implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RecipeStep implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RecipeVersion implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RecipeDraft implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Constraint implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PlanRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Reason implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Plan implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model AdaptRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CookSession implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CookStart implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CookPatch implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model TimerState implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Completion implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Feedback implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model FeedbackWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Memory implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MemoryPatch implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SavedRecipe implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SaveRecipeRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SavePostRecipeRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Collection implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CollectionWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CollectionItemWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReuseRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReuseOption implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Audience implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Attachment implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SavePolicy implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Post implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PostWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PostPatch implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ProfileSummary implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MediaPrepare implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Upload implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model UploadComplete implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MediaAccessRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MediaAccess implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReactionWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Reaction implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RemixNode implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Circle implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CircleWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Member implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MemberPatch implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model InvitationRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Invitation implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model InviteAccept implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model InvitePreview implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Thread implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ThreadCreate implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Message implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MessageWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RecipeRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Notification implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model DeviceRegistration implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model NotificationSettings implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model NotificationSettingsPatch implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Report implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReportWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Block implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model BlockWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Mute implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MuteWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SOS implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SOSWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SOSReply implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Pact implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PactWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Participation implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Potluck implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PotluckWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Contribution implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ContributionWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ContributionClaim implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Shortcut implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ShortcutWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PollOption implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Poll implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PollWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model VoteWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Household implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model HouseholdWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model HouseholdPreference implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model HouseholdPreferenceWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Pack implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PackWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Entitlement implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReconcileRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RevenueCatWebhook implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model DeletionRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ExportRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SupportWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SupportTicket implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model FeatureFlag implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model FlagWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Review implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReviewWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Substitution implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SubstitutionWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ModerationCase implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CaseWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Audit implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Incident implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model IncidentWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Health implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReadWatermark implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model IngredientPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PantryItemPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RecipeVersionPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReasonPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReuseOptionPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MemoryPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SavedRecipePage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CollectionPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PostPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RemixNodePage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CirclePage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MemberPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ThreadPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MessagePage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model NotificationPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model BlockPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MutePage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ContributionPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model HouseholdPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model HouseholdPreferencePage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PackPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model EntitlementPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model DeviceSessionPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model FeatureFlagPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SubstitutionPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReportPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model AuditPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model IncidentPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PostDraft implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PostDraftWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PostDraftPatch implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model OwnershipTransfer implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReadNotifications implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RevokeAll implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PotluckPlanRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PotluckConfirm implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PotluckClaim implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model HelpfulWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model HelpfulResult implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model StaffReason implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RestrictionWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model AppealWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model FlagChange implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model FlagChangeWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model FlagApply implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MediaPause implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReplayRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model AdminHealth implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model AuditExportWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PostDraftPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model HouseholdKitchen implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model HouseholdKitchenWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RecipeRequestRecord implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RecipeRequestResponse implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PactScheduleWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model FeedbackTarget implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MemoryContext implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CollectionOrder implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model HouseholdPreferenceView implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PrivacySettings implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PrivacyPatch implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SOSPatch implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PlanPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Problem_fieldErrors_inner implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PlanRequest_baseMeal implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Plan_changes_inner implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Plan_interpretationCandidates_inner implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CookSession_personalNotes_inner implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Audience_bindings_inner implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Post_reactionCounts_inner implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Pact_participantStates_inner implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RevenueCatWebhook_event implements interface(s): []
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Accepted.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/AcceptedTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Accepted.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/AdaptRequest.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/AdaptRequestTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/AdaptRequest.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/AdminHealth.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/AdminHealthTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/AdminHealth.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/AppealWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/AppealWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/AppealWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Attachment.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/AttachmentTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Attachment.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Audience.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/AudienceTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Audience.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/AudienceBindingsInner.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/AudienceBindingsInnerTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/AudienceBindingsInner.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Audit.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/AuditTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Audit.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/AuditExportWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/AuditExportWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/AuditExportWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/AuditPage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/AuditPageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/AuditPage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Block.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/BlockTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Block.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/BlockPage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/BlockPageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/BlockPage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/BlockWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/BlockWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/BlockWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Bootstrap.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/BootstrapTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Bootstrap.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/BootstrapRequest.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/BootstrapRequestTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/BootstrapRequest.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/CaseWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/CaseWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/CaseWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Circle.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/CircleTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Circle.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/CirclePage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/CirclePageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/CirclePage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/CircleWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/CircleWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/CircleWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Collection.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/CollectionTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Collection.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/CollectionItemWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/CollectionItemWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/CollectionItemWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/CollectionOrder.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/CollectionOrderTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/CollectionOrder.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/CollectionPage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/CollectionPageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/CollectionPage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/CollectionWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/CollectionWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/CollectionWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Completion.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/CompletionTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Completion.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Constraint.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ConstraintTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Constraint.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Contribution.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ContributionTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Contribution.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/ContributionClaim.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ContributionClaimTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ContributionClaim.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/ContributionPage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ContributionPageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ContributionPage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/ContributionWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ContributionWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ContributionWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/CookPatch.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/CookPatchTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/CookPatch.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/CookSession.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/CookSessionTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/CookSession.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/CookSessionPersonalNotesInner.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/CookSessionPersonalNotesInnerTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/CookSessionPersonalNotesInner.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/CookStart.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/CookStartTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/CookStart.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/DeletionRequest.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/DeletionRequestTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/DeletionRequest.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/DeviceRegistration.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/DeviceRegistrationTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/DeviceRegistration.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/DeviceSession.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/DeviceSessionTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/DeviceSession.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/DeviceSessionPage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/DeviceSessionPageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/DeviceSessionPage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Entitlement.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/EntitlementTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Entitlement.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/EntitlementPage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/EntitlementPageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/EntitlementPage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/ExportRequest.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ExportRequestTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ExportRequest.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/FeatureFlag.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/FeatureFlagTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/FeatureFlag.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/FeatureFlagPage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/FeatureFlagPageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/FeatureFlagPage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Feedback.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/FeedbackTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Feedback.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/FeedbackTarget.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/FeedbackTargetTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/FeedbackTarget.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/FeedbackWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/FeedbackWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/FeedbackWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/FlagApply.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/FlagApplyTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/FlagApply.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/FlagChange.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/FlagChangeTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/FlagChange.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/FlagChangeWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/FlagChangeWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/FlagChangeWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/FlagWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/FlagWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/FlagWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/GuestRequest.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/GuestRequestTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/GuestRequest.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/GuestSession.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/GuestSessionTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/GuestSession.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Health.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/HealthTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Health.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/HelpfulResult.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/HelpfulResultTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/HelpfulResult.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/HelpfulWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/HelpfulWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/HelpfulWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Household.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/HouseholdTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Household.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/HouseholdKitchen.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/HouseholdKitchenTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/HouseholdKitchen.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/HouseholdKitchenWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/HouseholdKitchenWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/HouseholdKitchenWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/HouseholdPage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/HouseholdPageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/HouseholdPage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/HouseholdPreference.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/HouseholdPreferenceTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/HouseholdPreference.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/HouseholdPreferencePage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/HouseholdPreferencePageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/HouseholdPreferencePage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/HouseholdPreferenceView.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/HouseholdPreferenceViewTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/HouseholdPreferenceView.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/HouseholdPreferenceWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/HouseholdPreferenceWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/HouseholdPreferenceWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/HouseholdWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/HouseholdWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/HouseholdWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Incident.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/IncidentTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Incident.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/IncidentPage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/IncidentPageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/IncidentPage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/IncidentWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/IncidentWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/IncidentWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Ingredient.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/IngredientTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Ingredient.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/IngredientAmount.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/IngredientAmountTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/IngredientAmount.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/IngredientPage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/IngredientPageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/IngredientPage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Invitation.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/InvitationTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Invitation.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/InvitationRequest.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/InvitationRequestTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/InvitationRequest.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/InviteAccept.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/InviteAcceptTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/InviteAccept.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/InvitePreview.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/InvitePreviewTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/InvitePreview.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Job.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/JobTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Job.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/MediaAccess.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/MediaAccessTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/MediaAccess.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/MediaAccessRequest.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/MediaAccessRequestTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/MediaAccessRequest.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/MediaPause.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/MediaPauseTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/MediaPause.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/MediaPrepare.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/MediaPrepareTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/MediaPrepare.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Member.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/MemberTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Member.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/MemberPage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/MemberPageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/MemberPage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/MemberPatch.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/MemberPatchTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/MemberPatch.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Memory.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/MemoryTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Memory.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/MemoryContext.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/MemoryContextTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/MemoryContext.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/MemoryPage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/MemoryPageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/MemoryPage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/MemoryPatch.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/MemoryPatchTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/MemoryPatch.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/MergeRequest.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/MergeRequestTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/MergeRequest.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/MergeResult.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/MergeResultTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/MergeResult.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Message.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/MessageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Message.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/MessagePage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/MessagePageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/MessagePage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/MessageWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/MessageWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/MessageWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/ModerationCase.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ModerationCaseTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ModerationCase.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Mute.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/MuteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Mute.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/MutePage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/MutePageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/MutePage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/MuteWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/MuteWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/MuteWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Notification.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/NotificationTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Notification.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/NotificationPage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/NotificationPageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/NotificationPage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/NotificationSettings.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/NotificationSettingsTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/NotificationSettings.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/NotificationSettingsPatch.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/NotificationSettingsPatchTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/NotificationSettingsPatch.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/OwnershipTransfer.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/OwnershipTransferTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/OwnershipTransfer.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Pack.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PackTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Pack.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PackPage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PackPageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PackPage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PackWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PackWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PackWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Pact.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PactTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Pact.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PactParticipantStatesInner.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PactParticipantStatesInnerTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PactParticipantStatesInner.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PactScheduleWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PactScheduleWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PactScheduleWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PactWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PactWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PactWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PantryItem.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PantryItemTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PantryItem.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PantryItemPage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PantryItemPageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PantryItemPage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PantryWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PantryWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PantryWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Participation.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ParticipationTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Participation.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Plan.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PlanTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Plan.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PlanChangesInner.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PlanChangesInnerTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PlanChangesInner.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PlanInterpretationCandidatesInner.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PlanInterpretationCandidatesInnerTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PlanInterpretationCandidatesInner.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PlanPage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PlanPageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PlanPage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PlanRequest.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PlanRequestTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PlanRequest.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PlanRequestBaseMeal.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PlanRequestBaseMealTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PlanRequestBaseMeal.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Poll.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PollTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Poll.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PollOption.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PollOptionTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PollOption.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PollWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PollWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PollWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Post.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PostTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Post.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PostDraft.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PostDraftTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PostDraft.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PostDraftPage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PostDraftPageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PostDraftPage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PostDraftPatch.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PostDraftPatchTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PostDraftPatch.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PostDraftWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PostDraftWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PostDraftWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PostPage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PostPageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PostPage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PostPatch.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PostPatchTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PostPatch.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PostReactionCountsInner.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PostReactionCountsInnerTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PostReactionCountsInner.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PostWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PostWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PostWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Potluck.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PotluckTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Potluck.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PotluckClaim.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PotluckClaimTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PotluckClaim.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PotluckConfirm.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PotluckConfirmTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PotluckConfirm.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PotluckPlanRequest.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PotluckPlanRequestTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PotluckPlanRequest.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PotluckWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PotluckWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PotluckWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Preference.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PreferenceTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Preference.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PreferencePatch.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PreferencePatchTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PreferencePatch.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PrivacyPatch.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PrivacyPatchTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PrivacyPatch.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/PrivacySettings.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/PrivacySettingsTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PrivacySettings.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Problem.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ProblemTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Problem.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/ProblemFieldErrorsInner.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ProblemFieldErrorsInnerTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ProblemFieldErrorsInner.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Profile.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ProfileTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Profile.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/ProfilePatch.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ProfilePatchTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ProfilePatch.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/ProfileSummary.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ProfileSummaryTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ProfileSummary.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Reaction.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ReactionTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Reaction.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/ReactionWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ReactionWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ReactionWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/ReadNotifications.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ReadNotificationsTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ReadNotifications.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/ReadWatermark.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ReadWatermarkTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ReadWatermark.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Reason.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ReasonTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Reason.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/ReasonPage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ReasonPageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ReasonPage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/RecipeDraft.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/RecipeDraftTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/RecipeDraft.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/RecipeRequest.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/RecipeRequestTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/RecipeRequest.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/RecipeRequestRecord.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/RecipeRequestRecordTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/RecipeRequestRecord.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/RecipeRequestResponse.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/RecipeRequestResponseTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/RecipeRequestResponse.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/RecipeStep.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/RecipeStepTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/RecipeStep.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/RecipeVersion.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/RecipeVersionTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/RecipeVersion.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/RecipeVersionPage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/RecipeVersionPageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/RecipeVersionPage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/ReconcileRequest.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ReconcileRequestTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ReconcileRequest.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/RemixNode.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/RemixNodeTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/RemixNode.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/RemixNodePage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/RemixNodePageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/RemixNodePage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/ReplayRequest.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ReplayRequestTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ReplayRequest.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Report.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ReportTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Report.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/ReportPage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ReportPageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ReportPage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/ReportWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ReportWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ReportWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/RestrictionWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/RestrictionWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/RestrictionWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/ReuseOption.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ReuseOptionTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ReuseOption.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/ReuseOptionPage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ReuseOptionPageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ReuseOptionPage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/ReuseRequest.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ReuseRequestTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ReuseRequest.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhook.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/RevenueCatWebhookTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/RevenueCatWebhook.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhookEvent.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/RevenueCatWebhookEventTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/RevenueCatWebhookEvent.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Review.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ReviewTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Review.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/ReviewWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ReviewWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ReviewWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevokeAll.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/RevokeAllTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/RevokeAll.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/SOS.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/SOSTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/SOS.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/SOSPatch.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/SOSPatchTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/SOSPatch.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/SOSReply.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/SOSReplyTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/SOSReply.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/SOSWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/SOSWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/SOSWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/SavePolicy.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/SavePolicyTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/SavePolicy.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/SavePostRecipeRequest.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/SavePostRecipeRequestTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/SavePostRecipeRequest.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/SaveRecipeRequest.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/SaveRecipeRequestTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/SaveRecipeRequest.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/SavedRecipe.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/SavedRecipeTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/SavedRecipe.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/SavedRecipePage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/SavedRecipePageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/SavedRecipePage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Shortcut.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ShortcutTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Shortcut.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/ShortcutWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ShortcutWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ShortcutWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/StaffReason.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/StaffReasonTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/StaffReason.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Substitution.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/SubstitutionTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Substitution.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/SubstitutionPage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/SubstitutionPageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/SubstitutionPage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/SubstitutionWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/SubstitutionWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/SubstitutionWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/SupportTicket.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/SupportTicketTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/SupportTicket.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/SupportWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/SupportWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/SupportWrite.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Thread.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ThreadTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Thread.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/ThreadCreate.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ThreadCreateTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ThreadCreate.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/ThreadPage.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/ThreadPageTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ThreadPage.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/TimerState.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/TimerStateTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/TimerState.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/Upload.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/UploadTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/Upload.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/UploadComplete.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/UploadCompleteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/UploadComplete.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/models/VoteWrite.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/models/VoteWriteTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/VoteWrite.md
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model GuestSession implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model GuestRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MergeResult implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MergeRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Bootstrap implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model BootstrapRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Profile implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Profile implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ProfilePatch implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Preference implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Preference implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PreferencePatch implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model IngredientPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PantryItemPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PantryItem implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PantryWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RecipeVersionPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RecipeVersion implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PlanPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Plan implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PlanRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Plan implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Plan implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model AdaptRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Plan implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model AdaptRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Plan implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model AdaptRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReasonPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReuseOptionPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReuseRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CookSession implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CookStart implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CookSession implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CookSession implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CookPatch implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CookSession implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Completion implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Feedback implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model FeedbackWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Feedback implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model FeedbackWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MemoryPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Memory implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Memory implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MemoryPatch implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SavedRecipePage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SavedRecipe implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SaveRecipeRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SavedRecipe implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CollectionPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Collection implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CollectionWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Collection implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Collection implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CollectionWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Collection implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CollectionItemWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Upload implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MediaPrepare implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Upload implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model UploadComplete implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Upload implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MediaAccess implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MediaAccessRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PostPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Post implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PostWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Post implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Post implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PostPatch implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PostPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SavedRecipe implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SavePostRecipeRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Reaction implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReactionWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RemixNodePage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CirclePage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Circle implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CircleWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Circle implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Circle implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CircleWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MemberPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Member implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MemberPatch implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Invitation implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model InvitationRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model InvitePreview implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Member implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model InviteAccept implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ThreadPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Thread implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ThreadCreate implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Thread implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MessagePage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Message implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MessageWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Thread implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReadWatermark implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RecipeRequestRecord implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RecipeRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model NotificationPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Notification implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model DeviceSession implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model DeviceRegistration implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model NotificationSettings implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model NotificationSettings implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model NotificationSettingsPatch implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model BlockPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Block implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model BlockWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MutePage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Mute implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MuteWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Report implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReportWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Report implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SOS implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SOSWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SOS implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SOS implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SOSPatch implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Message implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SOSReply implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SOS implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Pact implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PactWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Pact implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Pact implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PactScheduleWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Pact implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Participation implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Potluck implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PotluckWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Potluck implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Potluck implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PotluckWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Potluck implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Participation implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ContributionPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Contribution implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ContributionWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Contribution implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ContributionClaim implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Shortcut implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ShortcutWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Shortcut implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Shortcut implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Poll implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PollWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Poll implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Poll implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model VoteWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Poll implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model HouseholdPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Household implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model HouseholdWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Household implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Household implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model HouseholdWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MemberPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model HouseholdPreferenceView implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model HouseholdKitchen implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model HouseholdKitchenWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model HouseholdPreference implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model HouseholdPreferenceWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PackPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Pack implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model EntitlementPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Accepted implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReconcileRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RevenueCatWebhook implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model DeviceSessionPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Accepted implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ExportRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Accepted implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model DeletionRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Job implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SupportTicket implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SupportWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model FeatureFlagPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Health implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RecipeVersionPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RecipeVersion implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RecipeDraft implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RecipeVersion implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RecipeVersion implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RecipeDraft implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RecipeVersion implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Review implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReviewWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RecipeVersion implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RecipeVersion implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReviewWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SubstitutionPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Substitution implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SubstitutionWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Substitution implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model SubstitutionWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Substitution implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReviewWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReportPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ModerationCase implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ModerationCase implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CaseWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model AuditPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model FeatureFlagPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model FeatureFlag implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model FlagWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PackPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Pack implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PackWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Pack implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PackWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Pack implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model IncidentPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Incident implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model IncidentWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Incident implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model IncidentWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PostDraftPage implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PostDraft implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PostDraftWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PostDraft implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PostDraft implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PostDraftPatch implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Circle implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model OwnershipTransfer implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReadNotifications implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RevokeAll implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Plan implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PotluckPlanRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Potluck implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PotluckConfirm implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Contribution implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PotluckClaim implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model HelpfulResult implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model HelpfulWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model AdminHealth implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ModerationCase implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model StaffReason implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ModerationCase implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CaseWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ModerationCase implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model AppealWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Accepted implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RestrictionWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Accepted implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model AuditExportWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model FlagChange implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model FlagChangeWrite implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model FlagChange implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model FlagChange implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model FlagApply implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model FeatureFlag implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model StaffReason implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model MediaPause implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Accepted implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model ReplayRequest implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Pack implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model StaffReason implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RecipeRequestRecord implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RecipeRequestRecord implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model RecipeRequestResponse implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model HouseholdKitchen implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PrivacySettings implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PrivacySettings implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model PrivacyPatch implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model Collection implements interface(s): []
+[main] INFO  o.o.c.l.AbstractKotlinCodegen - Model CollectionOrder implements interface(s): []
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/apis/CatalogApi.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/apis/CatalogApiTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/CatalogApi.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/apis/CirclesApi.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/apis/CirclesApiTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/CirclesApi.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/apis/CommerceApi.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/apis/CommerceApiTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/CommerceApi.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/apis/ConversationsApi.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/apis/ConversationsApiTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ConversationsApi.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/apis/CookingApi.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/apis/CookingApiTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/CookingApi.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/apis/CoordinationApi.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/apis/CoordinationApiTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/CoordinationApi.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/apis/IdentityApi.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/apis/IdentityApiTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/IdentityApi.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/apis/MemoryApi.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/apis/MemoryApiTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/MemoryApi.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/apis/PantryApi.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/apis/PantryApiTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PantryApi.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/apis/PlanningApi.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/apis/PlanningApiTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PlanningApi.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/apis/PlatformApi.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/apis/PlatformApiTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/PlatformApi.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/apis/ProfileApi.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/apis/ProfileApiTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/ProfileApi.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/apis/SafetyApi.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/apis/SafetyApiTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/SafetyApi.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/apis/SocialApi.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/test/kotlin/feedme/contract/spike/apis/SocialApiTest.kt (Test files never overwrite an existing file of the same name.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/docs/SocialApi.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/README.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/build.gradle.kts
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/settings.gradle.kts
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/infrastructure/ApiClient.kt
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/infrastructure/ApiAbstractions.kt
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/infrastructure/PartConfig.kt
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/infrastructure/RequestConfig.kt
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/infrastructure/RequestMethod.kt
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/infrastructure/Base64ByteArray.kt
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/infrastructure/HttpResponse.kt
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/infrastructure/OctetByteArray.kt
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/auth/ApiKeyAuth.kt
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/auth/Authentication.kt
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/auth/HttpBasicAuth.kt
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/auth/HttpBearerAuth.kt
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/src/commonMain/kotlin/feedme/contract/spike/auth/OAuth.kt
+[main] INFO  o.o.codegen.TemplateManager - Skipped /private/tmp/feedme-contract-spike.71oPZn/default-generated/.openapi-generator-ignore (Skipped by supportingFiles options supplied by user.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/.openapi-generator/VERSION
+[main] INFO  o.o.codegen.TemplateManager - writing file /private/tmp/feedme-contract-spike.71oPZn/default-generated/.openapi-generator/FILES
+################################################################################
+# Thanks for using OpenAPI Generator.                                          #
+# Please consider donating to help us maintain this project 🙏                 #
+# https://opencollective.com/openapi_generator/donate                          #
+#                                                                              #
+# This generator's contributed by Jim Schubert (https://github.com/jimschubert)#
+# Please support his work directly via https://patreon.com/jimschubert 🙏      #
+################################################################################

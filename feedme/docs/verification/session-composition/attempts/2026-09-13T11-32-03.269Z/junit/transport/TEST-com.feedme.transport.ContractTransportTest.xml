@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.transport.ContractTransportTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-09-13T11:32:08.807Z" hostname="ansachars-MacBook-Pro.local" time="0.795">
+  <properties/>
+  <testcase name="validGuestRequestAndCreatedSessionCompleteWithoutChangingTheirBytes[jvm]" classname="com.feedme.transport.ContractTransportTest" time="0.443"/>
+  <testcase name="shortPublicGuestNonceFailsBeforeDispatchOrSecureRead[jvm]" classname="com.feedme.transport.ContractTransportTest" time="0.042"/>
+  <testcase name="missingRequiredAndUnexpectedCookStartFieldsFailBeforeSecureReadOrDispatch[jvm]" classname="com.feedme.transport.ContractTransportTest" time="0.05"/>
+  <testcase name="missingRequiredHealthFieldIsInvalidDataDespiteValidJson[jvm]" classname="com.feedme.transport.ContractTransportTest" time="0.055"/>
+  <testcase name="unknownHealthStatusIsInvalidDataDespiteValidJson[jvm]" classname="com.feedme.transport.ContractTransportTest" time="0.047"/>
+  <testcase name="decimalSpellingOfMatchingProblemStatusIsAcceptedWithOriginalBytes[jvm]" classname="com.feedme.transport.ContractTransportTest" time="0.049"/>
+  <testcase name="schemaInvalidCreatedWriteReceiptLeavesTheOutcomeUnknown[jvm]" classname="com.feedme.transport.ContractTransportTest" time="0.029"/>
+  <testcase name="schemaValidProblemWithDifferentHttpStatusRejectsReadsAndLeavesWritesUnknown[jvm]" classname="com.feedme.transport.ContractTransportTest" time="0.032"/>
+  <testcase name="unexpectedHealthFieldIsInvalidDataDespiteValidJson[jvm]" classname="com.feedme.transport.ContractTransportTest" time="0.024"/>
+  <testcase name="schemaValidProblemWithDifferentTraceHeaderRejectsReadsAndLeavesWritesUnknown[jvm]" classname="com.feedme.transport.ContractTransportTest" time="0.023"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+]]></system-err>
+</testsuite>

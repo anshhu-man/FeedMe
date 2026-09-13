@@ -1,0 +1,18 @@
+{
+  "canonical": "/Users/LOCAL_USER/Documents/ChatGPT/Career/outputs/biteclub_blueprint/architecture/04_API_Contract.json",
+  "canonicalSha256": "f0a5f20c4a84822813137c3e6b1ef31ec22afd1d7ee384f7f29b5df09e10aba0",
+  "library": "io.github.optimumcode:json-schema-validator:0.5.5",
+  "kotlin": "2.3.21",
+  "serialization": "1.11.0",
+  "command": [
+    "/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/gradlew",
+    "-p",
+    "/private/tmp/feedme-schema-validator.OeNCDw",
+    "--no-daemon",
+    "--console=plain",
+    "run"
+  ],
+  "total": 158,
+  "exit": 1,
+  "logSha256": "b9e517c3fefc3df2149d5ea36f192c1565b9001beb0b03fcd9db33e48a6b2ee1"
+}

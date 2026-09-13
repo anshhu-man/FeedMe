@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.kitchen.KitchenContextTest" tests="31" skipped="0" failures="0" errors="0" timestamp="2026-09-13T11:53:45.475Z" hostname="ansachars-MacBook-Pro.local" time="0.229">
+  <properties/>
+  <testcase name="cancellationWhileStoreSuspendsDoesNotBecomeStorageFailure[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.011"/>
+  <testcase name="clearedAndSupersededLeaseFailBeforeReadCommitOrFetch[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.008"/>
+  <testcase name="identifierNormalizationIsStrictButCaseInsensitiveAtExternalBoundary[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.001"/>
+  <testcase name="negativeClockFailsLocallyWhileZeroAndLongMaximumAreExact[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.008"/>
+  <testcase name="readAndBatchCommitFailuresPropagateMetadataWithoutRetryOrPartialLocalApplication[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.008"/>
+  <testcase name="documentValidationRetainsOriginalCanonicalBytesAndRejectsUnknownSchemas[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.008"/>
+  <testcase name="successfulBatchReturnsStoreOwnedRevisionsAndDoesNotFabricateValues[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.007"/>
+  <testcase name="sessionChangeDuringSuspendedCommitDoesNotClaimCommittedDomainSuccess[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.009"/>
+  <testcase name="sessionChangeDuringSuspendedTransportFencesSuccessfulServerReply[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.008"/>
+  <testcase name="scopeMismatchCannotUseCurrentLeaseForAnotherOwnerOrEnvironment[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.007"/>
+  <testcase name="missingGetEtagRemainsMissingInsteadOfBecomingWritable[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.008"/>
+  <testcase name="demoCannotAccessPrivateRepositoriesDespiteCurrentLease[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.007"/>
+  <testcase name="readPassesExactOwnerAndKeyAndPreservesAbsence[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.011"/>
+  <testcase name="kitchenPutAlwaysUsesExplicitCasAndSchemaOneWithoutChangingPayload[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.0"/>
+  <testcase name="canonicalHttpFailuresMapToExplicitLocalFailureAndRetainRetryHeader[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.009"/>
+  <testcase name="currentLeaseAllowsAccountAndGuestWithoutActivatingNewIdentity[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.014"/>
+  <testcase name="unknownReadsMutationsAndArbitraryUrlsAreRejectedBeforeTransport[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.008"/>
+  <testcase name="unexpectedAdapterExceptionsAreSanitizedNotLeakedThroughResults[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.008"/>
+  <testcase name="typedFailureUnwrappingPreservesZeroRetryWithoutRawProviderDetails[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.0"/>
+  <testcase name="digestAndVerifiedPayloadDoNotAliasCallerMutableBuffers[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.0"/>
+  <testcase name="validLookingSuccessStillRequiresNestedCompleteCanonicalSchema[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.018"/>
+  <testcase name="cancellationWhileTransportSuspendsIsPropagatedAndNeverConvertedToSuccess[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.013"/>
+  <testcase name="malformedAndMismatchedErrorBodiesCannotBecomeTrustedFailures[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.009"/>
+  <testcase name="canonicalCookGetReturnsOriginalReplyWithoutSynthesizingOrWritingCache[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.008"/>
+  <testcase name="sessionChangeDuringSuspendedStoreReadFencesReturnedPrivateData[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.008"/>
+  <testcase name="contentDigestUsesExactBytesAndKnownSha256Vectors[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.0"/>
+  <testcase name="finalGuardFenceRejectsDataAfterActionChangesSession[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.007"/>
+  <testcase name="verifiedRecordRequiresExactDigestSchemaAndPresence[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.001"/>
+  <testcase name="unexpectedSuccessStatusMissingBodyAndMalformedSchemaNeverBecomeSynthetic200[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.008"/>
+  <testcase name="transportFailuresPreserveOriginalCategoryAndRetryMetadataWithoutRetries[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.007"/>
+  <testcase name="allOwnedGetOperationsPassThroughCanonicalErrorBindingWithoutWrites[jvm]" classname="com.feedme.kitchen.KitchenContextTest" time="0.01"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

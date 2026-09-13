@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.db.DurableCommandsIntegrationTest" tests="19" skipped="0" failures="0" errors="0" timestamp="2026-09-13T11:32:24.478Z" hostname="ansachars-MacBook-Pro.local" time="11.344">
+  <properties/>
+  <testcase name="changedPathRejectsKeyReuseWithoutSecondMutation" classname="com.feedme.server.db.DurableCommandsIntegrationTest" time="0.748"/>
+  <testcase name="jsonNullSuccessIsDistinctFromNoContentOnReplay" classname="com.feedme.server.db.DurableCommandsIntegrationTest" time="0.76"/>
+  <testcase name="serializationFailuresRetryTheOriginalIdentityWithOnlyOneCommittedMutation" classname="com.feedme.server.db.DurableCommandsIntegrationTest" time="0.952"/>
+  <testcase name="exceptionAfterFixtureWriteRollsBackMutationAndReceiptBeforeRetry" classname="com.feedme.server.db.DurableCommandsIntegrationTest" time="0.772"/>
+  <testcase name="successfulDeleteReplays204AfterTargetHasDisappeared" classname="com.feedme.server.db.DurableCommandsIntegrationTest" time="0.961"/>
+  <testcase name="deniedNewAuthorizationIsNotCachedAndDoesNotWriteMutation" classname="com.feedme.server.db.DurableCommandsIntegrationTest" time="0.741"/>
+  <testcase name="principalIdActorAndEnvironmentEachIsolateTheSameCommandKey" classname="com.feedme.server.db.DurableCommandsIntegrationTest" time="0.899"/>
+  <testcase name="canonicalOperationsIsolateTheSamePrincipalAndKey" classname="com.feedme.server.db.DurableCommandsIntegrationTest" time="0.764"/>
+  <testcase name="changedBodyRejectsKeyReuseWithoutSecondMutation" classname="com.feedme.server.db.DurableCommandsIntegrationTest" time="0.823"/>
+  <testcase name="preexistingPendingReceiptFailsClosedWithoutExecutingMutation" classname="com.feedme.server.db.DurableCommandsIntegrationTest" time="0.707"/>
+  <testcase name="exhaustedSerializationRetriesLeaveNoMutationOrReceipt" classname="com.feedme.server.db.DurableCommandsIntegrationTest" time="0.833"/>
+  <testcase name="twentyConcurrentIdenticalCommandsCommitOneMutationAndReplayOneReply" classname="com.feedme.server.db.DurableCommandsIntegrationTest" time="0.779"/>
+  <testcase name="statusNestedJsonAndEtagSurviveDatabaseReloadInANewExecutor" classname="com.feedme.server.db.DurableCommandsIntegrationTest" time="0.379"/>
+  <testcase name="canonicalJsonAndQueryOrderReplayButChangedQueryDoesNot" classname="com.feedme.server.db.DurableCommandsIntegrationTest" time="0.185"/>
+  <testcase name="accountGuestAndStaffScopesRespectCanonicalPrincipalRules" classname="com.feedme.server.db.DurableCommandsIntegrationTest" time="0.227"/>
+  <testcase name="replayRevalidatesPrincipalAndUsesDedicatedPermissionWithoutNewAuthorization" classname="com.feedme.server.db.DurableCommandsIntegrationTest" time="0.181"/>
+  <testcase name="changedOrOmittedIfMatchRejectsKeyReuseWithoutSecondMutation" classname="com.feedme.server.db.DurableCommandsIntegrationTest" time="0.195"/>
+  <testcase name="revokedIdentityCannotReadItsPreviouslyCompletedReply" classname="com.feedme.server.db.DurableCommandsIntegrationTest" time="0.195"/>
+  <testcase name="expiredReceiptCompactsToTombstoneAndNeverExecutesAgain" classname="com.feedme.server.db.DurableCommandsIntegrationTest" time="0.241"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

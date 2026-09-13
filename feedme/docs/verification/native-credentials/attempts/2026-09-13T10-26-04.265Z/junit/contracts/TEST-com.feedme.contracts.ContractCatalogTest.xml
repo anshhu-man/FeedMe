@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.contracts.ContractCatalogTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-09-13T10:26:07.983Z" hostname="ansachars-MacBook-Pro.local" time="0.178">
+  <properties/>
+  <testcase name="bootstrapRequiresAccountBearerAndIdempotencyWithoutAnExistingAppSession[jvm]" classname="com.feedme.contracts.ContractCatalogTest" time="0.016"/>
+  <testcase name="dualPrincipalHeadersDependOnTheCallerAndRetainWritePreconditions[jvm]" classname="com.feedme.contracts.ContractCatalogTest" time="0.007"/>
+  <testcase name="schemaAndResponseProjectionsRetainAllBundledJsonFields[jvm]" classname="com.feedme.contracts.ContractCatalogTest" time="0.075"/>
+  <testcase name="originalReferencesResolveWithoutChangingStringFormatsIntoRuntimeTypes[jvm]" classname="com.feedme.contracts.ContractCatalogTest" time="0.009"/>
+  <testcase name="callerMatrixKeepsEveryPrincipalClassDistinct[jvm]" classname="com.feedme.contracts.ContractCatalogTest" time="0.008"/>
+  <testcase name="nullableAndAnyOfRemainExactSchemaMetadata[jvm]" classname="com.feedme.contracts.ContractCatalogTest" time="0.006"/>
+  <testcase name="securityDescriptionsRetainVerificationRequirementsAsMetadata[jvm]" classname="com.feedme.contracts.ContractCatalogTest" time="0.006"/>
+  <testcase name="idempotencyAndIfMatchMetadataArePreservedForEveryOperation[jvm]" classname="com.feedme.contracts.ContractCatalogTest" time="0.007"/>
+  <testcase name="everyScreenBindingIsRetainedAndHttpBindingsResolve[jvm]" classname="com.feedme.contracts.ContractCatalogTest" time="0.007"/>
+  <testcase name="etagAndRetryAfterRemainResponseHeaderMetadata[jvm]" classname="com.feedme.contracts.ContractCatalogTest" time="0.006"/>
+  <testcase name="conditionalAndUniqueItemRulesRemainExactSchemaMetadata[jvm]" classname="com.feedme.contracts.ContractCatalogTest" time="0.005"/>
+  <testcase name="staffAndWebhookOperationsAreAbsentFromMobileSurface[jvm]" classname="com.feedme.contracts.ContractCatalogTest" time="0.01"/>
+  <testcase name="allDeclaredStatusCodesAndNoContentResponsesSurviveProjection[jvm]" classname="com.feedme.contracts.ContractCatalogTest" time="0.009"/>
+  <testcase name="exactCanonicalCoverageIsPinned[jvm]" classname="com.feedme.contracts.ContractCatalogTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

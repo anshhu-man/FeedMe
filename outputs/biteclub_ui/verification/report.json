@@ -1,0 +1,102 @@
+{
+  "passed": true,
+  "timestamp": "2026-09-13T03:10:51.447Z",
+  "scope": "High-fidelity synthetic UI: renderer/action coverage, selected simulated journeys, browser rendering and first-viewport PNG exports. Not a native app, backend, full accessibility audit or live provider test.",
+  "counts": {
+    "screens": 98,
+    "renderers": 98,
+    "actionBindings": 900,
+    "screenshotExports": 98,
+    "checks": 20
+  },
+  "htmlSha256": "bd168d1ce89bc2c573cd3d1d0f692eb6d9461de4d7e7a0d4f8844a7bbba72d3d",
+  "checks": [
+    {
+      "name": "All 98 canonical screens have explicit renderers",
+      "passed": true
+    },
+    {
+      "name": "All 900 canonical action bindings retained",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "Every canonical field is bound",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "No missing renderer, action label, or field label",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "No internal horizontal overflow in screen layouts",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "Signup: explicit consent and password validation, then onboarding",
+      "passed": true
+    },
+    {
+      "name": "Guest cooking is available, private social content gates on login",
+      "passed": true
+    },
+    {
+      "name": "Make Mine reaches a recipe and guided cooking",
+      "passed": true
+    },
+    {
+      "name": "Recipe picker cancels to the source draft",
+      "passed": true
+    },
+    {
+      "name": "Recipe request fulfillment stays out of publishing",
+      "passed": true
+    },
+    {
+      "name": "Existing post edits use explicit confirmation",
+      "passed": true
+    },
+    {
+      "name": "Privacy default edits do not update a composer draft",
+      "passed": true
+    },
+    {
+      "name": "Pending purchase never unlocks live access",
+      "passed": true
+    },
+    {
+      "name": "Offline publishing stays unpublished",
+      "passed": true
+    },
+    {
+      "name": "Every action handler executes without a JavaScript exception",
+      "passed": true
+    },
+    {
+      "name": "98 PNG screen exports exist",
+      "passed": true
+    },
+    {
+      "name": "All screen food images load",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "390px mobile studio has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "No browser exceptions",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "No attempted external HTTP requests",
+      "passed": true,
+      "detail": []
+    }
+  ]
+}

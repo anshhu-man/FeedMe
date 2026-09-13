@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.CommandIdentityTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-09-13T10:28:39.627Z" hostname="ansachars-MacBook-Pro.local" time="0.157">
+  <properties/>
+  <testcase name="targetQueryAndExpectedVersionAreBoundToFingerprint" classname="com.feedme.server.CommandIdentityTest" time="0.062"/>
+  <testcase name="responsePreservesNoContentAndJsonNullDistinction" classname="com.feedme.server.CommandIdentityTest" time="0.007"/>
+  <testcase name="canonicalHashIgnoresObjectOrderingAndNumericFormattingButNotArrayOrdering" classname="com.feedme.server.CommandIdentityTest" time="0.025"/>
+  <testcase name="rejectsUnsupportedIdentityDomainsUnknownOperationsAndMissingPath" classname="com.feedme.server.CommandIdentityTest" time="0.028"/>
+  <testcase name="missingBodyJsonNullAndAbsentFieldsAreDistinct" classname="com.feedme.server.CommandIdentityTest" time="0.023"/>
+  <testcase name="rejectsUnsafeHeaderAndBoundedPayloadAndRedactsDiagnostics" classname="com.feedme.server.CommandIdentityTest" time="0.01"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

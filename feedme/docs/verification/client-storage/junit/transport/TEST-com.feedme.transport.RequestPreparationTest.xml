@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.transport.RequestPreparationTest" tests="21" skipped="0" failures="0" errors="0" timestamp="2026-09-13T07:41:16.262Z" hostname="ansachars-MacBook-Pro.local" time="0.056">
+  <properties/>
+  <testcase name="publicGuestBootstrapRequiresItsKeyWithoutAttachingDeviceSession[jvm]" classname="com.feedme.transport.RequestPreparationTest" time="0.004"/>
+  <testcase name="pathTraversalUrlsSeparatorsAndNonUuidFormsAreRejected[jvm]" classname="com.feedme.transport.RequestPreparationTest" time="0.0"/>
+  <testcase name="pathValuesReplaceOnlyExactDeclaredSegments[jvm]" classname="com.feedme.transport.RequestPreparationTest" time="0.001"/>
+  <testcase name="dualPrincipalReadsRequireAccountSessionButOmitItForGuests[jvm]" classname="com.feedme.transport.RequestPreparationTest" time="0.001"/>
+  <testcase name="enumValuesAreExactAndCaseSensitive[jvm]" classname="com.feedme.transport.RequestPreparationTest" time="0.0"/>
+  <testcase name="unpairedUnicodeIsRejectedBeforeUrlEncoding[jvm]" classname="com.feedme.transport.RequestPreparationTest" time="0.001"/>
+  <testcase name="accountReadsRequireTheRegisteredDeviceSession[jvm]" classname="com.feedme.transport.RequestPreparationTest" time="0.001"/>
+  <testcase name="scalarQueryValuesStayExactAndOmittedDefaultsStayAbsent[jvm]" classname="com.feedme.transport.RequestPreparationTest" time="0.001"/>
+  <testcase name="accountBootstrapOmitsExistingSessionAndRequiresExplicitCommandKeyAndBody[jvm]" classname="com.feedme.transport.RequestPreparationTest" time="0.0"/>
+  <testcase name="unknownAndMissingParametersAreRejectedInTheirOwnLocation[jvm]" classname="com.feedme.transport.RequestPreparationTest" time="0.001"/>
+  <testcase name="absentBodiesAreNeverSynthesizedAndUndeclaredBodiesAreRejected[jvm]" classname="com.feedme.transport.RequestPreparationTest" time="0.0"/>
+  <testcase name="publicHealthHasOnlyItsDeclaredPathAndNoDefaultsOrCredentials[jvm]" classname="com.feedme.transport.RequestPreparationTest" time="0.001"/>
+  <testcase name="undeclaredHeadersAreRejectedAndUnboundedHeaderStringsHaveResourceCeilings[jvm]" classname="com.feedme.transport.RequestPreparationTest" time="0.002"/>
+  <testcase name="lengthsCountUnicodeCodePointsWithExactBoundaries[jvm]" classname="com.feedme.transport.RequestPreparationTest" time="0.001"/>
+  <testcase name="callerAndPreparedBuffersAreDetachedAndDebugOutputIsRedacted[jvm]" classname="com.feedme.transport.RequestPreparationTest" time="0.0"/>
+  <testcase name="malformedAndExcessiveBodiesAreRejectedWithWireDocumentPolicy[jvm]" classname="com.feedme.transport.RequestPreparationTest" time="0.036"/>
+  <testcase name="onlyCanonicalMobileOperationsAndAllowedPrincipalClassesArePrepared[jvm]" classname="com.feedme.transport.RequestPreparationTest" time="0.002"/>
+  <testcase name="mutationHeadersAreExplicitRequiredAndSchemaValidated[jvm]" classname="com.feedme.transport.RequestPreparationTest" time="0.001"/>
+  <testcase name="integersUseCanonicalDecimalNotationAndExactSchemaBounds[jvm]" classname="com.feedme.transport.RequestPreparationTest" time="0.001"/>
+  <testcase name="duplicateOrEmptyScalarQueryListsAreRejected[jvm]" classname="com.feedme.transport.RequestPreparationTest" time="0.0"/>
+  <testcase name="bodySyntaxChecksPreserveBytesAndDoNotClaimFullSchemaValidation[jvm]" classname="com.feedme.transport.RequestPreparationTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

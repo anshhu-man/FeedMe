@@ -1,0 +1,45 @@
+regular: 29 isolated session tests passed
+integration: 9 isolated session tests passed
+{
+  "startedAt": "2026-09-13T12:28:26.975Z",
+  "passed": true,
+  "serial": "emulator-5554",
+  "scope": "Isolated native credential/private-file tests, exact timer/worker cancellation and separate real native-store/OS integration, including private-runtime, read-only diagnostics and confirmed readable-empty setup discard with a synthetic verifier. Diagnostics inspect already-open stores only; they do not open factories, prove usable credentials, repair orphans or grant authority. Discard revalidates exact incomplete targets and empty native-work/private-record state; it is not generalized orphan or planned-write crash repair. Controlled close/reopen and injected post-rename acknowledgement loss are covered; notification and hardlink branches are reported explicitly. Not actual provider sign-in, production timer receiver/worker or app scheduling/recovery wiring, FeedMe UI/auth/confirmation integration, process-hard-kill, physical-device, power-loss or iOS proof.",
+  "apk": {
+    "path": "shared/session/build/outputs/apk/androidTest/debug/session-debug-androidTest.apk",
+    "bytes": 8426871,
+    "sha256": "1708f7fdc2f92abfe0306977d2a35d662b9e5e68b09b93bbf6f937397fc3b0d1"
+  },
+  "attemptDirectory": "docs/verification/native-credentials/android-attempts/2026-09-13T12-28-26.975Z",
+  "checks": [
+    {
+      "name": "regular",
+      "classes": "com.feedme.session.AndroidCredentialStoreTest,com.feedme.session.AndroidNativeWorkCancellationTest",
+      "passed": true,
+      "tests": 29,
+      "expected": 29,
+      "log": "docs/verification/native-credentials/android-attempts/2026-09-13T12-28-26.975Z/regular.log"
+    },
+    {
+      "name": "integration",
+      "classes": "com.feedme.session.AndroidLocalRetirementIntegrationTest",
+      "passed": true,
+      "tests": 9,
+      "expected": 9,
+      "log": "docs/verification/native-credentials/android-attempts/2026-09-13T12-28-26.975Z/integration.log"
+    },
+    {
+      "name": "owned-test-directories-cleaned",
+      "passed": true
+    }
+  ],
+  "androidApi": "35",
+  "androidAbi": "arm64-v8a",
+  "branches": {
+    "hardlinkManifest": "platform-denied:13; existing-hardlink-branch-unexercised",
+    "hardlinkBlob": "platform-denied:13; existing-hardlink-branch-unexercised",
+    "notification": "NATIVE_WORK_NOTIFICATION_EXACT_CANCELLATION_VERIFIED"
+  },
+  "finishedAt": "2026-09-13T12:28:36.213Z"
+}
+

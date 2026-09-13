@@ -1,0 +1,282 @@
+flowchart LR
+  IDP["Managed identity + native PKCE"]
+  API["Ktor API / modular monolith"]
+  PG[("PostgreSQL + transactional outbox")]
+  Q["SQS workers / scheduler"]
+  S3["Private S3 / signed delivery"]
+  RC["Store billing / RevenueCat"]
+  PUSH["APNs / FCM"]
+  subgraph identity_ui["Identity screens"]
+    AUTH_WELCOME["AUTH_WELCOME: Welcome to FeedMe"]
+    AUTH_SIGNUP["AUTH_SIGNUP: Create your account"]
+    AUTH_LOGIN["AUTH_LOGIN: Welcome back"]
+    AUTH_VERIFY["AUTH_VERIFY: Verify email"]
+    AUTH_RESET["AUTH_RESET: Reset password"]
+    AUTH_RESET_CONFIRM["AUTH_RESET_CONFIRM: Choose a new password"]
+    AUTH_CALLBACK["AUTH_CALLBACK: Complete secure sign-in"]
+    SESSIONS["SESSIONS: Devices and sessions"]
+    ADMIN_LOGIN["ADMIN_LOGIN: FeedMe operations sign-in"]
+  end
+  identity_client["Identity client boundary"] --> API
+  API --> identity_service["Identity module"]
+  identity_service --> PG
+  AUTH_WELCOME --> identity_client
+  AUTH_SIGNUP --> identity_client
+  AUTH_LOGIN --> identity_client
+  AUTH_VERIFY --> identity_client
+  AUTH_RESET --> identity_client
+  AUTH_RESET_CONFIRM --> identity_client
+  AUTH_CALLBACK --> identity_client
+  SESSIONS --> identity_client
+  ADMIN_LOGIN --> identity_client
+  subgraph profile_ui["Profile & privacy screens"]
+    LEGAL["LEGAL: Terms and privacy"]
+    PROFILE_SETUP["PROFILE_SETUP: Set up your profile"]
+    FOOD_PREFS["FOOD_PREFS: Food preferences"]
+    EQUIPMENT["EQUIPMENT: Your kitchen setup"]
+    SETTINGS["SETTINGS: Your FeedMe"]
+    PRIVACY["PRIVACY: Privacy and control"]
+    DELETE_ACCOUNT["DELETE_ACCOUNT: Delete your account"]
+    EXPORT["EXPORT: Export your FeedMe data"]
+  end
+  profile_client["Profile & privacy client boundary"] --> API
+  API --> profile_service["Profile & privacy module"]
+  profile_service --> PG
+  LEGAL --> profile_client
+  PROFILE_SETUP --> profile_client
+  FOOD_PREFS --> profile_client
+  EQUIPMENT --> profile_client
+  SETTINGS --> profile_client
+  PRIVACY --> profile_client
+  DELETE_ACCOUNT --> profile_client
+  EXPORT --> profile_client
+  subgraph pantry_ui["Pantry screens"]
+    PANTRY["PANTRY: What’s available?"]
+  end
+  pantry_client["Pantry client boundary"] --> API
+  API --> pantry_service["Pantry module"]
+  pantry_service --> PG
+  PANTRY --> pantry_client
+  subgraph catalog_ui["Reviewed catalog screens"]
+    RECIPE["RECIPE: Recipe and practical details"]
+    ADMIN_RECIPE["ADMIN_RECIPE: Author a recipe revision"]
+    ADMIN_REVIEW["ADMIN_REVIEW: Review and publish"]
+    ADMIN_SUBSTITUTION["ADMIN_SUBSTITUTION: Reviewed substitutions"]
+  end
+  catalog_client["Reviewed catalog client boundary"] --> API
+  API --> catalog_service["Reviewed catalog module"]
+  catalog_service --> PG
+  RECIPE --> catalog_client
+  ADMIN_RECIPE --> catalog_client
+  ADMIN_REVIEW --> catalog_client
+  ADMIN_SUBSTITUTION --> catalog_client
+  subgraph planning_ui["Meal planning screens"]
+    HOME["HOME: What can we make easy?"]
+    REQUEST["REQUEST: Tell us what you have"]
+    EFFORT["EFFORT: What fits today?"]
+    TASTE["TASTE: What would hit right?"]
+    RECOMMENDATIONS["RECOMMENDATIONS: A meal that fits"]
+    ADAPT["ADAPT: Make Mine"]
+    VARIANT["VARIANT: Your version, explained"]
+    REUSE["REUSE: One useful next meal"]
+    TONIGHT["TONIGHT: Make a save into dinner"]
+  end
+  planning_client["Meal planning client boundary"] --> API
+  API --> planning_service["Meal planning module"]
+  planning_service --> PG
+  HOME --> planning_client
+  REQUEST --> planning_client
+  EFFORT --> planning_client
+  TASTE --> planning_client
+  RECOMMENDATIONS --> planning_client
+  ADAPT --> planning_client
+  VARIANT --> planning_client
+  REUSE --> planning_client
+  TONIGHT --> planning_client
+  subgraph cooking_ui["Cooking sessions screens"]
+    COOK["COOK: Cooking, one step at a time"]
+    TIMER["TIMER: Step timer"]
+    MEAL_DONE["MEAL_DONE: Dinner, handled"]
+  end
+  cooking_client["Cooking sessions client boundary"] --> API
+  API --> cooking_service["Cooking sessions module"]
+  cooking_service --> PG
+  COOK --> cooking_client
+  TIMER --> cooking_client
+  MEAL_DONE --> cooking_client
+  subgraph memory_ui["Personal memory screens"]
+    FEEDBACK["FEEDBACK: Worth an encore?"]
+    COOKBOOK["COOKBOOK: Your reliable meals"]
+    COLLECTION["COLLECTION: Saved collection"]
+    COLLECTION_EDIT["COLLECTION_EDIT: Organize your cookbook"]
+    MEMORY["MEMORY: What works for you"]
+    MEMORY_DETAIL["MEMORY_DETAIL: A remembered preference"]
+  end
+  memory_client["Personal memory client boundary"] --> API
+  API --> memory_service["Personal memory module"]
+  memory_service --> PG
+  FEEDBACK --> memory_client
+  COOKBOOK --> memory_client
+  COLLECTION --> memory_client
+  COLLECTION_EDIT --> memory_client
+  MEMORY --> memory_client
+  MEMORY_DETAIL --> memory_client
+  subgraph social_ui["Posts & media screens"]
+    TODAY["TODAY: Today’s plates"]
+    STORY["STORY: A friend’s plate"]
+    PROFILE_PLATE["PROFILE_PLATE: My Plate"]
+    POST["POST: Meal post"]
+    CAPTURE["CAPTURE: What did you make?"]
+    EDIT_MEDIA["EDIT_MEDIA: Prepare your post"]
+    ATTACH_RECIPE["ATTACH_RECIPE: Add the useful details"]
+    REVIEW_ATTACHMENT["REVIEW_ATTACHMENT: Check your recipe card"]
+    SAVE_PERMISSION["SAVE_PERMISSION: May friends save the recipe?"]
+    PUBLISH_STATUS["PUBLISH_STATUS: Review and share"]
+    REMIX_TRAIL["REMIX_TRAIL: Your Takes"]
+    DELETE_POST["DELETE_POST: Delete this post?"]
+    VIDEO_EDIT["VIDEO_EDIT: A little food clip"]
+  end
+  social_client["Posts & media client boundary"] --> API
+  API --> social_service["Posts & media module"]
+  social_service --> PG
+  TODAY --> social_client
+  STORY --> social_client
+  PROFILE_PLATE --> social_client
+  POST --> social_client
+  CAPTURE --> social_client
+  EDIT_MEDIA --> social_client
+  ATTACH_RECIPE --> social_client
+  REVIEW_ATTACHMENT --> social_client
+  SAVE_PERMISSION --> social_client
+  PUBLISH_STATUS --> social_client
+  REMIX_TRAIL --> social_client
+  DELETE_POST --> social_client
+  VIDEO_EDIT --> social_client
+  subgraph circles_ui["Circle access screens"]
+    INVITE_ACCEPT["INVITE_ACCEPT: Join a kitchen circle"]
+    AUDIENCE["AUDIENCE: Who gets a seat?"]
+    CIRCLES["CIRCLES: Your kitchen circles"]
+    CIRCLE["CIRCLE: A kitchen circle"]
+    CIRCLE_CREATE["CIRCLE_CREATE: Start a circle"]
+    CIRCLE_MEMBERS["CIRCLE_MEMBERS: Circle members"]
+    INVITE["INVITE: Invite your people"]
+    PEOPLE_PICKER["PEOPLE_PICKER: Choose your people"]
+  end
+  circles_client["Circle access client boundary"] --> API
+  API --> circles_service["Circle access module"]
+  circles_service --> PG
+  INVITE_ACCEPT --> circles_client
+  AUDIENCE --> circles_client
+  CIRCLES --> circles_client
+  CIRCLE --> circles_client
+  CIRCLE_CREATE --> circles_client
+  CIRCLE_MEMBERS --> circles_client
+  INVITE --> circles_client
+  PEOPLE_PICKER --> circles_client
+  subgraph conversations_ui["Conversations screens"]
+    NOTIFICATION_PERMISSION["NOTIFICATION_PERMISSION: Stay in the loop"]
+    INBOX["INBOX: Around your table"]
+    THREAD["THREAD: Meal conversation"]
+    RECIPE_REQUEST["RECIPE_REQUEST: Ask for the recipe"]
+    NOTIFICATIONS["NOTIFICATIONS: Choose your updates"]
+  end
+  conversations_client["Conversations client boundary"] --> API
+  API --> conversations_service["Conversations module"]
+  conversations_service --> PG
+  NOTIFICATION_PERMISSION --> conversations_client
+  INBOX --> conversations_client
+  THREAD --> conversations_client
+  RECIPE_REQUEST --> conversations_client
+  NOTIFICATIONS --> conversations_client
+  subgraph coordination_ui["Shared meals screens"]
+    SOS_CREATE["SOS_CREATE: Fridge SOS"]
+    SOS_DETAIL["SOS_DETAIL: Ideas from your people"]
+    PACT_CREATE["PACT_CREATE: Dinner Pact"]
+    PACT_DETAIL["PACT_DETAIL: Your Dinner Pact"]
+    POTLUCK_CREATE["POTLUCK_CREATE: Bring a Bit"]
+    POTLUCK_DETAIL["POTLUCK_DETAIL: One shared dinner"]
+    CONTRIBUTION["CONTRIBUTION: What can you bring?"]
+    SHORTCUT_CREATE["SHORTCUT_CREATE: The thing that made it easier"]
+    SHORTCUT_DETAIL["SHORTCUT_DETAIL: Shortcut Swap"]
+    POLL_CREATE["POLL_CREATE: Dinner Vote"]
+    POLL_DETAIL["POLL_DETAIL: Help choose dinner"]
+  end
+  coordination_client["Shared meals client boundary"] --> API
+  API --> coordination_service["Shared meals module"]
+  coordination_service --> PG
+  SOS_CREATE --> coordination_client
+  SOS_DETAIL --> coordination_client
+  PACT_CREATE --> coordination_client
+  PACT_DETAIL --> coordination_client
+  POTLUCK_CREATE --> coordination_client
+  POTLUCK_DETAIL --> coordination_client
+  CONTRIBUTION --> coordination_client
+  SHORTCUT_CREATE --> coordination_client
+  SHORTCUT_DETAIL --> coordination_client
+  POLL_CREATE --> coordination_client
+  POLL_DETAIL --> coordination_client
+  subgraph commerce_ui["Entitlements screens"]
+    HOUSEHOLDS["HOUSEHOLDS: Your household"]
+    HOUSEHOLD_MEMBER["HOUSEHOLD_MEMBER: Household members"]
+    HOUSEHOLD_PREFS["HOUSEHOLD_PREFS: What works for this meal group"]
+    PACK_STORE["PACK_STORE: Reviewed situation packs"]
+    PACK_DETAIL["PACK_DETAIL: A pack for your kind of evening"]
+    PAYWALL["PAYWALL: Choose what helps"]
+    PURCHASE_STATUS["PURCHASE_STATUS: Confirming access"]
+    MANAGE_PLAN["MANAGE_PLAN: Purchases and access"]
+    ADMIN_PACK["ADMIN_PACK: Manage reviewed packs"]
+  end
+  commerce_client["Entitlements client boundary"] --> API
+  API --> commerce_service["Entitlements module"]
+  commerce_service --> PG
+  HOUSEHOLDS --> commerce_client
+  HOUSEHOLD_MEMBER --> commerce_client
+  HOUSEHOLD_PREFS --> commerce_client
+  PACK_STORE --> commerce_client
+  PACK_DETAIL --> commerce_client
+  PAYWALL --> commerce_client
+  PURCHASE_STATUS --> commerce_client
+  MANAGE_PLAN --> commerce_client
+  ADMIN_PACK --> commerce_client
+  subgraph safety_ui["Trust & review screens"]
+    BLOCKED["BLOCKED: Blocked accounts"]
+    REPORT["REPORT: Report a concern"]
+    SUPPORT["SUPPORT: Help and receipts"]
+    ADMIN_REPORTS["ADMIN_REPORTS: Moderation queue"]
+    ADMIN_CASE["ADMIN_CASE: Resolve a moderation case"]
+    ADMIN_AUDIT["ADMIN_AUDIT: Audit trail"]
+  end
+  safety_client["Trust & review client boundary"] --> API
+  API --> safety_service["Trust & review module"]
+  safety_service --> PG
+  BLOCKED --> safety_client
+  REPORT --> safety_client
+  SUPPORT --> safety_client
+  ADMIN_REPORTS --> safety_client
+  ADMIN_CASE --> safety_client
+  ADMIN_AUDIT --> safety_client
+  subgraph platform_ui["Platform screens"]
+    UNAVAILABLE["UNAVAILABLE: This isn’t available right now"]
+    OFFLINE["OFFLINE: Your connection is taking a break"]
+    ADMIN_HOME["ADMIN_HOME: Operations workspace"]
+    ADMIN_FLAGS["ADMIN_FLAGS: Feature rollout controls"]
+    ADMIN_INCIDENT["ADMIN_INCIDENT: Service and incident controls"]
+    CONFIRM_ACTION["CONFIRM_ACTION: Confirm this change"]
+  end
+  platform_client["Platform client boundary"] --> API
+  API --> platform_service["Platform module"]
+  platform_service --> PG
+  UNAVAILABLE --> platform_client
+  OFFLINE --> platform_client
+  ADMIN_HOME --> platform_client
+  ADMIN_FLAGS --> platform_client
+  ADMIN_INCIDENT --> platform_client
+  CONFIRM_ACTION --> platform_client
+  API --> IDP
+  PG --> Q
+  Q --> S3
+  Q --> PUSH
+  commerce_service --> RC
+  planning_service --> LLM["Server interpretation adapter"]
+  LLM --> VALIDATE["Strict schema + reviewed eligibility"]
+  VALIDATE --> catalog_service

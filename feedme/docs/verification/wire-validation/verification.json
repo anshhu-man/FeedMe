@@ -1,0 +1,644 @@
+{
+  "verifiedAt": "2026-09-13T06:01:18.634Z",
+  "scope": "Bounded exact JVM body-validation library, shared lossless wire/cooking projections, actual outbound local Health/Problem validation; not authenticated product endpoints or native/iOS parity.",
+  "sourceManifest": [
+    {
+      "path": "../outputs/biteclub_blueprint/architecture/04_API_Contract.json",
+      "bytes": 801361,
+      "sha256": "f0a5f20c4a84822813137c3e6b1ef31ec22afd1d7ee384f7f29b5df09e10aba0"
+    },
+    {
+      "path": "build.gradle.kts",
+      "bytes": 579,
+      "sha256": "69d3edb5744a165479078e128dcb7f45be6e9198edae951163e776348db3b3cc"
+    },
+    {
+      "path": "docs/verification/schema-validator-spike/cases.json",
+      "bytes": 28379,
+      "sha256": "35dc360294a61a8553cb22675d70cb0544b246fac9eab89f48b15af05c142989"
+    },
+    {
+      "path": "gradle/libs.versions.toml",
+      "bytes": 1641,
+      "sha256": "a0514bb51b749ae9f0be09237f3e370368304cb44f6118828ebccdfdfcc1c798"
+    },
+    {
+      "path": "gradle/wrapper/gradle-wrapper.properties",
+      "bytes": 338,
+      "sha256": "779ae2c24776dfbc873f2dc0669aa990d8990cca9e0519056422fa50c5991566"
+    },
+    {
+      "path": "scripts/contract-source.lock.json",
+      "bytes": 255,
+      "sha256": "ec8fa21255f47eae1763075b596e922e904053971a7803325abdf6b06922dc9e"
+    },
+    {
+      "path": "scripts/generate-contract-artifacts.mjs",
+      "bytes": 14680,
+      "sha256": "ea39a40da5dbe0e511ddf90c2e267eec593ed969093f98a81a7f51a88c91c2ab"
+    },
+    {
+      "path": "scripts/generate-contract-artifacts.test.mjs",
+      "bytes": 24992,
+      "sha256": "59190d50b8b5c0393e738b946864f8a5895faf36c343ec74b7e33b3c8193e09f"
+    },
+    {
+      "path": "scripts/jvm-schema-validator-spike.mjs",
+      "bytes": 8700,
+      "sha256": "d68df61e623ac70ee3b5a5c6cb845b85a8746c919265224ad67c12417a64983d"
+    },
+    {
+      "path": "server/build.gradle.kts",
+      "bytes": 2205,
+      "sha256": "2ef512e4549eae76e49184b11b37ab864987d7cac9f1e9ca8a5f0bb8660daf3b"
+    },
+    {
+      "path": "server/src/integrationTest/kotlin/com/feedme/server/db/CommitAndRetentionIntegrationTest.kt",
+      "bytes": 6873,
+      "sha256": "6f5369aa1aeee86e5614e2f407b402764d919f72ded05769ecca91ffadee3c8e"
+    },
+    {
+      "path": "server/src/integrationTest/kotlin/com/feedme/server/db/DurableCommandsIntegrationTest.kt",
+      "bytes": 30536,
+      "sha256": "938dd169373ae6caef5a9c1e0c87fc64885ca89efca09a695f43b514d98895df"
+    },
+    {
+      "path": "server/src/integrationTest/kotlin/com/feedme/server/db/DurableEventsIntegrationTest.kt",
+      "bytes": 12796,
+      "sha256": "bb620bb58857515538f3da23474d493c8017208508b402911eea8772defe5d7c"
+    },
+    {
+      "path": "server/src/integrationTest/kotlin/com/feedme/server/db/PlatformMigrationsIntegrationTest.kt",
+      "bytes": 11933,
+      "sha256": "bb5a272dd7f29e4b10f2c765335487022b735fef9db3eaf8be8ac93da165ebc7"
+    },
+    {
+      "path": "server/src/integrationTest/kotlin/com/feedme/server/db/PostgresTestCluster.kt",
+      "bytes": 12729,
+      "sha256": "643917f603eee3712d2b795490d1228067ddbe635bd4a979082aebb342471bf3"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/Main.kt",
+      "bytes": 663,
+      "sha256": "23943735a7d0379eaa815b3793b47a281fccd798c2d26fd75feb02f4c4d92281"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/config/LocalServerConfig.kt",
+      "bytes": 1778,
+      "sha256": "1138e265d3a92f634cecb4c0109b633a5b07aaecc1efbb1362dc6b1d5c0bbd71"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/contract/ContractBodyValidator.kt",
+      "bytes": 16475,
+      "sha256": "5e38bc602a889b95ea2c8f7f1323970d702b6e0d62871b337482fd0975b63dda"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/contract/ContractCatalog.kt",
+      "bytes": 2880,
+      "sha256": "6bd5f52e81214e345bd8bc8e03c3eec7be0a114c33a99d5dd434798d1d434a86"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/db/DurableCommands.kt",
+      "bytes": 10670,
+      "sha256": "00aa64778ea76a0ed4f735cdc97857b9f7de3ed74497a08ae58b2c009928d5ec"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/db/DurableEvents.kt",
+      "bytes": 11246,
+      "sha256": "9d2a4d2c6816c3c379854d2e31b6b88b757f3d431013209ded434219e8534c74"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/db/PgTransactions.kt",
+      "bytes": 2229,
+      "sha256": "ded0596efcab54040ba05c1f75900ca08199992a29aecc8247953d01bad317c5"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/db/PlatformMigrations.kt",
+      "bytes": 6006,
+      "sha256": "258b6164443b225aa0ad03d81d0103022804f2ee4ba3156c08bd21cf8c05e181"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/http/FeedMeApplication.kt",
+      "bytes": 5202,
+      "sha256": "91bb2e84a4b2e89411124bbf434cd184944e5e7a3ac06aca0ec33deb611c375c"
+    },
+    {
+      "path": "server/src/main/resources/db/migration/V001__durable_platform.sql",
+      "bytes": 4146,
+      "sha256": "343fa1e0ad66b2c2db12bd9e38ea64aee65df8ae7c8829fe5ab7d9308abfdbb9"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/CommandIdentityTest.kt",
+      "bytes": 3000,
+      "sha256": "e0ca281469262e8dd18c64a4ba95830db0a6428d45e9d7dcc1f4e234b1d50c6f"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/ContractCatalogTest.kt",
+      "bytes": 2707,
+      "sha256": "4f0f82c5cd75652f73422a1f3e26570f37e7fee3eb29806616723bd9109be451"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/EventDraftTest.kt",
+      "bytes": 903,
+      "sha256": "cc9fbb4149bde9bcfea39583d09ebd001e8e11765e2b749e9bfb50cac415ae51"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/LocalServerConfigTest.kt",
+      "bytes": 2654,
+      "sha256": "f7e76575500e4509bf46e844b1d4d0957d749668cac252266e5ed190f6374a99"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/LocalServiceTest.kt",
+      "bytes": 7538,
+      "sha256": "821f550d2b32eb26f763c77d4fb4a62122a8e60607afddf988b683e37d138ecc"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/LoopbackEngineTest.kt",
+      "bytes": 2542,
+      "sha256": "9a02d3ec6f0948c188946e6ebbb51aeaec71a1539ed10c81e232d5a0fa2d2be1"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/contract/ContractBodyValidatorTest.kt",
+      "bytes": 12612,
+      "sha256": "77733b28d815f4c8e9c2beda41ee9341ad49a74ce29a517ed5eb8813185ccd08"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/contract/SharedContractParityTest.kt",
+      "bytes": 1089,
+      "sha256": "964170081a78358e334d404af35511d8e4a36bdad9c4dfde2d4556f3a16c0ab7"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/contract/WireContractIntegrationTest.kt",
+      "bytes": 8917,
+      "sha256": "ee22b39e422fd1731c9a7187489281f7f5a07a4ae6f2b2141c73c8e0df1487ab"
+    },
+    {
+      "path": "settings.gradle.kts",
+      "bytes": 398,
+      "sha256": "258eb355a75827d0b4286f3b7b752b0e247d9c704aa1df810ebccfde8e389ddf"
+    },
+    {
+      "path": "shared/contracts/build.gradle.kts",
+      "bytes": 901,
+      "sha256": "1a3fb857cb5fedd01e2c092f1ea5cda5aa10c0a4fee294f1695eb14f9d106b97"
+    },
+    {
+      "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/ContractCatalog.kt",
+      "bytes": 10484,
+      "sha256": "adb82efa39a485baec82581b2e2860b5e8b7c53d98e65bee6cb189d610cf5d36"
+    },
+    {
+      "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/CookingWireModels.kt",
+      "bytes": 16206,
+      "sha256": "20cf43990f84a71713afb49b5b878236c1b2bd0a4f6a6b89b0354993daa44d5d"
+    },
+    {
+      "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/WireDocument.kt",
+      "bytes": 9165,
+      "sha256": "16aedbb81a98ad55160b6a8beb0e74c3775a0d417adef00f5a251ff37e5b172c"
+    },
+    {
+      "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/generated/GeneratedContract.kt",
+      "bytes": 1030089,
+      "sha256": "c27913390fd1e8d3af3d19d83f522851eb9ec7fbf76d96c28a9d0379bb92d8ac"
+    },
+    {
+      "path": "shared/contracts/src/commonTest/kotlin/com/feedme/contracts/ContractCatalogTest.kt",
+      "bytes": 19872,
+      "sha256": "0975e1e50a7a2cad1a4cf449b15677818409bcba6949c3108fbb5e205733ec6b"
+    },
+    {
+      "path": "shared/contracts/src/commonTest/kotlin/com/feedme/contracts/CookingWireModelsTest.kt",
+      "bytes": 16447,
+      "sha256": "aa41f16c6d678abe806364c212245fdb8375997b4cb5faddc3f1d5edad8e58a3"
+    },
+    {
+      "path": "shared/contracts/src/commonTest/kotlin/com/feedme/contracts/WireDocumentTest.kt",
+      "bytes": 20353,
+      "sha256": "e6e27d85f989323b066bf3ce09a0191fc5db59ca594878c48fa02719b9b3db80"
+    }
+  ],
+  "sourceManifestSha256": "131a9c47460e29bf28696f84f6d895206df40fc7b850c6485d63350dcfc0f72c",
+  "testCommands": [
+    "./gradlew --no-daemon --console=plain :shared:contracts:jvmTest :shared:core:jvmTest :server:test :server:installDist",
+    "FEEDME_POSTGRES_BIN=/opt/homebrew/opt/postgresql@15/bin ./gradlew --no-daemon --console=plain :server:integrationTest",
+    "node --test --test-reporter=junit --test-reporter-destination=docs/verification/wire-validation/node-tests.xml scripts/generate-contract-artifacts.test.mjs scripts/verify-delivery-plan.test.mjs scripts/android-backup-policy.test.mjs"
+  ],
+  "counts": {
+    "contracts": 55,
+    "core": 46,
+    "server": 37,
+    "postgres": 45
+  },
+  "node": {
+    "tests": 92,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "sha256": "6a8d3677a28719d68dfd5e46d94e0e375dc663c7c8aaefe9bf1e3660fa99efc9"
+  },
+  "tests": [
+    {
+      "group": "contracts",
+      "name": "com.feedme.contracts.ContractCatalogTest",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:52:01.403Z",
+      "sha256": "0281ed0da784783c626c9d9ba361ea45cd33b75fdc8e50a82f41302342322691"
+    },
+    {
+      "group": "contracts",
+      "name": "com.feedme.contracts.CookingWireModelsTest",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:52:01.628Z",
+      "sha256": "3b60de9bb9ef33ae3d752c5f3ae35090c10cf1d502e7870f8d0af6805a13698c"
+    },
+    {
+      "group": "contracts",
+      "name": "com.feedme.contracts.WireDocumentTest",
+      "tests": 27,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:52:01.703Z",
+      "sha256": "1897be9b61fc4f661ce85d6cbbe58ccb3004e258165c356429fdcf4e26b48b99"
+    },
+    {
+      "group": "core",
+      "name": "com.feedme.core.ClientPortsTest",
+      "tests": 17,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:56:43.095Z",
+      "sha256": "7677aa32b0aee3781d132a8dbe56c677484db7db44ff56f916555d4b5b6b7164"
+    },
+    {
+      "group": "core",
+      "name": "com.feedme.core.KitchenRuntimeTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:56:43.140Z",
+      "sha256": "9c7814e868998f960adcd5495d8ad6b1b27264d7c4c434605870dbe721dd9f2e"
+    },
+    {
+      "group": "core",
+      "name": "com.feedme.core.ReducerTest",
+      "tests": 26,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:56:43.148Z",
+      "sha256": "dc91ec1e90b5b148adc3ed3e0230b39d25600d4f6481960f22a6e57eb1f85079"
+    },
+    {
+      "group": "server",
+      "name": "com.feedme.server.CommandIdentityTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:56:42.944Z",
+      "sha256": "c67e39077354d8aa5ef130709c02203541ef08a4095c116788c84fb1d1bfb4ab"
+    },
+    {
+      "group": "server",
+      "name": "com.feedme.server.ContractCatalogTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:56:43.123Z",
+      "sha256": "9463ececd5c3e3e3dbb5535962b5edf96bb32bc9c7f7fdab407dd0c359252e60"
+    },
+    {
+      "group": "server",
+      "name": "com.feedme.server.EventDraftTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:56:43.143Z",
+      "sha256": "d58930590623161a6e2941c4172c8426681a8e6a216a5ff64dd94e06ea35450d"
+    },
+    {
+      "group": "server",
+      "name": "com.feedme.server.LocalServerConfigTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:56:43.151Z",
+      "sha256": "00f09ef7a2c1642a6e14df29e6254816eebdad45c58e68a4b4de69fc8206e8e4"
+    },
+    {
+      "group": "server",
+      "name": "com.feedme.server.LocalServiceTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:56:43.154Z",
+      "sha256": "31bac2054634c3ea83685cd1fcd49e7a895f08a32149f86208bacd22fe649cd1"
+    },
+    {
+      "group": "server",
+      "name": "com.feedme.server.LoopbackEngineTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:56:43.798Z",
+      "sha256": "b92806cc83994f8f319b8041cbe2512115908eef0312e52bdaaf00c31d98ed21"
+    },
+    {
+      "group": "server",
+      "name": "com.feedme.server.contract.ContractBodyValidatorTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:56:44.018Z",
+      "sha256": "e3692bb282b9e35b1c5921db0a9d056bfb4b0f0ece58bb4a2861fdcc876a2dd3"
+    },
+    {
+      "group": "server",
+      "name": "com.feedme.server.contract.SharedContractParityTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:56:44.116Z",
+      "sha256": "848d3b8c390fbf7de48e38b658e567026f0b830f9e8124f49d1ac0c0549eb118"
+    },
+    {
+      "group": "server",
+      "name": "com.feedme.server.contract.WireContractIntegrationTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:56:44.146Z",
+      "sha256": "03bec4fb9bb6c69af20d6b2609156a2df085be7005321d450af9cab58c886b6b"
+    },
+    {
+      "group": "postgres",
+      "name": "com.feedme.server.db.CommitAndRetentionIntegrationTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:58:08.176Z",
+      "sha256": "147596becc9c82fa0d9b44c3323cc19f98884fa64f26e67884969ea281303475"
+    },
+    {
+      "group": "postgres",
+      "name": "com.feedme.server.db.DurableCommandsIntegrationTest",
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:58:10.681Z",
+      "sha256": "e8ab941f28893eb403fdae24ae3723eb1a69dab1ed88f44e95003e6b34f0d40f"
+    },
+    {
+      "group": "postgres",
+      "name": "com.feedme.server.db.DurableEventsIntegrationTest",
+      "tests": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:58:15.625Z",
+      "sha256": "5a401f77787a60230057fa25bf14bbef210f642c1e28b11c74d3b70ae6d2e663"
+    },
+    {
+      "group": "postgres",
+      "name": "com.feedme.server.db.PlatformMigrationsIntegrationTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:58:19.803Z",
+      "sha256": "6aeae7d633ad6617a56fd81fa00deb4f93c8d48d29a57702cb406d6b60a34ddd"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "shared/contracts/build/libs/contracts-jvm.jar",
+      "bytes": 164640,
+      "sha256": "cf717687b9e1c3f5895af2851680c635733d9b90b58288a210d886b9c43cfba6"
+    },
+    {
+      "path": "server/build/install/server/lib/server.jar",
+      "bytes": 150287,
+      "sha256": "f4623d1280884de29f445a4449139fcd7775129e39f9e49eecc140a74bc38ab8"
+    },
+    {
+      "path": "apps/android/build/outputs/apk/debug/android-debug.apk",
+      "bytes": 18981844,
+      "sha256": "bf6dd07e31a4fd49b798672ba82edcee7f958b9d5c12ae0d7a89491d20ff3805"
+    }
+  ],
+  "runtimeDependencies": [
+    {
+      "path": "server/build/install/server/lib/annotations-23.0.0.jar",
+      "bytes": 29371,
+      "sha256": "7b0f19724082cbfcbc66e5abea2b9bc92cf08a1ea11e191933ed43801eb3cd05"
+    },
+    {
+      "path": "server/build/install/server/lib/checker-qual-3.55.1.jar",
+      "bytes": 241885,
+      "sha256": "857658c8bdcbff794949a8d9922f88d63ee3751c203c7cd7d21ea97f9e745288"
+    },
+    {
+      "path": "server/build/install/server/lib/config-1.4.9.jar",
+      "bytes": 297970,
+      "sha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37"
+    },
+    {
+      "path": "server/build/install/server/lib/itu-1.14.0.jar",
+      "bytes": 57633,
+      "sha256": "5cf40ab0cc77828ab2b875b1f3ecd71c8295d7721933476abc2e08fddcea164a"
+    },
+    {
+      "path": "server/build/install/server/lib/jackson-annotations-2.22.jar",
+      "bytes": 84211,
+      "sha256": "21ddb598807d3a51a876704eb979d9296e1c6a6f47ab1826ff88c6d6a127a2d0"
+    },
+    {
+      "path": "server/build/install/server/lib/jackson-core-3.2.1.jar",
+      "bytes": 604776,
+      "sha256": "2688aaa60b207403287e16a71fb5644bf2f9cfc464cc601ae95c6c86a5af1f94"
+    },
+    {
+      "path": "server/build/install/server/lib/jackson-databind-3.2.1.jar",
+      "bytes": 1973737,
+      "sha256": "8d005c5626b1839e2eea6bd33a437287e7a24d54e1bb3746b8f861193262b519"
+    },
+    {
+      "path": "server/build/install/server/lib/jackson-dataformat-yaml-3.2.1.jar",
+      "bytes": 66045,
+      "sha256": "b6a748ca9aab640f647079b6bfa53f16a5b65b815a19581c4afe0601e754854e"
+    },
+    {
+      "path": "server/build/install/server/lib/jcodings-1.0.63.jar",
+      "bytes": 1760082,
+      "sha256": "ef11e1741a65160c5619cd2c3c79c40ee0affda847062f012616034b9d10e719"
+    },
+    {
+      "path": "server/build/install/server/lib/joni-2.2.6.jar",
+      "bytes": 232385,
+      "sha256": "fb33f60ab43e38653317bbf41a1fec89cbee270c48e53b0b56d1165c00de0e07"
+    },
+    {
+      "path": "server/build/install/server/lib/json-schema-validator-3.0.7.jar",
+      "bytes": 583738,
+      "sha256": "27b90bce60845f353b203b735cda2e0cb9a32c4962550e249141a2b065b9be5c"
+    },
+    {
+      "path": "server/build/install/server/lib/kotlin-reflect-2.3.21.jar",
+      "bytes": 3633922,
+      "sha256": "33e37d9dfa86c7a29ab34e975b5f4a1287b458878611051f3485652220c1a2cb"
+    },
+    {
+      "path": "server/build/install/server/lib/kotlin-stdlib-2.3.21.jar",
+      "bytes": 1804721,
+      "sha256": "6f64eac736db9434dd6925b4a518b9d1d17177652320c37916cf9ba3ce7d7d7a"
+    },
+    {
+      "path": "server/build/install/server/lib/kotlinx-coroutines-core-jvm-1.11.0.jar",
+      "bytes": 1577052,
+      "sha256": "d1d75aa01dffbb4d1c520e67e4c4e7f5f6174718e7cb4632412503f2f0e604fa"
+    },
+    {
+      "path": "server/build/install/server/lib/kotlinx-io-bytestring-jvm-0.9.1.jar",
+      "bytes": 22776,
+      "sha256": "8589de0b7c476bfdd02a24641685f609ade72f5e595cf2909c168acdba7e6ba4"
+    },
+    {
+      "path": "server/build/install/server/lib/kotlinx-io-core-jvm-0.9.1.jar",
+      "bytes": 153576,
+      "sha256": "765d8851d8ca694706931331b92386844800867e041b720f1f193dbda874d370"
+    },
+    {
+      "path": "server/build/install/server/lib/kotlinx-serialization-core-jvm-1.11.0.jar",
+      "bytes": 404509,
+      "sha256": "f4a801c647d4351327cd9e1ac4113e2be9ea37a64ab0abae269c25a52e28f35d"
+    },
+    {
+      "path": "server/build/install/server/lib/kotlinx-serialization-json-jvm-1.11.0.jar",
+      "bytes": 294166,
+      "sha256": "563a25b4eb5c9128ae9c2479f3d1a5c44dcd176112b91cf03682e906eba5c935"
+    },
+    {
+      "path": "server/build/install/server/lib/ktor-events-jvm-3.5.2.jar",
+      "bytes": 6402,
+      "sha256": "7712ed1d51716180a9666fe88da5c5ef0e49123483ae2cd14ae3e9252ee71148"
+    },
+    {
+      "path": "server/build/install/server/lib/ktor-http-cio-jvm-3.5.2.jar",
+      "bytes": 134338,
+      "sha256": "3c87a3e3b368994a485e2f62f59cbe2201d767094018b726e81ffbe9b4976554"
+    },
+    {
+      "path": "server/build/install/server/lib/ktor-http-jvm-3.5.2.jar",
+      "bytes": 446542,
+      "sha256": "6afc8074f60732ed60cd904a3e52b46a98425b35a1b9446d2cfa457f2ee63b41"
+    },
+    {
+      "path": "server/build/install/server/lib/ktor-io-jvm-3.5.2.jar",
+      "bytes": 305409,
+      "sha256": "b990b4319b711218fbcee2f98e1dcf289a25a17194837992efb5b970b3b6c64c"
+    },
+    {
+      "path": "server/build/install/server/lib/ktor-network-jvm-3.5.2.jar",
+      "bytes": 200150,
+      "sha256": "f1d966faf5e9adf903a968480f6c1a4223d596583a972ebbaf3fa1fd7f9be75d"
+    },
+    {
+      "path": "server/build/install/server/lib/ktor-serialization-jvm-3.5.2.jar",
+      "bytes": 22962,
+      "sha256": "b7c85d08714ce39e9c17a235038de6f9c2b121e5fb57ce90c5a349a65f61e9f6"
+    },
+    {
+      "path": "server/build/install/server/lib/ktor-server-cio-jvm-3.5.2.jar",
+      "bytes": 120455,
+      "sha256": "cfc4f740b8efb5e608d683aefb8ce605b4081e1d97f3c3d7cd14dbed886570bb"
+    },
+    {
+      "path": "server/build/install/server/lib/ktor-server-core-jvm-3.5.2.jar",
+      "bytes": 949125,
+      "sha256": "d465a17ee037ac869d3b1002be91248dbad587dd4435e35fa727cbb7591bcd61"
+    },
+    {
+      "path": "server/build/install/server/lib/ktor-server-status-pages-jvm-3.5.2.jar",
+      "bytes": 34128,
+      "sha256": "30c3a78a2200ea42c0ae6eab5bb06f62f47d8623fb7c25ab14127631a0c67a51"
+    },
+    {
+      "path": "server/build/install/server/lib/ktor-utils-jvm-3.5.2.jar",
+      "bytes": 372837,
+      "sha256": "5cb9c040d290aa31ce5e4930d825dda5d25625a8603074b29943c519d5b022bb"
+    },
+    {
+      "path": "server/build/install/server/lib/ktor-websockets-jvm-3.5.2.jar",
+      "bytes": 192283,
+      "sha256": "f5aeb4e6ee108e815643e2cf06580d4ca1adc529f6cf4d306a89b69fb4880b4b"
+    },
+    {
+      "path": "server/build/install/server/lib/postgresql-42.7.13.jar",
+      "bytes": 1220948,
+      "sha256": "6e0e4cc2d8cae902084f8a2b18728b073a6fd9d1f87c9d8bff8f298c18185b93"
+    },
+    {
+      "path": "server/build/install/server/lib/server.jar",
+      "bytes": 150287,
+      "sha256": "f4623d1280884de29f445a4449139fcd7775129e39f9e49eecc140a74bc38ab8"
+    },
+    {
+      "path": "server/build/install/server/lib/slf4j-api-2.0.18.jar",
+      "bytes": 69982,
+      "sha256": "44508fd1576500688c790b190acdd16fec4f8c79a3e0b900afd70503cf055f55"
+    },
+    {
+      "path": "server/build/install/server/lib/snakeyaml-engine-3.0.1.jar",
+      "bytes": 299438,
+      "sha256": "0b638c8806112215e02e58e95cbd9e9a69d4bd540991f47553d053919994cc94"
+    }
+  ],
+  "distributionSmoke": {
+    "path": "docs/verification/wire-validation/distribution-smoke.json",
+    "bytes": 759,
+    "sha256": "ec186109a120d86d51f7fedf1414d1fd0cfc9308905fe2346c11335605c2cd50"
+  },
+  "limits": {
+    "bodyBytes": 1048576,
+    "nestingDepth": 64,
+    "numericTokenChars": 1000,
+    "serverAbsoluteDecimalScale": 10000,
+    "unicode": "scalar strings and keys; no lone surrogate replacement"
+  },
+  "notes": [
+    "Contracts tests last fresh at05:52Z; up-to-date in final Gradle run. Core/server and PG tests executed freshly in respective final runs.",
+    "Packaged distribution started only on127.0.0.1:8789, four probes passed, explicitly stopped after smoke.",
+    "Android APK is untouched and retains the prior matching emulator receipt; Android/iOS not run in this continuation.",
+    "Schema syntax/instance validity does not authenticate callers or enforce rights, recall, feasibility or consent.",
+    "75 generator tests plus17 tracker/backup tests form the92 Node total."
+  ],
+  "cleanup": {
+    "verifiedAt": "2026-09-13T06:06:13.102Z",
+    "distributionSessionTerminalExit": 130,
+    "loopback8789ListenerAbsent": true,
+    "testClusterPidFilesRemaining": 0,
+    "testClusterProcessesAbsent": true,
+    "processCheck": "Scoped pgrep succeeded with no matches after ordinary sandbox process lookup was unavailable; no existing service was stopped.",
+    "syntheticTestDataRetained": true
+  }
+}

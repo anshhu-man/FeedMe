@@ -1,0 +1,252 @@
+> Task :server:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:contracts:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:core:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:contracts:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :server:processResources
+> Task :server:processTestResources
+> Task :server:processIntegrationTestResources NO-SOURCE
+> Task :shared:core:jvmProcessResources NO-SOURCE
+> Task :shared:core:processJvmMainResources SKIPPED
+> Task :shared:core:jvmTestProcessResources NO-SOURCE
+> Task :shared:core:processJvmTestResources SKIPPED
+> Task :shared:storage:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:storage:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:storage:jvmProcessResources NO-SOURCE
+> Task :shared:storage:processJvmMainResources SKIPPED
+> Task :shared:storage:jvmTestProcessResources NO-SOURCE
+> Task :shared:storage:processJvmTestResources SKIPPED
+> Task :shared:storage:preBuild UP-TO-DATE
+> Task :shared:storage:preDebugBuild UP-TO-DATE
+> Task :shared:storage:checkDebugAarMetadata
+> Task :shared:storage:mergeDebugJniLibFolders
+> Task :shared:storage:mergeDebugNativeLibs NO-SOURCE
+> Task :shared:storage:stripDebugDebugSymbols NO-SOURCE
+> Task :shared:storage:copyDebugJniLibsProjectAndLocalJars
+> Task :shared:storage:generateDebugResValues
+> Task :shared:storage:generateDebugResources
+> Task :shared:storage:packageDebugResources
+> Task :shared:storage:processDebugNavigationResources
+> Task :shared:storage:extractDeepLinksForAarDebug
+> Task :shared:storage:mergeDebugShaders
+> Task :shared:storage:compileDebugShaders NO-SOURCE
+> Task :shared:storage:debugAssetsCopyForAGP NO-SOURCE
+> Task :shared:storage:generateDebugAssets UP-TO-DATE
+> Task :shared:storage:parseDebugLocalResources
+> Task :shared:storage:mergeDebugAssets
+> Task :shared:storage:prepareDebugArtProfile
+> Task :shared:storage:prepareLintJarForPublish
+> Task :shared:storage:javaPreCompileDebug
+> Task :shared:storage:preDebugAndroidTestBuild UP-TO-DATE
+> Task :shared:storage:generateDebugRFile
+> Task :shared:storage:writeDebugAarMetadata
+
+> Task :shared:contracts:verifyContractArtifacts
+feedme-contract-artifacts-v1: no drift; {"schemas":188,"paths":155,"operations":201,"features":54,"screens":98,"actions":900,"httpActions":152,"httpHydrations":99,"localExternalHydrations":32}
+
+> Task :shared:storage:generateDebugAndroidTestResValues
+> Task :shared:storage:writeDebugLintModelMetadata
+> Task :shared:storage:processDebugManifest
+> Task :shared:storage:extractProguardFiles
+> Task :shared:storage:preDebugUnitTestBuild UP-TO-DATE
+> Task :shared:contracts:jvmProcessResources NO-SOURCE
+> Task :shared:contracts:processJvmMainResources SKIPPED
+> Task :shared:contracts:jvmTestProcessResources
+> Task :shared:contracts:processJvmTestResources SKIPPED
+> Task :shared:transport:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:transport:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:transport:jvmProcessResources NO-SOURCE
+> Task :shared:transport:processJvmMainResources SKIPPED
+> Task :shared:transport:jvmTestProcessResources NO-SOURCE
+> Task :shared:transport:processJvmTestResources SKIPPED
+> Task :shared:transport:preBuild UP-TO-DATE
+> Task :shared:transport:preDebugBuild UP-TO-DATE
+> Task :shared:transport:checkDebugAarMetadata
+> Task :shared:transport:mergeDebugJniLibFolders
+> Task :shared:transport:mergeDebugNativeLibs NO-SOURCE
+> Task :shared:transport:stripDebugDebugSymbols NO-SOURCE
+> Task :shared:transport:copyDebugJniLibsProjectAndLocalJars
+> Task :shared:transport:generateDebugResValues
+> Task :shared:transport:generateDebugResources
+> Task :shared:transport:packageDebugResources
+> Task :shared:transport:processDebugNavigationResources
+> Task :shared:transport:extractDeepLinksForAarDebug
+> Task :shared:transport:mergeDebugShaders
+> Task :shared:transport:compileDebugShaders NO-SOURCE
+> Task :shared:transport:debugAssetsCopyForAGP NO-SOURCE
+> Task :shared:transport:generateDebugAssets UP-TO-DATE
+> Task :shared:transport:parseDebugLocalResources
+> Task :shared:transport:mergeDebugAssets
+> Task :shared:transport:prepareDebugArtProfile
+> Task :shared:transport:prepareLintJarForPublish
+> Task :shared:transport:javaPreCompileDebug
+> Task :shared:transport:generateDebugRFile
+> Task :shared:transport:preDebugAndroidTestBuild UP-TO-DATE
+> Task :shared:transport:writeDebugAarMetadata
+> Task :shared:sync:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:sync:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:sync:jvmProcessResources NO-SOURCE
+> Task :shared:sync:processJvmMainResources SKIPPED
+> Task :shared:sync:jvmTestProcessResources NO-SOURCE
+> Task :shared:sync:processJvmTestResources SKIPPED
+> Task :shared:sync:preBuild UP-TO-DATE
+> Task :shared:sync:preDebugBuild UP-TO-DATE
+> Task :shared:transport:generateDebugAndroidTestResValues
+> Task :shared:transport:writeDebugLintModelMetadata
+> Task :shared:sync:mergeDebugJniLibFolders
+> Task :shared:transport:processDebugManifest
+> Task :shared:transport:extractProguardFiles
+> Task :shared:transport:preDebugUnitTestBuild UP-TO-DATE
+> Task :shared:sync:mergeDebugNativeLibs NO-SOURCE
+> Task :shared:sync:stripDebugDebugSymbols NO-SOURCE
+> Task :shared:sync:checkDebugAarMetadata
+> Task :shared:sync:copyDebugJniLibsProjectAndLocalJars
+> Task :shared:sync:generateDebugResValues
+> Task :shared:sync:generateDebugResources
+> Task :shared:sync:packageDebugResources
+> Task :shared:sync:processDebugNavigationResources
+> Task :shared:sync:extractDeepLinksForAarDebug
+> Task :shared:sync:parseDebugLocalResources
+> Task :shared:sync:mergeDebugShaders
+> Task :shared:sync:compileDebugShaders NO-SOURCE
+> Task :shared:sync:debugAssetsCopyForAGP NO-SOURCE
+> Task :shared:sync:generateDebugAssets UP-TO-DATE
+> Task :shared:sync:mergeDebugAssets
+> Task :shared:sync:generateDebugRFile
+> Task :shared:sync:prepareDebugArtProfile
+> Task :shared:sync:javaPreCompileDebug
+> Task :shared:sync:prepareLintJarForPublish
+> Task :shared:sync:preDebugAndroidTestBuild UP-TO-DATE
+> Task :shared:sync:writeDebugAarMetadata
+> Task :shared:sync:generateDebugAndroidTestResValues
+> Task :shared:sync:processDebugManifest
+> Task :shared:sync:writeDebugLintModelMetadata
+> Task :shared:sync:extractProguardFiles
+> Task :shared:sync:preDebugUnitTestBuild UP-TO-DATE
+> Task :shared:core:compileKotlinJvm
+> Task :shared:core:compileJvmMainJava NO-SOURCE
+> Task :shared:core:jvmMainClasses
+> Task :shared:core:jvmJar
+> Task :shared:contracts:compileKotlinJvm
+> Task :shared:contracts:compileJvmMainJava NO-SOURCE
+> Task :shared:contracts:jvmMainClasses
+> Task :shared:contracts:jvmJar
+> Task :shared:storage:compileKotlinJvm
+> Task :shared:storage:compileJvmMainJava NO-SOURCE
+> Task :shared:storage:jvmMainClasses
+> Task :shared:storage:jvmJar
+
+> Task :shared:core:compileTestKotlinJvm
+w: file:///Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/shared/core/src/commonTest/kotlin/com/feedme/core/ReducerTest.kt:25:34 Unnecessary non-null assertion (!!) on a non-null receiver of type 'Session'.
+w: file:///Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/shared/core/src/commonTest/kotlin/com/feedme/core/ReducerTest.kt:91:31 Unnecessary non-null assertion (!!) on a non-null receiver of type 'AppError'.
+w: file:///Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/shared/core/src/commonTest/kotlin/com/feedme/core/ReducerTest.kt:145:54 Unnecessary non-null assertion (!!) on a non-null receiver of type 'Session'.
+w: file:///Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/shared/core/src/commonTest/kotlin/com/feedme/core/ReducerTest.kt:197:38 Unnecessary non-null assertion (!!) on a non-null receiver of type 'CookingSession'.
+w: file:///Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/shared/core/src/commonTest/kotlin/com/feedme/core/ReducerTest.kt:198:33 Unnecessary non-null assertion (!!) on a non-null receiver of type 'CookingSession'.
+
+> Task :shared:core:compileJvmTestJava NO-SOURCE
+> Task :shared:core:jvmTestClasses
+> Task :shared:storage:compileDebugKotlinAndroid
+> Task :shared:storage:extractDebugAnnotations
+> Task :shared:storage:compileDebugJavaWithJavac NO-SOURCE
+> Task :shared:storage:mergeDebugGeneratedProguardFiles
+> Task :shared:storage:mergeDebugConsumerProguardFiles
+> Task :shared:storage:processDebugJavaRes
+> Task :shared:storage:mergeDebugJavaResource
+> Task :shared:storage:bundleLibRuntimeToJarDebug
+> Task :shared:storage:generateDebugLintReportModel
+> Task :shared:storage:syncDebugLibJars
+> Task :shared:storage:bundleDebugAar
+> Task :shared:storage:assembleDebug
+> Task :shared:storage:bundleDebugLocalLintAar
+> Task :shared:storage:createFullJarDebug
+> Task :shared:storage:generateDebugAndroidTestLintModel
+> Task :shared:storage:generateDebugUnitTestLintModel
+> Task :shared:core:jvmTest
+> Task :shared:transport:compileKotlinJvm
+> Task :shared:transport:compileJvmMainJava NO-SOURCE
+> Task :shared:transport:jvmMainClasses
+> Task :shared:transport:jvmJar
+> Task :shared:contracts:compileTestKotlinJvm
+> Task :shared:contracts:compileJvmTestJava NO-SOURCE
+> Task :shared:contracts:jvmTestClasses
+> Task :shared:transport:compileDebugKotlinAndroid
+> Task :shared:transport:extractDebugAnnotations
+> Task :shared:transport:compileDebugJavaWithJavac NO-SOURCE
+> Task :shared:transport:mergeDebugGeneratedProguardFiles
+> Task :shared:transport:mergeDebugConsumerProguardFiles
+> Task :shared:transport:processDebugJavaRes
+> Task :shared:transport:mergeDebugJavaResource
+> Task :shared:storage:lintAnalyzeDebugUnitTest
+> Task :shared:transport:bundleLibRuntimeToJarDebug
+> Task :server:compileKotlin
+> Task :server:compileJava NO-SOURCE
+> Task :server:classes
+> Task :shared:transport:generateDebugLintReportModel
+> Task :shared:transport:syncDebugLibJars
+> Task :server:jar
+> Task :shared:transport:bundleDebugAar
+> Task :shared:transport:assembleDebug
+> Task :shared:transport:bundleDebugLocalLintAar
+> Task :shared:transport:createFullJarDebug
+> Task :shared:transport:bundleLibCompileToJarDebug
+> Task :shared:transport:generateDebugAndroidTestLintModel
+> Task :shared:transport:generateDebugUnitTestLintModel
+> Task :shared:transport:generateDebugLintModel
+> Task :shared:transport:lintAnalyzeDebugAndroidTest
+> Task :shared:storage:lintAnalyzeDebug
+> Task :shared:transport:lintAnalyzeDebug
+> Task :shared:storage:lintAnalyzeDebugAndroidTest
+> Task :shared:storage:lintReportDebug
+> Task :shared:storage:lintDebug
+> Task :shared:contracts:jvmTest
+> Task :shared:sync:compileKotlinJvm
+> Task :shared:sync:compileJvmMainJava NO-SOURCE
+> Task :shared:sync:jvmMainClasses
+> Task :shared:sync:jvmJar
+> Task :shared:transport:lintAnalyzeDebugUnitTest
+> Task :shared:transport:lintReportDebug
+> Task :shared:transport:lintDebug
+> Task :server:compileIntegrationTestKotlin
+> Task :server:compileIntegrationTestJava NO-SOURCE
+> Task :server:integrationTestClasses UP-TO-DATE
+> Task :server:compileTestKotlin
+> Task :shared:transport:compileTestKotlinJvm
+> Task :shared:transport:compileJvmTestJava NO-SOURCE
+> Task :shared:transport:jvmTestClasses
+> Task :shared:sync:compileDebugKotlinAndroid
+> Task :shared:sync:extractDebugAnnotations
+> Task :shared:sync:compileDebugJavaWithJavac NO-SOURCE
+> Task :shared:sync:mergeDebugGeneratedProguardFiles
+> Task :shared:sync:mergeDebugConsumerProguardFiles
+> Task :shared:sync:processDebugJavaRes
+> Task :shared:sync:generateDebugLintReportModel
+> Task :shared:sync:mergeDebugJavaResource
+> Task :shared:sync:bundleLibRuntimeToJarDebug
+> Task :shared:sync:syncDebugLibJars
+> Task :shared:sync:bundleDebugAar
+> Task :shared:sync:assembleDebug
+> Task :shared:sync:bundleDebugLocalLintAar
+> Task :shared:sync:createFullJarDebug
+> Task :shared:sync:generateDebugAndroidTestLintModel
+> Task :shared:sync:generateDebugUnitTestLintModel
+> Task :shared:sync:lintAnalyzeDebugUnitTest
+> Task :shared:sync:lintAnalyzeDebugAndroidTest
+> Task :shared:sync:lintAnalyzeDebug
+> Task :shared:sync:lintReportDebug
+> Task :shared:sync:lintDebug
+> Task :shared:storage:compileTestKotlinJvm
+> Task :shared:storage:compileJvmTestJava NO-SOURCE
+> Task :shared:storage:jvmTestClasses
+> Task :shared:sync:compileTestKotlinJvm
+> Task :shared:sync:compileJvmTestJava NO-SOURCE
+> Task :shared:sync:jvmTestClasses
+> Task :shared:transport:jvmTest
+> Task :shared:sync:jvmTest
+> Task :shared:storage:jvmTest
+> Task :server:integrationTest
+> Task :server:compileTestJava NO-SOURCE
+> Task :server:testClasses
+> Task :server:test
+
+BUILD SUCCESSFUL in 25s
+154 actionable tasks: 154 executed

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.session.SessionActivationCodecTest" tests="22" skipped="0" failures="0" errors="0" timestamp="2026-09-13T11:32:14.089Z" hostname="ansachars-MacBook-Pro.local" time="0.019">
+  <properties/>
+  <testcase name="everyRootFieldIsRequiredAndCredentialsOrMutableRefreshRevisionAreForbidden[jvm]" classname="com.feedme.session.SessionActivationCodecTest" time="0.002"/>
+  <testcase name="schemaVersionRequiresLiteralLocalIntegerOne[jvm]" classname="com.feedme.session.SessionActivationCodecTest" time="0.001"/>
+  <testcase name="scopeRequiresAllExactKeysAndStringTypes[jvm]" classname="com.feedme.session.SessionActivationCodecTest" time="0.002"/>
+  <testcase name="accountRecordRoundTripsEveryExactBindingAndOnlyTheSpecifiedFields[jvm]" classname="com.feedme.session.SessionActivationCodecTest" time="0.0"/>
+  <testcase name="targetIsExact137ByteLowercaseHexNotAPathBase64OrTruncatedCapability[jvm]" classname="com.feedme.session.SessionActivationCodecTest" time="0.002"/>
+  <testcase name="privateModelAndErrorsNeverExposeScopeCapabilityOrConfiguration[jvm]" classname="com.feedme.session.SessionActivationCodecTest" time="0.001"/>
+  <testcase name="duplicateDecodedKeysFailAtRootAndScopeIncludingEscapedNames[jvm]" classname="com.feedme.session.SessionActivationCodecTest" time="0.0"/>
+  <testcase name="scopeRejectsDemoUnknownKindsAndCaseFolding[jvm]" classname="com.feedme.session.SessionActivationCodecTest" time="0.0"/>
+  <testcase name="targetEncodingPreservesExactBytesIncludingZeroAndHighBits[jvm]" classname="com.feedme.session.SessionActivationCodecTest" time="0.001"/>
+  <testcase name="targetAndSerializedByteCopiesRemainDetachedAndCallerBuffersAreNotWiped[jvm]" classname="com.feedme.session.SessionActivationCodecTest" time="0.0"/>
+  <testcase name="exactTargetAndConfigurationChangesAreNotNormalizedOrTreatedAsEquivalent[jvm]" classname="com.feedme.session.SessionActivationCodecTest" time="0.0"/>
+  <testcase name="maximum4096WireBytesAreInclusiveAndDepthIsBounded[jvm]" classname="com.feedme.session.SessionActivationCodecTest" time="0.001"/>
+  <testcase name="configurationBindingIsAnExactLowercase64CharacterHexDigest[jvm]" classname="com.feedme.session.SessionActivationCodecTest" time="0.003"/>
+  <testcase name="malformedJsonAndUtf8DoNotBecomePartialOrRepairedActivationRecords[jvm]" classname="com.feedme.session.SessionActivationCodecTest" time="0.001"/>
+  <testcase name="bothLocalIncarnationsRequireExactLowercaseUuidStrings[jvm]" classname="com.feedme.session.SessionActivationCodecTest" time="0.002"/>
+  <testcase name="guestOwnerIsPreservedWithoutInferringAnAccountOrProvider[jvm]" classname="com.feedme.session.SessionActivationCodecTest" time="0.0"/>
+  <testcase name="topLevelNullScalarsArraysAndEmptyObjectsHaveNoFallback[jvm]" classname="com.feedme.session.SessionActivationCodecTest" time="0.001"/>
+  <testcase name="ownershipFieldsEnforceNonblankControlFreeCoreBounds[jvm]" classname="com.feedme.session.SessionActivationCodecTest" time="0.001"/>
+  <testcase name="largestCoreScopeWithJsonEscapingStillRoundTripsWithoutDroppingWireFields[jvm]" classname="com.feedme.session.SessionActivationCodecTest" time="0.0"/>
+  <testcase name="validUnicodeAndOwnershipWhitespaceArePreservedWithoutNormalization[jvm]" classname="com.feedme.session.SessionActivationCodecTest" time="0.001"/>
+  <testcase name="encodingRevalidatesUntrustedModelValuesWithoutNormalization[jvm]" classname="com.feedme.session.SessionActivationCodecTest" time="0.0"/>
+  <testcase name="loneOrReversedUnicodeSurrogatesAreRejectedAtEveryStringBoundary[jvm]" classname="com.feedme.session.SessionActivationCodecTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

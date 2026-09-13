@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.session.RetirementCodecTest" tests="22" skipped="0" failures="0" errors="0" timestamp="2026-09-13T12:27:37.164Z" hostname="ansachars-MacBook-Pro.local" time="0.039">
+  <properties/>
+  <testcase name="everyPendingFieldIsRequiredAndAdditionalSecretFieldsRejected[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.007"/>
+  <testcase name="duplicateKeysMalformedUtf8AndSurrogatesFailClosed[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.0"/>
+  <testcase name="setupDiscardCannotBeParsedAsLegacyLogoutByChangingItsTagWhenTargetsAreAbsent[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.004"/>
+  <testcase name="setupDiscardGuestScopeDoesNotBecomeAnAccount[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.0"/>
+  <testcase name="completedStateRemovesOwnerOriginAndTargets[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.001"/>
+  <testcase name="setupDiscardCheckpointSetDerivesOnlyPresentResourcesAndIsDetached[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.001"/>
+  <testcase name="setupDiscardIdsScopeAndNullableTargetTypesAreStrict[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.004"/>
+  <testcase name="setupDiscardViewsAndCompletionDoNotExposeTargetIdentity[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.0"/>
+  <testcase name="setupDiscardRoundTripsAllSixAnchoredOptionalTargetCombinations[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.001"/>
+  <testcase name="ownerKindAndScopeRemainStrictAndGuestIsNotAccount[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.01"/>
+  <testcase name="setupDiscardDuplicateKeysAndOversizedPayloadRemainRejected[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.002"/>
+  <testcase name="schemaVersionIsExactAndUnknownKeysAreRejected[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.0"/>
+  <testcase name="setupDiscardRejectsDuplicateOrUnknownCompletionSteps[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.001"/>
+  <testcase name="initialStateMatchesNativeControlFormatExactly[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.0"/>
+  <testcase name="setupDiscardNeverAcceptsDataOnlyOrNoAnchorAndNeverMarksAbsentTargetsDone[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.001"/>
+  <testcase name="setupDiscardHasDistinctTagAndExplicitNullsWithoutPlaceholderTargets[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.0"/>
+  <testcase name="privateModelViewsAndBytesRemainDetachedAndRedacted[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.003"/>
+  <testcase name="pendingRoundTripsExactOpaqueTargetsAndIncarnations[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.001"/>
+  <testcase name="completedStepSetDoesNotAcceptDuplicatesOrUnknownSteps[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.0"/>
+  <testcase name="opaqueTargetIsBoundedExactHexNotAPathOrCredential[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.001"/>
+  <testcase name="sizeAndNestingRemainBounded[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.0"/>
+  <testcase name="operationAndIncarnationIdsAreExactLowercaseUuids[jvm]" classname="com.feedme.session.RetirementCodecTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

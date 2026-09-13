@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Public-sanitized historical BiteClub archives; not current FeedMe implementation or verification evidence.",
+  "sanitization": "Only personal home path prefixes in UTF-8 entry contents are replaced with /Users/LOCAL_USER; other entry contents are unchanged.",
+  "archiveBytesAreNotOriginal": true,
+  "audit": {
+    "passed": true,
+    "checks": [
+      "pinned original SHA-256 and CRC",
+      "path traversal and duplicate/case-collision rejection",
+      "regular files/directories only; no symlinks or encrypted entries",
+      "credential filenames and generated/build directories rejected",
+      "bounded entry counts and uncompressed sizes",
+      "strict UTF-8 text and known PNG metadata types",
+      "raw and commonly decoded high-confidence token pattern scan",
+      "plain/escaped/percent-encoded personal home prefix audit",
+      "repacked CRC, exact entry identity/order and per-entry expected-content comparison",
+      "original bytes rechecked after packaging"
+    ],
+    "tokenRuleNames": [
+      "private-key-header",
+      "aws-access-key",
+      "github-token",
+      "openai-shaped-token",
+      "google-api-key",
+      "slack-token",
+      "jwt-shaped-token",
+      "literal-bearer-token",
+      "credential-bearing-url"
+    ],
+    "limitations": "Pattern checks are bounded publication hygiene, not a guarantee that arbitrary prose or image pixels contain no sensitive information. Existing PNG content-provenance caBX metadata is preserved. Archives are historical design snapshots, not security attestations."
+  },
+  "archives": [
+    {
+      "original": {
+        "relativePath": "outputs/BiteClub_GenZ_UI_Kit.zip",
+        "sha256": "97149c06087fad13ca958ddb797e012d13d8e765fa657c05960bbff8113505b5",
+        "bytes": 19498424
+      },
+      "published": {
+        "filename": "BiteClub_GenZ_UI_Kit-public-sanitized.zip",
+        "sha256": "14bf8c87d1563689d399ed6034e5444f49c11d6baa666e04192403b50e41148e",
+        "bytes": 19508840
+      },
+      "entryCount": 331,
+      "fileCount": 314,
+      "directoryCount": 17,
+      "originalUncompressedFileBytes": 28632843,
+      "publishedUncompressedFileBytes": 28632853,
+      "topLevelDirectories": [
+        "biteclub_blueprint",
+        "biteclub_ui"
+      ],
+      "unchangedFileCount": 311,
+      "redactedRelativeEntries": [
+        {
+          "entry": "biteclub_ui/ASSET_MANIFEST.md",
+          "replacementCounts": {
+            "plain": 3
+          },
+          "originalSha256": "e31f080ca76d6930dae9c8f1b330e33b4f93bd259e8111cbb7625c61181c70a2",
+          "publishedSha256": "4a65e93d81460ece6a14412e0d08fbd9464c6bc201d7e5538de3936afe3391c6"
+        },
+        {
+          "entry": "biteclub_ui/scripts/qa.mjs",
+          "replacementCounts": {
+            "plain": 1
+          },
+          "originalSha256": "8f093d83ee95fb43721d4297110a5b93bbe5486d2e7f97cdb989e8cbb1f1ab19",
+          "publishedSha256": "3b9ba305d3d10e25ab15281dfbedd402f70300fdd093137b8be60ffa8d353482"
+        },
+        {
+          "entry": "biteclub_blueprint/scripts/browser-qa.mjs",
+          "replacementCounts": {
+            "plain": 1
+          },
+          "originalSha256": "4e8d3b6e3f4069ca73b435630d621599e0f788beed8967d38a07286b8f3fc276",
+          "publishedSha256": "3729812ae51b870356e630deee86040e854cf558150f0be98e5823aa36353d66"
+        }
+      ],
+      "pngChunkTypes": [
+        "IDAT",
+        "IEND",
+        "IHDR",
+        "caBX"
+      ],
+      "entryOrderNamesAndOtherContentPreserved": true,
+      "sourceUnchangedAfterPackaging": true
+    },
+    {
+      "original": {
+        "relativePath": "outputs/BiteClub_Production_Blueprint.zip",
+        "sha256": "002cd8e07de47301b08c7ff283018c5e8bf06d7c385a5d73cb866b32c58b3cca",
+        "bytes": 1432898
+      },
+      "published": {
+        "filename": "BiteClub_Production_Blueprint-public-sanitized.zip",
+        "sha256": "f848d50a08613c637c66e1f19d2b4d855ecde93e3d913111f015695356a4ec43",
+        "bytes": 1433392
+      },
+      "entryCount": 196,
+      "fileCount": 187,
+      "directoryCount": 9,
+      "originalUncompressedFileBytes": 7865518,
+      "publishedUncompressedFileBytes": 7865520,
+      "topLevelDirectories": [
+        "biteclub_blueprint"
+      ],
+      "unchangedFileCount": 186,
+      "redactedRelativeEntries": [
+        {
+          "entry": "biteclub_blueprint/scripts/browser-qa.mjs",
+          "replacementCounts": {
+            "plain": 1
+          },
+          "originalSha256": "4e8d3b6e3f4069ca73b435630d621599e0f788beed8967d38a07286b8f3fc276",
+          "publishedSha256": "3729812ae51b870356e630deee86040e854cf558150f0be98e5823aa36353d66"
+        }
+      ],
+      "pngChunkTypes": [
+        "IDAT",
+        "IEND",
+        "IHDR"
+      ],
+      "entryOrderNamesAndOtherContentPreserved": true,
+      "sourceUnchangedAfterPackaging": true
+    }
+  ]
+}

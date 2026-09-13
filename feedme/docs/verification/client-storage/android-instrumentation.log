@@ -1,0 +1,45 @@
+regular: 13 tests passed
+restart-write: 1 tests passed
+restart-read: 1 tests passed
+{
+  "startedAt": "2026-09-13T07:41:35.744Z",
+  "passed": true,
+  "serial": "emulator-5554",
+  "scope": "Isolated Android library tests only; not FeedMe UI/auth integration, hard-kill-in-transaction, physical-device, power-loss or iOS proof.",
+  "apk": {
+    "path": "shared/storage/build/outputs/apk/androidTest/debug/storage-debug-androidTest.apk",
+    "bytes": 6224719,
+    "sha256": "fe3c0f1971f919cbedf835c68888f46165b2725747e599a0674c5b7ab97aa72e"
+  },
+  "attemptDirectory": "docs/verification/client-storage/android-attempts/2026-09-13T07-41-35.743Z",
+  "checks": [
+    {
+      "name": "regular",
+      "passed": true,
+      "tests": 13,
+      "expected": 13,
+      "log": "docs/verification/client-storage/android-attempts/2026-09-13T07-41-35.743Z/regular.log"
+    },
+    {
+      "name": "restart-write",
+      "passed": true,
+      "tests": 1,
+      "expected": 1,
+      "log": "docs/verification/client-storage/android-attempts/2026-09-13T07-41-35.743Z/restart-write.log"
+    },
+    {
+      "name": "restart-read",
+      "passed": true,
+      "tests": 1,
+      "expected": 1,
+      "log": "docs/verification/client-storage/android-attempts/2026-09-13T07-41-35.743Z/restart-read.log"
+    },
+    {
+      "name": "owned-test-directories-cleaned",
+      "passed": true
+    }
+  ],
+  "androidApi": "35",
+  "androidAbi": "arm64-v8a",
+  "finishedAt": "2026-09-13T07:41:37.111Z"
+}

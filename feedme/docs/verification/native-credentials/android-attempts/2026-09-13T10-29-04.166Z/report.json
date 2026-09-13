@@ -1,0 +1,29 @@
+{
+  "startedAt": "2026-09-13T10:29:04.166Z",
+  "passed": true,
+  "serial": "emulator-5554",
+  "scope": "Isolated native credential Keystore/private-file tests, including controlled close/reopen and injected post-rename acknowledgement loss. Not actual provider sign-in, FeedMe UI/auth integration, native work cleanup, process-hard-kill, physical-device, power-loss or iOS proof.",
+  "apk": {
+    "path": "shared/session/build/outputs/apk/androidTest/debug/session-debug-androidTest.apk",
+    "bytes": 6733010,
+    "sha256": "231ce0f498c28b7aa1c9d82c675294a3a7a57b3c2c9c3293109d16c54812c3ea"
+  },
+  "attemptDirectory": "docs/verification/native-credentials/android-attempts/2026-09-13T10-29-04.166Z",
+  "checks": [
+    {
+      "name": "regular",
+      "classes": "com.feedme.session.AndroidCredentialStoreTest",
+      "passed": true,
+      "tests": 19,
+      "expected": 19,
+      "log": "docs/verification/native-credentials/android-attempts/2026-09-13T10-29-04.166Z/regular.log"
+    },
+    {
+      "name": "owned-test-directories-cleaned",
+      "passed": true
+    }
+  ],
+  "androidApi": "35",
+  "androidAbi": "arm64-v8a",
+  "finishedAt": "2026-09-13T10:29:06.374Z"
+}

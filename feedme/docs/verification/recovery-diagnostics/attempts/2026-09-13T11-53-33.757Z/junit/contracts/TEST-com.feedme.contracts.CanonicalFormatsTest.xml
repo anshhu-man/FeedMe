@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.contracts.CanonicalFormatsTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2026-09-13T11:53:37.684Z" hostname="ansachars-MacBook-Pro.local" time="0.114">
+  <properties/>
+  <testcase name="uuidAcceptsItsExactAsciiHexGrammarWithoutVersionOrVariantRestrictions[jvm]" classname="com.feedme.contracts.CanonicalFormatsTest" time="0.035"/>
+  <testcase name="uriRejectsMalformedIpv6IncludingUnbracketedAddressesAndZoneExtensions[jvm]" classname="com.feedme.contracts.CanonicalFormatsTest" time="0.007"/>
+  <testcase name="leapSecondsRequireAnEventInThePinnedIersTable[jvm]" classname="com.feedme.contracts.CanonicalFormatsTest" time="0.001"/>
+  <testcase name="dateTimeRejectsImpossibleDatesTimesOffsetsAndIsoExtensions[jvm]" classname="com.feedme.contracts.CanonicalFormatsTest" time="0.0"/>
+  <testcase name="onlyTheFormatsInTheCanonicalBundleAreEnabled[jvm]" classname="com.feedme.contracts.CanonicalFormatsTest" time="0.005"/>
+  <testcase name="uriSupportsIpvFutureGrammarIncludingUppercaseV[jvm]" classname="com.feedme.contracts.CanonicalFormatsTest" time="0.0"/>
+  <testcase name="longInputsHaveNoRegexBacktrackingOrPlatformPrecisionLimit[jvm]" classname="com.feedme.contracts.CanonicalFormatsTest" time="0.059"/>
+  <testcase name="dateTimeSupportsGregorianLeapYearsAsciiCaseFractionAndNumericOffsets[jvm]" classname="com.feedme.contracts.CanonicalFormatsTest" time="0.0"/>
+  <testcase name="uriAcceptsIpv6CompressionInEveryPositionAndIpv4Tails[jvm]" classname="com.feedme.contracts.CanonicalFormatsTest" time="0.001"/>
+  <testcase name="uuidRejectsWrappersNonHexAndWrongHyphenPositions[jvm]" classname="com.feedme.contracts.CanonicalFormatsTest" time="0.002"/>
+  <testcase name="uriAcceptsEveryGenericHierPartAndAllSchemes[jvm]" classname="com.feedme.contracts.CanonicalFormatsTest" time="0.001"/>
+  <testcase name="uriDistinguishesComponentGrammarsAndEncodedDelimiters[jvm]" classname="com.feedme.contracts.CanonicalFormatsTest" time="0.001"/>
+  <testcase name="leapSecondPositionIsCheckedInUtcIncludingMonthAndYearRollover[jvm]" classname="com.feedme.contracts.CanonicalFormatsTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

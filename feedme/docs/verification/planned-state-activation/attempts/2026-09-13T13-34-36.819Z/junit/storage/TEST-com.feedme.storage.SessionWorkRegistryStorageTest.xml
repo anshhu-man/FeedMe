@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.storage.SessionWorkRegistryStorageTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-09-13T13:35:32.534Z" hostname="ansachars-MacBook-Pro.local" time="0.752">
+  <properties/>
+  <testcase name="latePriorOriginRetirementCannotAlterNewSameOwnerOriginAfterReopen[jvm]" classname="com.feedme.storage.SessionWorkRegistryStorageTest" time="0.21"/>
+  <testcase name="independentWorkRegistryCanRetireAfterDomainErasureAndDatabaseClosure[jvm]" classname="com.feedme.storage.SessionWorkRegistryStorageTest" time="0.244"/>
+  <testcase name="partiallyRetiredOriginReplaysOnlyRemainingTicketWithoutLeaseOrAdmission[jvm]" classname="com.feedme.storage.SessionWorkRegistryStorageTest" time="0.147"/>
+  <testcase name="cancellingExactTicketSurvivesReopenAndReconcilesWithoutReplacementIdentity[jvm]" classname="com.feedme.storage.SessionWorkRegistryStorageTest" time="0.151"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

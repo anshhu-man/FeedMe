@@ -1,0 +1,685 @@
+{
+  "verifiedAt": "2026-09-13T06:33:33.813Z",
+  "scope": "Shared contract-driven mobile HTTP transport/session isolation and local protocol integration. Not full body schema binding, production identity/storage/UI, device network or iOS proof.",
+  "sourceManifestSha256": "6fbb6e2dee611d378b267ba1a3fc0992ea45279db480d33b07b76a5466010416",
+  "sourceManifest": [
+    {
+      "path": "../outputs/biteclub_blueprint/architecture/04_API_Contract.json",
+      "bytes": 801361,
+      "sha256": "f0a5f20c4a84822813137c3e6b1ef31ec22afd1d7ee384f7f29b5df09e10aba0"
+    },
+    {
+      "path": "build.gradle.kts",
+      "bytes": 579,
+      "sha256": "69d3edb5744a165479078e128dcb7f45be6e9198edae951163e776348db3b3cc"
+    },
+    {
+      "path": "gradle/libs.versions.toml",
+      "bytes": 2304,
+      "sha256": "ae9953fde3406405955c140d9ac14cbf9900081e03e6ec4686cb078ae302ccfd"
+    },
+    {
+      "path": "gradle/wrapper/gradle-wrapper.properties",
+      "bytes": 338,
+      "sha256": "779ae2c24776dfbc873f2dc0669aa990d8990cca9e0519056422fa50c5991566"
+    },
+    {
+      "path": "scripts/contract-source.lock.json",
+      "bytes": 255,
+      "sha256": "ec8fa21255f47eae1763075b596e922e904053971a7803325abdf6b06922dc9e"
+    },
+    {
+      "path": "scripts/generate-contract-artifacts.mjs",
+      "bytes": 14680,
+      "sha256": "ea39a40da5dbe0e511ddf90c2e267eec593ed969093f98a81a7f51a88c91c2ab"
+    },
+    {
+      "path": "server/build.gradle.kts",
+      "bytes": 2258,
+      "sha256": "6db06c6891b824649b39c1b7de1c5ef6bdb0596345beae58382ed6c7381717f9"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/Main.kt",
+      "bytes": 663,
+      "sha256": "23943735a7d0379eaa815b3793b47a281fccd798c2d26fd75feb02f4c4d92281"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/config/LocalServerConfig.kt",
+      "bytes": 1778,
+      "sha256": "1138e265d3a92f634cecb4c0109b633a5b07aaecc1efbb1362dc6b1d5c0bbd71"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/contract/ContractBodyValidator.kt",
+      "bytes": 16475,
+      "sha256": "5e38bc602a889b95ea2c8f7f1323970d702b6e0d62871b337482fd0975b63dda"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/contract/ContractCatalog.kt",
+      "bytes": 2880,
+      "sha256": "6bd5f52e81214e345bd8bc8e03c3eec7be0a114c33a99d5dd434798d1d434a86"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/db/DurableCommands.kt",
+      "bytes": 10670,
+      "sha256": "00aa64778ea76a0ed4f735cdc97857b9f7de3ed74497a08ae58b2c009928d5ec"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/db/DurableEvents.kt",
+      "bytes": 11246,
+      "sha256": "9d2a4d2c6816c3c379854d2e31b6b88b757f3d431013209ded434219e8534c74"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/db/PgTransactions.kt",
+      "bytes": 2229,
+      "sha256": "ded0596efcab54040ba05c1f75900ca08199992a29aecc8247953d01bad317c5"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/db/PlatformMigrations.kt",
+      "bytes": 6006,
+      "sha256": "258b6164443b225aa0ad03d81d0103022804f2ee4ba3156c08bd21cf8c05e181"
+    },
+    {
+      "path": "server/src/main/kotlin/com/feedme/server/http/FeedMeApplication.kt",
+      "bytes": 5202,
+      "sha256": "91bb2e84a4b2e89411124bbf434cd184944e5e7a3ac06aca0ec33deb611c375c"
+    },
+    {
+      "path": "server/src/main/resources/db/migration/V001__durable_platform.sql",
+      "bytes": 4146,
+      "sha256": "343fa1e0ad66b2c2db12bd9e38ea64aee65df8ae7c8829fe5ab7d9308abfdbb9"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/CommandIdentityTest.kt",
+      "bytes": 3000,
+      "sha256": "e0ca281469262e8dd18c64a4ba95830db0a6428d45e9d7dcc1f4e234b1d50c6f"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/ContractCatalogTest.kt",
+      "bytes": 2707,
+      "sha256": "4f0f82c5cd75652f73422a1f3e26570f37e7fee3eb29806616723bd9109be451"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/EventDraftTest.kt",
+      "bytes": 903,
+      "sha256": "cc9fbb4149bde9bcfea39583d09ebd001e8e11765e2b749e9bfb50cac415ae51"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/LocalServerConfigTest.kt",
+      "bytes": 2654,
+      "sha256": "f7e76575500e4509bf46e844b1d4d0957d749668cac252266e5ed190f6374a99"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/LocalServiceTest.kt",
+      "bytes": 7538,
+      "sha256": "821f550d2b32eb26f763c77d4fb4a62122a8e60607afddf988b683e37d138ecc"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/LoopbackEngineTest.kt",
+      "bytes": 2542,
+      "sha256": "9a02d3ec6f0948c188946e6ebbb51aeaec71a1539ed10c81e232d5a0fa2d2be1"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/TransportIntegrationTest.kt",
+      "bytes": 8379,
+      "sha256": "b50419e89d05e901b8e09ac89a9b8f11ad2df3c707c104bca9a4e027728ed7ee"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/contract/ContractBodyValidatorTest.kt",
+      "bytes": 12612,
+      "sha256": "77733b28d815f4c8e9c2beda41ee9341ad49a74ce29a517ed5eb8813185ccd08"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/contract/SharedContractParityTest.kt",
+      "bytes": 1089,
+      "sha256": "964170081a78358e334d404af35511d8e4a36bdad9c4dfde2d4556f3a16c0ab7"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/contract/WireContractIntegrationTest.kt",
+      "bytes": 8917,
+      "sha256": "ee22b39e422fd1731c9a7187489281f7f5a07a4ae6f2b2141c73c8e0df1487ab"
+    },
+    {
+      "path": "settings.gradle.kts",
+      "bytes": 419,
+      "sha256": "012fd265a5f0f8f464def2387c93db617aa7ad2069dba8d937db88a0462779cf"
+    },
+    {
+      "path": "shared/contracts/build.gradle.kts",
+      "bytes": 907,
+      "sha256": "138e70c854d91243d8cc80639af1471695cf2e24647007624fe621df8eb14c24"
+    },
+    {
+      "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/ContractCatalog.kt",
+      "bytes": 10484,
+      "sha256": "adb82efa39a485baec82581b2e2860b5e8b7c53d98e65bee6cb189d610cf5d36"
+    },
+    {
+      "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/CookingWireModels.kt",
+      "bytes": 16206,
+      "sha256": "20cf43990f84a71713afb49b5b878236c1b2bd0a4f6a6b89b0354993daa44d5d"
+    },
+    {
+      "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/WireDocument.kt",
+      "bytes": 9165,
+      "sha256": "16aedbb81a98ad55160b6a8beb0e74c3775a0d417adef00f5a251ff37e5b172c"
+    },
+    {
+      "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/generated/GeneratedContract.kt",
+      "bytes": 1030089,
+      "sha256": "c27913390fd1e8d3af3d19d83f522851eb9ec7fbf76d96c28a9d0379bb92d8ac"
+    },
+    {
+      "path": "shared/contracts/src/commonTest/kotlin/com/feedme/contracts/ContractCatalogTest.kt",
+      "bytes": 19872,
+      "sha256": "0975e1e50a7a2cad1a4cf449b15677818409bcba6949c3108fbb5e205733ec6b"
+    },
+    {
+      "path": "shared/contracts/src/commonTest/kotlin/com/feedme/contracts/CookingWireModelsTest.kt",
+      "bytes": 16447,
+      "sha256": "aa41f16c6d678abe806364c212245fdb8375997b4cb5faddc3f1d5edad8e58a3"
+    },
+    {
+      "path": "shared/contracts/src/commonTest/kotlin/com/feedme/contracts/WireDocumentTest.kt",
+      "bytes": 20353,
+      "sha256": "e6e27d85f989323b066bf3ce09a0191fc5db59ca594878c48fa02719b9b3db80"
+    },
+    {
+      "path": "shared/core/build.gradle.kts",
+      "bytes": 230,
+      "sha256": "14c367fc49d2e3a5bd4b64843053cb7f61c09c0f7a3a54834a722ac029620bb0"
+    },
+    {
+      "path": "shared/core/src/commonMain/kotlin/com/feedme/core/DemoFixtures.kt",
+      "bytes": 4289,
+      "sha256": "c7a2c3b96760e532f9776e2708c5dc199a9e9914134b08e6fe55da5cf3f44961"
+    },
+    {
+      "path": "shared/core/src/commonMain/kotlin/com/feedme/core/KitchenRuntime.kt",
+      "bytes": 886,
+      "sha256": "3439d9a75b820f221180593db8be7d232ade59be5bef80ec20d9446026d4c62e"
+    },
+    {
+      "path": "shared/core/src/commonMain/kotlin/com/feedme/core/Models.kt",
+      "bytes": 5109,
+      "sha256": "49428e7e76828efcf0f84e4a050fcf69212f8d4e40e01bb2a3601bebb5c80b8b"
+    },
+    {
+      "path": "shared/core/src/commonMain/kotlin/com/feedme/core/PlateVisibility.kt",
+      "bytes": 1240,
+      "sha256": "4cd4898a5f2304ce0b3f6850d8e432c10129419149f998f5b6ffc6ca2924bce1"
+    },
+    {
+      "path": "shared/core/src/commonMain/kotlin/com/feedme/core/Reducer.kt",
+      "bytes": 14690,
+      "sha256": "b737a5f945902411803a124fabfff2fc4114d1a5e50b54a0b5914120ef51efb6"
+    },
+    {
+      "path": "shared/core/src/commonMain/kotlin/com/feedme/core/ports/ClientPorts.kt",
+      "bytes": 10818,
+      "sha256": "594d02607fc9ff62cf62a9748777d3dbf3dbdcf0dbf7abe7d7c4235578b2213c"
+    },
+    {
+      "path": "shared/core/src/commonTest/kotlin/com/feedme/core/ClientPortsTest.kt",
+      "bytes": 12304,
+      "sha256": "f97f7ecbaebea50858de65b8a4129bb5eea2362e430d6e5c9ebf179d734455c1"
+    },
+    {
+      "path": "shared/core/src/commonTest/kotlin/com/feedme/core/KitchenRuntimeTest.kt",
+      "bytes": 1775,
+      "sha256": "137ec270ebede9b881f39f2aa908da007de904bf9c37ae58b7bb94b1299586b5"
+    },
+    {
+      "path": "shared/core/src/commonTest/kotlin/com/feedme/core/ReducerTest.kt",
+      "bytes": 16530,
+      "sha256": "42ee2a58391f5a0bae27527ad41f50e364e1801c5d9e529f6dd0dbb9e179e3a8"
+    },
+    {
+      "path": "shared/transport/build.gradle.kts",
+      "bytes": 1176,
+      "sha256": "39783f03ff6362742461907903aa17b50dc1b76470b7a23f5d614153dbc10c0f"
+    },
+    {
+      "path": "shared/transport/src/androidMain/kotlin/com/feedme/transport/PlatformHttpClient.kt",
+      "bytes": 4135,
+      "sha256": "92c28065156a42b790081dc45b5e3f9c771968937334a6c50bc149d9eefd18f1"
+    },
+    {
+      "path": "shared/transport/src/commonMain/kotlin/com/feedme/transport/ApiEndpoint.kt",
+      "bytes": 1506,
+      "sha256": "e1b9d70288fceda0bd8fd179e683e0f17d21065f25f6b360ee7a6f744a6e12ac"
+    },
+    {
+      "path": "shared/transport/src/commonMain/kotlin/com/feedme/transport/FeedMeTransport.kt",
+      "bytes": 6011,
+      "sha256": "e120a8ca216f995df3c098dd8061294c00bd518e3b765547b80fef1b8dd95ea1"
+    },
+    {
+      "path": "shared/transport/src/commonMain/kotlin/com/feedme/transport/HttpExchange.kt",
+      "bytes": 5956,
+      "sha256": "8fffaa06695d880e4282ec2d0bae5b0df61c1b152ffccc665c9319778be9cf07"
+    },
+    {
+      "path": "shared/transport/src/commonMain/kotlin/com/feedme/transport/RequestPreparation.kt",
+      "bytes": 11216,
+      "sha256": "36b0468ee9510fad0f7b3c8f3c822685c7ac553611e10c972d32ca3dc9fc831d"
+    },
+    {
+      "path": "shared/transport/src/commonTest/kotlin/com/feedme/transport/FeedMeTransportTest.kt",
+      "bytes": 11934,
+      "sha256": "e45e06de511abb87bfefb2166cc2006923172723b96c0ee0772c6faf8cddbbc9"
+    },
+    {
+      "path": "shared/transport/src/commonTest/kotlin/com/feedme/transport/HttpExchangeTest.kt",
+      "bytes": 6069,
+      "sha256": "1249b086cd879b560f2ca89e6707e9ae615dcf696b1955469cfd95176b4c4d13"
+    },
+    {
+      "path": "shared/transport/src/commonTest/kotlin/com/feedme/transport/RequestPreparationTest.kt",
+      "bytes": 15722,
+      "sha256": "ceffc0f99f8459b43792bc4162e4030b545f3e23cd3deb03d3f9da08cd4103f1"
+    },
+    {
+      "path": "shared/transport/src/iosMain/kotlin/com/feedme/transport/PlatformHttpClient.kt",
+      "bytes": 2071,
+      "sha256": "a88bbb1c52f8b92a1a1b63d70b051e31a9282d13db6f851a2f03e7c5e62fdb08"
+    },
+    {
+      "path": "shared/transport/src/jvmMain/kotlin/com/feedme/transport/PlatformHttpClient.kt",
+      "bytes": 4135,
+      "sha256": "92c28065156a42b790081dc45b5e3f9c771968937334a6c50bc149d9eefd18f1"
+    },
+    {
+      "path": "shared/transport/src/jvmTest/kotlin/com/feedme/transport/RealHttpTransportTest.kt",
+      "bytes": 13495,
+      "sha256": "1b50692041a48ca6204db212672a3baa3ce61791d064e208de8629afcb44199c"
+    }
+  ],
+  "junit": [
+    {
+      "label": "core",
+      "tests": 48,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "files": [
+        {
+          "path": "docs/verification/transport/junit/core/TEST-com.feedme.core.ClientPortsTest.xml",
+          "bytes": 2842,
+          "sha256": "ea94d5ccb43e993ee244f6b0cb966295d81330e79509081f5d2e2f64c34a436e"
+        },
+        {
+          "path": "docs/verification/transport/junit/core/TEST-com.feedme.core.KitchenRuntimeTest.xml",
+          "bytes": 743,
+          "sha256": "849398d430bc18c2ecce89d29a31517b0f1f94d9b4c43637b0067d82c4b26bde"
+        },
+        {
+          "path": "docs/verification/transport/junit/core/TEST-com.feedme.core.ReducerTest.xml",
+          "bytes": 3622,
+          "sha256": "dd3ca1874af7e9a70cdd86d8e1f38dbb6ca13b52dc25c6edd9ad23bbc802c3ec"
+        }
+      ]
+    },
+    {
+      "label": "contracts",
+      "tests": 55,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "files": [
+        {
+          "path": "docs/verification/transport/junit/contracts/TEST-com.feedme.contracts.ContractCatalogTest.xml",
+          "bytes": 2395,
+          "sha256": "4ca9281691961750a1c3125c8411e585786386be5157ae2895f9550578485e53"
+        },
+        {
+          "path": "docs/verification/transport/junit/contracts/TEST-com.feedme.contracts.CookingWireModelsTest.xml",
+          "bytes": 2389,
+          "sha256": "3d64572537a8471e349de422bb0d2d0ccb13d71da633b7e8a8b8f607452cc721"
+        },
+        {
+          "path": "docs/verification/transport/junit/contracts/TEST-com.feedme.contracts.WireDocumentTest.xml",
+          "bytes": 4158,
+          "sha256": "754db09f0b88fa7c9567b81bd78b898d89e7afd9533c111368b2d50d3ff6b554"
+        }
+      ]
+    },
+    {
+      "label": "transport",
+      "tests": 50,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "files": [
+        {
+          "path": "docs/verification/transport/junit/transport/TEST-com.feedme.transport.FeedMeTransportTest.xml",
+          "bytes": 2064,
+          "sha256": "d13dc427909b7a6e18c38e615ce01f741bbf2cc02ca0df085c54e0bdc2919069"
+        },
+        {
+          "path": "docs/verification/transport/junit/transport/TEST-com.feedme.transport.HttpExchangeTest.xml",
+          "bytes": 1883,
+          "sha256": "c3bf7d11f840a9bd4c2b965f304a4b3822a1959779afb5a5037cf0efa9d4fa30"
+        },
+        {
+          "path": "docs/verification/transport/junit/transport/TEST-com.feedme.transport.RealHttpTransportTest.xml",
+          "bytes": 1362,
+          "sha256": "c920e09bb7edfb3cd2e343ae717c7c38138ff0acf3dad4cba3e4fc4e0093889d"
+        },
+        {
+          "path": "docs/verification/transport/junit/transport/TEST-com.feedme.transport.RequestPreparationTest.xml",
+          "bytes": 3508,
+          "sha256": "e37a6469acf4ab89c8d4163c55454410023319eb5cd3e4ca780afe8d920fd870"
+        }
+      ]
+    },
+    {
+      "label": "server",
+      "tests": 39,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "files": [
+        {
+          "path": "docs/verification/transport/junit/server/TEST-com.feedme.server.CommandIdentityTest.xml",
+          "bytes": 1184,
+          "sha256": "23053f1576b751b8c4a41b77923ac4066552e1304ed33c2c098c06b2d79b360b"
+        },
+        {
+          "path": "docs/verification/transport/junit/server/TEST-com.feedme.server.ContractCatalogTest.xml",
+          "bytes": 852,
+          "sha256": "e28d4c67c913b4008625b70453e1296e1fe008f01f5698a8623bec3c6241a3ae"
+        },
+        {
+          "path": "docs/verification/transport/junit/server/TEST-com.feedme.server.EventDraftTest.xml",
+          "bytes": 468,
+          "sha256": "002f4d6030294946a6bc5f986183f665daf55970fbfa1f4f9602aff44335d0b9"
+        },
+        {
+          "path": "docs/verification/transport/junit/server/TEST-com.feedme.server.LocalServerConfigTest.xml",
+          "bytes": 1002,
+          "sha256": "d319db38e30f6c4ed4ec90fef4f2199a87b0f6555e0da110f964c7aac3831bd1"
+        },
+        {
+          "path": "docs/verification/transport/junit/server/TEST-com.feedme.server.LocalServiceTest.xml",
+          "bytes": 1546,
+          "sha256": "df03f0020254bbe85b3b7fe540118917f99bb902ff2f4c1a77ba58798b3907d0"
+        },
+        {
+          "path": "docs/verification/transport/junit/server/TEST-com.feedme.server.LoopbackEngineTest.xml",
+          "bytes": 475,
+          "sha256": "2eaafb272fe33ccb40c6c0b0203108df20d8157e13294a852720a022c2611e5a"
+        },
+        {
+          "path": "docs/verification/transport/junit/server/TEST-com.feedme.server.TransportIntegrationTest.xml",
+          "bytes": 655,
+          "sha256": "16aeb51a7aaf31eeb7d1638c713a946ca4269c61693688cd2d032c7bf7544701"
+        },
+        {
+          "path": "docs/verification/transport/junit/server/TEST-com.feedme.server.contract.ContractBodyValidatorTest.xml",
+          "bytes": 1564,
+          "sha256": "8d07219eadd4788b3151792e0e8e096de2be246ca220d0ac633e9c70472d8d2c"
+        },
+        {
+          "path": "docs/verification/transport/junit/server/TEST-com.feedme.server.contract.SharedContractParityTest.xml",
+          "bytes": 506,
+          "sha256": "ac0f12e8bb75a1463134caaeb6cabf7fa97fd682f08880cc7fcf9f5082e5760c"
+        },
+        {
+          "path": "docs/verification/transport/junit/server/TEST-com.feedme.server.contract.WireContractIntegrationTest.xml",
+          "bytes": 1024,
+          "sha256": "0060b5494c273c04e1d4b130f8a5aa34a64ef593bcc179cf602cb618987aaae5"
+        }
+      ]
+    }
+  ],
+  "node": {
+    "tests": 92,
+    "passed": 92,
+    "failures": 0,
+    "log": {
+      "path": "docs/verification/transport/node-tests.log",
+      "bytes": 6391,
+      "sha256": "e55dda26189a32f69e2f5ccb9f63ec38a511a62bbef4bafa0dd8b99c50426f00"
+    }
+  },
+  "androidTransport": {
+    "assembled": true,
+    "lintIssues": 0,
+    "lint": {
+      "path": "docs/verification/transport/android-lint.xml",
+      "bytes": 87,
+      "sha256": "3782329f5ec7fc80243d071df4885364697fe238cd16d0fd49637d3010e96025"
+    },
+    "deviceExecution": false
+  },
+  "gradle": {
+    "freshRerun": true,
+    "executedTasks": 63,
+    "log": {
+      "path": "docs/verification/transport/gradle.log",
+      "bytes": 6338,
+      "sha256": "162d1472a13b96fc79e4ce9bff3e830509357c8bec1564a99344795e67163b3a"
+    },
+    "command": ":shared:transport:jvmTest :shared:transport:assembleDebug :shared:transport:lintDebug :shared:core:jvmTest :shared:contracts:jvmTest :server:test :server:installDist --rerun-tasks --console=plain"
+  },
+  "artifacts": [
+    {
+      "path": "shared/core/build/libs/core-jvm.jar",
+      "bytes": 128239,
+      "sha256": "a8f2ba31b491ea71b1e0258cecb4c8c34cb778bafe5ab919d952277d6ab89987"
+    },
+    {
+      "path": "shared/contracts/build/libs/contracts-jvm.jar",
+      "bytes": 164640,
+      "sha256": "cf717687b9e1c3f5895af2851680c635733d9b90b58288a210d886b9c43cfba6"
+    },
+    {
+      "path": "shared/transport/build/libs/transport-jvm.jar",
+      "bytes": 61912,
+      "sha256": "62678b3556e6b4f0d88fff2ff515cfffaf6c4e439eb0439aab6db2ee4afbdcfe"
+    },
+    {
+      "path": "shared/transport/build/outputs/aar/transport-debug.aar",
+      "bytes": 62516,
+      "sha256": "ba06fa41e859a34b9f55e1f7020dec25cd77d5c1a3596dd8ad575ad854ce0e5e"
+    },
+    {
+      "path": "server/build/install/server/lib/annotations-23.0.0.jar",
+      "bytes": 29371,
+      "sha256": "7b0f19724082cbfcbc66e5abea2b9bc92cf08a1ea11e191933ed43801eb3cd05"
+    },
+    {
+      "path": "server/build/install/server/lib/checker-qual-3.55.1.jar",
+      "bytes": 241885,
+      "sha256": "857658c8bdcbff794949a8d9922f88d63ee3751c203c7cd7d21ea97f9e745288"
+    },
+    {
+      "path": "server/build/install/server/lib/config-1.4.9.jar",
+      "bytes": 297970,
+      "sha256": "47d13e3196c84f2a8ccd014ae563738c3da5b7406b38e03505ec0601a2f4fc37"
+    },
+    {
+      "path": "server/build/install/server/lib/itu-1.14.0.jar",
+      "bytes": 57633,
+      "sha256": "5cf40ab0cc77828ab2b875b1f3ecd71c8295d7721933476abc2e08fddcea164a"
+    },
+    {
+      "path": "server/build/install/server/lib/jackson-annotations-2.22.jar",
+      "bytes": 84211,
+      "sha256": "21ddb598807d3a51a876704eb979d9296e1c6a6f47ab1826ff88c6d6a127a2d0"
+    },
+    {
+      "path": "server/build/install/server/lib/jackson-core-3.2.1.jar",
+      "bytes": 604776,
+      "sha256": "2688aaa60b207403287e16a71fb5644bf2f9cfc464cc601ae95c6c86a5af1f94"
+    },
+    {
+      "path": "server/build/install/server/lib/jackson-databind-3.2.1.jar",
+      "bytes": 1973737,
+      "sha256": "8d005c5626b1839e2eea6bd33a437287e7a24d54e1bb3746b8f861193262b519"
+    },
+    {
+      "path": "server/build/install/server/lib/jackson-dataformat-yaml-3.2.1.jar",
+      "bytes": 66045,
+      "sha256": "b6a748ca9aab640f647079b6bfa53f16a5b65b815a19581c4afe0601e754854e"
+    },
+    {
+      "path": "server/build/install/server/lib/jcodings-1.0.63.jar",
+      "bytes": 1760082,
+      "sha256": "ef11e1741a65160c5619cd2c3c79c40ee0affda847062f012616034b9d10e719"
+    },
+    {
+      "path": "server/build/install/server/lib/joni-2.2.6.jar",
+      "bytes": 232385,
+      "sha256": "fb33f60ab43e38653317bbf41a1fec89cbee270c48e53b0b56d1165c00de0e07"
+    },
+    {
+      "path": "server/build/install/server/lib/json-schema-validator-3.0.7.jar",
+      "bytes": 583738,
+      "sha256": "27b90bce60845f353b203b735cda2e0cb9a32c4962550e249141a2b065b9be5c"
+    },
+    {
+      "path": "server/build/install/server/lib/kotlin-reflect-2.3.21.jar",
+      "bytes": 3633922,
+      "sha256": "33e37d9dfa86c7a29ab34e975b5f4a1287b458878611051f3485652220c1a2cb"
+    },
+    {
+      "path": "server/build/install/server/lib/kotlin-stdlib-2.3.21.jar",
+      "bytes": 1804721,
+      "sha256": "6f64eac736db9434dd6925b4a518b9d1d17177652320c37916cf9ba3ce7d7d7a"
+    },
+    {
+      "path": "server/build/install/server/lib/kotlinx-coroutines-core-jvm-1.11.0.jar",
+      "bytes": 1577052,
+      "sha256": "d1d75aa01dffbb4d1c520e67e4c4e7f5f6174718e7cb4632412503f2f0e604fa"
+    },
+    {
+      "path": "server/build/install/server/lib/kotlinx-io-bytestring-jvm-0.9.1.jar",
+      "bytes": 22776,
+      "sha256": "8589de0b7c476bfdd02a24641685f609ade72f5e595cf2909c168acdba7e6ba4"
+    },
+    {
+      "path": "server/build/install/server/lib/kotlinx-io-core-jvm-0.9.1.jar",
+      "bytes": 153576,
+      "sha256": "765d8851d8ca694706931331b92386844800867e041b720f1f193dbda874d370"
+    },
+    {
+      "path": "server/build/install/server/lib/kotlinx-serialization-core-jvm-1.11.0.jar",
+      "bytes": 404509,
+      "sha256": "f4a801c647d4351327cd9e1ac4113e2be9ea37a64ab0abae269c25a52e28f35d"
+    },
+    {
+      "path": "server/build/install/server/lib/kotlinx-serialization-json-jvm-1.11.0.jar",
+      "bytes": 294166,
+      "sha256": "563a25b4eb5c9128ae9c2479f3d1a5c44dcd176112b91cf03682e906eba5c935"
+    },
+    {
+      "path": "server/build/install/server/lib/ktor-events-jvm-3.5.2.jar",
+      "bytes": 6402,
+      "sha256": "7712ed1d51716180a9666fe88da5c5ef0e49123483ae2cd14ae3e9252ee71148"
+    },
+    {
+      "path": "server/build/install/server/lib/ktor-http-cio-jvm-3.5.2.jar",
+      "bytes": 134338,
+      "sha256": "3c87a3e3b368994a485e2f62f59cbe2201d767094018b726e81ffbe9b4976554"
+    },
+    {
+      "path": "server/build/install/server/lib/ktor-http-jvm-3.5.2.jar",
+      "bytes": 446542,
+      "sha256": "6afc8074f60732ed60cd904a3e52b46a98425b35a1b9446d2cfa457f2ee63b41"
+    },
+    {
+      "path": "server/build/install/server/lib/ktor-io-jvm-3.5.2.jar",
+      "bytes": 305409,
+      "sha256": "b990b4319b711218fbcee2f98e1dcf289a25a17194837992efb5b970b3b6c64c"
+    },
+    {
+      "path": "server/build/install/server/lib/ktor-network-jvm-3.5.2.jar",
+      "bytes": 200150,
+      "sha256": "f1d966faf5e9adf903a968480f6c1a4223d596583a972ebbaf3fa1fd7f9be75d"
+    },
+    {
+      "path": "server/build/install/server/lib/ktor-serialization-jvm-3.5.2.jar",
+      "bytes": 22962,
+      "sha256": "b7c85d08714ce39e9c17a235038de6f9c2b121e5fb57ce90c5a349a65f61e9f6"
+    },
+    {
+      "path": "server/build/install/server/lib/ktor-server-cio-jvm-3.5.2.jar",
+      "bytes": 120455,
+      "sha256": "cfc4f740b8efb5e608d683aefb8ce605b4081e1d97f3c3d7cd14dbed886570bb"
+    },
+    {
+      "path": "server/build/install/server/lib/ktor-server-core-jvm-3.5.2.jar",
+      "bytes": 949125,
+      "sha256": "d465a17ee037ac869d3b1002be91248dbad587dd4435e35fa727cbb7591bcd61"
+    },
+    {
+      "path": "server/build/install/server/lib/ktor-server-status-pages-jvm-3.5.2.jar",
+      "bytes": 34128,
+      "sha256": "30c3a78a2200ea42c0ae6eab5bb06f62f47d8623fb7c25ab14127631a0c67a51"
+    },
+    {
+      "path": "server/build/install/server/lib/ktor-utils-jvm-3.5.2.jar",
+      "bytes": 372837,
+      "sha256": "5cb9c040d290aa31ce5e4930d825dda5d25625a8603074b29943c519d5b022bb"
+    },
+    {
+      "path": "server/build/install/server/lib/ktor-websockets-jvm-3.5.2.jar",
+      "bytes": 192283,
+      "sha256": "f5aeb4e6ee108e815643e2cf06580d4ca1adc529f6cf4d306a89b69fb4880b4b"
+    },
+    {
+      "path": "server/build/install/server/lib/postgresql-42.7.13.jar",
+      "bytes": 1220948,
+      "sha256": "6e0e4cc2d8cae902084f8a2b18728b073a6fd9d1f87c9d8bff8f298c18185b93"
+    },
+    {
+      "path": "server/build/install/server/lib/server.jar",
+      "bytes": 150287,
+      "sha256": "89f0646bc0e0fcbe689b06e5dce19660504736d076624bd1c619d6a6f27965d5"
+    },
+    {
+      "path": "server/build/install/server/lib/slf4j-api-2.0.18.jar",
+      "bytes": 69982,
+      "sha256": "44508fd1576500688c790b190acdd16fec4f8c79a3e0b900afd70503cf055f55"
+    },
+    {
+      "path": "server/build/install/server/lib/snakeyaml-engine-3.0.1.jar",
+      "bytes": 299438,
+      "sha256": "0b638c8806112215e02e58e95cbd9e9a69d4bd540991f47553d053919994cc94"
+    }
+  ],
+  "distributionSmoke": {
+    "path": "docs/verification/transport/distribution-smoke.json",
+    "bytes": 1035,
+    "sha256": "f007987897e3b60c1a4844b85164fa01032515152a130ab436c112d04b2839be"
+  },
+  "retainedDemoApk": {
+    "path": "apps/android/build/outputs/apk/debug/android-debug.apk",
+    "bytes": 18981844,
+    "sha256": "bf6dd07e31a4fd49b798672ba82edcee7f958b9d5c12ae0d7a89491d20ff3805",
+    "rebuilt": false,
+    "newDeviceRun": false,
+    "note": "Earlier demo APK, not a fresh build of the current shared-port source."
+  },
+  "serverProductionSourceChanged": false,
+  "notRun": [
+    "iOS compile/runtime",
+    "Android device network tests",
+    "PostgreSQL integration rerun",
+    "production TLS/device stress",
+    "provider authentication",
+    "durable product state/command orchestration"
+  ],
+  "earlierFailures": [
+    "Initial compile started before RequestPreparation agent files landed; unresolved types; corrected after files arrived.",
+    "First 50-test run:49 passed; ambient ProxySelector consulted through default Java SOCKS socket. Direct socket factory correction verified by final50-pass run.",
+    "First packaged smoke targeted8789 while service used default8780; connection refused. Service stopped and restarted with explicit8789; final4probes passed."
+  ],
+  "cleanup": "JUnit fixtures close their servers/executors; both packaged smoke server sessions stopped with Ctrl-C; final lsof confirmed no8789listener. No PostgreSQL cluster started.",
+  "tracker": {
+    "path": "docs/verification/delivery-plan-report.json",
+    "bytes": 1949,
+    "sha256": "a5539028d117bc5b07ad81ff685146b0482634d9afc3f063a77827c233075191"
+  }
+}

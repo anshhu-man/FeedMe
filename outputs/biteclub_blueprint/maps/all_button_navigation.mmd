@@ -1,0 +1,955 @@
+flowchart LR
+  AUTH_WELCOME["AUTH_WELCOME: Welcome to FeedMe"]
+  AUTH_SIGNUP["AUTH_SIGNUP: Create your account"]
+  AUTH_LOGIN["AUTH_LOGIN: Welcome back"]
+  AUTH_VERIFY["AUTH_VERIFY: Verify email"]
+  AUTH_RESET["AUTH_RESET: Reset password"]
+  AUTH_RESET_CONFIRM["AUTH_RESET_CONFIRM: Choose a new password"]
+  AUTH_CALLBACK["AUTH_CALLBACK: Complete secure sign-in"]
+  LEGAL["LEGAL: Terms and privacy"]
+  PROFILE_SETUP["PROFILE_SETUP: Set up your profile"]
+  FOOD_PREFS["FOOD_PREFS: Food preferences"]
+  EQUIPMENT["EQUIPMENT: Your kitchen setup"]
+  NOTIFICATION_PERMISSION["NOTIFICATION_PERMISSION: Stay in the loop"]
+  INVITE_ACCEPT["INVITE_ACCEPT: Join a kitchen circle"]
+  HOME["HOME: What can we make easy?"]
+  REQUEST["REQUEST: Tell us what you have"]
+  PANTRY["PANTRY: What’s available?"]
+  EFFORT["EFFORT: What fits today?"]
+  TASTE["TASTE: What would hit right?"]
+  RECOMMENDATIONS["RECOMMENDATIONS: A meal that fits"]
+  RECIPE["RECIPE: Recipe and practical details"]
+  ADAPT["ADAPT: Make Mine"]
+  VARIANT["VARIANT: Your version, explained"]
+  COOK["COOK: Cooking, one step at a time"]
+  TIMER["TIMER: Step timer"]
+  MEAL_DONE["MEAL_DONE: Dinner, handled"]
+  FEEDBACK["FEEDBACK: Worth an encore?"]
+  REUSE["REUSE: One useful next meal"]
+  COOKBOOK["COOKBOOK: Your reliable meals"]
+  COLLECTION["COLLECTION: Saved collection"]
+  COLLECTION_EDIT["COLLECTION_EDIT: Organize your cookbook"]
+  MEMORY["MEMORY: What works for you"]
+  MEMORY_DETAIL["MEMORY_DETAIL: A remembered preference"]
+  TODAY["TODAY: Today’s plates"]
+  STORY["STORY: A friend’s plate"]
+  PROFILE_PLATE["PROFILE_PLATE: My Plate"]
+  POST["POST: Meal post"]
+  CAPTURE["CAPTURE: What did you make?"]
+  EDIT_MEDIA["EDIT_MEDIA: Prepare your post"]
+  ATTACH_RECIPE["ATTACH_RECIPE: Add the useful details"]
+  REVIEW_ATTACHMENT["REVIEW_ATTACHMENT: Check your recipe card"]
+  AUDIENCE["AUDIENCE: Who gets a seat?"]
+  SAVE_PERMISSION["SAVE_PERMISSION: May friends save the recipe?"]
+  PUBLISH_STATUS["PUBLISH_STATUS: Review and share"]
+  REMIX_TRAIL["REMIX_TRAIL: Your Takes"]
+  CIRCLES["CIRCLES: Your kitchen circles"]
+  CIRCLE["CIRCLE: A kitchen circle"]
+  CIRCLE_CREATE["CIRCLE_CREATE: Start a circle"]
+  CIRCLE_MEMBERS["CIRCLE_MEMBERS: Circle members"]
+  INVITE["INVITE: Invite your people"]
+  INBOX["INBOX: Around your table"]
+  THREAD["THREAD: Meal conversation"]
+  RECIPE_REQUEST["RECIPE_REQUEST: Ask for the recipe"]
+  SETTINGS["SETTINGS: Your FeedMe"]
+  PRIVACY["PRIVACY: Privacy and control"]
+  BLOCKED["BLOCKED: Blocked accounts"]
+  REPORT["REPORT: Report a concern"]
+  DELETE_POST["DELETE_POST: Delete this post?"]
+  DELETE_ACCOUNT["DELETE_ACCOUNT: Delete your account"]
+  NOTIFICATIONS["NOTIFICATIONS: Choose your updates"]
+  SESSIONS["SESSIONS: Devices and sessions"]
+  SOS_CREATE["SOS_CREATE: Fridge SOS"]
+  SOS_DETAIL["SOS_DETAIL: Ideas from your people"]
+  TONIGHT["TONIGHT: Make a save into dinner"]
+  PACT_CREATE["PACT_CREATE: Dinner Pact"]
+  PACT_DETAIL["PACT_DETAIL: Your Dinner Pact"]
+  POTLUCK_CREATE["POTLUCK_CREATE: Bring a Bit"]
+  POTLUCK_DETAIL["POTLUCK_DETAIL: One shared dinner"]
+  CONTRIBUTION["CONTRIBUTION: What can you bring?"]
+  SHORTCUT_CREATE["SHORTCUT_CREATE: The thing that made it easier"]
+  SHORTCUT_DETAIL["SHORTCUT_DETAIL: Shortcut Swap"]
+  POLL_CREATE["POLL_CREATE: Dinner Vote"]
+  POLL_DETAIL["POLL_DETAIL: Help choose dinner"]
+  VIDEO_EDIT["VIDEO_EDIT: A little food clip"]
+  HOUSEHOLDS["HOUSEHOLDS: Your household"]
+  HOUSEHOLD_MEMBER["HOUSEHOLD_MEMBER: Household members"]
+  HOUSEHOLD_PREFS["HOUSEHOLD_PREFS: What works for this meal group"]
+  PACK_STORE["PACK_STORE: Reviewed situation packs"]
+  PACK_DETAIL["PACK_DETAIL: A pack for your kind of evening"]
+  PAYWALL["PAYWALL: Choose what helps"]
+  PURCHASE_STATUS["PURCHASE_STATUS: Confirming access"]
+  MANAGE_PLAN["MANAGE_PLAN: Purchases and access"]
+  EXPORT["EXPORT: Export your FeedMe data"]
+  SUPPORT["SUPPORT: Help and receipts"]
+  UNAVAILABLE["UNAVAILABLE: This isn’t available right now"]
+  OFFLINE["OFFLINE: Your connection is taking a break"]
+  ADMIN_LOGIN["ADMIN_LOGIN: FeedMe operations sign-in"]
+  ADMIN_HOME["ADMIN_HOME: Operations workspace"]
+  ADMIN_RECIPE["ADMIN_RECIPE: Author a recipe revision"]
+  ADMIN_REVIEW["ADMIN_REVIEW: Review and publish"]
+  ADMIN_SUBSTITUTION["ADMIN_SUBSTITUTION: Reviewed substitutions"]
+  ADMIN_REPORTS["ADMIN_REPORTS: Moderation queue"]
+  ADMIN_CASE["ADMIN_CASE: Resolve a moderation case"]
+  ADMIN_AUDIT["ADMIN_AUDIT: Audit trail"]
+  ADMIN_FLAGS["ADMIN_FLAGS: Feature rollout controls"]
+  ADMIN_PACK["ADMIN_PACK: Manage reviewed packs"]
+  ADMIN_INCIDENT["ADMIN_INCIDENT: Service and incident controls"]
+  PEOPLE_PICKER["PEOPLE_PICKER: Choose your people"]
+  CONFIRM_ACTION["CONFIRM_ACTION: Confirm this change"]
+  AUTH_WELCOME -->|"Create account"| AUTH_SIGNUP
+  AUTH_WELCOME -->|"Log in"| AUTH_LOGIN
+  AUTH_WELCOME -->|"Continue with Apple"| AUTH_CALLBACK
+  AUTH_WELCOME -->|"Continue with Google"| AUTH_CALLBACK
+  AUTH_WELCOME -->|"Try cooking first"| HOME
+  AUTH_WELCOME -->|"Terms and privacy"| LEGAL
+  AUTH_SIGNUP -->|"Back"| AUTH_WELCOME
+  AUTH_SIGNUP -->|"Create account"| AUTH_VERIFY
+  AUTH_SIGNUP -->|"Already have an account"| AUTH_LOGIN
+  AUTH_SIGNUP -->|"Read terms"| LEGAL
+  AUTH_LOGIN -->|"Back"| AUTH_WELCOME
+  AUTH_LOGIN -->|"Log in"| HOME
+  AUTH_LOGIN -.->|"Log in: profile incomplete"| PROFILE_SETUP
+  AUTH_LOGIN -.->|"Log in: email unverified"| AUTH_VERIFY
+  AUTH_LOGIN -.->|"Log in: account suspended"| UNAVAILABLE
+  AUTH_LOGIN -->|"Forgot password"| AUTH_RESET
+  AUTH_LOGIN -->|"Create account"| AUTH_SIGNUP
+  AUTH_LOGIN -->|"Continue with Apple"| AUTH_CALLBACK
+  AUTH_LOGIN -->|"Continue with Google"| AUTH_CALLBACK
+  AUTH_VERIFY -->|"Back"| AUTH_SIGNUP
+  AUTH_VERIFY -->|"Verify email"| PROFILE_SETUP
+  AUTH_VERIFY -->|"Change email"| AUTH_SIGNUP
+  AUTH_RESET -->|"Back"| AUTH_LOGIN
+  AUTH_RESET -->|"Send reset code"| AUTH_RESET_CONFIRM
+  AUTH_RESET -->|"Back to login"| AUTH_LOGIN
+  AUTH_RESET_CONFIRM -->|"Back"| AUTH_RESET
+  AUTH_RESET_CONFIRM -->|"Save new password"| AUTH_LOGIN
+  AUTH_CALLBACK -->|"Back"| AUTH_WELCOME
+  AUTH_CALLBACK -->|"Complete provider callback"| PROFILE_SETUP
+  AUTH_CALLBACK -.->|"Complete provider callback: existing onboarded user"| HOME
+  AUTH_CALLBACK -.->|"Complete provider callback: cancelled or invalid callback"| AUTH_WELCOME
+  AUTH_CALLBACK -->|"Cancel sign-in"| AUTH_WELCOME
+  LEGAL -->|"Back"| AUTH_WELCOME
+  PROFILE_SETUP -->|"Back"| AUTH_WELCOME
+  PROFILE_SETUP -->|"Continue"| FOOD_PREFS
+  PROFILE_SETUP -.->|"Continue: existing profile edit"| SETTINGS
+  PROFILE_SETUP -.->|"Continue: first setup"| FOOD_PREFS
+  PROFILE_SETUP -->|"Set preferences later"| HOME
+  FOOD_PREFS -->|"Back"| SETTINGS
+  FOOD_PREFS -->|"Save preferences"| EQUIPMENT
+  FOOD_PREFS -.->|"Save preferences: editing outside onboarding"| SETTINGS
+  FOOD_PREFS -.->|"Save preferences: first setup"| EQUIPMENT
+  FOOD_PREFS -->|"Skip for now"| HOME
+  FOOD_PREFS -->|"Today"| TODAY
+  FOOD_PREFS -->|"Cook"| HOME
+  FOOD_PREFS -->|"Cookbook"| COOKBOOK
+  FOOD_PREFS -->|"Inbox"| INBOX
+  FOOD_PREFS -->|"My Plate"| PROFILE_PLATE
+  EQUIPMENT -->|"Back"| FOOD_PREFS
+  EQUIPMENT -->|"Save kitchen setup"| HOME
+  EQUIPMENT -.->|"Save kitchen setup: editing outside onboarding"| SETTINGS
+  EQUIPMENT -.->|"Save kitchen setup: first setup"| HOME
+  EQUIPMENT -->|"Finish without defaults"| HOME
+  EQUIPMENT -->|"Today"| TODAY
+  EQUIPMENT -->|"Cook"| HOME
+  EQUIPMENT -->|"Cookbook"| COOKBOOK
+  EQUIPMENT -->|"Inbox"| INBOX
+  EQUIPMENT -->|"My Plate"| PROFILE_PLATE
+  NOTIFICATION_PERMISSION -->|"Back"| NOTIFICATIONS
+  NOTIFICATION_PERMISSION -->|"Enable notifications"| NOTIFICATIONS
+  NOTIFICATION_PERMISSION -->|"Maybe later"| HOME
+  NOTIFICATION_PERMISSION -->|"Today"| TODAY
+  NOTIFICATION_PERMISSION -->|"Cook"| HOME
+  NOTIFICATION_PERMISSION -->|"Cookbook"| COOKBOOK
+  NOTIFICATION_PERMISSION -->|"Inbox"| INBOX
+  NOTIFICATION_PERMISSION -->|"My Plate"| PROFILE_PLATE
+  INVITE_ACCEPT -->|"Back"| HOME
+  INVITE_ACCEPT -->|"Accept invitation"| CIRCLE
+  INVITE_ACCEPT -.->|"Accept invitation: guest; preserve invite return"| AUTH_WELCOME
+  INVITE_ACCEPT -.->|"Accept invitation: expired/revoked/full"| UNAVAILABLE
+  INVITE_ACCEPT -->|"Decline"| HOME
+  HOME -->|"Help me make something"| REQUEST
+  HOME -->|"Use what I have"| PANTRY
+  HOME -->|"Improve my meal"| REQUEST
+  HOME -->|"See today’s plates"| TODAY
+  HOME -->|"My reliable meals"| COOKBOOK
+  HOME -->|"Fridge SOS"| SOS_CREATE
+  HOME -->|"Resume my cooking session"| COOK
+  HOME -->|"Connection and saved access"| OFFLINE
+  HOME -->|"Today"| TODAY
+  HOME -->|"Cook"| HOME
+  HOME -->|"Cookbook"| COOKBOOK
+  HOME -->|"Inbox"| INBOX
+  HOME -->|"My Plate"| PROFILE_PLATE
+  REQUEST -->|"Back"| HOME
+  REQUEST -->|"Check ingredients"| PANTRY
+  REQUEST -->|"Set time and effort"| EFFORT
+  REQUEST -->|"Find a meal"| RECOMMENDATIONS
+  REQUEST -.->|"Find a meal: unknown ingredients need confirmation"| PANTRY
+  REQUEST -.->|"Find a meal: incompatible/unclear budget"| EFFORT
+  REQUEST -.->|"Find a meal: no supported match"| UNAVAILABLE
+  REQUEST -->|"Choose a taste"| TASTE
+  REQUEST -->|"Today"| TODAY
+  REQUEST -->|"Cook"| HOME
+  REQUEST -->|"Cookbook"| COOKBOOK
+  REQUEST -->|"Inbox"| INBOX
+  REQUEST -->|"My Plate"| PROFILE_PLATE
+  PANTRY -->|"Back"| REQUEST
+  PANTRY -->|"Use these ingredients"| REQUEST
+  PANTRY -->|"Time and effort"| EFFORT
+  PANTRY -->|"Today"| TODAY
+  PANTRY -->|"Cook"| HOME
+  PANTRY -->|"Cookbook"| COOKBOOK
+  PANTRY -->|"Inbox"| INBOX
+  PANTRY -->|"My Plate"| PROFILE_PLATE
+  EFFORT -->|"Back"| REQUEST
+  EFFORT -->|"Find my meal"| REQUEST
+  EFFORT -->|"Change equipment"| EQUIPMENT
+  EFFORT -->|"Today"| TODAY
+  EFFORT -->|"Cook"| HOME
+  EFFORT -->|"Cookbook"| COOKBOOK
+  EFFORT -->|"Inbox"| INBOX
+  EFFORT -->|"My Plate"| PROFILE_PLATE
+  TASTE -->|"Back"| REQUEST
+  TASTE -->|"Back to meal request"| REQUEST
+  TASTE -->|"Today"| TODAY
+  TASTE -->|"Cook"| HOME
+  TASTE -->|"Cookbook"| COOKBOOK
+  TASTE -->|"Inbox"| INBOX
+  TASTE -->|"My Plate"| PROFILE_PLATE
+  RECOMMENDATIONS -->|"Back"| REQUEST
+  RECOMMENDATIONS -->|"View recipe"| RECIPE
+  RECOMMENDATIONS -->|"Make it mine"| ADAPT
+  RECOMMENDATIONS -->|"Make it easier"| VARIANT
+  RECOMMENDATIONS -->|"Why this meal?"| VARIANT
+  RECOMMENDATIONS -->|"Edit constraints"| REQUEST
+  RECOMMENDATIONS -->|"Today"| TODAY
+  RECOMMENDATIONS -->|"Cook"| HOME
+  RECOMMENDATIONS -->|"Cookbook"| COOKBOOK
+  RECOMMENDATIONS -->|"Inbox"| INBOX
+  RECOMMENDATIONS -->|"My Plate"| PROFILE_PLATE
+  RECIPE -->|"Back"| RECOMMENDATIONS
+  RECIPE -->|"Start cooking"| COOK
+  RECIPE -->|"Make Mine"| ADAPT
+  RECIPE -->|"Save recipe"| COOKBOOK
+  RECIPE -->|"Share this meal"| CAPTURE
+  RECIPE -->|"View inspiration"| POST
+  RECIPE -->|"An ingredient is unavailable"| ADAPT
+  RECIPE -.->|"Select this recipe: attachment or request response"| REVIEW_ATTACHMENT
+  RECIPE -.->|"Select this recipe: SOS suggestion"| SOS_DETAIL
+  RECIPE -.->|"Select this recipe: pact source"| PACT_CREATE
+  RECIPE -.->|"Select this recipe: poll choice"| POLL_CREATE
+  RECIPE -.->|"Cancel selection: attachment or response"| ATTACH_RECIPE
+  RECIPE -.->|"Cancel selection: SOS suggestion"| SOS_DETAIL
+  RECIPE -.->|"Cancel selection: pact source"| PACT_CREATE
+  RECIPE -.->|"Cancel selection: poll choice"| POLL_CREATE
+  RECIPE -->|"Share a shortcut"| SHORTCUT_CREATE
+  RECIPE -->|"View a shared shortcut"| SHORTCUT_DETAIL
+  RECIPE -->|"Today"| TODAY
+  RECIPE -->|"Cook"| HOME
+  RECIPE -->|"Cookbook"| COOKBOOK
+  RECIPE -->|"Inbox"| INBOX
+  RECIPE -->|"My Plate"| PROFILE_PLATE
+  ADAPT -->|"Back"| RECIPE
+  ADAPT -->|"Make my version"| VARIANT
+  ADAPT -.->|"Make my version: no reviewed compatible variant"| UNAVAILABLE
+  ADAPT -->|"Edit ingredients"| PANTRY
+  ADAPT -->|"Edit preferences"| FOOD_PREFS
+  ADAPT -->|"Keep original"| RECIPE
+  ADAPT -->|"Change effort"| EFFORT
+  ADAPT -->|"Change equipment"| EQUIPMENT
+  ADAPT -->|"Change taste"| TASTE
+  ADAPT -->|"Today"| TODAY
+  ADAPT -->|"Cook"| HOME
+  ADAPT -->|"Cookbook"| COOKBOOK
+  ADAPT -->|"Inbox"| INBOX
+  ADAPT -->|"My Plate"| PROFILE_PLATE
+  VARIANT -->|"Back"| ADAPT
+  VARIANT -->|"Use this version"| RECIPE
+  VARIANT -->|"Change my request"| ADAPT
+  VARIANT -->|"View original"| RECIPE
+  VARIANT -->|"Today"| TODAY
+  VARIANT -->|"Cook"| HOME
+  VARIANT -->|"Cookbook"| COOKBOOK
+  VARIANT -->|"Inbox"| INBOX
+  VARIANT -->|"My Plate"| PROFILE_PLATE
+  COOK -->|"Back"| HOME
+  COOK -->|"Start step timer"| TIMER
+  COOK -->|"See ingredients"| RECIPE
+  COOK -->|"Finish meal"| MEAL_DONE
+  COOK -->|"Pause and leave"| HOME
+  TIMER -->|"Back"| COOK
+  TIMER -->|"Back to cooking"| COOK
+  TIMER -->|"Cancel timer"| COOK
+  MEAL_DONE -->|"Back"| HOME
+  MEAL_DONE -->|"Make again"| COOKBOOK
+  MEAL_DONE -->|"Leave a quick thought"| FEEDBACK
+  MEAL_DONE -->|"Share Your Take"| CAPTURE
+  MEAL_DONE -->|"Use an ingredient again"| REUSE
+  MEAL_DONE -->|"Done for now"| HOME
+  MEAL_DONE -->|"Today"| TODAY
+  MEAL_DONE -->|"Cook"| HOME
+  MEAL_DONE -->|"Cookbook"| COOKBOOK
+  MEAL_DONE -->|"Inbox"| INBOX
+  MEAL_DONE -->|"My Plate"| PROFILE_PLATE
+  FEEDBACK -->|"Back"| MEAL_DONE
+  FEEDBACK -->|"Save feedback"| MEAL_DONE
+  FEEDBACK -->|"Skip"| MEAL_DONE
+  FEEDBACK -->|"Remove my feedback: confirm"| CONFIRM_ACTION
+  FEEDBACK -->|"Remove my feedback"| MEAL_DONE
+  FEEDBACK -->|"Today"| TODAY
+  FEEDBACK -->|"Cook"| HOME
+  FEEDBACK -->|"Cookbook"| COOKBOOK
+  FEEDBACK -->|"Inbox"| INBOX
+  FEEDBACK -->|"My Plate"| PROFILE_PLATE
+  REUSE -->|"Back"| MEAL_DONE
+  REUSE -->|"Find a next use"| RECOMMENDATIONS
+  REUSE -->|"Not now"| MEAL_DONE
+  REUSE -->|"Today"| TODAY
+  REUSE -->|"Cook"| HOME
+  REUSE -->|"Cookbook"| COOKBOOK
+  REUSE -->|"Inbox"| INBOX
+  REUSE -->|"My Plate"| PROFILE_PLATE
+  COOKBOOK -->|"Back"| HOME
+  COOKBOOK -->|"Open saved meal"| RECIPE
+  COOKBOOK -->|"Tonight?"| TONIGHT
+  COOKBOOK -->|"Open collection"| COLLECTION
+  COOKBOOK -->|"Create collection"| COLLECTION_EDIT
+  COOKBOOK -->|"Manage taste memory"| MEMORY
+  COOKBOOK -->|"Explore library tools"| PAYWALL
+  COOKBOOK -.->|"Select this recipe: attachment picker"| REVIEW_ATTACHMENT
+  COOKBOOK -.->|"Select this recipe: SOS reply"| SOS_DETAIL
+  COOKBOOK -.->|"Select this recipe: pact picker"| PACT_CREATE
+  COOKBOOK -.->|"Select this recipe: poll option picker"| POLL_CREATE
+  COOKBOOK -.->|"Cancel selection: attachment picker"| ATTACH_RECIPE
+  COOKBOOK -.->|"Cancel selection: SOS reply"| SOS_DETAIL
+  COOKBOOK -.->|"Cancel selection: pact picker"| PACT_CREATE
+  COOKBOOK -.->|"Cancel selection: poll option picker"| POLL_CREATE
+  COOKBOOK -->|"Delete selected saved recipe: confirm"| CONFIRM_ACTION
+  COOKBOOK -->|"Today"| TODAY
+  COOKBOOK -->|"Cook"| HOME
+  COOKBOOK -->|"Cookbook"| COOKBOOK
+  COOKBOOK -->|"Inbox"| INBOX
+  COOKBOOK -->|"My Plate"| PROFILE_PLATE
+  COLLECTION -->|"Back"| COOKBOOK
+  COLLECTION -->|"Open recipe"| RECIPE
+  COLLECTION -->|"Edit collection"| COLLECTION_EDIT
+  COLLECTION -->|"Make this tonight"| TONIGHT
+  COLLECTION -->|"Delete collection: confirm"| CONFIRM_ACTION
+  COLLECTION -->|"Delete collection"| COOKBOOK
+  COLLECTION -->|"Today"| TODAY
+  COLLECTION -->|"Cook"| HOME
+  COLLECTION -->|"Cookbook"| COOKBOOK
+  COLLECTION -->|"Inbox"| INBOX
+  COLLECTION -->|"My Plate"| PROFILE_PLATE
+  COLLECTION_EDIT -->|"Back"| COOKBOOK
+  COLLECTION_EDIT -->|"Save collection"| COLLECTION
+  COLLECTION_EDIT -.->|"Save collection: premium-only organization requested without entitlement"| PAYWALL
+  COLLECTION_EDIT -->|"Rename collection"| COLLECTION
+  COLLECTION_EDIT -->|"Cancel"| COOKBOOK
+  COLLECTION_EDIT -->|"Save order"| COLLECTION
+  COLLECTION_EDIT -->|"Today"| TODAY
+  COLLECTION_EDIT -->|"Cook"| HOME
+  COLLECTION_EDIT -->|"Cookbook"| COOKBOOK
+  COLLECTION_EDIT -->|"Inbox"| INBOX
+  COLLECTION_EDIT -->|"My Plate"| PROFILE_PLATE
+  MEMORY -->|"Back"| SETTINGS
+  MEMORY -->|"Inspect a memory"| MEMORY_DETAIL
+  MEMORY -->|"Edit food preferences"| FOOD_PREFS
+  MEMORY -->|"Return to saved meals"| COOKBOOK
+  MEMORY -->|"Today"| TODAY
+  MEMORY -->|"Cook"| HOME
+  MEMORY -->|"Cookbook"| COOKBOOK
+  MEMORY -->|"Inbox"| INBOX
+  MEMORY -->|"My Plate"| PROFILE_PLATE
+  MEMORY_DETAIL -->|"Back"| MEMORY
+  MEMORY_DETAIL -->|"Update memory"| MEMORY
+  MEMORY_DETAIL -->|"Forget this"| MEMORY
+  MEMORY_DETAIL -->|"View source meal"| RECIPE
+  MEMORY_DETAIL -->|"Today"| TODAY
+  MEMORY_DETAIL -->|"Cook"| HOME
+  MEMORY_DETAIL -->|"Cookbook"| COOKBOOK
+  MEMORY_DETAIL -->|"Inbox"| INBOX
+  MEMORY_DETAIL -->|"My Plate"| PROFILE_PLATE
+  TODAY -->|"Back"| HOME
+  TODAY -->|"Open a plate"| STORY
+  TODAY -->|"Share what I made"| CAPTURE
+  TODAY -->|"Choose a circle"| CIRCLES
+  TODAY -->|"Help me cook"| HOME
+  TODAY -->|"Today"| TODAY
+  TODAY -->|"Cook"| HOME
+  TODAY -->|"Cookbook"| COOKBOOK
+  TODAY -->|"Inbox"| INBOX
+  TODAY -->|"My Plate"| PROFILE_PLATE
+  STORY -->|"Back"| TODAY
+  STORY -->|"Make Mine"| ADAPT
+  STORY -.->|"Make Mine: missing supported recipe"| RECIPE_REQUEST
+  STORY -->|"Save recipe"| COOKBOOK
+  STORY -.->|"Save recipe: saving not permitted or source recalled"| UNAVAILABLE
+  STORY -->|"Reply"| THREAD
+  STORY -->|"Ask for recipe"| RECIPE_REQUEST
+  STORY -->|"View profile"| PROFILE_PLATE
+  STORY -->|"Next plate"| STORY
+  STORY -->|"Report"| REPORT
+  PROFILE_PLATE -->|"Back"| TODAY
+  PROFILE_PLATE -->|"Open post"| POST
+  PROFILE_PLATE -->|"Share a meal"| CAPTURE
+  PROFILE_PLATE -->|"Edit my profile"| PROFILE_SETUP
+  PROFILE_PLATE -->|"My circles"| CIRCLES
+  PROFILE_PLATE -->|"Settings"| SETTINGS
+  PROFILE_PLATE -->|"Today"| TODAY
+  PROFILE_PLATE -->|"Cook"| HOME
+  PROFILE_PLATE -->|"Cookbook"| COOKBOOK
+  PROFILE_PLATE -->|"Inbox"| INBOX
+  PROFILE_PLATE -->|"My Plate"| PROFILE_PLATE
+  POST -->|"Back"| PROFILE_PLATE
+  POST -->|"Make Mine"| ADAPT
+  POST -.->|"Make Mine: attachment lacks supported details"| RECIPE_REQUEST
+  POST -->|"Save recipe"| COOKBOOK
+  POST -->|"Reply"| THREAD
+  POST -->|"View Your Takes"| REMIX_TRAIL
+  POST -->|"Make a Dinner Pact"| PACT_CREATE
+  POST -->|"Share my version"| CAPTURE
+  POST -->|"Delete my post"| DELETE_POST
+  POST -->|"Report this post"| REPORT
+  POST -->|"Edit audience"| AUDIENCE
+  POST -->|"Change recipe-save permission"| SAVE_PERMISSION
+  POST -->|"Remove from my Plate: confirm"| CONFIRM_ACTION
+  POST -->|"Replace recipe attachment"| ATTACH_RECIPE
+  POST -->|"Remove recipe attachment: confirm"| CONFIRM_ACTION
+  POST -->|"Today"| TODAY
+  POST -->|"Cook"| HOME
+  POST -->|"Cookbook"| COOKBOOK
+  POST -->|"Inbox"| INBOX
+  POST -->|"My Plate"| PROFILE_PLATE
+  CAPTURE -->|"Back"| HOME
+  CAPTURE -->|"Take photo"| EDIT_MEDIA
+  CAPTURE -->|"Choose photo"| EDIT_MEDIA
+  CAPTURE -->|"Add a short clip"| VIDEO_EDIT
+  CAPTURE -->|"Continue saved draft"| EDIT_MEDIA
+  CAPTURE -->|"Cancel"| HOME
+  CAPTURE -->|"Today"| TODAY
+  CAPTURE -->|"Cook"| HOME
+  CAPTURE -->|"Cookbook"| COOKBOOK
+  CAPTURE -->|"Inbox"| INBOX
+  CAPTURE -->|"My Plate"| PROFILE_PLATE
+  EDIT_MEDIA -->|"Back"| CAPTURE
+  EDIT_MEDIA -->|"Save draft"| EDIT_MEDIA
+  EDIT_MEDIA -->|"Attach recipe"| ATTACH_RECIPE
+  EDIT_MEDIA -->|"Choose audience"| AUDIENCE
+  EDIT_MEDIA -->|"Review and publish"| PUBLISH_STATUS
+  EDIT_MEDIA -->|"Discard this draft: confirm"| CONFIRM_ACTION
+  EDIT_MEDIA -->|"Discard this draft"| HOME
+  EDIT_MEDIA -->|"Today"| TODAY
+  EDIT_MEDIA -->|"Cook"| HOME
+  EDIT_MEDIA -->|"Cookbook"| COOKBOOK
+  EDIT_MEDIA -->|"Inbox"| INBOX
+  EDIT_MEDIA -->|"My Plate"| PROFILE_PLATE
+  ATTACH_RECIPE -->|"Back"| EDIT_MEDIA
+  ATTACH_RECIPE -->|"Choose from my cookbook"| COOKBOOK
+  ATTACH_RECIPE -->|"Use my recent cook"| REVIEW_ATTACHMENT
+  ATTACH_RECIPE -->|"Review entered details"| REVIEW_ATTACHMENT
+  ATTACH_RECIPE -->|"Post without a recipe"| AUDIENCE
+  ATTACH_RECIPE -->|"Today"| TODAY
+  ATTACH_RECIPE -->|"Cook"| HOME
+  ATTACH_RECIPE -->|"Cookbook"| COOKBOOK
+  ATTACH_RECIPE -->|"Inbox"| INBOX
+  ATTACH_RECIPE -->|"My Plate"| PROFILE_PLATE
+  REVIEW_ATTACHMENT -->|"Back"| ATTACH_RECIPE
+  REVIEW_ATTACHMENT -->|"Confirm attachment"| SAVE_PERMISSION
+  REVIEW_ATTACHMENT -->|"Edit recipe details"| ATTACH_RECIPE
+  REVIEW_ATTACHMENT -->|"Remove attachment"| AUDIENCE
+  REVIEW_ATTACHMENT -->|"Replace on existing post: confirm"| CONFIRM_ACTION
+  REVIEW_ATTACHMENT -->|"Replace on existing post"| POST
+  REVIEW_ATTACHMENT -->|"Back to this post"| POST
+  REVIEW_ATTACHMENT -->|"Use this recipe in my response"| RECIPE_REQUEST
+  REVIEW_ATTACHMENT -->|"Cancel recipe response selection"| RECIPE_REQUEST
+  REVIEW_ATTACHMENT -->|"Today"| TODAY
+  REVIEW_ATTACHMENT -->|"Cook"| HOME
+  REVIEW_ATTACHMENT -->|"Cookbook"| COOKBOOK
+  REVIEW_ATTACHMENT -->|"Inbox"| INBOX
+  REVIEW_ATTACHMENT -->|"My Plate"| PROFILE_PLATE
+  AUDIENCE -->|"Back"| EDIT_MEDIA
+  AUDIENCE -->|"Use this audience"| PUBLISH_STATUS
+  AUDIENCE -->|"Manage circles"| CIRCLES
+  AUDIENCE -->|"Recipe save permissions"| SAVE_PERMISSION
+  AUDIENCE -->|"Apply to existing post: confirm"| CONFIRM_ACTION
+  AUDIENCE -->|"Apply to existing post"| POST
+  AUDIENCE -->|"Save as my future default"| SETTINGS
+  AUDIENCE -->|"Cancel audience edit"| POST
+  AUDIENCE -->|"Cancel default change"| PRIVACY
+  AUDIENCE -->|"Today"| TODAY
+  AUDIENCE -->|"Cook"| HOME
+  AUDIENCE -->|"Cookbook"| COOKBOOK
+  AUDIENCE -->|"Inbox"| INBOX
+  AUDIENCE -->|"My Plate"| PROFILE_PLATE
+  SAVE_PERMISSION -->|"Back"| REVIEW_ATTACHMENT
+  SAVE_PERMISSION -->|"Confirm permission"| AUDIENCE
+  SAVE_PERMISSION -->|"Back to recipe details"| REVIEW_ATTACHMENT
+  SAVE_PERMISSION -->|"Update existing post: confirm"| CONFIRM_ACTION
+  SAVE_PERMISSION -->|"Update existing post"| POST
+  SAVE_PERMISSION -->|"Cancel permission edit"| POST
+  SAVE_PERMISSION -->|"Today"| TODAY
+  SAVE_PERMISSION -->|"Cook"| HOME
+  SAVE_PERMISSION -->|"Cookbook"| COOKBOOK
+  SAVE_PERMISSION -->|"Inbox"| INBOX
+  SAVE_PERMISSION -->|"My Plate"| PROFILE_PLATE
+  PUBLISH_STATUS -->|"Back"| EDIT_MEDIA
+  PUBLISH_STATUS -->|"Publish to selected audience"| POST
+  PUBLISH_STATUS -.->|"Publish to selected audience: media processing or review pending"| PUBLISH_STATUS
+  PUBLISH_STATUS -.->|"Publish to selected audience: source/audience permission revoked"| UNAVAILABLE
+  PUBLISH_STATUS -->|"Edit before sharing"| EDIT_MEDIA
+  PUBLISH_STATUS -->|"Save draft and leave"| HOME
+  PUBLISH_STATUS -->|"Today"| TODAY
+  PUBLISH_STATUS -->|"Cook"| HOME
+  PUBLISH_STATUS -->|"Cookbook"| COOKBOOK
+  PUBLISH_STATUS -->|"Inbox"| INBOX
+  PUBLISH_STATUS -->|"My Plate"| PROFILE_PLATE
+  REMIX_TRAIL -->|"Back"| POST
+  REMIX_TRAIL -->|"Open a version"| POST
+  REMIX_TRAIL -->|"Make this version mine"| ADAPT
+  REMIX_TRAIL -->|"Share my take"| CAPTURE
+  REMIX_TRAIL -->|"Today"| TODAY
+  REMIX_TRAIL -->|"Cook"| HOME
+  REMIX_TRAIL -->|"Cookbook"| COOKBOOK
+  REMIX_TRAIL -->|"Inbox"| INBOX
+  REMIX_TRAIL -->|"My Plate"| PROFILE_PLATE
+  CIRCLES -->|"Back"| HOME
+  CIRCLES -->|"Open circle"| CIRCLE
+  CIRCLES -->|"Create a circle"| CIRCLE_CREATE
+  CIRCLES -->|"Join with invite"| INVITE_ACCEPT
+  CIRCLES -->|"Manage invitations"| INVITE
+  CIRCLES -.->|"Use this circle: SOS audience"| SOS_CREATE
+  CIRCLES -.->|"Use this circle: shared meal audience"| POTLUCK_CREATE
+  CIRCLES -.->|"Use this circle: post audience"| AUDIENCE
+  CIRCLES -.->|"Cancel selection: SOS audience"| SOS_CREATE
+  CIRCLES -.->|"Cancel selection: shared meal audience"| POTLUCK_CREATE
+  CIRCLES -.->|"Cancel selection: post audience"| AUDIENCE
+  CIRCLES -->|"Today"| TODAY
+  CIRCLES -->|"Cook"| HOME
+  CIRCLES -->|"Cookbook"| COOKBOOK
+  CIRCLES -->|"Inbox"| INBOX
+  CIRCLES -->|"My Plate"| PROFILE_PLATE
+  CIRCLE -->|"Back"| CIRCLES
+  CIRCLE -->|"Open a meal"| POST
+  CIRCLE -->|"Invite a friend"| INVITE
+  CIRCLE -->|"Members"| CIRCLE_MEMBERS
+  CIRCLE -->|"Ask Fridge SOS"| SOS_CREATE
+  CIRCLE -->|"Start Dinner Vote"| POLL_CREATE
+  CIRCLE -->|"Bring a Bit"| POTLUCK_CREATE
+  CIRCLE -->|"Leave circle"| CIRCLES
+  CIRCLE -->|"Delete my circle: confirm"| CONFIRM_ACTION
+  CIRCLE -->|"Delete my circle"| CIRCLES
+  CIRCLE -->|"Today"| TODAY
+  CIRCLE -->|"Cook"| HOME
+  CIRCLE -->|"Cookbook"| COOKBOOK
+  CIRCLE -->|"Inbox"| INBOX
+  CIRCLE -->|"My Plate"| PROFILE_PLATE
+  CIRCLE_CREATE -->|"Back"| CIRCLES
+  CIRCLE_CREATE -->|"Create circle"| CIRCLE
+  CIRCLE_CREATE -->|"Cancel"| CIRCLES
+  CIRCLE_CREATE -->|"Today"| TODAY
+  CIRCLE_CREATE -->|"Cook"| HOME
+  CIRCLE_CREATE -->|"Cookbook"| COOKBOOK
+  CIRCLE_CREATE -->|"Inbox"| INBOX
+  CIRCLE_CREATE -->|"My Plate"| PROFILE_PLATE
+  CIRCLE_MEMBERS -->|"Back"| CIRCLE
+  CIRCLE_MEMBERS -->|"Transfer ownership: confirm"| CONFIRM_ACTION
+  CIRCLE_MEMBERS -->|"Invite someone"| INVITE
+  CIRCLE_MEMBERS -->|"Report a member"| REPORT
+  CIRCLE_MEMBERS -->|"Today"| TODAY
+  CIRCLE_MEMBERS -->|"Cook"| HOME
+  CIRCLE_MEMBERS -->|"Cookbook"| COOKBOOK
+  CIRCLE_MEMBERS -->|"Inbox"| INBOX
+  CIRCLE_MEMBERS -->|"My Plate"| PROFILE_PLATE
+  INVITE -->|"Back"| CIRCLE
+  INVITE -->|"Back to circle"| CIRCLE
+  INVITE -->|"Today"| TODAY
+  INVITE -->|"Cook"| HOME
+  INVITE -->|"Cookbook"| COOKBOOK
+  INVITE -->|"Inbox"| INBOX
+  INVITE -->|"My Plate"| PROFILE_PLATE
+  INBOX -->|"Back"| HOME
+  INBOX -->|"Open conversation"| THREAD
+  INBOX -->|"Open invitation"| INVITE_ACCEPT
+  INBOX -->|"Open activity"| POST
+  INBOX -->|"Notification settings"| NOTIFICATIONS
+  INBOX -->|"Today"| TODAY
+  INBOX -->|"Cook"| HOME
+  INBOX -->|"Cookbook"| COOKBOOK
+  INBOX -->|"Inbox"| INBOX
+  INBOX -->|"My Plate"| PROFILE_PLATE
+  THREAD -->|"Back"| INBOX
+  THREAD -->|"Open shared recipe"| RECIPE
+  THREAD -->|"Ask for recipe"| RECIPE_REQUEST
+  THREAD -->|"Report message"| REPORT
+  THREAD -->|"Review incoming recipe request"| RECIPE_REQUEST
+  THREAD -->|"Today"| TODAY
+  THREAD -->|"Cook"| HOME
+  THREAD -->|"Cookbook"| COOKBOOK
+  THREAD -->|"Inbox"| INBOX
+  THREAD -->|"My Plate"| PROFILE_PLATE
+  RECIPE_REQUEST -->|"Back"| POST
+  RECIPE_REQUEST -->|"Send request"| THREAD
+  RECIPE_REQUEST -->|"Browse related reviewed meals"| REQUEST
+  RECIPE_REQUEST -->|"Cancel"| POST
+  RECIPE_REQUEST -->|"Answer with a recipe"| ATTACH_RECIPE
+  RECIPE_REQUEST -->|"Send recipe response"| THREAD
+  RECIPE_REQUEST -->|"Decline request"| THREAD
+  RECIPE_REQUEST -->|"Cancel my request"| THREAD
+  RECIPE_REQUEST -->|"Back to conversation"| THREAD
+  RECIPE_REQUEST -->|"Today"| TODAY
+  RECIPE_REQUEST -->|"Cook"| HOME
+  RECIPE_REQUEST -->|"Cookbook"| COOKBOOK
+  RECIPE_REQUEST -->|"Inbox"| INBOX
+  RECIPE_REQUEST -->|"My Plate"| PROFILE_PLATE
+  SETTINGS -->|"Back"| HOME
+  SETTINGS -->|"Edit profile"| PROFILE_SETUP
+  SETTINGS -->|"Food preferences"| FOOD_PREFS
+  SETTINGS -->|"Kitchen equipment"| EQUIPMENT
+  SETTINGS -->|"Taste memory"| MEMORY
+  SETTINGS -->|"Privacy and safety"| PRIVACY
+  SETTINGS -->|"Notifications"| NOTIFICATIONS
+  SETTINGS -->|"Devices and sessions"| SESSIONS
+  SETTINGS -->|"Household"| HOUSEHOLDS
+  SETTINGS -->|"Purchases"| MANAGE_PLAN
+  SETTINGS -->|"Help"| SUPPORT
+  SETTINGS -->|"Terms and privacy"| LEGAL
+  SETTINGS -->|"Log out"| AUTH_WELCOME
+  SETTINGS -->|"Today"| TODAY
+  SETTINGS -->|"Cook"| HOME
+  SETTINGS -->|"Cookbook"| COOKBOOK
+  SETTINGS -->|"Inbox"| INBOX
+  SETTINGS -->|"My Plate"| PROFILE_PLATE
+  PRIVACY -->|"Back"| SETTINGS
+  PRIVACY -->|"Blocked accounts"| BLOCKED
+  PRIVACY -->|"Export my data"| EXPORT
+  PRIVACY -->|"Delete my account"| DELETE_ACCOUNT
+  PRIVACY -->|"Edit default audience"| AUDIENCE
+  PRIVACY -->|"Manage remembered preferences"| MEMORY
+  PRIVACY -->|"Privacy policy"| LEGAL
+  PRIVACY -->|"Today"| TODAY
+  PRIVACY -->|"Cook"| HOME
+  PRIVACY -->|"Cookbook"| COOKBOOK
+  PRIVACY -->|"Inbox"| INBOX
+  PRIVACY -->|"My Plate"| PROFILE_PLATE
+  BLOCKED -->|"Back"| PRIVACY
+  BLOCKED -->|"Today"| TODAY
+  BLOCKED -->|"Cook"| HOME
+  BLOCKED -->|"Cookbook"| COOKBOOK
+  BLOCKED -->|"Inbox"| INBOX
+  BLOCKED -->|"My Plate"| PROFILE_PLATE
+  REPORT -->|"Back"| POST
+  REPORT -->|"Submit report"| SUPPORT
+  REPORT -->|"Cancel"| POST
+  REPORT -->|"Today"| TODAY
+  REPORT -->|"Cook"| HOME
+  REPORT -->|"Cookbook"| COOKBOOK
+  REPORT -->|"Inbox"| INBOX
+  REPORT -->|"My Plate"| PROFILE_PLATE
+  DELETE_POST -->|"Back"| POST
+  DELETE_POST -->|"Delete post: confirm"| CONFIRM_ACTION
+  DELETE_POST -->|"Delete post"| PROFILE_PLATE
+  DELETE_POST -->|"Keep post"| POST
+  DELETE_POST -->|"Today"| TODAY
+  DELETE_POST -->|"Cook"| HOME
+  DELETE_POST -->|"Cookbook"| COOKBOOK
+  DELETE_POST -->|"Inbox"| INBOX
+  DELETE_POST -->|"My Plate"| PROFILE_PLATE
+  DELETE_ACCOUNT -->|"Back"| PRIVACY
+  DELETE_ACCOUNT -->|"Request account deletion: confirm"| CONFIRM_ACTION
+  DELETE_ACCOUNT -->|"Request account deletion"| AUTH_WELCOME
+  DELETE_ACCOUNT -->|"Manage my subscription first"| MANAGE_PLAN
+  DELETE_ACCOUNT -->|"Cancel"| PRIVACY
+  DELETE_ACCOUNT -->|"Today"| TODAY
+  DELETE_ACCOUNT -->|"Cook"| HOME
+  DELETE_ACCOUNT -->|"Cookbook"| COOKBOOK
+  DELETE_ACCOUNT -->|"Inbox"| INBOX
+  DELETE_ACCOUNT -->|"My Plate"| PROFILE_PLATE
+  NOTIFICATIONS -->|"Back"| SETTINGS
+  NOTIFICATIONS -->|"Save notification choices"| SETTINGS
+  NOTIFICATIONS -->|"Enable on this device"| NOTIFICATION_PERMISSION
+  NOTIFICATIONS -->|"Today"| TODAY
+  NOTIFICATIONS -->|"Cook"| HOME
+  NOTIFICATIONS -->|"Cookbook"| COOKBOOK
+  NOTIFICATIONS -->|"Inbox"| INBOX
+  NOTIFICATIONS -->|"My Plate"| PROFILE_PLATE
+  SESSIONS -->|"Back"| SETTINGS
+  SESSIONS -->|"Sign out everywhere"| AUTH_WELCOME
+  SESSIONS -->|"Today"| TODAY
+  SESSIONS -->|"Cook"| HOME
+  SESSIONS -->|"Cookbook"| COOKBOOK
+  SESSIONS -->|"Inbox"| INBOX
+  SESSIONS -->|"My Plate"| PROFILE_PLATE
+  SOS_CREATE -->|"Back"| HOME
+  SOS_CREATE -->|"Ask my circle"| SOS_DETAIL
+  SOS_CREATE -->|"Give me an idea now"| REQUEST
+  SOS_CREATE -->|"Choose circle"| CIRCLES
+  SOS_CREATE -->|"Today"| TODAY
+  SOS_CREATE -->|"Cook"| HOME
+  SOS_CREATE -->|"Cookbook"| COOKBOOK
+  SOS_CREATE -->|"Inbox"| INBOX
+  SOS_CREATE -->|"My Plate"| PROFILE_PLATE
+  SOS_DETAIL -->|"Back"| CIRCLE
+  SOS_DETAIL -->|"Attach a saved recipe"| COOKBOOK
+  SOS_DETAIL -->|"Make this suggestion mine"| ADAPT
+  SOS_DETAIL -->|"Report a reply"| REPORT
+  SOS_DETAIL -->|"Remove my reply: confirm"| CONFIRM_ACTION
+  SOS_DETAIL -->|"Today"| TODAY
+  SOS_DETAIL -->|"Cook"| HOME
+  SOS_DETAIL -->|"Cookbook"| COOKBOOK
+  SOS_DETAIL -->|"Inbox"| INBOX
+  SOS_DETAIL -->|"My Plate"| PROFILE_PLATE
+  TONIGHT -->|"Back"| COOKBOOK
+  TONIGHT -->|"Check tonight’s version"| VARIANT
+  TONIGHT -->|"Confirm ingredients"| PANTRY
+  TONIGHT -->|"Back to my saves"| COOKBOOK
+  TONIGHT -->|"Today"| TODAY
+  TONIGHT -->|"Cook"| HOME
+  TONIGHT -->|"Cookbook"| COOKBOOK
+  TONIGHT -->|"Inbox"| INBOX
+  TONIGHT -->|"My Plate"| PROFILE_PLATE
+  PACT_CREATE -->|"Back"| POST
+  PACT_CREATE -->|"Send Dinner Pact"| PACT_DETAIL
+  PACT_CREATE -->|"Choose a recipe"| COOKBOOK
+  PACT_CREATE -->|"Cancel"| POST
+  PACT_CREATE -->|"Choose a friend"| PEOPLE_PICKER
+  PACT_CREATE -->|"Today"| TODAY
+  PACT_CREATE -->|"Cook"| HOME
+  PACT_CREATE -->|"Cookbook"| COOKBOOK
+  PACT_CREATE -->|"Inbox"| INBOX
+  PACT_CREATE -->|"My Plate"| PROFILE_PLATE
+  PACT_DETAIL -->|"Back"| INBOX
+  PACT_DETAIL -->|"Make my version"| ADAPT
+  PACT_DETAIL -->|"Chat about dinner"| THREAD
+  PACT_DETAIL -->|"Share a progress photo"| CAPTURE
+  PACT_DETAIL -->|"Today"| TODAY
+  PACT_DETAIL -->|"Cook"| HOME
+  PACT_DETAIL -->|"Cookbook"| COOKBOOK
+  PACT_DETAIL -->|"Inbox"| INBOX
+  PACT_DETAIL -->|"My Plate"| PROFILE_PLATE
+  POTLUCK_CREATE -->|"Back"| CIRCLE
+  POTLUCK_CREATE -->|"Start shared meal"| POTLUCK_DETAIL
+  POTLUCK_CREATE -->|"Choose circle"| CIRCLES
+  POTLUCK_CREATE -->|"Cancel"| CIRCLE
+  POTLUCK_CREATE -->|"Choose participants"| PEOPLE_PICKER
+  POTLUCK_CREATE -->|"Today"| TODAY
+  POTLUCK_CREATE -->|"Cook"| HOME
+  POTLUCK_CREATE -->|"Cookbook"| COOKBOOK
+  POTLUCK_CREATE -->|"Inbox"| INBOX
+  POTLUCK_CREATE -->|"My Plate"| PROFILE_PLATE
+  POTLUCK_DETAIL -->|"Back"| CIRCLE
+  POTLUCK_DETAIL -->|"Bring an ingredient"| CONTRIBUTION
+  POTLUCK_DETAIL -->|"Find a meal we can make"| RECOMMENDATIONS
+  POTLUCK_DETAIL -->|"Open meal conversation"| THREAD
+  POTLUCK_DETAIL -->|"Leave shared meal: confirm"| CONFIRM_ACTION
+  POTLUCK_DETAIL -->|"Cancel shared meal: confirm"| CONFIRM_ACTION
+  POTLUCK_DETAIL -->|"Cancel shared meal"| CIRCLE
+  POTLUCK_DETAIL -->|"Today"| TODAY
+  POTLUCK_DETAIL -->|"Cook"| HOME
+  POTLUCK_DETAIL -->|"Cookbook"| COOKBOOK
+  POTLUCK_DETAIL -->|"Inbox"| INBOX
+  POTLUCK_DETAIL -->|"My Plate"| PROFILE_PLATE
+  CONTRIBUTION -->|"Back"| POTLUCK_DETAIL
+  CONTRIBUTION -->|"Add my contribution"| POTLUCK_DETAIL
+  CONTRIBUTION -->|"Remove my contribution"| POTLUCK_DETAIL
+  CONTRIBUTION -->|"Today"| TODAY
+  CONTRIBUTION -->|"Cook"| HOME
+  CONTRIBUTION -->|"Cookbook"| COOKBOOK
+  CONTRIBUTION -->|"Inbox"| INBOX
+  CONTRIBUTION -->|"My Plate"| PROFILE_PLATE
+  SHORTCUT_CREATE -->|"Back"| RECIPE
+  SHORTCUT_CREATE -->|"Share shortcut"| SHORTCUT_DETAIL
+  SHORTCUT_CREATE -->|"Cancel"| RECIPE
+  SHORTCUT_CREATE -->|"Today"| TODAY
+  SHORTCUT_CREATE -->|"Cook"| HOME
+  SHORTCUT_CREATE -->|"Cookbook"| COOKBOOK
+  SHORTCUT_CREATE -->|"Inbox"| INBOX
+  SHORTCUT_CREATE -->|"My Plate"| PROFILE_PLATE
+  SHORTCUT_DETAIL -->|"Back"| RECIPE
+  SHORTCUT_DETAIL -->|"Open recipe"| RECIPE
+  SHORTCUT_DETAIL -->|"Report tip"| REPORT
+  SHORTCUT_DETAIL -->|"Share my shortcut"| SHORTCUT_CREATE
+  SHORTCUT_DETAIL -->|"Withdraw my shortcut: confirm"| CONFIRM_ACTION
+  SHORTCUT_DETAIL -->|"Withdraw my shortcut"| RECIPE
+  SHORTCUT_DETAIL -->|"Keep as my cooking note"| COOK
+  SHORTCUT_DETAIL -->|"Today"| TODAY
+  SHORTCUT_DETAIL -->|"Cook"| HOME
+  SHORTCUT_DETAIL -->|"Cookbook"| COOKBOOK
+  SHORTCUT_DETAIL -->|"Inbox"| INBOX
+  SHORTCUT_DETAIL -->|"My Plate"| PROFILE_PLATE
+  POLL_CREATE -->|"Back"| CIRCLE
+  POLL_CREATE -->|"Choose option A"| COOKBOOK
+  POLL_CREATE -->|"Choose option B"| COOKBOOK
+  POLL_CREATE -->|"Ask my circle"| POLL_DETAIL
+  POLL_CREATE -->|"Today"| TODAY
+  POLL_CREATE -->|"Cook"| HOME
+  POLL_CREATE -->|"Cookbook"| COOKBOOK
+  POLL_CREATE -->|"Inbox"| INBOX
+  POLL_CREATE -->|"My Plate"| PROFILE_PLATE
+  POLL_DETAIL -->|"Back"| CIRCLE
+  POLL_DETAIL -->|"Make option A mine"| ADAPT
+  POLL_DETAIL -->|"Make option B mine"| ADAPT
+  POLL_DETAIL -->|"Today"| TODAY
+  POLL_DETAIL -->|"Cook"| HOME
+  POLL_DETAIL -->|"Cookbook"| COOKBOOK
+  POLL_DETAIL -->|"Inbox"| INBOX
+  POLL_DETAIL -->|"My Plate"| PROFILE_PLATE
+  VIDEO_EDIT -->|"Back"| CAPTURE
+  VIDEO_EDIT -->|"Upload and process"| PUBLISH_STATUS
+  VIDEO_EDIT -->|"Attach recipe"| ATTACH_RECIPE
+  VIDEO_EDIT -->|"Use a photo instead"| CAPTURE
+  VIDEO_EDIT -->|"Today"| TODAY
+  VIDEO_EDIT -->|"Cook"| HOME
+  VIDEO_EDIT -->|"Cookbook"| COOKBOOK
+  VIDEO_EDIT -->|"Inbox"| INBOX
+  VIDEO_EDIT -->|"My Plate"| PROFILE_PLATE
+  HOUSEHOLDS -->|"Back"| SETTINGS
+  HOUSEHOLDS -->|"Create household"| HOUSEHOLD_PREFS
+  HOUSEHOLDS -.->|"Create household: household entitlement absent"| PAYWALL
+  HOUSEHOLDS -->|"Members"| HOUSEHOLD_MEMBER
+  HOUSEHOLDS -->|"Shared meal preferences"| HOUSEHOLD_PREFS
+  HOUSEHOLDS -->|"View plan"| MANAGE_PLAN
+  HOUSEHOLDS -->|"Leave household: confirm"| CONFIRM_ACTION
+  HOUSEHOLDS -->|"Dissolve my household: confirm"| CONFIRM_ACTION
+  HOUSEHOLDS -->|"Dissolve my household"| SETTINGS
+  HOUSEHOLDS -->|"Today"| TODAY
+  HOUSEHOLDS -->|"Cook"| HOME
+  HOUSEHOLDS -->|"Cookbook"| COOKBOOK
+  HOUSEHOLDS -->|"Inbox"| INBOX
+  HOUSEHOLDS -->|"My Plate"| PROFILE_PLATE
+  HOUSEHOLD_MEMBER -->|"Back"| HOUSEHOLDS
+  HOUSEHOLD_MEMBER -->|"Accept household invitation"| HOUSEHOLD_PREFS
+  HOUSEHOLD_MEMBER -->|"Today"| TODAY
+  HOUSEHOLD_MEMBER -->|"Cook"| HOME
+  HOUSEHOLD_MEMBER -->|"Cookbook"| COOKBOOK
+  HOUSEHOLD_MEMBER -->|"Inbox"| INBOX
+  HOUSEHOLD_MEMBER -->|"My Plate"| PROFILE_PLATE
+  HOUSEHOLD_PREFS -->|"Back"| HOUSEHOLDS
+  HOUSEHOLD_PREFS -->|"Save shared defaults"| HOUSEHOLDS
+  HOUSEHOLD_PREFS -->|"Plan a household meal"| REQUEST
+  HOUSEHOLD_PREFS -->|"Today"| TODAY
+  HOUSEHOLD_PREFS -->|"Cook"| HOME
+  HOUSEHOLD_PREFS -->|"Cookbook"| COOKBOOK
+  HOUSEHOLD_PREFS -->|"Inbox"| INBOX
+  HOUSEHOLD_PREFS -->|"My Plate"| PROFILE_PLATE
+  PACK_STORE -->|"Back"| COOKBOOK
+  PACK_STORE -->|"View a pack"| PACK_DETAIL
+  PACK_STORE -->|"Restore purchases"| PURCHASE_STATUS
+  PACK_STORE -->|"My purchases"| MANAGE_PLAN
+  PACK_STORE -->|"Today"| TODAY
+  PACK_STORE -->|"Cook"| HOME
+  PACK_STORE -->|"Cookbook"| COOKBOOK
+  PACK_STORE -->|"Inbox"| INBOX
+  PACK_STORE -->|"My Plate"| PROFILE_PLATE
+  PACK_DETAIL -->|"Back"| PACK_STORE
+  PACK_DETAIL -->|"Try a free sample"| RECIPE
+  PACK_DETAIL -->|"Unlock this pack"| PAYWALL
+  PACK_DETAIL -->|"Open owned pack"| COLLECTION
+  PACK_DETAIL -->|"Review purchase terms"| LEGAL
+  PACK_DETAIL -->|"Today"| TODAY
+  PACK_DETAIL -->|"Cook"| HOME
+  PACK_DETAIL -->|"Cookbook"| COOKBOOK
+  PACK_DETAIL -->|"Inbox"| INBOX
+  PACK_DETAIL -->|"My Plate"| PROFILE_PLATE
+  PAYWALL -->|"Back"| COOKBOOK
+  PAYWALL -->|"Purchase selected offer"| PURCHASE_STATUS
+  PAYWALL -->|"Restore purchases"| PURCHASE_STATUS
+  PAYWALL -->|"Keep using the free app"| HOME
+  PAYWALL -->|"Terms and cancellation"| LEGAL
+  PAYWALL -->|"Today"| TODAY
+  PAYWALL -->|"Cook"| HOME
+  PAYWALL -->|"Cookbook"| COOKBOOK
+  PAYWALL -->|"Inbox"| INBOX
+  PAYWALL -->|"My Plate"| PROFILE_PLATE
+  PURCHASE_STATUS -->|"Back"| PAYWALL
+  PURCHASE_STATUS -->|"Check access"| MANAGE_PLAN
+  PURCHASE_STATUS -->|"Continue using FeedMe"| HOME
+  PURCHASE_STATUS -->|"Get purchase help"| SUPPORT
+  PURCHASE_STATUS -->|"Today"| TODAY
+  PURCHASE_STATUS -->|"Cook"| HOME
+  PURCHASE_STATUS -->|"Cookbook"| COOKBOOK
+  PURCHASE_STATUS -->|"Inbox"| INBOX
+  PURCHASE_STATUS -->|"My Plate"| PROFILE_PLATE
+  MANAGE_PLAN -->|"Back"| SETTINGS
+  MANAGE_PLAN -->|"Restore purchases"| PURCHASE_STATUS
+  MANAGE_PLAN -->|"Browse packs"| PACK_STORE
+  MANAGE_PLAN -->|"Household settings"| HOUSEHOLDS
+  MANAGE_PLAN -->|"Purchase help"| SUPPORT
+  MANAGE_PLAN -->|"Today"| TODAY
+  MANAGE_PLAN -->|"Cook"| HOME
+  MANAGE_PLAN -->|"Cookbook"| COOKBOOK
+  MANAGE_PLAN -->|"Inbox"| INBOX
+  MANAGE_PLAN -->|"My Plate"| PROFILE_PLATE
+  EXPORT -->|"Back"| PRIVACY
+  EXPORT -->|"Today"| TODAY
+  EXPORT -->|"Cook"| HOME
+  EXPORT -->|"Cookbook"| COOKBOOK
+  EXPORT -->|"Inbox"| INBOX
+  EXPORT -->|"My Plate"| PROFILE_PLATE
+  SUPPORT -->|"Back"| SETTINGS
+  SUPPORT -->|"Account and privacy"| PRIVACY
+  SUPPORT -->|"Community rules"| LEGAL
+  SUPPORT -->|"Back to cooking"| HOME
+  SUPPORT -->|"Today"| TODAY
+  SUPPORT -->|"Cook"| HOME
+  SUPPORT -->|"Cookbook"| COOKBOOK
+  SUPPORT -->|"Inbox"| INBOX
+  SUPPORT -->|"My Plate"| PROFILE_PLATE
+  UNAVAILABLE -->|"Back"| HOME
+  UNAVAILABLE -->|"Choose another meal"| REQUEST
+  UNAVAILABLE -->|"Back to Today"| TODAY
+  UNAVAILABLE -->|"Get help"| SUPPORT
+  UNAVAILABLE -->|"Log in again"| AUTH_LOGIN
+  UNAVAILABLE -->|"Today"| TODAY
+  UNAVAILABLE -->|"Cook"| HOME
+  UNAVAILABLE -->|"Cookbook"| COOKBOOK
+  UNAVAILABLE -->|"Inbox"| INBOX
+  UNAVAILABLE -->|"My Plate"| PROFILE_PLATE
+  OFFLINE -->|"Back"| HOME
+  OFFLINE -->|"Open saved meals"| COOKBOOK
+  OFFLINE -->|"Resume cooking"| COOK
+  OFFLINE -->|"Try connection again"| HOME
+  OFFLINE -->|"Today"| TODAY
+  OFFLINE -->|"Cook"| HOME
+  OFFLINE -->|"Cookbook"| COOKBOOK
+  OFFLINE -->|"Inbox"| INBOX
+  OFFLINE -->|"My Plate"| PROFILE_PLATE
+  ADMIN_LOGIN -->|"Sign in with staff SSO"| ADMIN_HOME
+  ADMIN_LOGIN -->|"Return to member app"| AUTH_WELCOME
+  ADMIN_HOME -->|"Recipe drafts"| ADMIN_RECIPE
+  ADMIN_HOME -->|"Review queue"| ADMIN_REVIEW
+  ADMIN_HOME -->|"Substitution rules"| ADMIN_SUBSTITUTION
+  ADMIN_HOME -->|"Moderation cases"| ADMIN_REPORTS
+  ADMIN_HOME -->|"Audit log"| ADMIN_AUDIT
+  ADMIN_HOME -->|"Release flags"| ADMIN_FLAGS
+  ADMIN_HOME -->|"Pack catalog"| ADMIN_PACK
+  ADMIN_HOME -->|"Incident console"| ADMIN_INCIDENT
+  ADMIN_RECIPE -->|"Back"| ADMIN_HOME
+  ADMIN_RECIPE -->|"Submit for review"| ADMIN_REVIEW
+  ADMIN_RECIPE -->|"Preview member recipe"| RECIPE
+  ADMIN_REVIEW -->|"Back"| ADMIN_HOME
+  ADMIN_REVIEW -->|"Recall revision: confirm"| CONFIRM_ACTION
+  ADMIN_REVIEW -->|"Return to draft"| ADMIN_RECIPE
+  ADMIN_SUBSTITUTION -->|"Back"| ADMIN_HOME
+  ADMIN_REPORTS -->|"Back"| ADMIN_HOME
+  ADMIN_REPORTS -->|"Open case"| ADMIN_CASE
+  ADMIN_REPORTS -->|"Review audit"| ADMIN_AUDIT
+  ADMIN_CASE -->|"Back"| ADMIN_REPORTS
+  ADMIN_CASE -->|"Remove reported content: confirm"| CONFIRM_ACTION
+  ADMIN_CASE -->|"Restrict account: confirm"| CONFIRM_ACTION
+  ADMIN_CASE -->|"Back to queue"| ADMIN_REPORTS
+  ADMIN_AUDIT -->|"Back"| ADMIN_HOME
+  ADMIN_FLAGS -->|"Back"| ADMIN_HOME
+  ADMIN_PACK -->|"Back"| ADMIN_HOME
+  ADMIN_INCIDENT -->|"Back"| ADMIN_HOME
+  ADMIN_INCIDENT -->|"Open release flags"| ADMIN_FLAGS
+  ADMIN_INCIDENT -->|"Inspect audit"| ADMIN_AUDIT
+  PEOPLE_PICKER -->|"Back"| CIRCLES
+  PEOPLE_PICKER -.->|"Use selected people: Dinner Pact"| PACT_CREATE
+  PEOPLE_PICKER -.->|"Use selected people: Bring a Bit"| POTLUCK_CREATE
+  PEOPLE_PICKER -.->|"Use selected people: circle role selection"| INVITE
+  PEOPLE_PICKER -.->|"Cancel selection: pact"| PACT_CREATE
+  PEOPLE_PICKER -.->|"Cancel selection: potluck"| POTLUCK_CREATE
+  PEOPLE_PICKER -.->|"Cancel selection: circle"| INVITE
+  CONFIRM_ACTION -->|"Back"| HOME

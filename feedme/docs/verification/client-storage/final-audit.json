@@ -1,0 +1,17 @@
+{
+  "verifiedAt": "2026-09-13T07:42:49.707Z",
+  "passed": true,
+  "sourceManifestSha256": "825c8d817b73197d8344e21d3c38dfcd9c8d014726cac503dfebf9769449401e",
+  "files": 99,
+  "mismatches": [],
+  "authoredWhitespaceIssues": [],
+  "retainedTestClusters": 26,
+  "clustersWithPidFile": 0,
+  "deliveryPlan": {
+    "TODO": 49,
+    "READY": 4,
+    "IN_PROGRESS": 2,
+    "USER_BLOCKED": 8,
+    "DONE": 9
+  }
+}

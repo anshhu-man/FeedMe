@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.db.CommitAndRetentionIntegrationTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-09-13T11:53:49.132Z" hostname="ansachars-MacBook-Pro.local" time="2.846">
+  <properties/>
+  <testcase name="expirySweepIsBoundedAndKeepsLiveResponsesAndCommandTombstones" classname="com.feedme.server.db.CommitAndRetentionIntegrationTest" time="0.957"/>
+  <testcase name="acceptedCommitThenLostResponseIsNotAutomaticallyExecutedAgain" classname="com.feedme.server.db.CommitAndRetentionIntegrationTest" time="0.436"/>
+  <testcase name="expiryIsRecheckedAfterReplayAuthorizationWait" classname="com.feedme.server.db.CommitAndRetentionIntegrationTest" time="0.366"/>
+  <testcase name="closeFailureCannotTurnKnownCommitIntoNewMutation" classname="com.feedme.server.db.CommitAndRetentionIntegrationTest" time="0.333"/>
+  <testcase name="racingDifferentPayloadsHaveOneWinnerAndOneMismatch" classname="com.feedme.server.db.CommitAndRetentionIntegrationTest" time="0.388"/>
+  <testcase name="concurrentSweepSkipsLockedReceiptAndReplaysCannotResurrectIt" classname="com.feedme.server.db.CommitAndRetentionIntegrationTest" time="0.366"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

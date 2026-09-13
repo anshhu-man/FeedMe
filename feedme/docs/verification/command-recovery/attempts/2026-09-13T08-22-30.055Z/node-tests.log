@@ -1,0 +1,562 @@
+TAP version 13
+# Subtest: manifest explicitly disables backups and references both Android policy formats
+ok 1 - manifest explicitly disables backups and references both Android policy formats
+  ---
+  duration_ms: 27.199542
+  type: 'test'
+  ...
+# Subtest: Android 8–11 policy excludes all credential- and device-protected storage domains
+ok 2 - Android 8–11 policy excludes all credential- and device-protected storage domains
+  ---
+  duration_ms: 67.301334
+  type: 'test'
+  ...
+# Subtest: Android 12+ cloud and device-transfer policies match the older exclusion policy
+ok 3 - Android 12+ cloud and device-transfer policies match the older exclusion policy
+  ---
+  duration_ms: 129.394167
+  type: 'test'
+  ...
+# Subtest: generation is reproducible and checked-in artifacts match the locked inputs byte for byte
+ok 4 - generation is reproducible and checked-in artifacts match the locked inputs byte for byte
+  ---
+  duration_ms: 18.572458
+  type: 'test'
+  ...
+# Subtest: Kotlin chunks reconstruct exact canonical bytes and the full normalized document without losing any key or value
+ok 5 - Kotlin chunks reconstruct exact canonical bytes and the full normalized document without losing any key or value
+  ---
+  duration_ms: 19.470625
+  type: 'test'
+  ...
+# Subtest: missing, null, false, empty, and default values retain distinct meanings
+ok 6 - missing, null, false, empty, and default values retain distinct meanings
+  ---
+  duration_ms: 0.175541
+  type: 'test'
+  ...
+# Subtest: Kotlin escaping round-trips interpolation markers, JSON quotes, slashes, controls, and Unicode
+ok 7 - Kotlin escaping round-trips interpolation markers, JSON quotes, slashes, controls, and Unicode
+  ---
+  duration_ms: 0.081542
+  type: 'test'
+  ...
+# Subtest: long descriptions and example data survive chunk boundaries and literal example references
+ok 8 - long descriptions and example data survive chunk boundaries and literal example references
+  ---
+  duration_ms: 26.87475
+  type: 'test'
+  ...
+# Subtest: all operation methods, routes, headers, statuses, security alternatives, and guard metadata are retained
+ok 9 - all operation methods, routes, headers, statuses, security alternatives, and guard metadata are retained
+  ---
+  duration_ms: 11.674
+  type: 'test'
+  ...
+# Subtest: all 900 actions and 131 hydrations retain identity, request, operation and screen association
+ok 10 - all 900 actions and 131 hydrations retain identity, request, operation and screen association
+  ---
+  duration_ms: 10.187708
+  type: 'test'
+  ...
+# Subtest: canonical bytes cannot change without intentionally updating the source lock
+ok 11 - canonical bytes cannot change without intentionally updating the source lock
+  ---
+  duration_ms: 0.891167
+  type: 'test'
+  ...
+# Subtest: generator identity and OpenAPI lock mismatches fail before emitting artifacts
+ok 12 - generator identity and OpenAPI lock mismatches fail before emitting artifacts
+  ---
+  duration_ms: 1.944458
+  type: 'test'
+  ...
+# Subtest: registry byte changes appear in the receipt even if binding meaning is unchanged
+ok 13 - registry byte changes appear in the receipt even if binding meaning is unchanged
+  ---
+  duration_ms: 13.053208
+  type: 'test'
+  ...
+# Subtest: unreviewed OpenAPI version is rejected
+ok 14 - unreviewed OpenAPI version is rejected
+  ---
+  duration_ms: 6.234041
+  type: 'test'
+  ...
+# Subtest: unreviewed schema keyword is rejected
+ok 15 - unreviewed schema keyword is rejected
+  ---
+  duration_ms: 7.052375
+  type: 'test'
+  ...
+# Subtest: nested unreviewed schema keyword is rejected
+ok 16 - nested unreviewed schema keyword is rejected
+  ---
+  duration_ms: 6.500542
+  type: 'test'
+  ...
+# Subtest: unreviewed schema format is rejected
+ok 17 - unreviewed schema format is rejected
+  ---
+  duration_ms: 6.750458
+  type: 'test'
+  ...
+# Subtest: unsupported boolean schema is rejected
+ok 18 - unsupported boolean schema is rejected
+  ---
+  duration_ms: 6.609541
+  type: 'test'
+  ...
+# Subtest: invalid schema type is rejected
+ok 19 - invalid schema type is rejected
+  ---
+  duration_ms: 6.540125
+  type: 'test'
+  ...
+# Subtest: unused parameter component schemas are audited
+ok 20 - unused parameter component schemas are audited
+  ---
+  duration_ms: 7.686042
+  type: 'test'
+  ...
+# Subtest: unused response component schemas are audited
+ok 21 - unused response component schemas are audited
+  ---
+  duration_ms: 7.47175
+  type: 'test'
+  ...
+# Subtest: default response selector requires review
+ok 22 - default response selector requires review
+  ---
+  duration_ms: 7.166792
+  type: 'test'
+  ...
+# Subtest: wildcard response selector requires review
+ok 23 - wildcard response selector requires review
+  ---
+  duration_ms: 7.708834
+  type: 'test'
+  ...
+# Subtest: 204 response cannot gain a body
+ok 24 - 204 response cannot gain a body
+  ---
+  duration_ms: 6.985584
+  type: 'test'
+  ...
+# Subtest: unreviewed response media is rejected
+ok 25 - unreviewed response media is rejected
+  ---
+  duration_ms: 7.030208
+  type: 'test'
+  ...
+# Subtest: response header schemas are audited
+ok 26 - response header schemas are audited
+  ---
+  duration_ms: 7.738958
+  type: 'test'
+  ...
+# Subtest: optional request bodies require review
+ok 27 - optional request bodies require review
+  ---
+  duration_ms: 7.387834
+  type: 'test'
+  ...
+# Subtest: unreviewed request media is rejected
+ok 28 - unreviewed request media is rejected
+  ---
+  duration_ms: 7.110125
+  type: 'test'
+  ...
+# Subtest: inline request schemas are audited
+ok 29 - inline request schemas are audited
+  ---
+  duration_ms: 7.014667
+  type: 'test'
+  ...
+# Subtest: unresolved schema reference is rejected
+ok 30 - unresolved schema reference is rejected
+  ---
+  duration_ms: 6.884375
+  type: 'test'
+  ...
+# Subtest: remote schema references are rejected
+ok 31 - remote schema references are rejected
+  ---
+  duration_ms: 6.491917
+  type: 'test'
+  ...
+# Subtest: schema references outside the schema namespace are rejected
+ok 32 - schema references outside the schema namespace are rejected
+  ---
+  duration_ms: 6.46475
+  type: 'test'
+  ...
+# Subtest: cyclic schema alias references are rejected
+ok 33 - cyclic schema alias references are rejected
+  ---
+  duration_ms: 6.309583
+  type: 'test'
+  ...
+# Subtest: unresolved parameter references are rejected
+ok 34 - unresolved parameter references are rejected
+  ---
+  duration_ms: 7.295084
+  type: 'test'
+  ...
+# Subtest: remote parameter references are rejected
+ok 35 - remote parameter references are rejected
+  ---
+  duration_ms: 6.877459
+  type: 'test'
+  ...
+# Subtest: unresolved response references are rejected
+ok 36 - unresolved response references are rejected
+  ---
+  duration_ms: 6.667709
+  type: 'test'
+  ...
+# Subtest: remote response references are rejected
+ok 37 - remote response references are rejected
+  ---
+  duration_ms: 6.753333
+  type: 'test'
+  ...
+# Subtest: unknown principal is rejected
+ok 38 - unknown principal is rejected
+  ---
+  duration_ms: 7.201291
+  type: 'test'
+  ...
+# Subtest: operation cannot inherit an implicit default security policy
+ok 39 - operation cannot inherit an implicit default security policy
+  ---
+  duration_ms: 7.103583
+  type: 'test'
+  ...
+# Subtest: public security cannot grant anonymous access to a user operation
+ok 40 - public security cannot grant anonymous access to a user operation
+  ---
+  duration_ms: 6.829958
+  type: 'test'
+  ...
+# Subtest: guest and user alternatives cannot become a combined requirement
+ok 41 - guest and user alternatives cannot become a combined requirement
+  ---
+  duration_ms: 6.735792
+  type: 'test'
+  ...
+# Subtest: staff operation cannot use consumer credentials
+ok 42 - staff operation cannot use consumer credentials
+  ---
+  duration_ms: 10.048583
+  type: 'test'
+  ...
+# Subtest: root default security drift requires review
+ok 43 - root default security drift requires review
+  ---
+  duration_ms: 6.485709
+  type: 'test'
+  ...
+# Subtest: missing referenced security scheme is rejected
+ok 44 - missing referenced security scheme is rejected
+  ---
+  duration_ms: 6.455708
+  type: 'test'
+  ...
+# Subtest: operation callbacks require explicit review
+ok 45 - operation callbacks require explicit review
+  ---
+  duration_ms: 7.230709
+  type: 'test'
+  ...
+# Subtest: missing required device session is rejected
+ok 46 - missing required device session is rejected
+  ---
+  duration_ms: 6.66
+  type: 'test'
+  ...
+# Subtest: optional device session cannot weaken user-only operations
+ok 47 - optional device session cannot weaken user-only operations
+  ---
+  duration_ms: 6.698958
+  type: 'test'
+  ...
+# Subtest: guest alternative retains conditional device-session policy
+ok 48 - guest alternative retains conditional device-session policy
+  ---
+  duration_ms: 6.925542
+  type: 'test'
+  ...
+# Subtest: public operation cannot gain a device session requirement
+ok 49 - public operation cannot gain a device session requirement
+  ---
+  duration_ms: 7.139958
+  type: 'test'
+  ...
+# Subtest: device session name in query cannot satisfy the header requirement
+ok 50 - device session name in query cannot satisfy the header requirement
+  ---
+  duration_ms: 6.633875
+  type: 'test'
+  ...
+# Subtest: missing idempotency declaration is rejected
+ok 51 - missing idempotency declaration is rejected
+  ---
+  duration_ms: 6.910333
+  type: 'test'
+  ...
+# Subtest: idempotency declaration cannot contradict required header
+ok 52 - idempotency declaration cannot contradict required header
+  ---
+  duration_ms: 6.55
+  type: 'test'
+  ...
+# Subtest: optional idempotency header cannot satisfy durable command requirement
+ok 53 - optional idempotency header cannot satisfy durable command requirement
+  ---
+  duration_ms: 7.073833
+  type: 'test'
+  ...
+# Subtest: idempotency name in query cannot satisfy the header requirement
+ok 54 - idempotency name in query cannot satisfy the header requirement
+  ---
+  duration_ms: 6.423417
+  type: 'test'
+  ...
+# Subtest: unexpected route namespace is rejected
+ok 55 - unexpected route namespace is rejected
+  ---
+  duration_ms: 10.625084
+  type: 'test'
+  ...
+# Subtest: path-item fields cannot be silently interpreted as operations
+ok 56 - path-item fields cannot be silently interpreted as operations
+  ---
+  duration_ms: 7.100542
+  type: 'test'
+  ...
+# Subtest: path template and parameter names must match
+ok 57 - path template and parameter names must match
+  ---
+  duration_ms: 6.925833
+  type: 'test'
+  ...
+# Subtest: path parameter must remain required
+ok 58 - path parameter must remain required
+  ---
+  duration_ms: 7.041834
+  type: 'test'
+  ...
+# Subtest: operation IDs must be valid
+ok 59 - operation IDs must be valid
+  ---
+  duration_ms: 6.623167
+  type: 'test'
+  ...
+# Subtest: operation IDs must be globally unique
+ok 60 - operation IDs must be globally unique
+  ---
+  duration_ms: 10.691958
+  type: 'test'
+  ...
+# Subtest: cookie parameter requires review
+ok 61 - cookie parameter requires review
+  ---
+  duration_ms: 6.789084
+  type: 'test'
+  ...
+# Subtest: header duplicate detection is case insensitive
+ok 62 - header duplicate detection is case insensitive
+  ---
+  duration_ms: 7.011667
+  type: 'test'
+  ...
+# Subtest: unknown feature ID in an operation is rejected
+ok 63 - unknown feature ID in an operation is rejected
+  ---
+  duration_ms: 10.223
+  type: 'test'
+  ...
+# Subtest: duplicate feature ID is rejected
+ok 64 - duplicate feature ID is rejected
+  ---
+  duration_ms: 9.347875
+  type: 'test'
+  ...
+# Subtest: duplicate screen ID is rejected
+ok 65 - duplicate screen ID is rejected
+  ---
+  duration_ms: 9.303875
+  type: 'test'
+  ...
+# Subtest: duplicate action ID is rejected without changing counts
+ok 66 - duplicate action ID is rejected without changing counts
+  ---
+  duration_ms: 8.876625
+  type: 'test'
+  ...
+# Subtest: action IDs cannot collide with generated hydration IDs
+ok 67 - action IDs cannot collide with generated hydration IDs
+  ---
+  duration_ms: 10.324
+  type: 'test'
+  ...
+# Subtest: HTTP action with unresolved operation is rejected
+ok 68 - HTTP action with unresolved operation is rejected
+  ---
+  duration_ms: 9.013958
+  type: 'test'
+  ...
+# Subtest: HTTP action with missing operation is rejected
+ok 69 - HTTP action with missing operation is rejected
+  ---
+  duration_ms: 10.804459
+  type: 'test'
+  ...
+# Subtest: HTTP action with wrong method is rejected
+ok 70 - HTTP action with wrong method is rejected
+  ---
+  duration_ms: 8.641458
+  type: 'test'
+  ...
+# Subtest: HTTP action with wrong path is rejected
+ok 71 - HTTP action with wrong path is rejected
+  ---
+  duration_ms: 9.387916
+  type: 'test'
+  ...
+# Subtest: swapping operation bindings is rejected even when all binding counts remain equal
+ok 72 - swapping operation bindings is rejected even when all binding counts remain equal
+  ---
+  duration_ms: 9.80475
+  type: 'test'
+  ...
+# Subtest: HTTP hydration with wrong operation is rejected
+ok 73 - HTTP hydration with wrong operation is rejected
+  ---
+  duration_ms: 9.050166
+  type: 'test'
+  ...
+# Subtest: LOCAL action cannot acquire an HTTP operation
+ok 74 - LOCAL action cannot acquire an HTTP operation
+  ---
+  duration_ms: 9.315167
+  type: 'test'
+  ...
+# Subtest: EXTERNAL action cannot acquire an HTTP operation
+ok 75 - EXTERNAL action cannot acquire an HTTP operation
+  ---
+  duration_ms: 8.846458
+  type: 'test'
+  ...
+# Subtest: LOCAL hydration cannot acquire an HTTP operation
+ok 76 - LOCAL hydration cannot acquire an HTTP operation
+  ---
+  duration_ms: 9.429917
+  type: 'test'
+  ...
+# Subtest: EXTERNAL hydration cannot acquire an HTTP operation
+ok 77 - EXTERNAL hydration cannot acquire an HTTP operation
+  ---
+  duration_ms: 8.740417
+  type: 'test'
+  ...
+# Subtest: unreviewed binding kinds are rejected
+ok 78 - unreviewed binding kinds are rejected
+  ---
+  duration_ms: 8.925959
+  type: 'test'
+  ...
+# Subtest: complete structural fixture passes without claiming production readiness
+ok 79 - complete structural fixture passes without claiming production readiness
+  ---
+  duration_ms: 2.319083
+  type: 'test'
+  ...
+# Subtest: missing feature is rejected
+ok 80 - missing feature is rejected
+  ---
+  duration_ms: 0.948
+  type: 'test'
+  ...
+# Subtest: duplicate feature is rejected
+ok 81 - duplicate feature is rejected
+  ---
+  duration_ms: 0.261833
+  type: 'test'
+  ...
+# Subtest: missing screen mapping is rejected without partial-ID matches
+ok 82 - missing screen mapping is rejected without partial-ID matches
+  ---
+  duration_ms: 0.284834
+  type: 'test'
+  ...
+# Subtest: unknown primary milestone is rejected
+ok 83 - unknown primary milestone is rejected
+  ---
+  duration_ms: 0.435125
+  type: 'test'
+  ...
+# Subtest: unchecked implementation work must be broken down
+ok 84 - unchecked implementation work must be broken down
+  ---
+  duration_ms: 0.223292
+  type: 'test'
+  ...
+# Subtest: duplicate task is rejected
+ok 85 - duplicate task is rejected
+  ---
+  duration_ms: 0.2375
+  type: 'test'
+  ...
+# Subtest: duplicate feature task is rejected
+ok 86 - duplicate feature task is rejected
+  ---
+  duration_ms: 0.369375
+  type: 'test'
+  ...
+# Subtest: feature task assigned to wrong owner is rejected
+ok 87 - feature task assigned to wrong owner is rejected
+  ---
+  duration_ms: 0.44425
+  type: 'test'
+  ...
+# Subtest: unknown task status is rejected
+ok 88 - unknown task status is rejected
+  ---
+  duration_ms: 0.499666
+  type: 'test'
+  ...
+# Subtest: user blocker without action ID is rejected
+ok 89 - user blocker without action ID is rejected
+  ---
+  duration_ms: 0.342084
+  type: 'test'
+  ...
+# Subtest: unknown user action reference is rejected
+ok 90 - unknown user action reference is rejected
+  ---
+  duration_ms: 0.316958
+  type: 'test'
+  ...
+# Subtest: known user action resolves
+ok 91 - known user action resolves
+  ---
+  duration_ms: 0.248916
+  type: 'test'
+  ...
+# Subtest: missing milestone heading is rejected
+ok 92 - missing milestone heading is rejected
+  ---
+  duration_ms: 0.188417
+  type: 'test'
+  ...
+1..92
+# tests 92
+# suites 0
+# pass 92
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 722.170333

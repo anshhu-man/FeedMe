@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.transport.RealHttpTransportTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-09-13T08:22:35.615Z" hostname="ansachars-MacBook-Pro.local" time="0.284">
+  <properties/>
+  <testcase name="ambientProxySelectorCannotRouteTheOwnedClient[jvm]" classname="com.feedme.transport.RealHttpTransportTest" time="0.146"/>
+  <testcase name="post503WithImmediateRetryDoesNotReplayTheMutation[jvm]" classname="com.feedme.transport.RealHttpTransportTest" time="0.018"/>
+  <testcase name="disconnectAfterReceivingWriteIsUnknownAndCallerRetryKeepsOriginalKey[jvm]" classname="com.feedme.transport.RealHttpTransportTest" time="0.019"/>
+  <testcase name="responseCookieIsNotStoredOrSentOnTheNextCall[jvm]" classname="com.feedme.transport.RealHttpTransportTest" time="0.022"/>
+  <testcase name="bodylessGet503WithImmediateRetryCannotMakeASecondNetworkAttempt[jvm]" classname="com.feedme.transport.RealHttpTransportTest" time="0.029"/>
+  <testcase name="redirectDoesNotReachTheLocationEndpoint[jvm]" classname="com.feedme.transport.RealHttpTransportTest" time="0.022"/>
+  <testcase name="chunkedJsonBeyondTheAcceptedByteLimitIsRejected[jvm]" classname="com.feedme.transport.RealHttpTransportTest" time="0.028"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

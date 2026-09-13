@@ -1,0 +1,53 @@
+nullable PantryItem.confirmedAt required=true nullPresent=true missingRejected=true
+nullable PantryWrite.confirmedAt required=false nullPresent=false missingRejected=false
+nullable Plan.nextAlternativeCursor required=false nullPresent=false missingRejected=false
+nullable IngredientPage.nextCursor required=true nullPresent=true missingRejected=true
+nullable PantryItemPage.nextCursor required=true nullPresent=true missingRejected=true
+nullable RecipeVersionPage.nextCursor required=true nullPresent=true missingRejected=true
+nullable ReasonPage.nextCursor required=true nullPresent=true missingRejected=true
+nullable ReuseOptionPage.nextCursor required=true nullPresent=true missingRejected=true
+nullable MemoryPage.nextCursor required=true nullPresent=true missingRejected=true
+nullable SavedRecipePage.nextCursor required=true nullPresent=true missingRejected=true
+nullable CollectionPage.nextCursor required=true nullPresent=true missingRejected=true
+nullable PostPage.nextCursor required=true nullPresent=true missingRejected=true
+nullable RemixNodePage.nextCursor required=true nullPresent=true missingRejected=true
+nullable CirclePage.nextCursor required=true nullPresent=true missingRejected=true
+nullable MemberPage.nextCursor required=true nullPresent=true missingRejected=true
+nullable ThreadPage.nextCursor required=true nullPresent=true missingRejected=true
+nullable MessagePage.nextCursor required=true nullPresent=true missingRejected=true
+nullable NotificationPage.nextCursor required=true nullPresent=true missingRejected=true
+nullable BlockPage.nextCursor required=true nullPresent=true missingRejected=true
+nullable MutePage.nextCursor required=true nullPresent=true missingRejected=true
+nullable ContributionPage.nextCursor required=true nullPresent=true missingRejected=true
+nullable HouseholdPage.nextCursor required=true nullPresent=true missingRejected=true
+nullable HouseholdPreferencePage.nextCursor required=true nullPresent=true missingRejected=true
+nullable PackPage.nextCursor required=true nullPresent=true missingRejected=true
+nullable EntitlementPage.nextCursor required=true nullPresent=true missingRejected=true
+nullable DeviceSessionPage.nextCursor required=true nullPresent=true missingRejected=true
+nullable FeatureFlagPage.nextCursor required=true nullPresent=true missingRejected=true
+nullable SubstitutionPage.nextCursor required=true nullPresent=true missingRejected=true
+nullable ReportPage.nextCursor required=true nullPresent=true missingRejected=true
+nullable AuditPage.nextCursor required=true nullPresent=true missingRejected=true
+nullable IncidentPage.nextCursor required=true nullPresent=true missingRejected=true
+nullable PostDraftPage.nextCursor required=true nullPresent=true missingRejected=true
+nullable PlanPage.nextCursor required=true nullPresent=true missingRejected=true
+TOTAL requiredNullPresent=31 requiredMissingRejected=31 optionalNullLost=2 stringPreserved=33
+conditional PlanRequest input={"mode":"improve","constraints":{"ingredientIds":[],"energy":"assemble","equipmentIds":[],"servings":0.1,"hardExcludedIngredientIds":[]}} invalidAccepted=true
+conditional ThreadCreate input={"kind":"direct"} invalidAccepted=true
+conditional ThreadCreate input={"kind":"pact"} invalidAccepted=true
+conditional ThreadCreate input={"kind":"potluck"} invalidAccepted=true
+conditional FeedbackTarget input={"kind":"cookSession"} invalidAccepted=true
+conditional FeedbackTarget input={"kind":"plan"} invalidAccepted=true
+conditional FeedbackTarget input={"kind":"recipeVersion"} invalidAccepted=true
+conditional FeedbackTarget input={"kind":"ingredient"} invalidAccepted=true
+conditional FeedbackTarget input={"kind":"taste"} invalidAccepted=true
+conditional FeedbackTarget input={"kind":"preparation"} invalidAccepted=true
+TOTAL conditionalInvalidAccepted=10
+unique Constraint.householdParticipantIds duplicateAccepted=true outputCount=1
+unique AdaptRequest.excludeRecipeVersionIds duplicateAccepted=true outputCount=1
+unique CollectionOrder.orderedSavedRecipeIds duplicateAccepted=true outputCount=1
+strictObject generatedAcceptsUnknown=true unknownLost=true strictConfigRejects=true
+unknownEnum rejected=true
+typedMap preserved=true numericValueRejected=true
+uuidFormat invalidAccepted=true
+minimum invalidAccepted=true

@@ -1,0 +1,36 @@
+regular: 29 credential/native-work tests passed
+{
+  "startedAt": "2026-09-13T11:01:53.283Z",
+  "passed": true,
+  "serial": "emulator-5554",
+  "scope": "Isolated native credential Keystore/private-file tests and exact native timer/worker cancellation tests, including controlled close/reopen and injected post-rename acknowledgement loss. Notification permission and hardlink fixture branches are reported explicitly. Not actual provider sign-in, production timer receiver/worker or app scheduling/recovery wiring, FeedMe UI/auth integration, process-hard-kill, physical-device, power-loss or iOS proof.",
+  "apk": {
+    "path": "shared/session/build/outputs/apk/androidTest/debug/session-debug-androidTest.apk",
+    "bytes": 8295799,
+    "sha256": "bc47e909357e11e1f840e34de4d980d1d0e9c9ad05311e3dda60f9db931e81b1"
+  },
+  "attemptDirectory": "docs/verification/native-credentials/android-attempts/2026-09-13T11-01-53.283Z",
+  "checks": [
+    {
+      "name": "regular",
+      "classes": "com.feedme.session.AndroidCredentialStoreTest,com.feedme.session.AndroidNativeWorkCancellationTest",
+      "passed": true,
+      "tests": 29,
+      "expected": 29,
+      "log": "docs/verification/native-credentials/android-attempts/2026-09-13T11-01-53.283Z/regular.log"
+    },
+    {
+      "name": "owned-test-directories-cleaned",
+      "passed": true
+    }
+  ],
+  "androidApi": "35",
+  "androidAbi": "arm64-v8a",
+  "branches": {
+    "hardlinkManifest": "platform-denied:13; existing-hardlink-branch-unexercised",
+    "hardlinkBlob": "platform-denied:13; existing-hardlink-branch-unexercised",
+    "notification": "NATIVE_WORK_NOTIFICATION_EXACT_CANCELLATION_VERIFIED"
+  },
+  "finishedAt": "2026-09-13T11:01:55.686Z"
+}
+

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.contracts.WireDocumentTest" tests="27" skipped="0" failures="0" errors="0" timestamp="2026-09-13T10:26:08.239Z" hostname="ansachars-MacBook-Pro.local" time="0.037">
+  <properties/>
+  <testcase name="invalidEscapesUnescapedControlCharactersAndNonJsonWhitespaceReject[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.001"/>
+  <testcase name="decodingAndEncodingDoNotShareCallerOwnedByteBuffers[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.001"/>
+  <testcase name="invalidUtf8IsRejectedInsteadOfReplaced[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.0"/>
+  <testcase name="validUnicodeAndAstralCharactersRoundTripWithoutReplacement[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.0"/>
+  <testcase name="defaultByteLimitIsOneMebibyteWithNoTruncation[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.02"/>
+  <testcase name="originalBytesRetainWhitespaceEscapesOrderingAndNumberSpelling[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.0"/>
+  <testcase name="numbersNeverRoundThroughMachineIntegersOrFloatingPoint[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.001"/>
+  <testcase name="syntaxParsingDoesNotApplySchemaDefaultsOrDropUnknownFields[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.0"/>
+  <testcase name="arraysPreserveOrderDuplicatesAndExplicitNulls[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.0"/>
+  <testcase name="unicodeScalarInteropPolicyRejectsEscapedUnpairedSurrogates[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.001"/>
+  <testcase name="byteLimitMeasuresUtf8BytesAndAllowsTheExactBoundary[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.003"/>
+  <testcase name="missingExplicitNullAndPresentValuesRemainDistinct[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.001"/>
+  <testcase name="duplicateObjectKeysRejectAtEveryDepthAndAfterEscapeDecoding[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.0"/>
+  <testcase name="printableWrappersAndFailureMessagesDoNotContainInputOrCauses[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.001"/>
+  <testcase name="numberLengthBoundsTheWholeTokenIncludingSignsAndExponent[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.001"/>
+  <testcase name="unsupportedResourcePoliciesAreRejectedBeforeUse[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.0"/>
+  <testcase name="onlyOneCompleteJsonDocumentIsAccepted[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.002"/>
+  <testcase name="commentsTrailingCommasAndMissingSeparatorsReject[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.0"/>
+  <testcase name="containerDepthAllowsTheExactLimitAndRejectsOneMore[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.001"/>
+  <testcase name="absentHttpBodyIsDifferentFromJsonNullAndEmptyBytes[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.0"/>
+  <testcase name="accessorsDoNotCoerceValuesAcrossJsonKinds[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.0"/>
+  <testcase name="defaultNumberLimitIsOneThousandCharacters[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.0"/>
+  <testcase name="nonJsonPrimitivesAndInvalidNumberGrammarReject[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.001"/>
+  <testcase name="detachedJsonAndArrayProjectionsCannotMutateTheOriginal[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.0"/>
+  <testcase name="defaultDepthLimitIsSixtyFourAndQuotedBracketsDoNotConsumeDepth[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.001"/>
+  <testcase name="distinctObjectScopesAndRepeatedStringValuesAreAllowed[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.001"/>
+  <testcase name="rawUnpairedUtf16SurrogatesCannotSilentlyBecomeReplacementBytes[jvm]" classname="com.feedme.contracts.WireDocumentTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

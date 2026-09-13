@@ -1,0 +1,119 @@
+> Task :server:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:core:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:contracts:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:contracts:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:core:jvmProcessResources NO-SOURCE
+> Task :shared:core:processJvmMainResources SKIPPED
+> Task :shared:core:jvmTestProcessResources NO-SOURCE
+> Task :shared:core:processJvmTestResources SKIPPED
+> Task :server:processResources
+> Task :server:processTestResources
+
+> Task :shared:contracts:verifyContractArtifacts
+feedme-contract-artifacts-v1: no drift; {"schemas":188,"paths":155,"operations":201,"features":54,"screens":98,"actions":900,"httpActions":152,"httpHydrations":99,"localExternalHydrations":32}
+
+> Task :shared:contracts:jvmProcessResources NO-SOURCE
+> Task :shared:contracts:processJvmMainResources SKIPPED
+> Task :shared:contracts:jvmTestProcessResources NO-SOURCE
+> Task :shared:contracts:processJvmTestResources SKIPPED
+> Task :shared:transport:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:transport:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:transport:jvmProcessResources NO-SOURCE
+> Task :shared:transport:processJvmMainResources SKIPPED
+> Task :shared:transport:jvmTestProcessResources NO-SOURCE
+> Task :shared:transport:processJvmTestResources SKIPPED
+> Task :shared:transport:preBuild UP-TO-DATE
+> Task :shared:transport:preDebugBuild UP-TO-DATE
+> Task :shared:transport:checkDebugAarMetadata
+> Task :shared:transport:mergeDebugJniLibFolders
+> Task :shared:transport:mergeDebugNativeLibs NO-SOURCE
+> Task :shared:transport:stripDebugDebugSymbols NO-SOURCE
+> Task :shared:transport:copyDebugJniLibsProjectAndLocalJars
+> Task :shared:transport:generateDebugResValues
+> Task :shared:transport:generateDebugResources
+> Task :shared:transport:packageDebugResources
+> Task :shared:transport:processDebugNavigationResources
+> Task :shared:transport:extractDeepLinksForAarDebug
+> Task :shared:transport:mergeDebugShaders
+> Task :shared:transport:compileDebugShaders NO-SOURCE
+> Task :shared:transport:parseDebugLocalResources
+> Task :shared:transport:debugAssetsCopyForAGP NO-SOURCE
+> Task :shared:transport:generateDebugAssets UP-TO-DATE
+> Task :shared:transport:mergeDebugAssets
+> Task :shared:transport:prepareDebugArtProfile
+> Task :shared:transport:prepareLintJarForPublish
+> Task :shared:transport:preDebugAndroidTestBuild UP-TO-DATE
+> Task :shared:transport:javaPreCompileDebug
+> Task :shared:transport:writeDebugAarMetadata
+> Task :shared:transport:generateDebugRFile
+> Task :shared:transport:generateDebugAndroidTestResValues
+> Task :shared:transport:writeDebugLintModelMetadata
+> Task :shared:transport:extractProguardFiles
+> Task :shared:transport:preDebugUnitTestBuild UP-TO-DATE
+> Task :shared:transport:processDebugManifest
+> Task :shared:core:compileKotlinJvm
+> Task :shared:core:compileJvmMainJava NO-SOURCE
+> Task :shared:core:jvmMainClasses
+> Task :shared:core:jvmJar
+> Task :shared:contracts:compileKotlinJvm
+> Task :shared:contracts:compileJvmMainJava NO-SOURCE
+> Task :shared:contracts:jvmMainClasses
+> Task :server:compileKotlin
+> Task :server:compileJava NO-SOURCE
+> Task :server:classes
+> Task :shared:contracts:jvmJar
+> Task :server:jar
+> Task :server:startScripts
+> Task :server:installDist
+
+> Task :shared:core:compileTestKotlinJvm
+w: file:///Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/shared/core/src/commonTest/kotlin/com/feedme/core/ReducerTest.kt:25:34 Unnecessary non-null assertion (!!) on a non-null receiver of type 'Session'.
+w: file:///Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/shared/core/src/commonTest/kotlin/com/feedme/core/ReducerTest.kt:91:31 Unnecessary non-null assertion (!!) on a non-null receiver of type 'AppError'.
+w: file:///Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/shared/core/src/commonTest/kotlin/com/feedme/core/ReducerTest.kt:145:54 Unnecessary non-null assertion (!!) on a non-null receiver of type 'Session'.
+w: file:///Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/shared/core/src/commonTest/kotlin/com/feedme/core/ReducerTest.kt:197:38 Unnecessary non-null assertion (!!) on a non-null receiver of type 'CookingSession'.
+w: file:///Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/shared/core/src/commonTest/kotlin/com/feedme/core/ReducerTest.kt:198:33 Unnecessary non-null assertion (!!) on a non-null receiver of type 'CookingSession'.
+
+> Task :shared:core:compileJvmTestJava NO-SOURCE
+> Task :shared:core:jvmTestClasses
+> Task :shared:contracts:compileTestKotlinJvm
+> Task :shared:contracts:compileJvmTestJava NO-SOURCE
+> Task :shared:contracts:jvmTestClasses
+> Task :shared:transport:compileDebugKotlinAndroid
+> Task :shared:transport:compileKotlinJvm
+> Task :shared:transport:extractDebugAnnotations
+> Task :shared:transport:compileJvmMainJava NO-SOURCE
+> Task :shared:transport:jvmMainClasses
+> Task :shared:transport:jvmJar
+> Task :shared:transport:compileDebugJavaWithJavac NO-SOURCE
+> Task :shared:transport:mergeDebugGeneratedProguardFiles
+> Task :shared:transport:mergeDebugConsumerProguardFiles
+> Task :shared:transport:processDebugJavaRes
+> Task :shared:transport:mergeDebugJavaResource
+> Task :shared:transport:bundleLibRuntimeToJarDebug
+> Task :shared:transport:generateDebugLintReportModel
+> Task :shared:transport:syncDebugLibJars
+> Task :shared:transport:bundleDebugAar
+> Task :shared:transport:assembleDebug
+> Task :shared:transport:bundleDebugLocalLintAar
+> Task :shared:core:jvmTest
+> Task :shared:transport:createFullJarDebug
+> Task :shared:transport:generateDebugAndroidTestLintModel
+> Task :shared:transport:generateDebugUnitTestLintModel
+> Task :shared:transport:lintAnalyzeDebugAndroidTest
+> Task :shared:transport:lintAnalyzeDebugUnitTest
+> Task :shared:contracts:jvmTest
+> Task :shared:transport:lintAnalyzeDebug
+> Task :shared:transport:lintReportDebug
+> Task :shared:transport:lintDebug
+> Task :server:compileTestKotlin
+> Task :server:compileTestJava NO-SOURCE
+> Task :server:testClasses
+> Task :shared:transport:compileTestKotlinJvm
+> Task :shared:transport:compileJvmTestJava NO-SOURCE
+> Task :shared:transport:jvmTestClasses
+> Task :shared:transport:jvmTest
+> Task :server:test
+
+BUILD SUCCESSFUL in 6s
+63 actionable tasks: 63 executed

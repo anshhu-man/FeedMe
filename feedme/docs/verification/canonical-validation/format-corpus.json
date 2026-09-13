@@ -1,0 +1,1359 @@
+{
+  "id": "feedme-canonical-format-corpus-v1",
+  "upstream": {
+    "repository": "https://github.com/json-schema-org/JSON-Schema-Test-Suite",
+    "revision": "f6fd52a0a95472e079cbfc6ef7f089702b80e045",
+    "license": "Copyright (c) 2012 Julian Berman\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in\nall copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\nTHE SOFTWARE.\n",
+    "sources": [
+      {
+        "format": "date-time",
+        "url": "https://raw.githubusercontent.com/json-schema-org/JSON-Schema-Test-Suite/f6fd52a0a95472e079cbfc6ef7f089702b80e045/tests/draft2020-12/optional/format/date-time.json"
+      },
+      {
+        "format": "uri",
+        "url": "https://raw.githubusercontent.com/json-schema-org/JSON-Schema-Test-Suite/f6fd52a0a95472e079cbfc6ef7f089702b80e045/tests/draft2020-12/optional/format/uri.json"
+      },
+      {
+        "format": "uuid",
+        "url": "https://raw.githubusercontent.com/json-schema-org/JSON-Schema-Test-Suite/f6fd52a0a95472e079cbfc6ef7f089702b80e045/tests/draft2020-12/optional/format/uuid.json"
+      }
+    ],
+    "caseCount": 119
+  },
+  "standardSources": {
+    "rfc3339": "https://www.rfc-editor.org/rfc/rfc3339.html#section-5.6",
+    "rfc3986": "https://www.rfc-editor.org/rfc/rfc3986.html#appendix-A",
+    "jsonSchema": "https://json-schema.org/draft/2020-12/json-schema-validation#section-7.3"
+  },
+  "leapSecondSnapshot": {
+    "reviewedOn": "2026-09-13",
+    "bulletin": "C 72",
+    "bulletinPublished": "2026-07-06",
+    "historyExpires": "2027-06-28",
+    "historySource": "https://hpiers.obspm.fr/iers/bul/bulc/Leap_Second.dat",
+    "historyText": "#  Value of TAI-UTC in second valid beetween the initial value until\n#  the epoch given on the next line. The last line reads that NO\n#  leap second was introduced since the corresponding date \n#  Updated through IERS Bulletin 72 issued in July 2026\n#  \n#\n#  File expires on 28 June 2027\n#\n#\n#    MJD        Date        TAI-UTC (s)\n#           day month year\n#    ---    --------------   ------   \n#\n    41317.0    1  1 1972       10\n    41499.0    1  7 1972       11\n    41683.0    1  1 1973       12\n    42048.0    1  1 1974       13\n    42413.0    1  1 1975       14\n    42778.0    1  1 1976       15\n    43144.0    1  1 1977       16\n    43509.0    1  1 1978       17\n    43874.0    1  1 1979       18\n    44239.0    1  1 1980       19\n    44786.0    1  7 1981       20\n    45151.0    1  7 1982       21\n    45516.0    1  7 1983       22\n    46247.0    1  7 1985       23\n    47161.0    1  1 1988       24\n    47892.0    1  1 1990       25\n    48257.0    1  1 1991       26\n    48804.0    1  7 1992       27\n    49169.0    1  7 1993       28\n    49534.0    1  7 1994       29\n    50083.0    1  1 1996       30\n    50630.0    1  7 1997       31\n    51179.0    1  1 1999       32\n    53736.0    1  1 2006       33\n    54832.0    1  1 2009       34\n    56109.0    1  7 2012       35\n    57204.0    1  7 2015       36\n    57754.0    1  1 2017       37\n",
+    "bulletinSource": "https://datacenter.iers.org/data/16/bulletinc-072.txt",
+    "bulletinText": " \n \n \n     INTERNATIONAL EARTH ROTATION AND REFERENCE SYSTEMS SERVICE (IERS) \n\nSERVICE INTERNATIONAL DE LA ROTATION TERRESTRE ET DES SYSTEMES DE REFERENCE\n\n\nSERVICE DE LA ROTATION TERRESTRE DE L'IERS\nOBSERVATOIRE DE PARIS\n61, Av. de l'Observatoire 75014 PARIS (France)\nTel.      : +33 1 40 51 23 35\ne-mail    : services.iers@obspm.fr\nhttp://hpiers.obspm.fr/eop-pc\n \n \n                                              Paris, 06 July 2026\n \n \n                                              Bulletin C 72\n \n                                              To authorities responsible\n                                              for the measurement and\n                                              distribution of time\n \n \n \n                          INFORMATION ON UTC - TAI\n \n \n NO leap second will be introduced at the end of December 2026.\n The difference between Coordinated Universal Time UTC and the\n International Atomic Time TAI is :\n \n     from 2017 January 1, 0h UTC, until further notice : UTC-TAI = -37 s\n \n Leap seconds can be introduced in UTC at the end of the months of December\n or June,  depending on the evolution of UT1-TAI. Bulletin C is mailed every\n six months, either to announce a time step in UTC, or to confirm that there\n will be no time step at the next possible date.\n \n \n                                            Christian BIZOUARD\n                                            Director\n                                            Earth Orientation Center of IERS\n\t\t\t\t\t    Observatoire de Paris, France\n \n",
+    "positiveUtcDates": [
+      "1972-06-30",
+      "1972-12-31",
+      "1973-12-31",
+      "1974-12-31",
+      "1975-12-31",
+      "1976-12-31",
+      "1977-12-31",
+      "1978-12-31",
+      "1979-12-31",
+      "1981-06-30",
+      "1982-06-30",
+      "1983-06-30",
+      "1985-06-30",
+      "1987-12-31",
+      "1989-12-31",
+      "1990-12-31",
+      "1992-06-30",
+      "1993-06-30",
+      "1994-06-30",
+      "1995-12-31",
+      "1997-06-30",
+      "1998-12-31",
+      "2005-12-31",
+      "2008-12-31",
+      "2012-06-30",
+      "2015-06-30",
+      "2016-12-31"
+    ],
+    "negativeUtcDates": [],
+    "futureRule": "Reject an unannounced second 60 until a reviewed event-table and regression-test update. A negative event requires omitted-second validation."
+  },
+  "cases": [
+    {
+      "id": "upstream-date-time-0",
+      "format": "date-time",
+      "description": "all string formats ignore integers",
+      "data": 12,
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-1",
+      "format": "date-time",
+      "description": "all string formats ignore floats",
+      "data": 13.7,
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-2",
+      "format": "date-time",
+      "description": "all string formats ignore objects",
+      "data": {},
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-3",
+      "format": "date-time",
+      "description": "all string formats ignore arrays",
+      "data": [],
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-4",
+      "format": "date-time",
+      "description": "all string formats ignore booleans",
+      "data": false,
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-5",
+      "format": "date-time",
+      "description": "all string formats ignore nulls",
+      "data": null,
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-6",
+      "format": "date-time",
+      "description": "a valid date-time string",
+      "data": "1963-06-19T08:30:06.283185Z",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-7",
+      "format": "date-time",
+      "description": "a valid date-time string without second fraction",
+      "data": "1963-06-19T08:30:06Z",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-8",
+      "format": "date-time",
+      "description": "a valid date-time string with plus offset",
+      "data": "1937-01-01T12:00:27.87+00:20",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-9",
+      "format": "date-time",
+      "description": "a valid date-time string with minus offset",
+      "data": "1990-12-31T15:59:50.123-08:00",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-10",
+      "format": "date-time",
+      "description": "a valid date-time with a leap second, UTC",
+      "data": "1998-12-31T23:59:60Z",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-11",
+      "format": "date-time",
+      "description": "a valid date-time with a leap second, with minus offset",
+      "data": "1998-12-31T15:59:60.123-08:00",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-12",
+      "format": "date-time",
+      "description": "an invalid date-time past leap second, UTC",
+      "data": "1998-12-31T23:59:61Z",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-13",
+      "format": "date-time",
+      "description": "an invalid date-time with leap second on a wrong minute, UTC",
+      "data": "1998-12-31T23:58:60Z",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-14",
+      "format": "date-time",
+      "description": "an invalid date-time with leap second on a wrong hour, UTC",
+      "data": "1998-12-31T22:59:60Z",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-15",
+      "format": "date-time",
+      "description": "an invalid day in date-time string",
+      "data": "1990-02-31T15:59:59.123-08:00",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-16",
+      "format": "date-time",
+      "description": "an invalid offset in date-time string",
+      "data": "1990-12-31T15:59:59-24:00",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-17",
+      "format": "date-time",
+      "description": "an invalid closing Z after time-zone offset",
+      "data": "1963-06-19T08:30:06.28123+01:00Z",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-18",
+      "format": "date-time",
+      "description": "an invalid hour in date-time string",
+      "data": "1990-12-31T24:00:00Z",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-19",
+      "format": "date-time",
+      "description": "an invalid minute in date-time string",
+      "data": "1990-12-31T15:60:00Z",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-20",
+      "format": "date-time",
+      "description": "an invalid offset minute in date-time string",
+      "data": "1990-12-31T10:00:00+10:60",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-21",
+      "format": "date-time",
+      "description": "an invalid date-time string",
+      "data": "06/19/1963 08:30:06 PST",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-22",
+      "format": "date-time",
+      "description": "case-insensitive T and Z",
+      "data": "1963-06-19t08:30:06.283185z",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-23",
+      "format": "date-time",
+      "description": "only RFC3339 not all of ISO 8601 are valid",
+      "data": "2013-350T01:01:01",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-24",
+      "format": "date-time",
+      "description": "invalid non-padded month dates",
+      "data": "1963-6-19T08:30:06.283185Z",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-25",
+      "format": "date-time",
+      "description": "invalid non-padded day dates",
+      "data": "1963-06-1T08:30:06.283185Z",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-26",
+      "format": "date-time",
+      "description": "invalid non-ASCII '৪' (a Bengali 4) in date portion",
+      "data": "1963-06-1৪T00:00:00Z",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-27",
+      "format": "date-time",
+      "description": "invalid non-ASCII '৪' (a Bengali 4) in time portion",
+      "data": "1963-06-11T0৪:00:00Z",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-28",
+      "format": "date-time",
+      "description": "invalid extended year",
+      "data": "+11963-06-19T08:30:06.283185Z",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-29",
+      "format": "date-time",
+      "description": "a numeric offset without minutes is invalid",
+      "data": "1985-04-12T23:20:50+01",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-30",
+      "format": "date-time",
+      "description": "hour 24 is invalid even with a leap second",
+      "data": "2016-12-31T24:59:60+01:00",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-31",
+      "format": "date-time",
+      "description": "a second fraction of fifteen nines is valid",
+      "data": "1985-04-12T00:59:59.999999999999999Z",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-32",
+      "format": "date-time",
+      "description": "a trailing newline is invalid",
+      "data": "1985-04-12T23:20:50Z\n",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-33",
+      "format": "date-time",
+      "description": "an invalid date-time string without seconds",
+      "data": "1985-04-12T23:20Z",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-34",
+      "format": "date-time",
+      "description": "an invalid date-time string with trailing content after the offset",
+      "data": "1985-04-12T23:20:50Ztail",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-35",
+      "format": "date-time",
+      "description": "an invalid minute in date-time string, with a numeric offset",
+      "data": "1985-04-12T23:60:00+00:01",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-36",
+      "format": "date-time",
+      "description": "a valid date-time string with 28 days in February (normal)",
+      "data": "2021-02-28T00:00:00Z",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-37",
+      "format": "date-time",
+      "description": "an invalid date-time string with 30 days in February (leap)",
+      "data": "2020-02-30T00:00:00Z",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-38",
+      "format": "date-time",
+      "description": "2021 is not a leap year",
+      "data": "2021-02-29T00:00:00Z",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-39",
+      "format": "date-time",
+      "description": "2020 is a leap year",
+      "data": "2020-02-29T00:00:00Z",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-40",
+      "format": "date-time",
+      "description": "century year 0100 is not a leap year",
+      "data": "0100-02-29T00:00:00Z",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-41",
+      "format": "date-time",
+      "description": "century year 0400 is a leap year",
+      "data": "0400-02-29T00:00:00Z",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-date-time-42",
+      "format": "date-time",
+      "description": "century year 2100 is not a leap year",
+      "data": "2100-02-29T00:00:00Z",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-0",
+      "format": "uri",
+      "description": "all string formats ignore integers",
+      "data": 12,
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-1",
+      "format": "uri",
+      "description": "all string formats ignore floats",
+      "data": 13.7,
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-2",
+      "format": "uri",
+      "description": "all string formats ignore objects",
+      "data": {},
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-3",
+      "format": "uri",
+      "description": "all string formats ignore arrays",
+      "data": [],
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-4",
+      "format": "uri",
+      "description": "all string formats ignore booleans",
+      "data": false,
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-5",
+      "format": "uri",
+      "description": "all string formats ignore nulls",
+      "data": null,
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-6",
+      "format": "uri",
+      "description": "a valid URL with anchor tag",
+      "data": "http://foo.bar/?baz=qux#quux",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-7",
+      "format": "uri",
+      "description": "a valid URL with anchor tag and parentheses",
+      "data": "http://foo.com/blah_(wikipedia)_blah#cite-1",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-8",
+      "format": "uri",
+      "description": "a valid URL with URL-encoded stuff",
+      "data": "http://foo.bar/?q=Test%20URL-encoded%20stuff",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-9",
+      "format": "uri",
+      "description": "a valid puny-coded URL ",
+      "data": "http://xn--nw2a.xn--j6w193g/",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-10",
+      "format": "uri",
+      "description": "a valid URL with many special characters",
+      "data": "http://-.~_!$&'()*+,;=:%40:80%2f::::::@example.com",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-11",
+      "format": "uri",
+      "description": "a valid URL based on IPv4",
+      "data": "http://223.255.255.254",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-12",
+      "format": "uri",
+      "description": "a valid URL with ftp scheme",
+      "data": "ftp://ftp.is.co.za/rfc/rfc1808.txt",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-13",
+      "format": "uri",
+      "description": "a valid URL for a simple text file",
+      "data": "http://www.ietf.org/rfc/rfc2396.txt",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-14",
+      "format": "uri",
+      "description": "a valid URL",
+      "data": "ldap://[2001:db8::7]/c=GB?objectClass?one",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-15",
+      "format": "uri",
+      "description": "a valid mailto URI",
+      "data": "mailto:John.Doe@example.com",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-16",
+      "format": "uri",
+      "description": "a valid newsgroup URI",
+      "data": "news:comp.infosystems.www.servers.unix",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-17",
+      "format": "uri",
+      "description": "a valid tel URI",
+      "data": "tel:+1-816-555-1212",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-18",
+      "format": "uri",
+      "description": "a valid URN",
+      "data": "urn:oasis:names:specification:docbook:dtd:xml:4.1.2",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-19",
+      "format": "uri",
+      "description": "an invalid protocol-relative URI Reference",
+      "data": "//foo.bar/?baz=qux#quux",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-20",
+      "format": "uri",
+      "description": "an invalid relative URI Reference",
+      "data": "/abc",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-21",
+      "format": "uri",
+      "description": "an invalid URI",
+      "data": "\\\\WINDOWS\\fileshare",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-22",
+      "format": "uri",
+      "description": "an invalid URI though valid URI reference",
+      "data": "abc",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-23",
+      "format": "uri",
+      "description": "an invalid URI with spaces",
+      "data": "http:// shouldfail.com",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-24",
+      "format": "uri",
+      "description": "an invalid URI with spaces and missing scheme",
+      "data": ":// should fail",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-25",
+      "format": "uri",
+      "description": "an invalid URI with comma in scheme",
+      "data": "bar,baz:foo",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-26",
+      "format": "uri",
+      "description": "invalid userinfo",
+      "data": "https://[@example.org/test.txt",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-27",
+      "format": "uri",
+      "description": "unescaped non US-ASCII characters",
+      "data": "https://example.org/foobar®.txt",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-28",
+      "format": "uri",
+      "description": "invalid backslash character",
+      "data": "https://example.org/foobar\\.txt",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-29",
+      "format": "uri",
+      "description": "invalid \" character",
+      "data": "https://example.org/foobar\".txt",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-30",
+      "format": "uri",
+      "description": "invalid <> characters",
+      "data": "https://example.org/foobar<>.txt",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-31",
+      "format": "uri",
+      "description": "invalid {} characters",
+      "data": "https://example.org/foobar{}.txt",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-32",
+      "format": "uri",
+      "description": "invalid ^ character",
+      "data": "https://example.org/foobar^.txt",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-33",
+      "format": "uri",
+      "description": "invalid ` character",
+      "data": "https://example.org/foobar`.txt",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-34",
+      "format": "uri",
+      "description": "invalid SPACE character",
+      "data": "https://example.org/foo bar.txt",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-35",
+      "format": "uri",
+      "description": "invalid | character",
+      "data": "https://example.org/foobar|.txt",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-36",
+      "format": "uri",
+      "description": "URI with leading-zero IPv4 is structurally valid as a reg-name",
+      "data": "http://087.10.0.1/",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-37",
+      "format": "uri",
+      "description": "URI with out-of-bounds IPv4 is structurally valid as a reg-name",
+      "data": "http://999.999.999.999/",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-38",
+      "format": "uri",
+      "description": "invalid percent-encoding with non-hex digits",
+      "data": "http://example.com/%6G",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-39",
+      "format": "uri",
+      "description": "incomplete percent-encoding triplet",
+      "data": "http://example.com/%A",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-40",
+      "format": "uri",
+      "description": "lone percent sign is invalid",
+      "data": "http://example.com/%",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-41",
+      "format": "uri",
+      "description": "scheme must start with a letter",
+      "data": "1http://example.com",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-42",
+      "format": "uri",
+      "description": "invalid character in scheme",
+      "data": "ht_tp://example.com",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-43",
+      "format": "uri",
+      "description": "non-numeric port is invalid",
+      "data": "http://example.com:abc/path",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-44",
+      "format": "uri",
+      "description": "leading zero in an embedded IPv4 address is invalid",
+      "data": "http://[::ffff:01.2.3.4]",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-45",
+      "format": "uri",
+      "description": "square brackets are not allowed in a path segment",
+      "data": "http:/[::1]",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uri-46",
+      "format": "uri",
+      "description": "a trailing newline after a valid URI is invalid",
+      "data": "http://foo.bar/\n",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-0",
+      "format": "uuid",
+      "description": "all string formats ignore integers",
+      "data": 12,
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-1",
+      "format": "uuid",
+      "description": "all string formats ignore floats",
+      "data": 13.7,
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-2",
+      "format": "uuid",
+      "description": "all string formats ignore objects",
+      "data": {},
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-3",
+      "format": "uuid",
+      "description": "all string formats ignore arrays",
+      "data": [],
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-4",
+      "format": "uuid",
+      "description": "all string formats ignore booleans",
+      "data": false,
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-5",
+      "format": "uuid",
+      "description": "all string formats ignore nulls",
+      "data": null,
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-6",
+      "format": "uuid",
+      "description": "all upper-case",
+      "data": "2EB8AA08-AA98-11EA-B4AA-73B441D16380",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-7",
+      "format": "uuid",
+      "description": "all lower-case",
+      "data": "2eb8aa08-aa98-11ea-b4aa-73b441d16380",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-8",
+      "format": "uuid",
+      "description": "mixed case",
+      "data": "2eb8aa08-AA98-11ea-B4Aa-73B441D16380",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-9",
+      "format": "uuid",
+      "description": "all zeroes is valid",
+      "data": "00000000-0000-0000-0000-000000000000",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-10",
+      "format": "uuid",
+      "description": "wrong length",
+      "data": "2eb8aa08-aa98-11ea-b4aa-73b441d1638",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-11",
+      "format": "uuid",
+      "description": "missing section",
+      "data": "2eb8aa08-aa98-11ea-73b441d16380",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-12",
+      "format": "uuid",
+      "description": "bad characters (not hex)",
+      "data": "2eb8aa08-aa98-11ea-b4ga-73b441d16380",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-13",
+      "format": "uuid",
+      "description": "no dashes",
+      "data": "2eb8aa08aa9811eab4aa73b441d16380",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-14",
+      "format": "uuid",
+      "description": "too few dashes",
+      "data": "2eb8aa08aa98-11ea-b4aa73b441d16380",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-15",
+      "format": "uuid",
+      "description": "too many dashes",
+      "data": "2eb8-aa08-aa98-11ea-b4aa73b44-1d16380",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-16",
+      "format": "uuid",
+      "description": "dashes in the wrong spot",
+      "data": "2eb8aa08aa9811eab4aa73b441d16380----",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-17",
+      "format": "uuid",
+      "description": "shifted dashes",
+      "data": "2eb8aa0-8aa98-11e-ab4aa7-3b441d16380",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-18",
+      "format": "uuid",
+      "description": "valid version 4",
+      "data": "98d80576-482e-427f-8434-7f86890ab222",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-19",
+      "format": "uuid",
+      "description": "valid version 5",
+      "data": "99c17cbb-656f-564a-940f-1a4568f03487",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-20",
+      "format": "uuid",
+      "description": "hypothetical version 6",
+      "data": "99c17cbb-656f-664a-940f-1a4568f03487",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-21",
+      "format": "uuid",
+      "description": "hypothetical version 15",
+      "data": "99c17cbb-656f-f64a-940f-1a4568f03487",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-22",
+      "format": "uuid",
+      "description": "URN prefixed UUID is invalid",
+      "data": "urn:uuid:2eb8aa08-aa98-11ea-b4aa-73b441d16380",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-23",
+      "format": "uuid",
+      "description": "a UUID wrapped in curly braces is invalid",
+      "data": "{2eb8aa08-aa98-11ea-b4aa-73b441d16380}",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-24",
+      "format": "uuid",
+      "description": "trailing hyphen after a complete UUID is invalid",
+      "data": "2eb8aa08-aa98-11ea-b4aa-73b441d16380-",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-25",
+      "format": "uuid",
+      "description": "non-ASCII digit '২' (a Bengali 2) is invalid",
+      "data": "২eb8aa08-aa98-11ea-b4aa-73b441d16380",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-26",
+      "format": "uuid",
+      "description": "an underscore in place of a hex digit is invalid",
+      "data": "2eb8aa08-aa98-11ea-b4aa-73b441d1_380",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-27",
+      "format": "uuid",
+      "description": "a trailing newline after a complete UUID is invalid",
+      "data": "2eb8aa08-aa98-11ea-b4aa-73b441d16380\n",
+      "valid": false,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "upstream-uuid-28",
+      "format": "uuid",
+      "description": "a variant nibble not defined by RFC 4122 is valid",
+      "data": "2eb8aa08-aa98-11ea-f4aa-73b441d16380",
+      "valid": true,
+      "source": "json-schema-test-suite"
+    },
+    {
+      "id": "regression-unknown-local-offset",
+      "format": "date-time",
+      "data": "2026-09-13T00:00:00-00:00",
+      "valid": true,
+      "source": "rfc3339"
+    },
+    {
+      "id": "regression-long-fraction",
+      "format": "date-time",
+      "data": "2026-09-13T00:00:00.123456789012345678901Z",
+      "valid": true,
+      "source": "rfc3339"
+    },
+    {
+      "id": "regression-positive-offset-leap",
+      "format": "date-time",
+      "data": "2017-01-01T00:59:60+01:00",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "regression-offset-leap-date-rollover",
+      "format": "date-time",
+      "data": "2017-01-01T05:29:60+05:30",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "regression-large-positive-offset",
+      "format": "date-time",
+      "data": "2026-09-13T00:00:00+23:59",
+      "valid": true,
+      "source": "rfc3339"
+    },
+    {
+      "id": "regression-large-negative-offset",
+      "format": "date-time",
+      "data": "2026-09-13T00:00:00-23:59",
+      "valid": true,
+      "source": "rfc3339"
+    },
+    {
+      "id": "regression-space-separator",
+      "format": "date-time",
+      "data": "2026-09-13 00:00:00Z",
+      "valid": false,
+      "source": "json-schema-rfc3339"
+    },
+    {
+      "id": "regression-trailing-line-feed",
+      "format": "date-time",
+      "data": "2026-09-13T00:00:00Z\n",
+      "valid": false,
+      "source": "rfc3339"
+    },
+    {
+      "id": "regression-trailing-space",
+      "format": "date-time",
+      "data": "2026-09-13T00:00:00Z ",
+      "valid": false,
+      "source": "rfc3339"
+    },
+    {
+      "id": "regression-trailing-content",
+      "format": "date-time",
+      "data": "2026-09-13T00:00:00Zx",
+      "valid": false,
+      "source": "rfc3339"
+    },
+    {
+      "id": "regression-unannounced-historical-leap",
+      "format": "date-time",
+      "data": "2016-06-30T23:59:60Z",
+      "valid": false,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "regression-unannounced-offset-leap",
+      "format": "date-time",
+      "data": "2016-07-01T00:59:60+01:00",
+      "valid": false,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "regression-confirmed-no-leap",
+      "format": "date-time",
+      "data": "2026-12-31T23:59:60Z",
+      "valid": false,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "regression-unannounced-future-leap",
+      "format": "date-time",
+      "data": "2099-12-31T23:59:60Z",
+      "valid": false,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "regression-alphabetic-port",
+      "format": "uri",
+      "data": "https://example.com:abc/",
+      "valid": false,
+      "source": "rfc3986"
+    },
+    {
+      "id": "regression-repeated-userinfo-separator",
+      "format": "uri",
+      "data": "https://a@b@c/",
+      "valid": false,
+      "source": "rfc3986"
+    },
+    {
+      "id": "regression-ipvfuture",
+      "format": "uri",
+      "data": "https://[v1.fe]/",
+      "valid": true,
+      "source": "rfc3986"
+    },
+    {
+      "id": "regression-uppercase-ipvfuture",
+      "format": "uri",
+      "data": "https://[VF.fe]/",
+      "valid": true,
+      "source": "rfc3986"
+    },
+    {
+      "id": "regression-empty-port",
+      "format": "uri",
+      "data": "https://example.com:/",
+      "valid": true,
+      "source": "rfc3986"
+    },
+    {
+      "id": "regression-empty-authority",
+      "format": "uri",
+      "data": "custom://",
+      "valid": true,
+      "source": "rfc3986"
+    },
+    {
+      "id": "regression-unbounded-numeric-port",
+      "format": "uri",
+      "data": "custom://example.test:9999999999999999999999999999/",
+      "valid": true,
+      "source": "rfc3986"
+    },
+    {
+      "id": "iers-positive-leap-1972-06-30",
+      "format": "date-time",
+      "data": "1972-06-30T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-1972-12-31",
+      "format": "date-time",
+      "data": "1972-12-31T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-1973-12-31",
+      "format": "date-time",
+      "data": "1973-12-31T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-1974-12-31",
+      "format": "date-time",
+      "data": "1974-12-31T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-1975-12-31",
+      "format": "date-time",
+      "data": "1975-12-31T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-1976-12-31",
+      "format": "date-time",
+      "data": "1976-12-31T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-1977-12-31",
+      "format": "date-time",
+      "data": "1977-12-31T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-1978-12-31",
+      "format": "date-time",
+      "data": "1978-12-31T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-1979-12-31",
+      "format": "date-time",
+      "data": "1979-12-31T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-1981-06-30",
+      "format": "date-time",
+      "data": "1981-06-30T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-1982-06-30",
+      "format": "date-time",
+      "data": "1982-06-30T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-1983-06-30",
+      "format": "date-time",
+      "data": "1983-06-30T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-1985-06-30",
+      "format": "date-time",
+      "data": "1985-06-30T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-1987-12-31",
+      "format": "date-time",
+      "data": "1987-12-31T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-1989-12-31",
+      "format": "date-time",
+      "data": "1989-12-31T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-1990-12-31",
+      "format": "date-time",
+      "data": "1990-12-31T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-1992-06-30",
+      "format": "date-time",
+      "data": "1992-06-30T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-1993-06-30",
+      "format": "date-time",
+      "data": "1993-06-30T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-1994-06-30",
+      "format": "date-time",
+      "data": "1994-06-30T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-1995-12-31",
+      "format": "date-time",
+      "data": "1995-12-31T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-1997-06-30",
+      "format": "date-time",
+      "data": "1997-06-30T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-1998-12-31",
+      "format": "date-time",
+      "data": "1998-12-31T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-2005-12-31",
+      "format": "date-time",
+      "data": "2005-12-31T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-2008-12-31",
+      "format": "date-time",
+      "data": "2008-12-31T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-2012-06-30",
+      "format": "date-time",
+      "data": "2012-06-30T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-2015-06-30",
+      "format": "date-time",
+      "data": "2015-06-30T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    },
+    {
+      "id": "iers-positive-leap-2016-12-31",
+      "format": "date-time",
+      "data": "2016-12-31T23:59:60Z",
+      "valid": true,
+      "source": "rfc3339-iers"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "startedAt": "2026-09-13T03:24:38.936Z",
+  "device": "emulator-5554",
+  "package": "com.feedme.development",
+  "apkSha256": "92b3ae988d470eb908fbd80e2a75596e9f57315887a96f994a738f7cb1500062",
+  "events": [
+    {
+      "name": "01-welcome",
+      "status": "passed",
+      "observedAt": "2026-09-13T03:24:42.398Z"
+    },
+    {
+      "name": "auth-truthful-unavailable",
+      "status": "passed"
+    },
+    {
+      "name": "02-kitchen",
+      "status": "passed",
+      "observedAt": "2026-09-13T03:24:52.769Z"
+    },
+    {
+      "name": "03-today",
+      "status": "passed",
+      "observedAt": "2026-09-13T03:24:56.890Z"
+    },
+    {
+      "name": "04-make-mine",
+      "status": "passed",
+      "observedAt": "2026-09-13T03:25:05.339Z"
+    },
+    {
+      "name": "05-your-version",
+      "status": "passed",
+      "observedAt": "2026-09-13T03:25:30.526Z"
+    },
+    {
+      "name": "06-cooking",
+      "status": "passed",
+      "observedAt": "2026-09-13T03:25:45.017Z"
+    },
+    {
+      "name": "07-complete",
+      "status": "passed",
+      "observedAt": "2026-09-13T03:26:01.547Z"
+    },
+    {
+      "name": "08-share-preview",
+      "status": "passed",
+      "observedAt": "2026-09-13T03:26:10.176Z"
+    },
+    {
+      "name": "09-my-plate",
+      "status": "passed",
+      "observedAt": "2026-09-13T03:26:20.694Z"
+    },
+    {
+      "name": "my-plate-back-origin",
+      "status": "passed"
+    },
+    {
+      "name": "10-cookbook",
+      "status": "passed",
+      "observedAt": "2026-09-13T03:26:28.936Z"
+    },
+    {
+      "name": "cookbook-back-origin",
+      "status": "passed"
+    },
+    {
+      "name": "reset-clears-demo-state",
+      "status": "passed"
+    }
+  ],
+  "status": "passed",
+  "finishedAt": "2026-09-13T03:27:01.629Z"
+}

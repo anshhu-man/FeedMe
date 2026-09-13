@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.contract.ContractBodyValidatorTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-09-13T11:32:14.397Z" hostname="ansachars-MacBook-Pro.local" time="0.063">
+  <properties/>
+  <testcase name="exact body and schema numbers survive production validation" classname="com.feedme.server.contract.ContractBodyValidatorTest" time="0.029"/>
+  <testcase name="every operation request and declared response is mapped including shared Problem statuses" classname="com.feedme.server.contract.ContractBodyValidatorTest" time="0.019"/>
+  <testcase name="compiled schemas support concurrent mixed validation without retaining caller data" classname="com.feedme.server.contract.ContractBodyValidatorTest" time="0.005"/>
+  <testcase name="operational resource limits are distinct from schema violations" classname="com.feedme.server.contract.ContractBodyValidatorTest" time="0.007"/>
+  <testcase name="unknown names operations statuses and media produce stable reasons" classname="com.feedme.server.contract.ContractBodyValidatorTest" time="0.0"/>
+  <testcase name="all 149 canonical cases from the 158 case spike pass without byte mutation" classname="com.feedme.server.contract.ContractBodyValidatorTest" time="0.002"/>
+  <testcase name="malformed JSON and invalid Unicode are syntax rejections with safe diagnostics" classname="com.feedme.server.contract.ContractBodyValidatorTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

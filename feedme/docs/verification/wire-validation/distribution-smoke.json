@@ -1,0 +1,34 @@
+{
+  "verifiedAt": "2026-09-13T05:59:51.883Z",
+  "scope": "Exact local installDist packaged runtime; loopback only, no product mutations/authentication.",
+  "checks": [
+    {
+      "path": "/v1/health",
+      "method": "GET",
+      "status": 200,
+      "media": "application/json",
+      "passed": true
+    },
+    {
+      "path": "/v1/config",
+      "method": "GET",
+      "status": 503,
+      "media": "application/problem+json",
+      "passed": true
+    },
+    {
+      "path": "/v1/plans",
+      "method": "POST",
+      "status": 503,
+      "media": "application/problem+json",
+      "passed": true
+    },
+    {
+      "path": "/missing",
+      "method": "GET",
+      "status": 404,
+      "media": "application/problem+json",
+      "passed": true
+    }
+  ]
+}

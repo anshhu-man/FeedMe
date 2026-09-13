@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.contracts.CookingWireModelsTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-09-13T11:53:38.418Z" hostname="ansachars-MacBook-Pro.local" time="0.081">
+  <properties/>
+  <testcase name="saveTitleLimitCountsUnicodeCodePoints[jvm]" classname="com.feedme.contracts.CookingWireModelsTest" time="0.002"/>
+  <testcase name="reviewStatesRemainDistinctIncludingUnknownState[jvm]" classname="com.feedme.contracts.CookingWireModelsTest" time="0.037"/>
+  <testcase name="savedRecipeKeepsSnapshotRightsSourceGrantAndRecall[jvm]" classname="com.feedme.contracts.CookingWireModelsTest" time="0.009"/>
+  <testcase name="recipeVersionKeepsRecipeIdentityStableStepsAndExactAmounts[jvm]" classname="com.feedme.contracts.CookingWireModelsTest" time="0.0"/>
+  <testcase name="projectionsAndNestedDebugStringsRedactPrivateMaterial[jvm]" classname="com.feedme.contracts.CookingWireModelsTest" time="0.016"/>
+  <testcase name="cookSessionKeepsSessionPlanStepTimerSequenceAndServerTimestamps[jvm]" classname="com.feedme.contracts.CookingWireModelsTest" time="0.0"/>
+  <testcase name="typedSliceMatchesCanonicalPropertiesWithoutChangingTheContract[jvm]" classname="com.feedme.contracts.CookingWireModelsTest" time="0.006"/>
+  <testcase name="planWithoutOptionalRecipeStillProjects[jvm]" classname="com.feedme.contracts.CookingWireModelsTest" time="0.001"/>
+  <testcase name="planKeepsSnapshotIdsAndOptionalNullableCursorPresence[jvm]" classname="com.feedme.contracts.CookingWireModelsTest" time="0.0"/>
+  <testcase name="identityRolesAreDistinctAndRedacted[jvm]" classname="com.feedme.contracts.CookingWireModelsTest" time="0.006"/>
+  <testcase name="saveAnyOfAllowsEachSelectorAndBothWithEveryOptionalField[jvm]" classname="com.feedme.contracts.CookingWireModelsTest" time="0.001"/>
+  <testcase name="projectionsRejectWrongScalarShapesWithoutLoggingPayload[jvm]" classname="com.feedme.contracts.CookingWireModelsTest" time="0.0"/>
+  <testcase name="returnedListsAndSnapshotBytesCannotMutateTheProjection[jvm]" classname="com.feedme.contracts.CookingWireModelsTest" time="0.0"/>
+  <testcase name="cookStartConstructsPlanIdentityAndPreservesZeroSequence[jvm]" classname="com.feedme.contracts.CookingWireModelsTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

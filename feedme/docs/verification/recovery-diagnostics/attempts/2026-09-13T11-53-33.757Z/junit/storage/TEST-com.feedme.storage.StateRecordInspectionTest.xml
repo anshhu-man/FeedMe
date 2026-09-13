@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.storage.StateRecordInspectionTest" tests="18" skipped="0" failures="0" errors="0" timestamp="2026-09-13T11:54:12.869Z" hostname="ansachars-MacBook-Pro.local" time="1.37">
+  <properties/>
+  <testcase name="oversizedDecryptedOutputFailsClosedAndTemporaryPlaintextIsCleared[jvm]" classname="com.feedme.storage.StateRecordInspectionTest" time="0.05"/>
+  <testcase name="indexAndDecryptionProviderFailuresReturnOnlySanitizedFailureAndNoMutation[jvm]" classname="com.feedme.storage.StateRecordInspectionTest" time="0.041"/>
+  <testcase name="targetAndRecordShareOneSqliteSnapshotThatRejectsInterleavingWriterCommit[jvm]" classname="com.feedme.storage.StateRecordInspectionTest" time="0.046"/>
+  <testcase name="malformedOrUnretirableOwnerCannotBecomeAMissingOwnerDiagnostic[jvm]" classname="com.feedme.storage.StateRecordInspectionTest" time="0.201"/>
+  <testcase name="inspectionNeverRunsRealQueuedKeyGcForRetiredActiveOrMissingRequestedOwners[jvm]" classname="com.feedme.storage.StateRecordInspectionTest" time="0.101"/>
+  <testcase name="reactivatedSameOwnerReturnsOnlyNewGenerationKeyAndRecordNotOldCapability[jvm]" classname="com.feedme.storage.StateRecordInspectionTest" time="0.08"/>
+  <testcase name="activeMissingAndDeletedRecordKeepTargetButDoNotResurrectPayloadOrRevision[jvm]" classname="com.feedme.storage.StateRecordInspectionTest" time="0.054"/>
+  <testcase name="ciphertextRevisionSchemaLengthAndTypeCorruptionCannotReturnAnApparentlyValidTargetOnly[jvm]" classname="com.feedme.storage.StateRecordInspectionTest" time="0.313"/>
+  <testcase name="readCommitFailureRollsBackWithoutOutcomeUnknownAndClosedDatabaseDoesNotReadAgain[jvm]" classname="com.feedme.storage.StateRecordInspectionTest" time="0.044"/>
+  <testcase name="cancellationDuringRecordReadPropagatesRollsBackAndDoesNotFenceExistingOwner[jvm]" classname="com.feedme.storage.StateRecordInspectionTest" time="0.048"/>
+  <testcase name="activeRecordAndAuthenticatedCurrentTargetAreReadTogetherWithoutFencingItsHandle[jvm]" classname="com.feedme.storage.StateRecordInspectionTest" time="0.065"/>
+  <testcase name="locallyFencedActiveRowCannotBeInspectedEvenWhenFailedKeyDeletionKeptItReadable[jvm]" classname="com.feedme.storage.StateRecordInspectionTest" time="0.065"/>
+  <testcase name="cancellationBeforeOwnerDispatcherRunsPerformsNoReadOrMutation[jvm]" classname="com.feedme.storage.StateRecordInspectionTest" time="0.055"/>
+  <testcase name="environmentKindActorCollectionAndRecordIdentityRemainExact[jvm]" classname="com.feedme.storage.StateRecordInspectionTest" time="0.051"/>
+  <testcase name="missingExistingKeyFailsClosedEvenWhenRequestedRecordIsAbsentAndNeverHeals[jvm]" classname="com.feedme.storage.StateRecordInspectionTest" time="0.046"/>
+  <testcase name="invalidRecordKeysAreRejectedBeforeAnyDatabaseOrVaultRead[jvm]" classname="com.feedme.storage.StateRecordInspectionTest" time="0.019"/>
+  <testcase name="missingOwnerDoesNotActivateCreateKeysWriteOrClaimOtherOwnersAreAbsent[jvm]" classname="com.feedme.storage.StateRecordInspectionTest" time="0.024"/>
+  <testcase name="returnedBytesAreDetachedFromLaterCommitsAndAllDiagnosticStringsAreRedacted[jvm]" classname="com.feedme.storage.StateRecordInspectionTest" time="0.067"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,160 @@
+# FeedMe verification receipt
+
+Specification checks passed. Specification, contract and synthetic navigation QA only; not a deployed backend, full OpenAPI semantic certification, or native-device/provider test.
+
+Generated 2026-09-13T03:49:35.751Z.
+
+- features: 54
+- screens: 98
+- buttonBindings: 900
+- apiOperations: 201
+- schemas: 188
+- checks: 137
+
+## Checks
+
+- PASS — 54 unique feature specifications
+- PASS — Unique screen and action IDs
+- PASS — Welcome is the app entry
+- PASS — Confirmed shared Kotlin platform
+- PASS — F01 has all nine feature design sections
+- PASS — F01 maps to screens
+- PASS — F02 has all nine feature design sections
+- PASS — F02 maps to screens
+- PASS — F03 has all nine feature design sections
+- PASS — F03 maps to screens
+- PASS — F04 has all nine feature design sections
+- PASS — F04 maps to screens
+- PASS — F05 has all nine feature design sections
+- PASS — F05 maps to screens
+- PASS — F06 has all nine feature design sections
+- PASS — F06 maps to screens
+- PASS — F07 has all nine feature design sections
+- PASS — F07 maps to screens
+- PASS — F08 has all nine feature design sections
+- PASS — F08 maps to screens
+- PASS — F09 has all nine feature design sections
+- PASS — F09 maps to screens
+- PASS — F10 has all nine feature design sections
+- PASS — F10 maps to screens
+- PASS — F11 has all nine feature design sections
+- PASS — F11 maps to screens
+- PASS — F12 has all nine feature design sections
+- PASS — F12 maps to screens
+- PASS — F13 has all nine feature design sections
+- PASS — F13 maps to screens
+- PASS — F14 has all nine feature design sections
+- PASS — F14 maps to screens
+- PASS — F15 has all nine feature design sections
+- PASS — F15 maps to screens
+- PASS — F16 has all nine feature design sections
+- PASS — F16 maps to screens
+- PASS — F17 has all nine feature design sections
+- PASS — F17 maps to screens
+- PASS — F18 has all nine feature design sections
+- PASS — F18 maps to screens
+- PASS — F19 has all nine feature design sections
+- PASS — F19 maps to screens
+- PASS — F20 has all nine feature design sections
+- PASS — F20 maps to screens
+- PASS — F21 has all nine feature design sections
+- PASS — F21 maps to screens
+- PASS — F22 has all nine feature design sections
+- PASS — F22 maps to screens
+- PASS — F23 has all nine feature design sections
+- PASS — F23 maps to screens
+- PASS — F24 has all nine feature design sections
+- PASS — F24 maps to screens
+- PASS — F25 has all nine feature design sections
+- PASS — F25 maps to screens
+- PASS — F26 has all nine feature design sections
+- PASS — F26 maps to screens
+- PASS — F27 has all nine feature design sections
+- PASS — F27 maps to screens
+- PASS — F28 has all nine feature design sections
+- PASS — F28 maps to screens
+- PASS — F29 has all nine feature design sections
+- PASS — F29 maps to screens
+- PASS — F30 has all nine feature design sections
+- PASS — F30 maps to screens
+- PASS — F31 has all nine feature design sections
+- PASS — F31 maps to screens
+- PASS — F32 has all nine feature design sections
+- PASS — F32 maps to screens
+- PASS — F33 has all nine feature design sections
+- PASS — F33 maps to screens
+- PASS — F34 has all nine feature design sections
+- PASS — F34 maps to screens
+- PASS — F35 has all nine feature design sections
+- PASS — F35 maps to screens
+- PASS — F36 has all nine feature design sections
+- PASS — F36 maps to screens
+- PASS — F37 has all nine feature design sections
+- PASS — F37 maps to screens
+- PASS — F38 has all nine feature design sections
+- PASS — F38 maps to screens
+- PASS — F39 has all nine feature design sections
+- PASS — F39 maps to screens
+- PASS — F40 has all nine feature design sections
+- PASS — F40 maps to screens
+- PASS — F41 has all nine feature design sections
+- PASS — F41 maps to screens
+- PASS — F42 has all nine feature design sections
+- PASS — F42 maps to screens
+- PASS — F43 has all nine feature design sections
+- PASS — F43 maps to screens
+- PASS — F44 has all nine feature design sections
+- PASS — F44 maps to screens
+- PASS — F45 has all nine feature design sections
+- PASS — F45 maps to screens
+- PASS — F46 has all nine feature design sections
+- PASS — F46 maps to screens
+- PASS — F47 has all nine feature design sections
+- PASS — F47 maps to screens
+- PASS — F48 has all nine feature design sections
+- PASS — F48 maps to screens
+- PASS — F49 has all nine feature design sections
+- PASS — F49 maps to screens
+- PASS — F50 has all nine feature design sections
+- PASS — F50 maps to screens
+- PASS — F51 has all nine feature design sections
+- PASS — F51 maps to screens
+- PASS — F52 has all nine feature design sections
+- PASS — F52 maps to screens
+- PASS — F53 has all nine feature design sections
+- PASS — F53 maps to screens
+- PASS — F54 has all nine feature design sections
+- PASS — F54 maps to screens
+- PASS — Every destination, branch and picker return resolves
+- PASS — Every screen has feature/module/entry state contracts
+- PASS — Every action declares effects, auth, failure, offline and retry
+- PASS — Destructive commands have an explicit confirmation
+- PASS — All screen HTTP actions and hydration reads resolve to OpenAPI
+- PASS — Unique OpenAPI operation IDs
+- PASS — All OpenAPI local references resolve: 3088 refs inspected
+- PASS — Every API path parameter is declared and required
+- PASS — Every operation has a success response
+- PASS — Every operation declares security or intentional public access
+- PASS — Durable API commands declare idempotency
+- PASS — All screens reachable from app or separate staff entry
+- PASS — maps/all_screens_mindmap.svg includes every screen
+- PASS — maps/all_screens_architecture.svg includes every screen
+- PASS — maps/all_screens_mindmap.mmd includes every screen
+- PASS — maps/all_screens_architecture.mmd includes every screen
+- PASS — maps/all_button_navigation.mmd includes every screen
+- PASS — Every screen has a generated specification
+- PASS — Generated registry matches current source
+- PASS — Complete action ledger row count
+- PASS — Complete feature traceability row count
+- PASS — Self-contained portal has embedded data
+- PASS — Explicit feature HTTP route mentions resolve
+- PASS — Browser smoke scenarios pass
+- PASS — Browser test receipt matches current portal sources
+
+## Not executed
+
+- Android/iOS device and accessibility QA
+- Real backend/provider authentication and object authorization tests
+- Store sandbox billing and reconciliation
+- Review by qualified food-content professionals and launch privacy/legal approval
+- Load, failover, restore, recall propagation and penetration tests

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.storage.KitchenStorageTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-09-13T11:01:31.854Z" hostname="ansachars-MacBook-Pro.local" time="1.175">
+  <properties/>
+  <testcase name="cookingPinAndTwoOfflineEditsReopenThenApplyOrderedReceiptsWithActualEtags[jvm]" classname="com.feedme.storage.KitchenStorageTest" time="0.348"/>
+  <testcase name="cookingMutationRecallObserverDurablyHidesSameVersionSaveBeforeAnyCookingRead[jvm]" classname="com.feedme.storage.KitchenStorageTest" time="0.193"/>
+  <testcase name="ownedSavedRecipeReopensWithExactOriginalWireAndNoPlaintextInSqlite[jvm]" classname="com.feedme.storage.KitchenStorageTest" time="0.057"/>
+  <testcase name="authenticatedButMismatchedSavedBodyFailsClosedAfterReopenWithoutDestructiveRepair[jvm]" classname="com.feedme.storage.KitchenStorageTest" time="0.07"/>
+  <testcase name="savedCopiesRemainOwnerIsolatedAcrossActualDatabaseHandles[jvm]" classname="com.feedme.storage.KitchenStorageTest" time="0.071"/>
+  <testcase name="alteredEncryptedProgressFailsClosedAfterReopenBeforeAnyDispatch[jvm]" classname="com.feedme.storage.KitchenStorageTest" time="0.137"/>
+  <testcase name="authoritativeRecallPersistsAcrossDatabaseAndIdentityBoundaryRecreation[jvm]" classname="com.feedme.storage.KitchenStorageTest" time="0.085"/>
+  <testcase name="exponentSpelledHugeRemoteCounterReopensExactlyButCannotCreateLocalEdit[jvm]" classname="com.feedme.storage.KitchenStorageTest" time="0.099"/>
+  <testcase name="staleCookingEditRevisionCannotPartiallyWriteProgressOrCommandIntent[jvm]" classname="com.feedme.storage.KitchenStorageTest" time="0.115"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

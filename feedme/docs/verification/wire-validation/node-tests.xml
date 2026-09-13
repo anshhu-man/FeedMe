@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+	<testcase name="manifest explicitly disables backups and references both Android policy formats" time="0.023171" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/android-backup-policy.test.mjs"/>
+	<testcase name="Android 8–11 policy excludes all credential- and device-protected storage domains" time="0.065854" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/android-backup-policy.test.mjs"/>
+	<testcase name="Android 12+ cloud and device-transfer policies match the older exclusion policy" time="0.119194" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/android-backup-policy.test.mjs"/>
+	<testcase name="generation is reproducible and checked-in artifacts match the locked inputs byte for byte" time="0.017927" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="Kotlin chunks reconstruct exact canonical bytes and the full normalized document without losing any key or value" time="0.017874" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="missing, null, false, empty, and default values retain distinct meanings" time="0.000170" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="Kotlin escaping round-trips interpolation markers, JSON quotes, slashes, controls, and Unicode" time="0.000091" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="long descriptions and example data survive chunk boundaries and literal example references" time="0.027535" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="all operation methods, routes, headers, statuses, security alternatives, and guard metadata are retained" time="0.011368" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="all 900 actions and 131 hydrations retain identity, request, operation and screen association" time="0.009858" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="canonical bytes cannot change without intentionally updating the source lock" time="0.000814" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="generator identity and OpenAPI lock mismatches fail before emitting artifacts" time="0.001846" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="registry byte changes appear in the receipt even if binding meaning is unchanged" time="0.011904" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="unreviewed OpenAPI version is rejected" time="0.006931" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="unreviewed schema keyword is rejected" time="0.006727" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="nested unreviewed schema keyword is rejected" time="0.006231" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="unreviewed schema format is rejected" time="0.006104" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="unsupported boolean schema is rejected" time="0.006609" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="invalid schema type is rejected" time="0.007238" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="unused parameter component schemas are audited" time="0.006860" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="unused response component schemas are audited" time="0.006580" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="default response selector requires review" time="0.007422" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="wildcard response selector requires review" time="0.006836" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="204 response cannot gain a body" time="0.006891" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="unreviewed response media is rejected" time="0.006915" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="response header schemas are audited" time="0.007056" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="optional request bodies require review" time="0.006531" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="unreviewed request media is rejected" time="0.006719" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="inline request schemas are audited" time="0.006635" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="unresolved schema reference is rejected" time="0.006495" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="remote schema references are rejected" time="0.006272" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="schema references outside the schema namespace are rejected" time="0.006042" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="cyclic schema alias references are rejected" time="0.006197" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="unresolved parameter references are rejected" time="0.006969" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="remote parameter references are rejected" time="0.006435" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="unresolved response references are rejected" time="0.006329" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="remote response references are rejected" time="0.006405" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="unknown principal is rejected" time="0.006726" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="operation cannot inherit an implicit default security policy" time="0.006520" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="public security cannot grant anonymous access to a user operation" time="0.006510" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="guest and user alternatives cannot become a combined requirement" time="0.006479" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="staff operation cannot use consumer credentials" time="0.009774" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="root default security drift requires review" time="0.006280" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="missing referenced security scheme is rejected" time="0.006200" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="operation callbacks require explicit review" time="0.006862" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="missing required device session is rejected" time="0.006481" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="optional device session cannot weaken user-only operations" time="0.006316" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="guest alternative retains conditional device-session policy" time="0.006489" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="public operation cannot gain a device session requirement" time="0.006757" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="device session name in query cannot satisfy the header requirement" time="0.006438" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="missing idempotency declaration is rejected" time="0.006249" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="idempotency declaration cannot contradict required header" time="0.006451" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="optional idempotency header cannot satisfy durable command requirement" time="0.006776" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="idempotency name in query cannot satisfy the header requirement" time="0.006045" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="unexpected route namespace is rejected" time="0.010094" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="path-item fields cannot be silently interpreted as operations" time="0.006642" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="path template and parameter names must match" time="0.006486" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="path parameter must remain required" time="0.006637" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="operation IDs must be valid" time="0.006506" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="operation IDs must be globally unique" time="0.010247" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="cookie parameter requires review" time="0.006342" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="header duplicate detection is case insensitive" time="0.006444" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="unknown feature ID in an operation is rejected" time="0.009830" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="duplicate feature ID is rejected" time="0.008958" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="duplicate screen ID is rejected" time="0.009222" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="duplicate action ID is rejected without changing counts" time="0.008569" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="action IDs cannot collide with generated hydration IDs" time="0.009900" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="HTTP action with unresolved operation is rejected" time="0.008572" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="HTTP action with missing operation is rejected" time="0.009902" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="HTTP action with wrong method is rejected" time="0.008386" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="HTTP action with wrong path is rejected" time="0.008537" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="swapping operation bindings is rejected even when all binding counts remain equal" time="0.009335" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="HTTP hydration with wrong operation is rejected" time="0.008348" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="LOCAL action cannot acquire an HTTP operation" time="0.008811" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="EXTERNAL action cannot acquire an HTTP operation" time="0.008445" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="LOCAL hydration cannot acquire an HTTP operation" time="0.008836" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="EXTERNAL hydration cannot acquire an HTTP operation" time="0.008233" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="unreviewed binding kinds are rejected" time="0.008426" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/generate-contract-artifacts.test.mjs"/>
+	<testcase name="complete structural fixture passes without claiming production readiness" time="0.002112" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/verify-delivery-plan.test.mjs"/>
+	<testcase name="missing feature is rejected" time="0.000820" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/verify-delivery-plan.test.mjs"/>
+	<testcase name="duplicate feature is rejected" time="0.000230" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/verify-delivery-plan.test.mjs"/>
+	<testcase name="missing screen mapping is rejected without partial-ID matches" time="0.000268" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/verify-delivery-plan.test.mjs"/>
+	<testcase name="unknown primary milestone is rejected" time="0.000534" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/verify-delivery-plan.test.mjs"/>
+	<testcase name="unchecked implementation work must be broken down" time="0.000311" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/verify-delivery-plan.test.mjs"/>
+	<testcase name="duplicate task is rejected" time="0.000276" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/verify-delivery-plan.test.mjs"/>
+	<testcase name="duplicate feature task is rejected" time="0.000275" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/verify-delivery-plan.test.mjs"/>
+	<testcase name="feature task assigned to wrong owner is rejected" time="0.000353" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/verify-delivery-plan.test.mjs"/>
+	<testcase name="unknown task status is rejected" time="0.000523" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/verify-delivery-plan.test.mjs"/>
+	<testcase name="user blocker without action ID is rejected" time="0.000259" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/verify-delivery-plan.test.mjs"/>
+	<testcase name="unknown user action reference is rejected" time="0.000254" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/verify-delivery-plan.test.mjs"/>
+	<testcase name="known user action resolves" time="0.000236" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/verify-delivery-plan.test.mjs"/>
+	<testcase name="missing milestone heading is rejected" time="0.000183" classname="test" file="/Users/LOCAL_USER/Documents/ChatGPT/Career/feedme/scripts/verify-delivery-plan.test.mjs"/>
+	<!-- tests 92 -->
+	<!-- suites 0 -->
+	<!-- pass 92 -->
+	<!-- fail 0 -->
+	<!-- cancelled 0 -->
+	<!-- skipped 0 -->
+	<!-- todo 0 -->
+	<!-- duration_ms 682.318333 -->
+</testsuites>

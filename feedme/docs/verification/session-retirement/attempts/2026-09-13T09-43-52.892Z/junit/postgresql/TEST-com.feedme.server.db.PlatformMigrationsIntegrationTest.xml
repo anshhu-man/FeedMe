@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.db.PlatformMigrationsIntegrationTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-09-13T09:44:19.556Z" hostname="ansachars-MacBook-Pro.local" time="0.973">
+  <properties/>
+  <testcase name="failedDdlRollsBackHistoryAndEarlierObjectsButPreservesTheConflictingTable" classname="com.feedme.server.db.PlatformMigrationsIntegrationTest" time="0.128"/>
+  <testcase name="repeatedMigrationsPreserveHistoryDataTimestampsAndDatabaseObjects" classname="com.feedme.server.db.PlatformMigrationsIntegrationTest" time="0.218"/>
+  <testcase name="unknownAppliedVersionIsRejectedWithoutChangingTheDatabase" classname="com.feedme.server.db.PlatformMigrationsIntegrationTest" time="0.227"/>
+  <testcase name="changedAppliedChecksumIsRejectedWithoutChangingTheDatabase" classname="com.feedme.server.db.PlatformMigrationsIntegrationTest" time="0.211"/>
+  <testcase name="concurrentMigratorsApplyTheFreshDatabaseExactlyOnce" classname="com.feedme.server.db.PlatformMigrationsIntegrationTest" time="0.188"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

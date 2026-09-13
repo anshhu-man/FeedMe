@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.storage.SessionWorkStoreTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-09-13T13:35:33.287Z" hostname="ansachars-MacBook-Pro.local" time="0.777">
+  <properties/>
+  <testcase name="initializesOnlyNewStoreAndReopensExactEncryptedPayloadAndRevision[jvm]" classname="com.feedme.storage.SessionWorkStoreTest" time="0.078"/>
+  <testcase name="simultaneousExactCasHasOneWinnerAndNoLostUpdate[jvm]" classname="com.feedme.storage.SessionWorkStoreTest" time="0.063"/>
+  <testcase name="existingDatabaseWithoutWorkOwnerFailsClosedAndDoesNotCreateKey[jvm]" classname="com.feedme.storage.SessionWorkStoreTest" time="0.052"/>
+  <testcase name="missingWorkKeyFailsClosedWithoutGeneratingReplacement[jvm]" classname="com.feedme.storage.SessionWorkStoreTest" time="0.045"/>
+  <testcase name="interruptedSetupMissingRecordAndRetiredOwnerCannotReinitializeOnReopen[jvm]" classname="com.feedme.storage.SessionWorkStoreTest" time="0.079"/>
+  <testcase name="missingDeletedOrInvalidRecordCannotBeRepairedByReadOrCas[jvm]" classname="com.feedme.storage.SessionWorkStoreTest" time="0.212"/>
+  <testcase name="acceptsExact32KiBBoundAndRejectsOversizeEmptyAndInvalidRevisionsWithoutMutation[jvm]" classname="com.feedme.storage.SessionWorkStoreTest" time="0.053"/>
+  <testcase name="ownerDataRetirementAndControlWritesDoNotEraseSeparateWorkKeyOrEvidence[jvm]" classname="com.feedme.storage.SessionWorkStoreTest" time="0.195"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

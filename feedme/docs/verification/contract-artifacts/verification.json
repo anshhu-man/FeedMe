@@ -1,0 +1,215 @@
+{
+  "verifiedAt": "2026-09-13T05:32:21.617Z",
+  "scope": "Contract artifact generation, metadata projections and existing JVM/server regressions only. No body validation, authentication or network client integration. Android/iOS/PG integration not rerun in this continuation.",
+  "canonicalSha256": "f0a5f20c4a84822813137c3e6b1ef31ec22afd1d7ee384f7f29b5df09e10aba0",
+  "sourceManifest": [
+    {
+      "path": "settings.gradle.kts",
+      "bytes": 398,
+      "sha256": "258eb355a75827d0b4286f3b7b752b0e247d9c704aa1df810ebccfde8e389ddf"
+    },
+    {
+      "path": "gradle/libs.versions.toml",
+      "bytes": 1416,
+      "sha256": "320d56e6b6930b393805cd38ba5a467cb63f79826385a9f290eccef366e54235"
+    },
+    {
+      "path": "shared/contracts/build.gradle.kts",
+      "bytes": 901,
+      "sha256": "1a3fb857cb5fedd01e2c092f1ea5cda5aa10c0a4fee294f1695eb14f9d106b97"
+    },
+    {
+      "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/ContractCatalog.kt",
+      "bytes": 10484,
+      "sha256": "adb82efa39a485baec82581b2e2860b5e8b7c53d98e65bee6cb189d610cf5d36"
+    },
+    {
+      "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/generated/GeneratedContract.kt",
+      "bytes": 1030089,
+      "sha256": "c27913390fd1e8d3af3d19d83f522851eb9ec7fbf76d96c28a9d0379bb92d8ac"
+    },
+    {
+      "path": "shared/contracts/src/commonTest/kotlin/com/feedme/contracts/ContractCatalogTest.kt",
+      "bytes": 19872,
+      "sha256": "0975e1e50a7a2cad1a4cf449b15677818409bcba6949c3108fbb5e205733ec6b"
+    },
+    {
+      "path": "server/build.gradle.kts",
+      "bytes": 1965,
+      "sha256": "d61c8f443b245ad66e33adb5d17be25e93729120ad805a06cbf7703acc880df9"
+    },
+    {
+      "path": "server/src/test/kotlin/com/feedme/server/contract/SharedContractParityTest.kt",
+      "bytes": 1089,
+      "sha256": "964170081a78358e334d404af35511d8e4a36bdad9c4dfde2d4556f3a16c0ab7"
+    },
+    {
+      "path": "scripts/contract-source.lock.json",
+      "bytes": 255,
+      "sha256": "ec8fa21255f47eae1763075b596e922e904053971a7803325abdf6b06922dc9e"
+    },
+    {
+      "path": "scripts/generate-contract-artifacts.mjs",
+      "bytes": 14680,
+      "sha256": "ea39a40da5dbe0e511ddf90c2e267eec593ed969093f98a81a7f51a88c91c2ab"
+    },
+    {
+      "path": "scripts/generate-contract-artifacts.test.mjs",
+      "bytes": 24992,
+      "sha256": "59190d50b8b5c0393e738b946864f8a5895faf36c343ec74b7e33b3c8193e09f"
+    }
+  ],
+  "sourceManifestSha256": "7945b87e77b144702b2617d8b4270b44961c2676600157bf51087478bf3521dc",
+  "commands": [
+    "node --test --test-reporter=junit --test-reporter-destination=docs/verification/contract-artifacts/node-tests.xml scripts/generate-contract-artifacts.test.mjs scripts/verify-delivery-plan.test.mjs scripts/android-backup-policy.test.mjs",
+    "./gradlew --no-daemon --console=plain :shared:contracts:jvmTest :shared:core:jvmTest :server:test :server:installDist"
+  ],
+  "node": {
+    "tests": 92,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "sha256": "24598a7f5bffa14f836d3680c1aaf9ccd1973f102782d6b3be86b2da28282a94"
+  },
+  "tests": [
+    {
+      "group": "contracts",
+      "name": "com.feedme.contracts.ContractCatalogTest",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:31:29.773Z",
+      "sha256": "e85c12f68f54bc7e892949d897e904718c468f9575aedb918e775f44816a725c"
+    },
+    {
+      "group": "core",
+      "name": "com.feedme.core.ClientPortsTest",
+      "tests": 17,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:03:06.794Z",
+      "sha256": "31cba7327818ea03d9a477e9a3033aa0e82afff572f47e4bd0b03a8c77d10ff8"
+    },
+    {
+      "group": "core",
+      "name": "com.feedme.core.KitchenRuntimeTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:03:06.836Z",
+      "sha256": "31b2fc13ca2e3104011c029704497366336e534fc68808c3e2553ab9902bf541"
+    },
+    {
+      "group": "core",
+      "name": "com.feedme.core.ReducerTest",
+      "tests": 26,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:03:06.844Z",
+      "sha256": "922b372439a153f1f86fd5e2c904fffebea1390d15021340eade8969ad1db36b"
+    },
+    {
+      "group": "server",
+      "name": "com.feedme.server.CommandIdentityTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:31:28.927Z",
+      "sha256": "264f3f5cd072ab11da87075692cc483ad945778b98ccbac30bf6030d1b608be5"
+    },
+    {
+      "group": "server",
+      "name": "com.feedme.server.ContractCatalogTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:31:29.146Z",
+      "sha256": "3d948b32285f571184595a9cf1c21382f2c9c87bc4d6254afead92a6e2d1efa0"
+    },
+    {
+      "group": "server",
+      "name": "com.feedme.server.EventDraftTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:31:29.168Z",
+      "sha256": "72c2035976ceb61270adddfffa0c53382251c0782f94c529b884615c10531afb"
+    },
+    {
+      "group": "server",
+      "name": "com.feedme.server.LocalServerConfigTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:31:29.178Z",
+      "sha256": "00629058b6d08f4581c818de37e6e9d3de8f9efffd0e71e1f3645e04cd097daf"
+    },
+    {
+      "group": "server",
+      "name": "com.feedme.server.LocalServiceTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:31:29.183Z",
+      "sha256": "2657b26d3ecbde0e1c52d36a69b62fdde76811aa3d76512b45fd0962102cf399"
+    },
+    {
+      "group": "server",
+      "name": "com.feedme.server.LoopbackEngineTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:31:29.662Z",
+      "sha256": "d900c92a71ef0d1a9c6e8db352090edeecc74d675ad3bcd39e4ae945e099c754"
+    },
+    {
+      "group": "server",
+      "name": "com.feedme.server.contract.SharedContractParityTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-09-13T05:31:29.889Z",
+      "sha256": "06f283c2f4c453eb2ae5ea9b252de6cdec8e7b6e62022dce26dcac04c5e22602"
+    }
+  ],
+  "counts": {
+    "contracts": 14,
+    "core": 46,
+    "server": 25
+  },
+  "artifacts": [
+    {
+      "path": "shared/contracts/build/libs/contracts-jvm.jar",
+      "bytes": 87083,
+      "sha256": "1f0590235f669e5866e6d1d3002e9b8a7041d36de08def59fcdea664b24f406d"
+    },
+    {
+      "path": "server/build/install/server/lib/server.jar",
+      "bytes": 124318,
+      "sha256": "787c4d21a3c0ad1967bba9d946dbfb803ae046bd6c24bd53875a64318492e32e"
+    },
+    {
+      "path": "apps/android/build/outputs/apk/debug/android-debug.apk",
+      "bytes": 18981844,
+      "sha256": "bf6dd07e31a4fd49b798672ba82edcee7f958b9d5c12ae0d7a89491d20ff3805"
+    }
+  ],
+  "limitations": [
+    "Core JVM tests were UP-TO-DATE; contracts and server tests executed freshly.",
+    "Server distribution UP-TO-DATE: no production server source changed.",
+    "Android APK untouched; prior emulator receipt remains authoritative.",
+    "iOS/native not compiled: full Xcode missing.",
+    "Candidate schema validator failed exact-number probes and was not adopted."
+  ]
+}

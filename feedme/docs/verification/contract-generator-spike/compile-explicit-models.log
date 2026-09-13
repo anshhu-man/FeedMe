@@ -1,0 +1,642 @@
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Accepted.kt:38:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/AdaptRequest.kt:45:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/AdminHealth.kt:42:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/AppealWrite.kt:37:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Attachment.kt:42:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Audience.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/AudienceBindingsInner.kt:37:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Audit.kt:45:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/AuditExportWrite.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/AuditPage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Block.kt:40:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/BlockPage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/BlockWrite.kt:36:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Bootstrap.kt:44:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/BootstrapRequest.kt:40:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/CaseWrite.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Circle.kt:44:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/CirclePage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/CircleWrite.kt:37:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Collection.kt:43:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/CollectionItemWrite.kt:36:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/CollectionOrder.kt:36:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/CollectionPage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/CollectionWrite.kt:38:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Completion.kt:38:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Constraint.kt:47:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Contribution.kt:46:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/ContributionClaim.kt:36:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/ContributionPage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/ContributionWrite.kt:38:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/CookPatch.kt:43:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/CookSession.kt:49:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/CookSessionPersonalNotesInner.kt:38:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/CookStart.kt:37:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/DeletionRequest.kt:38:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/DeviceRegistration.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/DeviceSession.kt:44:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/DeviceSessionPage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Entitlement.kt:41:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/EntitlementPage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/ExportRequest.kt:37:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/FeatureFlag.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/FeatureFlagPage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Feedback.kt:36:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Feedback.kt:38:21: error: data class must have at least one primary constructor parameter.
+data class Feedback (
+                    ^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/FeedbackTarget.kt:38:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/FeedbackWrite.kt:36:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/FeedbackWrite.kt:38:26: error: data class must have at least one primary constructor parameter.
+data class FeedbackWrite (
+                         ^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/FlagApply.kt:37:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/FlagChange.kt:47:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/FlagChangeWrite.kt:40:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/FlagWrite.kt:38:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/GuestRequest.kt:37:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/GuestSession.kt:40:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Health.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/HelpfulResult.kt:38:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/HelpfulWrite.kt:36:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Household.kt:45:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/HouseholdKitchen.kt:42:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/HouseholdKitchenWrite.kt:37:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/HouseholdPage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/HouseholdPreference.kt:45:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/HouseholdPreferencePage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/HouseholdPreferenceView.kt:40:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/HouseholdPreferenceWrite.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/HouseholdWrite.kt:36:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Incident.kt:44:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/IncidentPage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/IncidentWrite.kt:40:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Ingredient.kt:44:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/IngredientAmount.kt:40:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/IngredientPage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Invitation.kt:45:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/InvitationRequest.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/InviteAccept.kt:36:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/InvitePreview.kt:40:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Job.kt:45:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/MediaAccess.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/MediaAccessRequest.kt:38:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/MediaPause.kt:37:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/MediaPrepare.kt:41:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Member.kt:43:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/MemberPage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/MemberPatch.kt:36:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Memory.kt:47:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/MemoryContext.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/MemoryPage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/MemoryPatch.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/MergeRequest.kt:38:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/MergeResult.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Message.kt:49:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/MessagePage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/MessageWrite.kt:40:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/ModerationCase.kt:47:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Mute.kt:41:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/MutePage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/MuteWrite.kt:37:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Notification.kt:44:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/NotificationPage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/NotificationSettings.kt:47:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/NotificationSettingsPatch.kt:43:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/OwnershipTransfer.kt:37:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Pack.kt:46:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PackPage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PackWrite.kt:40:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Pact.kt:51:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PactParticipantStatesInner.kt:38:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PactScheduleWrite.kt:38:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PactWrite.kt:40:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PantryItem.kt:46:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PantryItemPage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PantryWrite.kt:43:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Participation.kt:38:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Plan.kt:58:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PlanChangesInner.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PlanInterpretationCandidatesInner.kt:38:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PlanPage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PlanRequest.kt:47:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PlanRequestBaseMeal.kt:38:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Poll.kt:47:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PollOption.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PollWrite.kt:41:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Post.kt:59:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PostDraft.kt:54:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PostDraftPage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PostDraftPatch.kt:48:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PostDraftWrite.kt:48:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PostPage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PostPatch.kt:44:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PostReactionCountsInner.kt:37:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PostWrite.kt:49:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Potluck.kt:46:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PotluckClaim.kt:38:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PotluckConfirm.kt:37:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PotluckPlanRequest.kt:37:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PotluckWrite.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Preference.kt:47:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PreferencePatch.kt:43:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PrivacyPatch.kt:42:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/PrivacySettings.kt:47:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Problem.kt:45:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/ProblemFieldErrorsInner.kt:38:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Profile.kt:45:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/ProfilePatch.kt:40:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/ProfileSummary.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Reaction.kt:42:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/ReactionWrite.kt:36:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/ReadNotifications.kt:36:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/ReadWatermark.kt:36:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Reason.kt:38:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/ReasonPage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RecipeDraft.kt:55:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RecipeRequest.kt:37:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RecipeRequestRecord.kt:45:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RecipeRequestResponse.kt:38:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RecipeStep.kt:42:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RecipeVersion.kt:65:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RecipeVersionPage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/ReconcileRequest.kt:37:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RemixNode.kt:42:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RemixNodePage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/ReplayRequest.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Report.kt:44:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/ReportPage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/ReportWrite.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RestrictionWrite.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/ReuseOption.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/ReuseOptionPage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/ReuseRequest.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhook.kt:38:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhook.kt:46:53: error: syntax error: Expecting a top level declaration.
+) : kotlin.collections.HashMap<String, kotlin.Any>()()() {
+                                                    ^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhook.kt:46:54: error: syntax error: Expecting a top level declaration.
+) : kotlin.collections.HashMap<String, kotlin.Any>()()() {
+                                                     ^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhook.kt:46:55: error: syntax error: Expecting a top level declaration.
+) : kotlin.collections.HashMap<String, kotlin.Any>()()() {
+                                                      ^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhook.kt:46:56: error: syntax error: Expecting a top level declaration.
+) : kotlin.collections.HashMap<String, kotlin.Any>()()() {
+                                                       ^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhook.kt:46:58: error: syntax error: Expecting a top level declaration.
+) : kotlin.collections.HashMap<String, kotlin.Any>()()() {
+                                                         ^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhook.kt:46:58: error: function declaration must have a name.
+) : kotlin.collections.HashMap<String, kotlin.Any>()()() {
+                                                         ^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhookEvent.kt:40:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhookEvent.kt:50:67: error: serializer has not been found for type '??? (Unresolved qualified name: RevenueCatWebhookEvent.Environment)'. To use context serializer as fallback, explicitly annotate type or property with @Contextual
+    @SerialName(value = "environment") @Required val environment: RevenueCatWebhookEvent.Environment,
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhookEvent.kt:50:90: error: unresolved reference 'Environment'.
+    @SerialName(value = "environment") @Required val environment: RevenueCatWebhookEvent.Environment,
+                                                                                         ^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhookEvent.kt:54:53: error: syntax error: Expecting a top level declaration.
+) : kotlin.collections.HashMap<String, kotlin.Any>()()() {
+                                                    ^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhookEvent.kt:54:54: error: syntax error: Expecting a top level declaration.
+) : kotlin.collections.HashMap<String, kotlin.Any>()()() {
+                                                     ^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhookEvent.kt:54:55: error: syntax error: Expecting a top level declaration.
+) : kotlin.collections.HashMap<String, kotlin.Any>()()() {
+                                                      ^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhookEvent.kt:54:56: error: syntax error: Expecting a top level declaration.
+) : kotlin.collections.HashMap<String, kotlin.Any>()()() {
+                                                       ^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhookEvent.kt:54:58: error: syntax error: Expecting a top level declaration.
+) : kotlin.collections.HashMap<String, kotlin.Any>()()() {
+                                                         ^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhookEvent.kt:54:58: error: function declaration must have a name.
+) : kotlin.collections.HashMap<String, kotlin.Any>()()() {
+                                                         ^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevenueCatWebhookEvent.kt:62:5: error: modifier 'enum' is not applicable to 'local class'.
+    enum class Environment(val value: kotlin.String) {
+    ^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Review.kt:44:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/ReviewWrite.kt:38:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/RevokeAll.kt:36:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/SOS.kt:49:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/SOSPatch.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/SOSReply.kt:38:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/SOSWrite.kt:41:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/SavePolicy.kt:38:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/SavePostRecipeRequest.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/SaveRecipeRequest.kt:35:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/SaveRecipeRequest.kt:37:30: error: data class must have at least one primary constructor parameter.
+data class SaveRecipeRequest (
+                             ^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/SavedRecipe.kt:48:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/SavedRecipePage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Shortcut.kt:46:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/ShortcutWrite.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/StaffReason.kt:37:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Substitution.kt:47:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/SubstitutionPage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/SubstitutionWrite.kt:42:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/SupportTicket.kt:42:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/SupportWrite.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Thread.kt:45:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/ThreadCreate.kt:40:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/ThreadPage.kt:39:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/TimerState.kt:41:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/Upload.kt:45:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/UploadComplete.kt:37:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^
+explicit-generated/src/commonMain/kotlin/feedme/contract/spike/models/VoteWrite.kt:36:14: error: this annotation is not repeatable.
+@Serializable@Serializable
+             ^^^^^^^^^^^^^

@@ -1,0 +1,99 @@
+# Encrypted client storage — M1.05 / M0.07d
+
+13 September 2026. Executable shared storage plus an Android Keystore adapter; **not connected to FeedMe's demo runtime or authentication**. The subsequent [command journal](CLIENT_COMMAND_RECOVERY.md) and [private kitchen repositories](PRIVATE_KITCHEN_REPOSITORIES.md) exercise exact saved/cooking state and request/receipt recovery in real-SQLite JVM tests, using a synthetic remote. The demo APK remains memory-only. iOS storage is a documented integration design, not an implemented or compiled adapter.
+
+This foundation supports the retained F12 guided-cooking journey (`RECIPE`, `COOK`, `TIMER`, `OFFLINE`) and F19 private cookbook (`RECIPE`, `COOKBOOK`, `COLLECTION`, `COLLECTION_EDIT`). It does not accept their feature packages. Social-copy rights remain F30's separate authorized transaction; encrypted bytes cannot establish permission to retain a recipe.
+
+## Small delivery packages
+
+| Package | Status | Acceptance and remaining work |
+| --- | --- | --- |
+| M1.05a | DONE | Shared encrypted SQLite atomic records, CAS/tombstones, owner generations, failure/cleanup behavior; 36 real-SQLite JVM tests and source-bound receipt |
+| M1.05b | IN_PROGRESS | Android native vault/factory passes 13 emulator tests plus two fresh-process stages. iOS Keychain/CryptoKit adapter, native linkage, API26/physical-device and cross-process contention gates remain |
+| M1.05c | IN_PROGRESS | PRIVATE_KITCHEN_REPOSITORIES.md splits c.1–4: canonical owned saved/cooking codecs, pinned bundles, indexes, ordered journal actions and recall fences implemented. Server guarantees/reconciliation, real identity/backend/UI and native process recovery remain; no demo-model DTO substitution |
+| M1.05d | IN_PROGRESS | Exact retirement/control, credentials, work registry and bounded private-session composition are implemented separately. [Planned state recovery](PLANNED_STATE_RECOVERY.md) adds existing-only empty-plan abort code with full verification pending; composite data/work setup journal, real provider/UI, API26 credentials/recovery, iOS and crash gates remain |
+| M1.05e | TODO | Actual cooking/save app-kill and mid-transaction crash recovery; migrations from every supported release, corruption/restore drills, quotas/key rotation and patched-engine release review |
+| M1.06a | DONE | CLIENT_COMMAND_RECOVERY.md: immutable validated command intent, original key and domain draft in one CAS transaction before dispatch; exact encrypted-SQLite reopen/rollback proof |
+| M1.06b | IN_PROGRESS | Owner-bound index, dependencies/device sequence, bounded retry/confirmation and receipt CAS implemented. Domain ETag/expired-outcome reconciliation, retention/quotas and final native timing remain |
+| M1.06c | TODO | Connect authorized backend effects to durable client state and actual UI; explicit confirmation for social/time-sensitive actions, two-device terminal-state tests |
+
+M1.05 and M1.06 remain IN_PROGRESS. No whole milestone or production feature is accepted. The full 54-feature/98-screen scope and pending U01–U03 decisions remain unchanged.
+
+## Composition and ownership
+
+`AndroidStateDatabase.open(context)` obtains the app-private, non-backup fixed path and native vault, then transfers one SQLite connection and its lifetime-lock cleanup callback to `EncryptedStateDatabase`. There is no production JVM key store, plaintext fallback, arbitrary SQL interface or external database import. Tests use an internal connection seam and **test-only** JCA keys.
+
+Only the serialized application session owner may call `activate(scope)` or `resume(scope)` after resolving the actual identity. These calls do not verify credentials. Never call them from a delayed HTTP completion to acquire a fresh store after logout.
+
+- `activate`: explicit new owner incarnation. An already active owner returns CONFLICT; it is not silently replaced. A retired owner gets a new generation/key only after queued key cleanup succeeds.
+- `resume`: returns the existing active incarnation, or null for a missing/retired owner. A missing/inaccessible required key is STORAGE_FAILURE, never a replacement key.
+- Returned `PrivateStateStore`: bound to exactly one environment, actor kind, actor ID, durable generation and key handle. Every read/write rechecks the persisted owner inside its transaction. A wrong scope or retired incarnation returns STALE_SESSION.
+- `close`: serialized, cancellation-safe cleanup; connection close must acknowledge before releasing the file lock. Returned managers/recovery handles can retry a failed close, and retained handles cannot operate after close begins. A failed construction whose cleanup close also fails returns no retry handle and stays fenced until process restart.
+
+The native factory reserves the canonical lock path **before opening another descriptor in the same process**, then takes an exclusive OS file lock. It holds that stable sibling lock until the SQLite connection closes. The lock file is never unlinked during normal use. This avoids the POSIX hazard where closing a second descriptor for an inode can release the first descriptor's process lock. It coordinates cooperating application code, not arbitrary privileged file access. Separate-process lock contention remains untested.
+
+Android uses `noBackupFilesDir/feedme-state`, directory mode 0700, files mode 0600, fixed `state.sqlite` / `state.lock`, UID/type/permission checks and rejected symlink/hard-link file aliases. Foreign WAL/shm files are preserved and rejected; a private rollback journal is left to SQLite recovery. No actor-supplied string becomes a path.
+
+The separate API27+ `openActivationRecovery(context, scope, plan)` is stricter than this ordinary opener. It authenticates the exact plan using the existing index before opening SQLite, requires existing private directory/database/zero-byte lock and V2 schema, and returns only inspect/abort/close. It creates no files, locks, keys or schema, does not migrate or run GC, and rejects all preexisting rollback journals, WAL/SHM and unknown children. These exclusions preserve evidence instead of treating SQLite journal recovery as byte-read-only inspection. It shares the ordinary factory's lifetime lock ownership; it is not a general orphan probe, database import or activation capability. Full/native verification is pending in [planned state recovery](PLANNED_STATE_RECOVERY.md).
+
+## Persisted protocol
+
+| Table | Data | Privacy / lifecycle |
+| --- | --- | --- |
+| `feedme_owners` | Opaque owner HMAC, generation, active/retired flag, random key handle | No raw account/environment IDs; retired fence persists |
+| `feedme_records` | Opaque owner/record HMACs, revision, schema version, ciphertext or tombstone | No plaintext payload/record name/ID; delete retains revision against ABA |
+| `feedme_key_gc` | Exact random owner-key handle pending deletion | Fallback when key-first deletion fails: owner retirement and cleanup intent commit together; restart retries exact-key deletion |
+| `feedme_activation_aborts` (V2) | Exact owner tag, consumed generation, planned key ID and positive revision | Every planned empty-only abort genuinely changes this receipt and commits consumption before exact key deletion; historical same/foreign-owner receipts prevent candidate-key reuse |
+
+An install-specific HMAC-SHA256 key masks lookup identities. Distinct length-prefixed UTF-8 domains separate owner and record indexes. Record indexes include the owner index. Each owner incarnation has a separately erasable AES-256-GCM key. Android keys are non-exportable through Keystore APIs; hardware/StrongBox residency is **not** claimed.
+
+The Android envelope is `[version 1 | 12-byte provider-generated nonce | ciphertext | 16-byte tag]`. Associated data is a versioned, length-prefixed tuple containing owner index, generation, record index, revision and schema version. Payloads are encrypted before being passed to SQLite. Changed payload/nonce/tag/AAD/key/record placement fails authentication; existing corrupted ciphertext also cannot be silently replaced by CAS. No raw provider/SQL exception is returned in a port failure.
+
+HMAC indexes reveal equality, counts and access patterns; schema/revisions remain visible. AEAD does not detect rollback of an entire authentic database snapshot, prevent privileged code from using accessible keys, or guarantee removal from physical storage/backups. Native SQLite's handling of a malicious file is not proven globally memory-bounded by Kotlin read-size checks. Do not advertise this as whole-file encryption, anti-rollback authority, medical-data certification or forensic sanitization.
+
+## Transactions, revisions and uncertainty
+
+All disk/vault operations run on a background dispatcher under one mutex. Transactions have synchronous bodies, no network and no suspending caller callbacks. Mutating transactions begin IMMEDIATE; reads also use a transaction. Results/buffers are detached.
+
+A batch accepts 1–64 distinct keys, at most 1 MiB plaintext per record and 4 MiB total. Collection names are limited to 128 UTF-16 units and IDs to 512, with strict UTF-8/no controls. These are explicit local-store limits, not changes to API schemas. Unsupported payloads fail before persistence; no truncated successful record is returned.
+
+`Put(expectedRevision=null)` is create-if-absent. Updating or deleting needs the exact present revision. One conflict or encryption failure rolls the whole batch back. Delete leaves a tombstone; revisions 1 → 2 → deleted-at-3 → recreated-at-4 cannot recycle the old value. Owner erasure deletes its records but advances the independently checked generation.
+
+A thrown COMMIT with a still-active transaction can return STORAGE_FAILURE only after rollback is confirmed. If COMMIT may have succeeded, or cleanup cannot establish its outcome, return OUTCOME_UNKNOWN and never repeat the write automatically. An unclean connection is poisoned. Cancellation after synchronous work starts can suppress delivery of a successful commit: the JVM test explicitly demonstrates this. The coordinator must reread/reconcile the same intent/CAS identity; cancellation is not proof of rollback.
+
+## Erasure and crash windows
+
+Clear the application `SessionBoundary` before requesting logout cleanup. Ordinary exact-incarnation retirement validates a captured target, fences it locally and attempts native key deletion **before** SQL retirement, confirming absence. It then atomically marks that owner retired, advances its generation and removes only its records. If key deletion fails, SQL retirement plus an exact key-GC row is still attempted and the operation remains failed. Missing keys are idempotent deletion success. Ordinary startup/resume/activation retry pending cleanup before exposing new owner state. Malformed owner metadata/cleanup rows cannot trigger key destruction.
+
+Old handles remain fenced when cleanup is retried and cannot erase a subsequently activated owner. If the retirement transaction fails before commit **after confirmed key deletion**, the earlier active row is no longer decryptable on restart. An authenticated exact-incarnation `StateRetirementTarget` allows explicit retry without recreating the missing key. Scope/HMAC/generation checks happen before independent credential/work cleanup. The new [local retirement coordinator](LOCAL_SESSION_RETIREMENT.md) persists its pending barrier in a separate encrypted control database before any native cleanup; that barrier survives erasure of owner data keys. If all initial barrier writes fail and the process is killed, its process-only latch cannot survive: native credential authority, user-visible recovery and crash acceptance remain required. A pre-commit crash during key creation may also leave an unused key; audited exact-namespace orphan cleanup is still required. No automatic database wipe or broad key deletion is used to hide these failures.
+
+Planned activation abort is a distinct empty-only protocol, not ordinary retirement. It requires an independently persisted authenticated plan and explicit abort intent; all rows, including tombstones, unknown schema and corrupt ciphertext, forbid abort without being decrypted. Every attempt—including ABORTED retry—commits the exact consumed generation/key and an increased V2 receipt revision before a second locked recheck and exact planned-key deletion. First-transaction errors/cancellation never delete the key. A failure after deletion retains the earlier acknowledged consumption fence; retry still writes a new receipt. Missing selected key material is never regenerated. No private-store or general retirement handle is returned. Composite setup journaling and runtime/UI integration are not yet supplied, and full/native component verification is pending.
+
+## Engine and schema policy
+
+AndroidX SQLite 2.7.1 is pinned, but its inspected artifacts embed SQLite **3.50.1**. The documented WAL-reset defect is avoided here by refusing WAL and using `journal_mode=DELETE`, `synchronous=EXTRA`, `fullfsync=ON`, foreign keys, untrusted-schema protections, secure delete, memory temporary storage and a five-second busy timeout. Config values are read back. EXTRA is the stronger rollback-journal sync policy; no emulator result is a universal power-loss guarantee. [SQLite engine audit and primary citations](SQLITE_STORAGE_ENGINE_NOTES.md).
+
+Other documented engine defects remain unpatched. Fixed parameterized SQL, private files and no FTS/imports constrain their known routes but do not clear the engine for release. Review/replace with a patched engine before the store is promoted through M8; keep its platform driver seam replaceable and rerun all tests. Do not enable WAL as a performance tweak.
+
+The historical V1 baseline used application ID `0x464d5331`, `user_version=1` and three exact tables. Current normal initialization creates V2 with the additional activation-abort receipt table. Normal opening can atomically migrate only the exact V1 legacy schema to V2, preserving owner keys and encrypted records; foreign legacy objects block the upgrade. Existing-only activation recovery requires V2 and refuses V1 without migration. Future/wrong/foreign schemas and injected tables/triggers/views/explicit indexes remain rejected without deletion or conversion. Exact SQLite schema text is checked against the pinned representation; there is not yet a multi-version migration checksum ledger. Further schema changes require explicit versioned migrations and upgrade/rollback fixtures.
+
+## Verification and integration gates
+
+Current continuation is [planned state recovery](PLANNED_STATE_RECOVERY.md), **IN_PROGRESS**: **315 targeted storage JVM tests pass**, including 40 new recovery cases; full source-bound/native verification is pending. The preceding complete [planned-state-activation receipt](verification/planned-state-activation/verification.json) finished **2026-09-13T13:35:54.272Z** with **1,069 Kotlin/server/PG, 92 Node and 102 native checks** and five clean library lint reports. Those totals are historical and do not prove the changed V2 recovery sources. No runtime composite setup journal, data-recovery UI or whole-session power-loss guarantee follows from these components.
+
+Historical storage-only receipts live in `docs/verification/client-storage/`; the later retirement snapshot is documented in [local session retirement](LOCAL_SESSION_RETIREMENT.md). The original 36 engine tests use real bundled SQLite, covering CAS concurrency/atomicity, close/reopen, private byte absence, erasure/fencing, missing keys, corruption/row type and length guards, schema drift, real SQLITE_FULL through a page quota, before/after-COMMIT failures and cancellation. Two key-count expectations now reflect key-first erasure. The page-quota test is not a host filesystem exhaustion or power-loss simulation.
+
+The historical retirement Android run included the original 13 actual Keystore/factory tests, seven control-store tests and two opt-in stages in different instrumentation processes. The writer closes the store and exits; the reader verifies a different PID and the original encrypted record, then deletes only its dedicated fixture/aliases. This is fresh-process persistence, **not** hard-kill during a transaction or a cooking-screen recovery test. The test APK is separate `com.feedme.storage.test`; the FeedMe demo app is untouched. Test directories are checked absent after cleanup. The current runner includes later suites, so a historical count or runner expectation is not itself current execution proof: use the timestamped receipt linked above when full verification completes.
+
+Reproduce after building the module, with a running emulator:
+
+```sh
+./gradlew :shared:storage:jvmTest :shared:storage:assembleDebug :shared:storage:assembleDebugAndroidTest :shared:storage:lintDebug
+FEEDME_TEST_DEVICE=emulator-5554 node scripts/android-storage-smoke.mjs
+```
+
+Set the installed JDK17 and Android SDK via `JAVA_HOME` / `ANDROID_HOME`. The smoke runner rejects physical-device serials, checks the test artifact identity, retains attempt logs and fails for any missing/skipped expected test. It does not start or wipe an emulator.
+
+For source-bound storage/device verification, also set `FEEDME_POSTGRES_BIN` to the installed local PostgreSQL binaries; the current continuation's reproduction command is maintained in [planned state recovery](PLANNED_STATE_RECOVERY.md). Earlier `node scripts/verify-client-storage.mjs` runs checked shared/server/isolated-PG/Node tests, lint, isolated Android stages and unchanged sources. The retained **historical storage/device receipt** covers 99 input files, 354 JVM/server/PG tests, 92 Node tests and 15 Android checks; no failures or skips. Its source-manifest SHA-256 is `825c8d817b73197d8344e21d3c38dfcd9c8d014726cac503dfebf9769449401e`. The final audit for that run rechecked hashes and found no test-cluster PID files; its emulator was stopped. The later historical [command-recovery receipt](verification/command-recovery/verification.json) covers 456 Kotlin/server/PG and 92 Node tests plus Android library builds/lint, without a new device claim; neither receipt covers current recovery sources.
+
+The subsequent historical [private-kitchen receipt](verification/kitchen-repositories/verification.json) covers saved/cooking codecs, owned pins, journal composition and nine actual SQLite repository tests: 626 Kotlin/server/PG and 92 Node tests, four Android library builds/lint, no new native-device check. Later control/credential/work/runtime and recovery snapshots are linked from [planned state recovery](PLANNED_STATE_RECOVERY.md). Still required: server manifests/lifecycle contracts, no credentials in the record store, actual owner/provider/UI lifecycle, composite setup journal, permanent/expired-outcome same-key reconciliation, backend/UI and recall-delivery integration, iOS vault/factory, native contention and crash/restore/device gates, and dependency/security review. Source-level iOS crypto options and their limits are documented in [native crypto notes](PRIVATE_STORAGE_CRYPTO_NOTES.md), not installed as a fallback.
