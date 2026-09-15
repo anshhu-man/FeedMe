@@ -26,6 +26,7 @@ kotlin {
             implementation(project(":shared:sync"))
             implementation(project(":shared:kitchen"))
             implementation(project(":shared:session"))
+            implementation(project(":shared:mealflow"))
         }
         androidInstrumentedTest.dependencies {
             implementation(project(":shared:session"))
@@ -34,6 +35,23 @@ kotlin {
         }
     }
 }
+
+// Narrow TEST-ONLY protocol bridge. No factory/access constructor is added to main or release.
+// Export only the actual runtime fixture and its bridge, not an alternate production authority.
+val protocolTestFixturesJar by tasks.registering(Jar::class) {
+    dependsOn("jvmTestClasses")
+    archiveClassifier.set("jvm-protocol-test-fixtures")
+    from(kotlin.targets.getByName("jvm").compilations.getByName("test").output.allOutputs) {
+        include("com/feedme/storage/PostDraftHttpSessionFixture*")
+        include("com/feedme/storage/PrivateSessionRuntimeTest*")
+    }
+}
+val jvmProtocolTestFixtures by configurations.creating {
+    isCanBeConsumed = true
+    isCanBeResolved = false
+    extendsFrom(configurations.getByName("jvmTestImplementation"), configurations.getByName("jvmTestRuntimeOnly"))
+}
+artifacts { add(jvmProtocolTestFixtures.name, protocolTestFixturesJar) }
 
 android {
     namespace = "com.feedme.storage"

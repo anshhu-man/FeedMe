@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -109,6 +110,7 @@ fun WelcomeScreen(onExplore: () -> Unit, onUnavailableAuth: () -> Unit) {
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun HomeScreen(
     meals: List<MealUi>,
@@ -118,27 +120,29 @@ fun HomeScreen(
     onOpenRecipe: (String) -> Unit,
 ) {
     Page {
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+        FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(18.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Wordmark()
             Badge("DINNER MODE", FeedMeColors.Lime)
         }
         Heading("HEY, HUNGRY HUMAN.", "Good food.\nLess effort.")
-        Card(colors = CardDefaults.cardColors(containerColor = FeedMeColors.Lilac), shape = RoundedCornerShape(28.dp)) {
+        Card(colors = CardDefaults.cardColors(containerColor = Color.White), shape = RoundedCornerShape(28.dp), border = BorderStroke(1.dp, FeedMeColors.Line)) {
             Box {
                 FoodPhoto("wrap", "Illustrative vegetable wrap on a plate", Modifier.fillMaxWidth().height(236.dp))
                 Box(Modifier.align(Alignment.TopStart).padding(16.dp)) { Badge("LOW EFFORT · HIGH REWARD", FeedMeColors.Lime) }
             }
             Column(Modifier.padding(23.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                Eyebrow("YOUR LOW-EFFORT ERA", FeedMeColors.Blue)
                 Text("Dinner doesn’t need\na plot twist.", style = MaterialTheme.typography.headlineMedium)
+                Text("Borrow an idea. Find a version that fits your evening.", style = MaterialTheme.typography.bodyMedium, color = FeedMeColors.Muted)
                 PrimaryAction("Make Mine  ↗", onMakeMine)
             }
         }
-        Surface(onClick = onToday, color = FeedMeColors.Coral, shape = RoundedCornerShape(24.dp)) {
+        Surface(onClick = onToday, color = FeedMeColors.SoftLime, shape = RoundedCornerShape(24.dp)) {
             Row(Modifier.fillMaxWidth().padding(22.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 Avatar("FM", FeedMeColors.Paper)
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(5.dp)) {
                     Eyebrow("THE PLATE CHECK")
-                    Text("What’s cooking\nin your circle?", style = MaterialTheme.typography.titleLarge)
+                    Text("A little dinner\ninspiration.", style = MaterialTheme.typography.titleLarge)
                     Text("Explore sample Today posts", style = MaterialTheme.typography.bodySmall)
                 }
                 Text("↗", fontSize = 28.sp)
@@ -151,15 +155,20 @@ fun HomeScreen(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun TodayScreen(plates: List<PlateUi>, onOpenPlate: (String) -> Unit, onMakeMine: (String) -> Unit, onBack: () -> Unit, title: String = "What’s cooking?", showingKeepers: Boolean = false) {
     Page {
         BackAction(onBack)
-        Heading("THE REAL-LIFE PLATE CHECK", title, "A little inspiration from your people. Make it yours.")
+        Heading("THE PLATE CHECK · DEMO", title, "Everyday meals. Tiny wins. Ideas to make your own.")
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Badge(if (showingKeepers) "YOUR KEEPERS" else "TODAY MOMENTS", FeedMeColors.Lime)
+            Badge("${plates.size} SAMPLE ${if (plates.size == 1) "PLATE" else "PLATES"}", Color.White)
+        }
         if (showingKeepers) {
-            Note("Your little collection of good food.", "These are demo plates you chose to keep. Keeping a post on My Plate is separate from saving its recipe to your cookbook.", FeedMeColors.Lilac)
+            Note("Worth keeping around.", "These are demo plates you chose to keep. Keeping a post on My Plate is separate from saving its recipe to your cookbook.", FeedMeColors.SoftBlue)
         } else {
-            Note("Today is a moment. My Plate is a keeper.", "In the planned social experience, Today posts expire; saving to My Plate is a separate choice. These are local sample posts, not a live feed.", FeedMeColors.Lilac)
+            Note("Today is a moment. My Plate is a keeper.", "Today is for passing moments; My Plate keeps the ones you choose. These are local sample posts, not a live feed or verified server expiry.", FeedMeColors.SoftBlue)
         }
         if (plates.isEmpty()) {
             EmptyState("A quiet kitchen.", "No sample plates to show right now.")
@@ -167,7 +176,7 @@ fun TodayScreen(plates: List<PlateUi>, onOpenPlate: (String) -> Unit, onMakeMine
             plates.forEach { plate ->
                 Card(colors = CardDefaults.cardColors(containerColor = Color.White), shape = RoundedCornerShape(26.dp), border = BorderStroke(1.dp, FeedMeColors.Line)) {
                     Row(Modifier.fillMaxWidth().padding(18.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                        Avatar(plate.author.take(1), FeedMeColors.Lilac)
+                        Avatar(plate.author.take(1), FeedMeColors.SoftBlue)
                         Column(Modifier.weight(1f)) {
                             Text(plate.author, style = MaterialTheme.typography.titleMedium)
                             Text(plate.ageLabel, style = MaterialTheme.typography.bodySmall, color = FeedMeColors.Muted)
@@ -175,7 +184,7 @@ fun TodayScreen(plates: List<PlateUi>, onOpenPlate: (String) -> Unit, onMakeMine
                         Badge(if (showingKeepers) "MY PLATE" else "TODAY", FeedMeColors.Lime)
                     }
                     Surface(onClick = { onOpenPlate(plate.id) }, color = Color.Transparent) {
-                        FoodPhoto(plate.meal.imageKey, "Illustrative ${plate.meal.title}", Modifier.fillMaxWidth().height(250.dp))
+                        FoodPhoto(plate.meal.imageKey, "Illustrative ${plate.meal.title}", Modifier.fillMaxWidth().aspectRatio(1.35f))
                     }
                     Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
                         Text(plate.caption, style = MaterialTheme.typography.titleLarge)
@@ -194,14 +203,15 @@ fun PlateScreen(plate: PlateUi, onMakeMine: (String) -> Unit, onBack: () -> Unit
     Page {
         BackAction(onBack)
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            Avatar(plate.author.take(1), FeedMeColors.Coral)
-            Column {
+            Avatar(plate.author.take(1), FeedMeColors.Lime)
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(plate.author, style = MaterialTheme.typography.titleLarge)
                 Text(plate.handle, style = MaterialTheme.typography.bodyMedium, color = FeedMeColors.Muted)
+                Text(plate.ageLabel, style = MaterialTheme.typography.bodySmall, color = FeedMeColors.Muted)
             }
         }
         Box {
-            FoodPhoto(plate.meal.imageKey, "Illustrative ${plate.meal.title}", Modifier.fillMaxWidth().height(350.dp).clip(RoundedCornerShape(28.dp)))
+            FoodPhoto(plate.meal.imageKey, "Illustrative ${plate.meal.title}", Modifier.fillMaxWidth().aspectRatio(1f).clip(RoundedCornerShape(28.dp)))
             Box(Modifier.align(Alignment.TopStart).padding(17.dp)) { Badge("SAMPLE PLATE", FeedMeColors.Lime) }
         }
         Text(plate.caption, style = MaterialTheme.typography.headlineLarge, modifier = Modifier.semantics { heading() })
@@ -228,7 +238,7 @@ fun MakeMineScreen(
 ) {
     Page {
         BackAction(onBack)
-        Surface(color = FeedMeColors.Lilac, shape = RoundedCornerShape(28.dp)) {
+        Surface(color = FeedMeColors.SoftBlue, shape = RoundedCornerShape(28.dp)) {
             Column(Modifier.fillMaxWidth().padding(25.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
                 Eyebrow("THE SAME IDEA. MORE YOU.")
                 Text("Make", style = MaterialTheme.typography.displayMedium)
@@ -237,25 +247,25 @@ fun MakeMineScreen(
                 if (sourceTitle != null) Badge("INSPIRED BY $sourceTitle", Color.White)
             }
         }
-        SectionTitle("How much time have you got?")
+        FeedMeSectionHeading("01  /  Your time", "How much time have you got?")
         FlowRow(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             listOf(10, 15, 20, 30).forEach { minutes -> Choice("$minutes min", minutes == selectedMinutes) { onMinutesChange(minutes) } }
         }
-        SectionTitle("Match my energy")
+        FeedMeSectionHeading("02  /  Your energy", "Match the meal to the evening you’re having.")
         FlowRow(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             listOf("assemble" to "Assemble only", "light-prep" to "Light prep", "cooking" to "Up for cooking").forEach { (value, label) ->
                 Choice(label, selectedEffort == value) { onEffortChange(value) }
             }
         }
         if (availableIngredients.isNotEmpty()) {
-            SectionTitle("What’s in your kitchen?")
+            FeedMeSectionHeading("03  /  Your kitchen", "What’s in your kitchen?")
             Text("Select ingredients you have. An empty selection leaves the pantry filter off.", style = MaterialTheme.typography.bodyMedium, color = FeedMeColors.Muted)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 availableIngredients.forEach { ingredient -> Choice(ingredient, ingredient in selectedIngredients) { onIngredientToggle(ingredient) } }
             }
         }
         PrimaryAction("Find my version  ↗", onFindMatches)
-        Note("A real filter. A small sample catalog.", "This build matches local sample options. It does not generate recipes, infer ingredients from photos, or verify allergy safety.", FeedMeColors.Lime)
+        Note("Your choices. A small sample catalog.", "This build filters local sample options. It does not generate recipes, infer ingredients from photos, or verify allergy safety.", FeedMeColors.SoftLime)
     }
 }
 
@@ -341,7 +351,7 @@ fun CookbookScreen(meals: List<MealUi>, onOpenRecipe: (String) -> Unit, onExplor
     Page {
         BackAction(onBack)
         Heading("YOUR PRIVATE LITTLE COLLECTION", "The keepers.", "Meals you’d happily meet again.")
-        Badge("${meals.size} SAVED ${if (meals.size == 1) "MEAL" else "MEALS"}", FeedMeColors.Lilac)
+        Badge("${meals.size} SAVED ${if (meals.size == 1) "MEAL" else "MEALS"}", FeedMeColors.Lime)
         if (meals.isEmpty()) {
             EmptyState("Nothing saved.\nYet.", "Find a meal, save it, and make future-you’s dinner a little easier.")
             PrimaryAction("Find my first keeper", onExplore)
@@ -402,19 +412,31 @@ fun SettingsScreen(onReset: () -> Unit, onBack: () -> Unit) {
     Page {
         BackAction(onBack)
         Heading("CLEAR IS KIND", "Your kitchen.\nYour controls.")
-        Note("This is the native foundation.", "Real accounts, cloud sync, live circles, photo publishing, payments and notifications are not connected. The sample catalog and sample people are demonstration data.", FeedMeColors.Lilac)
-        Note("Make Mine is yours.", "Change time, effort and pantry selections to filter the sample catalog. No generative AI call is made, and no preference is sent to a server.", FeedMeColors.Lime)
-        SectionTitle("Start fresh")
-        Text("Reset the local demo’s saved meals, selections and cooking progress. This cannot delete a real account because no account is connected.", style = MaterialTheme.typography.bodyLarge)
-        SecondaryAction("Reset local demo", onReset)
+        Badge("LOCAL DEMO WORKSPACE", FeedMeColors.Lime)
+        Note("You’re in the demo kitchen.", "Sample recipes. Sample people. No real account, cloud sync, live circles, photo publishing, payments or notifications are connected on this surface.", FeedMeColors.SoftBlue)
+        Note("Make Mine is yours.", "Change time, effort and pantry selections to filter the sample catalog. No generative AI call is made, and no preference is sent to a server.", FeedMeColors.SoftLime)
+        Surface(color = Color.White, shape = RoundedCornerShape(24.dp), border = BorderStroke(1.dp, FeedMeColors.Line)) {
+            Column(Modifier.padding(22.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+                SectionTitle("A fresh start")
+                Text("Reset this demo’s saved meals, selections and cooking progress. No real account or cloud data is deleted.",
+                    style = MaterialTheme.typography.bodyMedium, color = FeedMeColors.Muted)
+                SecondaryAction("Reset local demo", onReset)
+            }
+        }
         FinePrint("FeedMe · Your kitchen. Your rules.")
     }
 }
 
 @Composable
-fun FeedMeDemoLabel() {
+fun FeedMeDemoLabel(onSettings: (() -> Unit)? = null) {
     Surface(color = FeedMeColors.Ink) {
-        Text("LOCAL DEMO · SAMPLE DATA · NO LIVE SHARING", color = Color.White, style = MaterialTheme.typography.labelMedium, modifier = Modifier.fillMaxWidth().padding(horizontal = 18.dp, vertical = 9.dp))
+        Row(Modifier.fillMaxWidth().padding(horizontal = 18.dp, vertical = 5.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
+            Text("LOCAL DEMO · SAMPLE DATA · NO LIVE SHARING", color = Color.White,
+                style = MaterialTheme.typography.labelMedium, modifier = Modifier.weight(1f).padding(vertical = 7.dp))
+            if (onSettings != null) TextButton(onClick = onSettings, modifier = Modifier.heightIn(min = 48.dp),
+                colors = ButtonDefaults.textButtonColors(contentColor = FeedMeColors.Lime)) { Text("Demo settings") }
+        }
     }
 }
 
@@ -440,7 +462,7 @@ private fun Page(content: @Composable ColumnScope.() -> Unit) {
 
 @Composable
 private fun Wordmark() {
-    Text("feedme.", fontWeight = FontWeight.Black, fontSize = 29.sp, letterSpacing = (-1.5).sp, color = FeedMeColors.Ink)
+    FeedMeWordmark()
 }
 
 @Composable
@@ -503,7 +525,7 @@ private fun FinePrint(copy: String) { Text(copy, style = MaterialTheme.typograph
 
 @Composable
 private fun EmptyState(title: String, copy: String) {
-    Surface(color = FeedMeColors.Lilac, shape = RoundedCornerShape(28.dp)) {
+    Surface(color = FeedMeColors.SoftLime, shape = RoundedCornerShape(28.dp)) {
         Column(Modifier.fillMaxWidth().padding(27.dp), verticalArrangement = Arrangement.spacedBy(19.dp)) {
             Text("✳", fontSize = 57.sp, color = FeedMeColors.Blue)
             Text(title, style = MaterialTheme.typography.headlineLarge)

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.app.mealflow.CookingFlowPresentationTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-09-14T03:17:04.809Z" hostname="ansachars-MacBook-Pro.local" time="0.109">
+  <properties/>
+  <testcase name="missingStepNeverClampsToFirstOrLast[jvm]" classname="com.feedme.app.mealflow.CookingFlowPresentationTest" time="0.089"/>
+  <testcase name="localAcknowledgedAndHistoricalCompletionHaveDifferentCopy[jvm]" classname="com.feedme.app.mealflow.CookingFlowPresentationTest" time="0.003"/>
+  <testcase name="retainedRetiredMayBeReadButRecallUnreviewedAndMissingPinCannot[jvm]" classname="com.feedme.app.mealflow.CookingFlowPresentationTest" time="0.004"/>
+  <testcase name="errorRecallOriginAndConflictOverrideCelebratoryCompletion[jvm]" classname="com.feedme.app.mealflow.CookingFlowPresentationTest" time="0.004"/>
+  <testcase name="onlyExplicitPendingProgressEnablesHeadSync[jvm]" classname="com.feedme.app.mealflow.CookingFlowPresentationTest" time="0.002"/>
+  <testcase name="allIssuesExplainUnavailableActionWithoutRawPrivatePayload[jvm]" classname="com.feedme.app.mealflow.CookingFlowPresentationTest" time="0.003"/>
+  <testcase name="originalStartAndLostFinalizationCannotBecomeOrdinaryStepSyncOrDiscard[jvm]" classname="com.feedme.app.mealflow.CookingFlowPresentationTest" time="0.001"/>
+  <testcase name="lastStepOrMarkedLastDoesNotImplyCompletion[jvm]" classname="com.feedme.app.mealflow.CookingFlowPresentationTest" time="0.001"/>
+  <testcase name="quantitiesAndDurationsStayExactAndDoNotBecomeTimers[jvm]" classname="com.feedme.app.mealflow.CookingFlowPresentationTest" time="0.0"/>
+  <testcase name="currentStepUsesExactStableIdNotPositionOrCompletedSet[jvm]" classname="com.feedme.app.mealflow.CookingFlowPresentationTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

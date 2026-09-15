@@ -25,6 +25,7 @@ import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 
 private val traceKey = AttributeKey<String>("FeedMeTraceId")
+private val authoredProblemKey = AttributeKey<Unit>("FeedMeAuthoredProblem")
 private val localBodyValidator by lazy { ContractBodyValidator.bundled() }
 private val problemContentType = ContentType.parse("application/problem+json")
 private val responseContext = createApplicationPlugin("FeedMeResponseContext") {
@@ -38,12 +39,20 @@ private val responseContext = createApplicationPlugin("FeedMeResponseContext") {
     }
 }
 
-/** The only implemented operation is public health. All other product routes deny with 503. */
+/** Default is health-only/503. Product route groups require explicit trusted composition. */
 fun Application.feedMeLocalService(
     config: LocalServerConfig,
     catalog: ContractCatalog = ContractCatalog.bundled(),
     clock: Clock = Clock.systemUTC(),
     bodyValidator: ContractBodyValidator = localBodyValidator,
+    planning: PlanningHttpConfiguration? = null,
+    social: SocialHttpConfiguration? = null,
+    kitchen: KitchenHttpConfiguration? = null,
+    cooking: CookingHttpConfiguration? = null,
+    savedRecipe: SavedRecipeHttpConfiguration? = null,
+    media: MediaHttpConfiguration? = null,
+    postDraft: PostDraftHttpConfiguration? = null,
+    postPublication: PostPublicationHttpConfiguration? = null,
 ) {
     install(responseContext)
     install(StatusPages) {
@@ -56,7 +65,10 @@ fun Application.feedMeLocalService(
             // No raw exception, URI, body, authorization header or principal logging here.
         }
         status(HttpStatusCode.NotFound, HttpStatusCode.MethodNotAllowed) { call, _ ->
-            call.problem(bodyValidator, HttpStatusCode.NotFound, "ROUTE_NOT_FOUND", "Route not found")
+            // Only an empty routing fallback needs replacement. Keep an explicitly authored,
+            // canonical operation Problem (e.g. private PLAN_UNAVAILABLE) unchanged.
+            if (!call.attributes.contains(authoredProblemKey))
+                call.problem(bodyValidator, HttpStatusCode.NotFound, "ROUTE_NOT_FOUND", "Route not found")
         }
     }
     routing {
@@ -74,6 +86,22 @@ fun Application.feedMeLocalService(
                             "Local response violates the bundled contract"
                         }
                         call.respondText(text, ContentType.Application.Json, HttpStatusCode.OK)
+                    } else if (planning != null && operation.id in planningHttpOperations) {
+                        call.planningOperation(operation.id, planning, bodyValidator)
+                    } else if (social != null && operation.id in socialHttpOperations) {
+                        call.socialOperation(operation.id, social, bodyValidator)
+                    } else if (kitchen != null && operation.id in kitchenHttpOperations) {
+                        call.kitchenOperation(operation.id, kitchen, bodyValidator)
+                    } else if (cooking != null && operation.id in cookingHttpOperations) {
+                        call.cookingOperation(operation.id, cooking, bodyValidator)
+                    } else if (savedRecipe != null && operation.id in savedRecipeHttpOperations) {
+                        call.savedRecipeOperation(operation.id, savedRecipe, bodyValidator)
+                    } else if (media != null && operation.id in mediaHttpOperations) {
+                        call.mediaOperation(operation.id, media, bodyValidator)
+                    } else if (postDraft != null && operation.id in postDraftHttpOperations) {
+                        call.postDraftOperation(operation.id, postDraft, bodyValidator)
+                    } else if (postPublication != null && operation.id == "publishPost") {
+                        call.postPublicationOperation(postPublication, bodyValidator)
                     } else {
                         // Do not accept fake tokens, grant access, parse/mutate data or acknowledge webhooks.
                         // No Retry-After promise: this is missing implementation, not transient capacity.
@@ -86,14 +114,16 @@ fun Application.feedMeLocalService(
     }
 }
 
-private suspend fun ApplicationCall.problem(
+internal suspend fun ApplicationCall.problem(
     validator: ContractBodyValidator,
     status: HttpStatusCode,
     code: String,
     title: String,
     detail: String? = null,
     operationId: String? = null,
+    retryAfterSeconds: Long? = null,
 ) {
+    require(retryAfterSeconds == null || (retryAfterSeconds >= 0 && status.value in setOf(429, 503)))
     val body = buildJsonObject {
         put("type", "about:blank")
         put("title", title)
@@ -101,11 +131,16 @@ private suspend fun ApplicationCall.problem(
         put("code", code)
         put("traceId", attributes[traceKey])
         detail?.let { put("detail", it) }
+        retryAfterSeconds?.let { put("retryAfterSeconds", it) }
     }
     val text = body.toString()
     val bytes = text.encodeToByteArray()
     val result = if (operationId == null) validator.validateSchema("Problem", bytes)
         else validator.validateResponse(operationId, status.value, bytes, "application/problem+json")
     check(result == BodyValidationResult.Valid) { "Local Problem violates the bundled contract" }
+    attributes.put(authoredProblemKey, Unit)
+    // Problem accepts zero. The shared transport's Retry-After profile accepts positive
+    // integer seconds only, so zero remains exact in the body without inventing a delay.
+    retryAfterSeconds?.takeIf { it > 0 }?.let { response.headers.append(HttpHeaders.RetryAfter, it.toString()) }
     respondText(text, problemContentType, status)
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.http.CookingHttpIntegrationTest" tests="18" skipped="0" failures="0" errors="0" timestamp="2026-09-14T03:18:52.681Z" hostname="ansachars-MacBook-Pro.local" time="6.568">
+  <properties/>
+  <testcase name="createReplaysExactCurrentStateAndNeverRebasesAnOldCommand" classname="com.feedme.server.http.CookingHttpIntegrationTest" time="0.332"/>
+  <testcase name="defaultServiceAndUnrelatedProductOperationsStayExplicitlyUnavailable" classname="com.feedme.server.http.CookingHttpIntegrationTest" time="0.25"/>
+  <testcase name="revocationGuestExpiryAndChangedInputAreCheckedBeforeNewOrCachedDisclosure" classname="com.feedme.server.http.CookingHttpIntegrationTest" time="0.36"/>
+  <testcase name="actualCioSocketAcceptsCanonicalCreateAndRejectsDuplicateAuthorization" classname="com.feedme.server.http.CookingHttpIntegrationTest" time="0.474"/>
+  <testcase name="retirementPreservesOwnedPinsButRecallDeniesTheirBodiesAndMutations" classname="com.feedme.server.http.CookingHttpIntegrationTest" time="0.45"/>
+  <testcase name="configuredCookingDoesNotEnableSaveShareAuthOrTimerEndpoints" classname="com.feedme.server.http.CookingHttpIntegrationTest" time="0.314"/>
+  <testcase name="outboxFailureRollsBackButLostCommitReceiptRequiresOriginalIdentity" classname="com.feedme.server.http.CookingHttpIntegrationTest" time="0.447"/>
+  <testcase name="exactOwnedPinExtendsHistoricalPlanReadNotNewStartAndNotBeyondSessionExpiry" classname="com.feedme.server.http.CookingHttpIntegrationTest" time="0.32"/>
+  <testcase name="verifiedGuestAndAccountCannotReadOrStartEachOthersPlans" classname="com.feedme.server.http.CookingHttpIntegrationTest" time="0.425"/>
+  <testcase name="completionIsOnceOnlyAndMakeAgainCannotBeSilentlyIgnored" classname="com.feedme.server.http.CookingHttpIntegrationTest" time="0.463"/>
+  <testcase name="malformedBodiesAndUndeclaredControlsHaveZeroCookingEffects" classname="com.feedme.server.http.CookingHttpIntegrationTest" time="0.295"/>
+  <testcase name="completionHasNoConditionalHeaderAndPatchCannotSkipItsPrecondition" classname="com.feedme.server.http.CookingHttpIntegrationTest" time="0.371"/>
+  <testcase name="verifierFailuresAreSanitizedWithRetryMetadataAndNoDomainEffects" classname="com.feedme.server.http.CookingHttpIntegrationTest" time="0.281"/>
+  <testcase name="responseBoundIsEnforcedBeforeSessionReceiptOrOutboxCommits" classname="com.feedme.server.http.CookingHttpIntegrationTest" time="0.344"/>
+  <testcase name="cancelledCallerAfterCommitCannotUndoOrDuplicateSession" classname="com.feedme.server.http.CookingHttpIntegrationTest" time="0.306"/>
+  <testcase name="progressAndStatusOnlyCompletionPreserveExactStepsTimersNotesAndDatabaseTime" classname="com.feedme.server.http.CookingHttpIntegrationTest" time="0.367"/>
+  <testcase name="createGetAndPinnedPlanReturnActualCanonicalStateWithoutGetEffects" classname="com.feedme.server.http.CookingHttpIntegrationTest" time="0.341"/>
+  <testcase name="secondDeviceRequiresFreshVersionAndNextAggregateSequence" classname="com.feedme.server.http.CookingHttpIntegrationTest" time="0.427"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

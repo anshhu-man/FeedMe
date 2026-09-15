@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.http.PlanningHttpIntegrationTest" tests="18" skipped="0" failures="0" errors="0" timestamp="2026-09-13T23:26:02.533Z" hostname="ansachars-MacBook-Pro.local" time="14.445">
+  <properties/>
+  <testcase name="actualVerifiedGuestKindCannotBorrowDeviceOrAccountOwnership" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="1.056"/>
+  <testcase name="verifierFailuresAndExceptionsAreSanitizedAndCannotReachDatabaseAuthority" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.769"/>
+  <testcase name="decodedUuidPathsAreExactAndMalformedOrExtraSegmentsNeverSelectAnotherResource" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.804"/>
+  <testcase name="unconfiguredAndOtherProductOperationsStayClosedEvenWithPlanningCredentials" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.714"/>
+  <testcase name="preCommitDatabaseFailureRollsBackPlanReceiptAndOutboxWithoutLeakingCause" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.68"/>
+  <testcase name="duplicateQueriesAndConditionalReadsCannotCauseUnvalidated304OrDisclosure" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.604"/>
+  <testcase name="actualCioSocketServesPlanningAndRejectsDuplicateAuthorizationWithoutSecondEffect" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.967"/>
+  <testcase name="currentSessionRevocationIsRecheckedBeforeSuccessfulIdempotentReplay" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.87"/>
+  <testcase name="verifierOutputEnvironmentAndDeviceMustMatchAdmittedContext" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.779"/>
+  <testcase name="durableAlternativesUseCanonicalNoIfMatchBodyAndDoNotAdvanceTwiceOnRetry" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.847"/>
+  <testcase name="simulatedCommitReceiptLossReturnsUnknownAndExactRetryRecoversOneActualCommit" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.876"/>
+  <testcase name="malformedSchemaDuplicateUnicodeAndOversizeBodiesHaveNoDurableEffects" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.857"/>
+  <testcase name="catalogRecallDeniesReadExplanationAndCachedReadySelection" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.727"/>
+  <testcase name="cancelledHttpCallerAfterActualCommitKeepsOneDurableResultForExactRetry" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.736"/>
+  <testcase name="sameKeyBodyReplayIsExactButChangedBodyCannotCreateAnotherPlan" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.795"/>
+  <testcase name="configuredServiceStillDoesNotEnablePreferenceRecipeOrSocialRoutes" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.725"/>
+  <testcase name="expiredGuestAndUnknownTokenDoNotAuthorizeFreshOrCachedPlans" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.731"/>
+  <testcase name="configuredCreateReadAndExplanationReturnCanonicalPrivateResponses" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.908"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+]]></system-err>
+</testsuite>

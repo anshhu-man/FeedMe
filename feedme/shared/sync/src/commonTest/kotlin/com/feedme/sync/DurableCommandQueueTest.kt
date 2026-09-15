@@ -13,6 +13,62 @@ import kotlin.test.*
 /** Journal state-machine tests. The CAS fixture is not a production persistence/crypto adapter. */
 @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
 class DurableCommandQueueTest {
+    @Test fun originalIntentReadIsDetachedExactAndNeverCallsExecutionPorts() = runTest {
+        val f = Fixture(StandardTestDispatcher(testScheduler)); val original = cookIntent()
+        value(f.queue.enqueue(f.lease, original)); val commits = f.store.commits.size
+        val read = assertNotNull(value(f.queue.intent(f.lease, ID)))
+        assertEquals(original.originBinding, read.originBinding); assertEquals(ID, read.commandId)
+        assertEquals(original.call.pathParameters, read.call.pathParameters); assertEquals(original.call.ifMatch, read.call.ifMatch)
+        assertContentEquals(original.call.body!!.copyForCodec(), read.call.body!!.copyForCodec())
+        read.call.body!!.copyForCodec().fill(0)
+        runCatching { (read.call.pathParameters as MutableMap<String, String>).clear() }
+        val again = assertNotNull(value(f.queue.intent(f.lease, ID)))
+        assertContentEquals(original.call.body!!.copyForCodec(), again.call.body!!.copyForCodec())
+        assertEquals(original.call.pathParameters, again.call.pathParameters)
+        assertEquals(commits, f.store.commits.size); assertEquals(0, f.gateCalls); assertTrue(f.sent.isEmpty())
+    }
+
+    @Test fun originalIntentReadRejectsWrongStaleAndMalformedIdentityWithoutEffects() = runTest {
+        val f = Fixture(StandardTestDispatcher(testScheduler)); value(f.queue.enqueue(f.lease, cookIntent()))
+        val foreign = SessionBoundary().activate(f.scope)
+        failure(FailureReason.STALE_SESSION, f.queue.intent(foreign, ID))
+        failure(FailureReason.INVALID_DATA, f.queue.intent(f.lease, "invalid"))
+        f.boundary.activate(f.scope); failure(FailureReason.STALE_SESSION, f.queue.intent(f.lease, ID))
+        assertEquals(0, f.gateCalls); assertTrue(f.sent.isEmpty())
+    }
+
+    @Test fun originalIntentReadReturnsNullForAbsentAndBothTerminalTombstones() = runTest {
+        for (apply in listOf(false, true)) {
+            val f = Fixture(StandardTestDispatcher(testScheduler)); assertNull(value(f.queue.intent(f.lease, ID)))
+            val queued = value(f.queue.enqueue(f.lease, deleteIntent()))
+            if (apply) {
+                val received = assertNotNull(value(f.queue.dispatchNext(f.lease)))
+                value(f.queue.applyReceipt(f.lease, ID, received.localRevision, emptyList()))
+            } else value(f.queue.discardUnsent(f.lease, ID, queued.localRevision))
+            assertNull(value(f.queue.intent(f.lease, ID))); assertNotNull(value(f.queue.command(f.lease, ID)))
+        }
+    }
+
+    @Test fun originalIntentReadBracketsChangedMetadataAndBody() = runTest {
+        for (body in listOf(false, true)) {
+            val f = Fixture(StandardTestDispatcher(testScheduler)); value(f.queue.enqueue(f.lease, cookIntent()))
+            var changed = false
+            f.store.afterRead = { key -> if (!changed && key == request(ID)) {
+                changed = true
+                if (body) f.store.corrupt(key, json("{\"deviceSequence\":2,\"currentStepId\":\"next\"}"))
+                else f.store.bumpRevision(metadata(ID))
+            } }
+            failure(FailureReason.CONFLICT, f.queue.intent(f.lease, ID)); assertTrue(f.sent.isEmpty())
+        }
+    }
+
+    @Test fun originalIntentReadRejectsMalformedPersistedBodyWithoutRepairingIt() = runTest {
+        val f = Fixture(StandardTestDispatcher(testScheduler)); value(f.queue.enqueue(f.lease, cookIntent()))
+        f.store.corrupt(request(ID), json("{}")); val commits = f.store.commits.size
+        failure(FailureReason.INVALID_DATA, f.queue.intent(f.lease, ID)); assertEquals(commits, f.store.commits.size)
+        assertEquals("{}", f.store.text(request(ID))); assertTrue(f.sent.isEmpty())
+    }
+
     @Test fun enqueueAtomicallyPersistsDraftExactBodyMetadataAndIndexBeforeAnySend() = runTest {
         val f = Fixture(StandardTestDispatcher(testScheduler))
         val bytes = " { \"deviceSequence\": 1e0, \"currentStepId\": \"private-step\" } \n".encodeToByteArray()

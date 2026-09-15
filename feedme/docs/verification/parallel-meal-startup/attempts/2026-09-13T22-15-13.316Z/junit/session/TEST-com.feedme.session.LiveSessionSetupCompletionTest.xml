@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.session.LiveSessionSetupCompletionTest" tests="34" skipped="0" failures="0" errors="0" timestamp="2026-09-13T22:15:35.943Z" hostname="ansachars-MacBook-Pro.local" time="0.339">
+  <properties/>
+  <testcase name="closeDuringSuspendedSealFencesFinalCompleteAndIsPermanent[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.019"/>
+  <testcase name="newlyRetiringStaleOrActiveOwnerAfterAwaitStopsTheNextCompletionEffect[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.033"/>
+  <testcase name="failedCompletionCannotBeReenteredThroughSelectionRetryOrNewBegin[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.006"/>
+  <testcase name="credentialMetadataChangesBeforeOrDuringBindingFenceCompletion[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.007"/>
+  <testcase name="cancellationOfQueuedCompletionDoesNotInvalidateTheRunningCompletion[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.009"/>
+  <testcase name="persistedPendingOrCompleteNeverReconstructsLiveCompletionAuthority[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.006"/>
+  <testcase name="nonemptyTombstonedMissingOrForeignDataFailuresNeverFallBackToGeneralActivation[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.009"/>
+  <testcase name="repeatedCompletionRequiresNewBindingSealAndControlAcknowledgements[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.004"/>
+  <testcase name="schemaTwoBindsOperationAndLegacyOneNeverInfersItOrAllowsExtraFields[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.001"/>
+  <testcase name="staleOrForeignCompleteRecordNeverCompletesThisLiveAttempt[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.004"/>
+  <testcase name="coroutineCancellationAtCompletionEffectsDropsRetryAuthorityButPreservesWrittenState[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.013"/>
+  <testcase name="selectionAloneNeverBindsSealsCompletesOrPublishesALease[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.003"/>
+  <testcase name="failedPendingReackBeforeOrAfterCommitStopsCredentialReackBindingAndSeal[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.009"/>
+  <testcase name="bindingFailureBeforeCommitStopsSealAndRetryBindsTheSamePayload[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.011"/>
+  <testcase name="completedReceiptAndBindingDiagnosticsNeverPrintIdentifiersOrCredentials[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.004"/>
+  <testcase name="changedBindingReadbackCannotAuthorizeSealOrComplete[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.007"/>
+  <testcase name="visibleBindingAfterUnknownWriteRequiresNewRevisionBeforeSealing[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.006"/>
+  <testcase name="alreadyCompleteWithMissingBindingCannotCreateAReplacementBinding[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.004"/>
+  <testcase name="existingDifferentConfigurationOperationOrVersionedBindingIsNeverOverwritten[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.007"/>
+  <testcase name="exactCredentialReackMustMatchFullPayloadNotOnlyIncarnationMetadata[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.011"/>
+  <testcase name="completeCanResumeFailedSelectionOnlyUsingTheOriginalPreparedAttempt[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.013"/>
+  <testcase name="selectionOnlyResourcesHaveNoImplicitCompletionFallback[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.003"/>
+  <testcase name="explicitCancelDuringSuspendedBindingDropsLiveAuthorityWithoutCleanup[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.005"/>
+  <testcase name="falseCompleteReceiptAndChangedReadbackNeverReturnACompletionReceipt[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.013"/>
+  <testcase name="failedCompleteBeforeOrAfterCommitNeverReturnsReceiptAndRetryReacksEveryComponent[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.009"/>
+  <testcase name="failedSealBeforeOrAfterSelectionRequiresFreshBindingAndSealOnRetry[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.01"/>
+  <testcase name="alreadyCompleteRequiresExactStillUnusedSealedWork[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.008"/>
+  <testcase name="completionOrdersFreshBindingThenSealThenCompleteAndReturnsOnlyExactDetachedReceipt[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.01"/>
+  <testcase name="missingWrongSchemaPayloadOrTargetInBindingReceiptStopsBeforeSeal[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.016"/>
+  <testcase name="successfulSealReceiptRequiresExactSealedStatusBeforeControlCompletion[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.015"/>
+  <testcase name="completionReturnHandoffCancellationDropsLiveContextEvenAfterVisibleComplete[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.005"/>
+  <testcase name="replacementAbortJournalAfterBindingStopsSealAndPreservesReplacement[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.008"/>
+  <testcase name="noOpOrJumpedBindingReceiptCannotSubstituteForOneChangedRevision[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.046"/>
+  <testcase name="guestCompletionKeepsGuestIdentityAndAllOriginalPlans[jvm]" classname="com.feedme.session.LiveSessionSetupCompletionTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

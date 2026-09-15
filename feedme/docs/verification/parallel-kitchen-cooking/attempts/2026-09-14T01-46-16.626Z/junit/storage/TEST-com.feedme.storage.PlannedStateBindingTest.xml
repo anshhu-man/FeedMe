@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.storage.PlannedStateBindingTest" tests="18" skipped="0" failures="0" errors="0" timestamp="2026-09-14T01:47:07.709Z" hostname="ansachars-MacBook-Pro.local" time="1.639">
+  <properties/>
+  <testcase name="anyOtherRecordOrTombstoneBlocksInitialBindingAndReplay[jvm]" classname="com.feedme.storage.PlannedStateBindingTest" time="0.206"/>
+  <testcase name="changedSelectionOrExtraRowsAfterCommitCannotPassExactReadback[jvm]" classname="com.feedme.storage.PlannedStateBindingTest" time="0.139"/>
+  <testcase name="preparedPartialAndOrdinarilyRetiredPlansCannotBindOrExposeAStore[jvm]" classname="com.feedme.storage.PlannedStateBindingTest" time="0.069"/>
+  <testcase name="acknowledgedBindingAndExactResumeSurviveDatabaseCloseAndReopen[jvm]" classname="com.feedme.storage.PlannedStateBindingTest" time="0.045"/>
+  <testcase name="invalidSchemaAndPayloadBoundsAreRejectedBeforeSqlOrKeyAccess[jvm]" classname="com.feedme.storage.PlannedStateBindingTest" time="0.042"/>
+  <testcase name="emptyExactInspectionReturnsDetachedTargetWithoutRecordHandleWritesOrGarbageCollection[jvm]" classname="com.feedme.storage.PlannedStateBindingTest" time="0.038"/>
+  <testcase name="differentPayloadOrSchemaCannotReplaceTheFirstBinding[jvm]" classname="com.feedme.storage.PlannedStateBindingTest" time="0.047"/>
+  <testcase name="exactBoundResumePermitsDomainRowsAndDoesNotCollectUnrelatedGarbage[jvm]" classname="com.feedme.storage.PlannedStateBindingTest" time="0.057"/>
+  <testcase name="everyExactRetryChangesRevisionCiphertextAndAadWhileKeepingTargetAndPayload[jvm]" classname="com.feedme.storage.PlannedStateBindingTest" time="0.118"/>
+  <testcase name="authenticatedMaximumBindingRevisionCannotWrapResetOrReturnFreshAcknowledgement[jvm]" classname="com.feedme.storage.PlannedStateBindingTest" time="0.042"/>
+  <testcase name="staleOrDifferentBindingReceiptCannotPublishAnExactOwner[jvm]" classname="com.feedme.storage.PlannedStateBindingTest" time="0.052"/>
+  <testcase name="cancelledOrClosedCallsCannotBindOrReturnBoundHandles[jvm]" classname="com.feedme.storage.PlannedStateBindingTest" time="0.042"/>
+  <testcase name="readbackFailureAfterRealCommitIsNotPromotedAndRetryMustWriteAgain[jvm]" classname="com.feedme.storage.PlannedStateBindingTest" time="0.051"/>
+  <testcase name="firstBindingSupportsBothSchemasAndReturnsTheActuallyReadBackRecord[jvm]" classname="com.feedme.storage.PlannedStateBindingTest" time="0.113"/>
+  <testcase name="failedCommitNeverReturnsReceiptAndFreshRetryAlwaysChangesTheObservedRevision[jvm]" classname="com.feedme.storage.PlannedStateBindingTest" time="0.216"/>
+  <testcase name="reservedTombstoneAndCorruptOrUnknownBindingAreNeverRepaired[jvm]" classname="com.feedme.storage.PlannedStateBindingTest" time="0.147"/>
+  <testcase name="scopeMacForeignInstallAndNewerOwnerCannotCrossBind[jvm]" classname="com.feedme.storage.PlannedStateBindingTest" time="0.067"/>
+  <testcase name="selectedMissingOrUnusableKeyNeverRegeneratesOrOverwritesBinding[jvm]" classname="com.feedme.storage.PlannedStateBindingTest" time="0.147"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

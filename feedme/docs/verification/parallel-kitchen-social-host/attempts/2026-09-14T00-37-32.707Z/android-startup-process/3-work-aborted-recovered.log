@@ -1,0 +1,29 @@
+INSTRUMENTATION_STATUS: class=com.feedme.session.AndroidSessionSetupProcessInterruptionTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+com.feedme.session.AndroidSessionSetupProcessInterruptionTest:
+INSTRUMENTATION_STATUS: test=recoverAfterAcknowledgedWorkAbort
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.session.AndroidSessionSetupProcessInterruptionTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=recoverAfterAcknowledgedWorkAbort
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: startup_recovery_cleanup=exact-owned-fixture-removed
+INSTRUMENTATION_RESULT: startup_recovery_closed=3
+INSTRUMENTATION_RESULT: startup_recovery_control=complete
+INSTRUMENTATION_RESULT: startup_recovery_pid=9480
+INSTRUMENTATION_RESULT: startup_recovery_previous_pid=9423
+INSTRUMENTATION_RESULT: startup_recovery_scenario=work-aborted
+INSTRUMENTATION_RESULT: stream=
+
+Time: 1.653
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1

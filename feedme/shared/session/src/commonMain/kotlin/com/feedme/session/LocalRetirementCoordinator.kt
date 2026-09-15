@@ -251,6 +251,8 @@ private fun samePayload(left: PrivateBytes, right: PrivateBytes): Boolean {
 }
 
 /** Application-boundary lifetime only. This is not a substitute for the durable control record. */
+internal suspend fun processRetirementPending(boundary: SessionBoundary): Boolean = ProcessRetirements.get(boundary) != null
+
 private object ProcessRetirements {
     private val mutex = Mutex()
     private val pending = mutableMapOf<SessionBoundary, PendingLatch>()

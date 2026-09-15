@@ -1,6 +1,8 @@
 # Retained startup recovery owners
 
-14 September 2026. M1.05d.5b.2b.3.6d.1 is **DONE bounded**; whole6d remains **IN_PROGRESS**. This first slice adds retained credential and private-data recovery ownership; it does not integrate a complete startup recovery path. The original54 features,98 screens and FeedMe cooking/social scope are unchanged.
+14 September 2026. M1.05d.5b.2b.3.6d.1–4 are **DONE bounded**; parent6d/task6 remain **IN_PROGRESS** for production application wiring and integrated acceptance. The first slice adds retained credential/private-data ownership, [the second existing-only work recovery](WORK_RECOVERY_OWNERS.md), and [the third/fourth owned startup and close-before-Complete](OWNED_STARTUP_RECOVERY.md). No complete authenticated product journey is claimed. The original54-feature/98-screen blueprint is preserved; [V1 includes44 features and defers10](V1_RELEASE_SCOPE.md).
+
+The [preceding parallel batch](PARALLEL_FEATURE_FOUNDATIONS.md) added retained existing-only CONTROL ownership. Its trusted `ExistingSessionControlRecoveryStore` transfers ownership before opening and keeps the exact fixed encrypted ledger behind guarded read/CAS/close, without initialization/migration/GC or interpreting session-plan authority. Its26 JVM/12 native methods remain covered. The [current batch](PARALLEL_MEAL_STARTUP.md) adds bounded6d.3/6d.4 composition with36 session JVM/12 native methods; task7 integrated interruption and production wiring remain open.
 
 ## Why this precedes startup composition
 
@@ -31,21 +33,25 @@ Reservations retain the actual sibling-lock lifetime object, not just a pathname
 
 A real platform close error after its descriptor/channel has become invalid or closed is ambiguous. It is not promoted to success because a later close would be a no-op. A retained terminal failure keeps the process reservation, never retries a saved numeric file descriptor, and requires explicit process repair. Tests can simulate that error immediately after a real descriptor close; that is not evidence of an actual platform EIO or physical power loss.
 
-The application must not clear its recovery journal merely because these two owners closed. A future startup composition must also own and close the work-recovery handle and preserve independent control ownership through the final acknowledged Complete write.
+The application must not clear its recovery journal merely because these two owners closed. The [new owned composition](OWNED_STARTUP_RECOVERY.md) also owns/closes the work-recovery handle and preserves independent control ownership through the final acknowledged Complete write. Its verified protocol is not yet wired into the product roots.
 
 ## Small remaining tasks
 
 | Slice | Acceptance |
 | --- | --- |
 | 6d.1 — DONE bounded | Credential/data retained owners; exact observations; failed-open and failed-close retention; caller-handoff cancellation and truthful native/driver release tests. Verification below covers this component only. |
-| 6d.2 — TODO | Existing-only work recovery with exact native plan proof and full revision observation, without initialization, ordinary resume, migration, GC, lease or scheduler effects. Retain its manager before every suspended factory handoff. |
-| 6d.3 — TODO | Startup owner created before opening resources; exact control/configuration/lifecycle preflight; authenticated resource bundle; explicit confirmation and ordered abort; retained partial-open cleanup and closing-only retries. Independent control ownership remains held through finalization. |
-| 6d.4 — TODO | Complete only after all owned subordinate handles close successfully. Retain exact final evidence and close acknowledgements; never reinspect a closed resource or reconstruct authority from persisted Complete alone. Test cancellation/close/CAS outcomes and stale lifecycle/control changes. |
+| 6d.2 — DONE bounded | Existing-only fixed work owner plus original-plan public session facade; exact native proof, sole ledger and status/revision observation; changed-CAS abort/replay; retained failed-open/failed-close ownership. No initialization, normal resume, migration, GC, signing, lease or scheduler. Added30 storage JVM,28 session common,12 lower native and7 real public-facade tests. Full1,650 Kotlin/161 Node/299 native run passed. [Evidence and integration limits](WORK_RECOVERY_OWNERS.md). |
+| 6d.3 — DONE bounded | Actual application reservation before factories and retained four-owner startup; exact control/configuration/lifecycle preflight; authenticated original plans, explicit consent and ordered abort; partial-open cleanup and close-only retries. Root invalidation clears private leases synchronously but retains ownership; failed logical runtime admission releases exactly. [Current proof](OWNED_STARTUP_RECOVERY.md). Product wiring remains separate. |
+| 6d.4 — DONE bounded | Retain exact ALL-ABORTED checkpoint before subordinate close; acknowledge each close before fresh changed Complete, without reinspecting closed resources or reconstructing consent from persisted Complete. Cancellation/close/CAS/lifecycle and real same-process close/reopen tests pass. [Current proof](OWNED_STARTUP_RECOVERY.md); task7 process-separated integration is not claimed. |
 | Composite task7 — TODO | Integrated native process-separated interruption acceptance, distinct from component hooks and controlled reopen. Public journal recovery, hard-kill and physical-power-loss coverage remain explicit gates. |
 
-The existing [6c coordinator](COMPOSITE_SETUP_ABORT.md) borrows its resources and intentionally closes none. This slice does not change that coordinator or claim it now provides startup ownership.
+The existing [6c coordinator](COMPOSITE_SETUP_ABORT.md) still borrows resources and intentionally closes none by default. The new explicitly owned variant retains the ALL-ABORTED checkpoint and defers Complete to the owner; it does not silently transfer ownership in the borrowed path.
 
-## Verification
+## Current verification
+
+The [current combined source-bound receipt](verification/parallel-meal-startup/verification.json) passed at **2026-09-13T22:19:20.584Z**, covering all preceding owner regressions and bounded6d.3/6d.4:1,890 Kotlin/server/database,161 Node and323 native tests with seven clean Android libraries. [Exact inventory, independent audits, failed history and cleanup](PARALLEL_MEAL_STARTUP.md). Use `node scripts/verify-parallel-meal-startup.mjs` for this source tree;6d.1/6d.2 runners below have historical fixed inventories. Application wiring, task7 integrated interruption and release gates remain open.
+
+## Historical 6d.1 verification
 
 The full [source-bound receipt](verification/startup-recovery-owners/verification.json) passed at **2026-09-13T19:31:47.969Z** (14 September in India): **1,592 Kotlin/server/database tests,142 Node checks and280 isolated Android tests**, with five freshly built Android libraries and zero-issue lint. Shared Kotlin totals1,501: core48, contracts119, transport72, storage/integration488, sync103, kitchen142 and session529; server46 and isolated PostgreSQL45 remain separate. Native coverage is140 storage/140 session on the API35 arm64 emulator.
 

@@ -1,0 +1,1048 @@
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkRecoveryStoreTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+com.feedme.storage.AndroidSessionWorkRecoveryStoreTest:
+INSTRUMENTATION_STATUS: test=constructionDefersContextIoAndCloseBeforeOpenNeverInitializesMissingStorage
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkRecoveryStoreTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=constructionDefersContextIoAndCloseBeforeOpenNeverInitializesMissingStorage
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkRecoveryStoreTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=authenticProofsRejectAnotherInstallMutationsAndInvalidBoundsWithoutSelection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkRecoveryStoreTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stack=java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.authenticProofsRejectAnotherInstallMutationsAndInvalidBoundsWithoutSelection(AndroidSessionWorkRecoveryStoreTest.kt:88)
+
+INSTRUMENTATION_STATUS: stream=
+Error in authenticProofsRejectAnotherInstallMutationsAndInvalidBoundsWithoutSelection(com.feedme.storage.AndroidSessionWorkRecoveryStoreTest):
+java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.authenticProofsRejectAnotherInstallMutationsAndInvalidBoundsWithoutSelection(AndroidSessionWorkRecoveryStoreTest.kt:88)
+
+INSTRUMENTATION_STATUS: test=authenticProofsRejectAnotherInstallMutationsAndInvalidBoundsWithoutSelection
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkRecoveryStoreTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=competingLegacyAndCancelledQueuedOpensCannotRevokeTheFirstReadyOwner
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkRecoveryStoreTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stack=java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.competingLegacyAndCancelledQueuedOpensCannotRevokeTheFirstReadyOwner(AndroidSessionWorkRecoveryStoreTest.kt:238)
+
+INSTRUMENTATION_STATUS: stream=
+Error in competingLegacyAndCancelledQueuedOpensCannotRevokeTheFirstReadyOwner(com.feedme.storage.AndroidSessionWorkRecoveryStoreTest):
+java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.competingLegacyAndCancelledQueuedOpensCannotRevokeTheFirstReadyOwner(AndroidSessionWorkRecoveryStoreTest.kt:238)
+
+INSTRUMENTATION_STATUS: test=competingLegacyAndCancelledQueuedOpensCannotRevokeTheFirstReadyOwner
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkRecoveryStoreTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=absentFilesInstallOrOwnerKeysAndUnsupportedSchemaCannotCreateReplacementState
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkRecoveryStoreTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stack=java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.absentFilesInstallOrOwnerKeysAndUnsupportedSchemaCannotCreateReplacementState(AndroidSessionWorkRecoveryStoreTest.kt:124)
+
+INSTRUMENTATION_STATUS: stream=
+Error in absentFilesInstallOrOwnerKeysAndUnsupportedSchemaCannotCreateReplacementState(com.feedme.storage.AndroidSessionWorkRecoveryStoreTest):
+java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.absentFilesInstallOrOwnerKeysAndUnsupportedSchemaCannotCreateReplacementState(AndroidSessionWorkRecoveryStoreTest.kt:124)
+
+INSTRUMENTATION_STATUS: test=absentFilesInstallOrOwnerKeysAndUnsupportedSchemaCannotCreateReplacementState
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkRecoveryStoreTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=existingPreparedSelectedSealedAndAbortedRecordsAreReadWithoutWritingOrSigning
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkRecoveryStoreTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stack=java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.existingPreparedSelectedSealedAndAbortedRecordsAreReadWithoutWritingOrSigning(AndroidSessionWorkRecoveryStoreTest.kt:68)
+
+INSTRUMENTATION_STATUS: stream=
+Error in existingPreparedSelectedSealedAndAbortedRecordsAreReadWithoutWritingOrSigning(com.feedme.storage.AndroidSessionWorkRecoveryStoreTest):
+java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.existingPreparedSelectedSealedAndAbortedRecordsAreReadWithoutWritingOrSigning(AndroidSessionWorkRecoveryStoreTest.kt:68)
+
+INSTRUMENTATION_STATUS: test=existingPreparedSelectedSealedAndAbortedRecordsAreReadWithoutWritingOrSigning
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkRecoveryStoreTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sidecarsUnknownChildrenUnsafeModesAndSymlinksBlockBeforeSqliteOpening
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkRecoveryStoreTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stack=java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.sidecarsUnknownChildrenUnsafeModesAndSymlinksBlockBeforeSqliteOpening(AndroidSessionWorkRecoveryStoreTest.kt:166)
+
+INSTRUMENTATION_STATUS: stream=
+Error in sidecarsUnknownChildrenUnsafeModesAndSymlinksBlockBeforeSqliteOpening(com.feedme.storage.AndroidSessionWorkRecoveryStoreTest):
+java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.sidecarsUnknownChildrenUnsafeModesAndSymlinksBlockBeforeSqliteOpening(AndroidSessionWorkRecoveryStoreTest.kt:166)
+
+INSTRUMENTATION_STATUS: test=sidecarsUnknownChildrenUnsafeModesAndSymlinksBlockBeforeSqliteOpening
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkRecoveryStoreTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=partialAcquisitionFailuresRetainExactOwnerAndPreventSecondDescriptorsUntilClose
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkRecoveryStoreTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stack=java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.partialAcquisitionFailuresRetainExactOwnerAndPreventSecondDescriptorsUntilClose(AndroidSessionWorkRecoveryStoreTest.kt:185)
+
+INSTRUMENTATION_STATUS: stream=
+Error in partialAcquisitionFailuresRetainExactOwnerAndPreventSecondDescriptorsUntilClose(com.feedme.storage.AndroidSessionWorkRecoveryStoreTest):
+java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.partialAcquisitionFailuresRetainExactOwnerAndPreventSecondDescriptorsUntilClose(AndroidSessionWorkRecoveryStoreTest.kt:185)
+
+INSTRUMENTATION_STATUS: test=partialAcquisitionFailuresRetainExactOwnerAndPreventSecondDescriptorsUntilClose
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkRecoveryStoreTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedInitializationAndEachPreCloseFaultRetryOnlyUnfinishedAcknowledgedStages
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkRecoveryStoreTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stack=java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.failedInitializationAndEachPreCloseFaultRetryOnlyUnfinishedAcknowledgedStages(AndroidSessionWorkRecoveryStoreTest.kt:201)
+
+INSTRUMENTATION_STATUS: stream=
+Error in failedInitializationAndEachPreCloseFaultRetryOnlyUnfinishedAcknowledgedStages(com.feedme.storage.AndroidSessionWorkRecoveryStoreTest):
+java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.failedInitializationAndEachPreCloseFaultRetryOnlyUnfinishedAcknowledgedStages(AndroidSessionWorkRecoveryStoreTest.kt:201)
+
+INSTRUMENTATION_STATUS: test=failedInitializationAndEachPreCloseFaultRetryOnlyUnfinishedAcknowledgedStages
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkRecoveryStoreTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=simulatedPostDescriptorCloseFailureKeepsTerminalReservationWithoutNumericRetry
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkRecoveryStoreTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stack=java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.simulatedPostDescriptorCloseFailureKeepsTerminalReservationWithoutNumericRetry(AndroidSessionWorkRecoveryStoreTest.kt:256)
+
+INSTRUMENTATION_STATUS: stream=
+Error in simulatedPostDescriptorCloseFailureKeepsTerminalReservationWithoutNumericRetry(com.feedme.storage.AndroidSessionWorkRecoveryStoreTest):
+java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.simulatedPostDescriptorCloseFailureKeepsTerminalReservationWithoutNumericRetry(AndroidSessionWorkRecoveryStoreTest.kt:256)
+
+INSTRUMENTATION_STATUS: test=simulatedPostDescriptorCloseFailureKeepsTerminalReservationWithoutNumericRetry
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkRecoveryStoreTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=exactSamePayloadCasChangesRevisionAndSurvivesExistingOnlyReopen
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkRecoveryStoreTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stack=java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.exactSamePayloadCasChangesRevisionAndSurvivesExistingOnlyReopen(AndroidSessionWorkRecoveryStoreTest.kt:105)
+
+INSTRUMENTATION_STATUS: stream=
+Error in exactSamePayloadCasChangesRevisionAndSurvivesExistingOnlyReopen(com.feedme.storage.AndroidSessionWorkRecoveryStoreTest):
+java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.exactSamePayloadCasChangesRevisionAndSurvivesExistingOnlyReopen(AndroidSessionWorkRecoveryStoreTest.kt:105)
+
+INSTRUMENTATION_STATUS: test=exactSamePayloadCasChangesRevisionAndSurvivesExistingOnlyReopen
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkRecoveryStoreTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=foreignRowsTombstonesGcAndAbortReceiptsArePreservedAndNeverCollected
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkRecoveryStoreTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stack=java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.foreignRowsTombstonesGcAndAbortReceiptsArePreservedAndNeverCollected(AndroidSessionWorkRecoveryStoreTest.kt:143)
+
+INSTRUMENTATION_STATUS: stream=
+Error in foreignRowsTombstonesGcAndAbortReceiptsArePreservedAndNeverCollected(com.feedme.storage.AndroidSessionWorkRecoveryStoreTest):
+java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.foreignRowsTombstonesGcAndAbortReceiptsArePreservedAndNeverCollected(AndroidSessionWorkRecoveryStoreTest.kt:143)
+
+INSTRUMENTATION_STATUS: test=foreignRowsTombstonesGcAndAbortReceiptsArePreservedAndNeverCollected
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkRecoveryStoreTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cancelledAcquisitionAndCallerReturnGapNeverExposeLedgerOrCasAuthority
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkRecoveryStoreTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stack=java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.cancelledAcquisitionAndCallerReturnGapNeverExposeLedgerOrCasAuthority(AndroidSessionWorkRecoveryStoreTest.kt:217)
+
+INSTRUMENTATION_STATUS: stream=
+Error in cancelledAcquisitionAndCallerReturnGapNeverExposeLedgerOrCasAuthority(com.feedme.storage.AndroidSessionWorkRecoveryStoreTest):
+java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.cancelledAcquisitionAndCallerReturnGapNeverExposeLedgerOrCasAuthority(AndroidSessionWorkRecoveryStoreTest.kt:217)
+
+INSTRUMENTATION_STATUS: test=cancelledAcquisitionAndCallerReturnGapNeverExposeLedgerOrCasAuthority
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 0.738
+There were 11 failures:
+1) authenticProofsRejectAnotherInstallMutationsAndInvalidBoundsWithoutSelection(com.feedme.storage.AndroidSessionWorkRecoveryStoreTest)
+java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.authenticProofsRejectAnotherInstallMutationsAndInvalidBoundsWithoutSelection(AndroidSessionWorkRecoveryStoreTest.kt:88)
+2) competingLegacyAndCancelledQueuedOpensCannotRevokeTheFirstReadyOwner(com.feedme.storage.AndroidSessionWorkRecoveryStoreTest)
+java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.competingLegacyAndCancelledQueuedOpensCannotRevokeTheFirstReadyOwner(AndroidSessionWorkRecoveryStoreTest.kt:238)
+3) absentFilesInstallOrOwnerKeysAndUnsupportedSchemaCannotCreateReplacementState(com.feedme.storage.AndroidSessionWorkRecoveryStoreTest)
+java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.absentFilesInstallOrOwnerKeysAndUnsupportedSchemaCannotCreateReplacementState(AndroidSessionWorkRecoveryStoreTest.kt:124)
+4) existingPreparedSelectedSealedAndAbortedRecordsAreReadWithoutWritingOrSigning(com.feedme.storage.AndroidSessionWorkRecoveryStoreTest)
+java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.existingPreparedSelectedSealedAndAbortedRecordsAreReadWithoutWritingOrSigning(AndroidSessionWorkRecoveryStoreTest.kt:68)
+5) sidecarsUnknownChildrenUnsafeModesAndSymlinksBlockBeforeSqliteOpening(com.feedme.storage.AndroidSessionWorkRecoveryStoreTest)
+java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.sidecarsUnknownChildrenUnsafeModesAndSymlinksBlockBeforeSqliteOpening(AndroidSessionWorkRecoveryStoreTest.kt:166)
+6) partialAcquisitionFailuresRetainExactOwnerAndPreventSecondDescriptorsUntilClose(com.feedme.storage.AndroidSessionWorkRecoveryStoreTest)
+java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.partialAcquisitionFailuresRetainExactOwnerAndPreventSecondDescriptorsUntilClose(AndroidSessionWorkRecoveryStoreTest.kt:185)
+7) failedInitializationAndEachPreCloseFaultRetryOnlyUnfinishedAcknowledgedStages(com.feedme.storage.AndroidSessionWorkRecoveryStoreTest)
+java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.failedInitializationAndEachPreCloseFaultRetryOnlyUnfinishedAcknowledgedStages(AndroidSessionWorkRecoveryStoreTest.kt:201)
+8) simulatedPostDescriptorCloseFailureKeepsTerminalReservationWithoutNumericRetry(com.feedme.storage.AndroidSessionWorkRecoveryStoreTest)
+java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.simulatedPostDescriptorCloseFailureKeepsTerminalReservationWithoutNumericRetry(AndroidSessionWorkRecoveryStoreTest.kt:256)
+9) exactSamePayloadCasChangesRevisionAndSurvivesExistingOnlyReopen(com.feedme.storage.AndroidSessionWorkRecoveryStoreTest)
+java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.exactSamePayloadCasChangesRevisionAndSurvivesExistingOnlyReopen(AndroidSessionWorkRecoveryStoreTest.kt:105)
+10) foreignRowsTombstonesGcAndAbortReceiptsArePreservedAndNeverCollected(com.feedme.storage.AndroidSessionWorkRecoveryStoreTest)
+java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.foreignRowsTombstonesGcAndAbortReceiptsArePreservedAndNeverCollected(AndroidSessionWorkRecoveryStoreTest.kt:143)
+11) cancelledAcquisitionAndCallerReturnGapNeverExposeLedgerOrCasAuthority(com.feedme.storage.AndroidSessionWorkRecoveryStoreTest)
+java.util.regex.PatternSyntaxException: Syntax error in regexp pattern near index 27
+,"proof":"([0-9a-f]{128})"}$
+                           ^
+	at com.android.icu.util.regex.PatternNative.compileImpl(Native Method)
+	at com.android.icu.util.regex.PatternNative.<init>(PatternNative.java:53)
+	at com.android.icu.util.regex.PatternNative.create(PatternNative.java:49)
+	at java.util.regex.Pattern.compile(Pattern.java:3533)
+	at java.util.regex.Pattern.<init>(Pattern.java:1419)
+	at java.util.regex.Pattern.compile(Pattern.java:921)
+	at kotlin.text.Regex.<init>(Regex.kt:90)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.proof(AndroidSessionWorkRecoveryStoreTest.kt:287)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.fixture(AndroidSessionWorkRecoveryStoreTest.kt:276)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.access$fixture(AndroidSessionWorkRecoveryStoreTest.kt:29)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest$fixture$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at com.feedme.storage.AndroidSessionWorkRecoveryStoreTest.cancelledAcquisitionAndCallerReturnGapNeverExposeLedgerOrCasAuthority(AndroidSessionWorkRecoveryStoreTest.kt:217)
+
+FAILURES!!!
+Tests run: 12,  Failures: 11
+
+
+INSTRUMENTATION_CODE: -1

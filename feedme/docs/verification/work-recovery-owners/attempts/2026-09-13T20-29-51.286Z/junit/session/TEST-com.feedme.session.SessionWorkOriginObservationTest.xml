@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.session.SessionWorkOriginObservationTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-09-13T20:30:14.223Z" hostname="ansachars-MacBook-Pro.local" time="0.026">
+  <properties/>
+  <testcase name="cancellationAfterEveryReadOrProofBoundaryCannotReturnObservation[jvm]" classname="com.feedme.session.SessionWorkOriginObservationTest" time="0.004"/>
+  <testcase name="visibleSelectionAfterUnknownWriteIsEvidenceButNeverAnAcknowledgement[jvm]" classname="com.feedme.session.SessionWorkOriginObservationTest" time="0.001"/>
+  <testcase name="samePayloadSelectedAndSealedReacknowledgementsChangeObservedRevision[jvm]" classname="com.feedme.session.SessionWorkOriginObservationTest" time="0.003"/>
+  <testcase name="foreignOrTamperedProofAndMissingNativeCapabilityFailWithoutFallback[jvm]" classname="com.feedme.session.SessionWorkOriginObservationTest" time="0.001"/>
+  <testcase name="missingCorruptAndUnreadableRecordsRemainFailuresWithoutInitialization[jvm]" classname="com.feedme.session.SessionWorkOriginObservationTest" time="0.001"/>
+  <testcase name="queuedObservationAfterAcknowledgedCloseDoesNotReadOrAuthenticate[jvm]" classname="com.feedme.session.SessionWorkOriginObservationTest" time="0.003"/>
+  <testcase name="activeOrLateReplacementLeaseIsRejectedAndNeverClearedByInspection[jvm]" classname="com.feedme.session.SessionWorkOriginObservationTest" time="0.002"/>
+  <testcase name="authenticatedPredecessorAndCanonicalSelectedSealedBytesCannotBeNormalized[jvm]" classname="com.feedme.session.SessionWorkOriginObservationTest" time="0.003"/>
+  <testcase name="ordinaryUsedRetiringOrCompetingOriginsNeverProduceSetupEvidence[jvm]" classname="com.feedme.session.SessionWorkOriginObservationTest" time="0.001"/>
+  <testcase name="observationValidatesPositiveRevisionAndRedactsAllDiagnosticFields[jvm]" classname="com.feedme.session.SessionWorkOriginObservationTest" time="0.001"/>
+  <testcase name="preparedSelectedAndSealedExposeOnlyTheirExactAuthenticatedRevision[jvm]" classname="com.feedme.session.SessionWorkOriginObservationTest" time="0.002"/>
+  <testcase name="changedRevisionOrPayloadDuringProofNeverReturnsAnEarlierObservation[jvm]" classname="com.feedme.session.SessionWorkOriginObservationTest" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

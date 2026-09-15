@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.kitchen.SavedRecipeRepositoryTest" tests="31" skipped="0" failures="0" errors="0" timestamp="2026-09-13T22:15:28.295Z" hostname="ansachars-MacBook-Pro.local" time="0.641">
+  <properties/>
+  <testcase name="validRecallWithMismatchedEtagStillBlocksAnExistingCopy[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.031"/>
+  <testcase name="schemaRejectsSourceMediaCommentsAndWrongResponseIdentity[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.019"/>
+  <testcase name="nestedLifecycleCannotRegressOrChangeAtTheSameVersionDespiteNewerSaveVersion[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.027"/>
+  <testcase name="retirementDuringStorageAwaitDoesNotExposeThePrivateDocument[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.013"/>
+  <testcase name="failedDurableRecallMarkersStillFailClosedInTheCurrentProcess[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.022"/>
+  <testcase name="noEtagIsReadableButAMismatchedEtagCannotBeSynthesizedOrRounded[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.009"/>
+  <testcase name="unknownIdsAreNullAndInvalidIdsFailBeforeAnyStoreOrNetworkAccess[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.011"/>
+  <testcase name="versionRecallInvalidatesAnotherSavedCopyOfThatExactVersion[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.01"/>
+  <testcase name="delayedFreshReadCannotOverwriteAConcurrentHydration[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.028"/>
+  <testcase name="missingOrMalformedIndexedMetadataRemainsAnExplicitEntry[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.028"/>
+  <testcase name="unboundMalformedAndOtherProblemsCannotInstallRecallEvidence[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.014"/>
+  <testcase name="recallProblemForAnUnknownCopyNeverInventsARecipeVersionIdentity[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.008"/>
+  <testcase name="recalledNestedVersionRegressionStillFencesTheEstablishedSavedCopy[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.017"/>
+  <testcase name="boundRecallProblemInvalidatesTheOwnedCopyAndItsPinnedVersion[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.018"/>
+  <testcase name="ownedMaterializedVariantIsNeverReplacedWithBaseCatalogRecipe[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.014"/>
+  <testcase name="localSearchUsesOnlyTitlesIsUnicodeBoundedAndNeverUsesTransport[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.017"/>
+  <testcase name="indexBoundAndStrictIndexMetadataPreventUnboundedEnumeration[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.021"/>
+  <testcase name="bodyMetadataAndIndexAreOneAtomicCasBatch[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.011"/>
+  <testcase name="wrongSavedIdentityCannotTombstoneTheRequestedCopy[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.011"/>
+  <testcase name="recallProblemRetainsItsDomainReasonAndMemoryFenceWhenPersistenceFails[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.022"/>
+  <testcase name="failedFirstDownloadDoesNotCreateAnOrphanBodyOrIndexEntry[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.012"/>
+  <testcase name="sameOwnerNewLeaseEnvironmentAndGuestNeverReuseTheOldLease[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.014"/>
+  <testcase name="recallMarkersSurviveAFailedBodyMetadataIndexCommit[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.019"/>
+  <testcase name="exactCanonicalBodyAndReadOnlyMetadataSurviveRepositoryRecreation[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.026"/>
+  <testcase name="learnedRecallRemainsStickyAcrossLaterSuccessAndRepositoryRecreation[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.018"/>
+  <testcase name="unchangedImmutableContentPermitsRetirementAndSourceRedactionButNeverIdentityResurrection[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.027"/>
+  <testcase name="rawBodyWhitespaceCorruptionIsExplicitEvenForANonmatchingSearchQuery[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.012"/>
+  <testcase name="ownerRetirementDuringTransportAwaitDropsTheResultWithoutCaching[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.011"/>
+  <testcase name="recallWithChangedImmutableContentFailsButStillInvalidatesTheOldCopy[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.057"/>
+  <testcase name="sameVersionContentChangeAndLowerVersionAreConflicts[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.022"/>
+  <testcase name="personalAndRetiredCopiesAreReadableWithoutPaidOrCurrentGrantChecks[jvm]" classname="com.feedme.kitchen.SavedRecipeRepositoryTest" time="0.067"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

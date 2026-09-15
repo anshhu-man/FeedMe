@@ -1,0 +1,11 @@
+R.txt
+AndroidManifest.xml
+classes.jar
+assets/
+assets/composeResources/
+assets/composeResources/com.feedme.app.generated.resources/
+assets/composeResources/com.feedme.app.generated.resources/drawable/
+assets/composeResources/com.feedme.app.generated.resources/drawable/bowl.png
+assets/composeResources/com.feedme.app.generated.resources/drawable/noodles.png
+assets/composeResources/com.feedme.app.generated.resources/drawable/wrap.png
+META-INF/com/android/build/gradle/aar-metadata.properties

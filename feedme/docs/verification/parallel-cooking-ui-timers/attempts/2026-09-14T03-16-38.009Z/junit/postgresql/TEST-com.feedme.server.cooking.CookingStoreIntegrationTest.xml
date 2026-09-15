@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.cooking.CookingStoreIntegrationTest" tests="33" skipped="0" failures="0" errors="0" timestamp="2026-09-14T03:17:08.650Z" hostname="ansachars-MacBook-Pro.local" time="43.058">
+  <properties/>
+  <testcase name="newSelectionRechecksPreferencesPantryAndExactTaxonomyButExistingPinDoesNotRerank" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="3.989"/>
+  <testcase name="foreignDuplicateAndIncompleteTimersFailWithoutDiscardingThePreviousState" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="1.111"/>
+  <testcase name="disabledNewCookingDoesNotEraseOwnedProgressOrMakeHistoricalPinANewStart" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="1.167"/>
+  <testcase name="lostApplicationCommitAcknowledgementReconcilesExactOriginalCommandWithoutDuplicateEffects" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="3.387"/>
+  <testcase name="wrongVerifiedSessionCannotUseAnotherDeviceCursorOrOriginalReceipt" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="1.09"/>
+  <testcase name="stepMembershipAndDuplicateCompletionIdsAreNotSchemaOnlyChecks" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="1.187"/>
+  <testcase name="explicitAbandonIsTerminalButDoesNotPretendTimersOrStepsCompleted" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="1.068"/>
+  <testcase name="currentDeviceRevocationAndGuestExpiryPrecedeCachedDisclosure" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="1.23"/>
+  <testcase name="retiredVersionAllowsOwnedPinButNeverFreshStartOrSilentRecipeReplacement" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="1.003"/>
+  <testcase name="concurrentDifferentKeysWithSameVersionPreserveOneWinnerAndVersionConflict" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="0.627"/>
+  <testcase name="createPinsExactImmutablePlanInitialStepZeroSequenceAndOneAtomicFact" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="0.599"/>
+  <testcase name="noGetInitializationOrNonreadyPlanCanCreateCookingRows" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="0.854"/>
+  <testcase name="completionIsTerminalOnlyItsExactCurrentKeyReplaysAndMakeAgainIsNeverInvented" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="1.34"/>
+  <testcase name="unsupportedNotesSourceAndMakeAgainCannotMutateOrCacheAFalseSuccess" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="0.99"/>
+  <testcase name="completionPreservesAllAcknowledgedProgressTimersNotesAndUsesAcceptedDatabaseTime" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="1.051"/>
+  <testcase name="suppliedMathematicalSequenceIsRetainedAndChangedOriginalBodyIsMismatch" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="0.97"/>
+  <testcase name="completionVersusConcurrentProgressNeverConsumesAnOlderCompletionSequence" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="0.99"/>
+  <testcase name="exactAggregateSequenceAndPerVerifiedDeviceCursorsPreventStaleCompletion" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="1.035"/>
+  <testcase name="concurrentSameKeyCommandsCommitOneSessionAndOneStartedFact" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="0.955"/>
+  <testcase name="preCommitOutboxFailuresRollbackCreateProgressCompletionAndOriginalPendingReceipt" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="2.571"/>
+  <testcase name="cancellationAfterAuthorityOrPlanReadStopsBeforeAnyCookingEffects" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="2.818"/>
+  <testcase name="learnedRecallBlocksReadProgressCompletionAndCachedCreateWithoutEffects" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="0.913"/>
+  <testcase name="sameUuidAcrossOperationsCannotCreateTwoStepEventsOrBypassNamespaceFence" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="0.855"/>
+  <testcase name="cookingOutboxCarriesOnlyRegisteredFieldsAndNoPrivateProgressOrTokens" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="1.205"/>
+  <testcase name="currentRightsOrSameVersionChangedRecipeCannotAcknowledgeAnOwnedPin" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="1.817"/>
+  <testcase name="databaseRejectsPinReplacementVersionSkipsAndTerminalReopen" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="0.885"/>
+  <testcase name="accountGuestEnvironmentAndForeignPlanIdsNeverEnumeratePrivateSessions" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="0.938"/>
+  <testcase name="progressUsesOriginalVersionAndBodyAndExactCurrentReplayOnly" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="0.876"/>
+  <testcase name="actualOwnedPinRetainsHistoricalPlanPastPlanningExpiryWithoutGrantingNewStart" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="0.876"/>
+  <testcase name="maximumInitialSequenceDoesNotOverflowOrResetOnLaterMutation" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="1.192"/>
+  <testcase name="responseSizeIsValidatedBeforeAnyDomainReceiptOrOutboxCommit" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="0.98"/>
+  <testcase name="existingPinEnumAndAnotherOwnersOrAbsentSessionNeverBypassPlanExpiry" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="1.051"/>
+  <testcase name="samePrincipalLifecycleLockMakesConcurrentRecallWinBeforeNewSelection" classname="com.feedme.server.cooking.CookingStoreIntegrationTest" time="1.434"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+]]></system-err>
+</testsuite>

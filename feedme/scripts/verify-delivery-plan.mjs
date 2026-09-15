@@ -16,7 +16,7 @@ export function verifyDeliveryPlan({plan, matrix, userActions, registry}) {
     const cells = line.split('|').slice(1, -1).map(s => s.trim());
     return {id: cells[0], status: cells[1], task: cells[2], evidence: cells[3], columns: cells.length};
   });
-  const allowedStatuses = new Set(['TODO', 'READY', 'IN_PROGRESS', 'USER_BLOCKED', 'DONE']);
+  const allowedStatuses = new Set(['TODO', 'READY', 'IN_PROGRESS', 'USER_BLOCKED', 'DEFERRED', 'DONE']);
   const actionIds = new Set([...userActions.matchAll(/^\| (U\d{2}) \|/gm)].map(m => m[1]));
   check('Every milestone has small tasks', expectedMilestones.every(id => rows.some(row => row.id.startsWith(`${id}.`))));
   check('Task identifiers are unique', new Set(rows.map(row => row.id)).size === rows.length);

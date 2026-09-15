@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.mealflow.IngredientPickerControllerTest" tests="30" skipped="0" failures="0" errors="0" timestamp="2026-09-14T00:37:48.709Z" hostname="ansachars-MacBook-Pro.local" time="2.468">
+  <properties/>
+  <testcase name="searchAndPantryDoNotInvalidateEachOtherAndDuplicatePageTapConflicts[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.324"/>
+  <testcase name="duplicatedCatalogIdentityOrCyclicCursorNeverAppendsOrCachesPage[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.153"/>
+  <testcase name="rateLimitAndTransportFailureStayExplicitWithoutAutomaticRetry[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.068"/>
+  <testcase name="pantryPaginationIsBoundedAndNeverPersistsOrInfersMissingStock[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.05"/>
+  <testcase name="publicModelsDetachCollectionsAndRedactPrivateDetails[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.053"/>
+  <testcase name="queryLimitsCountUnicodeScalarsAndRejectMalformedInputBeforeAnyIo[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.042"/>
+  <testcase name="closeFencesDelayedReadAndReleasesOnlyControllerOwnership[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.083"/>
+  <testcase name="pantryPresenceAndConfirmationRemainDistinctAndNeverInventMissingLabels[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.043"/>
+  <testcase name="searchPagingPreservesQueryAndOpaqueCursorAndEnforcesConfiguredBound[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.039"/>
+  <testcase name="unsuccessfulOrFalseCacheReceiptsNeverPublishFreshSearchSuccess[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.18"/>
+  <testcase name="boundedCacheEvictsResolvedLabelsByCountAndEncodedBytes[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.18"/>
+  <testcase name="offlinePrivateAccessNeverUsesTransportEvenWhenConnectivityOnline[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.036"/>
+  <testcase name="exactIntegerVersionsDoNotRoundThroughFloatingPoint[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.001"/>
+  <testcase name="catalogVersionRegressionAndSameVersionMetadataChangeFailButHigherVersionSucceeds[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.117"/>
+  <testcase name="restoreReadsTheExistingSingleMealPantryPageWithoutCreatingAnotherAuthority[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.061"/>
+  <testcase name="duplicateControllerClaimRequiresExplicitCloseButInvalidationReleasesOldClaim[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.144"/>
+  <testcase name="cancellationAfterNonCooperativeNetworkNeverCachesOrPublishesLateRows[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.081"/>
+  <testcase name="backwardsClockAndFutureStoredTimeAreRejectedWithoutOverwrite[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.085"/>
+  <testcase name="boundCanonicalProblemIsUnavailableAndMalformedProblemNeverAccepted[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.041"/>
+  <testcase name="leaseInvalidationSynchronouslyRedactsBothPanesAndFencesDelayedTransport[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.067"/>
+  <testcase name="malformedOrOversizedPagesAndMetadataNeverBecomePickerChoices[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.066"/>
+  <testcase name="collectingAndRestoreNeverAutomaticallyFetchOrSubmit[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.032"/>
+  <testcase name="bothActualGuestAndAccountLeasesUseCanonicalSearchAndPantryOperations[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.089"/>
+  <testcase name="offlineRecreationSearchesOnlyDownloadedNamesAndAliasesWithHistoricalDisclosure[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.059"/>
+  <testcase name="duplicatePantryRowIngredientOrCursorCannotMixPages[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.118"/>
+  <testcase name="canonicalSearchUsesActualLabelsAndExplicitQueryWithoutMutationFields[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.048"/>
+  <testcase name="cacheExpiryPrunesExplicitlyAndNeverReconstructsLabels[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.043"/>
+  <testcase name="changedLeaseOrCancellationDuringCacheAcknowledgementCannotPublishOrEraseWrittenOwnerRecord[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.101"/>
+  <testcase name="corruptWrongOriginAndUnknownSchemaCacheFailClosedWithoutReset[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.027"/>
+  <testcase name="supersedingSearchFencesSuspendedOldResponseAndOnlyNewQueryIsCached[jvm]" classname="com.feedme.mealflow.IngredientPickerControllerTest" time="0.033"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.kitchen.CookingRecordsTest" tests="29" skipped="0" failures="0" errors="0" timestamp="2026-09-14T01:46:27.819Z" hostname="ansachars-MacBook-Pro.local" time="0.409">
+  <properties/>
+  <testcase name="progressRoundTripPreservesLocalStateAndOptionalNotesWithoutNetwork[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.17"/>
+  <testcase name="corruptProgressAndMetadataNeverParseByDroppingDuplicateOrMalformedFields[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.011"/>
+  <testcase name="headerEncodingDetachesPendingListAndPayloadProjections[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.019"/>
+  <testcase name="actionVersionOperationAndMaterializationRulesAreStrict[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.023"/>
+  <testcase name="headerRejectsNoncanonicalIdsHashesAndTimestamps[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.013"/>
+  <testcase name="headerPreservesMissingWritePreconditionAndUnversionedConflictRead[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.017"/>
+  <testcase name="headerRequiresVersionOneAndExactRequiredKeys[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.006"/>
+  <testcase name="progressTimersRequireFullCanonicalTimerSchemaNotJustArrayShape[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.003"/>
+  <testcase name="progressAndEditCollectionsAreDetachedFromInputsAndGetterMutations[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.014"/>
+  <testcase name="cookingHeaderRoundTripsExactHashesPendingOrderAndNullableFields[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.001"/>
+  <testcase name="remoteExponentCounterBeyondWireTokenLengthRemainsExactInLocalProgress[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.015"/>
+  <testcase name="hugeReadOnlyCounterDoesNotBypassTimerAndNoteValidation[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.003"/>
+  <testcase name="progressNotesRequireCanonicalTextLabelAndBoundedContent[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.008"/>
+  <testcase name="patchUsesCanonicalNumericSequenceAndDoesNotInventWritePreconditions[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.001"/>
+  <testcase name="serverProjectionDistinguishesAbsentNotesFromExplicitEmptyNotes[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.0"/>
+  <testcase name="progressAndEditDiagnosticsDoNotRevealStepTimerOrNoteContent[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.058"/>
+  <testcase name="actionHeaderRoundTripsUnmaterializedAndMaterializedUpdateWithoutInventingEtag[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.002"/>
+  <testcase name="allCanonicalServerStatusesMapWithoutInventingCompletionTimestamp[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.002"/>
+  <testcase name="progressRequiresExactSchemaVersionRootKeysAndTypedFields[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.002"/>
+  <testcase name="headerPendingIdsAreUniqueBoundedAndCanonical[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.004"/>
+  <testcase name="completionActionNeverContainsUpdateIfMatchEvenAfterMaterialization[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.001"/>
+  <testcase name="cookingIndexRoundTripsOrderAndEmptyIndexWithoutIdentityCreation[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.001"/>
+  <testcase name="largestLocalCounterRoundTripsWithoutReplacingStoredSequenceWithValidationPlaceholder[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.001"/>
+  <testcase name="completedProgressCannotEmitStatusCompletedInPatch[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.019"/>
+  <testcase name="serverProjectionPreservesStatusStepOrderTimersNotesAndExactSequenceValue[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.001"/>
+  <testcase name="progressSequenceMustBeCanonicalDigitStringWithoutFractionExponentOrLeadingZero[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.01"/>
+  <testcase name="cookingIndexRejectsUnknownFieldsMissingVersionWrongTypeAndDuplicateIds[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.001"/>
+  <testcase name="patchExplicitEmptyNotesRemainAnIntentionalClear[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.0"/>
+  <testcase name="actionIdentifiersHashAndCreationTimeRejectCorruption[jvm]" classname="com.feedme.kitchen.CookingRecordsTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

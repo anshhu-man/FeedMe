@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.social.CirclesStoreIntegrationTest" tests="28" skipped="0" failures="0" errors="0" timestamp="2026-09-14T00:39:35.180Z" hostname="ansachars-MacBook-Pro.local" time="11.297">
+  <properties/>
+  <testcase name="disabledCreationNeverDisablesLeaveRemovalAndOtherPrivacyNarrowing" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.281"/>
+  <testcase name="membershipReadsArePrivateAndMissingAndForeignCirclesAreNonEnumerating" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.213"/>
+  <testcase name="principalDeviceEnvironmentAndCurrentAccountStateAreCheckedBeforeNewAndCachedCommands" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.233"/>
+  <testcase name="invitationBearerIsReproducibleButAbsentFromRowsReceiptsEventsAndDiagnostics" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.25"/>
+  <testcase name="leaveRejoinDoesNotRestoreOldAuthorGrantsOrReplayAnOldLeaveAgainstNewMembership" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.438"/>
+  <testcase name="concurrentSameKeyRetriesReturnOneOriginalMembershipAndOnePairOfEvents" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.232"/>
+  <testcase name="canonicalValidationAndLaunchPolicyRejectUnsupportedFieldsTargetsAndUnboundedUseCounts" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.247"/>
+  <testcase name="acceptingAValidInvitationCreatesOneMembershipAndReplaysOnlyForItsCurrentGeneration" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.349"/>
+  <testcase name="expiryIsRecheckedAfterBlockingPolicyWaitBeforeAnyMembershipOrTokenConsumption" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="1.467"/>
+  <testcase name="exactV001UpgradePreservesOriginalHistoryAndAddsV002AndV003OnlyOnce" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.227"/>
+  <testcase name="lostCommitResponseRetriesOriginalReceiptWithoutSecondCircleMembershipOrEvent" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.214"/>
+  <testcase name="creationMembershipCommandReceiptAndOutboxCommitOnceAndReplayExactResponse" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.291"/>
+  <testcase name="pagesHaveExactCoverageAndPrincipalAndCollectionBoundCursors" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.283"/>
+  <testcase name="removalReplayCannotAcknowledgeAnotherRemovedMembershipIncarnation" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.552"/>
+  <testcase name="deferredDatabaseConstraintRejectsMissingOwnerAndCapacityViolationAtCommit" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.485"/>
+  <testcase name="revocationChecksOwnershipVersionAndUnusedStateAndDoesNotLeakToOtherMembers" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.409"/>
+  <testcase name="publicPreviewContainsOnlyMinimalTokenBoundFieldsAndUniformUnavailableStates" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.294"/>
+  <testcase name="concurrentTransfersHaveOneWinnerAndDatabaseKeepsExactlyOneOwner" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.342"/>
+  <testcase name="outboxFailureRollsBackDomainAndReceiptThenSameKeyCanRetry" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.28"/>
+  <testcase name="concurrentDistinctInvitationsRespectTheConfiguredCircleCapacity" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.319"/>
+  <testcase name="currentBlockInEitherDirectionRejectsAcceptanceAndCachedSuccessAndAudienceAccess" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="1.292"/>
+  <testcase name="roleReplayRejectsChangedTargetVersionProfileAndBlockedRosterDoesNotExposeProfiles" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.349"/>
+  <testcase name="ownerCannotLeaveUntilTransferAndDissolutionRevokesMembersAndOutstandingInvitations" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.385"/>
+  <testcase name="concurrentSingleUseRedemptionHasOneWinnerWithoutDoubleCapacityOrReceipts" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.283"/>
+  <testcase name="circleMetadataEventIsMinimalVersionedAndAtomicWithoutPrivateContent" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.243"/>
+  <testcase name="adminCanInviteAndRemoveNonownersButCannotAssignRolesTransferOrDissolve" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.444"/>
+  <testcase name="explicitOwnershipTransferChangesBothRolesAtomicallyAndRequiresCurrentCircleVersion" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.333"/>
+  <testcase name="removedOrDemotedInviterCannotGrantAccessOrReissueCachedCapability" classname="com.feedme.server.social.CirclesStoreIntegrationTest" time="0.561"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

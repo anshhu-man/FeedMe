@@ -36,6 +36,8 @@ class CookingSnapshot internal constructor(
     val etag: String?,
     pendingCommandIds: List<String>,
     val conflictingRemote: CookSessionWire?,
+    /** Observation only. A current matching origin does not replace edit/recall/lease checks. */
+    val originMatches: Boolean,
 ) {
     private val pending = pendingCommandIds.toList()
     val pendingCommandIds: List<String> get() = pending.toList()

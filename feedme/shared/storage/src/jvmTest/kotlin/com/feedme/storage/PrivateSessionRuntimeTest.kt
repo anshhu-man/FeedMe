@@ -2405,7 +2405,11 @@ class PrivateSessionRuntimeTest {
         try { f.start(); block(f) } finally { f.close() }
     }
 
-    private class RuntimeFixture(private val dispatcher: CoroutineDispatcher) {
+    internal class RuntimeFixture(private val dispatcher: CoroutineDispatcher,
+        private val executionPolicy: NativeWorkExecutionPolicy = NativeWorkExecutionPolicy { _, _, _, _ -> PortResult.Value(true) },
+        initialIdSequence: Int = 0,
+    ) {
+        init { require(initialIdSequence in 0..1_000_000) }
         private val directory = Files.createTempDirectory("feedme-runtime-integration-")
         private val dataFile = directory.resolve("data.sqlite")
         private val controlFile = directory.resolve("control.sqlite")
@@ -2441,7 +2445,7 @@ class PrivateSessionRuntimeTest {
         var workReads = 0
         var controlWrites = 0
         var workWrites = 0
-        private var nextId = 0
+        private var nextId = initialIdSequence
         private val dataManagers = mutableListOf<EncryptedStateDatabase>()
         private val controlManagers = mutableListOf<EncryptedSessionControlStore>()
         private val workManagers = mutableListOf<EncryptedSessionWorkStore>()
@@ -2543,7 +2547,7 @@ class PrivateSessionRuntimeTest {
                     override suspend fun restore(snapshot: CredentialSnapshot): PortResult<PrivateSessionAccessMode> { restoreCalls++; return this@RuntimeFixture.restore(snapshot) }
                 }, NativeWorkCancellationPort { cancelled += it; cancel(it) },
                 NativeWorkIdSource { uuid(1_000 + ++nextId) },
-                NativeWorkExecutionPolicy { _, _, _, _ -> PortResult.Value(true) })).also { runtimes += it }
+                executionPolicy)).also { runtimes += it }
         }
         suspend fun binding(scope: StorageScope): PrivateRecord = value(value(data.resume(scope))!!.read(scope, BINDING))!!
         suspend fun replaceBinding(scope: StorageScope, payload: PrivateBytes, schema: Int? = null) {
@@ -2586,7 +2590,7 @@ class PrivateSessionRuntimeTest {
     }
 
     /** Test fake only. Reflection avoids adding a production constructor/authority API for tests. */
-    private class RuntimeTestCredentials : PlannedCredentialCreateStore, CredentialCreatePlanInspection, CredentialCreatePlanAbort {
+    internal class RuntimeTestCredentials : PlannedCredentialCreateStore, CredentialCreatePlanInspection, CredentialCreatePlanAbort {
         var current: CredentialSnapshot? = null
         var revision = 1L
         var creates = 0
@@ -2751,12 +2755,15 @@ class PrivateSessionRuntimeTest {
         }
     }
 
-    private class RuntimeTestConnection(private val delegate: SQLiteConnection) : SQLiteConnection by delegate {
+    internal class RuntimeTestConnection(private val delegate: SQLiteConnection) : SQLiteConnection by delegate {
         var failNextBindingCommitAfter = false
         var failNextBindingCommitBefore = false
         var failNextAbortCommitBefore = false
         var failNextAbortCommitAfter = false
         var afterNextReadCommit: (() -> Unit)? = null
+        /** Exact real SQLite transaction boundary hooks; test-only, no scheduler/receipt simulation in main. */
+        var beforeRecordCommit: () -> Unit = {}
+        var afterRecordCommit: () -> Unit = {}
         var writeStatements = 0
         private var write = false
         private var recordWrite = false
@@ -2774,10 +2781,12 @@ class PrivateSessionRuntimeTest {
                     val readCommit = normalized == "COMMIT" && !write
                     if (normalized.startsWith("INSERT ") || normalized.startsWith("UPDATE ") || normalized.startsWith("DELETE ")) writeStatements++
                     if (commit && failNextBindingCommitBefore) { failNextBindingCommitBefore = false; error("Injected runtime binding precommit failure") }
+                    if (commit) beforeRecordCommit()
                     if (abortCommit && failNextAbortCommitBefore) { failNextAbortCommitBefore = false; error("Injected runtime abort precommit failure") }
                     val result = statement.step()
                     if (normalized == "COMMIT" || normalized == "ROLLBACK") write = false
                     if (commit && failNextBindingCommitAfter) { failNextBindingCommitAfter = false; error("Injected runtime binding acknowledgement failure") }
+                    if (commit) afterRecordCommit()
                     if (abortCommit && failNextAbortCommitAfter) { failNextAbortCommitAfter = false; error("Injected runtime abort acknowledgement failure") }
                     if (readCommit) afterNextReadCommit?.also { afterNextReadCommit = null }?.invoke()
                     return result
@@ -2786,7 +2795,7 @@ class PrivateSessionRuntimeTest {
         }
     }
 
-    private class RuntimeTestVault : PlannedStateVault {
+    internal class RuntimeTestVault : PlannedStateVault {
         private val random = SecureRandom()
         private val index = SecretKeySpec(ByteArray(32).also(random::nextBytes), "HmacSHA256")
         val keys = mutableMapOf<String, SecretKey>()

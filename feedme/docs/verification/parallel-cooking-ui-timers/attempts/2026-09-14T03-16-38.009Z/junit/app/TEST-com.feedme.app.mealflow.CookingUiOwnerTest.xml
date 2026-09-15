@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.app.mealflow.CookingUiOwnerTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-09-14T03:17:04.925Z" hostname="ansachars-MacBook-Pro.local" time="0.02">
+  <properties/>
+  <testcase name="newProposalFencesOldDialogForDifferentAndSamePlan[jvm]" classname="com.feedme.app.mealflow.CookingUiOwnerTest" time="0.007"/>
+  <testcase name="identityInvalidationSynchronouslyRedactsEveryTicket[jvm]" classname="com.feedme.app.mealflow.CookingUiOwnerTest" time="0.0"/>
+  <testcase name="allTicketAndNavigationLoggingIsRedacted[jvm]" classname="com.feedme.app.mealflow.CookingUiOwnerTest" time="0.002"/>
+  <testcase name="sameAccountReplacementIsStillDifferentLease[jvm]" classname="com.feedme.app.mealflow.CookingUiOwnerTest" time="0.001"/>
+  <testcase name="onlyExactIntentIdentityIsAcceptedEvenWithEqualFields[jvm]" classname="com.feedme.app.mealflow.CookingUiOwnerTest" time="0.0"/>
+  <testcase name="leaveFencesSuspendedPreparationWithoutAnyProgressAuthority[jvm]" classname="com.feedme.app.mealflow.CookingUiOwnerTest" time="0.0"/>
+  <testcase name="formGenerationAndSavedStateAreIndependentRequiredStartChecks[jvm]" classname="com.feedme.app.mealflow.CookingUiOwnerTest" time="0.008"/>
+  <testcase name="dismissPreservesNavigationButRemovesConsent[jvm]" classname="com.feedme.app.mealflow.CookingUiOwnerTest" time="0.0"/>
+  <testcase name="foreignBoundaryCannotPublishAndCloseDoesNotClearActualLease[jvm]" classname="com.feedme.app.mealflow.CookingUiOwnerTest" time="0.0"/>
+  <testcase name="constructionAndNavigationDoNotMintConsent[jvm]" classname="com.feedme.app.mealflow.CookingUiOwnerTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

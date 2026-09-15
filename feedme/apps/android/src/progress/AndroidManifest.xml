@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!-- Local development service only: no network permission, real login or test runner. -->
+    <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" tools:node="remove" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" tools:node="remove" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" tools:node="remove" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" tools:node="remove" />
+    <application
+        android:name="com.feedme.development.progress.ProgressApplication"
+        android:label="@string/progress_app_name"
+        android:usesCleartextTraffic="false"
+        tools:replace="android:label">
+        <!-- No background work is installed by this host. Avoid implicit WorkManager state
+             creation before the positive native inventory/explicit startup decision. -->
+        <provider android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup" android:exported="false" tools:node="merge">
+            <meta-data android:name="androidx.work.WorkManagerInitializer" tools:node="remove" />
+        </provider>
+        <activity android:name="com.feedme.development.MainActivity" tools:node="remove" />
+        <receiver android:name="com.feedme.development.progress.ProgressTimerCancellationReceiver"
+            android:exported="false" android:enabled="false" />
+        <activity android:name="com.feedme.development.progress.ProgressActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

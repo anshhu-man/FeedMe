@@ -1,78 +1,71 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {createHash} from 'node:crypto';
-import {sanitizeDiagnostics} from './sanitize-diagnostics.mjs';
+import {verifyHistoricalParserFixture} from './verify-historical-parser-fixture.mjs';
+import {sourceRoots, excludedPrefixes, requiredFixtures, historicalApk, manifestPath, generatedPaths,
+  need, sha, absolute, canonicalRoot, descriptor, inspectTree, isExcluded, isManaged, safeRelative,
+  validatePublished, requireFixtures, assertExactPaths, checkReferenceLinks} from './snapshot-policy.mjs';
 
 // Repository/reference integrity only; never a native build or release certification.
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const hash = bytes => createHash('sha256').update(bytes).digest('hex');
-const read = name => fs.readFileSync(path.join(root, name));
-const json = name => JSON.parse(read(name).toString('utf8'));
-const assert = (value, message) => { if (!value) throw new Error(message); };
-const manifest = json('Reference/SNAPSHOT_MANIFEST.json');
-assert(new Set(manifest.files.map(item => item.path)).size === manifest.files.length, 'Duplicate snapshot path.');
-for (const item of manifest.files) {
-  const bytes = read(item.path);
-  assert(bytes.length === item.bytes && hash(bytes) === item.sha256, `Changed published snapshot file: ${item.path}`);
-}
-const history = json('Reference/History/HISTORY_MANIFEST.json');
-assert(history.audit?.passed && history.archives?.length === 2, 'Missing archive provenance.');
-for (const archive of history.archives) {
-  assert(/^[A-Za-z0-9_-]+\.zip$/.test(archive.published.filename), 'Unexpected history filename.');
-  const bytes = read(`Reference/History/${archive.published.filename}`);
-  assert(bytes.length === archive.published.bytes && hash(bytes) === archive.published.sha256, 'Historical ZIP changed.');
-  assert(archive.entryOrderNamesAndOtherContentPreserved && archive.sourceUnchangedAfterPackaging, 'Incomplete history comparison.');
-}
-const registry = json('outputs/biteclub_blueprint/registry/screen_registry.json');
-assert(registry.features.length === 54 && registry.screens.length === 98, 'Canonical feature/screen coverage changed.');
-assert(new Set(registry.screens.map(item => item.id)).size === 98, 'Duplicate canonical screen.');
-for (const screen of registry.screens) {
-  assert(fs.existsSync(path.join(root, `outputs/biteclub_ui/screens/${screen.id}.png`)), `Missing design ${screen.id}`);
-  assert(fs.existsSync(path.join(root, `outputs/biteclub_blueprint/screens/${screen.id}.md`)), `Missing spec ${screen.id}`);
-  assert(read('Reference/SCREEN_GALLERY.md').includes(Buffer.from(`| ${screen.id} |`)), `Missing gallery row ${screen.id}`);
-}
-const operations = Object.values(json('outputs/biteclub_blueprint/architecture/04_API_Contract.json').paths)
-  .flatMap(item => Object.entries(item).filter(([method]) => ['get', 'post', 'put', 'patch', 'delete', 'head', 'options', 'trace'].includes(method)));
-assert(operations.length === 201, 'API operation coverage changed.');
-const artifact = read('Reference/artifacts/FeedMe-android-demo-debug.apk');
-assert(artifact.length === 18981844 && hash(artifact) === 'bf6dd07e31a4fd49b798672ba82edcee7f958b9d5c12ae0d7a89491d20ff3805', 'Historical demo APK changed.');
-assert((fs.statSync(path.join(root, 'feedme/gradlew')).mode & 0o111) !== 0, 'Gradle wrapper lost executable bit.');
-
-function walk(directory) {
-  return fs.readdirSync(directory, {withFileTypes: true}).flatMap(entry => {
-    if (entry.name === '.git') return [];
-    const filename = path.join(directory, entry.name);
-    assert(!entry.isSymbolicLink(), 'Published tree contains a symlink.');
-    assert(entry.isDirectory() || entry.isFile(), 'Published tree contains a special file.');
-    return entry.isDirectory() ? walk(filename) : [filename];
-  });
-}
-const files = walk(root);
-let checkedLinks = 0;
-for (const filename of files) {
-  const relative = path.relative(root, filename);
-  assert(!relative.split(path.sep).some(part => ['.gradle', '.kotlin', '.local', 'node_modules', 'build', 'xcuserdata'].includes(part)), `Generated/private directory: ${relative}`);
-  assert(!/(?:^|\/)(?:local\.properties|\.env(?:\..*)?)$|\.(?:keystore|jks|p12|pfx|pem|key|mobileprovision)$/i.test(relative), `Private configuration filename: ${relative}`);
-  const bytes = fs.readFileSync(filename);
-  assert(bytes.length < 50 * 1024 * 1024, `Large unreviewed file: ${relative}`);
-  if (!bytes.includes(0)) {
-    const text = bytes.toString('utf8');
-    assert(!/\/Users\/(?!LOCAL_USER(?:\/|\b))[\p{L}\p{N}._-]+/u.test(text), `Personal home path: ${relative}`);
-    assert(!/-----BEGIN (?:[A-Z ]+ )?PRIVATE KEY-----|\bgh[pousr]_[A-Za-z0-9]{30,}\b|\bgithub_pat_[A-Za-z0-9_]{40,}\b|\bAKIA[A-Z0-9]{16}\b|\bAIza[0-9A-Za-z_-]{30,}\b/.test(text), `Potential credential: ${relative}`);
-    if (relative.startsWith('feedme/docs/verification/') && relative.endsWith('.log')) {
-      assert(sanitizeDiagnostics(relative, text).unrelatedInstrumentationRedactions === 0, `Unrelated app inventory: ${relative}`);
-    }
-    // Check the new human index, not historical reports referring to excluded build outputs.
-    if (relative === 'README.md' || (relative.startsWith('Reference/') && relative.endsWith('.md'))) {
-      for (const match of text.matchAll(/\]\(([^)]+)\)|\bsrc="([^"]+)"/g)) {
-        const target = match[1] || match[2];
-        if (/^(?:https?:|mailto:|#)/.test(target)) continue;
-        const resolved = path.resolve(path.dirname(filename), decodeURIComponent(target.split(/[?#]/)[0]));
-        assert(resolved.startsWith(root + path.sep) && fs.existsSync(resolved), `Broken local link in ${relative}: ${target}`);
-        checkedLinks++;
-      }
-    }
+export function verifyReference(publicationRoot) {
+  const root = canonicalRoot(publicationRoot), read = name => fs.readFileSync(absolute(root, name));
+  descriptor(root, manifestPath); // Refuse a symlink/shared inode before reading or parsing the manifest.
+  const json = name => JSON.parse(read(name).toString('utf8')), manifest = json(manifestPath);
+  need(manifest.version === 2 && JSON.stringify(manifest.policy) === JSON.stringify({excludedPrefixes, requiredFixtures, historicalApk, sourceRoots}), 'Missing/changed exact snapshot policy');
+  for (const key of ['files', 'generated', 'retainedFiles']) need(Array.isArray(manifest[key]), 'Missing complete manifest section: ' + key);
+  assertExactPaths(manifest.generated.map(item => item.path), generatedPaths, 'Missing/unlisted generated reference');
+  for (const item of manifest.files) {
+    safeRelative(item.source); safeRelative(item.path);
+    const mapping = sourceRoots.find(([source, published]) => item.source === source || item.source.startsWith(source + '/'));
+    need(mapping && item.path === mapping[1] + item.source.slice(mapping[0].length) && !isExcluded(item.source), 'Source mapping/exclusion mismatch: ' + item.path);
+    need(Number.isSafeInteger(item.originalBytes) && item.originalBytes >= 0 && /^[a-f0-9]{64}$/.test(item.originalSha256), 'Missing original descriptor: ' + item.path);
   }
+  for (const item of manifest.retainedFiles) need(!isManaged(item.path) && !generatedPaths.includes(item.path) && item.path !== manifestPath, 'Retained entry cannot hide an omitted source/generated file');
+  const listed = [...manifest.files, ...manifest.generated, ...manifest.retainedFiles];
+  for (const item of listed) {
+    safeRelative(item.path); need(item.path !== manifestPath, 'Manifest cannot certify itself');
+    need(Number.isSafeInteger(item.bytes) && item.bytes >= 0 && /^[a-f0-9]{64}$/.test(item.sha256) &&
+      Number.isInteger(item.mode) && item.mode >= 0 && item.mode <= 0o777, 'Invalid file descriptor: ' + item.path);
+    const actual = descriptor(root, item.path);
+    need(actual.bytes === item.bytes && actual.sha256 === item.sha256 && actual.mode === item.mode, 'Changed/missing snapshot bytes or mode: ' + item.path);
+  }
+  const tree = inspectTree(root);
+  for (const name of [...tree.files, ...tree.directories]) need(!isExcluded(name), 'Excluded local evidence present: ' + name);
+  assertExactPaths(tree.files, [...listed.map(item => item.path), manifestPath], 'Omitted/unlisted public file or duplicate manifest path');
+  requireFixtures(manifest.files.map(item => item.path));
+  const contents = new Map();
+  for (const name of tree.files) { const bytes = read(name); validatePublished(name, bytes); contents.set(name, bytes); }
+  const portable = verifyHistoricalParserFixture(root); // Integrity only; no test process launched.
+  need(portable.passed === true && portable.files === 9 && portable.originalReceiptBundled === false && portable.testsExecuted === 0, 'Portable fixture integrity not confirmed');
+  const history = json('Reference/History/HISTORY_MANIFEST.json');
+  need(history.audit?.passed && history.archives?.length === 2, 'Missing archive provenance');
+  for (const archive of history.archives) {
+    need(/^[A-Za-z0-9_-]+\.zip$/.test(archive.published.filename), 'Unexpected history filename');
+    const bytes = read('Reference/History/' + archive.published.filename);
+    need(bytes.length === archive.published.bytes && sha(bytes) === archive.published.sha256, 'Historical ZIP changed');
+    need(archive.entryOrderNamesAndOtherContentPreserved && archive.sourceUnchangedAfterPackaging, 'Incomplete history comparison');
+  }
+  const registry = json('outputs/biteclub_blueprint/registry/screen_registry.json');
+  need(registry.features?.length === 54 && registry.screens?.length === 98, 'Canonical feature/screen coverage changed');
+  need(new Set(registry.screens.map(item => item.id)).size === 98, 'Duplicate canonical screen');
+  for (const screen of registry.screens) {
+    need(/^[A-Z][A-Z0-9_]*$/.test(screen.id), 'Invalid canonical screen identity');
+    for (const name of ['outputs/biteclub_ui/screens/' + screen.id + '.png', 'outputs/biteclub_blueprint/screens/' + screen.id + '.md']) need(contents.has(name), 'Missing design/spec: ' + screen.id);
+    need(read('Reference/SCREEN_GALLERY.md').includes(Buffer.from('| ' + screen.id + ' |')), 'Missing gallery row: ' + screen.id);
+  }
+  const operations = Object.values(json('outputs/biteclub_blueprint/architecture/04_API_Contract.json').paths)
+    .flatMap(item => Object.entries(item).filter(([method]) => ['get', 'post', 'put', 'patch', 'delete', 'head', 'options', 'trace'].includes(method)));
+  need(operations.length === 201, 'API operation coverage changed');
+  const artifact = read(historicalApk.path);
+  need(artifact.length === historicalApk.bytes && sha(artifact) === historicalApk.sha256, 'Historical demo APK changed');
+  need((descriptor(root, 'feedme/gradlew').mode & 0o111) !== 0, 'Gradle wrapper lost executable bit');
+  const checkedLinks = checkReferenceLinks(root, contents);
+  return {passed: true, scope: 'Complete public inventory, bytes/modes, links, privacy, required fixtures and portable parser-fixture integrity only; not app/native/release or original historical-run acceptance.',
+    files: tree.files.length, sourceCopies: manifest.files.length, retainedFiles: manifest.retainedFiles.length,
+    screens: 98, features: 54, apiOperations: 201, checkedLinks, portableFixtureVerified: true,
+    sourceCopyBytes: manifest.files.reduce((sum, item) => sum + item.bytes, 0)};
 }
-console.log(JSON.stringify({passed: true, scope: 'Public snapshot hashes, reference links, privacy patterns, source/asset coverage only; not app, native or release acceptance.', files: files.length, sourceCopies: manifest.files.length, screens: 98, features: 54, apiOperations: operations.length, checkedLinks, sourceCopyBytes: manifest.files.reduce((sum, item) => sum + item.bytes, 0)}, null, 2));
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  console.log(JSON.stringify(verifyReference(path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')), null, 2));
+}

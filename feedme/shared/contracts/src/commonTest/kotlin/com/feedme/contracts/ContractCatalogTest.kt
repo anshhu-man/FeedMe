@@ -22,12 +22,12 @@ class ContractCatalogTest {
     private val catalog = ContractCatalog.bundled()
 
     @Test fun exactCanonicalCoverageIsPinned() {
-        assertEquals("f0a5f20c4a84822813137c3e6b1ef31ec22afd1d7ee384f7f29b5df09e10aba0", catalog.sourceSha256)
+        assertEquals("64cb5009fc71b7428e1756b0d82d3ccdae951121f7815b7904eef10b4fb754dd", catalog.sourceSha256)
         assertEquals(201, catalog.operations.size)
         assertEquals(201, catalog.operations.map { it.id }.toSet().size)
         assertEquals(155, catalog.operations.map { it.path }.toSet().size)
         assertEquals(188, catalog.schemaNames.size)
-        assertEquals(mapOf("public" to 3, "user" to 124, "both" to 35, "admin" to 38, "webhook" to 1),
+        assertEquals(mapOf("public" to 3, "user" to 123, "both" to 36, "admin" to 38, "webhook" to 1),
             catalog.operations.groupingBy { it.principal }.eachCount())
         assertNull(catalog.operation("unknownOperation"))
         assertNull(catalog.operationJson("unknownOperation"))

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.sync.JournalCodecTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-09-13T23:25:01.918Z" hostname="ansachars-MacBook-Pro.local" time="0.105">
+  <properties/>
+  <testcase name="terminalStatesRetainOperationButRequireErasedPrivateRequestMetadata[jvm]" classname="com.feedme.sync.JournalCodecTest" time="0.002"/>
+  <testcase name="attemptPhaseAndReceiptInvariantsAreCheckedOnEncodeAndDecode[jvm]" classname="com.feedme.sync.JournalCodecTest" time="0.003"/>
+  <testcase name="metadataByteLimitIsEnforcedOnDecodeAndOnEscapedEncoderOutput[jvm]" classname="com.feedme.sync.JournalCodecTest" time="0.005"/>
+  <testcase name="commandRoundTripKeepsRawStringsListsOrderAndExplicitNulls[jvm]" classname="com.feedme.sync.JournalCodecTest" time="0.006"/>
+  <testcase name="encodedPrivateBytesAndDecodedCollectionSnapshotsDoNotAliasInputs[jvm]" classname="com.feedme.sync.JournalCodecTest" time="0.007"/>
+  <testcase name="wrongJsonKindsNeverCoerceToMetadataValues[jvm]" classname="com.feedme.sync.JournalCodecTest" time="0.028"/>
+  <testcase name="identityDependenciesAndScopesAreBoundedAndNeverNormalized[jvm]" classname="com.feedme.sync.JournalCodecTest" time="0.008"/>
+  <testcase name="parameterCeilingsCountUtf16AndIncludeCommandKeyAndIfMatch[jvm]" classname="com.feedme.sync.JournalCodecTest" time="0.019"/>
+  <testcase name="indexRoundTripsEmptyAndMaximumBoundariesWithoutLosingLongPrecision[jvm]" classname="com.feedme.sync.JournalCodecTest" time="0.001"/>
+  <testcase name="replyMetadataUsesApiReplyBoundsAndOnlySuccessfulReceipts[jvm]" classname="com.feedme.sync.JournalCodecTest" time="0.0"/>
+  <testcase name="malformedJsonUnicodeAndDuplicateDecodedKeysAreSanitized[jvm]" classname="com.feedme.sync.JournalCodecTest" time="0.002"/>
+  <testcase name="integerMetadataRequiresCanonicalNonnegativeExactTokensAndRange[jvm]" classname="com.feedme.sync.JournalCodecTest" time="0.021"/>
+  <testcase name="receiptRoundTripPreservesTypedMetadataAndBodyPresence[jvm]" classname="com.feedme.sync.JournalCodecTest" time="0.001"/>
+  <testcase name="everySchemaFieldIsRequiredAndUnknownFieldsAreRejectedAtEveryLevel[jvm]" classname="com.feedme.sync.JournalCodecTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

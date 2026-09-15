@@ -1,29 +1,45 @@
-# Published development checkpoint
+# Development snapshot — 15 September 2026
 
-14 September 2026 (India time). This repository is the user-requested public snapshot of FeedMe work to date, not a release announcement. It refreshes the initial 13 September publication with the subsequent implementation, documentation and retained test evidence.
+This is the user-requested public reference snapshot, not a release announcement. The original FeedMe idea is intact: effortless healthy cooking, Make Mine, Today, My Plate and Kitchen Circles. All 54 features/98 screens remain documented; 44 features are in V1 and the existing ten are deferred.
 
 ## Included
 
-Shared Kotlin and native Android/iOS hosts, the local server foundation, tests and scripts; the complete 54-feature/98-screen blueprint; the full UI prototype and screen exports; architecture, data/API/event contracts, security plans, milestone/task tracking, retained test evidence, the historical Android demo APK, original brand story and sanitized historical ZIP copies.
+Current shared Kotlin, Android/iOS hosts, local Ktor/server components, source tests and engineering docs; complete blueprint, 900-action ledger, 201-operation API contract, UI prototype and 98 screen exports; milestone/user-action tracking; the new retained Android preview; the unchanged historical demo, original brand story and sanitized historical ZIPs. Repeated local verification directories are excluded, not deleted from the source workspace.
 
-## Verification boundaries
+## Latest bounded preview result
 
-The latest source-workspace checkpoint is [retained credential/private-data recovery owners, slice 6d.1](../feedme/docs/STARTUP_RECOVERY_OWNERS.md). Full source-bound verification passed at **2026-09-13T19:31:47.969Z** (14 September in India): **1,592 Kotlin/server/PostgreSQL tests, 142 Node checks and 280 isolated Android tests**, plus five freshly built Android libraries with zero-issue lint. The [retained receipt](../feedme/docs/verification/startup-recovery-owners/verification.json) binds 280 source inputs, 13 artifacts and 148 evidence files. These are component-level results from the source workspace, not a new native test run of the sanitized publication tree.
+The source-workspace build finished at **2026-09-15T04:03:59.906Z** and the full emulator run at **2026-09-15T04:23:26.609Z** (09:53 IST). Root and independent audits verify **360 fresh JVM methods** (260 app + 100 progress), **63 native methods across ten groups**, **76 individually reviewed PNGs**, three APK artifacts and two zero-issue lint reports. The build executed 489 Gradle tasks; all 756 build/native source inputs remained unchanged.
 
-The formerly unfinished native SQLite VFS hookup is now compiled and included in the passing component checks: 39 injected VFS labels and five controlled process stages. Its C helper is confined to the storage test APK and absent from the five production libraries, session test APK and historical demo. Some internal Kotlin fault hooks remain in library bytecode; this is not a claim that every test-related symbol is absent. Engine fault injection and controlled reopen are not physical power-loss or hard-kill verification.
+| Source-workspace evidence | SHA-256 |
+| --- | --- |
+| Build receipt | `567440805bac6c49b86c0519c6c5c537dfe0f045a4a0ee98ed4c8eba5b1f70e4` |
+| Native receipt | `84b65e17cad9b111ccbadbe0874517e80db37ef2e5dfd8e8e5f3cf623f68a78d` |
+| Source-inventory digest | `652984d5164e5d6c3896012e92bd396ca0f5fd52e66b3ef3bcfe95316f9df47c` |
+| Independent native audit | `cdd972e2826ffa763b9a5c65e29ab6e4fd2c6cc13121e7f96f48983875a500d7` |
+| Downloadable preview APK | `21755e11413984e877211776f40eaf81c46f048dd095f2c0c21a7322b70eb86b` |
 
-Earlier failed attempts remain included, including the initial 6d.1 run that failed six credential-test path-counter assertions. Only the canonical-path test helper changed before the focused and full passing reruns. No failed evidence was removed or relabelled as success. Historical receipts describe their original checkpoints; statements that the public repository was unchanged are true of those earlier verification runs, not a claim that this refresh did not occur.
+These hashes identify original **local** evidence; the bulky underlying attempts are not bundled in this public tree. This table is a curated summary, not a replacement acceptance receipt or a claim that native tests were rerun against sanitized public sources. [APK and testing instructions](ARTIFACTS.md), [local-evidence boundary](LOCAL_EVIDENCE.md).
 
-Existing-only work recovery (6d.2), all-owning startup composition (6d.3), owned-close-before-Complete coordination (6d.4) and integrated interruption acceptance remain open. This publication does not mark the full milestone or the ship-ready goal complete.
+The preview uses real retained controllers/native encrypted storage for meal requests, pantry/preferences, cooking, foreground timers, cookbook copies and private text drafts with separately reviewed Save/Publish. Its identity, content and service adapters are synthetic. Publication is text-only and self-audience on the device—not a live post to other users. Missing social records do not force an automatic reset of retained cooking. Earlier failed attempts remain failed in the original workspace; no failed evidence was reclassified or removed.
 
-The included demo APK is an earlier explicitly local-only demo, not a fresh build of all current sources. iOS is uncompiled. Provider login, real app persistence/sync integration, social service, reviewed recipes/media, purchases, release signing, physical-device checks and store publication remain open. See [build status](../feedme/docs/BUILD_STATUS.md) and [planned recovery](../feedme/docs/PLANNED_STATE_RECOVERY.md).
+A separate earlier focused JVM run passed 1,571 contracts/transport/mealflow/server methods. Its JVM/production inputs were unchanged by the two subsequent Android-test corrections; the complete 756-file inventory differs in those two instrumentation files. The 1,571 methods were **not rerun** in this 360-method build. These are separate, non-overlapping module results, not one fresh all-project invocation.
 
-## Public-export privacy and evidence
+All 76 captures were individually reviewed across four reviewers. No blocking overlap or clipped dialog action was found at normal-font 1080×1920. Tall headers, technical wording, isolated-host status-icon contrast and small copy issues remain polish. This does not establish large-font/keyboard/TalkBack, physical-device, API26, full OS-process-death, iOS or release acceptance.
 
-Personal home-directory prefixes in textual files are replaced with `/Users/LOCAL_USER` (and equivalent encoded forms). Unrelated installed-app instrumentation inventory lines are omitted from public diagnostic log copies; FeedMe inventory and test-result lines are retained. The original workspace and original verification evidence are not modified by export. [The snapshot manifest](SNAPSHOT_MANIFEST.json) records every copied source file's original SHA-256, published SHA-256 and both transformation counts; [history metadata](History/HISTORY_MANIFEST.json) covers sanitized archive copies. The refresh does not rewrite earlier Git commits, which can retain the previously published diagnostic inventory.
+## Still required
 
-Because of those transformations, some public historical receipts and their nested source/artifact hashes refer to original local bytes, not to the redacted file beside them. They are retained provenance records, **not** a byte-identical acceptance receipt for this public tree. Build outputs and historical temporary clusters referenced by them are not bundled, except for the separately identified demo APK. Run the appropriate current tests to generate fresh evidence for a clone; historical fixed-count verifiers should not be treated as current-source acceptance commands. The current full component runner is `feedme/scripts/verify-startup-recovery-owners.mjs`; see [setup](SETUP.md) for prerequisites.
+Live signup/login and account bootstrap, approved providers and deployment, licensed/reviewed launch content, photo/audience/circle/feed integration, remaining V1 functions, moderation/privacy operations, approved monetization and RevenueCat, physical-device/iOS tests, signing and store submission remain open. Shared Kotlin is not proof of iOS parity.
 
-Excluded: dependency/build caches, temporary machine state, local SDK properties, signing material, credentials, unrelated Career projects and TasteEcho's earlier concept. No CI, cloud deployment, GitHub Pages site, store upload or Devpost submission is configured by this snapshot.
+[Supabase + Ktor on Render](../feedme/docs/BACKEND_PROPOSAL.md) is a proposal awaiting technical-direction approval, not an installed or paid service. No provider account, spending, region, cloud deployment or store release is approved by publishing source. [Milestones](../feedme/docs/RELEASE_PLAN.md), [current build status](../feedme/docs/BUILD_STATUS.md), [user actions](../feedme/docs/USER_ACTIONS.md).
 
-The active implementation workspace is preserved separately from this publication checkout. Later uploads must deliberately refresh and re-audit the snapshot; this export does not silently synchronize future edits.
+Earlier checkpoints, including the 14 September 6d.1 result of 1,592 Kotlin/server/database, 142 Node and 280 Android tests, are historical component evidence. Their fixed inventories and “remaining work” statements describe those dates, not the current implementation or a current clone-wide command. The historical demo remains byte-identical and is not the retained preview.
+
+## Privacy and reproducibility
+
+Textual home paths are replaced with `/Users/LOCAL_USER` and equivalent encoded forms. Unrelated installed-app instrumentation lines are omitted from public diagnostic copies. Original workspace/evidence bytes stay unchanged. [The snapshot manifest](SNAPSHOT_MANIFEST.json) records copied source/published hashes and transformation counts, generated references and preserved files; [history metadata](History/HISTORY_MANIFEST.json) covers the two sanitized archives. Earlier Git commits are not rewritten.
+
+Remaining older public receipts can refer to original local bytes that differ from redacted copies. They are provenance, not byte-identical acceptance receipts for this tree. Six repeated diagnostic subtrees are excluded; four build/test fixtures remain. The [portable ninth-parser fixture](Fixtures/ninth-parser/README.md) contains exactly nine unchanged sources and a new provenance record, **not** the original ninth receipt. Its standalone command replays ten frozen parser tests without that receipt; it neither weakens the main historical verifier nor certifies native/current-source acceptance.
+
+Use [setup](SETUP.md) for ordinary build and public-reference checks. Do not treat wildcard historical script tests or old full-checkpoint runners as portable current verification. Build caches, local SDK configuration, credentials, signing material, temporary database clusters, unrelated Career projects and TasteEcho's previous concept are excluded.
+
+No paid CI, GitHub Pages, cloud deployment, store upload or Devpost submission is enabled by this snapshot. The active implementation workspace is separate; later edits require another deliberate export and review.

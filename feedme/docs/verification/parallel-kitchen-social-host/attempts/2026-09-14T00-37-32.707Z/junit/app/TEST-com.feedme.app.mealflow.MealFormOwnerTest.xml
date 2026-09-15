@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.app.mealflow.MealFormOwnerTest" tests="22" skipped="0" failures="0" errors="0" timestamp="2026-09-14T00:37:51.075Z" hostname="ansachars-MacBook-Pro.local" time="0.067">
+  <properties/>
+  <testcase name="sameAccountReplacementAlsoRedacts[jvm]" classname="com.feedme.app.mealflow.MealFormOwnerTest" time="0.006"/>
+  <testcase name="exitCheckRejectsEditsOrInvalidationAfterSaveHasAlreadyReturned[jvm]" classname="com.feedme.app.mealflow.MealFormOwnerTest" time="0.048"/>
+  <testcase name="resourceLimitRejectsWithoutReplacingPrivateInput[jvm]" classname="com.feedme.app.mealflow.MealFormOwnerTest" time="0.0"/>
+  <testcase name="acknowledgementCannotReviveInvalidatedForm[jvm]" classname="com.feedme.app.mealflow.MealFormOwnerTest" time="0.0"/>
+  <testcase name="transformCannotRepublishAfterSynchronousIdentityChangeOrClose[jvm]" classname="com.feedme.app.mealflow.MealFormOwnerTest" time="0.001"/>
+  <testcase name="laterEditCannotBeMarkedSavedByEarlierAcknowledgement[jvm]" classname="com.feedme.app.mealflow.MealFormOwnerTest" time="0.0"/>
+  <testcase name="exactCurrentAcknowledgementMarksOnlyCurrentDraftSaved[jvm]" classname="com.feedme.app.mealflow.MealFormOwnerTest" time="0.001"/>
+  <testcase name="invalidationSynchronouslyClearsFormAndSearch[jvm]" classname="com.feedme.app.mealflow.MealFormOwnerTest" time="0.0"/>
+  <testcase name="defaultFormInventsNoEquipmentTasteExclusionsOrBaseComposition[jvm]" classname="com.feedme.app.mealflow.MealFormOwnerTest" time="0.0"/>
+  <testcase name="restoreDoesNotOverwriteDirtyPartialText[jvm]" classname="com.feedme.app.mealflow.MealFormOwnerTest" time="0.0"/>
+  <testcase name="choicesRejectAmbiguousDuplicateIdentities[jvm]" classname="com.feedme.app.mealflow.MealFormOwnerTest" time="0.001"/>
+  <testcase name="suspendedSaveCannotAcknowledgeAfterSessionReplacement[jvm]" classname="com.feedme.app.mealflow.MealFormOwnerTest" time="0.003"/>
+  <testcase name="closeRedactsWithoutClearingBorrowedIdentity[jvm]" classname="com.feedme.app.mealflow.MealFormOwnerTest" time="0.0"/>
+  <testcase name="suspendedSaveDoesNotAuthorizeExitAfterNewerEdits[jvm]" classname="com.feedme.app.mealflow.MealFormOwnerTest" time="0.002"/>
+  <testcase name="improveAvailabilityDoesNotBecomeBaseComposition[jvm]" classname="com.feedme.app.mealflow.MealFormOwnerTest" time="0.0"/>
+  <testcase name="reentrantNewerEditCannotBeOverwrittenByOuterTransform[jvm]" classname="com.feedme.app.mealflow.MealFormOwnerTest" time="0.0"/>
+  <testcase name="foreignBoundaryLeaseCannotRenderPrivateForm[jvm]" classname="com.feedme.app.mealflow.MealFormOwnerTest" time="0.0"/>
+  <testcase name="failedSaveKeepsDraftDirtyWithoutAcknowledging[jvm]" classname="com.feedme.app.mealflow.MealFormOwnerTest" time="0.002"/>
+  <testcase name="modelsDoNotLogPrivateText[jvm]" classname="com.feedme.app.mealflow.MealFormOwnerTest" time="0.001"/>
+  <testcase name="explicitDiscardRestoresSavedDraftWithoutErasingSavedExclusions[jvm]" classname="com.feedme.app.mealflow.MealFormOwnerTest" time="0.0"/>
+  <testcase name="partialNumericTextRemainsUnsavedAndExact[jvm]" classname="com.feedme.app.mealflow.MealFormOwnerTest" time="0.0"/>
+  <testcase name="listInputsAndPublishedValuesAreDetached[jvm]" classname="com.feedme.app.mealflow.MealFormOwnerTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

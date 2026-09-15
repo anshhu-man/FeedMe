@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.session.SessionWorkOriginAbortTest" tests="24" skipped="0" failures="0" errors="0" timestamp="2026-09-14T03:17:10.255Z" hostname="ansachars-MacBook-Pro.local" time="0.108">
+  <properties/>
+  <testcase name="abortedCodecRejectsDuplicateVersionAndUnknownProgressWithoutPrivateDiagnostics[jvm]" classname="com.feedme.session.SessionWorkOriginAbortTest" time="0.001"/>
+  <testcase name="abortedCodecKeepsExactOpaquePlanAndLegacyWireBytesDetached[jvm]" classname="com.feedme.session.SessionWorkOriginAbortTest" time="0.001"/>
+  <testcase name="aFreshPlanCannotReuseTheImmediatelyConsumedOriginIdentity[jvm]" classname="com.feedme.session.SessionWorkOriginAbortTest" time="0.029"/>
+  <testcase name="ordinaryUsedRetiringPopulatedOrCompetingOriginsNeverQualifyAsAbortTargets[jvm]" classname="com.feedme.session.SessionWorkOriginAbortTest" time="0.001"/>
+  <testcase name="noncooperativeCancellationAfterReadProofCasOrReadbackStopsAcknowledgement[jvm]" classname="com.feedme.session.SessionWorkOriginAbortTest" time="0.013"/>
+  <testcase name="failuresBeforeOrAfterCasNeverPromoteReadbackAndRetryUsesTheExactPlan[jvm]" classname="com.feedme.session.SessionWorkOriginAbortTest" time="0.006"/>
+  <testcase name="preparedSelectedAndUntouchedSealedPlansBecomeExactConsumedMarkers[jvm]" classname="com.feedme.session.SessionWorkOriginAbortTest" time="0.007"/>
+  <testcase name="readOnlySuccessorPlanningIsNotAReservationAgainstOldAbortReacknowledgement[jvm]" classname="com.feedme.session.SessionWorkOriginAbortTest" time="0.002"/>
+  <testcase name="successorCannotUseReorderedOrChangedRawAbortPredecessor[jvm]" classname="com.feedme.session.SessionWorkOriginAbortTest" time="0.003"/>
+  <testcase name="malformedOrForeignAbortedProofCannotBeBlessedBySuccessorPlanning[jvm]" classname="com.feedme.session.SessionWorkOriginAbortTest" time="0.001"/>
+  <testcase name="exactNoncanonicalIdlePredecessorIsAuthenticatedButAbortedMarkerIsCanonical[jvm]" classname="com.feedme.session.SessionWorkOriginAbortTest" time="0.001"/>
+  <testcase name="impossibleConsumedRevisionLaterIdleAndExhaustionNeverResetAuthority[jvm]" classname="com.feedme.session.SessionWorkOriginAbortTest" time="0.002"/>
+  <testcase name="ordinaryOriginCreationResumeAndRetirementCannotEraseSetupMarkers[jvm]" classname="com.feedme.session.SessionWorkOriginAbortTest" time="0.006"/>
+  <testcase name="changedRecordDuringAuthenticationPreventsAbortAndSuccessorPlanning[jvm]" classname="com.feedme.session.SessionWorkOriginAbortTest" time="0.002"/>
+  <testcase name="consumedMarkerHasEmptyMetadataButNeverSelectsOrSealsTheOldPlanAgain[jvm]" classname="com.feedme.session.SessionWorkOriginAbortTest" time="0.002"/>
+  <testcase name="successorSignsExactAbortedPredecessorAndItsSelectionFencesOldPlan[jvm]" classname="com.feedme.session.SessionWorkOriginAbortTest" time="0.004"/>
+  <testcase name="abortedCodecRequiresExactFieldsAndCanonicalBoundedNestedPlan[jvm]" classname="com.feedme.session.SessionWorkOriginAbortTest" time="0.0"/>
+  <testcase name="activeOrNewlyActivatedBoundaryBlocksAbortWithoutClearingNewIdentity[jvm]" classname="com.feedme.session.SessionWorkOriginAbortTest" time="0.004"/>
+  <testcase name="abortedReplaySurvivesManagerReopenAndAlwaysChangesRevision[jvm]" classname="com.feedme.session.SessionWorkOriginAbortTest" time="0.006"/>
+  <testcase name="ordinarySuccessfulResumeConsumesSealSoAnEmptyUsedOriginCannotBeAborted[jvm]" classname="com.feedme.session.SessionWorkOriginAbortTest" time="0.003"/>
+  <testcase name="missingCapabilityForeignProofCorruptMissingAndClosedStoresHaveNoFallback[jvm]" classname="com.feedme.session.SessionWorkOriginAbortTest" time="0.003"/>
+  <testcase name="repeatedUnknownAbortedReplaysStillRequireAFreshSuccessfulCas[jvm]" classname="com.feedme.session.SessionWorkOriginAbortTest" time="0.002"/>
+  <testcase name="successfulAbortCasNeedsExactReadbackWithoutMissingOlderNewerOrWrongPayload[jvm]" classname="com.feedme.session.SessionWorkOriginAbortTest" time="0.002"/>
+  <testcase name="malformedSuccessReceiptNeverAcknowledgesInitialAbortOrReplay[jvm]" classname="com.feedme.session.SessionWorkOriginAbortTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -57,13 +57,9 @@ fun FeedMeApp(
     FeedMeTheme {
         Scaffold(
             modifier = Modifier.safeDrawingPadding(),
+            containerColor = FeedMeColors.Paper,
             topBar = {
-                Column {
-                    FeedMeDemoLabel()
-                    if (state.session != null) {
-                        TextButton(onClick = { settingsOpen = true }) { Text("Demo settings") }
-                    }
-                }
+                FeedMeDemoLabel(onSettings = if (state.session != null) ({ settingsOpen = true }) else null)
             },
             bottomBar = {
                 if (state.session != null && state.route !in setOf(Route.COOK, Route.CAPTURE)) {

@@ -200,6 +200,11 @@ interface TimerNotificationPort {
 /** Immutable ticket for a single session incarnation; construction belongs to SessionBoundary. */
 class SessionLease internal constructor(val scope: StorageScope, internal val epoch: Long)
 
+/** Dispose on the same serialized application dispatcher as the owning boundary. */
+class SessionInvalidationSubscription internal constructor(private val dispose: () -> Unit) {
+    fun close() = dispose()
+}
+
 /**
  * Client-side stale-result isolation, not authentication or a thread-safe server policy engine.
  * Own it on one serialized UI/application dispatcher. Clear before logout/account switching;
@@ -208,20 +213,55 @@ class SessionLease internal constructor(val scope: StorageScope, internal val ep
 class SessionBoundary {
     private var epoch = 0L
     private var active: SessionLease? = null
+    private class Invalidation(val lease: SessionLease, var callback: (() -> Unit)?)
+    private val invalidations = mutableListOf<Invalidation>()
 
     fun activate(scope: StorageScope): SessionLease {
         advanceEpoch()
-        return SessionLease(scope, epoch).also { active = it }
+        return SessionLease(scope, epoch).also {
+            active = it
+            notifyInvalidated()
+        }
     }
 
     fun clear() {
         advanceEpoch()
         active = null
+        notifyInvalidated()
     }
 
     fun current(): SessionLease? = active
 
     fun isCurrent(lease: SessionLease): Boolean = active === lease && lease.epoch == epoch
+
+    /**
+     * One-shot lifecycle signal, never authentication or a replacement for isCurrent checks.
+     * Called synchronously AFTER this lease is invalidated by clear/activate, or immediately
+     * if it is already stale. Register, dispose and mutate on the same application dispatcher.
+     * The callback must only redact in-memory state/invalidate work generations; it must not
+     * suspend, do I/O or activate another session. An observer exception cannot undo clearing,
+     * prevent other observers from being notified, or leak its private message into logs.
+     */
+    fun onInvalidated(lease: SessionLease, callback: () -> Unit): SessionInvalidationSubscription {
+        val entry = Invalidation(lease, callback)
+        if (isCurrent(lease)) invalidations += entry else notify(entry)
+        return SessionInvalidationSubscription {
+            entry.callback = null
+            invalidations.remove(entry)
+        }
+    }
+
+    private fun notifyInvalidated() {
+        val stale = invalidations.filter { !isCurrent(it.lease) }
+        invalidations.removeAll(stale.toSet())
+        stale.forEach(::notify)
+    }
+
+    private fun notify(entry: Invalidation) {
+        val callback = entry.callback
+        entry.callback = null // Detach captured private state before invoking arbitrary observer code.
+        try { callback?.invoke() } catch (_: Exception) { /* No logging and no rollback of invalidation. */ }
+    }
 
     suspend fun <T> execute(lease: SessionLease, operation: suspend () -> PortResult<T>): PortResult<T> {
         if (!isCurrent(lease)) return PortResult.Failure(FailureReason.STALE_SESSION)

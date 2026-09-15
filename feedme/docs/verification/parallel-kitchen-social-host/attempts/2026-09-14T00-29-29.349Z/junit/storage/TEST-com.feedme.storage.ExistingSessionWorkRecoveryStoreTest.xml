@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" tests="30" skipped="0" failures="0" errors="0" timestamp="2026-09-14T00:30:02.488Z" hostname="ansachars-MacBook-Pro.local" time="3.086">
+  <properties/>
+  <testcase name="originalPredecessorProofBindsExactRawWhitespaceNotOnlyDecodedStateOrRevision[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.068"/>
+  <testcase name="missingUnusableReplacedKeysAndMalformedEncryptedLedgerFailClosedWithoutRepair[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.423"/>
+  <testcase name="constructionTransfersConnectionWithoutSqlKeyAccessOrOwnershipCallback[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.062"/>
+  <testcase name="proofRevisionProposalAndBothMacHalvesRemainBoundWithoutMutation[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.07"/>
+  <testcase name="closeBeforeOpenIsIdempotentAndDoesNotInitializeReadOrTouchKeys[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.065"/>
+  <testcase name="samePayloadCasMakesOneChangedAcknowledgedRevisionAndNeverAllocatesOrDeletesKeys[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.056"/>
+  <testcase name="unexpectedVaultFailuresAreSanitizedAndCancellationDoesNotBecomeSuccessOrDestroyReadyOwner[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.052"/>
+  <testcase name="purposeFixedStorageKeepsBoundedLedgerBytesOpaqueWithoutParsingSessionStates[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.099"/>
+  <testcase name="failedInitializationBecomesCloseOnlyAndRetainsConnectionAcrossFailedClose[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.051"/>
+  <testcase name="malformedProofInputsAreRejectedAndNeverMintReplacementProofs[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.061"/>
+  <testcase name="nullStaleInvalidAndExhaustedCasCannotInitializeReplaceOrResetTheLedger[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.047"/>
+  <testcase name="extraActiveInactiveOrForeignOwnersAreRejectedWithoutEnumerationAuthorityOrCleanup[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.138"/>
+  <testcase name="concurrentOrCancelledSecondOpenCannotInvalidateSuccessfullyReadyOwner[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.043"/>
+  <testcase name="sameInstallNewOwnerIncarnationCannotVerifyOldProofAfterExplicitReopen[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.088"/>
+  <testcase name="synchronousReadCancellationBeforeReturnCannotDeliverValueOnTheSameDispatcher[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.045"/>
+  <testcase name="openAndRepeatedReadAndProofVerificationPreserveExactBytesKeysAndRevision[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.046"/>
+  <testcase name="failedOwnershipCallbackRetriesOnlyAfterConnectionClosureAndNeverReopensSql[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.038"/>
+  <testcase name="cancelledCloseStillReleasesOwnershipAndClosedCapabilitiesNeverTouchSqlOrVault[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.041"/>
+  <testcase name="beforeCommitFailureAndLostApplicationReceiptRemainFailureUntilFreshChangedCas[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.146"/>
+  <testcase name="extraRowsTombstonesWrongRecordIdentityAndMissingLedgerCannotBeResetOrIgnored[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.222"/>
+  <testcase name="pinnedGenerationAndKeyNeverRebindToChangedOwnerAfterReady[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.122"/>
+  <testcase name="beforeOpenCapabilitiesAreFencedWithoutLazyInitializationOrProofSigning[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.043"/>
+  <testcase name="anyQueuedKeyGarbageOrHistoricalAbortReceiptBlocksOpenAndRemainsUntouched[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.133"/>
+  <testcase name="everyReadyReadCasAndProofRevalidatesStrictShapeBeforeAnyWrite[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.215"/>
+  <testcase name="equalRevisionForeignInstallCannotAuthenticateAnotherStoresPlan[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.08"/>
+  <testcase name="acknowledgedCloseAndExistingReopenRetainOnlyTheExactCurrentLedgerAndOriginalProof[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.081"/>
+  <testcase name="existingOnlyOpenRejectsEmptyLegacyFutureForeignAndAlteredSchemaWithoutInitialization[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.265"/>
+  <testcase name="cancelledCallerAfterAcknowledgedCommitGetsNoSuccessAndCanObserveExactWrittenRecord[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.068"/>
+  <testcase name="cancelledInitializationCannotPublishReadyAfterNoncooperativeSqlReturns[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.044"/>
+  <testcase name="readinessIsNotExposedUntilSuccessfulCallerHandoffAndCloseOrCancellationWinsTheGap[jvm]" classname="com.feedme.storage.ExistingSessionWorkRecoveryStoreTest" time="0.171"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

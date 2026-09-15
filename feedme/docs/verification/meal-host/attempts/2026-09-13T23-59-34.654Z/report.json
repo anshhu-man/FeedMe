@@ -1,0 +1,64 @@
+{
+  "startedAt": "2026-09-13T23:59:34.654Z",
+  "passed": false,
+  "serial": "emulator-5554",
+  "scope": "Seven actual Android retained FeedMeMealFlow/MealFlowExperience/controller tests using public native session factories and encrypted owner-scoped storage. Account verification and transport are explicitly synthetic; no real login, HTTP/catalog, provider, cooking/save/share, iOS or release acceptance. Activity recreation, system Back, native draft persistence, exact original request replay and invalidation are exercised. Not process death, a delayed actual storage acknowledgement or physical storage-fault proof.",
+  "apk": {
+    "path": "shared/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk",
+    "bytes": 27701139,
+    "sha256": "c247fb8c248dca8bba55028c583eaa5b68aab003401fd3c3914245a179cec3a7"
+  },
+  "apkMetadata": {
+    "path": "docs/verification/meal-host/attempts/2026-09-13T23-59-34.654Z/output-metadata.json",
+    "bytes": 421,
+    "sha256": "cee2ae8b5f90978e068be43ebfb0455ae1b2ae6b558bf56b8d72b44296ec3f82"
+  },
+  "source": {
+    "path": "shared/app/src/androidInstrumentedTest/kotlin/com/feedme/app/mealflow/AndroidMealFlowHostTest.kt",
+    "bytes": 14780,
+    "sha256": "8afc57a119a7cdc7a70487c42ab5acd0c10bb901306f49a1eab30bc8cd484042"
+  },
+  "attemptDirectory": "docs/verification/meal-host/attempts/2026-09-13T23-59-34.654Z",
+  "screenshots": [],
+  "androidApi": "35",
+  "androidAbi": "arm64-v8a",
+  "failure": "Host test failed/skipped/mismatched",
+  "finishedAt": "2026-09-14T00:00:49.365Z",
+  "evidence": [
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-13T23-59-34.654Z/abi.log",
+      "bytes": 10,
+      "sha256": "7f10c3cd4593d1d6ded27d658e7c05216011c955c200aac551caad0c979d4d90"
+    },
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-13T23-59-34.654Z/api.log",
+      "bytes": 3,
+      "sha256": "90d7ec0f0acef104d8b6252794295f661a0149634868d02a1ae0c358099638f5"
+    },
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-13T23-59-34.654Z/boot.log",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-13T23-59-34.654Z/install.log",
+      "bytes": 36,
+      "sha256": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7"
+    },
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-13T23-59-34.654Z/instrumentation.log",
+      "bytes": 9779,
+      "sha256": "61c3bdbbdeede3b93c48140fdd09cd8809203691675734f88ee4fd0be591d020"
+    },
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-13T23-59-34.654Z/output-metadata.json",
+      "bytes": 421,
+      "sha256": "cee2ae8b5f90978e068be43ebfb0455ae1b2ae6b558bf56b8d72b44296ec3f82"
+    },
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-13T23-59-34.654Z/runner.log",
+      "bytes": 105,
+      "sha256": "fea4b8e499b021972383b98662d206dd48075388faa6322c01baba312db9466e"
+    }
+  ]
+}

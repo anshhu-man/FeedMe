@@ -90,6 +90,11 @@ class CookingRepository(
         mutex.withLock { load(lease, normalizedId(sessionId))?.let { view(lease, it) } }
     }
 
+    /** Known local blocking evidence only. False does not establish current safety or rights. */
+    suspend fun hasRecipeRecall(lease: SessionLease, recipeVersionId: String): PortResult<Boolean> = context.guarded(lease) {
+        mutex.withLock { context.isRecalled(lease, "version", recipeVersionId) }
+    }
+
     /** Complete owner index, bounded to 64 pins; corrupt entries fail closed, never disappear. */
     suspend fun list(lease: SessionLease): PortResult<List<CookingSnapshot>> = context.guarded(lease) {
         mutex.withLock {
@@ -102,7 +107,80 @@ class CookingRepository(
 
     /** Save domain intent and visible progress in one CAS transaction before acknowledging a tap. */
     suspend fun edit(lease: SessionLease, sessionId: String, expectedLocalRevision: Long,
-        commandId: String, edit: CookingEdit): PortResult<CookingSnapshot> = context.guarded(lease) {
+        commandId: String, edit: CookingEdit): PortResult<CookingSnapshot> = editInternal(lease, sessionId,
+            expectedLocalRevision, commandId, edit, null)
+
+    /** Purpose-fixed atomic timer progress + immutable command + private scheduling intent. No OS effect. */
+    suspend fun editTimersWithMetadata(lease: SessionLease, sessionId: String, expectedLocalRevision: Long,
+        commandId: String, timers: List<WireDocument>, expectedMetadata: PrivateRecord?,
+        metadata: PrivateBytes): PortResult<CookingSnapshot> = editInternal(lease, sessionId, expectedLocalRevision,
+            commandId, CookingEdit.ReplaceTimers(timers), TimerExtra(expectedMetadata, metadata))
+
+    /** Observation, not scheduling acknowledgement. A changed timer body invalidates old mappings. */
+    suspend fun readTimerMetadata(lease: SessionLease, sessionId: String): PortResult<CookingTimerMetadata?> = context.guarded(lease) {
+        mutex.withLock {
+            val bundle = requireLoaded(lease, normalizedId(sessionId))
+            if (bundle.header.originBinding != origin) kitchenFail(FailureReason.CONFLICT)
+            timerMetadata(lease, bundle)
+        }
+    }
+
+    /** Read-only local eligibility, not a server/OS grant. Missing materialized queue evidence is
+     * corruption/conflict, never interchangeable with an unmaterialized immutable local action.
+     */
+    suspend fun timerExecutionCheck(lease: SessionLease, sessionId: String): PortResult<Unit> = context.guarded(lease) {
+        mutex.withLock {
+            val bundle = requireLoaded(lease, normalizedId(sessionId))
+            requireEditable(lease, bundle)
+            if (terminal(bundle.progress.status.name.lowercase())) kitchenFail(FailureReason.FORBIDDEN)
+            for (id in bundle.header.pending) {
+                val action = action(lease, id, bundle.header.id)
+                val command = kitchenValue(commands.command(lease, id))
+                if (!action.header.materialized) {
+                    if (command != null) kitchenFail(FailureReason.CONFLICT)
+                    continue
+                }
+                if (id != bundle.header.pending.first() || command == null || command.operationId != action.header.operationId ||
+                    command.phase !in setOf(CommandPhase.READY, CommandPhase.RETRY_WAIT) ||
+                    command.issue !in setOf(CommandIssue.NONE, CommandIssue.OFFLINE, CommandIssue.TEMPORARILY_UNAVAILABLE)) kitchenFail(FailureReason.CONFLICT)
+                val original = kitchenValue(commands.intent(lease, id)) ?: kitchenFail(FailureReason.CONFLICT)
+                val call = original.call
+                if (original.commandId != id || original.originBinding != origin || original.dependencyCommandIds.isNotEmpty() ||
+                    call.operationId != action.header.operationId || call.pathParameters != mapOf("sessionId" to bundle.header.id) ||
+                    call.queryParameters.isNotEmpty() || call.ifMatch != action.header.ifMatch || call.idempotencyKey?.use { it } != id ||
+                    call.body?.let(::privateDigest) != action.header.bodyHash) kitchenFail(FailureReason.CONFLICT)
+                val after = kitchenValue(commands.command(lease, id)) ?: kitchenFail(FailureReason.CONFLICT)
+                if (after.localRevision != command.localRevision) kitchenFail(FailureReason.CONFLICT)
+            }
+            if (context.read(lease, key("metadata", bundle.header.id))?.revision != bundle.metadataRecord.revision) kitchenFail(FailureReason.CONFLICT)
+            requireEditable(lease, bundle)
+        }
+    }
+
+    /** Fresh changing CAS/readback of the fixed mapping with an exact cooking predecessor.
+     * This does not acknowledge an earlier failed edit/command, change timer bytes, or approve alerts.
+     * A stale timer binding remains stale, permitting only exact alert cleanup by the trusted facade.
+     */
+    suspend fun acknowledgeTimerMetadata(lease: SessionLease, sessionId: String, expectedLocalRevision: Long,
+        expected: PrivateRecord, metadata: PrivateBytes): PortResult<CookingTimerMetadata> = context.guarded(lease) {
+        mutex.withLock {
+            val bundle = requireLoaded(lease, normalizedId(sessionId))
+            if (bundle.header.originBinding != origin || bundle.metadataRecord.revision != expectedLocalRevision) kitchenFail(FailureReason.CONFLICT)
+            val old = timerMetadata(lease, bundle) ?: kitchenFail(FailureReason.CONFLICT)
+            exactTimerRecord(old.record, expected)
+            val raw = context.read(lease, key("timer-metadata", bundle.header.id)) ?: kitchenFail(FailureReason.CONFLICT)
+            val envelope = CookingTimerMetadataCodec.decode(raw.payload)
+            val encoded = CookingTimerMetadataCodec.encode(origin, envelope.timerHash, metadata)
+            context.commit(lease, listOf(kitchenPut(key("timer-metadata", bundle.header.id), raw.revision, encoded),
+                kitchenPut(key("metadata", bundle.header.id), bundle.metadataRecord.revision, bundle.metadataRecord.payload),
+                kitchenPut(key("progress", bundle.header.id), bundle.progressRecord.revision, bundle.progressRecord.payload),
+                indexChange(bundle.index, bundle.header.id)))
+            timerMetadata(lease, requireLoaded(lease, bundle.header.id)) ?: kitchenFail(FailureReason.STORAGE_FAILURE)
+        }
+    }
+
+    private suspend fun editInternal(lease: SessionLease, sessionId: String, expectedLocalRevision: Long,
+        commandId: String, edit: CookingEdit, timerExtra: TimerExtra?): PortResult<CookingSnapshot> = context.guarded(lease) {
         mutex.withLock {
             val bundle = requireLoaded(lease, normalizedId(sessionId))
             requireEditable(lease, bundle)
@@ -127,13 +205,19 @@ class CookingRepository(
             context.document(if (edit is CookingEdit.Complete) "Completion" else "CookPatch", body)
             val action = CookActionHeader(command, bundle.header.id, operation, privateDigest(body), context.now(), false, null)
             val header = bundle.header.copy(progressHash = privateDigest(progressBytes), pending = bundle.header.pending + command)
+            val timerChanges = timerExtra?.let {
+                val existing = timerMetadata(lease, bundle)
+                exactTimerRecord(existing?.record, it.expected)
+                listOf(kitchenPut(key("timer-metadata", bundle.header.id), it.expected?.revision,
+                    CookingTimerMetadataCodec.encode(origin, timerDigest(progress), it.payload)))
+            }.orEmpty()
             context.commit(lease, listOf(
                 kitchenPut(key("progress", header.id), bundle.progressRecord.revision, progressBytes),
                 kitchenPut(key("metadata", header.id), bundle.metadataRecord.revision, CookingRecords.encodeHeader(header)),
                 kitchenPut(key("action", command), null, CookingRecords.encodeAction(action)),
                 kitchenPut(key("action-body", command), null, body),
                 kitchenPut(key("used-action", command), null, PrivateBytes(byteArrayOf(1))), indexChange(bundle.index, header.id),
-            ))
+            ) + timerChanges)
             view(lease, requireLoaded(lease, header.id))
         }
     }
@@ -300,6 +384,21 @@ class CookingRepository(
         if (availability(lease, bundle) != CookingAvailability.AVAILABLE) kitchenFail(FailureReason.FORBIDDEN)
     }
 
+    private suspend fun timerMetadata(lease: SessionLease, bundle: Bundle): CookingTimerMetadata? {
+        val stored = context.read(lease, key("timer-metadata", bundle.header.id)) ?: return null
+        if (stored.schemaVersion != 1) PrivateJson.invalid()
+        val envelope = CookingTimerMetadataCodec.decode(stored.payload)
+        if (envelope.origin != origin) kitchenFail(FailureReason.CONFLICT)
+        return CookingTimerMetadata(PrivateRecord(stored.revision, 1, envelope.payload), envelope.timerHash == timerDigest(bundle.progress))
+    }
+    private fun timerDigest(progress: CookingProgress) = privateDigest(PrivateBytes(JsonArray(progress.timers.map { it.document.json() }).toString().encodeToByteArray()))
+    private fun exactTimerRecord(actual: PrivateRecord?, expected: PrivateRecord?) {
+        if ((actual == null) != (expected == null) || (actual != null && expected != null &&
+            (actual.revision != expected.revision || actual.schemaVersion != expected.schemaVersion || privateDigest(actual.payload) != privateDigest(expected.payload))))
+            kitchenFail(FailureReason.CONFLICT)
+    }
+    private class TimerExtra(val expected: PrivateRecord?, val payload: PrivateBytes)
+
     private suspend fun availability(lease: SessionLease, bundle: Bundle): CookingAvailability {
         val recipe = recipe(bundle.plan)
         if (bundle.plan.status == "recalled" || (recipe != null && (recipe.reviewStatus == "recalled" || context.isRecalled(lease, "version", recipe.id.value))))
@@ -313,7 +412,7 @@ class CookingRepository(
 
     private suspend fun view(lease: SessionLease, bundle: Bundle) = CookingSnapshot(bundle.header.id, bundle.plan, bundle.remote,
         bundle.progress, availability(lease, bundle), bundle.header.checkedAt, bundle.metadataRecord.revision,
-        bundle.header.etag, bundle.header.pending, bundle.conflict)
+        bundle.header.etag, bundle.header.pending, bundle.conflict, bundle.header.originBinding == origin)
 
     private fun compatiblePlan(old: PlanWire, incoming: PlanWire) {
         val order = compareVersions(documentVersion(incoming.document), documentVersion(old.document))

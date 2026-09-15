@@ -1,6 +1,6 @@
 # All 98 FeedMe screens
 
-Each design is paired with its screen specification and button behavior. These are prototype designs, not completed native feature claims. Start at AUTH_WELCOME, then signup/login and onboarding. [Interactive viewing instructions](../outputs/biteclub_ui/README.md).
+Each design is paired with its screen specification and button behavior. These are prototype designs, not completed native feature claims. Start at AUTH_WELCOME, then signup/login and onboarding. [Interactive viewing instructions](../outputs/biteclub_ui/README.md). [Local evidence boundary](LOCAL_EVIDENCE.md).
 
 | Screen | Name | Design | Specification |
 | --- | --- | --- | --- |

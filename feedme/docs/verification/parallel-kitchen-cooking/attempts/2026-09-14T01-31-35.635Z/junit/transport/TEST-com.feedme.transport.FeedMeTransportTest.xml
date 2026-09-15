@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.transport.FeedMeTransportTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-09-14T01:31:42.037Z" hostname="ansachars-MacBook-Pro.local" time="0.345">
+  <properties/>
+  <testcase name="guestCredentialsOmitDeviceAndBootstrapDoesToo[jvm]" classname="com.feedme.transport.FeedMeTransportTest" time="0.049"/>
+  <testcase name="cancellationPropagatesAndClosedTransportDoesNotSend[jvm]" classname="com.feedme.transport.FeedMeTransportTest" time="0.04"/>
+  <testcase name="accountSwitchDuringSecureReadStopsDispatch[jvm]" classname="com.feedme.transport.FeedMeTransportTest" time="0.035"/>
+  <testcase name="accountHeadersAndProblemBodySurviveWithoutExceptionMapping[jvm]" classname="com.feedme.transport.FeedMeTransportTest" time="0.032"/>
+  <testcase name="trustedOriginsRejectUserInfoPathsPortsAndDowngrades[jvm]" classname="com.feedme.transport.FeedMeTransportTest" time="0.003"/>
+  <testcase name="lostOrInvalidWriteReceiptIsUnknownAndSameKeyIsPreserved[jvm]" classname="com.feedme.transport.FeedMeTransportTest" time="0.026"/>
+  <testcase name="accountSwitchAfterDispatchSuppressesResult[jvm]" classname="com.feedme.transport.FeedMeTransportTest" time="0.02"/>
+  <testcase name="invalidExpiredMissingWrongScopeAndDemoSessionsNeverSend[jvm]" classname="com.feedme.transport.FeedMeTransportTest" time="0.027"/>
+  <testcase name="closeCancelsInFlightOwnedClientWork[jvm]" classname="com.feedme.transport.FeedMeTransportTest" time="0.033"/>
+  <testcase name="publicCallsNeverReadOrAttachStoredCredentials[jvm]" classname="com.feedme.transport.FeedMeTransportTest" time="0.032"/>
+  <testcase name="offlineAndStorageFailureAreLocal[jvm]" classname="com.feedme.transport.FeedMeTransportTest" time="0.047"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "timestamp": "2026-09-13T03:49:08.760Z",
-  "sourceDigest": "07b0c3c752561c96c4b80ab386dd0f8b54e5c7334f5c8a46232b8b4f0d7727f3",
+  "timestamp": "2026-09-13T21:47:52.699Z",
+  "sourceDigest": "e56891fd897e1f4b604a90cc7c9a73a7b8efc0cb9255f38dbda604621a529ca2",
   "scope": "Real headless Chromium rendering of a synthetic local HTML navigation prototype. All API/provider outcomes are simulated.",
   "screensRendered": 98,
   "actionsExercised": 900,

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.session.SessionApplicationCompositionTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-09-14T00:29:54.627Z" hostname="ansachars-MacBook-Pro.local" time="0.01">
+  <properties/>
+  <testcase name="reservedRuntimeReleaseDoesNotReleaseBorrowedStoreReservation[jvm]" classname="com.feedme.session.SessionApplicationCompositionTest" time="0.004"/>
+  <testcase name="activeBoundaryAndWrongBoundaryCannotAcquireCompositionAuthority[jvm]" classname="com.feedme.session.SessionApplicationCompositionTest" time="0.001"/>
+  <testcase name="rootReplacementCannotReactivateReleasedOldTokenEvenWithSameConfiguration[jvm]" classname="com.feedme.session.SessionApplicationCompositionTest" time="0.0"/>
+  <testcase name="invalidationFencesOldTokenWithoutDroppingItsOwnerOrNativeCleanupDuty[jvm]" classname="com.feedme.session.SessionApplicationCompositionTest" time="0.003"/>
+  <testcase name="unreservedRuntimeAdmissionCannotBypassEvenAnUnreservedApplicationRoot[jvm]" classname="com.feedme.session.SessionApplicationCompositionTest" time="0.001"/>
+  <testcase name="legacyRuntimeRegistrationExcludesRootUntilItsExactRelease[jvm]" classname="com.feedme.session.SessionApplicationCompositionTest" time="0.0"/>
+  <testcase name="rootRequiresExactConfigurationAndCannotReplaceExistingRoot[jvm]" classname="com.feedme.session.SessionApplicationCompositionTest" time="0.001"/>
+  <testcase name="reservationAndRootRenderNoPrivateConfigurationOrOwner[jvm]" classname="com.feedme.session.SessionApplicationCompositionTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

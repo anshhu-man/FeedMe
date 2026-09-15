@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.social.CircleCapabilitiesTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-09-13T21:15:49.373Z" hostname="ansachars-MacBook-Pro.local" time="0.033">
+  <properties/>
+  <testcase name="invitationHashRejectsUnboundedOrControlBearingTokensWithoutEchoingThem" classname="com.feedme.server.social.CircleCapabilitiesTest" time="0.008"/>
+  <testcase name="insecureOrAmbiguousInvitationEndpointsAreRejected" classname="com.feedme.server.social.CircleCapabilitiesTest" time="0.0"/>
+  <testcase name="cursorTamperingMalformedAndUnboundedInputNeverFallsBackToFirstPage" classname="com.feedme.server.social.CircleCapabilitiesTest" time="0.012"/>
+  <testcase name="cursorsBindPrincipalEnvironmentCollectionAndCircleRatherThanGrantingAccess" classname="com.feedme.server.social.CircleCapabilitiesTest" time="0.0"/>
+  <testcase name="configuredKeyBytesAndMapAreDetachedAndOldKeyIdsRemainUsableForReplay" classname="com.feedme.server.social.CircleCapabilitiesTest" time="0.002"/>
+  <testcase name="policyBoundsAreExplicitAndPrincipalDiagnosticsRemainRedacted" classname="com.feedme.server.social.CircleCapabilitiesTest" time="0.002"/>
+  <testcase name="invitationProofIsDeterministicBoundToEnvironmentIdAndKeyAndNeverPrinted" classname="com.feedme.server.social.CircleCapabilitiesTest" time="0.001"/>
+  <testcase name="configuredKeysAreRequiredAndNoHostOrSecretIsInvented" classname="com.feedme.server.social.CircleCapabilitiesTest" time="0.0"/>
+  <testcase name="allProducedEventNamesAreRegisteredInTheCanonicalEventCatalog" classname="com.feedme.server.social.CircleCapabilitiesTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

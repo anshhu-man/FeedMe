@@ -53,6 +53,14 @@ test('unknown task status is rejected', () => {
   const input = fixture(); input.plan = input.plan.replace('| READY |', '| SHIPPED_MAYBE |');
   fails(input, 'Every task has a known milestone, status, action and acceptance evidence');
 });
+test('deferred work remains tracked without being counted as done', () => {
+  const input = fixture(); input.plan = input.plan.replace('| READY |', '| DEFERRED |');
+  const report = verifyDeliveryPlan(input);
+  assert.equal(report.passed, true);
+  assert.equal(report.tasksByStatus.DEFERRED, 1);
+  assert.equal(report.tasksByStatus.DONE, 0);
+  assert.equal(report.counts.features, 54);
+});
 test('user blocker without action ID is rejected', () => {
   const input = fixture(); input.plan = input.plan.replace('| READY |', '| USER_BLOCKED |');
   fails(input, 'Every user-blocked task identifies a user action');

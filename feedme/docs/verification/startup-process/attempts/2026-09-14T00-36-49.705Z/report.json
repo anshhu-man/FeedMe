@@ -1,0 +1,698 @@
+{
+  "startedAt": "2026-09-14T00:36:49.705Z",
+  "passed": true,
+  "serial": "emulator-5554",
+  "scope": "Seven host-witnessed forced terminations of the isolated session-test process at acknowledged startup boundaries, each followed by a distinct-process public-owner recovery. Interrupted starts are NOT passed tests. Real native stores/plans with synthetic test identity and programmatic consent; not physical power loss, in-transaction crash, general journal/orphan recovery, real provider/UI/iOS or release acceptance.",
+  "apk": {
+    "path": "shared/session/build/outputs/apk/androidTest/debug/session-debug-androidTest.apk",
+    "bytes": 9098615,
+    "sha256": "c1d712a55594a2a7ea57f32268d13ac055c1dc940f19170f10288aa41019f3ce"
+  },
+  "apkMetadata": {
+    "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/output-metadata.json",
+    "bytes": 429,
+    "sha256": "295c766680d7ebd3b5a40643eca570d09c34efb22974faac3b8734c19c7a38d9"
+  },
+  "attemptDirectory": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z",
+  "stages": [
+    {
+      "name": "opening",
+      "runId": "35634331-7ac7-4359-92dc-539f4c696252",
+      "interruptSelector": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#interruptDuringExistingOpen",
+      "recoverSelector": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#recoverAfterInterruptedExistingOpen",
+      "passed": true,
+      "checkpoint": {
+        "version": 1,
+        "runId": "35634331-7ac7-4359-92dc-539f4c696252",
+        "scenario": "opening",
+        "pid": 6938,
+        "control": "unconfirmed",
+        "closed": 0
+      },
+      "forceStop": {
+        "out": "",
+        "status": 0
+      },
+      "interruption": {
+        "identity": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#interruptDuringExistingOpen",
+        "witnessedInterruption": true,
+        "passedTest": false
+      },
+      "interruptedExit": {
+        "code": 0,
+        "signal": null
+      },
+      "processAbsentAfterStop": true,
+      "recovery": {
+        "identity": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#recoverAfterInterruptedExistingOpen",
+        "passed": true,
+        "tests": 1,
+        "previousPid": 6938,
+        "pid": 7025
+      }
+    },
+    {
+      "name": "ready",
+      "runId": "22e5fc05-b634-458d-9616-1dfcf775e6a1",
+      "interruptSelector": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#interruptReadyWithoutConfirmation",
+      "recoverSelector": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#recoverUnconfirmedReadyWithoutInferringConsent",
+      "passed": true,
+      "checkpoint": {
+        "version": 1,
+        "runId": "22e5fc05-b634-458d-9616-1dfcf775e6a1",
+        "scenario": "ready",
+        "pid": 7069,
+        "control": "unconfirmed",
+        "closed": 0
+      },
+      "forceStop": {
+        "out": "",
+        "status": 0
+      },
+      "interruption": {
+        "identity": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#interruptReadyWithoutConfirmation",
+        "witnessedInterruption": true,
+        "passedTest": false
+      },
+      "interruptedExit": {
+        "code": 0,
+        "signal": null
+      },
+      "processAbsentAfterStop": true,
+      "recovery": {
+        "identity": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#recoverUnconfirmedReadyWithoutInferringConsent",
+        "passed": true,
+        "tests": 1,
+        "previousPid": 7069,
+        "pid": 7123
+      }
+    },
+    {
+      "name": "work-aborted",
+      "runId": "5a9521d5-5024-40bc-9f49-663a5efb5b42",
+      "interruptSelector": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#interruptAfterWorkAbort",
+      "recoverSelector": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#recoverAfterAcknowledgedWorkAbort",
+      "passed": true,
+      "checkpoint": {
+        "version": 1,
+        "runId": "5a9521d5-5024-40bc-9f49-663a5efb5b42",
+        "scenario": "work-aborted",
+        "pid": 7166,
+        "control": "requested",
+        "closed": 0
+      },
+      "forceStop": {
+        "out": "",
+        "status": 0
+      },
+      "interruption": {
+        "identity": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#interruptAfterWorkAbort",
+        "witnessedInterruption": true,
+        "passedTest": false
+      },
+      "interruptedExit": {
+        "code": 0,
+        "signal": null
+      },
+      "processAbsentAfterStop": true,
+      "recovery": {
+        "identity": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#recoverAfterAcknowledgedWorkAbort",
+        "passed": true,
+        "tests": 1,
+        "previousPid": 7166,
+        "pid": 7222
+      }
+    },
+    {
+      "name": "data-aborted",
+      "runId": "d9860fad-c2a7-4a6e-8629-b9910be3c691",
+      "interruptSelector": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#interruptAfterDataAbort",
+      "recoverSelector": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#recoverAfterAcknowledgedDataAbort",
+      "passed": true,
+      "checkpoint": {
+        "version": 1,
+        "runId": "d9860fad-c2a7-4a6e-8629-b9910be3c691",
+        "scenario": "data-aborted",
+        "pid": 7266,
+        "control": "requested",
+        "closed": 0
+      },
+      "forceStop": {
+        "out": "",
+        "status": 0
+      },
+      "interruption": {
+        "identity": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#interruptAfterDataAbort",
+        "witnessedInterruption": true,
+        "passedTest": false
+      },
+      "interruptedExit": {
+        "code": 0,
+        "signal": null
+      },
+      "processAbsentAfterStop": true,
+      "recovery": {
+        "identity": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#recoverAfterAcknowledgedDataAbort",
+        "passed": true,
+        "tests": 1,
+        "previousPid": 7266,
+        "pid": 7324
+      }
+    },
+    {
+      "name": "work-closed",
+      "runId": "da576750-df8f-4545-97b0-52e1493be77d",
+      "interruptSelector": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#interruptAfterWorkClose",
+      "recoverSelector": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#recoverAfterAcknowledgedWorkClose",
+      "passed": true,
+      "checkpoint": {
+        "version": 1,
+        "runId": "da576750-df8f-4545-97b0-52e1493be77d",
+        "scenario": "work-closed",
+        "pid": 7367,
+        "control": "requested",
+        "closed": 1
+      },
+      "forceStop": {
+        "out": "",
+        "status": 0
+      },
+      "interruption": {
+        "identity": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#interruptAfterWorkClose",
+        "witnessedInterruption": true,
+        "passedTest": false
+      },
+      "interruptedExit": {
+        "code": 0,
+        "signal": null
+      },
+      "processAbsentAfterStop": true,
+      "recovery": {
+        "identity": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#recoverAfterAcknowledgedWorkClose",
+        "passed": true,
+        "tests": 1,
+        "previousPid": 7367,
+        "pid": 7428
+      }
+    },
+    {
+      "name": "data-closed",
+      "runId": "9d1945e2-db4e-4f85-8d65-c6572805b464",
+      "interruptSelector": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#interruptAfterDataClose",
+      "recoverSelector": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#recoverAfterAcknowledgedDataClose",
+      "passed": true,
+      "checkpoint": {
+        "version": 1,
+        "runId": "9d1945e2-db4e-4f85-8d65-c6572805b464",
+        "scenario": "data-closed",
+        "pid": 7471,
+        "control": "requested",
+        "closed": 2
+      },
+      "forceStop": {
+        "out": "",
+        "status": 0
+      },
+      "interruption": {
+        "identity": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#interruptAfterDataClose",
+        "witnessedInterruption": true,
+        "passedTest": false
+      },
+      "interruptedExit": {
+        "code": 0,
+        "signal": null
+      },
+      "processAbsentAfterStop": true,
+      "recovery": {
+        "identity": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#recoverAfterAcknowledgedDataClose",
+        "passed": true,
+        "tests": 1,
+        "previousPid": 7471,
+        "pid": 7532
+      }
+    },
+    {
+      "name": "complete",
+      "runId": "b2ed0cd5-7e6f-4bbc-b82b-ee19b315ca21",
+      "interruptSelector": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#interruptAfterCompleteBeforeControlClose",
+      "recoverSelector": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#rejectCompleteAsFreshAbortAuthority",
+      "passed": true,
+      "checkpoint": {
+        "version": 1,
+        "runId": "b2ed0cd5-7e6f-4bbc-b82b-ee19b315ca21",
+        "scenario": "complete",
+        "pid": 7575,
+        "control": "complete",
+        "closed": 3
+      },
+      "forceStop": {
+        "out": "",
+        "status": 0
+      },
+      "interruption": {
+        "identity": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#interruptAfterCompleteBeforeControlClose",
+        "witnessedInterruption": true,
+        "passedTest": false
+      },
+      "interruptedExit": {
+        "code": 0,
+        "signal": null
+      },
+      "processAbsentAfterStop": true,
+      "recovery": {
+        "identity": "com.feedme.session.AndroidSessionSetupProcessInterruptionTest#rejectCompleteAsFreshAbortAuthority",
+        "passed": true,
+        "tests": 1,
+        "previousPid": 7575,
+        "pid": 7637
+      }
+    }
+  ],
+  "androidApi": "35",
+  "androidAbi": "arm64-v8a",
+  "tests": {
+    "tests": 7,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "witnessedInterruptions": 7,
+  "finishedAt": "2026-09-14T00:37:13.272Z",
+  "evidence": [
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/1-opening-after-stop-pid.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/1-opening-before-stop.log",
+      "bytes": 390,
+      "sha256": "b2c8d59f509ab8d88b03d935c4938b2d4f3037090cb7289477690dfe57d9d338"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/1-opening-checkpoint.json",
+      "bytes": 127,
+      "sha256": "fa0af2eead8dccae32dd3277f7d4aa21f8c810ff41e1735d0ac300d5fe8003af"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/1-opening-fixture-cleanup.log",
+      "bytes": 71,
+      "sha256": "06ecf56960c01c91d4d57e0fe6fe99139c9a8e906fb56537293e0e1d74cc8bf7"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/1-opening-force-stop.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/1-opening-interrupted.log",
+      "bytes": 464,
+      "sha256": "dff369371d3a1874993291387a86fbf04c9bc0eb4c7e2485a814e34c9aa0884c"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/1-opening-live-pid.log",
+      "bytes": 5,
+      "sha256": "54e4b10ccb0028d53241f983e82e821830b5fbcaa19b3a9f133f758eaab7d15d"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/1-opening-ownership.log",
+      "bytes": 99,
+      "sha256": "ae4b4522ff696eb8e793f30adfc23ede738141510bc4726efd4f54628dc39b70"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/1-opening-preflight-pid.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/1-opening-preflight-stop.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/1-opening-recovered.log",
+      "bytes": 1171,
+      "sha256": "07a77352217b79f95ecdd44335aef56493941d35ed66a257b5c6859e8daefdef"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/2-ready-after-stop-pid.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/2-ready-before-stop.log",
+      "bytes": 396,
+      "sha256": "8d6810fa4c1cdc53cd6bd1f8471dfa4e5127b470800652c40390a5fb1e6f15fd"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/2-ready-checkpoint.json",
+      "bytes": 125,
+      "sha256": "2b02e01a8d9ec64ef184d6d538ec5a9bcd9240a5d66ec112fef36232bedd9d57"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/2-ready-fixture-cleanup.log",
+      "bytes": 71,
+      "sha256": "06ecf56960c01c91d4d57e0fe6fe99139c9a8e906fb56537293e0e1d74cc8bf7"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/2-ready-force-stop.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/2-ready-interrupted.log",
+      "bytes": 470,
+      "sha256": "6e0641addda8535b01758259bd19953895583f671b574a117d2a44a9d6e44bbd"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/2-ready-live-pid.log",
+      "bytes": 5,
+      "sha256": "32bfba413c73f52a03fba13a3d31594d6b01a553bb32238d6c4742320a0e3663"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/2-ready-ownership.log",
+      "bytes": 97,
+      "sha256": "409e248bbfc3ba58d398a180f0931b11eb66d8331073cbf180f2ebee2442c521"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/2-ready-preflight-pid.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/2-ready-preflight-stop.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/2-ready-recovered.log",
+      "bytes": 1191,
+      "sha256": "2ea3d48ffabea030836de8fe3bdbe0f718e4952cb617979ae2d9fb70cd9c74f6"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/3-work-aborted-after-stop-pid.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/3-work-aborted-before-stop.log",
+      "bytes": 386,
+      "sha256": "c30078d943f89eed847f3c036895e07f65144ccace5d4d22f7c9e4893410dc31"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/3-work-aborted-checkpoint.json",
+      "bytes": 130,
+      "sha256": "145adc18430fbb4afafc5c929ae018aa20b1fca3900d60e8a053d68927dcb448"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/3-work-aborted-fixture-cleanup.log",
+      "bytes": 71,
+      "sha256": "06ecf56960c01c91d4d57e0fe6fe99139c9a8e906fb56537293e0e1d74cc8bf7"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/3-work-aborted-force-stop.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/3-work-aborted-interrupted.log",
+      "bytes": 460,
+      "sha256": "ca76fa9d366b7bc215cc7e5e45fa250b6cb1265f202fbf57968f889d11d1c4e8"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/3-work-aborted-live-pid.log",
+      "bytes": 5,
+      "sha256": "3e8af61d58c2c94a3f31060f193f7ae3644f4be26e661d69e958fd1f14ff5761"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/3-work-aborted-ownership.log",
+      "bytes": 104,
+      "sha256": "7bfcfaa8f7b34b2e48abf63b022df5519b9fa59de6dc45a0e0ff247027865ed4"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/3-work-aborted-preflight-pid.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/3-work-aborted-preflight-stop.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/3-work-aborted-recovered.log",
+      "bytes": 1172,
+      "sha256": "c42eff35e991b06d8b3c5c2659283404dc402c919f68c6b85b17a253efb303cf"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/4-data-aborted-after-stop-pid.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/4-data-aborted-before-stop.log",
+      "bytes": 386,
+      "sha256": "8e2b3ca1e48eb3292715078913fa79e598010dbe63a21870d4c8f9c3a1e1f180"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/4-data-aborted-checkpoint.json",
+      "bytes": 130,
+      "sha256": "1d013f11e4039309fd40d1c2af7cd3fb19e6c84a2f11179a099b7c8920074ee8"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/4-data-aborted-fixture-cleanup.log",
+      "bytes": 71,
+      "sha256": "06ecf56960c01c91d4d57e0fe6fe99139c9a8e906fb56537293e0e1d74cc8bf7"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/4-data-aborted-force-stop.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/4-data-aborted-interrupted.log",
+      "bytes": 460,
+      "sha256": "d1521c512ab6b14772e98337b7c9a2f81114b583220409ecff84ded2c208379c"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/4-data-aborted-live-pid.log",
+      "bytes": 5,
+      "sha256": "858d1bcf68c783e8c1555182a91171cc67119070fe4f33dc650678869fd19eb0"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/4-data-aborted-ownership.log",
+      "bytes": 104,
+      "sha256": "58bc480f86603f486622b8b0c866a31bc1fda588757a7d6e6130165c1534cca0"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/4-data-aborted-preflight-pid.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/4-data-aborted-preflight-stop.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/4-data-aborted-recovered.log",
+      "bytes": 1172,
+      "sha256": "0c01eb1dcdebee0475d839acb6a2051d4d46c93e5f1004fee034056c55d8dbba"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/5-work-closed-after-stop-pid.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/5-work-closed-before-stop.log",
+      "bytes": 386,
+      "sha256": "96e6fee6403f47ef3374835f3e51282f5acbcbedcf4fe9abc979a81a168fac72"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/5-work-closed-checkpoint.json",
+      "bytes": 129,
+      "sha256": "c97fc9ffbca591db5c536f1d677a04848d5ba04f60ce794977f2d74fa3889e26"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/5-work-closed-fixture-cleanup.log",
+      "bytes": 71,
+      "sha256": "06ecf56960c01c91d4d57e0fe6fe99139c9a8e906fb56537293e0e1d74cc8bf7"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/5-work-closed-force-stop.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/5-work-closed-interrupted.log",
+      "bytes": 460,
+      "sha256": "44d19da468ab31913a53d2195a22653336e6bd92fe41ffdc6f4b4ac44a1654f3"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/5-work-closed-live-pid.log",
+      "bytes": 5,
+      "sha256": "4bb3383a445465808d001ea1a03c8832fb1eb21875d2e90c92d69514c6bb0372"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/5-work-closed-ownership.log",
+      "bytes": 103,
+      "sha256": "e3783fdbbbf979ff0b0a72c2ff6eb6f5f88a2be5e29d830b59e539034b70b897"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/5-work-closed-preflight-pid.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/5-work-closed-preflight-stop.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/5-work-closed-recovered.log",
+      "bytes": 1171,
+      "sha256": "b52e5877604223e264f0e1c16c8f6fae3a26d61a9d829b263d7ece6771c85b21"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/6-data-closed-after-stop-pid.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/6-data-closed-before-stop.log",
+      "bytes": 386,
+      "sha256": "7e20d3e5ac752c93dc3d68fe4db78b395083b69c96a00c476a735c1b8e5ffddb"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/6-data-closed-checkpoint.json",
+      "bytes": 129,
+      "sha256": "d2c4e863b426dfe19039fbccbfdc6ddc1b84b9a43567ba71a3b0351dc2bccbba"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/6-data-closed-fixture-cleanup.log",
+      "bytes": 71,
+      "sha256": "06ecf56960c01c91d4d57e0fe6fe99139c9a8e906fb56537293e0e1d74cc8bf7"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/6-data-closed-force-stop.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/6-data-closed-interrupted.log",
+      "bytes": 460,
+      "sha256": "f5117927dbebc953bbfd57e68006bb0df1968c7022d234917c8fd9693a9b0eb5"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/6-data-closed-live-pid.log",
+      "bytes": 5,
+      "sha256": "db1bda56288d81b3bdc4f023106745d06fe9983f796c3107fbb7a3b9a735b8f9"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/6-data-closed-ownership.log",
+      "bytes": 103,
+      "sha256": "84aef02ea1703fc422705d2b1879940d7595f1eea78ca3051f31d57dea70cf7f"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/6-data-closed-preflight-pid.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/6-data-closed-preflight-stop.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/6-data-closed-recovered.log",
+      "bytes": 1171,
+      "sha256": "43a080a0d0b922b3022d21d5a761d16f3d71213fe174c7766259ca68b75f0c15"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/7-complete-after-stop-pid.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/7-complete-before-stop.log",
+      "bytes": 403,
+      "sha256": "fd31267339f12c7c558786684753ab5333cfc043e2421d06ac4e6b12be3b7604"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/7-complete-checkpoint.json",
+      "bytes": 125,
+      "sha256": "e02572ec8971446f0a1dc964637b32f0850b60279e468b1f5d1cc5005c5cc6b5"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/7-complete-fixture-cleanup.log",
+      "bytes": 71,
+      "sha256": "06ecf56960c01c91d4d57e0fe6fe99139c9a8e906fb56537293e0e1d74cc8bf7"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/7-complete-force-stop.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/7-complete-interrupted.log",
+      "bytes": 477,
+      "sha256": "3018d28584ea0facd5199bff2358a6b4b84602fc0dc7d1185848b68318cedede"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/7-complete-live-pid.log",
+      "bytes": 5,
+      "sha256": "7ea451999932f33001e877ee85fd633bd6c6b673745cdbda976a9b3f0d8069fc"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/7-complete-ownership.log",
+      "bytes": 100,
+      "sha256": "2912911f6e8a38341e650fdd53ec17df522f63f7d0ba4441061d94333ec9071f"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/7-complete-preflight-pid.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/7-complete-preflight-stop.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/7-complete-recovered.log",
+      "bytes": 1172,
+      "sha256": "9609e092eb9357af7b3efcbffa5640e752cb080258fe027e9063543f7c399c90"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/abi.log",
+      "bytes": 10,
+      "sha256": "7f10c3cd4593d1d6ded27d658e7c05216011c955c200aac551caad0c979d4d90"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/api.log",
+      "bytes": 3,
+      "sha256": "90d7ec0f0acef104d8b6252794295f661a0149634868d02a1ae0c358099638f5"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/boot.log",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/install.log",
+      "bytes": 36,
+      "sha256": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/output-metadata.json",
+      "bytes": 429,
+      "sha256": "295c766680d7ebd3b5a40643eca570d09c34efb22974faac3b8734c19c7a38d9"
+    },
+    {
+      "path": "docs/verification/startup-process/attempts/2026-09-14T00-36-49.705Z/runners.log",
+      "bytes": 331,
+      "sha256": "85c4d22a554f45750de3de0d22248375b24a80e9302ae4b4de43d3efe3103de7"
+    }
+  ]
+}

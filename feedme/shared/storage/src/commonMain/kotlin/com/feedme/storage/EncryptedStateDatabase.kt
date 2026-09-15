@@ -675,6 +675,203 @@ class EncryptedStateDatabase private constructor(
         override fun toString() = "StateActivationRecoveryOwner(<redacted>)"
     }
 
+    /**
+     * The low-level session codec seam. It never returns a ScopedStore or signs a plan. Its sole
+     * row and captured owner are revalidated in the same transaction as every read/proof/write.
+     */
+    @OptIn(WorkRecoveryCompositionApi::class)
+    private inner class RetainedWorkRecovery :
+        RetainedFixedLedgerRecovery(WORK_ORIGIN_SCOPE, WORK_ORIGIN_KEY), ExistingSessionWorkRecoveryStore {
+        override suspend fun verifyOriginPlan(expectedRevision: Long, proposal: PrivateBytes, proof: PrivateBytes) =
+            verify(expectedRevision, proposal, proof, null)
+        override suspend fun verifyOriginPredecessor(expected: SessionControlRecord, proposal: PrivateBytes, proof: PrivateBytes) =
+            verify(expected.revision, proposal, proof, expected)
+        override fun toString() = "ExistingSessionWorkRecoveryStore(<redacted>)"
+    }
+
+    @OptIn(SessionControlRecoveryCompositionApi::class)
+    private inner class RetainedControlRecovery :
+        RetainedFixedLedgerRecovery(CONTROL_RECOVERY_SCOPE, CONTROL_RECOVERY_KEY), ExistingSessionControlRecoveryStore {
+        override fun toString() = "ExistingSessionControlRecoveryStore(<redacted>)"
+    }
+
+    /** Private implementation accepts only the two fixed companion-owned ledger purposes. */
+    private open inner class RetainedFixedLedgerRecovery(
+        private val ledgerScope: StorageScope,
+        private val ledgerKey: RecordKey,
+    ) : com.feedme.core.ports.SessionControlStore {
+        private val ownerMutex = Mutex()
+        private var attempted = false
+        private var ready = false
+        private var closeRequested = false
+        private var captured: Retirement? = null
+
+        suspend fun open(): PortResult<Unit> {
+            var admitted = false
+            try {
+                val result = withContext(dispatcher) {
+                    ownerMutex.withLock {
+                        if (attempted) return@withLock PortResult.Failure(FailureReason.CONFLICT)
+                        attempted = true
+                        admitted = true
+                        val result = guarded {
+                            initializeExistingRecovery()
+                            transaction(writes = false) {
+                                val tag = ownerTag(ledgerScope)
+                                val current = owner(tag) ?: fail(FailureReason.STORAGE_FAILURE)
+                                if (!current.active) fail(FailureReason.STORAGE_FAILURE)
+                                val target = Retirement(tag, current.generation, current.keyId)
+                                recoveryLedgerRecord(target, ledgerKey)
+                                captured = target
+                            }
+                            Unit
+                        }
+                        currentCoroutineContext().ensureActive()
+                        result
+                    }
+                }
+                if (!admitted || result is PortResult.Failure) return result
+                // No authority during the I/O-to-caller return gap; close wins this handoff.
+                return ownerMutex.withLock {
+                    currentCoroutineContext().ensureActive()
+                    if (closeRequested) PortResult.Failure(FailureReason.STALE_SESSION)
+                    else { ready = true; result }
+                }
+            } catch (cancelled: CancellationException) {
+                withContext(NonCancellable + dispatcher) {
+                    ownerMutex.withLock {
+                        if (admitted || !attempted) { attempted = true; ready = false; closeRequested = true }
+                    }
+                }
+                throw cancelled
+            }
+        }
+
+        private suspend fun <T> whenReady(action: suspend () -> PortResult<T>): PortResult<T> =
+            withContext(dispatcher) {
+                ownerMutex.withLock {
+                    currentCoroutineContext().ensureActive()
+                    if (!ready) PortResult.Failure(FailureReason.STALE_SESSION) else action()
+                }
+            }
+
+        private fun target(): Retirement = captured ?: fail(FailureReason.STALE_SESSION)
+
+        override suspend fun read(): PortResult<SessionControlRecord?> {
+            val caller = currentCoroutineContext()
+            return whenReady {
+                guarded {
+                    caller.ensureActive()
+                    val result = transaction(writes = false) {
+                        val record = recoveryLedgerRecord(target(), ledgerKey)
+                        SessionControlRecord(record.revision, record.payload)
+                    }
+                    caller.ensureActive()
+                    result
+                }
+            }
+        }
+
+        protected suspend fun verify(revision: Long, proposal: PrivateBytes, proof: PrivateBytes,
+            predecessor: SessionControlRecord?): PortResult<Unit> {
+            val proposed = proposal.copyForCodec()
+            val supplied = proof.copyForCodec()
+            val previous = predecessor?.payload?.copyForCodec()
+            val caller = currentCoroutineContext()
+            return try {
+                whenReady {
+                    guarded {
+                        caller.ensureActive()
+                        if (revision !in 1..Long.MAX_VALUE - 2 || proposed.size !in 1..4096 ||
+                            supplied.size != 64 || (previous != null && previous.size !in 1..32_768))
+                            fail(FailureReason.INVALID_DATA)
+                        transaction(writes = false) {
+                            val exact = target()
+                            recoveryLedgerRecord(exact, ledgerKey)
+                            ScopedStore(ledgerScope, exact.tag, exact.generation, exact.keyId)
+                                .workOriginProof(revision, proposed, supplied, previous)
+                            Unit
+                        }
+                        caller.ensureActive()
+                    }
+                }
+            } finally { proposed.fill(0); supplied.fill(0); previous?.fill(0) }
+        }
+
+        override suspend fun compareAndSet(expectedRevision: Long?, payload: PrivateBytes): PortResult<SessionControlRecord> {
+            val plaintext = payload.copyForCodec()
+            val caller = currentCoroutineContext()
+            return try {
+                whenReady {
+                    guarded {
+                        caller.ensureActive()
+                        if (plaintext.size !in 1..32_768 || (expectedRevision != null && expectedRevision <= 0))
+                            fail(FailureReason.INVALID_DATA)
+                        val result = transaction(writes = true) {
+                            val exact = target()
+                            val current = recoveryLedgerRecord(exact, ledgerKey)
+                            if (expectedRevision != current.revision) fail(FailureReason.CONFLICT)
+                            val revision = next(current.revision)
+                            val tag = recordTag(exact.tag, ledgerKey)
+                            val encrypted = vault.seal(exact.keyId, plaintext,
+                                aad(exact.tag, exact.generation, tag, revision, 1))
+                            try {
+                                if (encrypted.size !in MIN_CIPHERTEXT_BYTES..32_768 + 64)
+                                    fail(FailureReason.STORAGE_FAILURE)
+                                caller.ensureActive()
+                                execute("UPDATE feedme_records SET revision=?,schema_version=1,payload=? " +
+                                    "WHERE owner_tag=? AND record_tag=? AND revision=? AND schema_version=1") {
+                                    bindLong(1, revision); bindBlob(2, encrypted); bindText(3, exact.tag)
+                                    bindText(4, tag); bindLong(5, current.revision)
+                                }
+                                if (scalarLong("SELECT changes()") != 1L) fail(FailureReason.CONFLICT)
+                                caller.ensureActive()
+                                SessionControlRecord(revision, PrivateBytes(plaintext))
+                            } finally { encrypted.fill(0) }
+                        }
+                        // Never substitute readback for a failed/unknown COMMIT. The trusted
+                        // session acknowledgement protocol additionally brackets exact raw bytes.
+                        caller.ensureActive()
+                        result
+                    }
+                }
+            } finally { plaintext.fill(0) }
+        }
+
+        suspend fun close(): PortResult<Unit> = withContext(NonCancellable + dispatcher) {
+            ownerMutex.withLock {
+                attempted = true
+                ready = false
+                closeRequested = true
+                this@EncryptedStateDatabase.close()
+            }
+        }
+    }
+
+    /** Caller holds the database mutex and a read/write transaction; includes every tombstone. */
+    private fun recoveryLedgerRecord(target: Retirement, ledgerKey: RecordKey): PrivateRecord {
+        val current = owner(target.tag)
+        if (current != Owner(target.generation, true, target.keyId) ||
+            (target.tag to target.generation) in locallyRetired) fail(FailureReason.STALE_SESSION)
+        if (scalarLong("SELECT count(*) FROM feedme_owners") != 1L ||
+            scalarLong("SELECT count(*) FROM feedme_records") != 1L ||
+            scalarLong("SELECT count(*) FROM feedme_key_gc") != 0L ||
+            scalarLong("SELECT count(*) FROM feedme_activation_aborts") != 0L)
+            fail(FailureReason.STORAGE_FAILURE)
+        requireKey(target.keyId)
+        val tag = recordTag(target.tag, ledgerKey)
+        val row = record(target.tag, tag) ?: fail(FailureReason.STORAGE_FAILURE)
+        val ciphertext = row.payload ?: fail(FailureReason.STORAGE_FAILURE)
+        if (row.schemaVersion != 1 || ciphertext.size !in MIN_CIPHERTEXT_BYTES..32_768 + 64)
+            fail(FailureReason.STORAGE_FAILURE)
+        val plaintext = vault.open(target.keyId, ciphertext,
+            aad(target.tag, target.generation, tag, row.revision, row.schemaVersion))
+        return try {
+            if (plaintext.size !in 1..32_768) fail(FailureReason.STORAGE_FAILURE)
+            PrivateRecord(row.revision, row.schemaVersion, PrivateBytes(plaintext))
+        } finally { plaintext.fill(0); ciphertext.fill(0) }
+    }
+
     private fun recoveryPlan(scope: StorageScope, plan: StateActivationPlan): StateActivationPlanRecord {
         try { validateStateActivationPlan(scope, plan, vault) }
         catch (_: StateActivationPlanFormatException) { fail(FailureReason.INVALID_DATA) }
@@ -1267,6 +1464,8 @@ class EncryptedStateDatabase private constructor(
         private const val MAX_BINDING_BYTES = 4096
         private val WORK_ORIGIN_SCOPE = StorageScope("feedme-session-work-v1", ActorKind.DEMO, "install-work")
         private val WORK_ORIGIN_KEY = RecordKey("session-work", "native-work-ledger")
+        private val CONTROL_RECOVERY_SCOPE = StorageScope("feedme-session-control-v1", ActorKind.DEMO, "install-control")
+        private val CONTROL_RECOVERY_KEY = RecordKey("session-control", "retirement-ledger")
         private fun equalBytes(left: ByteArray, right: ByteArray): Boolean {
             if (left.size != right.size) return false
             var mismatch = 0
@@ -1304,6 +1503,34 @@ class EncryptedStateDatabase private constructor(
         ): StateActivationRecoveryOwner {
             val database = EncryptedStateDatabase(connection, vault, dispatcher, onClosed)
             return database.RetainedActivationRecovery(scope, plan)
+        }
+
+        /**
+         * Retain before any SQL/suspension. The native factory owns an existing fixed-work file,
+         * existing vault and truthful driver-close guard; the caller retains failed-open cleanup.
+         * No ordinary initialization/resume or garbage collection is admitted through this seam.
+         */
+        @WorkRecoveryCompositionApi
+        internal fun createWorkRecoveryStore(
+            connection: SQLiteConnection,
+            vault: StateVault,
+            dispatcher: CoroutineDispatcher = Dispatchers.IO,
+            onClosed: () -> Unit = {},
+        ): ExistingSessionWorkRecoveryStore {
+            val database = EncryptedStateDatabase(connection, vault, dispatcher, onClosed)
+            return database.RetainedWorkRecovery()
+        }
+
+        /** Retain ownership before any SQL/suspension; no ordinary initialization, resume or GC. */
+        @SessionControlRecoveryCompositionApi
+        internal fun createControlRecoveryStore(
+            connection: SQLiteConnection,
+            vault: StateVault,
+            dispatcher: CoroutineDispatcher = Dispatchers.IO,
+            onClosed: () -> Unit = {},
+        ): ExistingSessionControlRecoveryStore {
+            val database = EncryptedStateDatabase(connection, vault, dispatcher, onClosed)
+            return database.RetainedControlRecovery()
         }
 
         /** Existing schema only: no creation, migration, ordinary activation or garbage collection. */

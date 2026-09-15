@@ -1,0 +1,1772 @@
+[
+  {
+    "path": "../outputs/biteclub_blueprint/architecture/02_Architecture.md",
+    "bytes": 25530,
+    "sha256": "9df65fb7c1270352f000a98d2d9cf83208fb9acd8293c4ff907dd8063b024acc"
+  },
+  {
+    "path": "../outputs/biteclub_blueprint/architecture/03_Data_Model.md",
+    "bytes": 27712,
+    "sha256": "19f784857361d980cb64de9f8fa1ccd49e3b9144df8b51755d455988dce56dd2"
+  },
+  {
+    "path": "../outputs/biteclub_blueprint/architecture/04_API_Contract.json",
+    "bytes": 802033,
+    "sha256": "73e23af85fd128acdb8e1c630d7ac9de587233c3d6aa233cad3c18394bc1afbf"
+  },
+  {
+    "path": "../outputs/biteclub_blueprint/architecture/05_Events.md",
+    "bytes": 16265,
+    "sha256": "d90e42d61b5ebb05afe19cd7a0e7b44707aa8722d21a2917bb65e83dc69c13b1"
+  },
+  {
+    "path": "../outputs/biteclub_blueprint/features/F01.md",
+    "bytes": 5488,
+    "sha256": "29031cec3a6f3577d7f1e9dc023538408393d6922b96a39a5e85914d5929c9ba"
+  },
+  {
+    "path": "../outputs/biteclub_blueprint/features/F02.md",
+    "bytes": 5290,
+    "sha256": "1adcb3a6d706f53abbe1c559636b7aa03abf8e75b6190f4334cc38d591d23974"
+  },
+  {
+    "path": "../outputs/biteclub_blueprint/features/F03.md",
+    "bytes": 4844,
+    "sha256": "4dc0b8d75a22237a4512ea4227eefb86dbdbec52a0ae4f8ff15c9572471c2a91"
+  },
+  {
+    "path": "../outputs/biteclub_blueprint/features/F04.md",
+    "bytes": 4621,
+    "sha256": "3d856b220a5107c57b398a419890c59f55bed2f30fa3b13f5de9d2636dab5bde"
+  },
+  {
+    "path": "../outputs/biteclub_blueprint/features/F05.md",
+    "bytes": 4626,
+    "sha256": "23e652d9b93e19d5c2c292801bfe8eb977172ca4f773d94c8dd9361a1d4a8d17"
+  },
+  {
+    "path": "../outputs/biteclub_blueprint/features/F06.md",
+    "bytes": 4921,
+    "sha256": "8491a0a183c45f102925802d6319d1eb2b0eae2297f96b2c40bfb1866449b622"
+  },
+  {
+    "path": "../outputs/biteclub_blueprint/features/F07.md",
+    "bytes": 4832,
+    "sha256": "7a0307a3147444795fedbd33d1585c65cb3cec1a8085d884036792f0e5e58a3b"
+  },
+  {
+    "path": "../outputs/biteclub_blueprint/features/F09.md",
+    "bytes": 5006,
+    "sha256": "57214a5864da3253881a249cb8d5a0aeb89ca0db80133a6b8510692140ed6b1f"
+  },
+  {
+    "path": "../outputs/biteclub_blueprint/features/F11.md",
+    "bytes": 4891,
+    "sha256": "dbb75387379531add35faa6d4b37513fb511b85b404c049321e92d5ad2b300da"
+  },
+  {
+    "path": "../outputs/biteclub_blueprint/features/F13.md",
+    "bytes": 5117,
+    "sha256": "fa947d43bfa2889095f81352dab9f489803f391d9e6d0290fbe1e2ab5f3e5ef8"
+  },
+  {
+    "path": "../outputs/biteclub_blueprint/features/F17.md",
+    "bytes": 4922,
+    "sha256": "ce7169e1d45689e7ce275f4aa880889fcc0b611c8fb8e724b6d0c2aed5706e98"
+  },
+  {
+    "path": "../outputs/biteclub_blueprint/features/F23.md",
+    "bytes": 5388,
+    "sha256": "3b12c6191cd504f03143dbe7fd4d3e313a0d3d586a2ad171e66415507722c063"
+  },
+  {
+    "path": "../outputs/biteclub_blueprint/features/F40.md",
+    "bytes": 4522,
+    "sha256": "80e6a5fc52997008976415b010f6d9c5a33fc0f8487f8e5df43b41b4ddad1aff"
+  },
+  {
+    "path": "../outputs/biteclub_blueprint/features/F42.md",
+    "bytes": 4839,
+    "sha256": "ffdbdff508e6b4912b0b6bc4c78e49eaad75c39b0b53e1840e9feb23012439e8"
+  },
+  {
+    "path": "../outputs/biteclub_blueprint/registry/screen_registry.json",
+    "bytes": 1210445,
+    "sha256": "cd3e517f9e4efd2a2c55dec6a7bfdcc39ec06d03d1617841d8bfa48e90997a70"
+  },
+  {
+    "path": "apps/android/src/main/AndroidManifest.xml",
+    "bytes": 961,
+    "sha256": "e60ba8d80e3374a509fb875b1cd22199483dcc0900e9011a1ac94796185a1c45"
+  },
+  {
+    "path": "apps/android/src/main/res/xml/backup_rules.xml",
+    "bytes": 573,
+    "sha256": "41b40949bba95346a37b40ba7381c6f6a76c1bee27596fa1fb2b1a1a96d2280d"
+  },
+  {
+    "path": "apps/android/src/main/res/xml/data_extraction_rules.xml",
+    "bytes": 1185,
+    "sha256": "5ece48b239677b09b0ef5b74fb4ee67895c240029d3db2baf0b69243fa870b13"
+  },
+  {
+    "path": "build.gradle.kts",
+    "bytes": 1324,
+    "sha256": "61885627206daa7a5bfca3ba51b58cf4223c66a42a931441e93085470973fca4"
+  },
+  {
+    "path": "docs/V1_RELEASE_SCOPE.json",
+    "bytes": 553,
+    "sha256": "b52394251dc52e68f76f39a3c5a90bfc6274f92bc1a87a240d49de073de299a7"
+  },
+  {
+    "path": "docs/verification/canonical-validation/format-corpus.json",
+    "bytes": 42689,
+    "sha256": "53b5cdc8d11dfc37bdfb9a8c6d08231fb20ab879d13cd7a0474badbdff200397"
+  },
+  {
+    "path": "docs/verification/contract-artifacts/generated-receipt.json",
+    "bytes": 1210,
+    "sha256": "c25780288e153de4d8f60504cb9dce050af9f956890ddb7badeb67f4718ad0a9"
+  },
+  {
+    "path": "gradle/libs.versions.toml",
+    "bytes": 2875,
+    "sha256": "596e75bca6cb75f2eafb49754d55ff776d5bf9704970462d5f7c467b9b3db5a7"
+  },
+  {
+    "path": "gradle/wrapper/gradle-wrapper.jar",
+    "bytes": 43764,
+    "sha256": "7d3a4ac4de1c32b59bc6a4eb8ecb8e612ccd0cf1ae1e99f66902da64df296172"
+  },
+  {
+    "path": "gradle/wrapper/gradle-wrapper.properties",
+    "bytes": 338,
+    "sha256": "779ae2c24776dfbc873f2dc0669aa990d8990cca9e0519056422fa50c5991566"
+  },
+  {
+    "path": "scripts/android-backup-policy.test.mjs",
+    "bytes": 2908,
+    "sha256": "761b05b79d9df1ef4d17d5f3bd19bfe67357fb386b09a0637dac1161ed54a636"
+  },
+  {
+    "path": "scripts/android-credential-smoke.mjs",
+    "bytes": 10791,
+    "sha256": "10d742681c512b5b99a5fd98ca26286c22fa2ee3ecadafc4ab24a1ade21a5ab8"
+  },
+  {
+    "path": "scripts/android-smoke.mjs",
+    "bytes": 6321,
+    "sha256": "a3e4b3e2cd43d10a40240611e43ae1b3786d8ee9108d2a86bf3c9e5ba6cd5cfb"
+  },
+  {
+    "path": "scripts/android-storage-smoke.mjs",
+    "bytes": 25930,
+    "sha256": "7d798aee28490f7c4782d90b72b17ded7b64e78590d729e5811eb2aa2a7605b6"
+  },
+  {
+    "path": "scripts/contract-generator-spike-probe.kt",
+    "bytes": 5399,
+    "sha256": "6030bfc817118751780a15c599c163f8f2ec1b4ddfc8e60d732279be15497e50"
+  },
+  {
+    "path": "scripts/contract-generator-spike.mjs",
+    "bytes": 8090,
+    "sha256": "23312c666e4e48e677b85b5c928b7590957fd7851771f989246028480a731068"
+  },
+  {
+    "path": "scripts/contract-source.lock.json",
+    "bytes": 255,
+    "sha256": "cacdab56cec50b3d4ce8db206eb980d7568e9235f9b032d8a8a1f00a287bc703"
+  },
+  {
+    "path": "scripts/data-binding-abort-sync-evidence.test.mjs",
+    "bytes": 5618,
+    "sha256": "b48e6cc8de72ec3ecefa54060f3a30e41799354c40bdd5baaa224aa330b01932"
+  },
+  {
+    "path": "scripts/data-binding-sync-evidence.test.mjs",
+    "bytes": 5605,
+    "sha256": "e2104e31bfb19c795cc1853e927b2b33892025412bdceb2e4646306ef9bb00d3"
+  },
+  {
+    "path": "scripts/generate-contract-artifacts.mjs",
+    "bytes": 14680,
+    "sha256": "ea39a40da5dbe0e511ddf90c2e267eec593ed969093f98a81a7f51a88c91c2ab"
+  },
+  {
+    "path": "scripts/generate-contract-artifacts.test.mjs",
+    "bytes": 24992,
+    "sha256": "59190d50b8b5c0393e738b946864f8a5895faf36c343ec74b7e33b3c8193e09f"
+  },
+  {
+    "path": "scripts/jvm-schema-validator-spike.mjs",
+    "bytes": 8700,
+    "sha256": "d68df61e623ac70ee3b5a5c6cb845b85a8746c919265224ad67c12417a64983d"
+  },
+  {
+    "path": "scripts/schema-validator-spike.mjs",
+    "bytes": 10896,
+    "sha256": "a18558792d5093e2b689ca62ccfa501d90e8d9fefa3973097acda2db37b64e35"
+  },
+  {
+    "path": "scripts/session-ledger-evidence.test.mjs",
+    "bytes": 4155,
+    "sha256": "4cf7e5116dfb2240f551d7195b30e30723d2273f9deb9785858d672ae31fb487"
+  },
+  {
+    "path": "scripts/verify-client-storage.mjs",
+    "bytes": 8377,
+    "sha256": "ed6f648ceb598a224a31bb113c85ee237b02dac4be1f02812a1cdf8da762eeca"
+  },
+  {
+    "path": "scripts/verify-command-recovery.mjs",
+    "bytes": 8387,
+    "sha256": "0e165fb1b504b221b76098ca444b065a7870a2b1ccafb9bbe1590eb47aadc60e"
+  },
+  {
+    "path": "scripts/verify-composite-setup-abort.mjs",
+    "bytes": 44053,
+    "sha256": "1d5bb77430a756c582dd9b27891109a75d65160d2c72aeff768dc52af6eb756c"
+  },
+  {
+    "path": "scripts/verify-composite-setup-journal.mjs",
+    "bytes": 36353,
+    "sha256": "944fce9979510d02f0e3d26a29763b9440deaba0c67fe20096e23bf94267fa71"
+  },
+  {
+    "path": "scripts/verify-delivery-plan.mjs",
+    "bytes": 6334,
+    "sha256": "78a55ef76ca016dde78e1240d5217932c724d8b5fa3aac247333fc3ad3ba9c64"
+  },
+  {
+    "path": "scripts/verify-delivery-plan.test.mjs",
+    "bytes": 4621,
+    "sha256": "329b80c6d09e9c087f11ebf4c275c17a77f03218e5521850df5d7a0a86b89741"
+  },
+  {
+    "path": "scripts/verify-empty-setup-discard.mjs",
+    "bytes": 24536,
+    "sha256": "1c918751c2abe95194d246daed321d2007cbaa09fc0b8c8d257e8370c4288557"
+  },
+  {
+    "path": "scripts/verify-interrupted-setup-inspection.mjs",
+    "bytes": 39476,
+    "sha256": "88cfe31d24727320861a98963db961203a3526305c4f63790243970b96b1a1ab"
+  },
+  {
+    "path": "scripts/verify-kitchen-repositories.mjs",
+    "bytes": 8603,
+    "sha256": "af06a3fdc6a032d77df140b9af10aab70e2354cd8ea9dd8fac6b1e5e4bf81a5e"
+  },
+  {
+    "path": "scripts/verify-live-session-setup.mjs",
+    "bytes": 37041,
+    "sha256": "1fd1704ff6e79bbfd25012e3e8ef15e17a3506c96aa62751c3a349e96602dc53"
+  },
+  {
+    "path": "scripts/verify-native-credentials.mjs",
+    "bytes": 22027,
+    "sha256": "0c44154a867a850c2363b1bdc7c121abd2350e9bd56242acea4175b169cefeba"
+  },
+  {
+    "path": "scripts/verify-parallel-feature-foundations.mjs",
+    "bytes": 48257,
+    "sha256": "e158e4abb4664354bc97982411ce7f63c4548c4b65f5ba823bf602d7226cd747"
+  },
+  {
+    "path": "scripts/verify-parallel-meal-startup.mjs",
+    "bytes": 49186,
+    "sha256": "43328c234b20da55b50d426ccaedfb37447664da8bc5dab490325a597d122a4e"
+  },
+  {
+    "path": "scripts/verify-planned-credential-create.mjs",
+    "bytes": 24520,
+    "sha256": "a6bed53c81b4e861ddf061865591398f5cd5079543ec7d8fa67545c9e27e876b"
+  },
+  {
+    "path": "scripts/verify-planned-state-activation.mjs",
+    "bytes": 24694,
+    "sha256": "e6dc3405936b9012762220e693aff4e1d0baab49c7ed37ea7bdcf42dcedbb4d6"
+  },
+  {
+    "path": "scripts/verify-planned-state-recovery.mjs",
+    "bytes": 30985,
+    "sha256": "229a2f9ea9c3617a87069be17233352bc084b03855b00cb8e8395e2b3af154f5"
+  },
+  {
+    "path": "scripts/verify-recovery-diagnostics.mjs",
+    "bytes": 24268,
+    "sha256": "898ab735c3d2dbf20b35f4db12d1abc4c3d3d84519e8ae2b52bde6e1af8900e0"
+  },
+  {
+    "path": "scripts/verify-release-scope.mjs",
+    "bytes": 7505,
+    "sha256": "8501dc81a0bf0e6d49e4a1212fd014416c3986c3836dba14ae516e906308d578"
+  },
+  {
+    "path": "scripts/verify-release-scope.test.mjs",
+    "bytes": 8109,
+    "sha256": "3a0b474454d1ae2c619a9fd611dff7b6e54d8221e20e57abadb1ae2db22a5f3d"
+  },
+  {
+    "path": "scripts/verify-session-composition.mjs",
+    "bytes": 23986,
+    "sha256": "120594dda81ea6ba08f2a55bd2f5c76940260b751baa696ae3fffd131b3c390e"
+  },
+  {
+    "path": "scripts/verify-session-ledger-acknowledgements.mjs",
+    "bytes": 33342,
+    "sha256": "c12b32134dd6eb9adc1ef137ef98fb56bb88463c5259fde54ef2ce4e09c6e717"
+  },
+  {
+    "path": "scripts/verify-session-retirement.mjs",
+    "bytes": 14501,
+    "sha256": "8195832e8c6a10e6edcf20600e761ea8817be55638eb649407e17ca9578d8db2"
+  },
+  {
+    "path": "scripts/verify-session-setup-publication.mjs",
+    "bytes": 39094,
+    "sha256": "3e84664b85a23832afa19471ac37ea5ef4a6420e623793eb02f1a441896ebd45"
+  },
+  {
+    "path": "scripts/verify-session-work.mjs",
+    "bytes": 23958,
+    "sha256": "5a93fa256398893ca4f3e7e396078e981cb85ffc037b1a4b7f7050fbafbc6105"
+  },
+  {
+    "path": "scripts/verify-setup-abort-primitives.mjs",
+    "bytes": 44649,
+    "sha256": "73de8b0aa9ea56824cc6ccd01d6de0aa319192e253acd8f709d5b13997891d2c"
+  },
+  {
+    "path": "scripts/verify-startup-recovery-owners.mjs",
+    "bytes": 44317,
+    "sha256": "4113f4d50ab5c5f50c87baa5899b7541075efe37841158db40205a035164842f"
+  },
+  {
+    "path": "scripts/verify-work-origin-planning.mjs",
+    "bytes": 35828,
+    "sha256": "af6bed91ee9eb832fb230af02c5a5bda453fb2da73373ff9f8ff0d25d3851b0c"
+  },
+  {
+    "path": "scripts/verify-work-recovery-owners.mjs",
+    "bytes": 46953,
+    "sha256": "54f5830fc4bd8fbfb761b9ad2ee81ed35fa121750fcc95a709a3d11f665dbeef"
+  },
+  {
+    "path": "scripts/work-abort-sync-evidence.test.mjs",
+    "bytes": 5588,
+    "sha256": "4ff1c230a4a807728d8fbb5f4bf1596be1d2d882cfcebeeb0cdb5822f0a49878"
+  },
+  {
+    "path": "scripts/work-origin-sync-evidence.test.mjs",
+    "bytes": 5618,
+    "sha256": "8369df3c42d061b3a51d095bdba4eed036774efe3ecc604b71b32700a0d026fe"
+  },
+  {
+    "path": "server/build.gradle.kts",
+    "bytes": 2355,
+    "sha256": "12c33fe674450ab5d60791ebd275fa39993e6140480c7e5ef7eed001db1ff391"
+  },
+  {
+    "path": "server/src/integrationTest/kotlin/com/feedme/server/db/CommitAndRetentionIntegrationTest.kt",
+    "bytes": 6873,
+    "sha256": "6f5369aa1aeee86e5614e2f407b402764d919f72ded05769ecca91ffadee3c8e"
+  },
+  {
+    "path": "server/src/integrationTest/kotlin/com/feedme/server/db/DurableCommandsIntegrationTest.kt",
+    "bytes": 30536,
+    "sha256": "938dd169373ae6caef5a9c1e0c87fc64885ca89efca09a695f43b514d98895df"
+  },
+  {
+    "path": "server/src/integrationTest/kotlin/com/feedme/server/db/DurableEventsIntegrationTest.kt",
+    "bytes": 12796,
+    "sha256": "bb620bb58857515538f3da23474d493c8017208508b402911eea8772defe5d7c"
+  },
+  {
+    "path": "server/src/integrationTest/kotlin/com/feedme/server/db/PlatformMigrationsIntegrationTest.kt",
+    "bytes": 12155,
+    "sha256": "374bb861e3e14736b432679fb93e31baaa5c5f53996410bb40c1a6bb848c53b3"
+  },
+  {
+    "path": "server/src/integrationTest/kotlin/com/feedme/server/db/PostgresTestCluster.kt",
+    "bytes": 12729,
+    "sha256": "643917f603eee3712d2b795490d1228067ddbe635bd4a979082aebb342471bf3"
+  },
+  {
+    "path": "server/src/integrationTest/kotlin/com/feedme/server/planning/PlansStoreIntegrationTest.kt",
+    "bytes": 39646,
+    "sha256": "f8c8fdeb50fd4897c79506f506f97139de1e117fdf2df8cad17456635e0b3ecd"
+  },
+  {
+    "path": "server/src/integrationTest/kotlin/com/feedme/server/social/CirclesStoreIntegrationTest.kt",
+    "bytes": 41730,
+    "sha256": "dddc5461026223887346f0748ec078fcccc15fe8ec0dcc8bd65ec2a5033a281b"
+  },
+  {
+    "path": "server/src/main/kotlin/com/feedme/server/Main.kt",
+    "bytes": 663,
+    "sha256": "23943735a7d0379eaa815b3793b47a281fccd798c2d26fd75feb02f4c4d92281"
+  },
+  {
+    "path": "server/src/main/kotlin/com/feedme/server/config/LocalServerConfig.kt",
+    "bytes": 1778,
+    "sha256": "1138e265d3a92f634cecb4c0109b633a5b07aaecc1efbb1362dc6b1d5c0bbd71"
+  },
+  {
+    "path": "server/src/main/kotlin/com/feedme/server/contract/ContractBodyValidator.kt",
+    "bytes": 17478,
+    "sha256": "5a92a4b9fdff309e8ca13f51dcd4fa8bebaede7bc930f1fa2c888833af62dac7"
+  },
+  {
+    "path": "server/src/main/kotlin/com/feedme/server/contract/ContractCatalog.kt",
+    "bytes": 2880,
+    "sha256": "367a8b9e081da865a69f02d3187d17c4ab5e7a9a65134af6b256f13d974c0da8"
+  },
+  {
+    "path": "server/src/main/kotlin/com/feedme/server/db/DurableCommands.kt",
+    "bytes": 10670,
+    "sha256": "00aa64778ea76a0ed4f735cdc97857b9f7de3ed74497a08ae58b2c009928d5ec"
+  },
+  {
+    "path": "server/src/main/kotlin/com/feedme/server/db/DurableEvents.kt",
+    "bytes": 11246,
+    "sha256": "9d2a4d2c6816c3c379854d2e31b6b88b757f3d431013209ded434219e8534c74"
+  },
+  {
+    "path": "server/src/main/kotlin/com/feedme/server/db/PgTransactions.kt",
+    "bytes": 2229,
+    "sha256": "ded0596efcab54040ba05c1f75900ca08199992a29aecc8247953d01bad317c5"
+  },
+  {
+    "path": "server/src/main/kotlin/com/feedme/server/db/PlatformMigrations.kt",
+    "bytes": 6096,
+    "sha256": "a93ddd6f452e7ef4fba20b93718cc8548f28a19d69adbbc512639adef291f5f3"
+  },
+  {
+    "path": "server/src/main/kotlin/com/feedme/server/http/FeedMeApplication.kt",
+    "bytes": 5202,
+    "sha256": "91bb2e84a4b2e89411124bbf434cd184944e5e7a3ac06aca0ec33deb611c375c"
+  },
+  {
+    "path": "server/src/main/kotlin/com/feedme/server/planning/PlanningAuthority.kt",
+    "bytes": 3087,
+    "sha256": "b9528f9679b9a93004c56b04a780003d7db66cb4c61bf18868ba513fb0d91ac8"
+  },
+  {
+    "path": "server/src/main/kotlin/com/feedme/server/planning/PlanningCursors.kt",
+    "bytes": 1799,
+    "sha256": "34c3c371a6465d58503179b519ffaca23b9e65eb17f987256f40950b48b6ae3c"
+  },
+  {
+    "path": "server/src/main/kotlin/com/feedme/server/planning/PlanningEvidenceSnapshot.kt",
+    "bytes": 9976,
+    "sha256": "4d6f02ba14ae571391da860e55f5458e92de8e8456c078f559b08ba3d2e4f5a3"
+  },
+  {
+    "path": "server/src/main/kotlin/com/feedme/server/planning/PlansStore.kt",
+    "bytes": 27244,
+    "sha256": "604b06b0310d67e5dc2cefd8cafc9eec8cd9e56d1e4eec5664885a47d30739eb"
+  },
+  {
+    "path": "server/src/main/kotlin/com/feedme/server/social/CircleCapabilities.kt",
+    "bytes": 3695,
+    "sha256": "a5da1fa6d7227d67177f78a2cf4f23d73e25346780a8c0bd4b9b208280d2b18e"
+  },
+  {
+    "path": "server/src/main/kotlin/com/feedme/server/social/CirclesStore.kt",
+    "bytes": 40960,
+    "sha256": "46a47849f84488fa745b67e64c5d184a961d411b8da4d697522a39e13a401f29"
+  },
+  {
+    "path": "server/src/main/kotlin/com/feedme/server/social/SocialIdentityPolicy.kt",
+    "bytes": 3628,
+    "sha256": "db10eb620cfb7855f6b8026b8094c574a5315cd81257186d45e0baf171a7bb2c"
+  },
+  {
+    "path": "server/src/main/resources/db/migration/V001__durable_platform.sql",
+    "bytes": 4146,
+    "sha256": "343fa1e0ad66b2c2db12bd9e38ea64aee65df8ae7c8829fe5ab7d9308abfdbb9"
+  },
+  {
+    "path": "server/src/main/resources/db/migration/V002__circle_memberships.sql",
+    "bytes": 5450,
+    "sha256": "f78e73335e45b22669de0d50e1ed9e6d2210f8a98d4d9cc451a93b927250c3e7"
+  },
+  {
+    "path": "server/src/main/resources/db/migration/V003__private_planning.sql",
+    "bytes": 3967,
+    "sha256": "eb7e133e962ffc2a0cfc6c35516ebfdfade670e8447e89b4bdfd185c347678e9"
+  },
+  {
+    "path": "server/src/test/kotlin/com/feedme/server/CanonicalValidatorParityTest.kt",
+    "bytes": 30131,
+    "sha256": "f14698121f585f0a594b50324eba428c1be11efa52f99974ffbdbf673513a32c"
+  },
+  {
+    "path": "server/src/test/kotlin/com/feedme/server/CommandIdentityTest.kt",
+    "bytes": 3000,
+    "sha256": "e0ca281469262e8dd18c64a4ba95830db0a6428d45e9d7dcc1f4e234b1d50c6f"
+  },
+  {
+    "path": "server/src/test/kotlin/com/feedme/server/ContractCatalogTest.kt",
+    "bytes": 2707,
+    "sha256": "4f0f82c5cd75652f73422a1f3e26570f37e7fee3eb29806616723bd9109be451"
+  },
+  {
+    "path": "server/src/test/kotlin/com/feedme/server/EventDraftTest.kt",
+    "bytes": 903,
+    "sha256": "cc9fbb4149bde9bcfea39583d09ebd001e8e11765e2b749e9bfb50cac415ae51"
+  },
+  {
+    "path": "server/src/test/kotlin/com/feedme/server/LocalServerConfigTest.kt",
+    "bytes": 2654,
+    "sha256": "f7e76575500e4509bf46e844b1d4d0957d749668cac252266e5ed190f6374a99"
+  },
+  {
+    "path": "server/src/test/kotlin/com/feedme/server/LocalServiceTest.kt",
+    "bytes": 7538,
+    "sha256": "821f550d2b32eb26f763c77d4fb4a62122a8e60607afddf988b683e37d138ecc"
+  },
+  {
+    "path": "server/src/test/kotlin/com/feedme/server/LoopbackEngineTest.kt",
+    "bytes": 2542,
+    "sha256": "9a02d3ec6f0948c188946e6ebbb51aeaec71a1539ed10c81e232d5a0fa2d2be1"
+  },
+  {
+    "path": "server/src/test/kotlin/com/feedme/server/TransportIntegrationTest.kt",
+    "bytes": 8379,
+    "sha256": "b50419e89d05e901b8e09ac89a9b8f11ad2df3c707c104bca9a4e027728ed7ee"
+  },
+  {
+    "path": "server/src/test/kotlin/com/feedme/server/contract/ContractBodyValidatorTest.kt",
+    "bytes": 12612,
+    "sha256": "77733b28d815f4c8e9c2beda41ee9341ad49a74ce29a517ed5eb8813185ccd08"
+  },
+  {
+    "path": "server/src/test/kotlin/com/feedme/server/contract/PlanModeParityTest.kt",
+    "bytes": 2597,
+    "sha256": "29d66fe30c57548143bab22e9adc77ce8090abf8273ebffecca5b1c36a622429"
+  },
+  {
+    "path": "server/src/test/kotlin/com/feedme/server/contract/SharedContractParityTest.kt",
+    "bytes": 1089,
+    "sha256": "964170081a78358e334d404af35511d8e4a36bdad9c4dfde2d4556f3a16c0ab7"
+  },
+  {
+    "path": "server/src/test/kotlin/com/feedme/server/contract/WireContractIntegrationTest.kt",
+    "bytes": 8917,
+    "sha256": "ee22b39e422fd1731c9a7187489281f7f5a07a4ae6f2b2141c73c8e0df1487ab"
+  },
+  {
+    "path": "server/src/test/kotlin/com/feedme/server/planning/PlanningPersistenceCodecTest.kt",
+    "bytes": 8296,
+    "sha256": "5287c28b173c3455e290e7abc93b04e044ea88f51bdff1ae7d8d37b8c18d9b0c"
+  },
+  {
+    "path": "server/src/test/kotlin/com/feedme/server/social/CircleCapabilitiesTest.kt",
+    "bytes": 5483,
+    "sha256": "31022e441fded85d30f3ef1dc4719705067edf1d7289aa3b3d4a2362d5ab79a4"
+  },
+  {
+    "path": "settings.gradle.kts",
+    "bytes": 548,
+    "sha256": "60d2b1f5fa935e5fc38a15fc4dbe964bb5d23370b93b75ecd3a2dd0abb0e74df"
+  },
+  {
+    "path": "shared/contracts/build.gradle.kts",
+    "bytes": 1085,
+    "sha256": "4475e87a518bef6c8fe0da0dbac65ed0744b5d1562004de8d9362eebb20af094"
+  },
+  {
+    "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/CanonicalBodyValidator.kt",
+    "bytes": 7470,
+    "sha256": "c6a58ff43c42693b03b32aa0138be41d861c166c0b050c22fbf499fdea987acc"
+  },
+  {
+    "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/CanonicalFormats.kt",
+    "bytes": 11398,
+    "sha256": "5e8daf874bf2a2dd9c29fc436ef5f77d31ace39c09e97d5cdcdb294fc5755a7d"
+  },
+  {
+    "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/CanonicalResponseBinder.kt",
+    "bytes": 2460,
+    "sha256": "fea7c7ac5eed45776012e2b968746f6c8166d24f32a9495897be1dfa163d2b76"
+  },
+  {
+    "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/CanonicalSchemaProgram.kt",
+    "bytes": 10737,
+    "sha256": "08fb5c88ef5c32c68df84572cc5b33f9648bc42c6ddbb460871ad695f09ef21b"
+  },
+  {
+    "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/ContractCatalog.kt",
+    "bytes": 10484,
+    "sha256": "adb82efa39a485baec82581b2e2860b5e8b7c53d98e65bee6cb189d610cf5d36"
+  },
+  {
+    "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/CookingWireModels.kt",
+    "bytes": 16378,
+    "sha256": "cf22bfe8465d31c987a4dfe6307b715db7b72efbe05a7502548713b37f42c849"
+  },
+  {
+    "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/ExactDecimal.kt",
+    "bytes": 4703,
+    "sha256": "bd5cfb626d146e22841a3be10c3480a57de29612bdde8c12b5d498e8cba4d036"
+  },
+  {
+    "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/WireDocument.kt",
+    "bytes": 9165,
+    "sha256": "16aedbb81a98ad55160b6a8beb0e74c3775a0d417adef00f5a251ff37e5b172c"
+  },
+  {
+    "path": "shared/contracts/src/commonMain/kotlin/com/feedme/contracts/generated/GeneratedContract.kt",
+    "bytes": 1030809,
+    "sha256": "4cd15da2f53ae1f5eb5bc4c95b6ff3a2e74ea99f33c9ed496c921228a98a76b5"
+  },
+  {
+    "path": "shared/contracts/src/commonTest/kotlin/com/feedme/contracts/CanonicalFormatsTest.kt",
+    "bytes": 10112,
+    "sha256": "08480652264811278c3c0021a7f91a7cd0721a1414e3a6ed455aa960c488aeff"
+  },
+  {
+    "path": "shared/contracts/src/commonTest/kotlin/com/feedme/contracts/CanonicalResponseBinderTest.kt",
+    "bytes": 3519,
+    "sha256": "c7614375daccd29b66951e31b0bffa990fb52355c39ca38ccaecc679d1700ebc"
+  },
+  {
+    "path": "shared/contracts/src/commonTest/kotlin/com/feedme/contracts/CanonicalSchemaProgramTest.kt",
+    "bytes": 9374,
+    "sha256": "335f53d9676f3d0b9244f73186850abedb22fd2a0b3693b96818a486ca39b478"
+  },
+  {
+    "path": "shared/contracts/src/commonTest/kotlin/com/feedme/contracts/ContractCatalogTest.kt",
+    "bytes": 19872,
+    "sha256": "3be027949194d7a6d090a849c4c16fff29e4b9ed12dae0df2dbf2febf935f7cd"
+  },
+  {
+    "path": "shared/contracts/src/commonTest/kotlin/com/feedme/contracts/CookingWireModelsTest.kt",
+    "bytes": 16447,
+    "sha256": "aa41f16c6d678abe806364c212245fdb8375997b4cb5faddc3f1d5edad8e58a3"
+  },
+  {
+    "path": "shared/contracts/src/commonTest/kotlin/com/feedme/contracts/ExactDecimalTest.kt",
+    "bytes": 8822,
+    "sha256": "9bd8e0dcc122cd17746f2e1fa54d29081c64ec1cbd7d523ee9cfad04ff0ee394"
+  },
+  {
+    "path": "shared/contracts/src/commonTest/kotlin/com/feedme/contracts/PlanModeContractTest.kt",
+    "bytes": 3479,
+    "sha256": "1e37f43af1dbc85fc2aa36bcfa40d9fadb2a474fddfc5daaaaa1e432ba8b14a4"
+  },
+  {
+    "path": "shared/contracts/src/commonTest/kotlin/com/feedme/contracts/WireDocumentTest.kt",
+    "bytes": 20353,
+    "sha256": "e6e27d85f989323b066bf3ce09a0191fc5db59ca594878c48fa02719b9b3db80"
+  },
+  {
+    "path": "shared/contracts/src/jvmTest/kotlin/com/feedme/contracts/OfficialFormatCorpusTest.kt",
+    "bytes": 1499,
+    "sha256": "0e7c4a273fea61e2b3b66a578a5b2fb6c982e88d41ddb90351081d172eea016a"
+  },
+  {
+    "path": "shared/core/build.gradle.kts",
+    "bytes": 230,
+    "sha256": "14c367fc49d2e3a5bd4b64843053cb7f61c09c0f7a3a54834a722ac029620bb0"
+  },
+  {
+    "path": "shared/core/src/commonMain/kotlin/com/feedme/core/DemoFixtures.kt",
+    "bytes": 4289,
+    "sha256": "c7a2c3b96760e532f9776e2708c5dc199a9e9914134b08e6fe55da5cf3f44961"
+  },
+  {
+    "path": "shared/core/src/commonMain/kotlin/com/feedme/core/KitchenRuntime.kt",
+    "bytes": 886,
+    "sha256": "3439d9a75b820f221180593db8be7d232ade59be5bef80ec20d9446026d4c62e"
+  },
+  {
+    "path": "shared/core/src/commonMain/kotlin/com/feedme/core/Models.kt",
+    "bytes": 5109,
+    "sha256": "49428e7e76828efcf0f84e4a050fcf69212f8d4e40e01bb2a3601bebb5c80b8b"
+  },
+  {
+    "path": "shared/core/src/commonMain/kotlin/com/feedme/core/PlateVisibility.kt",
+    "bytes": 1240,
+    "sha256": "4cd4898a5f2304ce0b3f6850d8e432c10129419149f998f5b6ffc6ca2924bce1"
+  },
+  {
+    "path": "shared/core/src/commonMain/kotlin/com/feedme/core/Reducer.kt",
+    "bytes": 14690,
+    "sha256": "b737a5f945902411803a124fabfff2fc4114d1a5e50b54a0b5914120ef51efb6"
+  },
+  {
+    "path": "shared/core/src/commonMain/kotlin/com/feedme/core/ports/ClientPorts.kt",
+    "bytes": 12876,
+    "sha256": "0b180d510aa6c961cd320cb0341dbda900ab7837183c62a5ec0d84f23c098ad8"
+  },
+  {
+    "path": "shared/core/src/commonMain/kotlin/com/feedme/core/ports/SessionControlStore.kt",
+    "bytes": 1412,
+    "sha256": "30d68335de39de3ab63d2bb7f1ead17cad1f4e1e062a90710f371c59cc1bda99"
+  },
+  {
+    "path": "shared/core/src/commonMain/kotlin/com/feedme/core/ports/WorkOriginPlanAuthentication.kt",
+    "bytes": 1763,
+    "sha256": "3aeb4505e6dbb1391831b44a24d98b142bf29e46ad7f584b285c325f36679b49"
+  },
+  {
+    "path": "shared/core/src/commonMain/kotlin/com/feedme/core/ports/WorkOriginPlanVerification.kt",
+    "bytes": 710,
+    "sha256": "e148eac8c5823e0d55a7159b9e1ace95525801c5c09b61159a26a790be98cc2e"
+  },
+  {
+    "path": "shared/core/src/commonTest/kotlin/com/feedme/core/ClientPortsTest.kt",
+    "bytes": 12304,
+    "sha256": "f97f7ecbaebea50858de65b8a4129bb5eea2362e430d6e5c9ebf179d734455c1"
+  },
+  {
+    "path": "shared/core/src/commonTest/kotlin/com/feedme/core/KitchenRuntimeTest.kt",
+    "bytes": 1775,
+    "sha256": "137ec270ebede9b881f39f2aa908da007de904bf9c37ae58b7bb94b1299586b5"
+  },
+  {
+    "path": "shared/core/src/commonTest/kotlin/com/feedme/core/ReducerTest.kt",
+    "bytes": 16530,
+    "sha256": "42ee2a58391f5a0bae27527ad41f50e364e1801c5d9e529f6dd0dbb9e179e3a8"
+  },
+  {
+    "path": "shared/core/src/commonTest/kotlin/com/feedme/core/SessionInvalidationTest.kt",
+    "bytes": 3195,
+    "sha256": "827e00b96cc5a88b08dc994799d6b7329228974598c41a7109c0eeb0edda891d"
+  },
+  {
+    "path": "shared/kitchen/build.gradle.kts",
+    "bytes": 892,
+    "sha256": "f5a9c8afa81885b8cf1a25dd24c85382270837e7de5e8acbe310a5a962b42257"
+  },
+  {
+    "path": "shared/kitchen/src/androidMain/kotlin/com/feedme/kitchen/ContentDigest.kt",
+    "bytes": 259,
+    "sha256": "fe19799aa684d8a9ddf649f8447ca22401d0f425ef1e193a5701018a26d33c21"
+  },
+  {
+    "path": "shared/kitchen/src/commonMain/kotlin/com/feedme/kitchen/ContentDigest.kt",
+    "bytes": 371,
+    "sha256": "5d51fe41b46f331b990203af87305ac7740aa9a84e3282ae67e1998c36e9e12e"
+  },
+  {
+    "path": "shared/kitchen/src/commonMain/kotlin/com/feedme/kitchen/CookingRecords.kt",
+    "bytes": 10830,
+    "sha256": "a4d3ec1ae425077120cb1159fc7e52d04deb72d680df80eed96c2785981b2757"
+  },
+  {
+    "path": "shared/kitchen/src/commonMain/kotlin/com/feedme/kitchen/CookingRepository.kt",
+    "bytes": 30838,
+    "sha256": "fadeba5057cf367d57f26345b9e19947976ffe6cc5de7bc999af638073e1ccf3"
+  },
+  {
+    "path": "shared/kitchen/src/commonMain/kotlin/com/feedme/kitchen/KitchenContext.kt",
+    "bytes": 5449,
+    "sha256": "f15d89be142ea3b2f6d5f43616c4e9817114cce0f1e0043e028c5df59c1b27c8"
+  },
+  {
+    "path": "shared/kitchen/src/commonMain/kotlin/com/feedme/kitchen/KitchenValidation.kt",
+    "bytes": 2589,
+    "sha256": "eb92c2138ec6e695187d5814fa68c41981ff81e80a615ac5329b90c73540a818"
+  },
+  {
+    "path": "shared/kitchen/src/commonMain/kotlin/com/feedme/kitchen/PrivateJson.kt",
+    "bytes": 3372,
+    "sha256": "6baa03a4d6e72f340992b82894bf3f11ee72d127cddd9c7741289c435a7a6504"
+  },
+  {
+    "path": "shared/kitchen/src/commonMain/kotlin/com/feedme/kitchen/PrivateKitchenSession.kt",
+    "bytes": 1621,
+    "sha256": "d81d041a2414a7d2c7138740fa78d5e40e72464be4112f0dea5eecb1df9b41ee"
+  },
+  {
+    "path": "shared/kitchen/src/commonMain/kotlin/com/feedme/kitchen/RecallFence.kt",
+    "bytes": 2728,
+    "sha256": "5be69371a56c9071883befa7dfca61ae021de11d3388573753c91596e92c055d"
+  },
+  {
+    "path": "shared/kitchen/src/commonMain/kotlin/com/feedme/kitchen/SavedRecipeRepository.kt",
+    "bytes": 15710,
+    "sha256": "b7ad3af25109b5587b19c4a09aba107161e70564843aa9eaf0d6af73e7cb2b00"
+  },
+  {
+    "path": "shared/kitchen/src/commonTest/kotlin/com/feedme/kitchen/ContentDigestTest.kt",
+    "bytes": 2878,
+    "sha256": "0b88fa4030686e10bb2bdf42ce73c92cbe39ac49c29ec435173f0d6ca58a96d1"
+  },
+  {
+    "path": "shared/kitchen/src/commonTest/kotlin/com/feedme/kitchen/CookingRecordsTest.kt",
+    "bytes": 27186,
+    "sha256": "ee3db7735f884f82ad4ef62c5f0384b0c87e731f6348dfad09c6e926d8a21768"
+  },
+  {
+    "path": "shared/kitchen/src/commonTest/kotlin/com/feedme/kitchen/CookingRepositoryTest.kt",
+    "bytes": 42108,
+    "sha256": "170b3faefd6ef28e6985974d7c122909c6f945b92c590731b032fde6cdde4471"
+  },
+  {
+    "path": "shared/kitchen/src/commonTest/kotlin/com/feedme/kitchen/KitchenContextTest.kt",
+    "bytes": 23977,
+    "sha256": "cbeafe1dcf3e7a9986d9b57bd4ff17145a1a536fdb8cae9c5df08c25ec99fe97"
+  },
+  {
+    "path": "shared/kitchen/src/commonTest/kotlin/com/feedme/kitchen/KitchenValidationTest.kt",
+    "bytes": 13086,
+    "sha256": "7b9e88dae9e7464d8d1d6cfdef37de37751b47fef8c5c92def10601e09475381"
+  },
+  {
+    "path": "shared/kitchen/src/commonTest/kotlin/com/feedme/kitchen/SavedRecipeRepositoryTest.kt",
+    "bytes": 30718,
+    "sha256": "7619d79bfda5dd951ffc48ee9b6aa322d3fd804f13e189f49de0af5bc5f68f6c"
+  },
+  {
+    "path": "shared/kitchen/src/iosMain/kotlin/com/feedme/kitchen/ContentDigest.kt",
+    "bytes": 1015,
+    "sha256": "d344519a682904559bf844df44da1a447ce1b60fdb79aed69651d82b51a13bbb"
+  },
+  {
+    "path": "shared/kitchen/src/jvmMain/kotlin/com/feedme/kitchen/ContentDigest.kt",
+    "bytes": 259,
+    "sha256": "fe19799aa684d8a9ddf649f8447ca22401d0f425ef1e193a5701018a26d33c21"
+  },
+  {
+    "path": "shared/mealflow/build.gradle.kts",
+    "bytes": 951,
+    "sha256": "f454ae8782e6d97bf8516d3bc1e24a25cd83d2f7796ba499c9569df77fec16bc"
+  },
+  {
+    "path": "shared/mealflow/src/commonMain/kotlin/com/feedme/mealflow/MealFlowRecord.kt",
+    "bytes": 9628,
+    "sha256": "9e99e4fa276322a3b2f31a8af2f97c51f25375b9af4c5021f3d67f3f7014a738"
+  },
+  {
+    "path": "shared/mealflow/src/commonMain/kotlin/com/feedme/mealflow/MealRequestBuilder.kt",
+    "bytes": 6164,
+    "sha256": "c90922b1419cd05e66d3414f95ff615244117785af4fe07fd01b22f0551f527d"
+  },
+  {
+    "path": "shared/mealflow/src/commonMain/kotlin/com/feedme/mealflow/MealRequestController.kt",
+    "bytes": 34435,
+    "sha256": "aca387c0ca45e9b6e955c85cc96ed2d21c92b524822b2028e9704f54869770f1"
+  },
+  {
+    "path": "shared/mealflow/src/commonMain/kotlin/com/feedme/mealflow/MealRequestModels.kt",
+    "bytes": 5281,
+    "sha256": "3b2112813ebc0e15d98b02cbe28c22315a43a97568f4c050428f1804b119266e"
+  },
+  {
+    "path": "shared/mealflow/src/commonTest/kotlin/com/feedme/mealflow/MealRequestControllerTest.kt",
+    "bytes": 45709,
+    "sha256": "fc91fcaa3ecef96631d26d0966883234276c4867bf02499d601d16dafd4ff5ae"
+  },
+  {
+    "path": "shared/planning/build.gradle.kts",
+    "bytes": 718,
+    "sha256": "54997c76dcbcc1c09cd22d962310ce58f100e2b978c3737d2d4eb95afc7e48d9"
+  },
+  {
+    "path": "shared/planning/src/commonMain/kotlin/com/feedme/planning/CanonicalPlanningAdapter.kt",
+    "bytes": 3391,
+    "sha256": "dfeda9960cf16a35e17eb700d0e38b2741c3a8ad82202d711dba3b3f9b819390"
+  },
+  {
+    "path": "shared/planning/src/commonMain/kotlin/com/feedme/planning/DeterministicPlanner.kt",
+    "bytes": 29295,
+    "sha256": "40b9f332402dc6c8d609bb59f721bd7e065a8f3fe56e692bb7df70ea07c3ae6a"
+  },
+  {
+    "path": "shared/planning/src/commonMain/kotlin/com/feedme/planning/PlanningDecimal.kt",
+    "bytes": 3637,
+    "sha256": "ef863e3f89d7c0357452ac58b0da149c5b3fa35da9275aa2a7e8ac9bbccbb406"
+  },
+  {
+    "path": "shared/planning/src/commonMain/kotlin/com/feedme/planning/PlanningModels.kt",
+    "bytes": 6427,
+    "sha256": "660aa7b78b758efbe0438fb8d26405dc75332f2211ad1659c7fc7b929dbef85b"
+  },
+  {
+    "path": "shared/planning/src/commonTest/kotlin/com/feedme/planning/DeterministicPlannerTest.kt",
+    "bytes": 36263,
+    "sha256": "26921b6fe3088c495a74fe056ed5033a5d51a4da1cdc2c097e28fce7f52f0873"
+  },
+  {
+    "path": "shared/session/build.gradle.kts",
+    "bytes": 1567,
+    "sha256": "2aa9d09cbf453ec33b2abcb770022e98d2f644566cb9bd6b3319dd998cf406a4"
+  },
+  {
+    "path": "shared/session/src/androidInstrumentedTest/AndroidManifest.xml",
+    "bytes": 1026,
+    "sha256": "012bc44b09a8d26024442d671a1897a4a45b8e7156a3c25f24adfbafbd321e1d"
+  },
+  {
+    "path": "shared/session/src/androidInstrumentedTest/kotlin/com/feedme/session/AndroidCompositeSetupAbortTest.kt",
+    "bytes": 29387,
+    "sha256": "33c5725100ecc111e0ae8d6be2b7d0e57e84b4f739940f5735aed8d30cb5e679"
+  },
+  {
+    "path": "shared/session/src/androidInstrumentedTest/kotlin/com/feedme/session/AndroidCredentialCreateInspectionTest.kt",
+    "bytes": 16713,
+    "sha256": "5f40db9c98456c06103d6dba3df21376357da5019af2f864269be49c2d990edf"
+  },
+  {
+    "path": "shared/session/src/androidInstrumentedTest/kotlin/com/feedme/session/AndroidCredentialCreatePlanTest.kt",
+    "bytes": 33423,
+    "sha256": "539ba9bcddb058468eaef045ce0eaad842ff53ed8ea7d2a4cd0defccd06baae5"
+  },
+  {
+    "path": "shared/session/src/androidInstrumentedTest/kotlin/com/feedme/session/AndroidCredentialPlanAbortTest.kt",
+    "bytes": 21154,
+    "sha256": "2e02a46b5416cc33a0a2e035d6a3c3eae87578fd2c919ee7a4addc6e41caab67"
+  },
+  {
+    "path": "shared/session/src/androidInstrumentedTest/kotlin/com/feedme/session/AndroidCredentialRecoveryOwnerTest.kt",
+    "bytes": 25941,
+    "sha256": "7edfcbf0fc893a5772d909c6d2f050838cb7f2617f2ef446c03e3b1233d94d63"
+  },
+  {
+    "path": "shared/session/src/androidInstrumentedTest/kotlin/com/feedme/session/AndroidCredentialStoreTest.kt",
+    "bytes": 29922,
+    "sha256": "1b25a921067f49ff1c4010ebb5f2abf76c9fd5a3be4cb2bced08563749cc3f08"
+  },
+  {
+    "path": "shared/session/src/androidInstrumentedTest/kotlin/com/feedme/session/AndroidCredentialTestSandbox.kt",
+    "bytes": 1729,
+    "sha256": "a8f34b206968faf4b3cb0acde7a808adce94e346601690fe7692a9ecd69e3648"
+  },
+  {
+    "path": "shared/session/src/androidInstrumentedTest/kotlin/com/feedme/session/AndroidInterruptedSetupInspectionTest.kt",
+    "bytes": 22188,
+    "sha256": "b139dbcdc4f2bd48033dda47c3aeae0f4500b4dccf18f08c339e5bd288c0b8e0"
+  },
+  {
+    "path": "shared/session/src/androidInstrumentedTest/kotlin/com/feedme/session/AndroidLiveSessionSetupCoordinatorTest.kt",
+    "bytes": 25830,
+    "sha256": "7f5a0003208fb45bffcaed2836dca0d6db06046bd6324c9e0669f7658f66db2f"
+  },
+  {
+    "path": "shared/session/src/androidInstrumentedTest/kotlin/com/feedme/session/AndroidLocalRetirementIntegrationTest.kt",
+    "bytes": 53305,
+    "sha256": "d3cb220e064338392ed68d1108ef329fdb829dcf18213bf931f7f4db2653fd7c"
+  },
+  {
+    "path": "shared/session/src/androidInstrumentedTest/kotlin/com/feedme/session/AndroidNativeWorkCancellationTest.kt",
+    "bytes": 15142,
+    "sha256": "4a9a76d1b7cc44eae24b18cb8c9a1ffb936e885ad5587659e774dd95c8c919f8"
+  },
+  {
+    "path": "shared/session/src/androidInstrumentedTest/kotlin/com/feedme/session/AndroidRetirementIntegrationSandbox.kt",
+    "bytes": 7882,
+    "sha256": "dbe3c0b2c6c145387d5bf4df2cefb332abc2be49ca7a73c349c7002a87d8efb2"
+  },
+  {
+    "path": "shared/session/src/androidInstrumentedTest/kotlin/com/feedme/session/AndroidSessionSetupJournalTest.kt",
+    "bytes": 19347,
+    "sha256": "373e0b70fe17bbc38076506401517fc3d7341889fafe3fba574a6b68b26f4554"
+  },
+  {
+    "path": "shared/session/src/androidInstrumentedTest/kotlin/com/feedme/session/AndroidSessionSetupPublicationTest.kt",
+    "bytes": 26169,
+    "sha256": "0404e5c911f09d211b6ce7d94b88f3a8a65cd6473b4dbe6ea3f5321c84a64edb"
+  },
+  {
+    "path": "shared/session/src/androidInstrumentedTest/kotlin/com/feedme/session/AndroidSessionSetupRecoveryOwnerTest.kt",
+    "bytes": 22918,
+    "sha256": "197c66940c07bc300de3bb9439f2c91fb96db1f8897991cc5556afba3ae0a0f4"
+  },
+  {
+    "path": "shared/session/src/androidInstrumentedTest/kotlin/com/feedme/session/AndroidSessionWorkRecoveryTest.kt",
+    "bytes": 17271,
+    "sha256": "efe33b3ab887ea17480a90de6c8ee120994bfff5f2e04e3ad1de22c962c9d4f5"
+  },
+  {
+    "path": "shared/session/src/androidMain/AndroidManifest.xml",
+    "bytes": 678,
+    "sha256": "2155bcce06c78e8aa541c8e511527443216d500a95a5a04c0c3bb45deb10aa40"
+  },
+  {
+    "path": "shared/session/src/androidMain/kotlin/com/feedme/session/AndroidCredentialFiles.kt",
+    "bytes": 19507,
+    "sha256": "0ea851af6ac2ffe65700481106b0b1a337b886cd0c51c54d14c9bd8cd3521fed"
+  },
+  {
+    "path": "shared/session/src/androidMain/kotlin/com/feedme/session/AndroidCredentialStore.kt",
+    "bytes": 43313,
+    "sha256": "37e70a9b777fd670f912992cc347ff015e3a9e587637bcf0f4d4fbf4d349894c"
+  },
+  {
+    "path": "shared/session/src/androidMain/kotlin/com/feedme/session/AndroidCredentialVault.kt",
+    "bytes": 9497,
+    "sha256": "b50cf998d4d148cc3b19b4f23500a543758cda2afe41471183c0f5a9ca5ad458"
+  },
+  {
+    "path": "shared/session/src/androidMain/kotlin/com/feedme/session/AndroidNativeWorkCancellation.kt",
+    "bytes": 6534,
+    "sha256": "dcabffefc29261197b29d57e37405470bcc07347a4e5b6202a5dc0ed5d39b6ab"
+  },
+  {
+    "path": "shared/session/src/androidMain/kotlin/com/feedme/session/AndroidSessionSetupRecovery.kt",
+    "bytes": 1300,
+    "sha256": "4294d4a005c2bb968abba6e3360395fe98e0c62b4b3789b84cdd33a79573ab30"
+  },
+  {
+    "path": "shared/session/src/androidMain/kotlin/com/feedme/session/AndroidSessionWorkRecovery.kt",
+    "bytes": 980,
+    "sha256": "da9dc60fb01822f8e23fd092dfaa551d977c1e5edfdd7848afbdf9a69075a480"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/CompositeSetupAbortCoordinator.kt",
+    "bytes": 17433,
+    "sha256": "0d0b740a2a43467811d720a18d5d84dd04f9c552e458188bfd73062e210604c2"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/CredentialCodec.kt",
+    "bytes": 6965,
+    "sha256": "31b46f37fa7f07c1cf8d3f69c5099d28bb7f57876d8095468f92df0051f90eea"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/CredentialCreateCoordinator.kt",
+    "bytes": 10564,
+    "sha256": "75037fb20ef3879633d5faec4f9b9595ae7495091be1da7bf78a47f456698a03"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/CredentialCreatePlan.kt",
+    "bytes": 3285,
+    "sha256": "4615a043648eea60bebe7622931e0b7532c65b22607101a5c272adf152a30840"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/CredentialCreatePlanAbort.kt",
+    "bytes": 959,
+    "sha256": "f254fe2246d8ce04c429ad32d326d6eb8a381c6416a47f796dae5c657230ba6c"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/CredentialCreatePlanCodec.kt",
+    "bytes": 3436,
+    "sha256": "aa2ea7ea0f1cbd6b86ed519d764818cdf88112708afdc1dd59794e0cba3e8cc7"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/CredentialCreatePlanInspection.kt",
+    "bytes": 1458,
+    "sha256": "32994c5ae81b96eb0846fd4fae8c62be64fbab48c990b0afce5b1545ffc61dd7"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/CredentialCreateRecoveryOwner.kt",
+    "bytes": 1175,
+    "sha256": "645d1b9ac0003a70eaed03eb3553451be63f1146451ec567e0ceca77942a64cc"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/IncarnationCredentialStore.kt",
+    "bytes": 5123,
+    "sha256": "1b356082336ed0fa180d11edad6941391555daa2646520726f8236b9609294fa"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/InterruptedSetupInspector.kt",
+    "bytes": 16609,
+    "sha256": "dffcb58e36dd7d70c9e66574c7b66170e1ded57c8e10e75038c3abce45b3544a"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/InterruptedSetupReport.kt",
+    "bytes": 1948,
+    "sha256": "e86d05665b69138e26e7ef0f7e880f77e9d86969a71ccd8037109377245ab53a"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/LiveSessionSetupCoordinator.kt",
+    "bytes": 24845,
+    "sha256": "de1238b4db9bc2e4159311a2c13a5f145412d7bcd49148078f4b8538ca9eb8f7"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/LocalRetirementCoordinator.kt",
+    "bytes": 16104,
+    "sha256": "e1a5cebf32610c4b1081f79c852e1fc25129d070408541ecf2f658e69bc60810"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/PreparedSessionSetupAbort.kt",
+    "bytes": 605,
+    "sha256": "654a2e2f007c0aef609104b19b062ee34fada7827705f4d924550b9fa56e38f0"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/PreparedSetupDiscard.kt",
+    "bytes": 1317,
+    "sha256": "c14f6961b35291bc34ff986fd2f850d340898116f60acdb4acf8078bdac52d40"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/PrivateSessionRuntime.kt",
+    "bytes": 46310,
+    "sha256": "76a5b7606061f50831d4beed5c57b9045b744204024c0583a3b4c1235f331b66"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/RetirementCodec.kt",
+    "bytes": 6885,
+    "sha256": "c274870bd28399e104eefe28d61b85f5442b7ea50030114ab34006cf076e29b6"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/RetirementModels.kt",
+    "bytes": 5931,
+    "sha256": "efc39cedae140bd5ae3a8f4a582781e6601d9aa88b88319a2e387ce44b8fe28b"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionActivationCodec.kt",
+    "bytes": 5573,
+    "sha256": "71b4b93bfcaac43187f567b5e4e3042fc3602899c2300ff8c706c5761277fd6f"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionApplicationComposition.kt",
+    "bytes": 9539,
+    "sha256": "89513fa463ce738c2b3e74bff4b42a5c7c507ff3b9786fec7dcbbb43b78bf00d"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionControlAcknowledgements.kt",
+    "bytes": 2317,
+    "sha256": "989a6ba6068b92cde5272813a4ca14e5169a9efdb11b1bc3bf887d3a09861464"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionRecoveryInspector.kt",
+    "bytes": 8977,
+    "sha256": "a9db18454ada208c0c53518a0b384642b0e20ec485d21c63f10caadab00e3fcd"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionRecoveryReport.kt",
+    "bytes": 2123,
+    "sha256": "65ba9dc2c5a8d7828924e16f4c5f38ef4cd2263f4d42a6b73457023338cde008"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionSetupPlan.kt",
+    "bytes": 2120,
+    "sha256": "91993ea8d80a1e29e537d391aac371df03294aaf6012c063b2cba219fb556c11"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionSetupPlanCodec.kt",
+    "bytes": 6327,
+    "sha256": "a2161d4fa512c98edf228f8b27a2905a9631c96d204c369a67a2e3f221793d54"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionSetupRecoveryOwner.kt",
+    "bytes": 17995,
+    "sha256": "80a67007c4992513227c19337cd22c68b3bcfd26cf822a6860526e9d4c2bfe52"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionWorkCodec.kt",
+    "bytes": 8486,
+    "sha256": "15fcb9ff40c37849679325376f85fec9c499185f6cd323e14d6983df7ce43a65"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionWorkModels.kt",
+    "bytes": 4392,
+    "sha256": "e7c053cf800ff407ff788350897fa3c08a3e65c0db111ee1101bc1fea0f3d62b"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionWorkOriginPlan.kt",
+    "bytes": 2696,
+    "sha256": "901fb19d1b953d1bd2af0274a8deb41a47069355bca79c658bef575acd5f3f37"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionWorkOriginPlanCodec.kt",
+    "bytes": 4835,
+    "sha256": "a795e6ecca252e7d91ad9763b1570b65e913134019c4be56ca864617488b2a1b"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionWorkOriginRecoveryOwner.kt",
+    "bytes": 6103,
+    "sha256": "4f5101f80473e2ce35fac777b154f9008b8ed3091aa6f5f5f6551d226fe11192"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionWorkRegistry.kt",
+    "bytes": 31995,
+    "sha256": "641782c54770e453ccf38191881a05bbdac5d527984f4dfc21cebced5b6b8ce9"
+  },
+  {
+    "path": "shared/session/src/commonMain/kotlin/com/feedme/session/SessionWorkSetupProtocol.kt",
+    "bytes": 7033,
+    "sha256": "b931e1502f26c4855fa714aced8247a79a849ea0000ee94fd5ab4e444d50709b"
+  },
+  {
+    "path": "shared/session/src/commonTest/kotlin/com/feedme/session/CompositeSetupAbortCoordinatorTest.kt",
+    "bytes": 46435,
+    "sha256": "67851adb6ff6d7c804cf567276385bf8b4601ad28c79009bc2f4df39553d56c9"
+  },
+  {
+    "path": "shared/session/src/commonTest/kotlin/com/feedme/session/CredentialCodecTest.kt",
+    "bytes": 27290,
+    "sha256": "34812a941d901bc17dfa9ebe2967b604ec597a8109ae9f1773c0655620f6a508"
+  },
+  {
+    "path": "shared/session/src/commonTest/kotlin/com/feedme/session/CredentialCreateCoordinatorTest.kt",
+    "bytes": 31021,
+    "sha256": "bcb4864e7440b6e7e0f52d984ffee0ee3a767a9cb9497fc7fe2d13c4fa36dba7"
+  },
+  {
+    "path": "shared/session/src/commonTest/kotlin/com/feedme/session/CredentialCreatePlanCodecTest.kt",
+    "bytes": 11923,
+    "sha256": "1b2bd611ffca261e60d02b92486f7feafe08735126f914e2f13a767eecbd8bc2"
+  },
+  {
+    "path": "shared/session/src/commonTest/kotlin/com/feedme/session/CredentialTransportViewTest.kt",
+    "bytes": 15364,
+    "sha256": "9b3d3ce2820db1fa3affb8ffce62a238286b230e288c35cbff5d719804df2646"
+  },
+  {
+    "path": "shared/session/src/commonTest/kotlin/com/feedme/session/InterruptedSetupInspectorTest.kt",
+    "bytes": 30220,
+    "sha256": "9484ed3636e97c4a9d1524c6a0c5ffb556cfc1096b7723790c068b7c9fde5996"
+  },
+  {
+    "path": "shared/session/src/commonTest/kotlin/com/feedme/session/LiveSessionSetupCompletionTest.kt",
+    "bytes": 34345,
+    "sha256": "29adcd9ec79b3808241ce9c3f3465d702cec5bdb6ca1ee8939825bb1d00fed09"
+  },
+  {
+    "path": "shared/session/src/commonTest/kotlin/com/feedme/session/LiveSessionSetupCoordinatorTest.kt",
+    "bytes": 35475,
+    "sha256": "c8d8df17ad20d0081dc72defe688352685c69891edffd575a84a338d782a752c"
+  },
+  {
+    "path": "shared/session/src/commonTest/kotlin/com/feedme/session/RetirementCodecTest.kt",
+    "bytes": 17695,
+    "sha256": "4a6129ec56fe862bd2356f85fd516945c467d046541294b2daa546103f202c13"
+  },
+  {
+    "path": "shared/session/src/commonTest/kotlin/com/feedme/session/SessionActivationCodecTest.kt",
+    "bytes": 14842,
+    "sha256": "89b5854f4b49b1352d7cd41e1926355937644dd21bd509d1cd20389fbc4688b2"
+  },
+  {
+    "path": "shared/session/src/commonTest/kotlin/com/feedme/session/SessionActivationV2CodecTest.kt",
+    "bytes": 7135,
+    "sha256": "90edf9f30a88bc33907bf2204cee505a697e7f7044d76a27e3b35a3c921a3bc6"
+  },
+  {
+    "path": "shared/session/src/commonTest/kotlin/com/feedme/session/SessionApplicationCompositionTest.kt",
+    "bytes": 5388,
+    "sha256": "26eda5ecb8efda775dabd4ab5830904fa87f48268bb6f51d35422f16b7dfa002"
+  },
+  {
+    "path": "shared/session/src/commonTest/kotlin/com/feedme/session/SessionControlAcknowledgementsTest.kt",
+    "bytes": 7244,
+    "sha256": "be0ef4d2ef3128b2fb2e2f09c0f67714ff12d64496cf7de3878b054f49599264"
+  },
+  {
+    "path": "shared/session/src/commonTest/kotlin/com/feedme/session/SessionSetupControlTest.kt",
+    "bytes": 8739,
+    "sha256": "2411b898b6ffd290135c2e6a6530ed25e3c9ab8785082ab1c1d5ae2e5ca4c58e"
+  },
+  {
+    "path": "shared/session/src/commonTest/kotlin/com/feedme/session/SessionSetupPlanCodecTest.kt",
+    "bytes": 20211,
+    "sha256": "1582f4aec6c260ed330321c29b4e0281d7b0e6f73bc41dbc3df923b8aba315e5"
+  },
+  {
+    "path": "shared/session/src/commonTest/kotlin/com/feedme/session/SessionSetupRecoveryOwnerTest.kt",
+    "bytes": 27551,
+    "sha256": "35525ffde55af3d1d437d875311e2448a7c3be6c1fa822cca460f5102c6b9ef7"
+  },
+  {
+    "path": "shared/session/src/commonTest/kotlin/com/feedme/session/SessionWorkCodecTest.kt",
+    "bytes": 21803,
+    "sha256": "6fb59b6809efd2d0cbdabda9c26bec862febebabdc7816a3d200d9d8b7b9eef9"
+  },
+  {
+    "path": "shared/session/src/commonTest/kotlin/com/feedme/session/SessionWorkOriginAbortTest.kt",
+    "bytes": 27524,
+    "sha256": "87839143d68855477dbbaa6f05c57d5fa7317fdba8030c1f2e3164eb104a6db1"
+  },
+  {
+    "path": "shared/session/src/commonTest/kotlin/com/feedme/session/SessionWorkOriginObservationTest.kt",
+    "bytes": 17472,
+    "sha256": "8af1db32239ea5e9b2cf463f6dd6ca090ad973834d977d31650033ebb58c8842"
+  },
+  {
+    "path": "shared/session/src/commonTest/kotlin/com/feedme/session/SessionWorkOriginPlanCodecTest.kt",
+    "bytes": 17393,
+    "sha256": "ee89fa717151b9149e841b15c8dea0504bf33e44015f917992e8e4aa86535fad"
+  },
+  {
+    "path": "shared/session/src/commonTest/kotlin/com/feedme/session/SessionWorkOriginPlanRegistryTest.kt",
+    "bytes": 26334,
+    "sha256": "696f7b95c284857e847240e48695c174c590c870a7c9f3481cf5fa64965e12a3"
+  },
+  {
+    "path": "shared/session/src/commonTest/kotlin/com/feedme/session/SessionWorkOriginRecoveryOwnerTest.kt",
+    "bytes": 24176,
+    "sha256": "c1f1e0986d3a027b3f717fb000a3a44dfc2a9fa9c6b40d37bae4337e83d296d5"
+  },
+  {
+    "path": "shared/session/src/commonTest/kotlin/com/feedme/session/SessionWorkOriginSealTest.kt",
+    "bytes": 27520,
+    "sha256": "9cd71a9f685bdfc89b7d59ed7735e9c4cb063b4b3433644380749dbe6539c6f9"
+  },
+  {
+    "path": "shared/session/src/commonTest/kotlin/com/feedme/session/SessionWorkRegistryTest.kt",
+    "bytes": 62166,
+    "sha256": "1415307fb5013ce9a5c6e0e8751f7fb832a56be4810877d1dd771589c171d261"
+  },
+  {
+    "path": "shared/session/src/jvmTest/kotlin/com/feedme/session/SessionCompositionReleaseTest.kt",
+    "bytes": 2179,
+    "sha256": "870686a13547151d38b01dd8c9d60457df1a415bc74f3bde47009aaf6926d968"
+  },
+  {
+    "path": "shared/storage/build.gradle.kts",
+    "bytes": 3813,
+    "sha256": "afbcaf31b211dc18ab84ad37ff79f0edaf2eeb802677711f00757ed3050d7761"
+  },
+  {
+    "path": "shared/storage/src/androidInstrumentedTest/cpp/sqlite_sync_failure.c",
+    "bytes": 16046,
+    "sha256": "e5081446f4ad5ad12070a6b7c59c4ea8b37c67f9e6b3b1dc88226dc0f2574510"
+  },
+  {
+    "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidSessionControlRecoveryStoreTest.kt",
+    "bytes": 23774,
+    "sha256": "29326c120d686f3346235dd2e22a912133b1eb60cb2bdd47939fdfd1d9161476"
+  },
+  {
+    "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidSessionControlStoreTest.kt",
+    "bytes": 12542,
+    "sha256": "ebafd983708c7d1386c10817c62ebb77d1f0d180ec5dcab20ebfe71bedb5ab54"
+  },
+  {
+    "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidSessionLedgerSyncFailureTest.kt",
+    "bytes": 26747,
+    "sha256": "fff79b5f6a7c2f330047fdf45be3ecb45e6c1a382f54ef825384a82920c6c421"
+  },
+  {
+    "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidSessionWorkOriginAbortSyncFailureTest.kt",
+    "bytes": 6179,
+    "sha256": "7775a4994e3aef7b6a72fad87d4f0af942b6eb2fc436bc743eeb8abbd7ccc52b"
+  },
+  {
+    "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidSessionWorkOriginAbortTest.kt",
+    "bytes": 15348,
+    "sha256": "a7352dce3d41f9fcc8e84322749ddb35f8b3c57368ba0a6e26c534881913d586"
+  },
+  {
+    "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidSessionWorkOriginPlanSyncFailureTest.kt",
+    "bytes": 5654,
+    "sha256": "688e41f2ca4defcd64f42f9ae824467e3121a968f61fe83194ca69f1f9312241"
+  },
+  {
+    "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidSessionWorkOriginPlanTest.kt",
+    "bytes": 15226,
+    "sha256": "f1634d73810d90d5c79df7c90470bb0aec722788ebbe2499182282062237e115"
+  },
+  {
+    "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidSessionWorkOriginProcessTest.kt",
+    "bytes": 10562,
+    "sha256": "6e13790c75a6330dea325a44722bbf4f4ab3657f06a345d64600dfea1a61b668"
+  },
+  {
+    "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidSessionWorkRecoveryStoreTest.kt",
+    "bytes": 24620,
+    "sha256": "bd905c01ca029fee35bf3aa1defe6df9de83fcd135ae6fc0fe9950733dee613f"
+  },
+  {
+    "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidSessionWorkStoreTest.kt",
+    "bytes": 13005,
+    "sha256": "4a168f3f0882d6c98ba72dc65f5a379ccaf96173fbf62a8b2b0e8173c6bf24a5"
+  },
+  {
+    "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidStateActivationPlanTest.kt",
+    "bytes": 23652,
+    "sha256": "abc9ec6ec50eecbb595d3070f7b6ec3a6ed7e98a68c35eef28ec19fb8a290095"
+  },
+  {
+    "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidStateActivationRecoveryOwnerTest.kt",
+    "bytes": 25594,
+    "sha256": "cb4eaadd04863b991a3456200b7e2e4c7212ac3f3a6af2b2fdfdfbc9e1a2a859"
+  },
+  {
+    "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidStateActivationRecoveryTest.kt",
+    "bytes": 24273,
+    "sha256": "ad0d1bf23447cb3098d17447273177c9d0a00d01702ebd55fad6cb5bfbee6a96"
+  },
+  {
+    "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidStateActivationSyncFailureTest.kt",
+    "bytes": 13077,
+    "sha256": "e2a496ed8674b1bfeec1fc5449fad83a7980539d36d48b3c8bc29ae0c3fc7de8"
+  },
+  {
+    "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidStateBindingAbortSyncFailureTest.kt",
+    "bytes": 9606,
+    "sha256": "c724ec62da47457ca0ec56de299762604077fabb3535d3f774a8d49c87614ac0"
+  },
+  {
+    "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidStateBindingAbortTest.kt",
+    "bytes": 15451,
+    "sha256": "b44aa5f2320a55363f77f973004348902dfa16865dd49bf1c3aca6e6e68ff5a4"
+  },
+  {
+    "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidStateBindingSyncFailureTest.kt",
+    "bytes": 9276,
+    "sha256": "1da68798bf15cef17f829d6e4dc56ad100830005e18be089916b09b27ec3afba"
+  },
+  {
+    "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidStateDatabaseTest.kt",
+    "bytes": 8935,
+    "sha256": "f9daa74403fdba8e3e854a497a1441685bb7d4e41cf8965ef76bd36106c3a4b5"
+  },
+  {
+    "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidStateProcessRestartTest.kt",
+    "bytes": 4753,
+    "sha256": "e2fbcb27804723f0261ac61a33dbceb18a5ce57789c272e0e4bf34c570ca2e27"
+  },
+  {
+    "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidStateTestSandbox.kt",
+    "bytes": 1503,
+    "sha256": "c7f154511170a15a6b525dc2369a1c02168b1c0c56763b92b1dfb66ad73afc36"
+  },
+  {
+    "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidStateVaultTest.kt",
+    "bytes": 6190,
+    "sha256": "5899210d212816339cdb9f2ddc6acc02bd9eac352f4c212c6a9e63171880feaf"
+  },
+  {
+    "path": "shared/storage/src/androidInstrumentedTest/kotlin/com/feedme/storage/AndroidWorkOriginPlanFixture.kt",
+    "bytes": 8372,
+    "sha256": "3211e4bb4344dadab7b55300a7b97422d8c3ef252bb6a32f00b87dca28fdea63"
+  },
+  {
+    "path": "shared/storage/src/androidMain/kotlin/com/feedme/storage/AndroidSessionControlStore.kt",
+    "bytes": 3692,
+    "sha256": "65c0342c40947f6bbb8ba6f8caf2fbfb66a83fcbc253f8de36b123a117421fcc"
+  },
+  {
+    "path": "shared/storage/src/androidMain/kotlin/com/feedme/storage/AndroidSessionWorkStore.kt",
+    "bytes": 4116,
+    "sha256": "5369beb857e81812d62b4cf1f38ae8376ffbd79d0e74a33ad0b9f6855499aed3"
+  },
+  {
+    "path": "shared/storage/src/androidMain/kotlin/com/feedme/storage/AndroidStateDatabase.kt",
+    "bytes": 33999,
+    "sha256": "e191f44d63e4c62b295c112ee4146054e2e60ae13f5351d45c71f19c995a2fbc"
+  },
+  {
+    "path": "shared/storage/src/androidMain/kotlin/com/feedme/storage/AndroidStateVault.kt",
+    "bytes": 8337,
+    "sha256": "db13c855d88758aacc0e9055c6e5c459ef2ff58d2e32ced8a4db5560ed08f27c"
+  },
+  {
+    "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/EncryptedSessionControlStore.kt",
+    "bytes": 6390,
+    "sha256": "6456c1a41b08b563f66be3a3f077751f2927e9759baf48c6addede965330d759"
+  },
+  {
+    "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/EncryptedSessionWorkStore.kt",
+    "bytes": 7699,
+    "sha256": "72c10d4eff246f6554a368c1cf3fc8e09e10bbdde094dea74681b81dc76bf902"
+  },
+  {
+    "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/EncryptedStateDatabase.kt",
+    "bytes": 90049,
+    "sha256": "6856d33cced81444104b910f3437a7322ddcfd4cfe6e2727e7c3fac0aa080557"
+  },
+  {
+    "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/ExistingSessionControlRecoveryStore.kt",
+    "bytes": 1759,
+    "sha256": "16da04b7293282aa666899fe3e6f6f86ba68a1c19a766c68ae469eee9f0bda93"
+  },
+  {
+    "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/ExistingSessionWorkRecoveryStore.kt",
+    "bytes": 1897,
+    "sha256": "ebd4aad1ed88fcb823d7713acfbb3252c6ff66e1477d595643fdfb0fbc0740ba"
+  },
+  {
+    "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/StateActivationPlan.kt",
+    "bytes": 2884,
+    "sha256": "fa25a86cc0115cacbc8009142a33643be5c9689fddd37dfe9ace5c08c08b385c"
+  },
+  {
+    "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/StateActivationPlanAuthentication.kt",
+    "bytes": 2125,
+    "sha256": "0a6af5da54976a86d88dfd960fc27fe21742fe7f83ab4baaec993c1d94c78483"
+  },
+  {
+    "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/StateActivationPlanCodec.kt",
+    "bytes": 3196,
+    "sha256": "a021661244b3f08cb459256ef9cefab037855da92298426caa7ab1ce4be83856"
+  },
+  {
+    "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/StateActivationPlanObservation.kt",
+    "bytes": 820,
+    "sha256": "80ed2cf35f48aef493cd53be3cd79f88fd11b01d3188d169eae9a1063f625048"
+  },
+  {
+    "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/StateActivationRecoveryHandle.kt",
+    "bytes": 1728,
+    "sha256": "c4d044e838981e0f81a925a0137df1c11725dd37407a61a72d46043e5e730a4a"
+  },
+  {
+    "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/StateActivationRecoveryOwner.kt",
+    "bytes": 1132,
+    "sha256": "1a0579edba4225e039215386527ff0bc5f94f664bc3a4f102ed4aaabe132f52e"
+  },
+  {
+    "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/StateOwnerInspection.kt",
+    "bytes": 604,
+    "sha256": "363f4b9b026e97185ffd311288a2ef4b796fa29ad6d48bced8ab80db6268b8f5"
+  },
+  {
+    "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/StateRecordInspection.kt",
+    "bytes": 741,
+    "sha256": "b9ca257c09ad818e39a7aa724b4e22c7d2392e35b041959c33a4c808a20fddf4"
+  },
+  {
+    "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/StateRetirementTarget.kt",
+    "bytes": 782,
+    "sha256": "4f7357f9de799ddfc2f24d31d6a0f73105eb730aec763163325d11198cc0ab35"
+  },
+  {
+    "path": "shared/storage/src/commonMain/kotlin/com/feedme/storage/StateVault.kt",
+    "bytes": 1823,
+    "sha256": "6b202361c77bf806870c5c485231af1cd23fa7643409eab482f34b8a232e1dd9"
+  },
+  {
+    "path": "shared/storage/src/commonTest/kotlin/com/feedme/storage/StateActivationPlanCodecTest.kt",
+    "bytes": 10134,
+    "sha256": "257be313ae42d44533546222b80147ae2f00522608b52f044f2f3cf8a01a856a"
+  },
+  {
+    "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/DurableCommandStorageTest.kt",
+    "bytes": 22709,
+    "sha256": "9cfa2aff03318a58bae432fcc9fa2b57fcfd9ec208e93cca79fe52cf5a0e4dea"
+  },
+  {
+    "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/EmptyStateRetirementTest.kt",
+    "bytes": 27472,
+    "sha256": "e67def287430c3a0569f0f1028a1a9611d1a400d2e42271ac1ba203fa05cc8e4"
+  },
+  {
+    "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/EncryptedRetirementTest.kt",
+    "bytes": 30532,
+    "sha256": "660cf56036000032292d116487c803e578f9592bf77dbf43462ac28e67702161"
+  },
+  {
+    "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/EncryptedStateDatabaseTest.kt",
+    "bytes": 43062,
+    "sha256": "c867062a28fad917e9aadb9d4c2eb45f001518a7da3da2398096b5655fc3941d"
+  },
+  {
+    "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/ExistingSessionControlRecoveryStoreTest.kt",
+    "bytes": 37129,
+    "sha256": "93dcc087d6bff87d4481a05b3453b44257caffa2d9dbf2fe9f2c3a571483058a"
+  },
+  {
+    "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/ExistingSessionWorkRecoveryStoreTest.kt",
+    "bytes": 42596,
+    "sha256": "b93267cb0130f87b20b40ca3b83902d357316aaa8c4807ac95ba2dd56e1b1dad"
+  },
+  {
+    "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/KitchenStorageTest.kt",
+    "bytes": 37049,
+    "sha256": "15a99b6e423fdfe7b09e9fc6d1e4da23114bf4f329d9a76014ae3dd8d7803bdf"
+  },
+  {
+    "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/LocalRetirementCoordinatorTest.kt",
+    "bytes": 73805,
+    "sha256": "afd31b30ec8744dc635f6775cb843ca6bcd4ea7a5885ee6b0e99d0aae29deb40"
+  },
+  {
+    "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/PlannedStateActivationInspectionTest.kt",
+    "bytes": 27140,
+    "sha256": "e5f79408213a5602a46bcdb6b5e05087e30d71fd2847608366cf31feca9b1cce"
+  },
+  {
+    "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/PlannedStateActivationRecoveryTest.kt",
+    "bytes": 53063,
+    "sha256": "81bdf2eb63b7c354c6f7b54a585107733f30c72d2af21b580c41492009a2b4ae"
+  },
+  {
+    "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/PlannedStateActivationTest.kt",
+    "bytes": 33430,
+    "sha256": "4ffa124b22bb1b8ebde14029f03bfa94affb7841ae2d273ece1fa5af69926e42"
+  },
+  {
+    "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/PlannedStateBindingAbortTest.kt",
+    "bytes": 22251,
+    "sha256": "bda31a64965a583b704b27d520436c6532d220928244907dffcffafcb44ef2aa"
+  },
+  {
+    "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/PlannedStateBindingTest.kt",
+    "bytes": 25681,
+    "sha256": "e6b7cb2ddefeed07e7d21ed81ac37ef90a84dd99cd7bb020cf83e9452bdeb317"
+  },
+  {
+    "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/PrivateSessionRuntimeTest.kt",
+    "bytes": 172284,
+    "sha256": "d0e230184c5450f9a41b897b3e5ae63a82cb4e281a3f873257dd6bec6963e05a"
+  },
+  {
+    "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/SessionControlStoreTest.kt",
+    "bytes": 16100,
+    "sha256": "15a56fe1433a32bfcc9d9b19f2309d4ca6cb21cde56db685b4b262ead0a0b236"
+  },
+  {
+    "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/SessionSetupJournalTestFixtures.kt",
+    "bytes": 1899,
+    "sha256": "153f22aa4796905424bd9c520f37fe528cf0a75843b6e11919967e350dfc7c25"
+  },
+  {
+    "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/SessionWorkRegistryStorageTest.kt",
+    "bytes": 28772,
+    "sha256": "fdc2e0d600ca21166b9bb219d0d1f7c4eb707e1f975946e9debb5622ada59350"
+  },
+  {
+    "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/SessionWorkStoreTest.kt",
+    "bytes": 15796,
+    "sha256": "2cb6fefc88b4729dc77e5f04a5a19114216977d07080baad19d78979b52287da"
+  },
+  {
+    "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/StateActivationPlanStorageCodecTest.kt",
+    "bytes": 6859,
+    "sha256": "8db64056ff9962914f8a1fae7c164aed3bdb6068fba7b900b344b72f01b31ae0"
+  },
+  {
+    "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/StateActivationRecoveryOwnerTest.kt",
+    "bytes": 33467,
+    "sha256": "54583989cfc39e7b27e8398b9bfca0c82942538698a15a00306668446d668e11"
+  },
+  {
+    "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/StateRecordInspectionTest.kt",
+    "bytes": 25067,
+    "sha256": "64add197b321782c4916d0a1fc3d5c7be5f77a63ca10143e42dd080c63cabab7"
+  },
+  {
+    "path": "shared/storage/src/jvmTest/kotlin/com/feedme/storage/WorkOriginPlanAuthenticationTest.kt",
+    "bytes": 23372,
+    "sha256": "d103c781be68c45251edb15429bc015614eccb8257485efac92d56d91a347e9e"
+  },
+  {
+    "path": "shared/sync/build.gradle.kts",
+    "bytes": 916,
+    "sha256": "84c1539e3e163dd013d90b563174392b5da70339494edd3aeb95b7e0df806baa"
+  },
+  {
+    "path": "shared/sync/src/commonMain/kotlin/com/feedme/sync/CommandModels.kt",
+    "bytes": 4926,
+    "sha256": "80d9af3189c9c59f814ab89f08d3b2fa6c1c06026c4090404ad3b569777db7d7"
+  },
+  {
+    "path": "shared/sync/src/commonMain/kotlin/com/feedme/sync/CommandPolicy.kt",
+    "bytes": 2823,
+    "sha256": "28d784a980b892303c90481ce9fb82f015662fc79e7c298223e3e1dc9f324c66"
+  },
+  {
+    "path": "shared/sync/src/commonMain/kotlin/com/feedme/sync/DurableCommandQueue.kt",
+    "bytes": 35678,
+    "sha256": "263ad8f8daeeb0c4196f876bcbc6a377d01869fecab77196675310480aab7399"
+  },
+  {
+    "path": "shared/sync/src/commonMain/kotlin/com/feedme/sync/JournalCodec.kt",
+    "bytes": 13050,
+    "sha256": "2f905f4b7139cbdf3a68c71da849f581e454fe9a01de7697b9891b2de8d23c4d"
+  },
+  {
+    "path": "shared/sync/src/commonMain/kotlin/com/feedme/sync/ProcessCommandClaims.kt",
+    "bytes": 1247,
+    "sha256": "9588b436914ece6b3941fa47c43ada991ab5f01969a7ce28deab392e80e352a1"
+  },
+  {
+    "path": "shared/sync/src/commonMain/kotlin/com/feedme/sync/RetrySeconds.kt",
+    "bytes": 1346,
+    "sha256": "1c093a61bf7f22e3fa6e73ff06df937bfc31b05c1fb911b7ed760bb2cbb704cd"
+  },
+  {
+    "path": "shared/sync/src/commonTest/kotlin/com/feedme/sync/DurableCommandQueueTest.kt",
+    "bytes": 58861,
+    "sha256": "0c8a7858b5b15712303b28d4c31863b1fbcf5b741a40b9de1e04b9e572bbf4d5"
+  },
+  {
+    "path": "shared/sync/src/commonTest/kotlin/com/feedme/sync/JournalCodecTest.kt",
+    "bytes": 18365,
+    "sha256": "84404e2e9809be1f70201e01739c48d5474a1486dd7f282163cfbfc4b3e0a10f"
+  },
+  {
+    "path": "shared/sync/src/commonTest/kotlin/com/feedme/sync/RetrySecondsTest.kt",
+    "bytes": 1477,
+    "sha256": "b965468d4235ec6b92ab8a5213c97ab30928f2e9b409a7e1b0cf931554b3a206"
+  },
+  {
+    "path": "shared/sync/src/commonTest/kotlin/com/feedme/sync/TargetedAutomaticDispatchTest.kt",
+    "bytes": 25848,
+    "sha256": "8880196fe1a89111e4916423e4d3b4ad26024afeb15be94507d4225bce987c32"
+  },
+  {
+    "path": "shared/transport/build.gradle.kts",
+    "bytes": 1176,
+    "sha256": "39783f03ff6362742461907903aa17b50dc1b76470b7a23f5d614153dbc10c0f"
+  },
+  {
+    "path": "shared/transport/src/androidMain/kotlin/com/feedme/transport/PlatformHttpClient.kt",
+    "bytes": 4135,
+    "sha256": "92c28065156a42b790081dc45b5e3f9c771968937334a6c50bc149d9eefd18f1"
+  },
+  {
+    "path": "shared/transport/src/commonMain/kotlin/com/feedme/transport/ApiEndpoint.kt",
+    "bytes": 1506,
+    "sha256": "e1b9d70288fceda0bd8fd179e683e0f17d21065f25f6b360ee7a6f744a6e12ac"
+  },
+  {
+    "path": "shared/transport/src/commonMain/kotlin/com/feedme/transport/FeedMeTransport.kt",
+    "bytes": 7629,
+    "sha256": "aea4cbc2a9e5e657b519591342b9bc5f2ecb4215094d2cf41bff1be1cf5bbdb4"
+  },
+  {
+    "path": "shared/transport/src/commonMain/kotlin/com/feedme/transport/HttpExchange.kt",
+    "bytes": 5956,
+    "sha256": "8fffaa06695d880e4282ec2d0bae5b0df61c1b152ffccc665c9319778be9cf07"
+  },
+  {
+    "path": "shared/transport/src/commonMain/kotlin/com/feedme/transport/MobileRequestValidator.kt",
+    "bytes": 1352,
+    "sha256": "bc601b612cdaeb06b9357dd4c125709878861f1e3ae9f6b519b6221cd7cf0fb9"
+  },
+  {
+    "path": "shared/transport/src/commonMain/kotlin/com/feedme/transport/RequestPreparation.kt",
+    "bytes": 12339,
+    "sha256": "cd3eb35072f9728f7ececa16508f2c0b53a2122dcbd85d139ce8e118fc0a567b"
+  },
+  {
+    "path": "shared/transport/src/commonTest/kotlin/com/feedme/transport/ContractTransportTest.kt",
+    "bytes": 10198,
+    "sha256": "70a4c3a53a2bc1939ac49bc0c0b6ebb19cc54987864d542a9002eb4ea90d5517"
+  },
+  {
+    "path": "shared/transport/src/commonTest/kotlin/com/feedme/transport/FeedMeTransportTest.kt",
+    "bytes": 12445,
+    "sha256": "35d271d70e6c3f9386ab420b4f109df99005d39b5778a2842a7ce5b411ac4eb3"
+  },
+  {
+    "path": "shared/transport/src/commonTest/kotlin/com/feedme/transport/HttpExchangeTest.kt",
+    "bytes": 6069,
+    "sha256": "1249b086cd879b560f2ca89e6707e9ae615dcf696b1955469cfd95176b4c4d13"
+  },
+  {
+    "path": "shared/transport/src/commonTest/kotlin/com/feedme/transport/MobileRequestValidatorTest.kt",
+    "bytes": 11770,
+    "sha256": "154f94808870d4e6b63f70471d7ad8db43caf5d347b268b8d71167cd1f18a7a7"
+  },
+  {
+    "path": "shared/transport/src/commonTest/kotlin/com/feedme/transport/RequestPreparationTest.kt",
+    "bytes": 15722,
+    "sha256": "ceffc0f99f8459b43792bc4162e4030b545f3e23cd3deb03d3f9da08cd4103f1"
+  },
+  {
+    "path": "shared/transport/src/iosMain/kotlin/com/feedme/transport/PlatformHttpClient.kt",
+    "bytes": 2071,
+    "sha256": "a88bbb1c52f8b92a1a1b63d70b051e31a9282d13db6f851a2f03e7c5e62fdb08"
+  },
+  {
+    "path": "shared/transport/src/jvmMain/kotlin/com/feedme/transport/PlatformHttpClient.kt",
+    "bytes": 4135,
+    "sha256": "92c28065156a42b790081dc45b5e3f9c771968937334a6c50bc149d9eefd18f1"
+  },
+  {
+    "path": "shared/transport/src/jvmTest/kotlin/com/feedme/transport/RealHttpTransportTest.kt",
+    "bytes": 14104,
+    "sha256": "3de851fe5385e3abbb5c245345f24e8561b45b5f5a97568c336352965d2550ea"
+  }
+]

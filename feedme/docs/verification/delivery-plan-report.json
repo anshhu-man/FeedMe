@@ -10,11 +10,12 @@
     "checks": 14
   },
   "tasksByStatus": {
-    "TODO": 48,
+    "TODO": 38,
     "READY": 4,
-    "IN_PROGRESS": 3,
-    "USER_BLOCKED": 8,
-    "DONE": 9
+    "IN_PROGRESS": 8,
+    "USER_BLOCKED": 7,
+    "DEFERRED": 5,
+    "DONE": 10
   },
   "checks": [
     {
@@ -74,6 +75,6 @@
       "passed": true
     }
   ],
-  "verifiedAt": "2026-09-13T19:37:07.718Z",
-  "sourceSha256": "cfde167f6f18a78579746cebf74830ae14c1708d7aa293f7ae5bdb40895b6153"
+  "verifiedAt": "2026-09-14T03:38:51.289Z",
+  "sourceSha256": "f10c6a4d94d067d78f705cb8d1f5575217b7687973efd8f20c2b664c4ed7dbe9"
 }

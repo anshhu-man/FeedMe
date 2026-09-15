@@ -1,0 +1,146 @@
+{
+  "startedAt": "2026-09-14T00:21:36.867Z",
+  "passed": true,
+  "serial": "emulator-5554",
+  "scope": "Nine actual Android retained FeedMeMealFlow/MealFlowExperience/controller tests using public native session factories and encrypted owner-scoped storage. Account verification and transport are explicitly synthetic; no real login, HTTP/catalog, provider, cooking/save/share, iOS or release acceptance. Activity recreation, system Back, native draft persistence, exact original request replay and invalidation are exercised. Not process death, a delayed actual storage acknowledgement or physical storage-fault proof.",
+  "apk": {
+    "path": "shared/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk",
+    "bytes": 27748688,
+    "sha256": "205c715c4fc935b75a31e7feb9d811fbf915f000358904bf0776a58fb7b832ff"
+  },
+  "apkMetadata": {
+    "path": "docs/verification/meal-host/attempts/2026-09-14T00-21-36.867Z/output-metadata.json",
+    "bytes": 421,
+    "sha256": "cee2ae8b5f90978e068be43ebfb0455ae1b2ae6b558bf56b8d72b44296ec3f82"
+  },
+  "source": {
+    "path": "shared/app/src/androidInstrumentedTest/kotlin/com/feedme/app/mealflow/AndroidMealFlowHostTest.kt",
+    "bytes": 19404,
+    "sha256": "66cb44d1ca239b83885dff241aa319a072a663f86312eecc807bb78b3b66a557"
+  },
+  "attemptDirectory": "docs/verification/meal-host/attempts/2026-09-14T00-21-36.867Z",
+  "screenshots": [
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-14T00-21-36.867Z/dirty-back.png",
+      "bytes": 128080,
+      "sha256": "c6f9df454f4d27810f3540b62cc2dd6a654e921c08b6ce3392a0c8b151c8282b"
+    },
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-14T00-21-36.867Z/recommendations.png",
+      "bytes": 133329,
+      "sha256": "26d56af6dbe3585df42c0da44d80dfb638f278a13862999af47e5fe48b2d9c6d"
+    },
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-14T00-21-36.867Z/recipe-exact.png",
+      "bytes": 149362,
+      "sha256": "94a61f12cd45277d4a48e9ef45f35aa909028a079e4f3f97e036c8e4b5f15e92"
+    },
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-14T00-21-36.867Z/unavailable.png",
+      "bytes": 116840,
+      "sha256": "8730543a89363221b985eae66bfe2e5379eab94f0ab1cf13372c106f15147f7a"
+    },
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-14T00-21-36.867Z/preferences-draft.png",
+      "bytes": 135973,
+      "sha256": "e905ace013f4d61c2b12aa59085b4ae29d611b8aed2d92ccf1c228c0d82284f4"
+    },
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-14T00-21-36.867Z/pantry-saved.png",
+      "bytes": 143170,
+      "sha256": "a30cdb21167f1a95a3cea52b91849709960cb067aedbd4c008c8951a99e402ed"
+    }
+  ],
+  "androidApi": "35",
+  "androidAbi": "arm64-v8a",
+  "tests": {
+    "tests": 9,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "identities": [
+    "com.feedme.app.mealflow.AndroidMealFlowHostTest#actualPreferencePageRetainsDraftBlocksPlanningAndSavesOnlyOnExplicitAction",
+    "com.feedme.app.mealflow.AndroidMealFlowHostTest#saveAndBackAcknowledgesExactNativeDraftAndNewOwnerRestoresIt",
+    "com.feedme.app.mealflow.AndroidMealFlowHostTest#actualPlanRecipeAndSystemBackStayOnExactCandidateAcrossRecreation",
+    "com.feedme.app.mealflow.AndroidMealFlowHostTest#invalidatedRealSessionSynchronouslyRedactsAndLatePlanCannotReviveUi",
+    "com.feedme.app.mealflow.AndroidMealFlowHostTest#unknownPlanOutcomeRetainsExactKeyAndBodyUntilExplicitUiRetry",
+    "com.feedme.app.mealflow.AndroidMealFlowHostTest#recreationCancelsActiveUiRequestWithoutRotatingDurableRetryIntent",
+    "com.feedme.app.mealflow.AndroidMealFlowHostTest#dirtyRecommendationSaveReturnsToRequestedDraftInsteadOfExitingJourney",
+    "com.feedme.app.mealflow.AndroidMealFlowHostTest#actualPantryPageSavesRoughReportAndConfirmsRemovalWithoutSelectingMealIngredients",
+    "com.feedme.app.mealflow.AndroidMealFlowHostTest#dirtyPartialTextSurvivesRecreationAndSystemBackDismissesOrDiscards"
+  ],
+  "finishedAt": "2026-09-14T00:23:58.838Z",
+  "evidence": [
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-14T00-21-36.867Z/abi.log",
+      "bytes": 10,
+      "sha256": "7f10c3cd4593d1d6ded27d658e7c05216011c955c200aac551caad0c979d4d90"
+    },
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-14T00-21-36.867Z/api.log",
+      "bytes": 3,
+      "sha256": "90d7ec0f0acef104d8b6252794295f661a0149634868d02a1ae0c358099638f5"
+    },
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-14T00-21-36.867Z/boot.log",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-14T00-21-36.867Z/cleanup.log",
+      "bytes": 22,
+      "sha256": "eab2584c261f5f3e12dbaa6b3dfefd20565c1d48b744712f1b52a2c1ca53a241"
+    },
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-14T00-21-36.867Z/dirty-back.png",
+      "bytes": 128080,
+      "sha256": "c6f9df454f4d27810f3540b62cc2dd6a654e921c08b6ce3392a0c8b151c8282b"
+    },
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-14T00-21-36.867Z/install.log",
+      "bytes": 36,
+      "sha256": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7"
+    },
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-14T00-21-36.867Z/instrumentation.log",
+      "bytes": 6508,
+      "sha256": "4d692d9161f72eaff946e81e31b028d57142271bc82957243d7676b4a19f392b"
+    },
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-14T00-21-36.867Z/output-metadata.json",
+      "bytes": 421,
+      "sha256": "cee2ae8b5f90978e068be43ebfb0455ae1b2ae6b558bf56b8d72b44296ec3f82"
+    },
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-14T00-21-36.867Z/pantry-saved.png",
+      "bytes": 143170,
+      "sha256": "a30cdb21167f1a95a3cea52b91849709960cb067aedbd4c008c8951a99e402ed"
+    },
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-14T00-21-36.867Z/preferences-draft.png",
+      "bytes": 135973,
+      "sha256": "e905ace013f4d61c2b12aa59085b4ae29d611b8aed2d92ccf1c228c0d82284f4"
+    },
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-14T00-21-36.867Z/recipe-exact.png",
+      "bytes": 149362,
+      "sha256": "94a61f12cd45277d4a48e9ef45f35aa909028a079e4f3f97e036c8e4b5f15e92"
+    },
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-14T00-21-36.867Z/recommendations.png",
+      "bytes": 133329,
+      "sha256": "26d56af6dbe3585df42c0da44d80dfb638f278a13862999af47e5fe48b2d9c6d"
+    },
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-14T00-21-36.867Z/runner.log",
+      "bytes": 105,
+      "sha256": "fea4b8e499b021972383b98662d206dd48075388faa6322c01baba312db9466e"
+    },
+    {
+      "path": "docs/verification/meal-host/attempts/2026-09-14T00-21-36.867Z/unavailable.png",
+      "bytes": 116840,
+      "sha256": "8730543a89363221b985eae66bfe2e5379eab94f0ab1cf13372c106f15147f7a"
+    }
+  ]
+}

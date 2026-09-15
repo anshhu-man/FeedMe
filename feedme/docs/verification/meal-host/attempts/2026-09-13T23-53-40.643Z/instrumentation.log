@@ -1,0 +1,461 @@
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowHostTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+com.feedme.app.mealflow.AndroidMealFlowHostTest:
+INSTRUMENTATION_STATUS: test=saveAndBackAcknowledgesExactNativeDraftAndNewOwnerRestoresIt
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowHostTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Acknowledged result required: Failure(reason=STORAGE_FAILURE, retryAfterSeconds=null)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.assertValue(AndroidMealFlowHostTest.kt:71)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.access$assertValue(AndroidMealFlowHostTest.kt:25)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest$withHost$1.invokeSuspend(AndroidMealFlowHostTest.kt:54)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:278)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:101)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:98)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+
+INSTRUMENTATION_STATUS: stream=
+Error in saveAndBackAcknowledgesExactNativeDraftAndNewOwnerRestoresIt(com.feedme.app.mealflow.AndroidMealFlowHostTest):
+java.lang.AssertionError: Acknowledged result required: Failure(reason=STORAGE_FAILURE, retryAfterSeconds=null)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.assertValue(AndroidMealFlowHostTest.kt:71)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.access$assertValue(AndroidMealFlowHostTest.kt:25)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest$withHost$1.invokeSuspend(AndroidMealFlowHostTest.kt:54)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:278)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:101)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:98)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+
+INSTRUMENTATION_STATUS: test=saveAndBackAcknowledgesExactNativeDraftAndNewOwnerRestoresIt
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowHostTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=actualPlanRecipeAndSystemBackStayOnExactCandidateAcrossRecreation
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowHostTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Acknowledged result required: Failure(reason=STORAGE_FAILURE, retryAfterSeconds=null)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.assertValue(AndroidMealFlowHostTest.kt:71)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.access$assertValue(AndroidMealFlowHostTest.kt:25)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest$withHost$1.invokeSuspend(AndroidMealFlowHostTest.kt:54)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:278)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:101)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:98)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+
+INSTRUMENTATION_STATUS: stream=
+Error in actualPlanRecipeAndSystemBackStayOnExactCandidateAcrossRecreation(com.feedme.app.mealflow.AndroidMealFlowHostTest):
+java.lang.AssertionError: Acknowledged result required: Failure(reason=STORAGE_FAILURE, retryAfterSeconds=null)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.assertValue(AndroidMealFlowHostTest.kt:71)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.access$assertValue(AndroidMealFlowHostTest.kt:25)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest$withHost$1.invokeSuspend(AndroidMealFlowHostTest.kt:54)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:278)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:101)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:98)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+
+INSTRUMENTATION_STATUS: test=actualPlanRecipeAndSystemBackStayOnExactCandidateAcrossRecreation
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowHostTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=invalidatedRealSessionSynchronouslyRedactsAndLatePlanCannotReviveUi
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowHostTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Acknowledged result required: Failure(reason=STORAGE_FAILURE, retryAfterSeconds=null)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.assertValue(AndroidMealFlowHostTest.kt:71)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.access$assertValue(AndroidMealFlowHostTest.kt:25)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest$withHost$1.invokeSuspend(AndroidMealFlowHostTest.kt:54)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:278)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:101)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:98)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+
+INSTRUMENTATION_STATUS: stream=
+Error in invalidatedRealSessionSynchronouslyRedactsAndLatePlanCannotReviveUi(com.feedme.app.mealflow.AndroidMealFlowHostTest):
+java.lang.AssertionError: Acknowledged result required: Failure(reason=STORAGE_FAILURE, retryAfterSeconds=null)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.assertValue(AndroidMealFlowHostTest.kt:71)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.access$assertValue(AndroidMealFlowHostTest.kt:25)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest$withHost$1.invokeSuspend(AndroidMealFlowHostTest.kt:54)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:278)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:101)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:98)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+
+INSTRUMENTATION_STATUS: test=invalidatedRealSessionSynchronouslyRedactsAndLatePlanCannotReviveUi
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowHostTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=unknownPlanOutcomeRetainsExactKeyAndBodyUntilExplicitUiRetry
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowHostTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Acknowledged result required: Failure(reason=STORAGE_FAILURE, retryAfterSeconds=null)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.assertValue(AndroidMealFlowHostTest.kt:71)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.access$assertValue(AndroidMealFlowHostTest.kt:25)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest$withHost$1.invokeSuspend(AndroidMealFlowHostTest.kt:54)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:278)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:101)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:98)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+
+INSTRUMENTATION_STATUS: stream=
+Error in unknownPlanOutcomeRetainsExactKeyAndBodyUntilExplicitUiRetry(com.feedme.app.mealflow.AndroidMealFlowHostTest):
+java.lang.AssertionError: Acknowledged result required: Failure(reason=STORAGE_FAILURE, retryAfterSeconds=null)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.assertValue(AndroidMealFlowHostTest.kt:71)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.access$assertValue(AndroidMealFlowHostTest.kt:25)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest$withHost$1.invokeSuspend(AndroidMealFlowHostTest.kt:54)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:278)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:101)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:98)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+
+INSTRUMENTATION_STATUS: test=unknownPlanOutcomeRetainsExactKeyAndBodyUntilExplicitUiRetry
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowHostTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=recreationCancelsActiveUiRequestWithoutRotatingDurableRetryIntent
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowHostTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Acknowledged result required: Failure(reason=STORAGE_FAILURE, retryAfterSeconds=null)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.assertValue(AndroidMealFlowHostTest.kt:71)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.access$assertValue(AndroidMealFlowHostTest.kt:25)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest$withHost$1.invokeSuspend(AndroidMealFlowHostTest.kt:54)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:278)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:101)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:98)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+
+INSTRUMENTATION_STATUS: stream=
+Error in recreationCancelsActiveUiRequestWithoutRotatingDurableRetryIntent(com.feedme.app.mealflow.AndroidMealFlowHostTest):
+java.lang.AssertionError: Acknowledged result required: Failure(reason=STORAGE_FAILURE, retryAfterSeconds=null)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.assertValue(AndroidMealFlowHostTest.kt:71)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.access$assertValue(AndroidMealFlowHostTest.kt:25)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest$withHost$1.invokeSuspend(AndroidMealFlowHostTest.kt:54)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:278)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:101)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:98)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+
+INSTRUMENTATION_STATUS: test=recreationCancelsActiveUiRequestWithoutRotatingDurableRetryIntent
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowHostTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=dirtyPartialTextSurvivesRecreationAndSystemBackDismissesOrDiscards
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowHostTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Acknowledged result required: Failure(reason=STORAGE_FAILURE, retryAfterSeconds=null)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.assertValue(AndroidMealFlowHostTest.kt:71)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.access$assertValue(AndroidMealFlowHostTest.kt:25)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest$withHost$1.invokeSuspend(AndroidMealFlowHostTest.kt:54)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:278)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:101)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:98)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+
+INSTRUMENTATION_STATUS: stream=
+Error in dirtyPartialTextSurvivesRecreationAndSystemBackDismissesOrDiscards(com.feedme.app.mealflow.AndroidMealFlowHostTest):
+java.lang.AssertionError: Acknowledged result required: Failure(reason=STORAGE_FAILURE, retryAfterSeconds=null)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.assertValue(AndroidMealFlowHostTest.kt:71)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.access$assertValue(AndroidMealFlowHostTest.kt:25)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest$withHost$1.invokeSuspend(AndroidMealFlowHostTest.kt:54)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:278)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:101)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:98)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+
+INSTRUMENTATION_STATUS: test=dirtyPartialTextSurvivesRecreationAndSystemBackDismissesOrDiscards
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 0.075
+There were 6 failures:
+1) saveAndBackAcknowledgesExactNativeDraftAndNewOwnerRestoresIt(com.feedme.app.mealflow.AndroidMealFlowHostTest)
+java.lang.AssertionError: Acknowledged result required: Failure(reason=STORAGE_FAILURE, retryAfterSeconds=null)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.assertValue(AndroidMealFlowHostTest.kt:71)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.access$assertValue(AndroidMealFlowHostTest.kt:25)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest$withHost$1.invokeSuspend(AndroidMealFlowHostTest.kt:54)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:278)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:101)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:98)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+2) actualPlanRecipeAndSystemBackStayOnExactCandidateAcrossRecreation(com.feedme.app.mealflow.AndroidMealFlowHostTest)
+java.lang.AssertionError: Acknowledged result required: Failure(reason=STORAGE_FAILURE, retryAfterSeconds=null)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.assertValue(AndroidMealFlowHostTest.kt:71)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.access$assertValue(AndroidMealFlowHostTest.kt:25)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest$withHost$1.invokeSuspend(AndroidMealFlowHostTest.kt:54)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:278)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:101)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:98)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+3) invalidatedRealSessionSynchronouslyRedactsAndLatePlanCannotReviveUi(com.feedme.app.mealflow.AndroidMealFlowHostTest)
+java.lang.AssertionError: Acknowledged result required: Failure(reason=STORAGE_FAILURE, retryAfterSeconds=null)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.assertValue(AndroidMealFlowHostTest.kt:71)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.access$assertValue(AndroidMealFlowHostTest.kt:25)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest$withHost$1.invokeSuspend(AndroidMealFlowHostTest.kt:54)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:278)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:101)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:98)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+4) unknownPlanOutcomeRetainsExactKeyAndBodyUntilExplicitUiRetry(com.feedme.app.mealflow.AndroidMealFlowHostTest)
+java.lang.AssertionError: Acknowledged result required: Failure(reason=STORAGE_FAILURE, retryAfterSeconds=null)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.assertValue(AndroidMealFlowHostTest.kt:71)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.access$assertValue(AndroidMealFlowHostTest.kt:25)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest$withHost$1.invokeSuspend(AndroidMealFlowHostTest.kt:54)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:278)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:101)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:98)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+5) recreationCancelsActiveUiRequestWithoutRotatingDurableRetryIntent(com.feedme.app.mealflow.AndroidMealFlowHostTest)
+java.lang.AssertionError: Acknowledged result required: Failure(reason=STORAGE_FAILURE, retryAfterSeconds=null)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.assertValue(AndroidMealFlowHostTest.kt:71)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.access$assertValue(AndroidMealFlowHostTest.kt:25)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest$withHost$1.invokeSuspend(AndroidMealFlowHostTest.kt:54)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:278)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:101)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:98)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+6) dirtyPartialTextSurvivesRecreationAndSystemBackDismissesOrDiscards(com.feedme.app.mealflow.AndroidMealFlowHostTest)
+java.lang.AssertionError: Acknowledged result required: Failure(reason=STORAGE_FAILURE, retryAfterSeconds=null)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.assertValue(AndroidMealFlowHostTest.kt:71)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest.access$assertValue(AndroidMealFlowHostTest.kt:25)
+	at com.feedme.app.mealflow.AndroidMealFlowHostTest$withHost$1.invokeSuspend(AndroidMealFlowHostTest.kt:54)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:278)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:101)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:98)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+
+FAILURES!!!
+Tests run: 6,  Failures: 6
+
+
+INSTRUMENTATION_CODE: -1

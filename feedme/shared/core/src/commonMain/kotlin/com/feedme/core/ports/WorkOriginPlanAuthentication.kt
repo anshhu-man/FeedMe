@@ -12,7 +12,7 @@ package com.feedme.core.ports
  * a domain-separated predecessor MAC followed by a proposal MAC authenticating that predecessor
  * MAC. Persist only as part of the opaque plan in independent encrypted session control.
  */
-interface WorkOriginPlanAuthentication {
+interface WorkOriginPlanAuthentication : WorkOriginPlanVerification {
     /** Read-only. Exact-current record comparison and signing share one storage read transaction. */
     suspend fun signOriginPlan(expected: SessionControlRecord, proposal: PrivateBytes): PortResult<PrivateBytes>
 
@@ -20,8 +20,8 @@ interface WorkOriginPlanAuthentication {
      * Read-only proof authentication against this handle's still-current work owner. The original
      * predecessor need not remain selected; this operation alone grants no replay permission.
      */
-    suspend fun verifyOriginPlan(expectedRevision: Long, proposal: PrivateBytes, proof: PrivateBytes): PortResult<Unit>
+    override suspend fun verifyOriginPlan(expectedRevision: Long, proposal: PrivateBytes, proof: PrivateBytes): PortResult<Unit>
 
     /** Also requires [expected] to be the exact current record and match the authenticated predecessor. */
-    suspend fun verifyOriginPredecessor(expected: SessionControlRecord, proposal: PrivateBytes, proof: PrivateBytes): PortResult<Unit>
+    override suspend fun verifyOriginPredecessor(expected: SessionControlRecord, proposal: PrivateBytes, proof: PrivateBytes): PortResult<Unit>
 }

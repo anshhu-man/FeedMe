@@ -1,0 +1,4 @@
+instrumentation:com.feedme.app.test/androidx.test.runner.AndroidJUnitRunner (target=com.feedme.app.test)
+instrumentation:com.feedme.development.progress.test/androidx.test.runner.AndroidJUnitRunner (target=com.feedme.development.progress)
+instrumentation:com.feedme.mealflow.test/androidx.test.runner.AndroidJUnitRunner (target=com.feedme.mealflow.test)
+instrumentation:com.feedme.session.test/androidx.test.runner.AndroidJUnitRunner (target=com.feedme.session.test)

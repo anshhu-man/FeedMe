@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.http.KitchenHttpInputTest" tests="21" skipped="0" failures="0" errors="0" timestamp="2026-09-14T01:31:51.138Z" hostname="ansachars-MacBook-Pro.local" time="0.129">
+  <properties/>
+  <testcase name="sixCanonicalOperationsKeepTheirActualMethodsAndMutationControls" classname="com.feedme.server.http.KitchenHttpInputTest" time="0.05"/>
+  <testcase name="verifiedAccountAndGuestMustMatchEnvironmentAndActualDeviceBinding" classname="com.feedme.server.http.KitchenHttpInputTest" time="0.04"/>
+  <testcase name="verifierFailuresAreSanitizedWithExactRetryMetadataAndNoStoreCalls" classname="com.feedme.server.http.KitchenHttpInputTest" time="0.004"/>
+  <testcase name="bearerIsRequiredButDevicePresenceDoesNotClassifyTheToken" classname="com.feedme.server.http.KitchenHttpInputTest" time="0.001"/>
+  <testcase name="exactDecimalAndIntegerLexemesReachCommandProjectionWithoutRounding" classname="com.feedme.server.http.KitchenHttpInputTest" time="0.001"/>
+  <testcase name="responseSchemasStatusesEtagsAndConfiguredBoundsAreCheckedExactly" classname="com.feedme.server.http.KitchenHttpInputTest" time="0.0"/>
+  <testcase name="paginationIsUniqueBoundedAndOnlyOnCanonicalReadOperations" classname="com.feedme.server.http.KitchenHttpInputTest" time="0.001"/>
+  <testcase name="searchKeepsAbsentEmptyAndUnicodeQueriesDistinctWithoutExceedingScalarLimit" classname="com.feedme.server.http.KitchenHttpInputTest" time="0.001"/>
+  <testcase name="readsCannotAcquireCommandKeysOrUnspecifiedConditionalResponses" classname="com.feedme.server.http.KitchenHttpInputTest" time="0.001"/>
+  <testcase name="uuidPathsDeviceAndKeysRejectShorthandOrInjectedSegments" classname="com.feedme.server.http.KitchenHttpInputTest" time="0.002"/>
+  <testcase name="duplicateAndFoldedSecurityOrFramingHeadersAreRejected" classname="com.feedme.server.http.KitchenHttpInputTest" time="0.001"/>
+  <testcase name="metadataDiagnosticsRedactTokenQueryAndPrivateIdentifiers" classname="com.feedme.server.http.KitchenHttpInputTest" time="0.001"/>
+  <testcase name="collectionReadsAndDeletionNeverInventEtagOrEmptyJsonBody" classname="com.feedme.server.http.KitchenHttpInputTest" time="0.0"/>
+  <testcase name="onlyTwoMutationsRequireQuotedIntegerIfMatchAndMissingIs428" classname="com.feedme.server.http.KitchenHttpInputTest" time="0.001"/>
+  <testcase name="cancellationCannotBeSwallowedByVerifierIntoAPrincipal" classname="com.feedme.server.http.KitchenHttpInputTest" time="0.007"/>
+  <testcase name="readAndDeleteBodiesMustBeGenuinelyAbsent" classname="com.feedme.server.http.KitchenHttpInputTest" time="0.007"/>
+  <testcase name="duplicateMalformedUnicodeAndInvalidUtf8FailBeforeJsonProjection" classname="com.feedme.server.http.KitchenHttpInputTest" time="0.001"/>
+  <testcase name="streamingEnforcesActualBytesAndDeclaredLengthAtTheExactLimit" classname="com.feedme.server.http.KitchenHttpInputTest" time="0.007"/>
+  <testcase name="mediaCharsetAndCompressionAreNeverGuessed" classname="com.feedme.server.http.KitchenHttpInputTest" time="0.0"/>
+  <testcase name="schemasRejectPrivateOwnerFieldsUnknownSelectionsAndMissingPantryInputs" classname="com.feedme.server.http.KitchenHttpInputTest" time="0.0"/>
+  <testcase name="framingRejectsLengthOverflowAmbiguityAndTransferEncodingConflicts" classname="com.feedme.server.http.KitchenHttpInputTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

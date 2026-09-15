@@ -17,10 +17,19 @@ class MobileRequestValidator internal constructor(
     private val preparation: RequestPreparation,
     private val bodies: CanonicalBodyValidator,
 ) {
-    constructor(catalog: ContractCatalog = ContractCatalog.bundled()) :
+    constructor() : this(bundledPreparation, CanonicalBodyValidator.bundled())
+
+    constructor(catalog: ContractCatalog) :
         this(RequestPreparation(catalog), CanonicalBodyValidator.bundled(catalog))
 
     fun accepts(call: ApiCall, principal: PrincipalClass): Boolean =
         preparation.acceptsIntent(call, principal) && bodies.validateRequest(call.operationId,
             call.body?.copyForCodec(), if (call.body == null) null else "application/json") == ContractValidationResult.Valid
+
+    private companion object {
+        // This privately owned metadata is used only by acceptsIntent's Boolean projection.
+        // No PreparedCall/OperationDefinition escapes; each call still gets fresh snapshots
+        // and its own ParameterBudget. Explicit catalogs do not use this shared preparation.
+        val bundledPreparation: RequestPreparation by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { RequestPreparation() }
+    }
 }

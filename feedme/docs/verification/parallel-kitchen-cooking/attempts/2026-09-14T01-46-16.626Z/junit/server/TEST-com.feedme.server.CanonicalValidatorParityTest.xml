@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.CanonicalValidatorParityTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-09-14T01:46:26.475Z" hostname="ansachars-MacBook-Pro.local" time="3.769">
+  <properties/>
+  <testcase name="everyConditionalAndAnyOfBranchMatchesTheOracleIncludingCombinedSelectors" classname="com.feedme.server.CanonicalValidatorParityTest" time="0.67"/>
+  <testcase name="reviewedFormatRegressionsHaveExplicitExpectationsAtBothProductionBoundaries" classname="com.feedme.server.CanonicalValidatorParityTest" time="0.012"/>
+  <testcase name="all149CanonicalCasesPreserveTheirOriginalBytesAndOracleResult" classname="com.feedme.server.CanonicalValidatorParityTest" time="0.044"/>
+  <testcase name="everyOperationRequestAndDeclaredResponseUsesItsCanonicalBodyAndMediaMapping" classname="com.feedme.server.CanonicalValidatorParityTest" time="1.775"/>
+  <testcase name="exactRawNumbersUnicodeDuplicatesSyntaxResourceBoundsAndMediaHaveParity" classname="com.feedme.server.CanonicalValidatorParityTest" time="0.049"/>
+  <testcase name="everyNamedSchemaHasAnOracleValidBaselineAndSystematicConstraintMutations" classname="com.feedme.server.CanonicalValidatorParityTest" time="1.209"/>
+  <testcase name="actualHealthDateTimeAndProblemUriFieldsMatchTheAuthoritativeFormatImplementation" classname="com.feedme.server.CanonicalValidatorParityTest" time="0.008"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+]]></system-err>
+</testsuite>

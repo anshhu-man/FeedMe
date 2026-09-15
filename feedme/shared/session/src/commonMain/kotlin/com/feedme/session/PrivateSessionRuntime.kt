@@ -56,6 +56,7 @@ class PrivateSessionRuntime private constructor(
     private val configurationBinding: String,
     private val verifier: NativeSessionVerifier,
     private val domainExecution: NativeWorkExecutionPolicy,
+    private val nativeCancellation: NativeWorkCancellationPort,
     private val ids: NativeWorkIdSource,
 ) {
     private val mutex = Mutex()
@@ -72,11 +73,18 @@ class PrivateSessionRuntime private constructor(
     private val setupProposalOwner = Any()
     private val compositeSetupProposalOwner = Any()
     private var compositeAbort: Pair<Any, CompositeSetupAbortCoordinator>? = null
+    private var compositionRegistration: SessionRuntimeRegistration? = null
 
     suspend fun phase(): PrivateSessionPhase = withContext(dispatcher) { phase }
     suspend fun currentAccess(): PrivateSessionAccess? = withContext(dispatcher) {
-        active?.takeIf { phase == PrivateSessionPhase.ACTIVE && boundary.isCurrent(it.lease) }
+        active?.takeIf { phase == PrivateSessionPhase.ACTIVE && boundary.isCurrent(it.lease) && compositionCurrent() }
     }
+
+    /** Identity-only composition check. Not authentication, ownership or proof of current access. */
+    fun usesExecutionPolicy(policy: NativeWorkExecutionPolicy): Boolean = domainExecution === policy
+
+    /** Identity-only composition check. Not authentication or proof of current access. */
+    fun usesCancellationPort(port: NativeWorkCancellationPort): Boolean = nativeCancellation === port
 
     /**
      * Read-only, UI-safe diagnostics of already-open resources. Never initializes, calls a
@@ -471,7 +479,7 @@ class PrivateSessionRuntime private constructor(
 
     /** No implicit logout; retain durable state for a future explicitly verified restore. */
     suspend fun close(): PortResult<Unit> = withContext(NonCancellable + dispatcher) {
-        if (phase == PrivateSessionPhase.CLOSED) return@withContext PortResult.Value(Unit)
+        if (phase == PrivateSessionPhase.CLOSED && compositionRegistration == null) return@withContext PortResult.Value(Unit)
         val lease = active?.lease ?: attempt?.lease
         lifecycleGeneration = Any()
         attempt = null; active = null; composingScope = null
@@ -479,7 +487,14 @@ class PrivateSessionRuntime private constructor(
         compositeAbort = null
         lease?.let { if (boundary.isCurrent(it)) boundary.clear() }
         discardLiveSetup()
-        work.close()
+        val closed = work.close()
+        if (closed is PortResult.Failure) return@withContext closed
+        compositionRegistration?.let { registration ->
+            val released = SessionCompositions.releaseRuntime(registration)
+            if (released is PortResult.Failure) return@withContext released
+            compositionRegistration = null
+        }
+        PortResult.Value(Unit)
     }
 
     private suspend fun publish(token: RuntimeAttempt, credential: CredentialSnapshot, lease: SessionLease,
@@ -646,17 +661,19 @@ class PrivateSessionRuntime private constructor(
     }
 
     private fun checkAttempt(token: RuntimeAttempt, lease: SessionLease? = token.lease) {
+        requireComposition()
         if (attempt !== token || phase == PrivateSessionPhase.CLOSED ||
             (if (lease == null) boundary.current() != null else !boundary.isCurrent(lease))) fail(FailureReason.STALE_SESSION)
     }
     private fun notClosed() { if (phase == PrivateSessionPhase.CLOSED) fail(FailureReason.STORAGE_FAILURE) }
     private fun requireInspectable() {
+        requireComposition()
         notClosed()
         if (phase !in setOf(PrivateSessionPhase.STARTUP, PrivateSessionPhase.SIGNED_OUT,
                 PrivateSessionPhase.RESTORE_REQUIRED, PrivateSessionPhase.RECOVERY_REQUIRED) || boundary.current() != null)
             fail(FailureReason.CONFLICT)
     }
-    private fun isActive(access: PrivateSessionAccess) = phase == PrivateSessionPhase.ACTIVE && active === access && boundary.isCurrent(access.lease)
+    private fun isActive(access: PrivateSessionAccess) = phase == PrivateSessionPhase.ACTIVE && active === access && boundary.isCurrent(access.lease) && compositionCurrent()
     private fun requireActive(access: PrivateSessionAccess) { if (!isActive(access)) fail(FailureReason.STALE_SESSION) }
 
     private inner class LeasedPrivateStore(private val delegate: PrivateStateStore, private val lease: SessionLease) : PrivateStateStore {
@@ -702,11 +719,19 @@ class PrivateSessionRuntime private constructor(
     private suspend fun <T> owned(action: suspend () -> T): PortResult<T> = withContext(dispatcher) {
         try {
             if (phase == PrivateSessionPhase.CLOSED) fail(FailureReason.STORAGE_FAILURE)
-            PortResult.Value(action())
+            requireComposition()
+            val result = action()
+            requireComposition()
+            PortResult.Value(result)
         } catch (cancelled: CancellationException) { throw cancelled }
         catch (failure: SessionRuntimeFailure) { PortResult.Failure(failure.reason) }
         catch (_: Exception) { PortResult.Failure(FailureReason.STORAGE_FAILURE) }
     }
+
+    private fun compositionCurrent(): Boolean = compositionRegistration?.let {
+        SessionCompositions.checkRuntime(it) is PortResult.Value
+    } == true
+    private fun requireComposition() { if (!compositionCurrent()) fail(FailureReason.STALE_SESSION) }
 
     companion object {
         private val BINDING_KEY = RecordKey("session-activation", "binding-v1")
@@ -716,18 +741,48 @@ class PrivateSessionRuntime private constructor(
             data: EncryptedStateDatabase, credentials: IncarnationCredentialStore,
             boundary: SessionBoundary, dispatcher: CoroutineDispatcher, configurationBinding: String,
             verifier: NativeSessionVerifier, cancellation: NativeWorkCancellationPort,
-            ids: NativeWorkIdSource, domainExecution: NativeWorkExecutionPolicy): PortResult<PrivateSessionRuntime> {
+            ids: NativeWorkIdSource, domainExecution: NativeWorkExecutionPolicy): PortResult<PrivateSessionRuntime> =
+            openInternal(control, workControl, data, credentials, boundary, dispatcher, configurationBinding,
+                verifier, cancellation, ids, domainExecution, null)
+
+        /**
+         * Production composition reserves BEFORE opening these supplied native stores. This
+         * runtime borrows them: close it and every native owner successfully before releasing
+         * the caller-retained reservation. The legacy open cannot bypass a registered app root.
+         */
+        suspend fun openReserved(reservation: SessionCompositionReservation,
+            control: SessionControlStore, workControl: SessionControlStore,
+            data: EncryptedStateDatabase, credentials: IncarnationCredentialStore,
+            verifier: NativeSessionVerifier, cancellation: NativeWorkCancellationPort,
+            ids: NativeWorkIdSource, domainExecution: NativeWorkExecutionPolicy): PortResult<PrivateSessionRuntime> =
+            openInternal(control, workControl, data, credentials, reservation.root.boundary,
+                reservation.root.dispatcher, reservation.root.configuration, verifier, cancellation, ids,
+                domainExecution, reservation)
+
+        private suspend fun openInternal(control: SessionControlStore, workControl: SessionControlStore,
+            data: EncryptedStateDatabase, credentials: IncarnationCredentialStore,
+            boundary: SessionBoundary, dispatcher: CoroutineDispatcher, configurationBinding: String,
+            verifier: NativeSessionVerifier, cancellation: NativeWorkCancellationPort,
+            ids: NativeWorkIdSource, domainExecution: NativeWorkExecutionPolicy,
+            reservation: SessionCompositionReservation?): PortResult<PrivateSessionRuntime> {
             if (!configurationBinding.matches(Regex("[0-9a-f]{64}")) || control === workControl) return PortResult.Failure(FailureReason.INVALID_DATA)
             var opened: SessionWorkRegistry? = null
+            var registration: SessionRuntimeRegistration? = null
+            var delivered = false
             try {
-                return withContext(dispatcher) {
+                val result = withContext(dispatcher) {
                     if (boundary.current() != null) return@withContext PortResult.Failure(FailureReason.CONFLICT)
-                    val runtime = PrivateSessionRuntime(control, data, credentials, boundary, dispatcher, configurationBinding, verifier, domainExecution, ids)
+                    val runtime = PrivateSessionRuntime(control, data, credentials, boundary, dispatcher, configurationBinding, verifier, domainExecution, cancellation, ids)
+                    when (val admitted = SessionCompositions.admitRuntime(boundary, runtime, reservation)) {
+                        is PortResult.Failure -> return@withContext admitted
+                        is PortResult.Value -> { registration = admitted.value; runtime.compositionRegistration = admitted.value }
+                    }
                     when (val index = SessionWorkRegistry.open(workControl, boundary, dispatcher, cancellation, ids,
                         NativeWorkAdmissionPolicy(runtime::workAdmission), NativeWorkExecutionPolicy(runtime::workExecution))) {
                         is PortResult.Failure -> index
                         is PortResult.Value -> {
                             opened = index.value
+                            runtime.requireComposition()
                             if (boundary.current() != null) {
                                 index.value.close()
                                 return@withContext PortResult.Failure(FailureReason.CONFLICT)
@@ -738,12 +793,18 @@ class PrivateSessionRuntime private constructor(
                         }
                     }
                 }
+                currentCoroutineContext().ensureActive()
+                delivered = result is PortResult.Value
+                return result
             } catch (cancelled: CancellationException) {
-                withContext(NonCancellable + dispatcher) { opened?.close() }
                 throw cancelled
             } catch (_: Exception) {
-                withContext(NonCancellable + dispatcher) { opened?.close() }
                 return PortResult.Failure(FailureReason.STORAGE_FAILURE)
+            } finally {
+                if (!delivered) withContext(NonCancellable + dispatcher) {
+                    val closed = opened?.close() ?: PortResult.Value(Unit)
+                    if (closed is PortResult.Value) registration?.let { SessionCompositions.releaseRuntimeAfterClose(it) }
+                }
             }
         }
 

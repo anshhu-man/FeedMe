@@ -1,0 +1,114 @@
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowPresentationTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+com.feedme.app.mealflow.AndroidMealFlowPresentationTest:
+INSTRUMENTATION_STATUS: test=ingredientSelectionChangesOnlyTheExplicitForm
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowPresentationTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Expected visible UI text: Synthetic cucumber; observed synthetic fixture: SYNTHETIC UI TEST · not a production recipe | Exclude this ingredient | Saved preferences stay in force | Matching also applies your saved hard exclusions. Removing an explicit exclusion here does not remove a saved preference. | Check pantry reports | 03 | Let’s find your fit. | Refresh preferences and pantry | Save draft on this device | Find a meal  ↗ | Manual matching only. Text interpretation, full pantry editing and preference editing are separate integrations. | Made for real life. No perfect-kitchen energy required.
+	at org.junit.Assert.fail(Assert.java:89)
+	at com.feedme.app.mealflow.AndroidMealFlowPresentationTest.waitText(AndroidMealFlowPresentationTest.kt:42)
+	at com.feedme.app.mealflow.AndroidMealFlowPresentationTest.click(AndroidMealFlowPresentationTest.kt:45)
+	at com.feedme.app.mealflow.AndroidMealFlowPresentationTest.ingredientSelectionChangesOnlyTheExplicitForm(AndroidMealFlowPresentationTest.kt:88)
+
+INSTRUMENTATION_STATUS: stream=
+Error in ingredientSelectionChangesOnlyTheExplicitForm(com.feedme.app.mealflow.AndroidMealFlowPresentationTest):
+java.lang.AssertionError: Expected visible UI text: Synthetic cucumber; observed synthetic fixture: SYNTHETIC UI TEST · not a production recipe | Exclude this ingredient | Saved preferences stay in force | Matching also applies your saved hard exclusions. Removing an explicit exclusion here does not remove a saved preference. | Check pantry reports | 03 | Let’s find your fit. | Refresh preferences and pantry | Save draft on this device | Find a meal  ↗ | Manual matching only. Text interpretation, full pantry editing and preference editing are separate integrations. | Made for real life. No perfect-kitchen energy required.
+	at org.junit.Assert.fail(Assert.java:89)
+	at com.feedme.app.mealflow.AndroidMealFlowPresentationTest.waitText(AndroidMealFlowPresentationTest.kt:42)
+	at com.feedme.app.mealflow.AndroidMealFlowPresentationTest.click(AndroidMealFlowPresentationTest.kt:45)
+	at com.feedme.app.mealflow.AndroidMealFlowPresentationTest.ingredientSelectionChangesOnlyTheExplicitForm(AndroidMealFlowPresentationTest.kt:88)
+
+INSTRUMENTATION_STATUS: test=ingredientSelectionChangesOnlyTheExplicitForm
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowPresentationTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=unavailableViewDoesNotExposeRetainedFixtureDetails
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowPresentationTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unavailableViewDoesNotExposeRetainedFixtureDetails
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowPresentationTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=requestShowsApprovedVisualControlsAndExplicitDraftAction
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowPresentationTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=requestShowsApprovedVisualControlsAndExplicitDraftAction
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowPresentationTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=uncertainRequestShowsOriginalRetryWithoutImplicitNewCommand
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowPresentationTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=uncertainRequestShowsOriginalRetryWithoutImplicitNewCommand
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowPresentationTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=recipeRendersExactAmountsAndMandatorySteps
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowPresentationTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=recipeRendersExactAmountsAndMandatorySteps
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowPresentationTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=recommendationsRouteRecipeExactlyOnceWithoutCookingOrSaving
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowPresentationTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=recommendationsRouteRecipeExactlyOnceWithoutCookingOrSaving
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 27.502
+There was 1 failure:
+1) ingredientSelectionChangesOnlyTheExplicitForm(com.feedme.app.mealflow.AndroidMealFlowPresentationTest)
+java.lang.AssertionError: Expected visible UI text: Synthetic cucumber; observed synthetic fixture: SYNTHETIC UI TEST · not a production recipe | Exclude this ingredient | Saved preferences stay in force | Matching also applies your saved hard exclusions. Removing an explicit exclusion here does not remove a saved preference. | Check pantry reports | 03 | Let’s find your fit. | Refresh preferences and pantry | Save draft on this device | Find a meal  ↗ | Manual matching only. Text interpretation, full pantry editing and preference editing are separate integrations. | Made for real life. No perfect-kitchen energy required.
+	at org.junit.Assert.fail(Assert.java:89)
+	at com.feedme.app.mealflow.AndroidMealFlowPresentationTest.waitText(AndroidMealFlowPresentationTest.kt:42)
+	at com.feedme.app.mealflow.AndroidMealFlowPresentationTest.click(AndroidMealFlowPresentationTest.kt:45)
+	at com.feedme.app.mealflow.AndroidMealFlowPresentationTest.ingredientSelectionChangesOnlyTheExplicitForm(AndroidMealFlowPresentationTest.kt:88)
+
+FAILURES!!!
+Tests run: 6,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

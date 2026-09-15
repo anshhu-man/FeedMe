@@ -264,6 +264,7 @@ class KitchenContextTest {
         val second = RecordKey("kitchen.plan", OTHER_ID)
         val revisions = mapOf(KEY to 100L, second to null)
         f.store.commitResult = PortResult.Value(revisions)
+        f.store.readByKey = { key -> PortResult.Value(if (key == KEY) PrivateRecord(100, 1, bytes("next")) else null) }
         assertEquals(revisions, value(f.context.guarded(f.lease) {
             f.context.commit(f.lease, listOf(kitchenPut(KEY, 99, bytes("next")), StoreMutation.Delete(second, 3)))
         }))
@@ -412,6 +413,7 @@ class KitchenContextTest {
         val commits = mutableListOf<List<StoreMutation>>()
         val commitScopes = mutableListOf<StorageScope>()
         var readResult: PortResult<PrivateRecord?> = PortResult.Value(null)
+        var readByKey: ((RecordKey) -> PortResult<PrivateRecord?>)? = null
         var commitResult: PortResult<Map<RecordKey, Long?>> = PortResult.Value(emptyMap())
         var beforeReadReturn: suspend () -> Unit = {}
         var beforeCommitReturn: suspend () -> Unit = {}
@@ -419,7 +421,7 @@ class KitchenContextTest {
             reads++
             readArguments += scope to key
             beforeReadReturn()
-            return readResult
+            return readByKey?.invoke(key) ?: readResult
         }
         override suspend fun commit(scope: StorageScope, mutations: List<StoreMutation>): PortResult<Map<RecordKey, Long?>> {
             commits += mutations.toList()

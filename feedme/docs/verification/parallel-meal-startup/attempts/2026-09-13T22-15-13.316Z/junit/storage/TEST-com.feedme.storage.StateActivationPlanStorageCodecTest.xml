@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.storage.StateActivationPlanStorageCodecTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-09-13T22:16:55.333Z" hostname="ansachars-MacBook-Pro.local" time="0.002">
+  <properties/>
+  <testcase name="absentAndRetiredPredecessorsRoundTripWithoutChangingCanonicalBytes[jvm]" classname="com.feedme.storage.StateActivationPlanStorageCodecTest" time="0.0"/>
+  <testcase name="arbitraryMacBytesRemainStructuralDataAndAreNeverAuthenticatedHere[jvm]" classname="com.feedme.storage.StateActivationPlanStorageCodecTest" time="0.0"/>
+  <testcase name="zeroVersionUnknownVersionAndUnknownPriorFlagsAreRejected[jvm]" classname="com.feedme.storage.StateActivationPlanStorageCodecTest" time="0.0"/>
+  <testcase name="absentPredecessorRequiresZeroGenerationAndBinaryZeroPadding[jvm]" classname="com.feedme.storage.StateActivationPlanStorageCodecTest" time="0.001"/>
+  <testcase name="exactLengthIsRequiredBeforeStructuralDecoding[jvm]" classname="com.feedme.storage.StateActivationPlanStorageCodecTest" time="0.0"/>
+  <testcase name="negativeAndOverflowingGenerationsCannotConsumeUnreservedRevisions[jvm]" classname="com.feedme.storage.StateActivationPlanStorageCodecTest" time="0.0"/>
+  <testcase name="ownerAndCandidateFieldsRejectNoncanonicalCaseWhitespaceAndNonAscii[jvm]" classname="com.feedme.storage.StateActivationPlanStorageCodecTest" time="0.0"/>
+  <testcase name="everySupportedGenerationBoundaryRetainsBothFutureRevisions[jvm]" classname="com.feedme.storage.StateActivationPlanStorageCodecTest" time="0.0"/>
+  <testcase name="legacyConstructorRemainsLengthOnlyWhileStorageFactoryRejectsItsInvalidPayload[jvm]" classname="com.feedme.storage.StateActivationPlanStorageCodecTest" time="0.0"/>
+  <testcase name="failureIsTypedRedactedAndLeavesInvalidCallerBufferUnchanged[jvm]" classname="com.feedme.storage.StateActivationPlanStorageCodecTest" time="0.0"/>
+  <testcase name="inputAndAllReturnedCopiesAreDetachedWithoutMutatingCallerBytes[jvm]" classname="com.feedme.storage.StateActivationPlanStorageCodecTest" time="0.0"/>
+  <testcase name="retiredPredecessorRequiresPositiveGenerationAndItsExactLowercaseKey[jvm]" classname="com.feedme.storage.StateActivationPlanStorageCodecTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

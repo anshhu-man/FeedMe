@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.kitchen.PrivateKitchenSessionReliabilityTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-09-14T03:16:59.819Z" hostname="ansachars-MacBook-Pro.local" time="0.668">
+  <properties/>
+  <testcase name="queueEnqueueCannotAcknowledgeWrongMapOrMissingDomainReadback[jvm]" classname="com.feedme.kitchen.PrivateKitchenSessionReliabilityTest" time="0.248"/>
+  <testcase name="cancellationInCreateGateCannotReachNativeClaimOrTransport[jvm]" classname="com.feedme.kitchen.PrivateKitchenSessionReliabilityTest" time="0.145"/>
+  <testcase name="createHookCannotGrantUnrelatedFeatureCommands[jvm]" classname="com.feedme.kitchen.PrivateKitchenSessionReliabilityTest" time="0.048"/>
+  <testcase name="optionalGateReceivesOnlyExactCreateIntentAndDoesNotBypassExplicitConfirmation[jvm]" classname="com.feedme.kitchen.PrivateKitchenSessionReliabilityTest" time="0.083"/>
+  <testcase name="missingCreateGateFailsClosedEvenAfterExplicitUserConfirmation[jvm]" classname="com.feedme.kitchen.PrivateKitchenSessionReliabilityTest" time="0.065"/>
+  <testcase name="failedInFlightAcknowledgementNeverHandsCommandToTransport[jvm]" classname="com.feedme.kitchen.PrivateKitchenSessionReliabilityTest" time="0.079"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

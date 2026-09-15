@@ -1,0 +1,284 @@
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidCookingFlowHostTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=9
+INSTRUMENTATION_STATUS: stream=
+com.feedme.app.mealflow.AndroidCookingFlowHostTest:
+INSTRUMENTATION_STATUS: test=dirtyFormAndStaleDialogCannotConfirmAnotherPlanOrPriorCookingPin
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidCookingFlowHostTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=9
+INSTRUMENTATION_STATUS: stack=org.junit.ComparisonFailure: expected:<...000-8000-00000000020[2]> but was:<...000-8000-00000000020[1]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$dirtyFormAndStaleDialogCannotConfirmAnotherPlanOrPriorCookingPin$1$4.invokeSuspend(AndroidCookingFlowHostTest.kt:164)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$dirtyFormAndStaleDialogCannotConfirmAnotherPlanOrPriorCookingPin$1$4.invoke(Unknown Source:8)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$dirtyFormAndStaleDialogCannotConfirmAnotherPlanOrPriorCookingPin$1$4.invoke(Unknown Source:2)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$main$1$1.invokeSuspend(AndroidCookingFlowHostTest.kt:31)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+
+INSTRUMENTATION_STATUS: stream=
+Error in dirtyFormAndStaleDialogCannotConfirmAnotherPlanOrPriorCookingPin(com.feedme.app.mealflow.AndroidCookingFlowHostTest):
+org.junit.ComparisonFailure: expected:<...000-8000-00000000020[2]> but was:<...000-8000-00000000020[1]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$dirtyFormAndStaleDialogCannotConfirmAnotherPlanOrPriorCookingPin$1$4.invokeSuspend(AndroidCookingFlowHostTest.kt:164)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$dirtyFormAndStaleDialogCannotConfirmAnotherPlanOrPriorCookingPin$1$4.invoke(Unknown Source:8)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$dirtyFormAndStaleDialogCannotConfirmAnotherPlanOrPriorCookingPin$1$4.invoke(Unknown Source:2)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$main$1$1.invokeSuspend(AndroidCookingFlowHostTest.kt:31)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+
+INSTRUMENTATION_STATUS: test=dirtyFormAndStaleDialogCannotConfirmAnotherPlanOrPriorCookingPin
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidCookingFlowHostTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=9
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=explicitOfflineProgressAndCompletionUseHeadOnlySyncAndNeverAutoFinishLastStep
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidCookingFlowHostTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=9
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=explicitOfflineProgressAndCompletionUseHeadOnlySyncAndNeverAutoFinishLastStep
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidCookingFlowHostTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=9
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=retainedCreatedReceiptRetriesDownloadWithoutSecondPost
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidCookingFlowHostTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=9
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Missing synthetic cooking text: Retry original cooking start; observed: SYNTHETIC ACCOUNT / TRANSPORT · REAL NATIVE STORE | ← Back | FeedMe | PINNED RECIPE | YOUR MEAL. YOUR PACE. | Your retained cooking plan. | Back never finishes or abandons your session. Progress is a record of your actions, not a food-safety guarantee. | Cooking status | You are offline. Retained local progress is not a server acknowledgement. | Action not acknowledged | OFFLINE. Your original intent is retained; this view cannot grant missing access or reset an uncertain operation. | Instructions unavailable | No eligible pinned recipe is exposed here. Read retained state or use Back; nothing starts automatically. | Historical observation | Retained content and progress are not a fresh recall, rights or server-state check. | Read retained cooking state | Separate actions stay separate | Save, Make Again, feedback and sharing are not connected here. Finishing cooking never performs them. Timer controls and native alerts are a separate integration. | Return to the meal journey
+	at org.junit.Assert.fail(Assert.java:89)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest.waitText(AndroidCookingFlowHostTest.kt:119)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest.click(AndroidCookingFlowHostTest.kt:122)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest.retainedCreatedReceiptRetriesDownloadWithoutSecondPost$lambda$0(AndroidCookingFlowHostTest.kt:185)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest.$r8$lambda$n9whvHuOnJYgwdPNydMVNxGCSg0(Unknown Source:0)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$$ExternalSyntheticLambda9.invoke(D8$$SyntheticClass:0)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest.withHost(AndroidCookingFlowHostTest.kt:67)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest.retainedCreatedReceiptRetriesDownloadWithoutSecondPost(AndroidCookingFlowHostTest.kt:180)
+
+INSTRUMENTATION_STATUS: stream=
+Error in retainedCreatedReceiptRetriesDownloadWithoutSecondPost(com.feedme.app.mealflow.AndroidCookingFlowHostTest):
+java.lang.AssertionError: Missing synthetic cooking text: Retry original cooking start; observed: SYNTHETIC ACCOUNT / TRANSPORT · REAL NATIVE STORE | ← Back | FeedMe | PINNED RECIPE | YOUR MEAL. YOUR PACE. | Your retained cooking plan. | Back never finishes or abandons your session. Progress is a record of your actions, not a food-safety guarantee. | Cooking status | You are offline. Retained local progress is not a server acknowledgement. | Action not acknowledged | OFFLINE. Your original intent is retained; this view cannot grant missing access or reset an uncertain operation. | Instructions unavailable | No eligible pinned recipe is exposed here. Read retained state or use Back; nothing starts automatically. | Historical observation | Retained content and progress are not a fresh recall, rights or server-state check. | Read retained cooking state | Separate actions stay separate | Save, Make Again, feedback and sharing are not connected here. Finishing cooking never performs them. Timer controls and native alerts are a separate integration. | Return to the meal journey
+	at org.junit.Assert.fail(Assert.java:89)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest.waitText(AndroidCookingFlowHostTest.kt:119)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest.click(AndroidCookingFlowHostTest.kt:122)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest.retainedCreatedReceiptRetriesDownloadWithoutSecondPost$lambda$0(AndroidCookingFlowHostTest.kt:185)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest.$r8$lambda$n9whvHuOnJYgwdPNydMVNxGCSg0(Unknown Source:0)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$$ExternalSyntheticLambda9.invoke(D8$$SyntheticClass:0)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest.withHost(AndroidCookingFlowHostTest.kt:67)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest.retainedCreatedReceiptRetriesDownloadWithoutSecondPost(AndroidCookingFlowHostTest.kt:180)
+
+INSTRUMENTATION_STATUS: test=retainedCreatedReceiptRetriesDownloadWithoutSecondPost
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidCookingFlowHostTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=9
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=invalidationRedactsConsentAndNoncooperativeCreateCannotRevivePrivateScreen
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidCookingFlowHostTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=9
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=invalidationRedactsConsentAndNoncooperativeCreateCannotRevivePrivateScreen
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidCookingFlowHostTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=9
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=missingProviderAndExactRecallNeverCreateOrRetainEligiblePreview
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidCookingFlowHostTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=9
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected null, but was:<PlanWire([redacted])>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotNull(Assert.java:756)
+	at org.junit.Assert.assertNull(Assert.java:738)
+	at org.junit.Assert.assertNull(Assert.java:748)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$missingProviderAndExactRecallNeverCreateOrRetainEligiblePreview$1$2.invokeSuspend(AndroidCookingFlowHostTest.kt:237)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$missingProviderAndExactRecallNeverCreateOrRetainEligiblePreview$1$2.invoke(Unknown Source:8)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$missingProviderAndExactRecallNeverCreateOrRetainEligiblePreview$1$2.invoke(Unknown Source:2)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$main$1$1.invokeSuspend(AndroidCookingFlowHostTest.kt:31)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+
+INSTRUMENTATION_STATUS: stream=
+Error in missingProviderAndExactRecallNeverCreateOrRetainEligiblePreview(com.feedme.app.mealflow.AndroidCookingFlowHostTest):
+java.lang.AssertionError: expected null, but was:<PlanWire([redacted])>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotNull(Assert.java:756)
+	at org.junit.Assert.assertNull(Assert.java:738)
+	at org.junit.Assert.assertNull(Assert.java:748)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$missingProviderAndExactRecallNeverCreateOrRetainEligiblePreview$1$2.invokeSuspend(AndroidCookingFlowHostTest.kt:237)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$missingProviderAndExactRecallNeverCreateOrRetainEligiblePreview$1$2.invoke(Unknown Source:8)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$missingProviderAndExactRecallNeverCreateOrRetainEligiblePreview$1$2.invoke(Unknown Source:2)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$main$1$1.invokeSuspend(AndroidCookingFlowHostTest.kt:31)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+
+INSTRUMENTATION_STATUS: test=missingProviderAndExactRecallNeverCreateOrRetainEligiblePreview
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidCookingFlowHostTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=9
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=pendingStricterPreferencesStopContinuedCookingButPermitExplicitSafeStop
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidCookingFlowHostTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=9
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=pendingStricterPreferencesStopContinuedCookingButPermitExplicitSafeStop
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidCookingFlowHostTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=9
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=immediateBackDuringDownloadAndReopenedOwnerKeepOriginalReceiptAndPinnedRecipe
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidCookingFlowHostTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=9
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=immediateBackDuringDownloadAndReopenedOwnerKeepOriginalReceiptAndPinnedRecipe
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidCookingFlowHostTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=9
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=exactPreparedConsentSurvivesRecreationAndBackNeverStartsCooking
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidCookingFlowHostTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=9
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=exactPreparedConsentSurvivesRecreationAndBackNeverStartsCooking
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidCookingFlowHostTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=9
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lostCreateReplyKeepsOriginalBodyKeyAndExplicitRetryAcrossRecreation
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidCookingFlowHostTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=9
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lostCreateReplyKeepsOriginalBodyKeyAndExplicitRetryAcrossRecreation
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 212.468
+There were 3 failures:
+1) dirtyFormAndStaleDialogCannotConfirmAnotherPlanOrPriorCookingPin(com.feedme.app.mealflow.AndroidCookingFlowHostTest)
+org.junit.ComparisonFailure: expected:<...000-8000-00000000020[2]> but was:<...000-8000-00000000020[1]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$dirtyFormAndStaleDialogCannotConfirmAnotherPlanOrPriorCookingPin$1$4.invokeSuspend(AndroidCookingFlowHostTest.kt:164)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$dirtyFormAndStaleDialogCannotConfirmAnotherPlanOrPriorCookingPin$1$4.invoke(Unknown Source:8)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$dirtyFormAndStaleDialogCannotConfirmAnotherPlanOrPriorCookingPin$1$4.invoke(Unknown Source:2)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$main$1$1.invokeSuspend(AndroidCookingFlowHostTest.kt:31)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+2) retainedCreatedReceiptRetriesDownloadWithoutSecondPost(com.feedme.app.mealflow.AndroidCookingFlowHostTest)
+java.lang.AssertionError: Missing synthetic cooking text: Retry original cooking start; observed: SYNTHETIC ACCOUNT / TRANSPORT · REAL NATIVE STORE | ← Back | FeedMe | PINNED RECIPE | YOUR MEAL. YOUR PACE. | Your retained cooking plan. | Back never finishes or abandons your session. Progress is a record of your actions, not a food-safety guarantee. | Cooking status | You are offline. Retained local progress is not a server acknowledgement. | Action not acknowledged | OFFLINE. Your original intent is retained; this view cannot grant missing access or reset an uncertain operation. | Instructions unavailable | No eligible pinned recipe is exposed here. Read retained state or use Back; nothing starts automatically. | Historical observation | Retained content and progress are not a fresh recall, rights or server-state check. | Read retained cooking state | Separate actions stay separate | Save, Make Again, feedback and sharing are not connected here. Finishing cooking never performs them. Timer controls and native alerts are a separate integration. | Return to the meal journey
+	at org.junit.Assert.fail(Assert.java:89)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest.waitText(AndroidCookingFlowHostTest.kt:119)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest.click(AndroidCookingFlowHostTest.kt:122)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest.retainedCreatedReceiptRetriesDownloadWithoutSecondPost$lambda$0(AndroidCookingFlowHostTest.kt:185)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest.$r8$lambda$n9whvHuOnJYgwdPNydMVNxGCSg0(Unknown Source:0)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$$ExternalSyntheticLambda9.invoke(D8$$SyntheticClass:0)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest.withHost(AndroidCookingFlowHostTest.kt:67)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest.retainedCreatedReceiptRetriesDownloadWithoutSecondPost(AndroidCookingFlowHostTest.kt:180)
+3) missingProviderAndExactRecallNeverCreateOrRetainEligiblePreview(com.feedme.app.mealflow.AndroidCookingFlowHostTest)
+java.lang.AssertionError: expected null, but was:<PlanWire([redacted])>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotNull(Assert.java:756)
+	at org.junit.Assert.assertNull(Assert.java:738)
+	at org.junit.Assert.assertNull(Assert.java:748)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$missingProviderAndExactRecallNeverCreateOrRetainEligiblePreview$1$2.invokeSuspend(AndroidCookingFlowHostTest.kt:237)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$missingProviderAndExactRecallNeverCreateOrRetainEligiblePreview$1$2.invoke(Unknown Source:8)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$missingProviderAndExactRecallNeverCreateOrRetainEligiblePreview$1$2.invoke(Unknown Source:2)
+	at com.feedme.app.mealflow.AndroidCookingFlowHostTest$main$1$1.invokeSuspend(AndroidCookingFlowHostTest.kt:31)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+
+FAILURES!!!
+Tests run: 9,  Failures: 3
+
+
+INSTRUMENTATION_CODE: -1

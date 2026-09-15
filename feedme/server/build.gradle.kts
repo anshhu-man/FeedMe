@@ -8,6 +8,7 @@ application { mainClass.set("com.feedme.server.MainKt") }
 
 dependencies {
     implementation(project(":shared:contracts"))
+    implementation(project(":shared:planning"))
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.cio)
     implementation(libs.ktor.server.status.pages)
@@ -19,6 +20,9 @@ dependencies {
     testImplementation(libs.ktor.server.test.host)
     testImplementation(project(":shared:contracts"))
     testImplementation(project(":shared:transport"))
+    testImplementation(project(":shared:kitchen"))
+    testImplementation(project(":shared:mealflow"))
+    testImplementation(project(path = ":shared:storage", configuration = "jvmProtocolTestFixtures"))
 }
 
 // One canonical source; never hand-maintain another list of product endpoints.

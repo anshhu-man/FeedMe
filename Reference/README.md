@@ -39,7 +39,9 @@ The complete FeedMe project reference, from idea to implementation. Canonical so
 
 - [Exact published checkpoint](SNAPSHOT_STATUS.md)
 - [Setup prerequisites](SETUP.md)
-- [Android demo artifact](ARTIFACTS.md)
+- [Current Android preview and historical demo](ARTIFACTS.md)
+- [Local evidence and public-exclusion boundary](LOCAL_EVIDENCE.md)
+- [Portable frozen parser fixture](Fixtures/ninth-parser/README.md)
 - [Historical exports](History/README.md)
 - [Public snapshot source/copy hash manifest](SNAPSHOT_MANIFEST.json)
 

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.planning.DeterministicPlannerTest" tests="40" skipped="0" failures="0" errors="0" timestamp="2026-09-13T22:15:18.284Z" hostname="ansachars-MacBook-Pro.local" time="0.431">
+  <properties/>
+  <testcase name="missingPreferenceVersionRequiresRefreshRatherThanImplicitPermissiveSnapshot[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.226"/>
+  <testcase name="reviewedLinearScalingMaterializesExactQuantitiesWithoutChangingStepsOrEffort[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.033"/>
+  <testcase name="scalingRequiresReviewedBoundsUnitsStepsAndEffortForRequestedRange[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.011"/>
+  <testcase name="improveRequiresCompleteConfirmedBaseMealAndReviewedCompatibility[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.006"/>
+  <testcase name="assemblyCannotHideHeatingSubstantialPreparationOrBadEnergyClassification[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.006"/>
+  <testcase name="hardExclusionClosesCompoundIngredientsAndAlwaysWinsOverSoftTaste[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.005"/>
+  <testcase name="availabilityDistinguishesUnreportedUncertainOutAndCurrentExplicitSelection[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.009"/>
+  <testcase name="optionalMissingIngredientsRemainVisibleAndExcludedOptionalIngredientsStillReject[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.003"/>
+  <testcase name="improveNeverSubstitutesWholeMealIncompatibleOrUnknownPreparedComposition[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.003"/>
+  <testcase name="freshContextAndConstraintsAreMandatoryForAlternativeTraversal[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.007"/>
+  <testcase name="unknownCurrentIngredientRequiresClarificationButIrrelevantUncertainPantryDoesNot[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.001"/>
+  <testcase name="automaticModeFollowsReviewedHeatingEvidenceNotCandidateInputOrder[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.0"/>
+  <testcase name="onlyPublishedNotApprovedRetiredPersonalOrRecalledCanMatch[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.003"/>
+  <testcase name="manualAssemblyProducesExactReviewedRecipeAndFactualReasons[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.001"/>
+  <testcase name="exactTasteRanksAheadAndRelatedFallbackRequiresExplicitPolicy[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.001"/>
+  <testcase name="unavailableProtectedOrUnreviewedCandidatesDoNotLeakMissingRecipeDetails[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.003"/>
+  <testcase name="adapterEmitsCanonicalFieldsRequiresReceiptIdentityAndPreservesUnresolvedNoMatchMode[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.01"/>
+  <testcase name="autoWithConfirmedPreparedBaseSelectsAdditionAndBaseExclusionsWin[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.0"/>
+  <testcase name="malformedDuplicateAndOversizedCatalogOrContextFailsBeforePartialRecommendations[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.011"/>
+  <testcase name="naturalLanguageNeedsConfirmationAndNeverExecutesOrOverridesStructuredExclusions[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.003"/>
+  <testcase name="contradictoryCookAndAssemblyIntentRequiresExplicitResolution[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.0"/>
+  <testcase name="stalePreferenceRevisionRequiresRefreshAndCurrentExactRevisionWorks[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.0"/>
+  <testcase name="callerCollectionsAreDetachedAndDiagnosticsNeverExposePrivateInputsOrBodies[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.001"/>
+  <testcase name="heatIsExplicitlyGatedAndFreshNeverBecomesFreshnessClaim[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.0"/>
+  <testcase name="denseTaxonomyTraversalHasFiniteEdgeAndUnionBudgetIndependentOfInputOrdering[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.054"/>
+  <testcase name="unavailableEquipmentRejectsCandidateWithoutDroppingTheStep[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.001"/>
+  <testcase name="requiredEffortAndStepMetadataMustBeInternallyConsistent[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.001"/>
+  <testcase name="laterFeaturesAndUnresolvedSourceAuthorizationDoNotBecomeEnabledBySharedPlanSchema[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.001"/>
+  <testcase name="hardTotalAndActiveLimitsUseExactlyPreviewedNumbersIncludingWaiting[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.001"/>
+  <testcase name="alternativeRechecksPublicationAndRecallAndEndsWithoutInventingNewCandidates[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.013"/>
+  <testcase name="canonicalValidationRejectsUnknownFieldsInvalidTagsAndAmbiguousSources[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.0"/>
+  <testcase name="decimalArithmeticHandlesExponentEqualityFiniteFractionsAndBoundaryRefusal[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.0"/>
+  <testcase name="explicitRecipeSourceRemainsExactAndDoesNotFallBackToAnUnrelatedVersion[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.001"/>
+  <testcase name="scalingNeverRoundsNonterminatingRatiosOrCoercesUnsupportedMagnitude[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.001"/>
+  <testcase name="boundedDeterministicAlternativesAreImmutableRetryableAndNeverCycle[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.001"/>
+  <testcase name="explicitSavedExclusionsAreMergedAndCannotBeRelaxedByRequest[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.001"/>
+  <testcase name="changedSameIdContentTaxonomyOrEditorialPolicyInvalidatesContinuation[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.003"/>
+  <testcase name="unknownAndCyclicCompositionNeverClaimsConstraintCompliance[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.001"/>
+  <testcase name="dislikesOnlyAffectRankingAndNeverActAsHiddenExclusions[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.0"/>
+  <testcase name="missingReviewAndCreatorReportedEstimatesNeverConferEligibility[jvm]" classname="com.feedme.planning.DeterministicPlannerTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

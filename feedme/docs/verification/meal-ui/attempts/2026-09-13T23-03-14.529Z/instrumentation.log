@@ -1,0 +1,114 @@
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowPresentationTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+com.feedme.app.mealflow.AndroidMealFlowPresentationTest:
+INSTRUMENTATION_STATUS: test=ingredientSelectionChangesOnlyTheExplicitForm
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowPresentationTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Expected visible UI text: Synthetic cucumber
+	at org.junit.Assert.fail(Assert.java:89)
+	at com.feedme.app.mealflow.AndroidMealFlowPresentationTest.waitText(AndroidMealFlowPresentationTest.kt:36)
+	at com.feedme.app.mealflow.AndroidMealFlowPresentationTest.click(AndroidMealFlowPresentationTest.kt:39)
+	at com.feedme.app.mealflow.AndroidMealFlowPresentationTest.ingredientSelectionChangesOnlyTheExplicitForm(AndroidMealFlowPresentationTest.kt:63)
+
+INSTRUMENTATION_STATUS: stream=
+Error in ingredientSelectionChangesOnlyTheExplicitForm(com.feedme.app.mealflow.AndroidMealFlowPresentationTest):
+java.lang.AssertionError: Expected visible UI text: Synthetic cucumber
+	at org.junit.Assert.fail(Assert.java:89)
+	at com.feedme.app.mealflow.AndroidMealFlowPresentationTest.waitText(AndroidMealFlowPresentationTest.kt:36)
+	at com.feedme.app.mealflow.AndroidMealFlowPresentationTest.click(AndroidMealFlowPresentationTest.kt:39)
+	at com.feedme.app.mealflow.AndroidMealFlowPresentationTest.ingredientSelectionChangesOnlyTheExplicitForm(AndroidMealFlowPresentationTest.kt:63)
+
+INSTRUMENTATION_STATUS: test=ingredientSelectionChangesOnlyTheExplicitForm
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowPresentationTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=unavailableViewDoesNotExposeRetainedFixtureDetails
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowPresentationTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unavailableViewDoesNotExposeRetainedFixtureDetails
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowPresentationTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=requestShowsApprovedVisualControlsAndExplicitDraftAction
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowPresentationTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=requestShowsApprovedVisualControlsAndExplicitDraftAction
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowPresentationTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=uncertainRequestShowsOriginalRetryWithoutImplicitNewCommand
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowPresentationTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=uncertainRequestShowsOriginalRetryWithoutImplicitNewCommand
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowPresentationTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=recipeRendersExactAmountsAndMandatorySteps
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowPresentationTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=recipeRendersExactAmountsAndMandatorySteps
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowPresentationTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=recommendationsRouteRecipeExactlyOnceWithoutCookingOrSaving
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.app.mealflow.AndroidMealFlowPresentationTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=recommendationsRouteRecipeExactlyOnceWithoutCookingOrSaving
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 12.32
+There was 1 failure:
+1) ingredientSelectionChangesOnlyTheExplicitForm(com.feedme.app.mealflow.AndroidMealFlowPresentationTest)
+java.lang.AssertionError: Expected visible UI text: Synthetic cucumber
+	at org.junit.Assert.fail(Assert.java:89)
+	at com.feedme.app.mealflow.AndroidMealFlowPresentationTest.waitText(AndroidMealFlowPresentationTest.kt:36)
+	at com.feedme.app.mealflow.AndroidMealFlowPresentationTest.click(AndroidMealFlowPresentationTest.kt:39)
+	at com.feedme.app.mealflow.AndroidMealFlowPresentationTest.ingredientSelectionChangesOnlyTheExplicitForm(AndroidMealFlowPresentationTest.kt:63)
+
+FAILURES!!!
+Tests run: 6,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

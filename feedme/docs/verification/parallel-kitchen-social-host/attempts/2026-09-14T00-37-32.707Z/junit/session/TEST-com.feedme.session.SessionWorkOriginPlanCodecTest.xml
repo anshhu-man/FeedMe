@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.session.SessionWorkOriginPlanCodecTest" tests="22" skipped="0" failures="0" errors="0" timestamp="2026-09-14T00:37:56.570Z" hostname="ansachars-MacBook-Pro.local" time="0.011">
+  <properties/>
+  <testcase name="unsignedProjectionOmitsOnlyProofAndPreservesAllOtherCanonicalBytes[jvm]" classname="com.feedme.session.SessionWorkOriginPlanCodecTest" time="0.0"/>
+  <testcase name="duplicatePlainAndEscapedRootAndScopeKeysAreRejected[jvm]" classname="com.feedme.session.SessionWorkOriginPlanCodecTest" time="0.001"/>
+  <testcase name="publicFactoryRejectsEquivalentNoncanonicalWhitespaceOrderAndEscapes[jvm]" classname="com.feedme.session.SessionWorkOriginPlanCodecTest" time="0.0"/>
+  <testcase name="plansStatesProofCopiesAndErrorsNeverEchoPrivateFields[jvm]" classname="com.feedme.session.SessionWorkOriginPlanCodecTest" time="0.0"/>
+  <testcase name="versionIsExactlyLocalIntegerOne[jvm]" classname="com.feedme.session.SessionWorkOriginPlanCodecTest" time="0.0"/>
+  <testcase name="malformedRootAndDocumentsNeverProduceAPartialPlan[jvm]" classname="com.feedme.session.SessionWorkOriginPlanCodecTest" time="0.001"/>
+  <testcase name="selectedLedgerRejectsMissingExtraDuplicateAndOrdinaryOriginFields[jvm]" classname="com.feedme.session.SessionWorkOriginPlanCodecTest" time="0.0"/>
+  <testcase name="scopeRequiresEveryExactFieldKindAndBoundedNonblankSafeStrings[jvm]" classname="com.feedme.session.SessionWorkOriginPlanCodecTest" time="0.002"/>
+  <testcase name="byteAndDepthBoundsPrecedeParsingUnboundedInput[jvm]" classname="com.feedme.session.SessionWorkOriginPlanCodecTest" time="0.0"/>
+  <testcase name="proofRequiresExactlySixtyFourBytesAndOneHundredTwentyEightLowercaseHexDigits[jvm]" classname="com.feedme.session.SessionWorkOriginPlanCodecTest" time="0.001"/>
+  <testcase name="predecessorRevisionRejectsEquivalentSpellingsAndOverflow[jvm]" classname="com.feedme.session.SessionWorkOriginPlanCodecTest" time="0.0"/>
+  <testcase name="canonicalRoundTripPreservesExactScopeOriginRevisionAndProof[jvm]" classname="com.feedme.session.SessionWorkOriginPlanCodecTest" time="0.0"/>
+  <testcase name="selectedLedgerRejectsMalformedHexAndNoncanonicalOrInvalidNestedPlan[jvm]" classname="com.feedme.session.SessionWorkOriginPlanCodecTest" time="0.002"/>
+  <testcase name="selectedWorkLedgerContainsOnlyExactCanonicalPlanProvenance[jvm]" classname="com.feedme.session.SessionWorkOriginPlanCodecTest" time="0.001"/>
+  <testcase name="allEncodingEntryPointsRejectInvalidInMemoryFields[jvm]" classname="com.feedme.session.SessionWorkOriginPlanCodecTest" time="0.0"/>
+  <testcase name="publicOpaqueFactoryDetachesEveryStorageCopy[jvm]" classname="com.feedme.session.SessionWorkOriginPlanCodecTest" time="0.0"/>
+  <testcase name="predecessorRevisionReservesTwoMonotonicSlots[jvm]" classname="com.feedme.session.SessionWorkOriginPlanCodecTest" time="0.0"/>
+  <testcase name="structuralFactoryDoesNotClaimThatWellFormedProofIsAuthenticated[jvm]" classname="com.feedme.session.SessionWorkOriginPlanCodecTest" time="0.0"/>
+  <testcase name="scopePreservesAccountGuestAndExactNonNormalizedIdentifiers[jvm]" classname="com.feedme.session.SessionWorkOriginPlanCodecTest" time="0.0"/>
+  <testcase name="malformedUtf8AndUnpairedUtf16FailBeforeLossyEncoding[jvm]" classname="com.feedme.session.SessionWorkOriginPlanCodecTest" time="0.001"/>
+  <testcase name="originRequiresExactLowercaseUuidAndNeverASecretOrNumericValue[jvm]" classname="com.feedme.session.SessionWorkOriginPlanCodecTest" time="0.0"/>
+  <testcase name="everyPlanFieldIsMandatoryAndUnknownAuthorityFieldsAreRejected[jvm]" classname="com.feedme.session.SessionWorkOriginPlanCodecTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

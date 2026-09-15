@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.storage.PlannedStateActivationRecoveryTest" tests="40" skipped="0" failures="0" errors="0" timestamp="2026-09-14T01:32:22.162Z" hostname="ansachars-MacBook-Pro.local" time="2.901">
+  <properties/>
+  <testcase name="malformedOwnerOrGarbageRowsAndStrayPredecessorRecordsFailClosed[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.09"/>
+  <testcase name="receiptRevisionExhaustionFailsWithoutDeletingEvenAnAlreadyConsumedKey[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.042"/>
+  <testcase name="existingOnlyOpenAndPreparedInspectionDoNotInitializeWriteDecryptOrCollectKeys[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.016"/>
+  <testcase name="selectedRowsIncludingTombstonesUnknownSchemasAndCorruptCiphertextAreNeverDecryptedOrAborted[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.055"/>
+  <testcase name="failureAfterDeletingExactKeyStillRequiresAnotherChangedReceiptOnReopen[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.058"/>
+  <testcase name="consumedOwnerRequiresMatchingWellFormedReceiptAndZeroRows[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.135"/>
+  <testcase name="malformedUtf16ScopeAndMissingIndexFailureAreSanitizedAndDoNotResetState[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.03"/>
+  <testcase name="selectedEmptyInspectionAllowsMissingKeyButNeverRecreatesIt[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.057"/>
+  <testcase name="normalV1MigrationRejectsForeignLegacyShapeWithoutCreatingReceiptTable[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.019"/>
+  <testcase name="callerCancellationAtCommitAcknowledgementCannotContinueIntoKeyDeletion[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.065"/>
+  <testcase name="unrelatedOwnerRowsAndQueuedGarbageSurviveOpenInspectAbortAndCloseReopen[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.078"/>
+  <testcase name="keyDeletionFailureRetainsConsumedReceiptAndReopensAsAbortingWithoutGc[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.057"/>
+  <testcase name="onlyNormalOpenMigratesExactV1AndPreservesItsOwnerKeyAndEncryptedRecords[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.054"/>
+  <testcase name="lostApplicationReceiptAfterSuccessfulSqliteCommitNeverAuthorizesImmediateKeyDeletion[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.06"/>
+  <testcase name="consumptionFencesOldPlanCommitAndRecoveryCannotDeleteANewerIncarnation[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.073"/>
+  <testcase name="wrongScopeForeignVaultMalformedEncodingAndAlteredMacNeverGrantARecoveryHandle[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.029"/>
+  <testcase name="malformedUnrelatedAbortReceiptBlocksInspectionWithoutTouchingEitherOwner[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.017"/>
+  <testcase name="inspectionAndHandleRepresentationsDoNotExposePlanOwnerOrKeyMaterial[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.028"/>
+  <testcase name="partialAndSelectedEmptyAbortsCommitExactConsumptionBeforeDeletingOnlyPlannedKey[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.074"/>
+  <testcase name="unusablePlannedAliasCanBeAbortedThroughPresenceWithoutDecryptingOrReplacingIt[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.067"/>
+  <testcase name="recordWrittenAfterEmptyInspectionIsRecheckedBeforeConsumptionOrDeletion[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.029"/>
+  <testcase name="cancellationBeforeConsumptionRollsBackAndCancellationAfterCommitPreservesKey[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.099"/>
+  <testcase name="partialCandidateInspectionIsReadOnlyAndNeverSelectsItsOwner[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.012"/>
+  <testcase name="realPrecommitRollbackDoesNotConsumeOrDeleteAndOriginalPlanRemainsRetryable[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.075"/>
+  <testcase name="fullyRetiredPredecessorAbortsToItsExactConsumedGenerationWithoutTouchingOldKey[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.118"/>
+  <testcase name="historicalReceiptKeyCollisionsAndMalformedReceiptMetadataFencePlanningCommitAndRecovery[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.336"/>
+  <testcase name="closeIsIdempotentClosesConnectionBeforeOwnershipAndCanRetryFailedClose[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.016"/>
+  <testcase name="abortedRetryAlwaysChangesAndCommitsReceiptEvenWhenKeyIsAlreadyAbsent[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.071"/>
+  <testcase name="failedOwnershipCallbackCanRetryWithoutReopeningOrClosingConnectionTwice[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.016"/>
+  <testcase name="preparedAbortConsumesBothReservedGenerationsWithoutCreatingAnyOwnerKey[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.028"/>
+  <testcase name="ordinaryRetirementIsNotMistakenForAnAuthenticatedActivationAbortReceipt[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.039"/>
+  <testcase name="candidateReferencesOrGarbageMarkersAddedBeforeOrAfterInspectionBlockAbort[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.129"/>
+  <testcase name="historicalAbortReceiptMayMatchRetiredPredecessorOrBeOlderButNeverNewerOrWrongKey[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.217"/>
+  <testcase name="cancellationWhileOpeningTransfersNoHandleAndClosesTheOwnedConnection[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.017"/>
+  <testcase name="changedOrMissingRetiredPredecessorIsNotReinterpretedAsTheOriginalAbsentOwner[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.158"/>
+  <testcase name="existingOnlyRecoveryRejectsEmptyOldFutureAndForeignSchemasWithoutMigration[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.118"/>
+  <testcase name="queuedCancellationAndClosedHandleCannotInspectOrAbort[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.032"/>
+  <testcase name="abortedReceiptWriteFailureRemainsFailureEvenThoughInspectionAlreadySaysAborted[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.096"/>
+  <testcase name="exactMaximumConsumedGenerationCanAbortAndRepeatWithoutOverflowingOwnerFence[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.081"/>
+  <testcase name="secondaryTransactionFailureAfterKeyDeletionPreservesPriorAcknowledgedConsumption[jvm]" classname="com.feedme.storage.PlannedStateActivationRecoveryTest" time="0.11"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

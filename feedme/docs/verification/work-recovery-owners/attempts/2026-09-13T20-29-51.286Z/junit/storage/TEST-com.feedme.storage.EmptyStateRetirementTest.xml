@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.storage.EmptyStateRetirementTest" tests="23" skipped="0" failures="0" errors="0" timestamp="2026-09-13T20:30:11.980Z" hostname="ansachars-MacBook-Pro.local" time="1.794">
+  <properties/>
+  <testcase name="tombstoneRejectionDoesNotFenceHandleOrEraseRevisionHistory[jvm]" classname="com.feedme.storage.EmptyStateRetirementTest" time="0.075"/>
+  <testcase name="deletedKeyAndFailedSqlCommitReopenAsUnreadableThenExactTargetCanFinish[jvm]" classname="com.feedme.storage.EmptyStateRetirementTest" time="0.051"/>
+  <testcase name="emptyRetirementDeletesExactKeyBeforeSqlAndLeavesOtherOwnerUntouched[jvm]" classname="com.feedme.storage.EmptyStateRetirementTest" time="0.42"/>
+  <testcase name="cancellationBeforeDispatchHasNoEffectsAndClosedManagerDoesNotInspectOrRetire[jvm]" classname="com.feedme.storage.EmptyStateRetirementTest" time="0.043"/>
+  <testcase name="missingActiveKeyBlocksInspectionButExactInterruptedEmptyRetirementCanResume[jvm]" classname="com.feedme.storage.EmptyStateRetirementTest" time="0.058"/>
+  <testcase name="inspectionIsOneReadTransactionAndConcurrentRowInsertionCannotCommitBetweenObservations[jvm]" classname="com.feedme.storage.EmptyStateRetirementTest" time="0.069"/>
+  <testcase name="inactiveOrMissingOwnerWithStrayRowsIsCorruptNotAnEmptyDiagnostic[jvm]" classname="com.feedme.storage.EmptyStateRetirementTest" time="0.1"/>
+  <testcase name="oldTargetCannotRetireNewSameOwnerIncarnationEvenWhenNewOwnerIsEmpty[jvm]" classname="com.feedme.storage.EmptyStateRetirementTest" time="0.087"/>
+  <testcase name="malformedMacForeignInstallAndWrongScopeCannotDeleteOrFenceTheExactOwner[jvm]" classname="com.feedme.storage.EmptyStateRetirementTest" time="0.091"/>
+  <testcase name="activeEmptyInspectionAndValidationAreReadOnlyAndKeepExistingHandleUsable[jvm]" classname="com.feedme.storage.EmptyStateRetirementTest" time="0.053"/>
+  <testcase name="privateInspectionTargetCopiesAreDetachedAndAllResultStringsAreRedacted[jvm]" classname="com.feedme.storage.EmptyStateRetirementTest" time="0.035"/>
+  <testcase name="committedResponseLossAndRepeatedRetirementAreExactAndIdempotentAfterReopen[jvm]" classname="com.feedme.storage.EmptyStateRetirementTest" time="0.045"/>
+  <testcase name="corruptRecordStillCountsWithoutDecryptionAndCannotBeDiscardedAsEmpty[jvm]" classname="com.feedme.storage.EmptyStateRetirementTest" time="0.041"/>
+  <testcase name="scopeEnvironmentAndActorKindAreIndependentAndOtherOwnerDataIsNotEmptyEvidence[jvm]" classname="com.feedme.storage.EmptyStateRetirementTest" time="0.041"/>
+  <testcase name="arbitraryCollectionsFutureSchemasAndTombstonesAllCountAsRecords[jvm]" classname="com.feedme.storage.EmptyStateRetirementTest" time="0.073"/>
+  <testcase name="cancellationAfterKeyDeletionCannotResurrectOwnerAndExactRecoveryRemainsPossible[jvm]" classname="com.feedme.storage.EmptyStateRetirementTest" time="0.042"/>
+  <testcase name="emptyInspectionAndValidationReadFailureDoNotFenceOwnerOrReturnOutcomeUnknown[jvm]" classname="com.feedme.storage.EmptyStateRetirementTest" time="0.038"/>
+  <testcase name="successfulPreflightIsNotAuthorityToEraseARecordWrittenBeforeRecovery[jvm]" classname="com.feedme.storage.EmptyStateRetirementTest" time="0.044"/>
+  <testcase name="nonemptyRejectionPrecedesFenceAndKeyDeletionAndPreservesWritableHandle[jvm]" classname="com.feedme.storage.EmptyStateRetirementTest" time="0.057"/>
+  <testcase name="sharedActiveKeyReferenceFailsBeforeFenceAndDoesNotDeleteEitherOwnerKey[jvm]" classname="com.feedme.storage.EmptyStateRetirementTest" time="0.044"/>
+  <testcase name="missingExactOwnerInspectionDoesNotEnumerateActivateWriteOrCreateKeys[jvm]" classname="com.feedme.storage.EmptyStateRetirementTest" time="0.016"/>
+  <testcase name="keyDeletionFailureCommitsExactRetiredFallbackAndRetryFinishesWithoutNewGeneration[jvm]" classname="com.feedme.storage.EmptyStateRetirementTest" time="0.075"/>
+  <testcase name="queuedGarbageKeyIsNotCollectedByEmptyInspectionOrValidation[jvm]" classname="com.feedme.storage.EmptyStateRetirementTest" time="0.194"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

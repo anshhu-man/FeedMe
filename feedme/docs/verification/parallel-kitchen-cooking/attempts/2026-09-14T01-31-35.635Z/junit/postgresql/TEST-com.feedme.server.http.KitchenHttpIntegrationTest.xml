@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.http.KitchenHttpIntegrationTest" tests="20" skipped="0" failures="0" errors="0" timestamp="2026-09-14T01:32:46.754Z" hostname="ansachars-MacBook-Pro.local" time="16.665">
+  <properties/>
+  <testcase name="outboxFailureRollsBackMutationAndNeverLeaksSqlFailure" classname="com.feedme.server.http.KitchenHttpIntegrationTest" time="0.792"/>
+  <testcase name="actualCommitWithLostApplicationReceiptRequiresOriginalKeyAndHasOneEffect" classname="com.feedme.server.http.KitchenHttpIntegrationTest" time="0.851"/>
+  <testcase name="ingredientSearchRunsCurrentTransactionAndPreservesAbsentEmptyAndUnicodeQuery" classname="com.feedme.server.http.KitchenHttpIntegrationTest" time="0.851"/>
+  <testcase name="retiredCatalogReferencesRemainOwnedReportsAndCanBeRemovedWithoutBeingSelectable" classname="com.feedme.server.http.KitchenHttpIntegrationTest" time="0.861"/>
+  <testcase name="deleteReturnsEmpty204AndOldKeysOrVersionsCannotDeleteARecreatedItem" classname="com.feedme.server.http.KitchenHttpIntegrationTest" time="0.874"/>
+  <testcase name="currentRevocationAndGuestExpiryAreCheckedBeforeCachedResponses" classname="com.feedme.server.http.KitchenHttpIntegrationTest" time="0.833"/>
+  <testcase name="kitchenConfigurationDoesNotActivateLoginCookingOrSocialOperations" classname="com.feedme.server.http.KitchenHttpIntegrationTest" time="0.697"/>
+  <testcase name="actualCioSocketAcceptsCanonicalRequestAndRejectsDuplicateAuthorization" classname="com.feedme.server.http.KitchenHttpIntegrationTest" time="1.019"/>
+  <testcase name="preferencePatchUsesOriginalKeyAndExactVersionWithoutRebasingAnOldReply" classname="com.feedme.server.http.KitchenHttpIntegrationTest" time="0.83"/>
+  <testcase name="actualPersistedPreferenceVersionGatesPlanningSelectionAndPreservesHistoricalRead" classname="com.feedme.server.http.KitchenHttpIntegrationTest" time="1.014"/>
+  <testcase name="paginationBindsOwnerAndQueriesCannotSmugglePrivateSelectionOrConditional304" classname="com.feedme.server.http.KitchenHttpIntegrationTest" time="0.877"/>
+  <testcase name="verifiedGuestAndAccountOwnDifferentInputsEvenWithIdenticalPrincipalUuid" classname="com.feedme.server.http.KitchenHttpIntegrationTest" time="0.705"/>
+  <testcase name="realPantryMutationChangesPlanningSnapshotWithoutTurningUnconfirmedStockIntoFact" classname="com.feedme.server.http.KitchenHttpIntegrationTest" time="0.882"/>
+  <testcase name="pantryWritesPreserveExactDecimalsAndExplicitExpectedVersions" classname="com.feedme.server.http.KitchenHttpIntegrationTest" time="0.861"/>
+  <testcase name="verifierFailureIsSanitizedAndCannotReachCurrentDatabaseAuthority" classname="com.feedme.server.http.KitchenHttpIntegrationTest" time="0.704"/>
+  <testcase name="cancelledHttpCallerAfterActualCommitDoesNotImplyRollbackOrDuplicateRetry" classname="com.feedme.server.http.KitchenHttpIntegrationTest" time="0.842"/>
+  <testcase name="unconfiguredServiceNeverInvokesVerifierOrEnablesKitchenWrites" classname="com.feedme.server.http.KitchenHttpIntegrationTest" time="0.826"/>
+  <testcase name="missingPreferencesNeverProvisionOnGetAndExplicitSeedRemainsCanonical" classname="com.feedme.server.http.KitchenHttpIntegrationTest" time="0.787"/>
+  <testcase name="explicitResponseCapRejectsMutationBeforeDomainReceiptAndOutboxCommit" classname="com.feedme.server.http.KitchenHttpIntegrationTest" time="0.815"/>
+  <testcase name="malformedSchemaDuplicateUnicodeAndOversizeInputCannotMutateDatabase" classname="com.feedme.server.http.KitchenHttpIntegrationTest" time="0.743"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+]]></system-err>
+</testsuite>

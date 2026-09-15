@@ -1,0 +1,57 @@
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest:
+INSTRUMENTATION_STATUS: test=journalSyncFailureCannotAcknowledgeInitialOrReplayedWorkOriginSelection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=journalSyncFailureCannotAcknowledgeInitialOrReplayedWorkOriginSelection
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=directorySyncFailureCannotPromoteVisibleWorkOriginSelectionOrReplayToAcknowledgement
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=directorySyncFailureCannotPromoteVisibleWorkOriginSelectionOrReplayToAcknowledgement
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=databaseSyncFailureCannotAcknowledgeInitialOrReplayedWorkOriginSelection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.feedme.storage.AndroidSessionWorkOriginPlanSyncFailureTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=databaseSyncFailureCannotAcknowledgeInitialOrReplayedWorkOriginSelection
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 0.968
+
+OK (3 tests)
+
+
+INSTRUMENTATION_RESULT: work_origin_sync_replay-database=sqlite=1034;failures=1;effects=0;vfs=1;delegatedUnlink=0
+INSTRUMENTATION_RESULT: work_origin_sync_replay-directory=sqlite=1290;failures=1;effects=0;vfs=1;delegatedUnlink=1
+INSTRUMENTATION_RESULT: work_origin_sync_replay-journal=sqlite=1034;failures=1;effects=0;vfs=1;delegatedUnlink=0
+INSTRUMENTATION_RESULT: work_origin_sync_select-database=sqlite=1034;failures=1;effects=0;vfs=1;delegatedUnlink=0
+INSTRUMENTATION_RESULT: work_origin_sync_select-directory=sqlite=1290;failures=1;effects=0;vfs=1;delegatedUnlink=1
+INSTRUMENTATION_RESULT: work_origin_sync_select-journal=sqlite=1034;failures=1;effects=0;vfs=1;delegatedUnlink=0
+INSTRUMENTATION_CODE: -1

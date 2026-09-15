@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.kitchen.KitchenPolicyTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-09-14T01:31:51.550Z" hostname="ansachars-MacBook-Pro.local" time="0.052">
+  <properties/>
+  <testcase name="cursorsExpireAtExactDatabaseSecondAndCannotExtendExpiryWithoutMac" classname="com.feedme.server.kitchen.KitchenPolicyTest" time="0.035"/>
+  <testcase name="malformedTamperedOversizedAndNoncanonicalCursorsNeverBecomeFirstPage" classname="com.feedme.server.kitchen.KitchenPolicyTest" time="0.01"/>
+  <testcase name="cursorConfigurationDetachesInputArraysAndSupportsExplicitKeyRotation" classname="com.feedme.server.kitchen.KitchenPolicyTest" time="0.001"/>
+  <testcase name="cursorKeysMustBeExplicitValidAndBounded" classname="com.feedme.server.kitchen.KitchenPolicyTest" time="0.0"/>
+  <testcase name="cursorsBindEnvironmentPrincipalAndActorKindNotDeviceRotation" classname="com.feedme.server.kitchen.KitchenPolicyTest" time="0.001"/>
+  <testcase name="principalRequiresExplicitAccountDeviceOrGuestButNeverStaff" classname="com.feedme.server.kitchen.KitchenPolicyTest" time="0.0"/>
+  <testcase name="cursorRoundtripIsExactAndNullIsDistinctFromEmpty" classname="com.feedme.server.kitchen.KitchenPolicyTest" time="0.0"/>
+  <testcase name="onlyCanonicalKitchenEventTypesAreProducedAndNoPrivateBodiesAreInRegistryContract" classname="com.feedme.server.kitchen.KitchenPolicyTest" time="0.004"/>
+  <testcase name="responseAndLifetimeBoundsAreExplicitAndRejectUnsafeConfigurations" classname="com.feedme.server.kitchen.KitchenPolicyTest" time="0.0"/>
+  <testcase name="principalAndPolicyDiagnosticsNeverExposePrivateIdentityOrKeyMaterial" classname="com.feedme.server.kitchen.KitchenPolicyTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,318 @@
+{
+  "startedAt": "2026-09-14T03:25:03.678Z",
+  "passed": true,
+  "serial": "emulator-5556",
+  "scope": "Nine actual retained Android FeedMeMealFlow/MealFlowExperience/CookingFlowController host tests using public native session factories, owner-scoped encrypted storage and the actual kitchen queue. Account verification and canonical service replies are explicitly synthetic. Proves declared UI consent, progress, Back, recreation, original create/201-download retry, preference conflict and invalidation paths only. No deployed provider/HTTP/catalog/reviewer/manifest claim; no timer, Save, Make Again, feedback/share, iOS, physical power-loss or native final-attachment-ACK injection acceptance. Screenshots are actual settled native captures, not generated images; visual acceptance remains independent review.",
+  "apk": {
+    "path": "shared/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk",
+    "bytes": 27568362,
+    "sha256": "c113c8949cd13444186afeffb4d832f98500db122845f07ed531e8b121ef97d6"
+  },
+  "apkMetadata": {
+    "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/output-metadata.json",
+    "bytes": 421,
+    "sha256": "cee2ae8b5f90978e068be43ebfb0455ae1b2ae6b558bf56b8d72b44296ec3f82"
+  },
+  "source": {
+    "path": "shared/app/src/androidInstrumentedTest/kotlin/com/feedme/app/mealflow/AndroidCookingFlowHostTest.kt",
+    "bytes": 19887,
+    "sha256": "4cbc5697e6978946baa95bfccd76bf30858d013a10bc965f2f656b63b5335379"
+  },
+  "attemptDirectory": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z",
+  "screenshots": [
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-confirmation.png",
+      "bytes": 152999,
+      "sha256": "b470e440d04576c879d236a96127f5a9d291a72d5663aea15c6ef120a19efb61"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-progress.png",
+      "bytes": 141692,
+      "sha256": "fcbff853329c66447a603a26f193cace84f728afe2adf111289746ad2d065189"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-pending.png",
+      "bytes": 140922,
+      "sha256": "d5590bd420c7e9af5f3de02c9ffe80d070d750f7e924951fd64aee93ad6abc16"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-done-pending.png",
+      "bytes": 136312,
+      "sha256": "94d501fa8598ed254e577f09056c9cc814c14f3735403721213fabcf62e2c8cf"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-done-acknowledged.png",
+      "bytes": 110273,
+      "sha256": "e7c2a81c26a6be6eec23b9e2db7e1dd9e5a472e1f99a52b3c95e782bb896a359"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-unavailable.png",
+      "bytes": 117078,
+      "sha256": "328e5c4edd69d7742be8b752bf099244a1c1bb1a771d8678c54cc165104a2753"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-retained-recipe.png",
+      "bytes": 138240,
+      "sha256": "f06cb9ef8a3f1d0ce1c01376eabd192d3230937b9019403d8638e8cfd68636fe"
+    }
+  ],
+  "screenshotEvidence": [
+    {
+      "name": "cooking-confirmation",
+      "identity": "com.feedme.app.mealflow.AndroidCookingFlowHostTest#exactPreparedConsentSurvivesRecreationAndBackNeverStartsCooking",
+      "nativePath": "no_backup/cooking-host-ui-evidence/cooking-confirmation.png",
+      "width": 1080,
+      "height": 1920,
+      "image": {
+        "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-confirmation.png",
+        "bytes": 152999,
+        "sha256": "b470e440d04576c879d236a96127f5a9d291a72d5663aea15c6ef120a19efb61"
+      }
+    },
+    {
+      "name": "cooking-progress",
+      "identity": "com.feedme.app.mealflow.AndroidCookingFlowHostTest#exactPreparedConsentSurvivesRecreationAndBackNeverStartsCooking",
+      "nativePath": "no_backup/cooking-host-ui-evidence/cooking-progress.png",
+      "width": 1080,
+      "height": 1920,
+      "image": {
+        "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-progress.png",
+        "bytes": 141692,
+        "sha256": "fcbff853329c66447a603a26f193cace84f728afe2adf111289746ad2d065189"
+      }
+    },
+    {
+      "name": "cooking-pending",
+      "identity": "com.feedme.app.mealflow.AndroidCookingFlowHostTest#retainedCreatedReceiptRetriesDownloadWithoutSecondPost",
+      "nativePath": "no_backup/cooking-host-ui-evidence/cooking-pending.png",
+      "width": 1080,
+      "height": 1920,
+      "image": {
+        "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-pending.png",
+        "bytes": 140922,
+        "sha256": "d5590bd420c7e9af5f3de02c9ffe80d070d750f7e924951fd64aee93ad6abc16"
+      }
+    },
+    {
+      "name": "cooking-done-pending",
+      "identity": "com.feedme.app.mealflow.AndroidCookingFlowHostTest#explicitOfflineProgressAndCompletionUseHeadOnlySyncAndNeverAutoFinishLastStep",
+      "nativePath": "no_backup/cooking-host-ui-evidence/cooking-done-pending.png",
+      "width": 1080,
+      "height": 1920,
+      "image": {
+        "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-done-pending.png",
+        "bytes": 136312,
+        "sha256": "94d501fa8598ed254e577f09056c9cc814c14f3735403721213fabcf62e2c8cf"
+      }
+    },
+    {
+      "name": "cooking-done-acknowledged",
+      "identity": "com.feedme.app.mealflow.AndroidCookingFlowHostTest#explicitOfflineProgressAndCompletionUseHeadOnlySyncAndNeverAutoFinishLastStep",
+      "nativePath": "no_backup/cooking-host-ui-evidence/cooking-done-acknowledged.png",
+      "width": 1080,
+      "height": 1920,
+      "image": {
+        "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-done-acknowledged.png",
+        "bytes": 110273,
+        "sha256": "e7c2a81c26a6be6eec23b9e2db7e1dd9e5a472e1f99a52b3c95e782bb896a359"
+      }
+    },
+    {
+      "name": "cooking-unavailable",
+      "identity": "com.feedme.app.mealflow.AndroidCookingFlowHostTest#invalidationRedactsConsentAndNoncooperativeCreateCannotRevivePrivateScreen",
+      "nativePath": "no_backup/cooking-host-ui-evidence/cooking-unavailable.png",
+      "width": 1080,
+      "height": 1920,
+      "image": {
+        "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-unavailable.png",
+        "bytes": 117078,
+        "sha256": "328e5c4edd69d7742be8b752bf099244a1c1bb1a771d8678c54cc165104a2753"
+      }
+    },
+    {
+      "name": "cooking-retained-recipe",
+      "identity": "com.feedme.app.mealflow.AndroidCookingFlowHostTest#immediateBackDuringDownloadAndReopenedOwnerKeepOriginalReceiptAndPinnedRecipe",
+      "nativePath": "no_backup/cooking-host-ui-evidence/cooking-retained-recipe.png",
+      "width": 1080,
+      "height": 1920,
+      "image": {
+        "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-retained-recipe.png",
+        "bytes": 138240,
+        "sha256": "f06cb9ef8a3f1d0ce1c01376eabd192d3230937b9019403d8638e8cfd68636fe"
+      }
+    }
+  ],
+  "invocation": {
+    "classes": "com.feedme.app.mealflow.AndroidCookingFlowHostTest",
+    "runner": "com.feedme.app.test/androidx.test.runner.AndroidJUnitRunner",
+    "expected": 9
+  },
+  "androidApi": "35",
+  "androidAbi": "arm64-v8a",
+  "nativeParent": {
+    "present": true,
+    "uid": "10210",
+    "mode": "771",
+    "gid": "10210"
+  },
+  "captureDirectory": {
+    "present": false,
+    "uid": "10210",
+    "mode": null
+  },
+  "identities": [
+    "com.feedme.app.mealflow.AndroidCookingFlowHostTest#dirtyFormAndStaleDialogCannotConfirmAnotherPlanOrPriorCookingPin",
+    "com.feedme.app.mealflow.AndroidCookingFlowHostTest#explicitOfflineProgressAndCompletionUseHeadOnlySyncAndNeverAutoFinishLastStep",
+    "com.feedme.app.mealflow.AndroidCookingFlowHostTest#retainedCreatedReceiptRetriesDownloadWithoutSecondPost",
+    "com.feedme.app.mealflow.AndroidCookingFlowHostTest#invalidationRedactsConsentAndNoncooperativeCreateCannotRevivePrivateScreen",
+    "com.feedme.app.mealflow.AndroidCookingFlowHostTest#missingProviderAndExactRecallNeverCreateOrRetainEligiblePreview",
+    "com.feedme.app.mealflow.AndroidCookingFlowHostTest#pendingStricterPreferencesStopContinuedCookingButPermitExplicitSafeStop",
+    "com.feedme.app.mealflow.AndroidCookingFlowHostTest#immediateBackDuringDownloadAndReopenedOwnerKeepOriginalReceiptAndPinnedRecipe",
+    "com.feedme.app.mealflow.AndroidCookingFlowHostTest#exactPreparedConsentSurvivesRecreationAndBackNeverStartsCooking",
+    "com.feedme.app.mealflow.AndroidCookingFlowHostTest#lostCreateReplyKeepsOriginalBodyKeyAndExplicitRetryAcrossRecreation"
+  ],
+  "tests": {
+    "tests": 9,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "finishedAt": "2026-09-14T03:28:11.295Z",
+  "evidence": [
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/abi.log",
+      "bytes": 10,
+      "sha256": "7f10c3cd4593d1d6ded27d658e7c05216011c955c200aac551caad0c979d4d90"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/api.log",
+      "bytes": 3,
+      "sha256": "90d7ec0f0acef104d8b6252794295f661a0149634868d02a1ae0c358099638f5"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/boot.log",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/capture-preflight.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cleanup.log",
+      "bytes": 64,
+      "sha256": "bcad4d0f1486ac439c5e7ba1e135fc74fbd702bdc3af2f1372f6407d75f6fcaf"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-confirmation-pull.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-confirmation.png",
+      "bytes": 152999,
+      "sha256": "b470e440d04576c879d236a96127f5a9d291a72d5663aea15c6ef120a19efb61"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-done-acknowledged-pull.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-done-acknowledged.png",
+      "bytes": 110273,
+      "sha256": "e7c2a81c26a6be6eec23b9e2db7e1dd9e5a472e1f99a52b3c95e782bb896a359"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-done-pending-pull.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-done-pending.png",
+      "bytes": 136312,
+      "sha256": "94d501fa8598ed254e577f09056c9cc814c14f3735403721213fabcf62e2c8cf"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-pending-pull.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-pending.png",
+      "bytes": 140922,
+      "sha256": "d5590bd420c7e9af5f3de02c9ffe80d070d750f7e924951fd64aee93ad6abc16"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-progress-pull.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-progress.png",
+      "bytes": 141692,
+      "sha256": "fcbff853329c66447a603a26f193cace84f728afe2adf111289746ad2d065189"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-retained-recipe-pull.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-retained-recipe.png",
+      "bytes": 138240,
+      "sha256": "f06cb9ef8a3f1d0ce1c01376eabd192d3230937b9019403d8638e8cfd68636fe"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-unavailable-pull.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/cooking-unavailable.png",
+      "bytes": 117078,
+      "sha256": "328e5c4edd69d7742be8b752bf099244a1c1bb1a771d8678c54cc165104a2753"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/install.log",
+      "bytes": 36,
+      "sha256": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/instrumentation.log",
+      "bytes": 6571,
+      "sha256": "c1289a977aecfacf005b7528a63e2224cd55d6f59bf4ffe85409bc83fba01ccc"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/output-metadata.json",
+      "bytes": 421,
+      "sha256": "cee2ae8b5f90978e068be43ebfb0455ae1b2ae6b558bf56b8d72b44296ec3f82"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/preflight-directory.log",
+      "bytes": 26,
+      "sha256": "d09355173a027883a5b70d1e09c8a9ee2a2f713120f56579ba1cf59096090165"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/preflight-root.log",
+      "bytes": 51,
+      "sha256": "17ce4b80e8d824c995a2a35ad190a44edc43cad5c6f8c30e0afa5b7912a3fa18"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/preflight-uid.log",
+      "bytes": 6,
+      "sha256": "71bb27c21f621d61244bc56eeced80d6631e74b1daf6d9b928ed580d81c74595"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/preflight.log",
+      "bytes": 39,
+      "sha256": "29d7af2878704da203d5ba0e8b2a33dd620fbef1cb59c10cd38d245749e7d101"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T03-25-03.678Z/runner.log",
+      "bytes": 331,
+      "sha256": "85c4d22a554f45750de3de0d22248375b24a80e9302ae4b4de43d3efe3103de7"
+    }
+  ]
+}

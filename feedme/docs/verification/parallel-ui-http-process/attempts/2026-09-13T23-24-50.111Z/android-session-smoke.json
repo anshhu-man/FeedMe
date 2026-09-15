@@ -1,0 +1,310 @@
+{
+  "startedAt": "2026-09-13T23:27:26.224Z",
+  "passed": true,
+  "serial": "emulator-5554",
+  "scope": "Isolated API35 Android credential/work/setup tests, now including twelve real native all-owning interrupted-startup cases. The new public factory retains CONTROL and exact credential/data/work owners before opening, authenticates the original PendingSetup, exposes read-only inspection and an opaque proposal, and requires explicit programmatic confirmation before aborting. Exact ALL-ABORTED checkpoint retention precedes work/data/credential close; truthful close acknowledgements precede fresh changed CONTROL Complete. Failed acquisition and close remain owned, restart after one/two closes reauthenticates original plans, and persisted Complete never becomes consent. Application reservation excludes competing legacy/runtime roots; invalidation fences work and clears live leases without releasing resources. Failed runtime opening retains borrowed native-store close responsibility in the caller. Existing native-file, credential CREATE-plan/abort, control/setup journal, live publication, already-open composite abort and exact work cancellation regressions remain. Real store/OS behavior is distinguished from synthetic identity/provider verification and application acknowledgement-loss wrappers; VFS fault injection belongs to separate storage suites. No production provider/configuration approval, UI confirmation, general orphan/hot-journal recovery, native workload/domain scheduling, hard kill, physical power loss, API26/iOS or release acceptance. Notification and hardlink branches remain explicitly reported. No existing application data is cleared.",
+  "apk": {
+    "path": "shared/session/build/outputs/apk/androidTest/debug/session-debug-androidTest.apk",
+    "bytes": 9098615,
+    "sha256": "c1d712a55594a2a7ea57f32268d13ac055c1dc940f19170f10288aa41019f3ce"
+  },
+  "apkMetadata": {
+    "path": "docs/verification/native-credentials/android-attempts/2026-09-13T23-27-26.224Z/output-metadata.json",
+    "bytes": 429,
+    "sha256": "295c766680d7ebd3b5a40643eca570d09c34efb22974faac3b8734c19c7a38d9"
+  },
+  "attemptDirectory": "docs/verification/native-credentials/android-attempts/2026-09-13T23-27-26.224Z",
+  "checks": [
+    {
+      "name": "regular",
+      "classes": "com.feedme.session.AndroidCredentialStoreTest,com.feedme.session.AndroidNativeWorkCancellationTest,com.feedme.session.AndroidCredentialCreatePlanTest",
+      "passed": true,
+      "tests": 47,
+      "expected": 47,
+      "identities": [
+        "com.feedme.session.AndroidCredentialStoreTest#missingActiveKeyOrBlobBlocksReadsButExactRetirementCanFinish",
+        "com.feedme.session.AndroidCredentialStoreTest#createAcknowledgementLossAfterManifestRenameReopensExactCommittedIncarnation",
+        "com.feedme.session.AndroidCredentialStoreTest#retirementAcknowledgementLossOccursOnlyAfterKeyErasureAndReopensEmpty",
+        "com.feedme.session.AndroidCredentialStoreTest#refreshCannotChangeOwnerKindOrBootstrappedDeviceAndAttachmentIsExactCas",
+        "com.feedme.session.AndroidCredentialStoreTest#oneActiveSlotAndExactRevisionCasRejectOtherLoginAndCompetingRefresh",
+        "com.feedme.session.AndroidCredentialStoreTest#guestCredentialsRemainGuestAcrossReopenAndCannotAcceptDeviceBootstrap",
+        "com.feedme.session.AndroidCredentialStoreTest#symlinkDirectoryCannotRedirectCredentialFilesOrModifyItsTarget",
+        "com.feedme.session.AndroidCredentialStoreTest#createRefreshBootstrapAndReopenPreserveExactIncarnationAndSecrets",
+        "com.feedme.session.AndroidCredentialStoreTest#preexistingEmptyDirectoryOrLostRetiredSlotCannotResetToInitialRevision",
+        "com.feedme.session.AndroidCredentialStoreTest#permissiveDirectoryAndManifestModesFailInsteadOfSilentlyRepairingThem",
+        "com.feedme.session.AndroidCredentialStoreTest#duplicateOpenRespectsLifetimeLockAndCloseAllowsExactReopen",
+        "com.feedme.session.AndroidCredentialStoreTest#symlinkManifestAndCredentialBlobAreRejectedWithoutChangingTargets",
+        "com.feedme.session.AndroidCredentialStoreTest#ownedLockDescriptorIsClosedAfterEveryOpenAndDuplicateFailureCycle",
+        "com.feedme.session.AndroidCredentialStoreTest#refreshInterruptionLeavesOrphanEvidenceAsExplicitRepairGate",
+        "com.feedme.session.AndroidCredentialStoreTest#exactRetirementErasesKeyAndOldRetirementCannotTouchNewSameAccountLogin",
+        "com.feedme.session.AndroidCredentialStoreTest#missingInstallKeysNeverRecreateOrRebindExistingCredentialFiles",
+        "com.feedme.session.AndroidCredentialStoreTest#missingOrCorruptManifestFailsClosedWithoutResettingKeysOrFiles",
+        "com.feedme.session.AndroidCredentialStoreTest#corruptedCredentialCiphertextCannotBeOverwrittenByRefresh",
+        "com.feedme.session.AndroidCredentialStoreTest#hardlinksAreDeniedByPlatformOrRejectedByStoreWithoutChangingCredentials",
+        "com.feedme.session.AndroidNativeWorkCancellationTest#timerIdentityIsOpaqueExplicitImmutableAndDefensivelyRecreated",
+        "com.feedme.session.AndroidNativeWorkCancellationTest#callerCancellationDoesNotBecomeSuccessfulNativeCancellation",
+        "com.feedme.session.AndroidNativeWorkCancellationTest#notificationCancellationIsExactWhenPermissionAvailableOtherwiseReportsGate",
+        "com.feedme.session.AndroidNativeWorkCancellationTest#workManagerInitializerIsDisabledAndTestCompositionInitializesExplicitly",
+        "com.feedme.session.AndroidNativeWorkCancellationTest#timerCancellationInvalidatesOnlyExactPendingIntentAndIsIdempotent",
+        "com.feedme.session.AndroidNativeWorkCancellationTest#malformedTicketsAndNonTimerIdentityAreRejectedWithoutNativeInstallation",
+        "com.feedme.session.AndroidNativeWorkCancellationTest#nonexistentWorkCancellationIsIdempotentAndDoesNotCreateWork",
+        "com.feedme.session.AndroidNativeWorkCancellationTest#cancellationOfNeverInstalledTimerDoesNotCreatePendingIntent",
+        "com.feedme.session.AndroidNativeWorkCancellationTest#foreignExportedAndUnresolvableReceiversCannotConfigureAdapter",
+        "com.feedme.session.AndroidNativeWorkCancellationTest#realDelayedWorkCancellationWaitsForCancelledStateAndRetainsSibling",
+        "com.feedme.session.AndroidCredentialCreatePlanTest#exactOwnedZeroLengthOrCorruptPartialCiphertextCanBeAbortedWithoutDecryption",
+        "com.feedme.session.AndroidCredentialCreatePlanTest#abortingPreparedPlanConsumesItPermanentlyAndRepeatedAbortDoesNotAdvanceRevision",
+        "com.feedme.session.AndroidCredentialCreatePlanTest#recoveryHandlesAreExclusiveReadOnlyToInspectAndReleaseOwnedLockDescriptors",
+        "com.feedme.session.AndroidCredentialCreatePlanTest#unsafeModesAndSymlinkTargetsFailClosedWithoutFollowingOrDeletingForeignData",
+        "com.feedme.session.AndroidCredentialCreatePlanTest#consumedEmptyReplayMustReacknowledgeDurabilityBeforeRemainingKeyDeletion",
+        "com.feedme.session.AndroidCredentialCreatePlanTest#selectedReplayAndAbortRequireDurabilityAcknowledgmentBeforeSuccessOrDeletion",
+        "com.feedme.session.AndroidCredentialCreatePlanTest#invalidPlanningAndCompetingCreatesPreserveTheWinningSelection",
+        "com.feedme.session.AndroidCredentialCreatePlanTest#interruptedUnselectedAbortConsumesRevisionBeforeErasingItsIncarnationKey",
+        "com.feedme.session.AndroidCredentialCreatePlanTest#refreshedOrNewerIncarnationCannotBeReadOrErasedThroughAnOldCreatePlan",
+        "com.feedme.session.AndroidCredentialCreatePlanTest#recoveryIsExistingOnlyAndNeverInitializesMissingLockManifestOrInstallKeys",
+        "com.feedme.session.AndroidCredentialCreatePlanTest#committedAccountAndGuestReplayExactSnapshotAcrossCloseWithoutNewKeyOrWrite",
+        "com.feedme.session.AndroidCredentialCreatePlanTest#cancellationAtNativeWriteAndAbortCheckpointsPreservesExactRecoverableIntent",
+        "com.feedme.session.AndroidCredentialCreatePlanTest#payloadChangesAndStructurallyValidForgedPlansCannotWriteOrDelete",
+        "com.feedme.session.AndroidCredentialCreatePlanTest#selectedAbortDeletesKeyFirstAndResumesWithoutReadingLostSelectedSecrets",
+        "com.feedme.session.AndroidCredentialCreatePlanTest#planningUsesOnlyExistingInstallKeysAndDoesNotWriteCredentialMaterial",
+        "com.feedme.session.AndroidCredentialCreatePlanTest#selectedMissingOrCorruptMaterialNeverRegeneratesAKeyDuringExactReplay",
+        "com.feedme.session.AndroidCredentialCreatePlanTest#unknownArtifactsAndOtherIncarnationKeysAreNeverAdoptedOrErasedByAPlan",
+        "com.feedme.session.AndroidCredentialCreatePlanTest#everyCreateInterruptionRetainsExactPlanArtifactsUntilExplicitAbort"
+      ],
+      "log": "docs/verification/native-credentials/android-attempts/2026-09-13T23-27-26.224Z/regular.log"
+    },
+    {
+      "name": "integration",
+      "classes": "com.feedme.session.AndroidLocalRetirementIntegrationTest",
+      "passed": true,
+      "tests": 11,
+      "expected": 11,
+      "identities": [
+        "com.feedme.session.AndroidLocalRetirementIntegrationTest#runtimeCompositeNativeInterruptionRetainsAllPlansAndRejectsLegacyCredentialOnlyAbort",
+        "com.feedme.session.AndroidLocalRetirementIntegrationTest#runtimeCreatesRestoresExactNativeBindingAndRetiresAllRealResources",
+        "com.feedme.session.AndroidLocalRetirementIntegrationTest#delayedPriorTargetsCannotEraseNewSameOwnerCredentialsDataOrNativeOrigin",
+        "com.feedme.session.AndroidLocalRetirementIntegrationTest#emptySetupDiscardRequiresExplicitConfirmationAndPreservesUnselectedOwner",
+        "com.feedme.session.AndroidLocalRetirementIntegrationTest#realLogoutErasesExactIdentityAndCancelsOnlyItsNativeTickets",
+        "com.feedme.session.AndroidLocalRetirementIntegrationTest#discardConfirmationRejectsChangedEvidenceAndProposalFromClosedRuntime",
+        "com.feedme.session.AndroidLocalRetirementIntegrationTest#legacyPlannedCreatePersistsIndependentControlBeforeNativeInterruptionAndExplicitAbort",
+        "com.feedme.session.AndroidLocalRetirementIntegrationTest#coherentMetadataDoesNotClaimMissingOrDamagedCredentialMaterialIsUsable",
+        "com.feedme.session.AndroidLocalRetirementIntegrationTest#recoveryInspectionAfterReopenPreservesNativeEvidenceWithoutVerificationOrActivation",
+        "com.feedme.session.AndroidLocalRetirementIntegrationTest#lostNativeCancellationAcknowledgementKeepsBarrierAndRecoversAfterAllStoresReopenWithoutLease",
+        "com.feedme.session.AndroidLocalRetirementIntegrationTest#discardPreparationRejectsPrivateRowsTombstonesBindingAndNativeTickets"
+      ],
+      "log": "docs/verification/native-credentials/android-attempts/2026-09-13T23-27-26.224Z/integration.log"
+    },
+    {
+      "name": "setup-journal",
+      "classes": "com.feedme.session.AndroidSessionSetupJournalTest",
+      "passed": true,
+      "tests": 7,
+      "expected": 7,
+      "identities": [
+        "com.feedme.session.AndroidSessionSetupJournalTest#realNativePlansRoundTripThroughIndependentEncryptedControlWithoutSelectingResources",
+        "com.feedme.session.AndroidSessionSetupJournalTest#legacyCredentialAbortCannotConsumeEitherUnconfirmedOrConfirmedCompositeJournal",
+        "com.feedme.session.AndroidSessionSetupJournalTest#ordinaryRetirementCannotOverwriteCompositeSetupOrTreatItAsEmptyDiscard",
+        "com.feedme.session.AndroidSessionSetupJournalTest#startupRuntimeReportsPartialCompositeStateWithoutProviderReadbackRepairOrAccess",
+        "com.feedme.session.AndroidSessionSetupJournalTest#compositeBarrierIntroducedAfterSignedOutBlocksProviderAcquisitionAndLiveCreate",
+        "com.feedme.session.AndroidSessionSetupJournalTest#malformedCompositeControlIsRejectedWithoutLegacyFallbackWritesOrNativeEffects",
+        "com.feedme.session.AndroidSessionSetupJournalTest#explicitAbortFlagPersistsAsMetadataOnlyAndNeverSelectsOrCleansAnyPlannedResource"
+      ],
+      "log": "docs/verification/native-credentials/android-attempts/2026-09-13T23-27-26.224Z/setup-journal.log"
+    },
+    {
+      "name": "live-setup",
+      "classes": "com.feedme.session.AndroidLiveSessionSetupCoordinatorTest",
+      "passed": true,
+      "tests": 11,
+      "expected": 11,
+      "identities": [
+        "com.feedme.session.AndroidLiveSessionSetupCoordinatorTest#threeRealPlansAreJournalledBeforeCredentialDataAndWorkSelectionWithoutGrantingAccess",
+        "com.feedme.session.AndroidLiveSessionSetupCoordinatorTest#cancelAndCloseDoNotClearTheExactPendingJournalOrGrantResourceCleanupAuthority",
+        "com.feedme.session.AndroidLiveSessionSetupCoordinatorTest#successfulControlCommitWithLostReceiptCannotSelectUntilExactFreshAcknowledgement",
+        "com.feedme.session.AndroidLiveSessionSetupCoordinatorTest#lostWorkSelectionReceiptRequiresExactSelectedReplayAndKeepsCompositeBarrier",
+        "com.feedme.session.AndroidLiveSessionSetupCoordinatorTest#failedJournalWriteLeavesAllThreeNativePlansUnselectedAndRetriesWithoutReplanning",
+        "com.feedme.session.AndroidLiveSessionSetupCoordinatorTest#lostDataSelectionReceiptRetainsExactEmptyOwnerAndDoesNotSelectWorkEarly",
+        "com.feedme.session.AndroidLiveSessionSetupCoordinatorTest#failedExactReadbackAfterControlCommitCannotAuthorizeSelectionOrReplanning",
+        "com.feedme.session.AndroidLiveSessionSetupCoordinatorTest#freshCoordinatorCannotContinuePersistedPlanWithoutOriginalVerifiedInMemoryAttempt",
+        "com.feedme.session.AndroidLiveSessionSetupCoordinatorTest#lostCredentialSelectionReceiptRetainsExactPlanAndStopsLaterNativeSelections",
+        "com.feedme.session.AndroidLiveSessionSetupCoordinatorTest#ordinaryWorkOriginCannotBeCrossJoinedEvenWhenItCopiesTheExactPlannedOrigin",
+        "com.feedme.session.AndroidLiveSessionSetupCoordinatorTest#selectedPrivateRecordsIncludingTombstonesBlockRetryBeforeAnyFurtherSelection"
+      ],
+      "log": "docs/verification/native-credentials/android-attempts/2026-09-13T23-27-26.224Z/live-setup.log"
+    },
+    {
+      "name": "setup-publication",
+      "classes": "com.feedme.session.AndroidSessionSetupPublicationTest",
+      "passed": true,
+      "tests": 9,
+      "expected": 9,
+      "identities": [
+        "com.feedme.session.AndroidSessionSetupPublicationTest#cancellationAfterNativeCompleteCommitCannotPublishItsLateReceiptOrKeepLiveRetryAuthority",
+        "com.feedme.session.AndroidSessionSetupPublicationTest#pendingNativeBindingAfterRestartCannotRetryRestoreOrFallBackToCredentialOnlyCleanup",
+        "com.feedme.session.AndroidSessionSetupPublicationTest#refusedCompleteWriteKeepsOriginalPendingPlanUntilExactBindingAndSealRetrySucceeds",
+        "com.feedme.session.AndroidSessionSetupPublicationTest#sealFailureBeforeOrAfterNativeWriteNeverPublishesAndExactRetryRewritesBinding",
+        "com.feedme.session.AndroidSessionSetupPublicationTest#realRuntimePublishesOnlyAfterExactCompositeBindingWorkSealAndControlAcknowledgement",
+        "com.feedme.session.AndroidSessionSetupPublicationTest#failedCompleteReadbackCannotPromoteVisibleNativeControlIntoPublicationAuthority",
+        "com.feedme.session.AndroidSessionSetupPublicationTest#closingDuringCompleteCommitKeepsLateResultClosedAndRequiresFreshNativeRestore",
+        "com.feedme.session.AndroidSessionSetupPublicationTest#wrongCompletedOperationCannotJoinAnOtherwiseMatchingNativeVersionTwoBinding",
+        "com.feedme.session.AndroidSessionSetupPublicationTest#lostCompleteReceiptLeavesNoLeaseAndSameLiveRetryAcknowledgesBindingAgainWithoutReplanning"
+      ],
+      "log": "docs/verification/native-credentials/android-attempts/2026-09-13T23-27-26.224Z/setup-publication.log"
+    },
+    {
+      "name": "credential-inspection",
+      "classes": "com.feedme.session.AndroidCredentialCreateInspectionTest",
+      "passed": true,
+      "tests": 12,
+      "expected": 12,
+      "identities": [
+        "com.feedme.session.AndroidCredentialCreateInspectionTest#refreshedOrNewerSelectionNeverMatchesTheOriginalPlan",
+        "com.feedme.session.AndroidCredentialCreateInspectionTest#distinctPreparedPlansHaveDistinctFingerprintsInTheSameEmptySlot",
+        "com.feedme.session.AndroidCredentialCreateInspectionTest#unknownFilesAndOtherIncarnationKeysFailClosedWithoutCleanup",
+        "com.feedme.session.AndroidCredentialCreateInspectionTest#ciphertextContentsAreIntentionallyExcludedAndNeverReadByInspection",
+        "com.feedme.session.AndroidCredentialCreateInspectionTest#observationFingerprintIsExactly32BytesDetachedAndRedacted",
+        "com.feedme.session.AndroidCredentialCreateInspectionTest#poisonedAndClosedManagersCannotUseInspectionToRecoverAuthority",
+        "com.feedme.session.AndroidCredentialCreateInspectionTest#exactPlanArtifactsChangeMetadataFingerprintWithoutContentReads",
+        "com.feedme.session.AndroidCredentialCreateInspectionTest#queuedCancellationDoesNotRunInspectionOrChangeMetadata",
+        "com.feedme.session.AndroidCredentialCreateInspectionTest#forgedAndForeignInstallPlansCannotBeObserved",
+        "com.feedme.session.AndroidCredentialCreateInspectionTest#selectionAndExactKeyOrBlobPresenceChangeFingerprintWithoutUsabilityClaim",
+        "com.feedme.session.AndroidCredentialCreateInspectionTest#wrongScopeDemoAndMalformedUnicodeAreRejectedWithoutEffects",
+        "com.feedme.session.AndroidCredentialCreateInspectionTest#preparedInspectionUsesOnlyExistingMetadataAndIsStableAcrossReopen"
+      ],
+      "log": "docs/verification/native-credentials/android-attempts/2026-09-13T23-27-26.224Z/credential-inspection.log"
+    },
+    {
+      "name": "interrupted-setup-inspection",
+      "classes": "com.feedme.session.AndroidInterruptedSetupInspectionTest",
+      "passed": true,
+      "tests": 9,
+      "expected": 9,
+      "identities": [
+        "com.feedme.session.AndroidInterruptedSetupInspectionTest#privateRowsTombstonesWrongBindingsAndUsedWorkCannotBeReportedAsCoherentPendingSetup",
+        "com.feedme.session.AndroidInterruptedSetupInspectionTest#closeCancellationAndForeignLeaseFenceSuspendedNativeInspectionWithoutCleaningAnything",
+        "com.feedme.session.AndroidInterruptedSetupInspectionTest#realPlansAndSelectionEvidenceSurviveNativeCloseReopenWithoutAcquiringIdentity",
+        "com.feedme.session.AndroidInterruptedSetupInspectionTest#selectedMissingOrDamagedCredentialsRemainOnlyMetadataEvidenceWithoutSecretReads",
+        "com.feedme.session.AndroidInterruptedSetupInspectionTest#abortRequestedReportIsRedactedAndDoesNotBecomeAConfirmationOrLegacyCleanupCapability",
+        "com.feedme.session.AndroidInterruptedSetupInspectionTest#malformedControlAndForeignAuthenticatedCredentialPlanArePreservedWithoutProbeFallback",
+        "com.feedme.session.AndroidInterruptedSetupInspectionTest#exactControlRevisionBracketRejectsNativeChangesAfterEarlierMetadataObservation",
+        "com.feedme.session.AndroidInterruptedSetupInspectionTest#configurationMismatchAndMissingInspectionCapabilityNeverFallBackToCredentialReads",
+        "com.feedme.session.AndroidInterruptedSetupInspectionTest#allNativePreparedSelectedBoundAndSealedStagesAreObservedWithoutAnyEffects"
+      ],
+      "log": "docs/verification/native-credentials/android-attempts/2026-09-13T23-27-26.224Z/interrupted-setup-inspection.log"
+    },
+    {
+      "name": "credential-plan-abort",
+      "classes": "com.feedme.session.AndroidCredentialPlanAbortTest",
+      "passed": true,
+      "tests": 12,
+      "expected": 12,
+      "identities": [
+        "com.feedme.session.AndroidCredentialPlanAbortTest#unknownInventoryAndOtherIncarnationKeysAreNeverAdoptedOrCleaned",
+        "com.feedme.session.AndroidCredentialPlanAbortTest#selectedAndAlreadyAbortedRetriesRequireFreshDirectoryAcknowledgement",
+        "com.feedme.session.AndroidCredentialPlanAbortTest#selectedAbortDeletesOnlyExactIncarnationAndPreservesIndependentNativeOwner",
+        "com.feedme.session.AndroidCredentialPlanAbortTest#wrongScopeDemoAndMalformedUnicodeCannotAuthorizeAnyExactDeletion",
+        "com.feedme.session.AndroidCredentialPlanAbortTest#alteredAndForeignInstallPlansCannotConsumeASelectedNativeSlot",
+        "com.feedme.session.AndroidCredentialPlanAbortTest#exactPartialKeyAndMalformedOwnedTempsAreConsumedBeforeCleanup",
+        "com.feedme.session.AndroidCredentialPlanAbortTest#lostConsumptionReceiptNeedsReopenedAcknowledgementAndCannotEraseSuccessor",
+        "com.feedme.session.AndroidCredentialPlanAbortTest#missingKeyOrMissingCorruptAndEmptySelectedBlobRequireNoCredentialReads",
+        "com.feedme.session.AndroidCredentialPlanAbortTest#cancellationBeforeDispatchOrAfterExactKeyDeletionNeverReturnsSuccess",
+        "com.feedme.session.AndroidCredentialPlanAbortTest#refreshedAndNewerSelectionsPreserveTheirSharedOrReplacementKey",
+        "com.feedme.session.AndroidCredentialPlanAbortTest#preparedAccountAndGuestAbortConsumePlanWithoutClosingParentOrAllocatingKeys",
+        "com.feedme.session.AndroidCredentialPlanAbortTest#poisonedAndClosedOwnersCannotBorrowAbortAuthorityOrReopenThemselves"
+      ],
+      "log": "docs/verification/native-credentials/android-attempts/2026-09-13T23-27-26.224Z/credential-plan-abort.log"
+    },
+    {
+      "name": "composite-setup-abort",
+      "classes": "com.feedme.session.AndroidCompositeSetupAbortTest",
+      "passed": true,
+      "tests": 10,
+      "expected": 10,
+      "identities": [
+        "com.feedme.session.AndroidCompositeSetupAbortTest#changedControlWorkOrBindingEvidenceInvalidatesProposalBeforeAnyCleanup",
+        "com.feedme.session.AndroidCompositeSetupAbortTest#closedGenerationAndCancelledOrClosedSuspendedConfirmationCannotBorrowProposalAuthority",
+        "com.feedme.session.AndroidCompositeSetupAbortTest#failedOrLostConfirmationWriteCannotAuthorizeEvenTheFirstNativeAbort",
+        "com.feedme.session.AndroidCompositeSetupAbortTest#visibleWorkAbortAndRepeatedLostReplayAcknowledgementCannotAdvanceToPrivateCleanup",
+        "com.feedme.session.AndroidCompositeSetupAbortTest#lostCredentialAbortReceiptRetainsConfirmedJournalAndFreshRetryReacknowledgesAllResources",
+        "com.feedme.session.AndroidCompositeSetupAbortTest#explicitConfirmationAbortsEveryPreparedThroughSealedStageWithoutPublishingOrClosingOwners",
+        "com.feedme.session.AndroidCompositeSetupAbortTest#selectedMissingAndDamagedCredentialMaterialCanBeExplicitlyAbortedWithoutSecretReads",
+        "com.feedme.session.AndroidCompositeSetupAbortTest#missingAbortCapabilityAndChangedConfigurationNeverFallBackToLegacyCleanup",
+        "com.feedme.session.AndroidCompositeSetupAbortTest#malformedJournalAdditionalRowsTombstonesAndUsedWorkBlockConfirmationWithoutEffects",
+        "com.feedme.session.AndroidCompositeSetupAbortTest#lostFinalControlReceiptNeedsExactLiveRetryAndFreshRuntimeCannotInferItsAuthority"
+      ],
+      "log": "docs/verification/native-credentials/android-attempts/2026-09-13T23-27-26.224Z/composite-setup-abort.log"
+    },
+    {
+      "name": "retained-recovery-owner",
+      "classes": "com.feedme.session.AndroidCredentialRecoveryOwnerTest",
+      "passed": true,
+      "tests": 12,
+      "expected": 12,
+      "identities": [
+        "com.feedme.session.AndroidCredentialRecoveryOwnerTest#unknownInventoryAndForeignIncarnationKeysCannotBeAdoptedByRetainedRecovery",
+        "com.feedme.session.AndroidCredentialRecoveryOwnerTest#simulatedPlatformErrorAfterActualDescriptorCloseIsTerminalAndNeverRetriesNumericFd",
+        "com.feedme.session.AndroidCredentialRecoveryOwnerTest#constructionDefersContextAndNativeIoAndCloseBeforeOpenNeverAcquiresAnything",
+        "com.feedme.session.AndroidCredentialRecoveryOwnerTest#failuresAtEveryOpeningStageKeepPartialDescriptorsReachableUntilAcknowledgedClose",
+        "com.feedme.session.AndroidCredentialRecoveryOwnerTest#interruptedAbortPoisonsOwnerUntilExactCloseAndFreshExistingOnlyRetry",
+        "com.feedme.session.AndroidCredentialRecoveryOwnerTest#scopeMacTamperingAndForeignInstallFailuresRetainCloseOnlyOwnerWithoutDeletion",
+        "com.feedme.session.AndroidCredentialRecoveryOwnerTest#everyPreCloseStageFailureRetainsReservationAndRetriesOnlyUnfinishedStages",
+        "com.feedme.session.AndroidCredentialRecoveryOwnerTest#refreshedAndNewerSelectionsCannotBeOpenedThroughOldPlanOrClosedOwner",
+        "com.feedme.session.AndroidCredentialRecoveryOwnerTest#missingAndCorruptSelectedMaterialCanBeInspectedAndAbortedWithoutCredentialReads",
+        "com.feedme.session.AndroidCredentialRecoveryOwnerTest#missingDirectoryLockManifestOrInstallKeyNeverInitializesReplacementState",
+        "com.feedme.session.AndroidCredentialRecoveryOwnerTest#preparedPartialSelectedAndAbortedMetadataRemainExactAcrossRetainedOpenAndAbort",
+        "com.feedme.session.AndroidCredentialRecoveryOwnerTest#cancelledOpeningAndLateAuthenticatedCancellationKeepAnExplicitCloseOnlyOwner"
+      ],
+      "log": "docs/verification/native-credentials/android-attempts/2026-09-13T23-27-26.224Z/retained-recovery-owner.log"
+    },
+    {
+      "name": "work-recovery",
+      "classes": "com.feedme.session.AndroidSessionWorkRecoveryTest",
+      "passed": true,
+      "tests": 7,
+      "expected": 7,
+      "identities": [
+        "com.feedme.session.AndroidSessionWorkRecoveryTest#wrongScopeFailsBeforeNativeOpenAndInvalidNativeProofRetainsCloseOnlyLock",
+        "com.feedme.session.AndroidSessionWorkRecoveryTest#everyAuthenticatedStageIsReadOnlyExactAndRetainedUntilExplicitClose",
+        "com.feedme.session.AndroidSessionWorkRecoveryTest#abortFromEveryStageAndReopenedAbortedReplayObtainFreshExactNextRevisions",
+        "com.feedme.session.AndroidSessionWorkRecoveryTest#publicConstructionAndCloseBeforeOpenPerformNoContextOrNativeIo",
+        "com.feedme.session.AndroidSessionWorkRecoveryTest#currentLeaseBlocksOpeningOrLateAbortAndClosingNeverClearsNewerSession",
+        "com.feedme.session.AndroidSessionWorkRecoveryTest#malformedNoncanonicalAndOrdinaryUsedLedgersNeverBecomeRecoveryAuthority",
+        "com.feedme.session.AndroidSessionWorkRecoveryTest#authenticatedAbortedPredecessorSupportsSuccessorButNewSelectionFencesOriginal"
+      ],
+      "log": "docs/verification/native-credentials/android-attempts/2026-09-13T23-27-26.224Z/work-recovery.log"
+    },
+    {
+      "name": "owned-startup-recovery",
+      "classes": "com.feedme.session.AndroidSessionSetupRecoveryOwnerTest",
+      "passed": true,
+      "tests": 12,
+      "expected": 12,
+      "identities": [
+        "com.feedme.session.AndroidSessionSetupRecoveryOwnerTest#allReachableOriginalSetupStagesUseRealExistingOwnersAndCloseBeforeComplete",
+        "com.feedme.session.AndroidSessionSetupRecoveryOwnerTest#oneOrTwoClosedNativeOwnersCanRestartOriginalConfirmedPlanWithoutReopeningClosedHandles",
+        "com.feedme.session.AndroidSessionSetupRecoveryOwnerTest#lostFinalCompleteReceiptNeedsSameOwnedCheckpointAndFreshControlAcknowledgement",
+        "com.feedme.session.AndroidSessionSetupRecoveryOwnerTest#authoritativeSelectedCredentialMetadataSupportsExactMissingKeyOrBlobCleanup",
+        "com.feedme.session.AndroidSessionSetupRecoveryOwnerTest#failedDataAcquisitionRetainsPriorNativeOwnersAndNeverInitializesMissingDatabase",
+        "com.feedme.session.AndroidSessionSetupRecoveryOwnerTest#applicationInvalidationFencesReadyOwnerWhileExactCloseAndRootReplacementRemainSafe",
+        "com.feedme.session.AndroidSessionSetupRecoveryOwnerTest#reservedRuntimeActuallyRegistersAndCannotReleaseBorrowedNativeResourcesEarly",
+        "com.feedme.session.AndroidSessionSetupRecoveryOwnerTest#constructingAndInspectingRetainedPublicOwnerNeverMutatesNativeMetadataOrCreatesAuthority",
+        "com.feedme.session.AndroidSessionSetupRecoveryOwnerTest#freshOwnerNeverTreatsPersistedCompleteAsUserConfirmationOrRecoveryCapability",
+        "com.feedme.session.AndroidSessionSetupRecoveryOwnerTest#eachNativeCloseFailureRetainsExactOwnershipAndCheckpointWithoutFurtherObservations",
+        "com.feedme.session.AndroidSessionSetupRecoveryOwnerTest#legacyRuntimeBlocksARealApplicationRootAndFailedReservedOpenDoesNotLeakRegistration",
+        "com.feedme.session.AndroidSessionSetupRecoveryOwnerTest#realProcessRetirementLatchBlocksBeforeAnyNativeControlFactoryOrOpen"
+      ],
+      "log": "docs/verification/native-credentials/android-attempts/2026-09-13T23-27-26.224Z/owned-startup-recovery.log"
+    },
+    {
+      "name": "owned-test-directories-cleaned",
+      "passed": true
+    }
+  ],
+  "androidApi": "35",
+  "androidAbi": "arm64-v8a",
+  "branches": {
+    "hardlinkManifest": "platform-denied:13; existing-hardlink-branch-unexercised",
+    "hardlinkBlob": "platform-denied:13; existing-hardlink-branch-unexercised",
+    "notification": "NATIVE_WORK_NOTIFICATION_EXACT_CANCELLATION_VERIFIED"
+  },
+  "finishedAt": "2026-09-13T23:29:06.850Z"
+}

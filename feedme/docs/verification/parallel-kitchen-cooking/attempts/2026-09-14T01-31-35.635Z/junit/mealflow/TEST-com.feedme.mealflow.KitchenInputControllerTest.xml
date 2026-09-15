@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.mealflow.KitchenInputControllerTest" tests="46" skipped="0" failures="0" errors="0" timestamp="2026-09-14T01:32:07.021Z" hostname="ansachars-MacBook-Pro.local" time="4.287">
+  <properties/>
+  <testcase name="duplicateIncomingPreferenceSelectionsCannotPassSetComparisonOrBecomeCurrent[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.087"/>
+  <testcase name="failedPreferenceWriteKeepsProcessFenceThroughCloseAndReadOnlyRestore[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.09"/>
+  <testcase name="cancelledEarlierReturnHandoffCannotInvalidateNewerAdmittedSynchronization[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.061"/>
+  <testcase name="readonlyValuesAreDetachedAndDiagnosticStringsNeverContainPrivateIdsOrPatch[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.067"/>
+  <testcase name="outcomeUnknownKeepsExactRequestAndRetryNeverCreatesNewIdentity[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.055"/>
+  <testcase name="cancelledNoncooperativeReservationCannotReachTransportAndCanRecoverOriginalIntent[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.09"/>
+  <testcase name="expiredRetryAndFifoConflictDoNotSendOrSilentlyReplaceEarlierPantryIntent[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.058"/>
+  <testcase name="lostAtomicApplyAcknowledgementRetainsOriginalIdAndNeedsFreshExactDomainAck[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.095"/>
+  <testcase name="localPreferenceDraftActuallyBlocksMealSubmitBeforeIdsOrTransport[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.097"/>
+  <testcase name="boundedPantryPagesRejectDuplicateRowsAndCursorCyclesWithoutDeletingUnfetchedCache[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.058"/>
+  <testcase name="delayedReadAndGetCannotPublishAfterSameAccountReplacement[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.118"/>
+  <testcase name="cancellationDuringFinalizationAckKeepsProofAndNeverSendsOrReleasesGuard[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.06"/>
+  <testcase name="restoreIsReadOnlyAndCollectionNeverLoadsOrSends[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.056"/>
+  <testcase name="sameVersionChangedPreferencesAndPantryAreNotAcceptedAsFresh[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.114"/>
+  <testcase name="neverAttemptedDiscardRestoresLocalDraftAndDoesNotRemoveSafetyGuard[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.063"/>
+  <testcase name="freshPreferencesOrPartialPantryNeverMakeUnobservedRetainedRowsCurrent[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.1"/>
+  <testcase name="pantryOverwriteUsesExpectedVersionAndDeleteUsesIfMatchOnly[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.105"/>
+  <testcase name="exclusionUnionKeepsOriginalAndStricterUnsentOrNewerLocalValues[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.057"/>
+  <testcase name="lostApplyProofCannotAcknowledgeChangedDomainOrChangedArchivedJournal[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.109"/>
+  <testcase name="mismatchingSuccessPayloadVersionOrOwnerRemainsReceiptReadyNotDomainSuccess[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.239"/>
+  <testcase name="editingAndSavingPreferencesRequireSeparateExplicitSynchronization[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.063"/>
+  <testcase name="restoredAuthenticationExplicitlyResumesOnlyOriginalPendingRequest[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.061"/>
+  <testcase name="enqueueBeforeAfterUnknownAndMalformedAcknowledgementsNeverSend[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.352"/>
+  <testcase name="canonicalAccountAndGuestLoadsUseExactQueriesWithoutMutationAuthority[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.116"/>
+  <testcase name="normalizedSuccessfulSelectionSetsAndExactNumbersAreAcceptedWithoutDoubleRounding[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.053"/>
+  <testcase name="priorUnknownFollowedByAuthVersionOrInputProblemsNeverDiscardsEvidence[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.343"/>
+  <testcase name="missingPreferenceEtagRequiresLoadInsteadOfInventingWriteVersion[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.057"/>
+  <testcase name="receiptReadyMustStillMatchExactJournalBodyAndOriginBeforeAnyDomainApplication[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.076"/>
+  <testcase name="offlineEditsAndQueuedIntentsSurviveReopenWithoutAnyAutomaticSend[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.09"/>
+  <testcase name="sessionInvalidationSynchronouslyRedactsEveryPrivateProjectionAndPreservesNewLease[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.059"/>
+  <testcase name="acknowledgedDraftPersistsSafetyGuardAcrossBothControllersReopen[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.113"/>
+  <testcase name="cancelledTransportRetainsOriginalDispatchedCommandAcrossRestart[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.093"/>
+  <testcase name="receiptApplyFailurePreservesSuccessfulReceiptAndRetryDoesNotSendAgain[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.056"/>
+  <testcase name="supersedingPreferenceEditFencesLateLoadWithoutLosingTheNewDraft[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.054"/>
+  <testcase name="queuedPreferenceConflictKeepsOriginalBodyKeyAndBaseAlongsideFreshServerCandidate[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.11"/>
+  <testcase name="responseProfileAndIndependentRecordReservationAreRequiredBeforeAdmission[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.097"/>
+  <testcase name="preferenceEditDuringMealSendPreventsPublishingLatePlanAndKeepsOriginalKey[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.063"/>
+  <testcase name="fenceOwnsInvalidationAfterEditorHasClosedWithoutRetainingRetiredIdentity[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.054"/>
+  <testcase name="preferenceSaveUsesActualEtagIncludingEquivalentLeadingZeroSpelling[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.086"/>
+  <testcase name="clockRollbackAndCorruptedOwnerRecordBlockWithoutResetOrErasure[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.059"/>
+  <testcase name="successfulReceiptDoesNotLeaveFinalizationActionWhenNewerLocalDraftStillBlocks[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.065"/>
+  <testcase name="closeReleasesOnlyControllerClaimAndNeverBorrowedStoreOrSession[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.167"/>
+  <testcase name="duplicateNativeIdCannotOverwriteAppliedOrDiscardedQueueTombstone[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.055"/>
+  <testcase name="invalidFieldsAndConsentAndDeferredQuantityAreRejectedBeforeStoreOrNetwork[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.053"/>
+  <testcase name="pantryPageLimitIsExplicitAndDoesNotPretendUnfetchedStockIsAbsent[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.054"/>
+  <testcase name="newPantryEntryHasNoInventedExpectedVersionAndDoesNotSelectMealIngredients[jvm]" classname="com.feedme.mealflow.KitchenInputControllerTest" time="0.053"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

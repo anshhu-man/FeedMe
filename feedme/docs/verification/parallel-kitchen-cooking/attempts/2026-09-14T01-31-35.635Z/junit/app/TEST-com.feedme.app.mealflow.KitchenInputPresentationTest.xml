@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.app.mealflow.KitchenInputPresentationTest" tests="21" skipped="0" failures="0" errors="0" timestamp="2026-09-14T01:31:54.279Z" hostname="ansachars-MacBook-Pro.local" time="0.075">
+  <properties/>
+  <testcase name="unknownOutcomeCopyNeverInfersRollbackOrReplacement[jvm]" classname="com.feedme.app.mealflow.KitchenInputPresentationTest" time="0.006"/>
+  <testcase name="explicitEmptyArrayIsNotReplacedByMorePermissiveOrOlderValues[jvm]" classname="com.feedme.app.mealflow.KitchenInputPresentationTest" time="0.039"/>
+  <testcase name="labelsComeOnlyFromExactControlledPickerIdentity[jvm]" classname="com.feedme.app.mealflow.KitchenInputPresentationTest" time="0.003"/>
+  <testcase name="pantryPatchPreservesUnknownCurrentAndDraftFieldsWithoutOverwritingDraft[jvm]" classname="com.feedme.app.mealflow.KitchenInputPresentationTest" time="0.003"/>
+  <testcase name="unavailableTakesPrecedenceOverAnyResidualIssue[jvm]" classname="com.feedme.app.mealflow.KitchenInputPresentationTest" time="0.0"/>
+  <testcase name="sourceDocumentsRemainByteIdenticalAfterProjectionAndEditing[jvm]" classname="com.feedme.app.mealflow.KitchenInputPresentationTest" time="0.004"/>
+  <testcase name="everyTypedFailureHasSafeCopyAndNoRawCommandIdentityIsNeeded[jvm]" classname="com.feedme.app.mealflow.KitchenInputPresentationTest" time="0.0"/>
+  <testcase name="togglingPreservesEveryOtherExistingPatchField[jvm]" classname="com.feedme.app.mealflow.KitchenInputPresentationTest" time="0.001"/>
+  <testcase name="pantryDraftCannotMergeAnotherIngredientOrUnknownPresence[jvm]" classname="com.feedme.app.mealflow.KitchenInputPresentationTest" time="0.005"/>
+  <testcase name="choosingRoughPresenceNeverCreatesOrReusesConfirmationTime[jvm]" classname="com.feedme.app.mealflow.KitchenInputPresentationTest" time="0.001"/>
+  <testcase name="offlineAndPartialPagesNeverClaimRemoteSuccessOrEmptyWholePantry[jvm]" classname="com.feedme.app.mealflow.KitchenInputPresentationTest" time="0.0"/>
+  <testcase name="roughPantryEditDoesNotEnableQuantityUnitOrCopyVersionFields[jvm]" classname="com.feedme.app.mealflow.KitchenInputPresentationTest" time="0.001"/>
+  <testcase name="hardExclusionEditNeverTurnsDislikesIntoExclusions[jvm]" classname="com.feedme.app.mealflow.KitchenInputPresentationTest" time="0.006"/>
+  <testcase name="pendingCopyDistinguishesRetainedReceiptFromAppliedAcknowledgement[jvm]" classname="com.feedme.app.mealflow.KitchenInputPresentationTest" time="0.0"/>
+  <testcase name="draftOverlayDoesNotReplaceUneditedCurrentSelections[jvm]" classname="com.feedme.app.mealflow.KitchenInputPresentationTest" time="0.001"/>
+  <testcase name="missingIngredientLabelsAreExplicitIdsNotFabricatedNames[jvm]" classname="com.feedme.app.mealflow.KitchenInputPresentationTest" time="0.001"/>
+  <testcase name="noGenericPreferenceFieldOrConsentEditingOracle[jvm]" classname="com.feedme.app.mealflow.KitchenInputPresentationTest" time="0.001"/>
+  <testcase name="currentDtoAndConsentNeverBecomeAnImplicitPatch[jvm]" classname="com.feedme.app.mealflow.KitchenInputPresentationTest" time="0.0"/>
+  <testcase name="ingredientUuidCaseDoesNotCreateDuplicateOrHiddenSelections[jvm]" classname="com.feedme.app.mealflow.KitchenInputPresentationTest" time="0.001"/>
+  <testcase name="visibleAppliedStateWithLostAckRequiresFinalizationWithoutClaimingSuccess[jvm]" classname="com.feedme.app.mealflow.KitchenInputPresentationTest" time="0.0"/>
+  <testcase name="newPantryReportHasNoInventedStockStapleOrMealSelection[jvm]" classname="com.feedme.app.mealflow.KitchenInputPresentationTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

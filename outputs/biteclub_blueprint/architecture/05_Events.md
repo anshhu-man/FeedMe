@@ -61,6 +61,7 @@ The following names are canonical; prose aliases in feature documents refer to t
 | memory.feedback.changed.v1 | memory / add/edit/delete | principalId, feedbackId, action | recompute only affected memory keys, respecting user override/suppression |
 | memory.preference.changed.v1 | memory / correction/forget | principalId, memoryId, action | invalidate ranker memory projection |
 | memory.recipe.saved.v1 | memory / snapshot+grant | principalId, savedRecipeId, sourceType | private cookbook indexing; save counts only where user-safe |
+| memory.recipe.deleted.v1 | memory / exact saved-copy tombstone | principalId, savedRecipeId | remove only this saved identity from private projections; never erase a later re-save incarnation or source recipe; aggregateType=saved_recipe and committed tombstone version |
 | memory.collection.changed.v1 | memory / organize | principalId, collectionId, action | private collection sync, entitlement-aware tool projection |
 | platform.media.upload_completed.v1 | platform / verified upload | mediaId, quarantineVersionId, checksum | scan/transcode pipeline; read this exact version |
 | platform.media.ready.v1 | platform / sanitized assets ready | mediaId, derivativeSetVersion | publish composer status; not automatic publish |
@@ -75,6 +76,7 @@ The following names are canonical; prose aliases in feature documents refer to t
 | social.remix.created.v1 | social / own take+edge | childPostId, parentPostId?, lineageVersion | update visible remix trail and author notification only if current visibility allows |
 | social.reaction.changed.v1 | social / set/remove | postId, actorUserId, kind?, action | recompute aggregate count; coalesce author notification |
 | circles.membership.changed.v1 | circles / accept/remove/leave | circleId, userId, action, membershipVersion | deny/restore new reads per policy, cancel invalid notifications, invalidate circle feed |
+| circles.circle.changed.v1 | circles / acknowledged name or description update | circleId, action=updated | invalidate authorized circle summaries; no circle name, description, membership list or invitation token in the event |
 | circles.ownership.transferred.v1 | circles / locked two-role change | circleId, fromUserId, toUserId | refresh member controls and staff audit |
 | circles.invitation.changed.v1 | circles / issue/revoke/accept | invitationId, targetType, targetId, action | local invitation status; token is never in event |
 | conversations.message.created.v1 | conversations / persisted message | threadId, messageId, senderUserId | recipient inbox and generic push after membership/block checks |

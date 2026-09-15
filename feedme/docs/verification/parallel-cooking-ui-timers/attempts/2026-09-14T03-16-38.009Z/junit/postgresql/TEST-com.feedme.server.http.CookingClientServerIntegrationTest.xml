@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.http.CookingClientServerIntegrationTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-09-14T03:18:46.390Z" hostname="ansachars-MacBook-Pro.local" time="3.855">
+  <properties/>
+  <testcase name="actualRecalledHttpProblemCreatesLocalBlockingEvidenceWithoutSendingProgress" classname="com.feedme.server.http.CookingClientServerIntegrationTest" time="1.498"/>
+  <testcase name="remoteRefreshPreservesUnacknowledgedLocalCommandAndConflictingProgress" classname="com.feedme.server.http.CookingClientServerIntegrationTest" time="0.969"/>
+  <testcase name="realTransportDownloadsExactPinAndSynchronizesOrderedProgressThenExplicitCompletion" classname="com.feedme.server.http.CookingClientServerIntegrationTest" time="1.388"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

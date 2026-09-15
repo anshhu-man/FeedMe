@@ -1,0 +1,72 @@
+{
+  "passed": true,
+  "scope": "Planning/build-manifest enforcement and canonical feature-association coverage only. Shared screens and operations remain in the V1 mapping. This does not implement runtime feature gating, remove endpoints or shared resources, establish authorization, or prove implementation/release readiness.",
+  "counts": {
+    "canonicalFeatures": 54,
+    "includedFeatures": 44,
+    "deferredFeatures": 10,
+    "canonicalScreens": 98,
+    "v1Screens": 81,
+    "v1OnlyScreens": 70,
+    "sharedScreens": 11,
+    "deferredOnlyScreens": 17,
+    "canonicalOperations": 201,
+    "v1Operations": 157,
+    "v1OnlyOperations": 130,
+    "sharedOperations": 27,
+    "deferredOnlyOperations": 44,
+    "checks": 12
+  },
+  "checks": [
+    {
+      "name": "Manifest has exactly the supported V1 fields",
+      "passed": true
+    },
+    {
+      "name": "Manifest schema, release and decision match the approved partition",
+      "passed": true
+    },
+    {
+      "name": "Canonical registry contains F01–F54 exactly once",
+      "passed": true
+    },
+    {
+      "name": "Canonical feature phases retain the existing P1/P2/P3 assignments",
+      "passed": true
+    },
+    {
+      "name": "Included and deferred lists contain unique known feature IDs",
+      "passed": true
+    },
+    {
+      "name": "Included and deferred features never overlap",
+      "passed": true
+    },
+    {
+      "name": "The release partition retains all 54 canonical features",
+      "passed": true
+    },
+    {
+      "name": "V1 includes exactly the existing 44 P1 features",
+      "passed": true
+    },
+    {
+      "name": "Only the ten existing P2/P3 features are deferred",
+      "passed": true
+    },
+    {
+      "name": "Canonical screen IDs are unique and well formed",
+      "passed": true
+    },
+    {
+      "name": "Every feature has unique canonical screen and operation associations",
+      "passed": true
+    },
+    {
+      "name": "Every canonical screen is retained in feature coverage",
+      "passed": true
+    }
+  ],
+  "sourceSha256": "c8cafdbc7687486edf0f51ce76feea266b0dd7225362527a381a59189beb1fc9",
+  "verifiedAt": "2026-09-14T01:48:51.195Z"
+}

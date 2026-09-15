@@ -31,7 +31,7 @@ import kotlinx.coroutines.withTimeoutOrNull
 class AndroidNativeWorkCancellation private constructor(
     private val context: Context,
     private val receiver: ComponentName,
-    private val workManager: WorkManager,
+    private val workManager: WorkManager?,
     private val alarms: AlarmManager,
     private val notifications: NotificationManager,
 ) : NativeWorkCancellationPort {
@@ -64,8 +64,11 @@ class AndroidNativeWorkCancellation private constructor(
                         notifications.cancel(identity.notificationTag, identity.notificationId)
                     }
                     NativeWorkKind.WORKER -> {
+                        // A foreground timer-only composition never initializes or invents a
+                        // worker cancellation provider. Retained worker cleanup stays blocked.
+                        val manager = workManager ?: return@withContext PortResult.Failure(FailureReason.NOT_CONFIGURED)
                         val acknowledged = withTimeoutOrNull(WORK_CANCEL_TIMEOUT_MILLIS) {
-                            workManager.cancelWorkById(UUID.fromString(ticket.id)).await()
+                            manager.cancelWorkById(UUID.fromString(ticket.id)).await()
                             true
                         }
                         // The command may have committed before its acknowledgment arrived.
@@ -93,7 +96,18 @@ class AndroidNativeWorkCancellation private constructor(
             context: Context,
             alarmReceiver: ComponentName,
             workManager: WorkManager,
-        ): PortResult<AndroidNativeWorkCancellation> = try {
+        ): PortResult<AndroidNativeWorkCancellation> = configured(context, alarmReceiver, workManager)
+
+        /** Actual exact alarm/PendingIntent/notification cancellation with no WorkManager access
+         * or initialization. The explicit private receiver establishes the same opaque native
+         * identity, not a delivery handler or scheduling grant. WORKER always fails closed.
+         * Call only from the trusted application composition after its startup ownership gate.
+         */
+        fun createTimerOnly(context: Context, alarmReceiver: ComponentName): PortResult<AndroidNativeWorkCancellation> =
+            configured(context, alarmReceiver, null)
+
+        private fun configured(context: Context, alarmReceiver: ComponentName,
+            workManager: WorkManager?): PortResult<AndroidNativeWorkCancellation> = try {
             val application = context.applicationContext
             require(alarmReceiver.packageName == application.packageName)
             // A disabled receiver can still have a previously issued PendingIntent to cancel.

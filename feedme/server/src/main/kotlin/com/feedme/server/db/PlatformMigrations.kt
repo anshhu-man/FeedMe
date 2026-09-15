@@ -121,6 +121,6 @@ class PlatformMigrations(private val dataSource: DataSource) {
     private companion object {
         // "FEEDME" plus a dedicated migration-lock suffix; shared by every runner.
         const val MIGRATION_LOCK = 0x464545444D450001L
-        val RESOURCES = listOf("/db/migration/V001__durable_platform.sql")
+        val RESOURCES = listOf("/db/migration/V001__durable_platform.sql", "/db/migration/V002__circle_memberships.sql", "/db/migration/V003__private_planning.sql", "/db/migration/V004__private_kitchen.sql", "/db/migration/V005__private_cooking.sql", "/db/migration/V006__private_saved_recipes.sql", "/db/migration/V007__owned_photo_media.sql", "/db/migration/V008__media_processing_jobs.sql", "/db/migration/V009__private_post_drafts.sql", "/db/migration/V010__post_publication.sql")
     }
 }

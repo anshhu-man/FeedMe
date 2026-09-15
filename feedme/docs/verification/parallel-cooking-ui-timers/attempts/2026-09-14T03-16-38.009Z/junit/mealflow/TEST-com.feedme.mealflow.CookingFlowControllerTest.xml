@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.mealflow.CookingFlowControllerTest" tests="43" skipped="0" failures="0" errors="0" timestamp="2026-09-14T03:17:03.996Z" hostname="ansachars-MacBook-Pro.local" time="13.342">
+  <properties/>
+  <testcase name="readOnlyRestoreAndOfflinePreparationNeverSendOrInventServerIdentity[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.502"/>
+  <testcase name="preferenceOrMealChangeDuringPreflightRejectsMixedReadSequence[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.325"/>
+  <testcase name="duplicateLiveControllerAndMalformedNativeIdsFailBeforeMutation[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.259"/>
+  <testcase name="lostAttachmentProofRejectsChangedArchiveAndCannotBeDiscardedOrOverwrittenByNavigation[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.342"/>
+  <testcase name="restoredOwnedBundleIsHistoricalAndDoesNotDownloadOrAcknowledgeServerAgain[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.305"/>
+  <testcase name="recallLearnedByExistingKitchenRepositoryBlocksNewStartEvenWithStaleReadyGetPlan[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.403"/>
+  <testcase name="cachedReturnToCookingPreservesExactPinPendingProofAndRejectsAnotherPreparedPlan[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.423"/>
+  <testcase name="backDuringNonCooperativeStartIsImmediateAndKeepsExactOriginalPendingBytes[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.34"/>
+  <testcase name="freshPreferencesOrMaterializedPlanChangesInvalidateStartWithoutPost[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.274"/>
+  <testcase name="confirmationExpiryClockRollbackAndSourceRevisionChangeRequireNewConsent[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.367"/>
+  <testcase name="explicitStartUsesExactOriginalKeyNoIfMatchThenOwnedSessionAndPlanDownload[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.292"/>
+  <testcase name="offlineStepEditsRetainRealRepositoryActionsAndLastStepNeverCompletes[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.313"/>
+  <testcase name="prepareIsReadPreflightThenEncryptedProposalWithoutCreatingServerSession[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.144"/>
+  <testcase name="headOnlySynchronizationUsesReceivedEtagsAndPreservesLaterLocalEdit[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.331"/>
+  <testcase name="cachedReturnCallerHandoffCannotExposeInvalidatedPinOrClearNewLease[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.282"/>
+  <testcase name="unreviewedRecalledMissingReviewAndMissingInstructionsNeverEnableCooking[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.551"/>
+  <testcase name="unknownQueueEnqueueAfterCommitRetainsOriginalForExplicitFreshRetry[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.328"/>
+  <testcase name="explicitCompletionHasNoIfMatchMakeAgainFalseAndNoImplicitSaveFeedbackOrTimer[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.264"/>
+  <testcase name="offlinePrivateAccessCannotBeUpgradedByConnectivity[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.063"/>
+  <testcase name="missingHistoricalOrChangedSelectedPlanCannotBeUsedAsStartAuthority[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.216"/>
+  <testcase name="stricterPendingPreferencesBlockCookingAndCompletionButAllowExplicitSafePauseAbandon[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.262"/>
+  <testcase name="pendingMealCommandAndPendingPreferenceDraftBlockBeforeTransport[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.219"/>
+  <testcase name="lostAtomicAttachmentReceiptNeedsFreshAcknowledgementWithoutReposting[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.3"/>
+  <testcase name="cancelledNonCooperativeCreateKeepsOriginalIntentAndCannotDownloadOrPublishLateReply[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.229"/>
+  <testcase name="backRetainsProgressAndPendingIntentWithoutAbandonOrCompletion[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.257"/>
+  <testcase name="preparedOrNeverAttemptedCommandsCanBeDiscardedButAttemptedCannot[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.209"/>
+  <testcase name="knownSharedRecallAfterPreparationHidesPreviewBeforeConfirmFailureAndRestore[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.216"/>
+  <testcase name="responseBindingProfileAndCodecCorruptionFailClosedWithoutPortExpansion[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.152"/>
+  <testcase name="preparedDifferentPlanOwnsConsentProjectionAndBlockedProposalNeverFallsBackToPriorPin[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.35"/>
+  <testcase name="closeDuringSuspendedPreflightFencesLateResponseWithoutClosingBorrowedStore[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.092"/>
+  <testcase name="openingAnotherCachedSessionNeverInheritsPreviousAcknowledgementAndPreparedStartDisablesActions[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.314"/>
+  <testcase name="callerReturnHandoffRechecksLeaseAndNeverReturnsOldPrivateSnapshot[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.229"/>
+  <testcase name="malformedWrongPlanOrDivergentDownloadCannotAttachReceipt[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.869"/>
+  <testcase name="boundGetPlanRecallProblemsFencePrepareConfirmAndRetryAcrossControllerReplacement[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.693"/>
+  <testcase name="lostCreateReplyRetriesExactOriginalAfterBackoffAndNeverChangesBodyOrKey[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.386"/>
+  <testcase name="preparedProposalSurvivesCloseReopenWithoutImplicitConfirmation[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.29"/>
+  <testcase name="closeDuringRepositoryStoreReadPreventsLaterNetworkAndStoreEffects[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.225"/>
+  <testcase name="failedOrFalseProposalAcknowledgementNeverAuthorizesPost[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.336"/>
+  <testcase name="receiptDownloadFailurePreservesReceiptWithoutAnotherCreatePost[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.241"/>
+  <testcase name="changedOriginDownloadedPinRemainsReadOnlyAndCannotBeAdopted[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.274"/>
+  <testcase name="accountAndGuestUseActualLeaseClassAndNoAnonymousOrSocialFallback[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.429"/>
+  <testcase name="actualLeaseInvalidationSynchronouslyRedactsAndPreservesNewerLease[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.227"/>
+  <testcase name="pendingPreferencesIntroducedAfterLocalEditStopUnsafeDispatchButKeepExactHead[jvm]" classname="com.feedme.mealflow.CookingFlowControllerTest" time="0.213"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

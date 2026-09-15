@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.kitchen.KitchenAcknowledgementTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-09-14T03:16:58.397Z" hostname="ansachars-MacBook-Pro.local" time="0.503">
+  <properties/>
+  <testcase name="cancellationSwallowedByReadCannotPermitFollowingCommit[jvm]" classname="com.feedme.kitchen.KitchenAcknowledgementTest" time="0.045"/>
+  <testcase name="missingExtraOrNullPutReceiptNeverBecomesSuccess[jvm]" classname="com.feedme.kitchen.KitchenAcknowledgementTest" time="0.066"/>
+  <testcase name="unchangedSkippedNegativeOrZeroPutRevisionsAreRejected[jvm]" classname="com.feedme.kitchen.KitchenAcknowledgementTest" time="0.043"/>
+  <testcase name="invalidationInCallerReturnGapNeverPublishesTheCompletedPrivateResult[jvm]" classname="com.feedme.kitchen.KitchenAcknowledgementTest" time="0.038"/>
+  <testcase name="deletionRequiresBothNullReceiptAndObservedAbsence[jvm]" classname="com.feedme.kitchen.KitchenAcknowledgementTest" time="0.019"/>
+  <testcase name="returnedRevisionMapDoesNotAliasStoreOwnedMutableReceipt[jvm]" classname="com.feedme.kitchen.KitchenAcknowledgementTest" time="0.018"/>
+  <testcase name="callerBatchMutationWhilePortSuspendsCannotChangeAcknowledgementIntent[jvm]" classname="com.feedme.kitchen.KitchenAcknowledgementTest" time="0.015"/>
+  <testcase name="invalidationDuringReadbackFencesReceiptWithoutClearingSuccessor[jvm]" classname="com.feedme.kitchen.KitchenAcknowledgementTest" time="0.015"/>
+  <testcase name="changedPutReceiptCannotHideWrongRevisionSchemaBytesOrMissingRecord[jvm]" classname="com.feedme.kitchen.KitchenAcknowledgementTest" time="0.04"/>
+  <testcase name="exactChangedPutAndDeleteReceiptRequiresExactReadback[jvm]" classname="com.feedme.kitchen.KitchenAcknowledgementTest" time="0.031"/>
+  <testcase name="readbackFailureRetainsExactCategoryWithoutRetryOrRollbackClaim[jvm]" classname="com.feedme.kitchen.KitchenAcknowledgementTest" time="0.035"/>
+  <testcase name="invalidBatchAndExhaustedRevisionFailBeforeAnyStoreEffects[jvm]" classname="com.feedme.kitchen.KitchenAcknowledgementTest" time="0.037"/>
+  <testcase name="cancellationAfterCommitCannotReturnReceiptOrBeginReadback[jvm]" classname="com.feedme.kitchen.KitchenAcknowledgementTest" time="0.039"/>
+  <testcase name="cancellationSwallowedByTransportCannotCacheItsLateReply[jvm]" classname="com.feedme.kitchen.KitchenAcknowledgementTest" time="0.019"/>
+  <testcase name="absentCreatePreservesNativeTombstoneRevisionInsteadOfInventingRevisionOne[jvm]" classname="com.feedme.kitchen.KitchenAcknowledgementTest" time="0.018"/>
+  <testcase name="failureWithVisibleExactCommittedBytesNeverTriggersReadbackPromotion[jvm]" classname="com.feedme.kitchen.KitchenAcknowledgementTest" time="0.025"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

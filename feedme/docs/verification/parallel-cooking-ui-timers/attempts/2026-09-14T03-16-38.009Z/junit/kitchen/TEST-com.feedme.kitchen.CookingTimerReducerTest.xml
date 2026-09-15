@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.kitchen.CookingTimerReducerTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-09-14T03:16:58.309Z" hostname="ansachars-MacBook-Pro.local" time="0.077">
+  <properties/>
+  <testcase name="invalidDurationCountsOverflowAndUnknownStepsAreRejected[jvm]" classname="com.feedme.kitchen.CookingTimerReducerTest" time="0.057"/>
+  <testcase name="startUsesCanonicalUtcAndDoesNotAdvanceAnyStep[jvm]" classname="com.feedme.kitchen.CookingTimerReducerTest" time="0.001"/>
+  <testcase name="mismatchedAnchorDeadlineDoesNotBecomeClockAuthorityAndMetadataIsRedacted[jvm]" classname="com.feedme.kitchen.CookingTimerReducerTest" time="0.004"/>
+  <testcase name="resetIsPausedFullDurationAndDoesNotStartAnAlert[jvm]" classname="com.feedme.kitchen.CookingTimerReducerTest" time="0.009"/>
+  <testcase name="pauseRoundsUpFractionThenResumeUsesRemainingNotOriginalDuration[jvm]" classname="com.feedme.kitchen.CookingTimerReducerTest" time="0.001"/>
+  <testcase name="integralExponentFieldsAreAcceptedWithoutRewritingSiblingValues[jvm]" classname="com.feedme.kitchen.CookingTimerReducerTest" time="0.0"/>
+  <testcase name="duplicateIdentityAndCapacityCannotOverwriteExistingTimers[jvm]" classname="com.feedme.kitchen.CookingTimerReducerTest" time="0.004"/>
+  <testcase name="cancellationRemovesOnlyExactTimerAndPreservesSiblingWire[jvm]" classname="com.feedme.kitchen.CookingTimerReducerTest" time="0.0"/>
+  <testcase name="zeroRemainingPauseCannotResumeAndIsNeverAutomaticCookingCompletion[jvm]" classname="com.feedme.kitchen.CookingTimerReducerTest" time="0.0"/>
+  <testcase name="wallClockJumpAndRollbackAreUncertainNotFullDurationRestart[jvm]" classname="com.feedme.kitchen.CookingTimerReducerTest" time="0.0"/>
+  <testcase name="unknownClockPauseAndResumeWithoutContinuityCannotInferRemaining[jvm]" classname="com.feedme.kitchen.CookingTimerReducerTest" time="0.001"/>
+  <testcase name="missingDifferentContinuityAndElapsedRollbackAreUncertain[jvm]" classname="com.feedme.kitchen.CookingTimerReducerTest" time="0.0"/>
+  <testcase name="invalidFractionalRemainingAndGreaterThanDurationFail[jvm]" classname="com.feedme.kitchen.CookingTimerReducerTest" time="0.0"/>
+  <testcase name="continuousElapsedClockControlsRemainingAndDue[jvm]" classname="com.feedme.kitchen.CookingTimerReducerTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -4183,10 +4183,13 @@
           "memory"
         ],
         "summary": "Read owned collection",
-        "description": "Read owned collection. Object authorization is evaluated at execution time; do not infer access from a client button or identifier. ",
+        "description": "Read an owned collection item page. Account and guest access remain owner-scoped, as for listCollections. A nextItemCursor continues this collection version only; reject changed versions rather than merging inconsistent pages. Object authorization is evaluated at execution time, independently of cursor validity. Custom organization remains separately gated.",
         "security": [
           {
             "UserBearer": []
+          },
+          {
+            "GuestBearer": []
           }
         ],
         "parameters": [
@@ -4202,12 +4205,18 @@
           {
             "name": "X-Device-Session",
             "in": "header",
-            "required": true,
-            "description": "Registered app session from bootstrap; checked for revocation and binding to access token subject.",
+            "required": false,
+            "description": "Required for UserBearer: registered app session checked for revocation and token-subject binding. Omit for GuestBearer; the server verifies the bounded guest identity independently.",
             "schema": {
               "type": "string",
               "format": "uuid"
             }
+          },
+          {
+            "$ref": "#/components/parameters/Cursor"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
           }
         ],
         "responses": {
@@ -4276,7 +4285,7 @@
           "F45"
         ],
         "x-module": "memory",
-        "x-principal": "user",
+        "x-principal": "both",
         "x-idempotency-required": false
       },
       "patch": {
@@ -4723,7 +4732,7 @@
           "platform"
         ],
         "summary": "Reserve a quarantined upload with limited presigned POST",
-        "description": "Reserve a quarantined upload with limited presigned POST. Object authorization is evaluated at execution time; do not infer access from a client button or identifier. Persist the command key/result and domain mutation atomically; duplicate retry returns original result. ",
+        "description": "Reserve a quarantined upload with limited presigned POST. Recheck current account, registered device, terms, upload policy and owner-scoped clientDraft lifecycle at execution. Persist the original reservation and core Upload result atomically under the exact command key. The uploadUrl, uploadMethod, uploadFields and uploadExpiresAt fields are ephemeral capabilities, not durable receipt fields: an exact same-key retry may freshly issue them only for the same unchanged awaitingUpload reservation after current authorization. Reissuance retains the exact media ID, version/ETag, timestamps, private destination and expected bytes/type/checksum; it cannot extend the original reservation deadline. Changed, processing or deleted reservations reject old capability issuance; an expired reservation returns 410 without allocating another media record. A committed reservation with a lost signing/response acknowledgement requires the same original key, not compensation or a replacement asset. Already-issued POSTs may remain usable until their expiry; tombstones deny processing/publication and exact quarantine cleanup accounts for late uploads. Status GET is observation only and does not issue or renew upload capabilities.",
         "security": [
           {
             "UserBearer": []
@@ -22527,6 +22536,7 @@
           },
           "mode": {
             "type": "string",
+            "description": "Resolved preparation mode. Required for ready/recalled plans; may be omitted for needsConfirmation/noMatch when no concrete mode has been selected. Absence is not auto, null, or permission to cook.",
             "enum": [
               "cook",
               "assemble",
@@ -22626,13 +22636,34 @@
           "version",
           "createdAt",
           "updatedAt",
-          "mode",
           "status",
           "constraints",
           "missingIngredients",
           "changes",
           "reasons",
           "catalogRevision"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "status": {
+                  "enum": [
+                    "ready",
+                    "recalled"
+                  ]
+                }
+              },
+              "required": [
+                "status"
+              ]
+            },
+            "then": {
+              "required": [
+                "mode"
+              ]
+            }
+          }
         ]
       },
       "AdaptRequest": {
@@ -23301,6 +23332,14 @@
               "format": "uuid"
             }
           },
+          "nextItemCursor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 2048,
+            "description": "Absent means a legacy complete savedRecipeIds set. Present null means the terminal item page. Present string means continue with getCollection cursor and the same collection version. listCollections embeds a bounded first item page per collection; its outer nextCursor pages collections, not their items. Never interpret a nonterminal item page as the complete collection."
+          },
           "smartRule": {
             "type": "string",
             "enum": [
@@ -23772,6 +23811,7 @@
       },
       "MediaPrepare": {
         "type": "object",
+        "description": "An exact owned upload intent. clientDraftId identifies an account-scoped local composer lifecycle; reserving media does not implicitly create a social PostDraft. Existing server-draft terminal or expiry state must fence upload eligibility under the same lifecycle lock. Different explicit media intents may share a draft, but retry keeps its original idempotency key and reservation. Configured photo format, byte and processing bounds are additional service policy, not permission to accept deferred clip/avatar flows.",
         "additionalProperties": false,
         "properties": {
           "kind": {
@@ -23819,6 +23859,7 @@
       },
       "Upload": {
         "type": "object",
+        "description": "Owned processing status. id/version/createdAt/updatedAt/status form the stable core result; uploadUrl/uploadMethod/uploadFields/uploadExpiresAt form one short-lived POST capability and must be present together when issued. They are excluded from durable command receipts and may differ on an authorized exact prepare retry for the same unchanged reservation. getMediaStatus does not issue these fields. Upload or processing success never grants media delivery or publication rights.",
         "additionalProperties": false,
         "properties": {
           "id": {

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.contracts.PlanModeContractTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-09-14T00:29:33.923Z" hostname="ansachars-MacBook-Pro.local" time="0.048">
+  <properties/>
+  <testcase name="omittedModeIsAllowedOnlyForConfirmationAndNoMatch[jvm]" classname="com.feedme.contracts.PlanModeContractTest" time="0.015"/>
+  <testcase name="projectionRetainsAbsenceAndExactBytesRatherThanInventingASelection[jvm]" classname="com.feedme.contracts.PlanModeContractTest" time="0.009"/>
+  <testcase name="optionalDoesNotMeanNullAutoWrongTypeOrUnknownStatus[jvm]" classname="com.feedme.contracts.PlanModeContractTest" time="0.011"/>
+  <testcase name="everyResolvedCanonicalModeStillValidatesForEveryKnownStatus[jvm]" classname="com.feedme.contracts.PlanModeContractTest" time="0.012"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.session.CompositeSetupAbortCoordinatorTest" tests="40" skipped="0" failures="0" errors="0" timestamp="2026-09-13T20:30:09.691Z" hostname="ansachars-MacBook-Pro.local" time="2.887">
+  <properties/>
+  <testcase name="successfulCasNeedsExactReadbackBeforeConfirmationCanAuthorizeEffects[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.247"/>
+  <testcase name="postCompleteReadbackOrEvidenceFailureCannotReturnSuccessfulCompletion[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.078"/>
+  <testcase name="everyReachableUnconfirmedStageCanBePreparedWithoutAllocatingOrSelectingAnything[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.033"/>
+  <testcase name="processRetirementBeforeOrDuringConfirmationStopsSubsequentCleanup[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.051"/>
+  <testcase name="aFreshCoordinatorForTheSameRuntimeOwnerAndGenerationCanValidateTheExactProposal[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.01"/>
+  <testcase name="staleOwnerAtEveryPreparationAndConfirmationAwaitStopsWithoutAnotherPortCall[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.41"/>
+  <testcase name="confirmedIntentCannotBecomeAnotherProposalAndRetryPreservesItsExactRawBytes[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.015"/>
+  <testcase name="eachFailedNativeAbortStopsLaterEffectsAndRetainsExactConfirmedPlan[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.016"/>
+  <testcase name="untouchedComponentsMustStayExactAfterEachAcknowledgedNativeEffect[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.037"/>
+  <testcase name="changedControlAfterAnEffectCannotAuthorizeTheNextResourceOrCompleteAnotherOperation[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.013"/>
+  <testcase name="failureBeforeOrAfterInitialConfirmationCasNeverStartsAnyNativeAbort[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.011"/>
+  <testcase name="confirmationAcknowledgesExactIntentThenAbortsWorkDataCredentialsAndCompletesOriginalOperation[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.007"/>
+  <testcase name="prepareIsReadOnlyRedactedAndDoesNotInferConfirmationFromCoherentNativeMetadata[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.002"/>
+  <testcase name="newerControlRevisionWithIdenticalPayloadInvalidatesTheOldProposal[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.002"/>
+  <testcase name="callerCancellationAtEveryAwaitSurvivesNoncooperativePortReturnsWithoutMoreCalls[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.392"/>
+  <testcase name="failedAbortAcknowledgementIsNotPromotedEvenWhenAbortedMetadataAlreadyBecameVisible[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.028"/>
+  <testcase name="noPendingMissingMalformedAndLegacyControlNeverBecomeAbortProposals[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.016"/>
+  <testcase name="proposalOwnerGenerationAndConfigurationAreExactAndNotTransferable[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.008"/>
+  <testcase name="extraDomainRowsTombstonesAndUnavailablePrivateKeysHaveNoEmptyOnlyFallback[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.008"/>
+  <testcase name="processLatchExceptionsAreSanitizedWhileOwnerAndCancellationFencesStillWin[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.019"/>
+  <testcase name="changedFingerprintsWorkRevisionOrBindingCannotBeHiddenBehindSamePublicStages[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.015"/>
+  <testcase name="staleOrCancelledConfirmedAndCompleteOnlyRetriesCannotContinueToAnotherEffect[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="1.158"/>
+  <testcase name="evidenceChangedDuringConfirmationCasCannotUseTheNewConsentToDeleteChangedResources[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.008"/>
+  <testcase name="alreadyAbortedResourcesAreAllReacknowledgedInsteadOfSkippedOnConfirmedRetry[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.005"/>
+  <testcase name="unboundSetupPassesNullExpectedBindingRatherThanInventingAPrivateRecord[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.022"/>
+  <testcase name="nativeAndControlExceptionsAreSanitizedButCancellationStillPropagates[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.032"/>
+  <testcase name="lostFinalReceiptRequiresRetainedExactPlanAndFreshCompleteAcknowledgementOnly[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.026"/>
+  <testcase name="successfulCompletionConsumesRetainedRetryProofAndCannotWriteCompleteAgain[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.027"/>
+  <testcase name="visibleUnknownConfirmationCanBeRetriedOnlyWithAFreshAcknowledgement[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.007"/>
+  <testcase name="malformedSuccessfulConfirmationReceiptNeverAuthorizesAnAbort[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.005"/>
+  <testcase name="unavailableMetadataAfterAnEffectCannotAuthorizeTheNextEffectOrCompletion[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.011"/>
+  <testcase name="evidenceChangedWithinPreparationNeverEscapesAsAProposal[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.066"/>
+  <testcase name="confirmedPartialCleanupMustRespectWorkThenDataThenCredentialOrder[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.014"/>
+  <testcase name="workAbortRequiresExactlyOneChangedRevisionAndDataAbortRequiresAChangedFingerprint[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.039"/>
+  <testcase name="retainedCompletionCannotFollowChangedComponentEvidenceOrAnotherControlRevision[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.02"/>
+  <testcase name="contradictoryUnconfirmedResourceStagesCannotAuthorizeConfirmation[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.002"/>
+  <testcase name="successfulPortResultWithoutAbortedMetadataCannotAdvanceToAnotherResource[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.01"/>
+  <testcase name="soleBindingMustMatchEveryCanonicalOriginalSetupDimensionAndSchemaTwo[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.004"/>
+  <testcase name="failedFinalCompleteWriteRetainsConfirmedIntentAndRetryReacknowledgesAllThreeResources[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.007"/>
+  <testcase name="mismatchedConfigurationAndUnavailableNativeAbortCapabilityNeverWriteConfirmation[jvm]" classname="com.feedme.session.CompositeSetupAbortCoordinatorTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

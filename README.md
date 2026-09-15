@@ -29,15 +29,15 @@ Everything starts in the **[Reference library](Reference/README.md)**.
 | Architecture and integration | [System architecture](outputs/biteclub_blueprint/architecture/02_Architecture.md) · [201-operation API contract](outputs/biteclub_blueprint/architecture/04_API_Contract.json) · [Integration guide](outputs/biteclub_blueprint/12_Integration_Guide.md) |
 | Milestones and Shipaton preparation | [Release plan](feedme/docs/RELEASE_PLAN.md) · [Needs-user register](feedme/docs/USER_ACTIONS.md) |
 | Source and tests | [Native app / shared Kotlin / local server](feedme/README.md) · [Implementation docs](feedme/docs/) |
-| Built artifacts and history | [Android demo and checksums](Reference/ARTIFACTS.md) · [Earlier BiteClub exports](Reference/History/README.md) |
+| Built artifacts and history | [Current Android preview and historical demo](Reference/ARTIFACTS.md) · [Earlier BiteClub exports](Reference/History/README.md) |
 
 ## Current state — development, not shipped
 
 The blueprint covers **54 features, 98 screens, 900 canonical actions and 201 API operations**. Those numbers describe design/contract coverage, not completed native features.
 
-The Android demo supports a local journey from welcome through Make Mine, saving, guided cooking and local post preview. Separate shared-Kotlin storage, transport, session, kitchen and server foundations have extensive tests. Real login, product backend routes, social delivery, reviewed cooking content, billing, iOS compilation and store release remain open.
+The retained Android preview connects meal requests, pantry/preferences, guided cooking, foreground timers, cookbook storage, private text drafts and explicit reviewed publication. Accounts, recipes and the service are synthetic; publishing is self-only on the device. Real sign-in, photo upload, circles/live feeds, reviewed cooking content, billing, iOS verification and store release remain open. The earlier memory-only demo is preserved separately.
 
-This snapshot includes the latest retained credential/private-data recovery foundations. The source workspace passed **1,592 Kotlin/server/database tests, 142 Node checks and 280 isolated Android tests** on 14 September 2026 (India time). These are component results, not completed product features; iOS remains uncompiled. Public evidence is path-redacted and is not a fresh native acceptance receipt for a clone. Read [the exact checkpoint and export limitations](Reference/SNAPSHOT_STATUS.md) and [build status](feedme/docs/BUILD_STATUS.md).
+The 15 September source-workspace preview passes **360 JVM methods, 63 Android emulator methods, two clean lint reports and 76 individually reviewed captures**. These are bounded preview results, not completed product features or a native rerun of this public tree. Full scope remains 54 features, with 44 in V1 and the existing ten deferred. Read [the exact checkpoint and export limitations](Reference/SNAPSHOT_STATUS.md), [local-evidence boundary](Reference/LOCAL_EVIDENCE.md) and [build status](feedme/docs/BUILD_STATUS.md).
 
 No app-store release, live backend, hosted UI or Devpost submission is implied by this public repository.
 
@@ -55,7 +55,7 @@ For Android, install JDK 17 and Android SDK 36, set `JAVA_HOME` and `ANDROID_HOM
 
 ```sh
 cd feedme
-./gradlew :shared:core:jvmTest :apps:android:assembleDebug
+./gradlew :shared:app:jvmTest :apps:android:testProgressUnitTest :apps:android:assembleProgress
 ```
 
 For iOS, open `feedme/apps/ios/FeedMe.xcodeproj` in full Xcode. iOS has not yet been compiled on the development machine. See [setup and test prerequisites](Reference/SETUP.md).
@@ -63,7 +63,7 @@ For iOS, open `feedme/apps/ios/FeedMe.xcodeproj` in full Xcode. iOS has not yet 
 ## Repository layout
 
 ```text
-Reference/                    Idea, screen index, snapshot status, demo and history
+Reference/                    Idea, screen index, status, preview, fixtures and history
 feedme/                       Shared Kotlin, Android, iOS, local server, tests and docs
 outputs/biteclub_blueprint/    Canonical feature plans, contracts, diagrams and screen specs
 outputs/biteclub_ui/           Complete prototype, 98 PNG screens, assets and design tokens

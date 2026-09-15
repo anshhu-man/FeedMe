@@ -1,0 +1,3 @@
+instrumentation:com.feedme.app.test/androidx.test.runner.AndroidJUnitRunner (target=com.feedme.app.test)
+instrumentation:com.feedme.session.test/androidx.test.runner.AndroidJUnitRunner (target=com.feedme.session.test)
+instrumentation:com.feedme.storage.test/androidx.test.runner.AndroidJUnitRunner (target=com.feedme.storage.test)

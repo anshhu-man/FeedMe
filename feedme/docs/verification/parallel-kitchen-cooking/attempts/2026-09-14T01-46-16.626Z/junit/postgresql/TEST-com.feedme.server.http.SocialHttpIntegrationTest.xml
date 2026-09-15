@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.http.SocialHttpIntegrationTest" tests="26" skipped="0" failures="0" errors="0" timestamp="2026-09-14T01:48:05.459Z" hostname="ansachars-MacBook-Pro.local" time="8.371">
+  <properties/>
+  <testcase name="invitationIssueAndRevokeReplayExactResponseWithoutRetainingBearer" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.347"/>
+  <testcase name="preCommitOutboxFailureRollsBackCircleMembershipAndReceiptWithoutPrivateDiagnostic" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.25"/>
+  <testcase name="cancelledCallerAfterActualCommitCanReconcileButCannotCreateASecondCircle" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.262"/>
+  <testcase name="opaquePaginationIsCurrentActorBoundAndDuplicateQueryCannotWidenIt" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.295"/>
+  <testcase name="suppliedDeviceAndVerifiedEnvironmentMustAgreeBeforeStoreAcquisition" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.239"/>
+  <testcase name="guestRefreshAndInvitationTokensCannotBecomeAccountPrincipals" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.242"/>
+  <testcase name="foreignAndMissingCirclesAndInvitationsHaveIndistinguishableProblems" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.329"/>
+  <testcase name="expiredRevokedAndUnknownPreviewCapabilitiesAreUniformAndNeverRedeem" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.409"/>
+  <testcase name="expiredAndRevokedAcceptsNeverConsumeMembershipAndDeferredTargetsStayClosed" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.402"/>
+  <testcase name="unconfiguredSocialOperationsStay503AndDoNotAcquireAnIdentity" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.227"/>
+  <testcase name="simulatedLostCommitReceiptKeepsOriginalCommandForExactReconciliation" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.299"/>
+  <testcase name="currentAccountRevocationStillDeniesVerifiedCachedCommandReplay" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.249"/>
+  <testcase name="invitationAcceptanceMemberRosterRoleUpdateAndRemovalUseActualStore" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.306"/>
+  <testcase name="invalidJsonFramingEncodingAndUnexpectedDeleteBodyHaveNoDomainEffects" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.342"/>
+  <testcase name="verifierUnavailableForbiddenAndRateLimitProblemsAreSanitizedAndBounded" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.207"/>
+  <testcase name="blockedRedemptionIsDeniedAndBlockedProfilesAreFilteredBeforeRosterPagination" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.408"/>
+  <testcase name="independentlyConfiguredPlanningAndSocialRoutesCoexistWithoutEnablingOtherProducts" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.274"/>
+  <testcase name="decodedCanonicalUuidSelectsOnlyExactResourceAndExtraSegmentsStayUnknown" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.256"/>
+  <testcase name="explicitTransferThenLeaveAndDissolveNeverLeavesAnOwnerlessActiveCircle" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.391"/>
+  <testcase name="concurrentSameKeyHttpCommandsSerializeOneCircleAndOneOutboxFact" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.254"/>
+  <testcase name="duplicateControlsAndUndeclaredConditionalReadsNeverReturn304OrMutate" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.35"/>
+  <testcase name="sameAndNewKeyAcceptReturnOneCurrentMembershipButNotAnotherActorOrGeneration" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.637"/>
+  <testcase name="configuredCreateReadListAndUpdateReturnCanonicalPrivateRepresentations" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.356"/>
+  <testcase name="actualCioSocketRejectsDuplicateAuthorizationAndAmbiguousLengthWithoutExtraEffects" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.284"/>
+  <testcase name="currentRoleAndVersionAreEnforcedForFreshAndReplayedWrites" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.407"/>
+  <testcase name="publicPreviewIsMinimalCapabilityReadAndIgnoresOptionalAuthWithoutVerification" classname="com.feedme.server.http.SocialHttpIntegrationTest" time="0.348"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

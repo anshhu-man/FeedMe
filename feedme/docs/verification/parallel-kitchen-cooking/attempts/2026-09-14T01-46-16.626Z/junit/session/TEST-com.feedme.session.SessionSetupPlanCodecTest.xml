@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.session.SessionSetupPlanCodecTest" tests="23" skipped="0" failures="0" errors="0" timestamp="2026-09-14T01:46:39.511Z" hostname="ansachars-MacBook-Pro.local" time="0.068">
+  <properties/>
+  <testcase name="malformedWorkPlanCannotBeSmuggledThroughTheCompositeWrapper[jvm]" classname="com.feedme.session.SessionSetupPlanCodecTest" time="0.003"/>
+  <testcase name="malformedCredentialPlanCannotBeSmuggledThroughTheCompositeWrapper[jvm]" classname="com.feedme.session.SessionSetupPlanCodecTest" time="0.003"/>
+  <testcase name="configurationBindingRequiresExactlyTheExistingLowercaseDigestShape[jvm]" classname="com.feedme.session.SessionSetupPlanCodecTest" time="0.004"/>
+  <testcase name="malformedRootsAndDeepDocumentsNeverReturnPartialSetupIntent[jvm]" classname="com.feedme.session.SessionSetupPlanCodecTest" time="0.001"/>
+  <testcase name="nestedByteBoundsRejectOversizedCredentialWorkAndNon170ByteData[jvm]" classname="com.feedme.session.SessionSetupPlanCodecTest" time="0.002"/>
+  <testcase name="credentialAndWorkPlansMustRetainTheirOwnExactCanonicalBytes[jvm]" classname="com.feedme.session.SessionSetupPlanCodecTest" time="0.004"/>
+  <testcase name="malformedUtf8AndUnpairedUnicodeAreNeverLossilyAccepted[jvm]" classname="com.feedme.session.SessionSetupPlanCodecTest" time="0.002"/>
+  <testcase name="allRootFieldsAreMandatoryAndUnknownAuthorityProgressOrCredentialFieldsAreRejected[jvm]" classname="com.feedme.session.SessionSetupPlanCodecTest" time="0.002"/>
+  <testcase name="versionAndPurposeHaveNoEquivalentOrLegacyFallback[jvm]" classname="com.feedme.session.SessionSetupPlanCodecTest" time="0.004"/>
+  <testcase name="outerScopeRequiresExactFieldsSafeBoundedStringsAndNonDemoKind[jvm]" classname="com.feedme.session.SessionSetupPlanCodecTest" time="0.007"/>
+  <testcase name="visibleWorkScopeMustMatchEveryOuterOwnershipField[jvm]" classname="com.feedme.session.SessionSetupPlanCodecTest" time="0.003"/>
+  <testcase name="operationRequiresAnExactCanonicalUuidNotAnotherAuthorityType[jvm]" classname="com.feedme.session.SessionSetupPlanCodecTest" time="0.005"/>
+  <testcase name="structuralAcceptanceDoesNotAuthenticateOpaqueCredentialOrDataOwnerBindings[jvm]" classname="com.feedme.session.SessionSetupPlanCodecTest" time="0.0"/>
+  <testcase name="accountGuestAndUnicodeScopesPreserveExactNonNormalizedIdentity[jvm]" classname="com.feedme.session.SessionSetupPlanCodecTest" time="0.002"/>
+  <testcase name="duplicateOuterScopeAndEmbeddedPlanKeysAreRejectedBeforeNormalization[jvm]" classname="com.feedme.session.SessionSetupPlanCodecTest" time="0.003"/>
+  <testcase name="planRecordPayloadAndErrorsNeverEchoAnyNestedCapabilityOrPrivateIdentity[jvm]" classname="com.feedme.session.SessionSetupPlanCodecTest" time="0.001"/>
+  <testcase name="encodingAndInternalCreationValidateAllVisibleFieldsAndNestedDataStructure[jvm]" classname="com.feedme.session.SessionSetupPlanCodecTest" time="0.0"/>
+  <testcase name="maximumCompositeWireBoundIs16000BytesAndCanonicalFactoryRejectsPadding[jvm]" classname="com.feedme.session.SessionSetupPlanCodecTest" time="0.001"/>
+  <testcase name="opaqueFactoryAndStorageCopiesAreDetachedFromCallerArrays[jvm]" classname="com.feedme.session.SessionSetupPlanCodecTest" time="0.001"/>
+  <testcase name="canonicalRoundTripPreservesExactNestedPlanBytesAndEveryVisibleField[jvm]" classname="com.feedme.session.SessionSetupPlanCodecTest" time="0.001"/>
+  <testcase name="nestedPlansMustBeLowercaseHexStringsNotEmbeddedObjectsOrRawSecrets[jvm]" classname="com.feedme.session.SessionSetupPlanCodecTest" time="0.012"/>
+  <testcase name="publicFactoryRejectsEquivalentOuterOrderWhitespaceAndEscapes[jvm]" classname="com.feedme.session.SessionSetupPlanCodecTest" time="0.003"/>
+  <testcase name="dataPlanReceivesStrictStructuralValidationEvenFromItsSizeOnlyConstructor[jvm]" classname="com.feedme.session.SessionSetupPlanCodecTest" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

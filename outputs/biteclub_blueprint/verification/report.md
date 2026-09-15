@@ -2,7 +2,7 @@
 
 Specification checks passed. Specification, contract and synthetic navigation QA only; not a deployed backend, full OpenAPI semantic certification, or native-device/provider test.
 
-Generated 2026-09-13T03:49:35.751Z.
+Generated 2026-09-13T21:49:18.664Z.
 
 - features: 54
 - screens: 98

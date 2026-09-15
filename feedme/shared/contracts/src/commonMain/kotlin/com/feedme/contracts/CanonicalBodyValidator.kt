@@ -63,7 +63,20 @@ class CanonicalBodyValidator private constructor(
     private class OperationBodies(val request: BodyShape, val responses: Map<Int, BodyShape>)
 
     companion object {
-        fun bundled(catalog: ContractCatalog = ContractCatalog.bundled()): CanonicalBodyValidator = try {
+        // One private compiled graph for the pinned, app-bundled contract. Initialization is
+        // synchronized; the mutable compiler exists only during initialization. Validation
+        // continues to decode each input and allocate its own budget/result, never caching data.
+        private val bundledValidator: CanonicalBodyValidator by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+            compile(ContractCatalog.bundled())
+        }
+
+        fun bundled(): CanonicalBodyValidator = bundledValidator
+
+        // Explicit catalogs remain independent: never ignore caller-supplied metadata or
+        // cache it by source hash. Public catalog collections are not a shared authority.
+        fun bundled(catalog: ContractCatalog): CanonicalBodyValidator = compile(catalog)
+
+        private fun compile(catalog: ContractCatalog): CanonicalBodyValidator = try {
             val compiler = CanonicalSchemaProgram { reference ->
                 Json.parseToJsonElement(catalog.resolveSchema(reference).json).jsonObject
             }

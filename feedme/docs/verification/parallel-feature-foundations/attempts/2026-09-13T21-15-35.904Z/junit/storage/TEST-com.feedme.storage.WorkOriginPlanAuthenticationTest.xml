@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.storage.WorkOriginPlanAuthenticationTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-09-13T21:17:21.093Z" hostname="ansachars-MacBook-Pro.local" time="1.129">
+  <properties/>
+  <testcase name="identicalRevisionAndPayloadInForeignInstallCannotAuthenticateProof[jvm]" classname="com.feedme.storage.WorkOriginPlanAuthenticationTest" time="0.092"/>
+  <testcase name="malformedMissingAndTombstonedWorkRecordFailClosedWithoutRepair[jvm]" classname="com.feedme.storage.WorkOriginPlanAuthenticationTest" time="0.272"/>
+  <testcase name="proofAuthenticationDoesNotPromoteChangedRecordIntoOriginalPredecessor[jvm]" classname="com.feedme.storage.WorkOriginPlanAuthenticationTest" time="0.062"/>
+  <testcase name="proofOperationsNeverRunUnrelatedPendingKeyGarbageCollection[jvm]" classname="com.feedme.storage.WorkOriginPlanAuthenticationTest" time="0.066"/>
+  <testcase name="internalSeamRejectsForeignManagerAndNonWorkScopedHandles[jvm]" classname="com.feedme.storage.WorkOriginPlanAuthenticationTest" time="0.091"/>
+  <testcase name="authenticatedDifferentBytesAtSameRevisionCannotMatchOriginalPredecessorMac[jvm]" classname="com.feedme.storage.WorkOriginPlanAuthenticationTest" time="0.051"/>
+  <testcase name="revisionProposalAndBothMacHalvesAreBound[jvm]" classname="com.feedme.storage.WorkOriginPlanAuthenticationTest" time="0.039"/>
+  <testcase name="exactProofSurvivesAcknowledgedCloseAndExistingReopen[jvm]" classname="com.feedme.storage.WorkOriginPlanAuthenticationTest" time="0.042"/>
+  <testcase name="capturedWrapperNeverRebindsAfterItsOwnerGenerationChanges[jvm]" classname="com.feedme.storage.WorkOriginPlanAuthenticationTest" time="0.052"/>
+  <testcase name="optionalWorkCapabilitySignsDetachedRepeatedProofsWithoutAnyWriteOrKeyEffect[jvm]" classname="com.feedme.storage.WorkOriginPlanAuthenticationTest" time="0.039"/>
+  <testcase name="vaultErrorsAreSanitizedAndCancellationPropagatesWithoutMutation[jvm]" classname="com.feedme.storage.WorkOriginPlanAuthenticationTest" time="0.041"/>
+  <testcase name="missingOwnerKeyCannotProduceOrVerifyProofOrRegenerateMaterial[jvm]" classname="com.feedme.storage.WorkOriginPlanAuthenticationTest" time="0.043"/>
+  <testcase name="predecessorComparisonPreservesExactNoncanonicalRawBytes[jvm]" classname="com.feedme.storage.WorkOriginPlanAuthenticationTest" time="0.056"/>
+  <testcase name="reopenedNewOwnerUnderSameInstallIndexCannotAuthenticateOldOwnerProof[jvm]" classname="com.feedme.storage.WorkOriginPlanAuthenticationTest" time="0.08"/>
+  <testcase name="closedWrapperCannotSignOrVerifyAndDoesNotTouchVault[jvm]" classname="com.feedme.storage.WorkOriginPlanAuthenticationTest" time="0.043"/>
+  <testcase name="boundedInputsRejectBeforeSqlAndMaximumSupportedRevisionStillSigns[jvm]" classname="com.feedme.storage.WorkOriginPlanAuthenticationTest" time="0.06"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

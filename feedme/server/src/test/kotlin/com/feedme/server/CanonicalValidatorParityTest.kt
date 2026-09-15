@@ -70,7 +70,12 @@ class CanonicalValidatorParityTest {
             "maximum", "minLength", "maxLength", "minItems", "maxItems", "uniqueItems", "pattern", "additionalProperties")) {
             assertTrue(categories.getOrDefault(category, 0) > 0, "missing mutation category: $category")
         }
-        assertEquals(8423, mutations, "pinned canonical schema mutation coverage")
+        // Conditional Plan.mode removes two unconditional-required mutations: Plan and the
+        // Plan item nested in PlanPage. Its ready/recalled requirements are exercised by the
+        // conditional-branch test below and the explicit PlanModeParityTest status/mode matrix.
+        // Optional bounded nullable item cursor adds eight mutations to Collection and eight
+        // more to the Collection nested in CollectionPage; all prior mutations remain covered.
+        assertEquals(8437, mutations, "pinned canonical schema mutation coverage")
         assertTrue(differences.isEmpty(), "${differences.size} schema differences; first 40:\n${differences.take(40).joinToString("\n")}")
     }
 

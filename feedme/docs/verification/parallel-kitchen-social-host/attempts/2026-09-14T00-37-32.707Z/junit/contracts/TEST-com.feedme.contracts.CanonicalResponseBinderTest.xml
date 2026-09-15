@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.contracts.CanonicalResponseBinderTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-09-14T00:37:36.139Z" hostname="ansachars-MacBook-Pro.local" time="0.263">
+  <properties/>
+  <testcase name="errorsBindToActualHttpStatusWithoutNumericSpellingLoss[jvm]" classname="com.feedme.contracts.CanonicalResponseBinderTest" time="0.153"/>
+  <testcase name="aSchemaValidProblemWithWrongStatusDoesNotBecomeAReceipt[jvm]" classname="com.feedme.contracts.CanonicalResponseBinderTest" time="0.034"/>
+  <testcase name="providedHttpTraceMustMatchProblemButAbsentHeaderIsNotInvented[jvm]" classname="com.feedme.contracts.CanonicalResponseBinderTest" time="0.018"/>
+  <testcase name="acceptedDocumentsAreDetachedAndBodylessIsNotNullJson[jvm]" classname="com.feedme.contracts.CanonicalResponseBinderTest" time="0.034"/>
+  <testcase name="allRequiredFieldsEnumsAndUnknownPropertiesMustValidateBeforeBinding[jvm]" classname="com.feedme.contracts.CanonicalResponseBinderTest" time="0.022"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

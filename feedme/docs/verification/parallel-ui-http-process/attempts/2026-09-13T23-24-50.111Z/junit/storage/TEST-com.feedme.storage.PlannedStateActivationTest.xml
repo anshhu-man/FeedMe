@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.storage.PlannedStateActivationTest" tests="26" skipped="0" failures="0" errors="0" timestamp="2026-09-13T23:25:40.463Z" hostname="ansachars-MacBook-Pro.local" time="1.895">
+  <properties/>
+  <testcase name="failedExactKeyCreationPreservesItsArtifactAndSamePlanCanCommitWithoutReplacement[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.037"/>
+  <testcase name="malformedOwnerAndStrayRowsCannotBeUsedAsAnEmptyPredecessor[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.223"/>
+  <testcase name="selectedMissingOrUnusableKeyNeverRegeneratesMaterial[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.064"/>
+  <testcase name="absentOwnerPlanIsReadOnlyAndAllocatesOnlyAnUnstoredRandomIdentifier[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.022"/>
+  <testcase name="changedAbsentOrRetiredPredecessorCannotBeOverwrittenByAnOldPlan[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.126"/>
+  <testcase name="competingPlanAfterPartialCreationPreservesOldUnselectedKeyAsExplicitRecoveryLimit[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.072"/>
+  <testcase name="candidateReferenceAddedAfterPlanningPreventsCommitWithoutDeletingAnyKey[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.115"/>
+  <testcase name="cancellationAfterKeyCreationOrCommittedSelectionNeverDeletesOrRegeneratesKey[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.059"/>
+  <testcase name="cancelledQueuedAndClosedCallsCannotPlanCreateOrMutate[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.015"/>
+  <testcase name="generationOverflowReservesBothSelectionAndFutureConsumptionSlots[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.134"/>
+  <testcase name="commitCreatesOnlyThePreselectedKeyAndReturnsAcknowledgementNotAStore[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.041"/>
+  <testcase name="planCopiesAndResultStringsDoNotLeakPrivateScopeOrMutableEncoding[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.016"/>
+  <testcase name="realPrecommitRollbackRetainsExactKeyAndLostCommitResponseReplaysSelectedOwner[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.053"/>
+  <testcase name="malformedScopeAndIdentifierProviderFailWithoutOwnerOrKeyCreation[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.019"/>
+  <testcase name="corruptSelectedRowDoesNotGetDecryptedOrOverwrittenByAcknowledgementReplay[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.044"/>
+  <testcase name="candidateKeyCollisionWithAliasOwnerOrGcIsRejectedBeforeCreationOrCleanup[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.123"/>
+  <testcase name="exactSelectedReplayAfterReopenPreservesRowsAndCreatesNoKeysOrSqlWrites[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.091"/>
+  <testcase name="changedRetiredKeyAndMissingRetiredPredecessorCannotBeReinterpretedAsAbsent[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.086"/>
+  <testcase name="legacyVaultFailsNotConfiguredWithoutCallingLegacyCreationOrCleanup[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.018"/>
+  <testcase name="unfinishedRetiredPredecessorWithKeyOrGcEntryNeverGetsAReplacementPlan[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.159"/>
+  <testcase name="repeatedPlansDoNotReserveRowsKeysOrMutatePriorEvidence[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.017"/>
+  <testcase name="unrelatedQueuedGcAndOtherOwnerDataSurvivePlanCommitAndSelectedReplay[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.122"/>
+  <testcase name="exactRetiredPredecessorIsBoundWithoutRevivingItsKeyOrOldHandle[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.053"/>
+  <testcase name="wrongScopeTamperedAndForeignInstallPlansFailBeforeAnyMutation[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.041"/>
+  <testcase name="retirementAndNewerSameOwnerSelectionPermanentlyFenceOldPlanReplay[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.069"/>
+  <testcase name="activeOwnerCannotBePlannedEvenIfItIsEmptyOrItsKeyIsMissing[jvm]" classname="com.feedme.storage.PlannedStateActivationTest" time="0.076"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

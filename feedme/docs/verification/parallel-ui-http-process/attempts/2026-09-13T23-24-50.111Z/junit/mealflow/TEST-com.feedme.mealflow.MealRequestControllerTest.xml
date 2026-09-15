@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.mealflow.MealRequestControllerTest" tests="52" skipped="0" failures="0" errors="0" timestamp="2026-09-13T23:25:09.876Z" hostname="ansachars-MacBook-Pro.local" time="4.673">
+  <properties/>
+  <testcase name="offlinePrivateSessionNeverUpgradesToNetworkEvenWhenConnectivitySaysOnline[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.08"/>
+  <testcase name="malformedOrMismatchedSuccessNeverBecomesReadyOrDropsPendingIntent[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.169"/>
+  <testcase name="independentRootsWithIdenticalConstraintsNeverLeakPriorLineageIntoAlternativeExclusions[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.054"/>
+  <testcase name="successPersistsExactRequestBeforeTransportAndPublishesWholeCanonicalPlanAfterReceipt[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.063"/>
+  <testcase name="returnToRecommendationsPreservesUncertainAlternativeAndTimeoutIssue[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.035"/>
+  <testcase name="knownBoundRecallBlocksCurrentVersionAndSurvivesReopenWithoutMutatingSnapshot[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.073"/>
+  <testcase name="restartRestoresExactPlanBodyDraftAndHistoricalContextWithoutBackend[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.145"/>
+  <testcase name="corruptedUnknownOrForeignOriginRecordFailsClosedWithoutReset[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.139"/>
+  <testcase name="retryAfterTakesLargestCanonicalDelayAndDoesNotSpendKeyOrCallBeforeDeadline[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.047"/>
+  <testcase name="offlineInitialSubmissionRetainsDraftWithoutGeneratingKeyOrCallingBackend[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.031"/>
+  <testcase name="builderRejectsMalformedDuplicatesInvalidModesAndUnsupportedNumbersWithoutThrowingPrivateData[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.083"/>
+  <testcase name="deepAlternativeExclusionsUseOnlyRetainedAncestorChain[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.059"/>
+  <testcase name="manualBuilderUsesOnlyCanonicalFieldsAndMergesHardExclusionsWithoutPantryInference[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.006"/>
+  <testcase name="issuedIdCapacityIsTemporaryAndAdvertisesEarliestSafeSevenDayExpiry[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.075"/>
+  <testcase name="byteBudgetEvictsOnlyResolvedHistoryAndNeverTrapsAnAcknowledgedNewPlan[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="1.702"/>
+  <testcase name="rapidDuplicateSubmissionDoesNotCreateTwoCommands[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.026"/>
+  <testcase name="cancelledDispatchedCommandRemainsResolvingAndNeverRotatesItsIdentity[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.033"/>
+  <testcase name="staleDuringStoreReadCannotExposeOldOwnerDraftOrCallBackend[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.022"/>
+  <testcase name="editsFenceLateReceiptPreserveUnresolvedBodyAndInvalidateOldCandidateContext[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.046"/>
+  <testcase name="closeDuringAwaitIsImmediateRedactionWithoutClosingBorrowedResourcesOrClearingNewLease[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.031"/>
+  <testcase name="recipeBackReturnsToSameRecommendationWithoutRewritingHistoryDraftOrSelection[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.025"/>
+  <testcase name="equalPreferenceVersionCannotChangeItsBodyAndQuotedLeadingZerosAreExactIntegers[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.027"/>
+  <testcase name="journalFailureBeforeOrAfterCommitNeverAuthorizesTransportAndRetryReacksVisibleIntent[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.062"/>
+  <testcase name="alternativeUsesCanonicalParentCursorConstraintsNoIfMatchAndBoundedHistory[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.023"/>
+  <testcase name="priorUnknownThenCurrentPolicyProblemsNeverEraseOriginalCommandAndRecoveryReusesItsIdentity[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.326"/>
+  <testcase name="canonicalGuestReadAndMutationValidationRequiresActualGuestPrincipalClass[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.023"/>
+  <testcase name="cancellationAfterDurableAdmissionBeforeTransportMakesLaterInputProblemUncertain[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.061"/>
+  <testcase name="changedDraftOrPreferenceVersionInvalidatesAlternativesWithoutNewCommand[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.061"/>
+  <testcase name="collectionsAndDiagnosticsAreDetachedAndNeverExposeRawPrivateBody[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.04"/>
+  <testcase name="backWhileTransportSuspendedIsImmediateAndFencesLateSuccessWithoutLosingOriginalCommand[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.031"/>
+  <testcase name="boundaryInvalidationImmediatelyRedactsReactiveStateAndFencesNoncooperativeReply[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.031"/>
+  <testcase name="pendingLocalPreferenceEditBlocksSubmissionWithoutRelaxingExclusions[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.025"/>
+  <testcase name="falseRevisionOrReadbackReceiptCannotAuthorizeDispatch[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.062"/>
+  <testcase name="bothBackActionsRejectRetiredLeaseAndCannotClearOrExposeNewerIdentity[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.034"/>
+  <testcase name="persistedClockRollbackCannotExpireDeduplicationOrRetryUnknownDispatch[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.038"/>
+  <testcase name="twoControllersCannotConcurrentlyOwnOneSessionFlowAndClosedOwnerCanReopen[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.086"/>
+  <testcase name="changedPreferencesDuringPantryAwaitRejectsMixedSnapshot[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.032"/>
+  <testcase name="backDoesNotPromoteUnacknowledgedDraftAndOldCancellationCannotOverwriteNewNavigation[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.026"/>
+  <testcase name="firstAuthorizationFailureAlsoRetainsCommandRatherThanPretendingItNeverExisted[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.099"/>
+  <testcase name="expiredNonpendingDraftIsPurgedByScopedCASButUnknownCommandIsNeverAutoErased[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.05"/>
+  <testcase name="fullServerReplyBoundRemainsPersistableAndReadableAfterRecreation[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.108"/>
+  <testcase name="guestAccessUsesRealLeaseClassWithoutAccountOrSocialRequirement[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.024"/>
+  <testcase name="fetchedPreviousAndNextCanBeBrowsedOfflineWithoutNewIdOrNetwork[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.031"/>
+  <testcase name="bothSuccessfulNonCookableStatusesAllowMissingModeAndNeverPublishRecipe[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.049"/>
+  <testcase name="contextHydrationPreservesFullBoundedPantryPageAndDoesNotAutoSelectUsualItems[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.022"/>
+  <testcase name="expiredUnresolvedIdentityAndBodyAreNeverEvictedByHistoryOrDraftMaintenance[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.065"/>
+  <testcase name="decimalSpellingAndPreparedMealArePreservedWithoutAnInterpretationOrSourceIssuer[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.008"/>
+  <testcase name="lostResponseRecreatedControllerRetriesOriginalExactKeyBodyAndThenPublishes[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.046"/>
+  <testcase name="nativeIdFailureCancellationAndReuseNeverFallbackToTimestampOrDispatch[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.064"/>
+  <testcase name="validPermanentProblemIsNotSuccessAndDoesNotTrapCorrectableDraftAsUnknown[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.022"/>
+  <testcase name="insufficientReplyReservationIsRefusedBeforeDispatchRatherThanTrappingServerSuccess[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.106"/>
+  <testcase name="expiredOrChangedPreferenceUncertaintyDoesNotInventFreshRequestIdentity[jvm]" classname="com.feedme.mealflow.MealRequestControllerTest" time="0.043"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

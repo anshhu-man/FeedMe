@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.planning.PlanningPersistenceCodecTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2026-09-14T03:17:00.979Z" hostname="ansachars-MacBook-Pro.local" time="0.033">
+  <properties/>
+  <testcase name="baseEvidenceRequiresExplicitCompositionAndMatchingPreparationShape" classname="com.feedme.server.planning.PlanningPersistenceCodecTest" time="0.013"/>
+  <testcase name="catalogBoundAndMalformedRecipeRejectRatherThanSilentlyTruncate" classname="com.feedme.server.planning.PlanningPersistenceCodecTest" time="0.013"/>
+  <testcase name="snapshotRejectsUnknownMissingAndIncorrectVersionFields" classname="com.feedme.server.planning.PlanningPersistenceCodecTest" time="0.001"/>
+  <testcase name="explanationCursorBindsOwnerPlanSnapshotAndExactOffset" classname="com.feedme.server.planning.PlanningPersistenceCodecTest" time="0.002"/>
+  <testcase name="unknownCompositionIsRetainedAsUnknownRatherThanAnEmptyAtom" classname="com.feedme.server.planning.PlanningPersistenceCodecTest" time="0.001"/>
+  <testcase name="preferenceIdsAreStrictAndCaseInsensitiveDuplicatesAreRejected" classname="com.feedme.server.planning.PlanningPersistenceCodecTest" time="0.0"/>
+  <testcase name="retentionAndPolicyRequireExplicitBoundedConfiguration" classname="com.feedme.server.planning.PlanningPersistenceCodecTest" time="0.0"/>
+  <testcase name="snapshotRoundTripPreservesExactProvenanceWithoutClaimingAuthentication" classname="com.feedme.server.planning.PlanningPersistenceCodecTest" time="0.0"/>
+  <testcase name="snapshotRejectsDuplicateKeysMalformedUnicodeAndOversizeBeforeProjection" classname="com.feedme.server.planning.PlanningPersistenceCodecTest" time="0.0"/>
+  <testcase name="planningEventIsInCanonicalCatalogAndFailuresNeverExposePrivateData" classname="com.feedme.server.planning.PlanningPersistenceCodecTest" time="0.001"/>
+  <testcase name="pantryUncertaintyIsExplicitAndNoUnknownEnumOrDuplicateCanBeCollapsed" classname="com.feedme.server.planning.PlanningPersistenceCodecTest" time="0.0"/>
+  <testcase name="accountAndGuestPrincipalKindsCannotBeSwappedOrDefaulted" classname="com.feedme.server.planning.PlanningPersistenceCodecTest" time="0.0"/>
+  <testcase name="cursorKeysAreExplicitDefensivelyCopiedAndNeverPrinted" classname="com.feedme.server.planning.PlanningPersistenceCodecTest" time="0.0"/>
+  <testcase name="preferenceRevisionRequiresExactPositiveBoundedLocalIntegerString" classname="com.feedme.server.planning.PlanningPersistenceCodecTest" time="0.0"/>
+  <testcase name="explanationCursorNeverTreatsMalformedOrTamperedInputAsFirstPage" classname="com.feedme.server.planning.PlanningPersistenceCodecTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,123 @@
+{
+  "startedAt": "2026-09-14T00:41:56.633Z",
+  "passed": true,
+  "serial": "emulator-5554",
+  "scope": "Six actual Android Compose layout/accessibility/event checks, using synthetic test-only view-state fixtures. Verifies explicit event wiring, exact recipe quantities/mandatory safety steps, retained-retry copy and unavailable-state redaction. Does not authenticate a user, connect providers/HTTP/catalog, test retained-experience end-to-end composition or prove cooking/save/share authorization. Screenshots are native renders, not generated images. API35 ARM64 only; iOS and full release acceptance remain open.",
+  "apk": {
+    "path": "shared/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk",
+    "bytes": 27273391,
+    "sha256": "f27fd308150ca4bfc5acbc65eedf06f98b19ab513abe39f643e9842f8e9c4819"
+  },
+  "apkMetadata": {
+    "path": "docs/verification/meal-ui/attempts/2026-09-14T00-41-56.633Z/output-metadata.json",
+    "bytes": 421,
+    "sha256": "cee2ae8b5f90978e068be43ebfb0455ae1b2ae6b558bf56b8d72b44296ec3f82"
+  },
+  "attemptDirectory": "docs/verification/meal-ui/attempts/2026-09-14T00-41-56.633Z",
+  "screenshots": [
+    {
+      "path": "docs/verification/meal-ui/attempts/2026-09-14T00-41-56.633Z/request.png",
+      "bytes": 118844,
+      "sha256": "a0f1725b434235506ad8680ee0afaaa73d749f0cc3d06dc321feee7f74dea40e"
+    },
+    {
+      "path": "docs/verification/meal-ui/attempts/2026-09-14T00-41-56.633Z/recommendations.png",
+      "bytes": 139335,
+      "sha256": "68339e392295a1d979e4ef8c2526b793ae8b442952be71e0a0fa2b67606f68e2"
+    },
+    {
+      "path": "docs/verification/meal-ui/attempts/2026-09-14T00-41-56.633Z/recipe-ingredients.png",
+      "bytes": 150687,
+      "sha256": "40bdfc168262e9f9b9f1c7ead3b81d8bba412fd17ff90a13fc60786cc40fb267"
+    },
+    {
+      "path": "docs/verification/meal-ui/attempts/2026-09-14T00-41-56.633Z/recipe-safety-step.png",
+      "bytes": 158629,
+      "sha256": "cc5160ba59fb6ef885f77556837465ad7d054e097933e40eeefbf8a50176dd5c"
+    },
+    {
+      "path": "docs/verification/meal-ui/attempts/2026-09-14T00-41-56.633Z/unavailable.png",
+      "bytes": 118440,
+      "sha256": "89d6bcc1b0abebf28ef89a6b937975c3f0ff1c5f68df14a49a3a914124ad1b83"
+    }
+  ],
+  "androidApi": "35",
+  "androidAbi": "arm64-v8a",
+  "tests": {
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "identities": [
+    "com.feedme.app.mealflow.AndroidMealFlowPresentationTest#ingredientSelectionChangesOnlyTheExplicitForm",
+    "com.feedme.app.mealflow.AndroidMealFlowPresentationTest#unavailableViewDoesNotExposeRetainedFixtureDetails",
+    "com.feedme.app.mealflow.AndroidMealFlowPresentationTest#requestShowsApprovedVisualControlsAndExplicitDraftAction",
+    "com.feedme.app.mealflow.AndroidMealFlowPresentationTest#uncertainRequestShowsOriginalRetryWithoutImplicitNewCommand",
+    "com.feedme.app.mealflow.AndroidMealFlowPresentationTest#recipeRendersExactAmountsAndMandatorySteps",
+    "com.feedme.app.mealflow.AndroidMealFlowPresentationTest#recommendationsRouteRecipeExactlyOnceWithoutCookingOrSaving"
+  ],
+  "finishedAt": "2026-09-14T00:42:26.908Z",
+  "evidence": [
+    {
+      "path": "docs/verification/meal-ui/attempts/2026-09-14T00-41-56.633Z/abi.log",
+      "bytes": 10,
+      "sha256": "7f10c3cd4593d1d6ded27d658e7c05216011c955c200aac551caad0c979d4d90"
+    },
+    {
+      "path": "docs/verification/meal-ui/attempts/2026-09-14T00-41-56.633Z/api.log",
+      "bytes": 3,
+      "sha256": "90d7ec0f0acef104d8b6252794295f661a0149634868d02a1ae0c358099638f5"
+    },
+    {
+      "path": "docs/verification/meal-ui/attempts/2026-09-14T00-41-56.633Z/boot.log",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "docs/verification/meal-ui/attempts/2026-09-14T00-41-56.633Z/install.log",
+      "bytes": 36,
+      "sha256": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7"
+    },
+    {
+      "path": "docs/verification/meal-ui/attempts/2026-09-14T00-41-56.633Z/instrumentation.log",
+      "bytes": 4300,
+      "sha256": "49444c025387dae1e4a119012b0699ad842100d7ff35628225b4e9105c2bc7b2"
+    },
+    {
+      "path": "docs/verification/meal-ui/attempts/2026-09-14T00-41-56.633Z/output-metadata.json",
+      "bytes": 421,
+      "sha256": "cee2ae8b5f90978e068be43ebfb0455ae1b2ae6b558bf56b8d72b44296ec3f82"
+    },
+    {
+      "path": "docs/verification/meal-ui/attempts/2026-09-14T00-41-56.633Z/recipe-ingredients.png",
+      "bytes": 150687,
+      "sha256": "40bdfc168262e9f9b9f1c7ead3b81d8bba412fd17ff90a13fc60786cc40fb267"
+    },
+    {
+      "path": "docs/verification/meal-ui/attempts/2026-09-14T00-41-56.633Z/recipe-safety-step.png",
+      "bytes": 158629,
+      "sha256": "cc5160ba59fb6ef885f77556837465ad7d054e097933e40eeefbf8a50176dd5c"
+    },
+    {
+      "path": "docs/verification/meal-ui/attempts/2026-09-14T00-41-56.633Z/recommendations.png",
+      "bytes": 139335,
+      "sha256": "68339e392295a1d979e4ef8c2526b793ae8b442952be71e0a0fa2b67606f68e2"
+    },
+    {
+      "path": "docs/verification/meal-ui/attempts/2026-09-14T00-41-56.633Z/request.png",
+      "bytes": 118844,
+      "sha256": "a0f1725b434235506ad8680ee0afaaa73d749f0cc3d06dc321feee7f74dea40e"
+    },
+    {
+      "path": "docs/verification/meal-ui/attempts/2026-09-14T00-41-56.633Z/runner.log",
+      "bytes": 331,
+      "sha256": "85c4d22a554f45750de3de0d22248375b24a80e9302ae4b4de43d3efe3103de7"
+    },
+    {
+      "path": "docs/verification/meal-ui/attempts/2026-09-14T00-41-56.633Z/unavailable.png",
+      "bytes": 118440,
+      "sha256": "89d6bcc1b0abebf28ef89a6b937975c3f0ff1c5f68df14a49a3a914124ad1b83"
+    }
+  ]
+}

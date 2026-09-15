@@ -11,6 +11,8 @@ import com.feedme.core.ports.*
 import com.feedme.transport.MobileRequestValidator
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
@@ -85,6 +87,27 @@ class DurableCommandQueue(
         }
     }
 
+    /** Read the original validated intent without dispatching or granting rebase authority.
+     * Terminal tombstones deliberately have no payload and return null. Domain receipt adapters
+     * use this exact origin/body/header evidence before atomically applying a successful reply. */
+    suspend fun intent(lease: SessionLease, commandId: String): PortResult<CommandIntent?> = guarded(lease) {
+        mutex.withLock {
+            currentCoroutineContext().ensureActive()
+            val entry = readCommand(lease, commandId) ?: return@withLock null
+            currentCoroutineContext().ensureActive()
+            if (entry.value.phase in setOf(CommandPhase.APPLIED, CommandPhase.DISCARDED)) return@withLock null
+            val original = call(lease, entry.value)
+            currentCoroutineContext().ensureActive()
+            val repeatedCall = call(lease, entry.value)
+            currentCoroutineContext().ensureActive()
+            if (original.body?.copyForCodec()?.toList() != repeatedCall.body?.copyForCodec()?.toList()) fail(FailureReason.CONFLICT)
+            val repeated = readCommand(lease, commandId) ?: fail(FailureReason.CONFLICT)
+            currentCoroutineContext().ensureActive()
+            if (repeated.revision != entry.revision) fail(FailureReason.CONFLICT)
+            CommandIntent(entry.value.id, entry.value.originBinding, original, entry.value.dependencies)
+        }
+    }
+
     /** Never send from this method. Interrupted attempts keep their original body/key and age. */
     suspend fun recoverInterrupted(lease: SessionLease): PortResult<Int> = guarded(lease) {
         mutex.withLock {
@@ -108,6 +131,38 @@ class DurableCommandQueue(
             count
         }
     }
+
+    /**
+     * Recover only this exact orphaned IN_FLIGHT command after an explicit domain recovery
+     * decision. Never dispatch, repair another lane, change the original, or refund an attempt.
+     * A live process claim and any stale metadata/index CAS both fail closed.
+     */
+    suspend fun recoverInterrupted(lease: SessionLease, commandId: String, expectedRevision: Long): PortResult<CommandView> =
+        guarded(lease) {
+            mutex.withLock {
+                currentCoroutineContext().ensureActive()
+                if (!commandUuid.matches(commandId) || expectedRevision <= 0) fail(FailureReason.INVALID_DATA)
+                val snapshot = snapshot(lease)
+                currentCoroutineContext().ensureActive()
+                val entry = snapshot.entries.singleOrNull { it.value.id == commandId } ?: fail(FailureReason.NOT_FOUND)
+                if (entry.revision != expectedRevision || entry.value.phase != CommandPhase.IN_FLIGHT ||
+                    ProcessCommandClaims.isActive(scope, commandId)) fail(FailureReason.CONFLICT)
+                // Reject obsolete/damaged original payload, but never rewrite or re-encode it.
+                val original = call(lease, entry.value)
+                currentCoroutineContext().ensureActive()
+                val repeated = call(lease, entry.value)
+                if (original.body?.copyForCodec()?.toList() != repeated.body?.copyForCodec()?.toList()) fail(FailureReason.CONFLICT)
+                currentCoroutineContext().ensureActive()
+                current(lease)
+                if (ProcessCommandClaims.isActive(scope, commandId)) fail(FailureReason.CONFLICT)
+                val now = now()
+                val recovered = retry(entry.value, now, CommandIssue.OUTCOME_UNKNOWN, null, snapshot.index.lastObservedMillis)
+                currentCoroutineContext().ensureActive()
+                val revision = update(lease, snapshot, entry, recovered, now)
+                currentCoroutineContext().ensureActive()
+                view(recovered, revision)
+            }
+        }
 
     /** Worker entry: only operations with explicit resumable policy can be selected automatically. */
     suspend fun dispatchNext(lease: SessionLease): PortResult<CommandView?> = dispatch(lease, targetId = null, confirmed = false)

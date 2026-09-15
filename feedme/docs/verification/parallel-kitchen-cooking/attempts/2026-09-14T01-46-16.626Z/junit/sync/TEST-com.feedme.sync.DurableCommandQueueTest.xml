@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.sync.DurableCommandQueueTest" tests="70" skipped="0" failures="0" errors="0" timestamp="2026-09-14T01:46:24.606Z" hostname="ansachars-MacBook-Pro.local" time="4.203">
+  <properties/>
+  <testcase name="claimIsDurableBeforeTransportAndReceiptDoesNotApplyDomainState[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.552"/>
+  <testcase name="retryBudgetStopsAfterEightAttemptsAndNeverCreatesNewKey[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.088"/>
+  <testcase name="attemptedUncertainCommandCannotBeDiscardedAsUnsent[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.054"/>
+  <testcase name="originalIntentReadIsDetachedExactAndNeverCallsExecutionPorts[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.027"/>
+  <testcase name="sameCookingSessionSerializesWhileAnotherSessionCanProgress[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.045"/>
+  <testcase name="originalIntentReadReturnsNullForAbsentAndBothTerminalTombstones[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.103"/>
+  <testcase name="neverAttemptedCommandCanBeDiscardedAtomicallyButItsIdCannotBeReused[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.024"/>
+  <testcase name="repairedManualActionStillNeedsNewConfirmationAndGate[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.031"/>
+  <testcase name="indexChangeDuringSnapshotRejectsMixedRevisionState[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.032"/>
+  <testcase name="differentOwnerAndDemoNeverAccessQueueStorage[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.035"/>
+  <testcase name="cancellationAndRestartReplayExactOriginalRequestWithSameIdentityAndVersion[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.108"/>
+  <testcase name="crossOwnerMetadataFailsClosedWithoutDispatch[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.023"/>
+  <testcase name="failedClaimCommitNeverCallsTransport[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.026"/>
+  <testcase name="guestPrincipalCanJournalItsOwnCookButNotAccountOnlySocialIntent[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.016"/>
+  <testcase name="malformedOrUnexpectedReplyCannotCreateSuccessReceipt[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.075"/>
+  <testcase name="readsAndSpecializedCredentialCapabilityWorkflowsCannotEnterGenericJournal[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.088"/>
+  <testcase name="enormousCanonicalProblemRetryDelaySaturatesSafely[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.031"/>
+  <testcase name="elapsedReplayWindowWhileClaimCommitSuspendsPreventsTransport[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.063"/>
+  <testcase name="originalIntentReadRejectsWrongStaleAndMalformedIdentityWithoutEffects[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.019"/>
+  <testcase name="reservedOrDuplicateDomainKeysCannotMutateJournalRecords[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.023"/>
+  <testcase name="resolutionCannotClearConflictOrExpiredUncertainty[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.068"/>
+  <testcase name="sixDayUncertaintyCutoffRequiresReconciliationWithoutReplay[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.023"/>
+  <testcase name="recoveryDoesNotStealAnActiveAttemptWithinSameQueue[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.024"/>
+  <testcase name="enqueueAtomicallyPersistsDraftExactBodyMetadataAndIndexBeforeAnySend[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.022"/>
+  <testcase name="receiptReadAndApplyRevalidatePersistedBody[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.022"/>
+  <testcase name="lateResponseCannotOverwriteChangedDurableClaimRevision[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.061"/>
+  <testcase name="failedOutcomeCommitLeavesOriginalAttemptRecoverable[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.054"/>
+  <testcase name="leaseChangeAfterStoreReadIsFencedBeforeMutation[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.054"/>
+  <testcase name="localAuthAndConfigurationFailuresBecomeExplicitResolutionHolds[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.093"/>
+  <testcase name="sessionChangeDuringGateCannotClaimOrSend[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.041"/>
+  <testcase name="canonicalProblemBodyRetryDelayUsesExactExponentAndGreaterGuidance[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.079"/>
+  <testcase name="cookingSequenceIsBoundedAndFailedEnqueueDoesNotAdvanceWatermark[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.019"/>
+  <testcase name="anotherQueueInstanceCannotRecoverGenuineActiveAttempt[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.066"/>
+  <testcase name="oversizedRetryAfterSaturatesWithoutImmediateReplayOrOverflow[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.018"/>
+  <testcase name="leaseChangeAfterCommittedClaimReturnsStaleWithoutSending[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.017"/>
+  <testcase name="cookingSequenceWatermarkSurvivesAppliedAndDiscardedCommands[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.091"/>
+  <testcase name="failedEnqueueCommitDoesNotPersistPartialDraftOrSend[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.015"/>
+  <testcase name="duplicateCommandIdCannotOverwriteOriginalRequestEvenBeforeSend[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.025"/>
+  <testcase name="successfulReceiptAndDomainApplicationAreOneAtomicCasTransaction[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.025"/>
+  <testcase name="staleReceiptRevisionCannotApplyDomainChangesOrLoseReceipt[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.017"/>
+  <testcase name="observedClockRollbackRequiresResolutionAndCannotEnqueueNewIntent[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.017"/>
+  <testcase name="staleLeaseIsRejectedBeforeAnyStoreGateOrTransportAccess[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.021"/>
+  <testcase name="queueCapacityIsBoundedWithoutEvictingExistingIntent[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.187"/>
+  <testcase name="successfulBodyMustSatisfyFullCanonicalSchema[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.024"/>
+  <testcase name="localAuthenticationRepairResumesExactOriginalIntentThroughFreshGate[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.044"/>
+  <testcase name="retriesRespectBoundedBackoffAndFailureRetryAfter[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.031"/>
+  <testcase name="diagnosticsDoNotExposePrivateIdentityBodyOrVersion[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.008"/>
+  <testcase name="discardedDependencyBlocksDescendantWithoutSending[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.021"/>
+  <testcase name="manualPolicyRequiresFreshConfirmationOnEveryAttempt[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.023"/>
+  <testcase name="missingRequestAndUnsupportedJournalSchemaFailClosed[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.019"/>
+  <testcase name="neverAttemptedIntentDoesNotAcquireFalseIdempotencyAge[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.016"/>
+  <testcase name="permanentCanonicalHttpProblemsNeverAutomaticallyReplay[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.209"/>
+  <testcase name="thrownTransportErrorIsSanitizedAsUnknownOriginalAttempt[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.019"/>
+  <testcase name="changedQueueTransactionInvalidatesPreflightCas[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.017"/>
+  <testcase name="corruptPersistedRequestIsRejectedBeforeGateOrNetwork[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.024"/>
+  <testcase name="cookingSequenceMustIncreaseWithinOriginAndSessionAcrossRestart[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.16"/>
+  <testcase name="domainCasConflictRejectsWholeReceiptApplication[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.048"/>
+  <testcase name="httpRetryAfterIsRespectedForCanonical503Problem[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.044"/>
+  <testcase name="gateExceptionAndEmptyIssueAreSanitizedWithoutSending[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.073"/>
+  <testcase name="originalIntentReadBracketsChangedMetadataAndBody[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.049"/>
+  <testcase name="originalIntentReadRejectsMalformedPersistedBodyWithoutRepairingIt[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.016"/>
+  <testcase name="invalidIdentityDependenciesOrCanonicalRequestAreRejectedBeforePersistence[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.078"/>
+  <testcase name="recoverySplitsManyInterruptedRecordsIntoBoundedAtomicBatchesWithoutSending[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.28"/>
+  <testcase name="httpAuthenticationFailureStillCountsAsRemoteAttemptWhenResumed[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.03"/>
+  <testcase name="recoveryFailureAfterOneBatchRetainsBothRecoveredAndStillInterruptedIntentions[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.123"/>
+  <testcase name="gateWaitPersistsSafeHoldWithoutDispatchOrRetry[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.09"/>
+  <testcase name="sessionChangeDuringTransportLeavesOldAttemptUnapplied[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.084"/>
+  <testcase name="repeatedProvenOfflineFailuresDoNotConsumeRemoteAttemptBudget[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.049"/>
+  <testcase name="sameLanePreservesOrderButIndependentLaneProgresses[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.052"/>
+  <testcase name="dependencyWaitsForAppliedReceiptNotMerelyRemoteSuccess[jvm]" classname="com.feedme.sync.DurableCommandQueueTest" time="0.033"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

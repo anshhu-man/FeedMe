@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.http.CookingHttpInputTest" tests="21" skipped="0" failures="0" errors="0" timestamp="2026-09-14T03:17:00.476Z" hostname="ansachars-MacBook-Pro.local" time="0.172">
+  <properties/>
+  <testcase name="onlyPatchUsesIfMatchAndNoOperationInventsConditionalGet" classname="com.feedme.server.http.CookingHttpInputTest" time="0.04"/>
+  <testcase name="CredentialInputAndConfigurationDiagnosticsAreRedacted" classname="com.feedme.server.http.CookingHttpInputTest" time="0.009"/>
+  <testcase name="OriginalWireRejectsDuplicateMembersMalformedUnicodeAndExcessDepth" classname="com.feedme.server.http.CookingHttpInputTest" time="0.001"/>
+  <testcase name="StartAcceptsOnlyPlanIdentityAndOptionalExactSequence" classname="com.feedme.server.http.CookingHttpInputTest" time="0.001"/>
+  <testcase name="SequenceProjectionNeverRoundsThroughDouble" classname="com.feedme.server.http.CookingHttpInputTest" time="0.0"/>
+  <testcase name="weakWildcardMultiValueAndUnboundedEtagsAreRejected" classname="com.feedme.server.http.CookingHttpInputTest" time="0.001"/>
+  <testcase name="duplicateSecurityHeadersAreRejectedBeforeAnyVerification" classname="com.feedme.server.http.CookingHttpInputTest" time="0.0"/>
+  <testcase name="VerifierFailuresPreserveSafeRetryMetadataAndNeverReachDatabase" classname="com.feedme.server.http.CookingHttpInputTest" time="0.051"/>
+  <testcase name="EverySuccessHasExactOperationStatusCanonicalBodyAndVersionMatchingEtag" classname="com.feedme.server.http.CookingHttpInputTest" time="0.001"/>
+  <testcase name="exactFourOperationsAndCanonicalControlPlacement" classname="com.feedme.server.http.CookingHttpInputTest" time="0.001"/>
+  <testcase name="VerifiedAccountAndBoundedGuestMustMatchActualDeviceAndEnvironment" classname="com.feedme.server.http.CookingHttpInputTest" time="0.022"/>
+  <testcase name="authorizationIsMandatoryBoundedAndNotAList" classname="com.feedme.server.http.CookingHttpInputTest" time="0.001"/>
+  <testcase name="NoQueryOrExtraPathCanAssertOwnerDeviceOrProgress" classname="com.feedme.server.http.CookingHttpInputTest" time="0.001"/>
+  <testcase name="TimerWireRejectsInventedStatusFractionalSecondsAndPrivateAnchors" classname="com.feedme.server.http.CookingHttpInputTest" time="0.001"/>
+  <testcase name="malformedDeviceAndCommandUuidsCannotBecomeTrustedIdentities" classname="com.feedme.server.http.CookingHttpInputTest" time="0.0"/>
+  <testcase name="onlyMutationsRequireAnOriginalCommandKey" classname="com.feedme.server.http.CookingHttpInputTest" time="0.001"/>
+  <testcase name="PatchCannotCompleteAndCompletionCannotCarryProgressOrInventSave" classname="com.feedme.server.http.CookingHttpInputTest" time="0.0"/>
+  <testcase name="JsonMediaAndUtf8EncodingAreExplicit" classname="com.feedme.server.http.CookingHttpInputTest" time="0.001"/>
+  <testcase name="RequestFramingRejectsAmbiguousUnsupportedAndOversizedControls" classname="com.feedme.server.http.CookingHttpInputTest" time="0.0"/>
+  <testcase name="VerifierCannotSwallowCancellationToPublishAPrincipal" classname="com.feedme.server.http.CookingHttpInputTest" time="0.026"/>
+  <testcase name="StreamingBoundsActualBytesAndDeclaredLengthWithoutAcceptingAnEmptyBody" classname="com.feedme.server.http.CookingHttpInputTest" time="0.013"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

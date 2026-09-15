@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.session.SessionSetupRecoveryOwnerTest" tests="26" skipped="0" failures="0" errors="0" timestamp="2026-09-14T00:29:54.747Z" hostname="ansachars-MacBook-Pro.local" time="0.336">
+  <properties/>
+  <testcase name="failedControlCloseRetainsReservationAndDoesNotRepeatAcknowledgedSubordinateCloses[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.023"/>
+  <testcase name="invalidatedCompositionFencesReadyAndClosingButStillPermitsExactCleanup[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.032"/>
+  <testcase name="missingIdleCompleteMalformedOrDifferentConfigurationNeverOpensSubordinates[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.003"/>
+  <testcase name="everyFailedAcquisitionRetainsExactPartialOwnersUntilClose[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.006"/>
+  <testcase name="freshOwnerCannotInferConfirmationFromPersistedComplete[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.02"/>
+  <testcase name="explicitCloseNeverCompletesAndRetainsFailedSubordinateBeforeControl[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.004"/>
+  <testcase name="inspectionAndPreparationAreStableReadOnlyAndRedacted[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.007"/>
+  <testcase name="callerReturnGapNeverPublishesReadyAndCancellationCloseOrRootInvalidationWins[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.012"/>
+  <testcase name="visibleUnknownCompleteNeedsRetainedCheckpointAndFreshChangedCasEveryRetry[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.013"/>
+  <testcase name="abortFailuresStopLaterEffectsAndRetryReacknowledgesBeforeClosing[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.052"/>
+  <testcase name="openingReadsOriginalPendingAndRetainsAllOwnersBeforeOpeningSubordinates[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.004"/>
+  <testcase name="rejectedRepeatedOpenDoesNotQuarantineReadyOwnership[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.005"/>
+  <testcase name="changedControlOrComponentEvidenceRejectsConfirmationWithoutEffects[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.01"/>
+  <testcase name="constructionClaimsReservationBeforeAnyFactoryOrResourceIo[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.001"/>
+  <testcase name="cancellationDuringAcquisitionIsCloseOnlyAndRetainsAcquiredOwner[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.004"/>
+  <testcase name="cancelledQueuedSecondOpenerCannotQuarantineFirstAdmittedOwner[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.01"/>
+  <testcase name="competingControlAfterAllClosesNeverReceivesComplete[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.008"/>
+  <testcase name="cancellationAfterAcknowledgedCloseRetainsThatCloseAndDoesNotInspectItAgain[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.01"/>
+  <testcase name="synchronousFactoryExceptionRetainsEveryPreviouslyReturnedOwnerAndNeverInitializesAnother[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.003"/>
+  <testcase name="confirmationOrdersExactAbortThenAllSubordinateCloseBeforeComplete[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.007"/>
+  <testcase name="finalCasFailureBeforeCommitRetriesOnlyFreshCompleteAfterAcknowledgedCloses[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.008"/>
+  <testcase name="failedCloseRetainsCheckpointAndNeverReinspectsAlreadyClosedHandles[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.023"/>
+  <testcase name="abandoningAfterOneOrTwoClosesLeavesOriginalConfirmedPlanForNewOwner[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.044"/>
+  <testcase name="thrownNativeCloseFailureIsSanitizedRetainedAndNeverCompletes[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.018"/>
+  <testcase name="failedInitialConfirmationNeverStartsAbortEvenWhenWriteBecameVisible[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.007"/>
+  <testcase name="duplicateRecoveryCannotReleaseOrOperateOriginalOwnersReservation[jvm]" classname="com.feedme.session.SessionSetupRecoveryOwnerTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

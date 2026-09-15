@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.storage.SessionCookingTimersStorageTest" tests="21" skipped="0" failures="0" errors="0" timestamp="2026-09-14T03:18:34.052Z" hostname="ansachars-MacBook-Pro.local" time="10.517">
+  <properties/>
+  <testcase name="clockJumpUnknownContinuityAndRecallRemainFailClosed[jvm]" classname="com.feedme.storage.SessionCookingTimersStorageTest" time="0.594"/>
+  <testcase name="atomicCookingIntentAndExactTicketMappingPrecedeSchedulerWithRealReservedLedger[jvm]" classname="com.feedme.storage.SessionCookingTimersStorageTest" time="0.494"/>
+  <testcase name="materializedActionWithMissingJournalCannotBecomeUnmaterializedPermission[jvm]" classname="com.feedme.storage.SessionCookingTimersStorageTest" time="0.533"/>
+  <testcase name="changedSameTicketGenerationCannotBeReportedOrDeliveredAsAcknowledged[jvm]" classname="com.feedme.storage.SessionCookingTimersStorageTest" time="0.492"/>
+  <testcase name="lostDomainAcknowledgementCannotInstallAndExplicitReconcileNeverRestartsIt[jvm]" classname="com.feedme.storage.SessionCookingTimersStorageTest" time="0.377"/>
+  <testcase name="mismatchedCurrentTimerBytesDenyCallbackAndPermitOnlyExactCleanup[jvm]" classname="com.feedme.storage.SessionCookingTimersStorageTest" time="0.546"/>
+  <testcase name="invalidationDuringSuspendedNativeInstallCannotPublishOrDeliverLateSuccess[jvm]" classname="com.feedme.storage.SessionCookingTimersStorageTest" time="0.376"/>
+  <testcase name="unresolvedQueueReceiptBlocksNewTimerMutationsAndDoesNotGuessAnEtag[jvm]" classname="com.feedme.storage.SessionCookingTimersStorageTest" time="0.424"/>
+  <testcase name="recallOrNewPauseDuringSuspendedWorkAcknowledgementCannotProduceAnOldEffect[jvm]" classname="com.feedme.storage.SessionCookingTimersStorageTest" time="0.958"/>
+  <testcase name="facadeCloseAtActualMappingCommitBoundaryPreventsSchedulingAfterItsLateReturn[jvm]" classname="com.feedme.storage.SessionCookingTimersStorageTest" time="0.376"/>
+  <testcase name="onlyCurrentDueDesiredTicketCanProduceRuntimeLocalEffect[jvm]" classname="com.feedme.storage.SessionCookingTimersStorageTest" time="0.463"/>
+  <testcase name="schedulerFailureAndRetryNeverAllocateReplacementTicket[jvm]" classname="com.feedme.storage.SessionCookingTimersStorageTest" time="0.435"/>
+  <testcase name="sameScopeDifferentStoreOrBoundaryCannotBindTheRuntimeTimerPolicy[jvm]" classname="com.feedme.storage.SessionCookingTimersStorageTest" time="0.321"/>
+  <testcase name="unknownCancellationKeepsSameTicketAndBlocksReplacementUntilFreshAck[jvm]" classname="com.feedme.storage.SessionCookingTimersStorageTest" time="0.618"/>
+  <testcase name="closedPolicyCannotRebindAndWrongRuntimeAccessCannotGainAuthority[jvm]" classname="com.feedme.storage.SessionCookingTimersStorageTest" time="0.63"/>
+  <testcase name="resetAndCancelPreserveSiblingAndDoNotScheduleReplacement[jvm]" classname="com.feedme.storage.SessionCookingTimersStorageTest" time="0.704"/>
+  <testcase name="lostArmedAcknowledgementCannotPromoteVisibleMappingIntoCallbackPermission[jvm]" classname="com.feedme.storage.SessionCookingTimersStorageTest" time="0.509"/>
+  <testcase name="lostExactMappingAcknowledgementNeverCallsSchedulerAndKeepsExactCleanupIdentity[jvm]" classname="com.feedme.storage.SessionCookingTimersStorageTest" time="0.496"/>
+  <testcase name="canonicalTimerWithoutPrivateMappingRemainsVisibleButNeverGainsAlertAuthority[jvm]" classname="com.feedme.storage.SessionCookingTimersStorageTest" time="0.324"/>
+  <testcase name="pausePersistsNonrunningGenerationBeforeExactCancellationAndResumeUsesRemaining[jvm]" classname="com.feedme.storage.SessionCookingTimersStorageTest" time="0.567"/>
+  <testcase name="policyDeniesBeforeBindingAndRejectsMismatchedRuntimePolicy[jvm]" classname="com.feedme.storage.SessionCookingTimersStorageTest" time="0.278"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

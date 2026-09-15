@@ -21,6 +21,9 @@ object FeedMeColors {
     val Lilac = Color(0xFFD7C9FF)
     val Ink = Color(0xFF161917)
     val Paper = Color(0xFFF7F7F2)
+    val Surface = Color(0xFFFFFFFF)
+    val SoftBlue = Color(0xFFECEFFF)
+    val SoftLime = Color(0xFFEEF5D8)
     val Muted = Color(0xFF60665E)
     val Line = Color(0xFFE4E6DF)
 }
@@ -41,7 +44,7 @@ fun FeedMeTheme(content: @Composable () -> Unit) {
             onTertiary = FeedMeColors.Ink,
             background = FeedMeColors.Paper,
             onBackground = FeedMeColors.Ink,
-            surface = FeedMeColors.Paper,
+            surface = FeedMeColors.Surface,
             onSurface = FeedMeColors.Ink,
             surfaceVariant = FeedMeColors.Line,
             onSurfaceVariant = FeedMeColors.Muted,
@@ -51,7 +54,7 @@ fun FeedMeTheme(content: @Composable () -> Unit) {
         ),
         typography = Typography(
             displayLarge = TextStyle(fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.Black, fontSize = 52.sp, lineHeight = 52.sp, letterSpacing = (-2).sp),
-            displayMedium = TextStyle(fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.Black, fontSize = 42.sp, lineHeight = 44.sp, letterSpacing = (-1.5).sp),
+            displayMedium = TextStyle(fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.ExtraBold, fontSize = 40.sp, lineHeight = 44.sp, letterSpacing = (-1.2).sp),
             headlineLarge = TextStyle(fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.ExtraBold, fontSize = 34.sp, lineHeight = 37.sp, letterSpacing = (-1).sp),
             headlineMedium = TextStyle(fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.ExtraBold, fontSize = 27.sp, lineHeight = 30.sp, letterSpacing = (-0.6).sp),
             titleLarge = TextStyle(fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.Bold, fontSize = 22.sp, lineHeight = 27.sp),
@@ -60,7 +63,7 @@ fun FeedMeTheme(content: @Composable () -> Unit) {
             bodyMedium = TextStyle(fontFamily = FontFamily.SansSerif, fontSize = 15.sp, lineHeight = 22.sp),
             bodySmall = TextStyle(fontFamily = FontFamily.SansSerif, fontSize = 13.sp, lineHeight = 19.sp),
             labelLarge = TextStyle(fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.Bold, fontSize = 15.sp, lineHeight = 21.sp),
-            labelMedium = TextStyle(fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.Bold, fontSize = 12.sp, lineHeight = 17.sp, letterSpacing = 0.8.sp),
+            labelMedium = TextStyle(fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.SemiBold, fontSize = 12.sp, lineHeight = 17.sp, letterSpacing = 0.2.sp),
         ),
         shapes = Shapes(
             extraSmall = RoundedCornerShape(8.dp),

@@ -50,6 +50,8 @@ internal class CompositeSetupAbortCoordinator(
     private val generation: Any,
     private val processPending: suspend () -> Boolean,
     private val checkCurrent: () -> Unit,
+    /** Owned startup stops here; its retained owner must close resources before final control. */
+    private val allAborted: ((InterruptedSetupEvidence, SessionControlRecord) -> Unit)? = null,
 ) {
     init { require(configuration.matches(Regex("[0-9a-f]{64}"))) }
     private var finalization: Finalization? = null
@@ -145,7 +147,8 @@ internal class CompositeSetupAbortCoordinator(
         val final = capture()
         requireControl(final, requested)
         if (!sameResources(after, final)) fail(FailureReason.CONFLICT)
-        complete(final, requested)
+        if (allAborted == null) complete(final, requested)
+        else allAborted.invoke(final, requested)
     }
 
     private suspend fun complete(evidence: InterruptedSetupEvidence, previous: SessionControlRecord) {

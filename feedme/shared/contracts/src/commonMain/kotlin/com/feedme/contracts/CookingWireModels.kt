@@ -191,7 +191,9 @@ class PlanWire private constructor(val document: WireDocument) {
     val parentPlanId = document.projectField("parentPlanId") { PlanId(it.requiredStringValue()) }
     val recipeVersionId = document.projectField("recipeVersionId") { RecipeVersionId(it.requiredStringValue()) }
     val sourcePostId = document.projectField("sourcePostId") { SourcePostId(it.requiredStringValue()) }
-    val mode = document.requiredString("mode")
+    // A confirmation/no-match response may not yet have selected a concrete mode.
+    // Canonical validation still requires it for ready/recalled and rejects explicit null.
+    val mode = document.stringField("mode")
     val status = document.requiredString("status")
     val constraints = document.requiredObject("constraints")
     val recipeSnapshot = document.projectField("recipeSnapshot", RecipeVersionWire::from)

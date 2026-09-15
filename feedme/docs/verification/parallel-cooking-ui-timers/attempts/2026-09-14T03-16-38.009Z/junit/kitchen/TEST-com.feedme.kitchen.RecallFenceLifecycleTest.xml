@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.kitchen.RecallFenceLifecycleTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-09-14T03:17:00.501Z" hostname="ansachars-MacBook-Pro.local" time="0.221">
+  <properties/>
+  <testcase name="cancelledMarkerWriteNeverAcknowledgesButRetainsExistingLeaseBlockingFence[jvm]" classname="com.feedme.kitchen.RecallFenceLifecycleTest" time="0.073"/>
+  <testcase name="invalidationOfOneBoundaryCannotDropAnotherLiveBoundaryFence[jvm]" classname="com.feedme.kitchen.RecallFenceLifecycleTest" time="0.023"/>
+  <testcase name="failedPersistenceBlocksAcrossRepositoryReplacementForExactLiveLease[jvm]" classname="com.feedme.kitchen.RecallFenceLifecycleTest" time="0.02"/>
+  <testcase name="cancelledPersistedReadCannotInstallLateProcessRecallFence[jvm]" classname="com.feedme.kitchen.RecallFenceLifecycleTest" time="0.055"/>
+  <testcase name="sameOwnerNewIncarnationCannotInheritOldInMemoryRecallIdentities[jvm]" classname="com.feedme.kitchen.RecallFenceLifecycleTest" time="0.027"/>
+  <testcase name="persistedOneWayMarkerStillBlocksAfterLeaseInvalidationAndRehydration[jvm]" classname="com.feedme.kitchen.RecallFenceLifecycleTest" time="0.021"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

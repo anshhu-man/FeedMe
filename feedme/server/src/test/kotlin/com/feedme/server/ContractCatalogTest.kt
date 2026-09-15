@@ -15,7 +15,7 @@ class ContractCatalogTest {
         assertEquals(201, catalog.operations.size)
         assertEquals(155, catalog.operations.map { it.path }.distinct().size)
         assertEquals(201, catalog.operations.map { it.id }.distinct().size)
-        assertEquals(mapOf("public" to 3, "user" to 124, "both" to 35, "admin" to 38, "webhook" to 1),
+        assertEquals(mapOf("public" to 3, "user" to 123, "both" to 36, "admin" to 38, "webhook" to 1),
             catalog.operations.groupingBy { it.principal }.eachCount())
     }
 

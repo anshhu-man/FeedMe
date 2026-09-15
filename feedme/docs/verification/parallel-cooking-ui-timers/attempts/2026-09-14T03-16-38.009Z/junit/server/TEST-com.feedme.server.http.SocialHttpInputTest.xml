@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.http.SocialHttpInputTest" tests="22" skipped="0" failures="0" errors="0" timestamp="2026-09-14T03:17:00.840Z" hostname="ansachars-MacBook-Pro.local" time="0.115">
+  <properties/>
+  <testcase name="malformedDuplicateAndInvalidUnicodeAreRejectedBeforeSchemaProjection" classname="com.feedme.server.http.SocialHttpInputTest" time="0.035"/>
+  <testcase name="readsAndUnversionedCommandsNeverHonorUndeclaredConditionals" classname="com.feedme.server.http.SocialHttpInputTest" time="0.001"/>
+  <testcase name="uuidPathsAndCommandDeviceIdsRejectShortFormsOrEncodedSegments" classname="com.feedme.server.http.SocialHttpInputTest" time="0.0"/>
+  <testcase name="duplicateSecurityPreconditionAndFramingHeadersAreAlwaysRejected" classname="com.feedme.server.http.SocialHttpInputTest" time="0.001"/>
+  <testcase name="exactCanonicalOperationMatrixHasFourteenRoutesAndTenDurableCommands" classname="com.feedme.server.http.SocialHttpInputTest" time="0.005"/>
+  <testcase name="schemaInvalidRolesOwnershipFieldsAndNonemptyLeaveAreTyped" classname="com.feedme.server.http.SocialHttpInputTest" time="0.001"/>
+  <testcase name="sixVersionedMutationsRequireExactQuotedIntegerPrecondition" classname="com.feedme.server.http.SocialHttpInputTest" time="0.0"/>
+  <testcase name="mandatoryAccountBearerAndDeviceAreNeverInferredFromHeaderPresence" classname="com.feedme.server.http.SocialHttpInputTest" time="0.001"/>
+  <testcase name="publicPreviewIgnoresWellFormedAccountGuestAndDeviceHeadersWithoutPrincipal" classname="com.feedme.server.http.SocialHttpInputTest" time="0.0"/>
+  <testcase name="exactJsonIntegerLexemeReachesDurableProjectionWithoutDoubleRounding" classname="com.feedme.server.http.SocialHttpInputTest" time="0.0"/>
+  <testcase name="secretsIdentifiersAndCapabilityNeverAppearInMetadataDiagnostics" classname="com.feedme.server.http.SocialHttpInputTest" time="0.0"/>
+  <testcase name="responseValidationRequiresExactStatusSchemaVersionAndAbsent204Body" classname="com.feedme.server.http.SocialHttpInputTest" time="0.001"/>
+  <testcase name="verifierFailuresAreTypedAndSanitizedButCancellationPropagates" classname="com.feedme.server.http.SocialHttpInputTest" time="0.028"/>
+  <testcase name="bodylessReadAndDeleteNeverConsumeUnexpectedJson" classname="com.feedme.server.http.SocialHttpInputTest" time="0.017"/>
+  <testcase name="cancellationBeforeBodyOrAfterVerifierNeverPublishesInputOrPrincipal" classname="com.feedme.server.http.SocialHttpInputTest" time="0.008"/>
+  <testcase name="framingRejectsAmbiguousOverflowNegativeAndOversizeLengths" classname="com.feedme.server.http.SocialHttpInputTest" time="0.0"/>
+  <testcase name="publicPreviewRejectsMalformedOrDuplicateControlsWithoutUsingThem" classname="com.feedme.server.http.SocialHttpInputTest" time="0.0"/>
+  <testcase name="mediaCharsetAndContentEncodingAreNotGuessed" classname="com.feedme.server.http.SocialHttpInputTest" time="0.0"/>
+  <testcase name="streamingLimitAndLengthMatchUseActualReceivedBytes" classname="com.feedme.server.http.SocialHttpInputTest" time="0.01"/>
+  <testcase name="previewRequiresOneBoundedQueryCapabilityAndNoHiddenTargetParameter" classname="com.feedme.server.http.SocialHttpInputTest" time="0.0"/>
+  <testcase name="paginationQueriesAreUniqueOperationSpecificAndBounded" classname="com.feedme.server.http.SocialHttpInputTest" time="0.0"/>
+  <testcase name="mandatoryVerifierEnvironmentAndDeviceBindingRejectForeignResults" classname="com.feedme.server.http.SocialHttpInputTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

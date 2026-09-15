@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.storage.DurableCommandStorageTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-09-14T03:17:09.939Z" hostname="ansachars-MacBook-Pro.local" time="1.916">
+  <properties/>
+  <testcase name="pendingIntentReopensWithExactRequestAndOriginWhileDatabaseHasNoPlaintextMarkers[jvm]" classname="com.feedme.storage.DurableCommandStorageTest" time="1.089"/>
+  <testcase name="lostResponseReopensAndRetriesOnlyTheOriginalLogicalCommand[jvm]" classname="com.feedme.storage.DurableCommandStorageTest" time="0.204"/>
+  <testcase name="conflictingDraftBatchLeavesNoDiscoverableOrOrphanedIntent[jvm]" classname="com.feedme.storage.DurableCommandStorageTest" time="0.122"/>
+  <testcase name="successfulReceiptSurvivesReopenAndDomainApplyIsAtomicWithAcknowledgement[jvm]" classname="com.feedme.storage.DurableCommandStorageTest" time="0.175"/>
+  <testcase name="ownerRetirementDuringPreflightPreventsSendAndOldQueueCannotUseReplacementOwner[jvm]" classname="com.feedme.storage.DurableCommandStorageTest" time="0.144"/>
+  <testcase name="cancelledDispatchLeavesRecoverableInFlightIntentAcrossReopen[jvm]" classname="com.feedme.storage.DurableCommandStorageTest" time="0.182"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

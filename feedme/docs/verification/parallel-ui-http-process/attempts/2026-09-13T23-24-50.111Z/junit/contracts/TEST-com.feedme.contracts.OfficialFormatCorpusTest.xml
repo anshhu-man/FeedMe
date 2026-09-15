@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.contracts.OfficialFormatCorpusTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-09-13T23:24:54.653Z" hostname="ansachars-MacBook-Pro.local" time="0.006">
+  <properties/>
+  <testcase name="pinnedOfficialAndStandardsCasesPassThroughTheSchemaEvaluator[jvm]" classname="com.feedme.contracts.OfficialFormatCorpusTest" time="0.006"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

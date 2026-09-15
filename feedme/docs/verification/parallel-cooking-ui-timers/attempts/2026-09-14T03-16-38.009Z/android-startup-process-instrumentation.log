@@ -1,0 +1,8 @@
+opening: witnessed interruption + fresh-process recovery passed
+ready: witnessed interruption + fresh-process recovery passed
+work-aborted: witnessed interruption + fresh-process recovery passed
+data-aborted: witnessed interruption + fresh-process recovery passed
+work-closed: witnessed interruption + fresh-process recovery passed
+data-closed: witnessed interruption + fresh-process recovery passed
+complete: witnessed interruption + fresh-process recovery passed
+{"passed":true,"tests":{"tests":7,"failures":0,"errors":0,"skipped":0},"witnessedInterruptions":7,"attemptDirectory":"docs/verification/startup-process/attempts/2026-09-14T03-28-11.607Z"}

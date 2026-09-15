@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.core.ReducerTest" tests="26" skipped="0" failures="0" errors="0" timestamp="2026-09-14T01:46:19.099Z" hostname="ansachars-MacBook-Pro.local" time="0.051">
+  <properties/>
+  <testcase name="logoutAndResetClearAllSessionDataAndCannotBackIntoIt[jvm]" classname="com.feedme.core.ReducerTest" time="0.024"/>
+  <testcase name="cookbookSavedRecipeReturnsToCookbookWithoutLeakingOriginToCatalog[jvm]" classname="com.feedme.core.ReducerTest" time="0.013"/>
+  <testcase name="productionSocialMutationsAreAlwaysDeniedWithoutBackend[jvm]" classname="com.feedme.core.ReducerTest" time="0.001"/>
+  <testcase name="todayOnlyShareIsNotKeptAndNavigatesToToday[jvm]" classname="com.feedme.core.ReducerTest" time="0.0"/>
+  <testcase name="myPlatePostReturnsToMyPlateIncludingAfterMakeMine[jvm]" classname="com.feedme.core.ReducerTest" time="0.001"/>
+  <testcase name="cookingBackResumesUnfinishedButExplicitRecookResetsCompletedSession[jvm]" classname="com.feedme.core.ReducerTest" time="0.0"/>
+  <testcase name="unsupportedVariantDoesNotInventRecipe[jvm]" classname="com.feedme.core.ReducerTest" time="0.0"/>
+  <testcase name="unknownIngredientsAndEffortAreRejected[jvm]" classname="com.feedme.core.ReducerTest" time="0.005"/>
+  <testcase name="allergyRequestsDoNotReceiveSafetyClaimsOrAdaptations[jvm]" classname="com.feedme.core.ReducerTest" time="0.0"/>
+  <testcase name="doneAndSavingAreIdempotentAndRetainAttribution[jvm]" classname="com.feedme.core.ReducerTest" time="0.0"/>
+  <testcase name="unreviewedVariantCannotBypassReviewedParent[jvm]" classname="com.feedme.core.ReducerTest" time="0.001"/>
+  <testcase name="shareIsLocalExplicitAndCommandReplaySafe[jvm]" classname="com.feedme.core.ReducerTest" time="0.0"/>
+  <testcase name="invitationBlockDeletionAndProductionModeGateLocalViews[jvm]" classname="com.feedme.core.ReducerTest" time="0.0"/>
+  <testcase name="expiryAndPermissionAreRecheckedWhenAdapting[jvm]" classname="com.feedme.core.ReducerTest" time="0.0"/>
+  <testcase name="unknownAndRejectedRecipesNeverRunEvenInDemo[jvm]" classname="com.feedme.core.ReducerTest" time="0.0"/>
+  <testcase name="doubleTapsDoNotSkipStepsOrCreateNewCookingSession[jvm]" classname="com.feedme.core.ReducerTest" time="0.001"/>
+  <testcase name="makeMinePreservesSourceAndUsesSupportedVariant[jvm]" classname="com.feedme.core.ReducerTest" time="0.0"/>
+  <testcase name="todayExpiresAtExactly24HoursEvenWhenKeptOnPlate[jvm]" classname="com.feedme.core.ReducerTest" time="0.0"/>
+  <testcase name="productionIsDefaultAndDoesNotLoadDemoIdentity[jvm]" classname="com.feedme.core.ReducerTest" time="0.0"/>
+  <testcase name="unreviewedContentCannotBeUsedInProduction[jvm]" classname="com.feedme.core.ReducerTest" time="0.0"/>
+  <testcase name="deletionRequiresOwnershipAndTombstoneIsHidden[jvm]" classname="com.feedme.core.ReducerTest" time="0.001"/>
+  <testcase name="timeEffortAndIngredientConstraintsAreActuallyEnforced[jvm]" classname="com.feedme.core.ReducerTest" time="0.0"/>
+  <testcase name="futureAndNegativeTimestampsNeverLeakIntoTodayOrDirectPosts[jvm]" classname="com.feedme.core.ReducerTest" time="0.0"/>
+  <testcase name="backAndBlockRemoveTransientSourceContext[jvm]" classname="com.feedme.core.ReducerTest" time="0.001"/>
+  <testcase name="reducerDoesNotMutateInputsAndDetachesCollectionAliases[jvm]" classname="com.feedme.core.ReducerTest" time="0.0"/>
+  <testcase name="demoRequiresExplicitModeAndGuestAction[jvm]" classname="com.feedme.core.ReducerTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

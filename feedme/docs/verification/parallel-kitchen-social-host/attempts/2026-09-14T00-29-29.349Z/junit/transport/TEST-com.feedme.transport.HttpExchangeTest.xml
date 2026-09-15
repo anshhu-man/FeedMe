@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.transport.HttpExchangeTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-09-14T00:29:37.088Z" hostname="ansachars-MacBook-Pro.local" time="0.34">
+  <properties/>
+  <testcase name="mediaTypeMustMatchCanonicalResponseAndUtf8Policy[jvm]" classname="com.feedme.transport.HttpExchangeTest" time="0.037"/>
+  <testcase name="bodyless204RemainsAbsentNotJsonNull[jvm]" classname="com.feedme.transport.HttpExchangeTest" time="0.018"/>
+  <testcase name="percentEncodedPathAndQueryCannotChangeOriginOrParameterCardinality[jvm]" classname="com.feedme.transport.HttpExchangeTest" time="0.047"/>
+  <testcase name="bytesOnBodylessOperationAreNotFabricatedReceipt[jvm]" classname="com.feedme.transport.HttpExchangeTest" time="0.032"/>
+  <testcase name="duplicateMetadataAndUnsupportedCompressionReject[jvm]" classname="com.feedme.transport.HttpExchangeTest" time="0.065"/>
+  <testcase name="undeclaredStatusIsNotInterpretedAsSuccessfulOperation[jvm]" classname="com.feedme.transport.HttpExchangeTest" time="0.016"/>
+  <testcase name="retryAfterRequiresCanonicalPositiveIntegerNotDateOrOverflow[jvm]" classname="com.feedme.transport.HttpExchangeTest" time="0.025"/>
+  <testcase name="responseLimitRejectsDeclaredAndChunkedOversize[jvm]" classname="com.feedme.transport.HttpExchangeTest" time="0.022"/>
+  <testcase name="rawNumbersAndExplicitNullStayUnchangedButAreNotSchemaCertification[jvm]" classname="com.feedme.transport.HttpExchangeTest" time="0.015"/>
+  <testcase name="contentLengthMismatchAndBadLengthsReject[jvm]" classname="com.feedme.transport.HttpExchangeTest" time="0.033"/>
+  <testcase name="invalidUtf8DuplicateKeysAndEmptyJsonAreRejected[jvm]" classname="com.feedme.transport.HttpExchangeTest" time="0.027"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

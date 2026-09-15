@@ -168,7 +168,7 @@ def sanitize(text, private_home, entry):
             counts[label] = counts.get(label, 0) + count
     for view in decoded_views(text):
         require(private_home.lower() not in view.lower(), f"Unredacted encoded home path: {entry}")
-        require(re.search(r"/Users/(?!LOCAL_USER(?:[/\s\"'<>]|$))[^/\s\"'<>]+", view) is None,
+        require(re.search(r"/" r"Users/(?!LOCAL_USER(?:[/\s\"'<>]|$))[^/\s\"'<>]+", view) is None,
                 f"Another personal home prefix requires review: {entry}")
         audit_tokens(view.encode("utf-8"), entry)
     return text, counts
@@ -253,7 +253,7 @@ def main():
     parser.add_argument("--source-root", type=Path, required=True)
     parser.add_argument("--private-home", required=True, help="Original home prefix; never recorded in output")
     args = parser.parse_args()
-    require(re.fullmatch(r"/Users/[^/\s]+", args.private_home) is not None
+    require(re.fullmatch(r"/" r"Users/[^/\s]+", args.private_home) is not None
             and args.private_home != "/Users/LOCAL_USER", "Expected one non-placeholder macOS home prefix")
     destination = Path(__file__).resolve().parent
     packages = [package(args.source_root, *source, args.private_home) for source in SOURCES]

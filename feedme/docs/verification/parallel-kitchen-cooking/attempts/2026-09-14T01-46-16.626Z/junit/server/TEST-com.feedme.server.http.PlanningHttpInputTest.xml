@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.http.PlanningHttpInputTest" tests="17" skipped="0" failures="0" errors="0" timestamp="2026-09-14T01:46:32.775Z" hostname="ansachars-MacBook-Pro.local" time="0.073">
+  <properties/>
+  <testcase name="bearerMissingOrNonBearerNeverBecomesGuestAuthorization" classname="com.feedme.server.http.PlanningHttpInputTest" time="0.033"/>
+  <testcase name="malformedDuplicateAndInvalidUnicodeBodiesNeverNormalizeIntoValidInput" classname="com.feedme.server.http.PlanningHttpInputTest" time="0.003"/>
+  <testcase name="cancelledCallerCannotReturnBodyOrConvertCancellationIntoInputFailure" classname="com.feedme.server.http.PlanningHttpInputTest" time="0.006"/>
+  <testcase name="duplicateSecurityAndFramingHeadersAreRejectedEvenWhenIdentical" classname="com.feedme.server.http.PlanningHttpInputTest" time="0.001"/>
+  <testcase name="streamingBoundAndDeclaredLengthAreCheckedAgainstActuallyReceivedBytes" classname="com.feedme.server.http.PlanningHttpInputTest" time="0.005"/>
+  <testcase name="readsRejectBodiesAndIdempotencyKeys" classname="com.feedme.server.http.PlanningHttpInputTest" time="0.001"/>
+  <testcase name="queriesAreOperationSpecificUniqueAndCanonicalIntegers" classname="com.feedme.server.http.PlanningHttpInputTest" time="0.001"/>
+  <testcase name="metadataDoesNotInferTokenKindAndIsRedacted" classname="com.feedme.server.http.PlanningHttpInputTest" time="0.001"/>
+  <testcase name="verifierCancellationPropagatesWithoutSanitizedAuthenticationFailure" classname="com.feedme.server.http.PlanningHttpInputTest" time="0.013"/>
+  <testcase name="canonicalUuidRejectsJavaShortFormsAndAcceptsExternalCaseWithoutRewritingToken" classname="com.feedme.server.http.PlanningHttpInputTest" time="0.001"/>
+  <testcase name="structurallyValidSchemaViolationsAreTypedBeforeAnyServiceUse" classname="com.feedme.server.http.PlanningHttpInputTest" time="0.001"/>
+  <testcase name="encodedBodiesAndAmbiguousMediaAreNeverDecodedOrGuessed" classname="com.feedme.server.http.PlanningHttpInputTest" time="0.0"/>
+  <testcase name="noUndeclaredConditionalHeaderIsSilentlyHonored" classname="com.feedme.server.http.PlanningHttpInputTest" time="0.001"/>
+  <testcase name="verifierReturningAfterCancellingCallerCannotPublishVerifiedPrincipal" classname="com.feedme.server.http.PlanningHttpInputTest" time="0.005"/>
+  <testcase name="malformedResponseCannotBePromotedToSuccessfulCanonicalHttpReply" classname="com.feedme.server.http.PlanningHttpInputTest" time="0.0"/>
+  <testcase name="framingRejectsConflictingUnknownNegativeAndOversizeLengths" classname="com.feedme.server.http.PlanningHttpInputTest" time="0.001"/>
+  <testcase name="originalNumericLexemeReachesServiceProjectionWithoutDoubleCoercion" classname="com.feedme.server.http.PlanningHttpInputTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

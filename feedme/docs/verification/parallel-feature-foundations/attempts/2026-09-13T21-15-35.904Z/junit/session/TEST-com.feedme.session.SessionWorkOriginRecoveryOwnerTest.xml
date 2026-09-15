@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" tests="28" skipped="0" failures="0" errors="0" timestamp="2026-09-13T21:15:57.822Z" hostname="ansachars-MacBook-Pro.local" time="0.05">
+  <properties/>
+  <testcase name="unknownWriteIsNotPromotedByVisibleAbortedStateAndRetryWritesAgain[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.008"/>
+  <testcase name="nativeProofFailureCannotPublishReadyOrWrite[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.0"/>
+  <testcase name="failedNativeOpenRemainsCloseOnlyAndPreservesTypedFailure[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.001"/>
+  <testcase name="abortedReplayStillRequiresANewCasAndExactReadbackEveryTime[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.002"/>
+  <testcase name="validNativeProofNeverMakesOrdinaryUsedOrNonemptyOriginRecoverable[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.001"/>
+  <testcase name="cancellationAfterNoncooperativeOpenReadOrProofKeepsCloseOnlyOwner[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.002"/>
+  <testcase name="definiteCasFailureDoesNotWriteAndDoesNotRequireReopeningToRetry[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.001"/>
+  <testcase name="changedEvidenceDuringAuthenticationCannotPublishAnEarlierObservation[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.002"/>
+  <testcase name="lateBoundaryActivationAtEveryOpenAwaitKeepsExactNewLeaseAndNeverPublishes[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.001"/>
+  <testcase name="missingMalformedAndUnreadableRecordsAreNotInitialized[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.001"/>
+  <testcase name="malformedSuccessfulCasReceiptNeverAcknowledgesAbort[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.002"/>
+  <testcase name="constructionHasNoIoAndPublicFacadeHasNoLedgerSigningOrSchedulerCapability[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.001"/>
+  <testcase name="everySupportedStatusOpensWithExactReadOnlyObservation[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.004"/>
+  <testcase name="cancelledQueuedSecondOpenDoesNotInvalidateTheFirstAdmittedOwner[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.002"/>
+  <testcase name="abortFromEveryAllowedStatusAlwaysChangesRevisionWithoutLeaseOrEffects[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.004"/>
+  <testcase name="changedAckReadbackCannotCompleteAndMaxRevisionCannotWrap[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.002"/>
+  <testcase name="wrongScopeDemoAndMalformedUnicodeFailBeforeLowerOpening[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.001"/>
+  <testcase name="noncanonicalRawStateAndChangedPredecessorCannotBeNormalized[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.001"/>
+  <testcase name="failedCloseRetainsSameStoreAndRetriesOnlyCloseWhileAllOtherOperationsStayDenied[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.001"/>
+  <testcase name="lateLeaseDuringAbortStopsFurtherCallsAndNeverClearsTheNewLease[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.002"/>
+  <testcase name="successorOfAbortedPlanRequiresBothOriginalAndSuccessorProofs[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.002"/>
+  <testcase name="closeBeforeOpenIsIdempotentAndNeverOpensOrInitializesLowerState[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.001"/>
+  <testcase name="callerHandoffNeverPublishesReadyAndCancellationOrCloseWinsThatGap[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.003"/>
+  <testcase name="cancelledAbortCannotReturnAnAcknowledgementFromItsCommittedMarker[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.001"/>
+  <testcase name="activeBoundaryBlocksOpenWithoutClearingOrReplacingLease[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.001"/>
+  <testcase name="competingPlanAfterOpeningCannotBeInspectedOrAbortedByOldOwner[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.001"/>
+  <testcase name="samePayloadReacknowledgementIsVisibleAsChangedRevisionNotAnotherStatus[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.001"/>
+  <testcase name="thrownNativeOpenIsSanitizedAndRetainedForExplicitClose[jvm]" classname="com.feedme.session.SessionWorkOriginRecoveryOwnerTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.session.SessionWorkOriginSealTest" tests="25" skipped="0" failures="0" errors="0" timestamp="2026-09-14T00:29:55.487Z" hostname="ansachars-MacBook-Pro.local" time="0.055">
+  <properties/>
+  <testcase name="deniedOrdinaryResumeKeepsProvenanceButUncertainCommittedResumeConsumesIt[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.004"/>
+  <testcase name="failedInstallerCompensationAlsoLeavesEmptyOriginPermanentlyUsed[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.004"/>
+  <testcase name="sealedReplaySurvivesReopenAndAlwaysFreshlyAcknowledgesIdenticalBytes[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.004"/>
+  <testcase name="exactReadbackIsMandatoryAfterSealSuccessReceipt[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.003"/>
+  <testcase name="missingAuthenticationCorruptMissingAndClosedStoresHaveNoSealFallback[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.001"/>
+  <testcase name="ordinaryEmptyCancelAndReconcileConsumeProvenanceWithoutNativeEffects[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.004"/>
+  <testcase name="beforeCommitFailurePreservesSelectionAndRetryUsesOriginalPlan[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.002"/>
+  <testcase name="changedRevisionOrPayloadDuringProofVerificationPreventsSealCas[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.002"/>
+  <testcase name="originTransformsPermanentlyDiscardProvenanceWithoutChangingOriginal[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.0"/>
+  <testcase name="retirementAndEmptyDiscardCannotReplaceExplicitAbortOfUntouchedSealedOrigin[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.002"/>
+  <testcase name="initialSealRetainsExactProvenanceAndReturnsNoLeaseOrNativeAuthority[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.001"/>
+  <testcase name="provenanceCannotCoexistWithEntriesRetirementOrDifferentVisibleIdentity[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.0"/>
+  <testcase name="visibleFailedSealIsNotAcknowledgedAndReplayRequiresAnotherChangedCas[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.003"/>
+  <testcase name="sealedOriginCodecKeepsLegacyBytesUnchangedAndCanonicalPlanDetached[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.0"/>
+  <testcase name="foreignProofAndCompetingGenuinePlanNeverSealEqualLookingOrigins[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.001"/>
+  <testcase name="installThenCancelToEmptyCannotRestoreOldSealingEligibility[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.002"/>
+  <testcase name="codecRejectsNullMalformedUnknownOrNonCanonicalProvenance[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.001"/>
+  <testcase name="cancellationDuringReadAuthenticationCasOrReadbackPropagatesWithoutCleanup[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.005"/>
+  <testcase name="impossibleOrExhaustedSealedRevisionNeverWrapsOrAcknowledges[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.002"/>
+  <testcase name="falseSuccessReceiptCannotAcknowledgeInitialOrReplayedSeal[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.004"/>
+  <testcase name="successfulOrdinaryResumeConsumesProvenanceEvenWithoutAnyNativeWork[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.002"/>
+  <testcase name="nonCanonicalOuterSealedStateIsReadableButNeverSealReplayAuthority[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.001"/>
+  <testcase name="ordinaryLegacyUsedRetiringAndCompetingOriginsRejectSealEvenWithSameId[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.001"/>
+  <testcase name="preparedPlanCannotSkipSelectionAndSealedPlanCannotRegressToSelection[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.002"/>
+  <testcase name="activeOrNewlyActivatedBoundaryBlocksSealWithoutClearingTheNewIdentity[jvm]" classname="com.feedme.session.SessionWorkOriginSealTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

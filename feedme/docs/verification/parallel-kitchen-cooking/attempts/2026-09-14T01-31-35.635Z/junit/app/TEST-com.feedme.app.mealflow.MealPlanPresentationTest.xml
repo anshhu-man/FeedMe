@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.app.mealflow.MealPlanPresentationTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-09-14T01:31:54.448Z" hostname="ansachars-MacBook-Pro.local" time="0.026">
+  <properties/>
+  <testcase name="recalledOrRetiredRecipeDoesNotEnableInstructions[jvm]" classname="com.feedme.app.mealflow.MealPlanPresentationTest" time="0.008"/>
+  <testcase name="fullStepsAndSafetyFlagsAreRetainedWithoutDemoConversion[jvm]" classname="com.feedme.app.mealflow.MealPlanPresentationTest" time="0.001"/>
+  <testcase name="quantityAndServingsRetainExactWireSpelling[jvm]" classname="com.feedme.app.mealflow.MealPlanPresentationTest" time="0.001"/>
+  <testcase name="missingReadySnapshotDoesNotEnableRecipe[jvm]" classname="com.feedme.app.mealflow.MealPlanPresentationTest" time="0.0"/>
+  <testcase name="unresolvedModeStaysAbsentAndRecipeIsNotVisible[jvm]" classname="com.feedme.app.mealflow.MealPlanPresentationTest" time="0.0"/>
+  <testcase name="largeExactNumbersNeverRoundThroughDouble[jvm]" classname="com.feedme.app.mealflow.MealPlanPresentationTest" time="0.0"/>
+  <testcase name="projectionLoggingIsRedacted[jvm]" classname="com.feedme.app.mealflow.MealPlanPresentationTest" time="0.007"/>
+  <testcase name="labelIdentityMatchingIsCaseInsensitiveWithoutChangingIds[jvm]" classname="com.feedme.app.mealflow.MealPlanPresentationTest" time="0.0"/>
+  <testcase name="recordedReasonsAndChangesAreNotGeneratedClaims[jvm]" classname="com.feedme.app.mealflow.MealPlanPresentationTest" time="0.002"/>
+  <testcase name="everyIssueHasRecoveryCopyExceptNone[jvm]" classname="com.feedme.app.mealflow.MealPlanPresentationTest" time="0.003"/>
+  <testcase name="everyPhaseHasExplicitPresentationIncludingUncertainty[jvm]" classname="com.feedme.app.mealflow.MealPlanPresentationTest" time="0.0"/>
+  <testcase name="absentIngredientLabelIsExplicitAndNeverGuessed[jvm]" classname="com.feedme.app.mealflow.MealPlanPresentationTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

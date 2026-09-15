@@ -98,12 +98,42 @@ object AndroidStateDatabase {
     ): StateActivationRecoveryOwner = NativeActivationRecoveryOwner(scope, plan, faults) { directory to keyPrefix }
 
     private class NativeActivationRecoveryOwner(
-        private val scope: StorageScope,
+        scope: StorageScope,
         plan: StateActivationPlan,
-        private val faults: StateActivationRecoveryFaults,
-        private val location: () -> Pair<File, String>,
+        faults: StateActivationRecoveryFaults,
+        location: () -> Pair<File, String>,
     ) : StateActivationRecoveryOwner {
         private val plan = StateActivationPlan(plan.copyForStorage())
+        private val lifetime = NativeExistingRecovery(
+            faults = faults,
+            location = location,
+            beforeSqliteOpen = { vault -> validateStateActivationPlan(scope, this.plan, vault) },
+            createDelegate = { connection, vault, onClosed ->
+                EncryptedStateDatabase.createActivationRecoveryOwner(connection, vault, scope, this.plan, Dispatchers.IO, onClosed)
+            },
+            openDelegate = { it.open() }, closeDelegate = { it.close() },
+        )
+        override suspend fun open() = lifetime.open()
+        override suspend fun inspect() = lifetime.whenReady { it.inspect() }
+        override suspend fun binding() = lifetime.whenReady { it.binding() }
+        override suspend fun abort(expectedBinding: PrivateBytes?) = lifetime.whenReady { it.abort(expectedBinding) }
+        override suspend fun close() = lifetime.close()
+        override fun toString() = "StateActivationRecoveryOwner(<redacted>)"
+    }
+
+    /**
+     * Shared internal acquisition only; neither vault nor connection escapes through a public
+     * owner. Construct and retain before calling open. Delegates take ownership synchronously
+     * and are retained before their first await. No normal open/resume/GC route is used here.
+     */
+    internal class NativeExistingRecovery<T : Any>(
+        private val faults: StateActivationRecoveryFaults,
+        private val location: () -> Pair<File, String>,
+        private val beforeSqliteOpen: (StateVault) -> Unit,
+        private val createDelegate: (SQLiteConnection, StateVault, () -> Unit) -> T,
+        private val openDelegate: suspend (T) -> PortResult<Unit>,
+        private val closeDelegate: suspend (T) -> PortResult<Unit>,
+    ) {
         private val mutex = Mutex()
         private var attempted = false
         private var ready = false
@@ -111,9 +141,9 @@ object AndroidStateDatabase {
         private var closed = false
         private var ownership: DatabaseOwnership? = null
         private var connection: SQLiteConnection? = null
-        private var recovery: StateActivationRecoveryOwner? = null
+        private var recovery: T? = null
 
-        override suspend fun open(): PortResult<Unit> {
+        suspend fun open(): PortResult<Unit> {
             var admitted = false
             try {
                 val result = withContext(Dispatchers.IO) {
@@ -139,7 +169,7 @@ object AndroidStateDatabase {
                             lifetime.openExisting(lockFile)
                             currentCoroutineContext().ensureActive()
                             val vault = AndroidStateVault.openExisting(keyPrefix)
-                            validateStateActivationPlan(scope, plan, vault)
+                            beforeSqliteOpen(vault)
                             requireRecoveryInventory(directory)
                             require(sameIdentity(initialDirectory, checkNotNull(statOrNull(directory))))
                             require(sameIdentity(initialDatabase, requireExistingPrivateFile(database)))
@@ -153,12 +183,11 @@ object AndroidStateDatabase {
                             require(sameIdentity(initialDatabase, requireExistingPrivateFile(database)))
                             requireRecoveryInventory(directory)
                             // Common owner creation is synchronous. Retain it before its first await.
-                            val owned = EncryptedStateDatabase.createActivationRecoveryOwner(
-                                opened, vault, scope, plan, Dispatchers.IO, lifetime::close)
+                            val owned = createDelegate(opened, vault, lifetime::close)
                                 .also { recovery = it }
                             connection = null
                             faults.at("before_initialize")
-                            val result = owned.open()
+                            val result = openDelegate(owned)
                             currentCoroutineContext().ensureActive()
                             result
                         } catch (cancelled: CancellationException) { throw cancelled }
@@ -184,17 +213,14 @@ object AndroidStateDatabase {
             }
         }
 
-        private suspend fun <T> whenReady(action: suspend (StateActivationRecoveryOwner) -> PortResult<T>): PortResult<T> =
+        suspend fun <R> whenReady(action: suspend (T) -> PortResult<R>): PortResult<R> =
             withContext(Dispatchers.IO) {
                 mutex.withLock {
                     if (!ready) PortResult.Failure(FailureReason.STALE_SESSION) else action(checkNotNull(recovery))
                 }
             }
 
-        override suspend fun inspect() = whenReady { it.inspect() }
-        override suspend fun binding() = whenReady { it.binding() }
-        override suspend fun abort(expectedBinding: PrivateBytes?) = whenReady { it.abort(expectedBinding) }
-        override suspend fun close(): PortResult<Unit> = withContext(NonCancellable + Dispatchers.IO) {
+        suspend fun close(): PortResult<Unit> = withContext(NonCancellable + Dispatchers.IO) {
             mutex.withLock {
                 attempted = true
                 ready = false
@@ -202,7 +228,7 @@ object AndroidStateDatabase {
                 if (closed) return@withLock PortResult.Value(Unit)
                 val owned = recovery
                 if (owned != null) {
-                    val result = owned.close()
+                    val result = closeDelegate(owned)
                     if (result is PortResult.Value) closed = true
                     result
                 } else try {
@@ -215,7 +241,7 @@ object AndroidStateDatabase {
                   catch (_: LinkageError) { PortResult.Failure(FailureReason.STORAGE_FAILURE) }
             }
         }
-        override fun toString() = "StateActivationRecoveryOwner(<redacted>)"
+        override fun toString() = "NativeExistingRecovery(<redacted>)"
     }
 
     /**

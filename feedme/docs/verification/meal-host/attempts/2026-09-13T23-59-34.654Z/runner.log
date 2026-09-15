@@ -1,0 +1,1 @@
+instrumentation:com.feedme.app.test/androidx.test.runner.AndroidJUnitRunner (target=com.feedme.app.test)

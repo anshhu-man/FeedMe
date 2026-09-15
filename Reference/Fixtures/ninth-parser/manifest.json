@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "scope": "Portable frozen parser regression fixture only; not current-source, original receipt, native or release acceptance.",
+  "originalLocalProvenance": {
+    "receiptSha256": "840990ff363394aa3ae152616ba92e84659f9ab293452ee4c31e2c996df504ab",
+    "sourceManifestSha256": "6173cde4f7baaf2dcae6af2067c93fecebca719880851ba38c2ed2197ea793a7",
+    "receiptBundled": false,
+    "originalAcceptanceVerifiedByPortableTool": false
+  },
+  "files": [
+    {
+      "path": "workspace/apps/android/src/androidTestProgress/kotlin/com/feedme/development/progress/AndroidProgressCookbookHostTest.kt",
+      "originalSourcePath": "apps/android/src/androidTestProgress/kotlin/com/feedme/development/progress/AndroidProgressCookbookHostTest.kt",
+      "bytes": 20628,
+      "sha256": "c448a0371fe78b7da44e85c79d997481655a0ceca87301e663c0dddffd4b0309"
+    },
+    {
+      "path": "workspace/apps/android/src/androidTestProgress/kotlin/com/feedme/development/progress/AndroidProgressCookbookProcessTest.kt",
+      "originalSourcePath": "apps/android/src/androidTestProgress/kotlin/com/feedme/development/progress/AndroidProgressCookbookProcessTest.kt",
+      "bytes": 15570,
+      "sha256": "d513652825935b36c9b090490034cfe8569ac4731c7c40d9e8766e70b91b4842"
+    },
+    {
+      "path": "workspace/apps/android/src/androidTestProgress/kotlin/com/feedme/development/progress/AndroidProgressHostTest.kt",
+      "originalSourcePath": "apps/android/src/androidTestProgress/kotlin/com/feedme/development/progress/AndroidProgressHostTest.kt",
+      "bytes": 29850,
+      "sha256": "d25f0a8daa760db7ac7c62c12051a6547e84e8845f67cf32470fdd277f67b1b0"
+    },
+    {
+      "path": "workspace/apps/android/src/androidTestProgress/kotlin/com/feedme/development/progress/AndroidProgressProcessTest.kt",
+      "originalSourcePath": "apps/android/src/androidTestProgress/kotlin/com/feedme/development/progress/AndroidProgressProcessTest.kt",
+      "bytes": 15811,
+      "sha256": "2ba8d5b66daacf1b898f5640789fb29158cc3a579ead1d784afc9b8d54c7b11b"
+    },
+    {
+      "path": "workspace/apps/android/src/androidTestProgress/kotlin/com/feedme/development/progress/AndroidProgressTimerHostTest.kt",
+      "originalSourcePath": "apps/android/src/androidTestProgress/kotlin/com/feedme/development/progress/AndroidProgressTimerHostTest.kt",
+      "bytes": 28356,
+      "sha256": "3810629b47c461420eb77b68be3bb8af713de8715ef9e0b81b25492640c2f7ca"
+    },
+    {
+      "path": "workspace/scripts/verify-cookbook-processor.mjs",
+      "originalSourcePath": "scripts/verify-cookbook-processor.mjs",
+      "bytes": 55082,
+      "sha256": "6659895bbe6aa3996d44eefb8b917d5e2df92c82b366bc78a7f09ad5d9d7c9e4"
+    },
+    {
+      "path": "workspace/scripts/verify-cookbook-processor.test.mjs",
+      "originalSourcePath": "scripts/verify-cookbook-processor.test.mjs",
+      "bytes": 8520,
+      "sha256": "efd35842080e1d2259115baf189427ab326c497575db76a5d296ac4fa8b7366a"
+    },
+    {
+      "path": "workspace/scripts/verify-native-cooking-host.mjs",
+      "originalSourcePath": "scripts/verify-native-cooking-host.mjs",
+      "bytes": 16771,
+      "sha256": "4abe629382b6d5097df348040699a65c5ba691a92ac5fb1fb40a99374acc85ba"
+    },
+    {
+      "path": "workspace/scripts/verify-release-scope.mjs",
+      "originalSourcePath": "scripts/verify-release-scope.mjs",
+      "bytes": 7505,
+      "sha256": "8501dc81a0bf0e6d49e4a1212fd014416c3986c3836dba14ae516e906308d578"
+    }
+  ]
+}

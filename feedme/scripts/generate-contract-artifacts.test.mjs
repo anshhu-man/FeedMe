@@ -178,7 +178,7 @@ test('all operation methods, routes, headers, statuses, security alternatives, a
     }
   }
   assert.deepEqual(audit.operations, expectedOperations);
-  assert.deepEqual(principalCounts, {public: 3, user: 124, both: 35, admin: 38, webhook: 1});
+  assert.deepEqual(principalCounts, {public: 3, user: 123, both: 36, admin: 38, webhook: 1});
   assert.ok(noContent > 0);
   assert.deepEqual(generatedDocument.components.securitySchemes, canonical.components.securitySchemes);
 });

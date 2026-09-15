@@ -1,0 +1,59 @@
+{
+  "startedAt": "2026-09-13T23:11:36.366Z",
+  "passed": false,
+  "serial": "emulator-5554",
+  "scope": "Six actual Android Compose layout/accessibility/event checks, using synthetic test-only view-state fixtures. Verifies explicit event wiring, exact recipe quantities/mandatory safety steps, retained-retry copy and unavailable-state redaction. Does not authenticate a user, connect providers/HTTP/catalog, test retained-experience end-to-end composition or prove cooking/save/share authorization. Screenshots are native renders, not generated images. API35 ARM64 only; iOS and full release acceptance remain open.",
+  "apk": {
+    "path": "shared/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk",
+    "bytes": 27032076,
+    "sha256": "f634923c46ab9a5bcbc762cb3c3a17932fab9679f970545a0a30f38727f5ce28"
+  },
+  "apkMetadata": {
+    "path": "docs/verification/meal-ui/attempts/2026-09-13T23-11-36.366Z/output-metadata.json",
+    "bytes": 421,
+    "sha256": "cee2ae8b5f90978e068be43ebfb0455ae1b2ae6b558bf56b8d72b44296ec3f82"
+  },
+  "attemptDirectory": "docs/verification/meal-ui/attempts/2026-09-13T23-11-36.366Z",
+  "screenshots": [],
+  "androidApi": "35",
+  "androidAbi": "arm64-v8a",
+  "failure": "UI test failed/skipped/mismatched",
+  "finishedAt": "2026-09-13T23:12:04.605Z",
+  "evidence": [
+    {
+      "path": "docs/verification/meal-ui/attempts/2026-09-13T23-11-36.366Z/abi.log",
+      "bytes": 10,
+      "sha256": "7f10c3cd4593d1d6ded27d658e7c05216011c955c200aac551caad0c979d4d90"
+    },
+    {
+      "path": "docs/verification/meal-ui/attempts/2026-09-13T23-11-36.366Z/api.log",
+      "bytes": 3,
+      "sha256": "90d7ec0f0acef104d8b6252794295f661a0149634868d02a1ae0c358099638f5"
+    },
+    {
+      "path": "docs/verification/meal-ui/attempts/2026-09-13T23-11-36.366Z/boot.log",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "docs/verification/meal-ui/attempts/2026-09-13T23-11-36.366Z/install.log",
+      "bytes": 36,
+      "sha256": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7"
+    },
+    {
+      "path": "docs/verification/meal-ui/attempts/2026-09-13T23-11-36.366Z/instrumentation.log",
+      "bytes": 7703,
+      "sha256": "2231fff2dc271101bf8bbc8f602163f3313b7da20eb80a014146b45b14cb1f6c"
+    },
+    {
+      "path": "docs/verification/meal-ui/attempts/2026-09-13T23-11-36.366Z/output-metadata.json",
+      "bytes": 421,
+      "sha256": "cee2ae8b5f90978e068be43ebfb0455ae1b2ae6b558bf56b8d72b44296ec3f82"
+    },
+    {
+      "path": "docs/verification/meal-ui/attempts/2026-09-13T23-11-36.366Z/runner.log",
+      "bytes": 218,
+      "sha256": "9ed4969401dc32c6ef743d8d3c8480fa84fd4f5316f2d697b2532c85ec017362"
+    }
+  ]
+}

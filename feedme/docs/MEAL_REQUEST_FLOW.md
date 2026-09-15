@@ -1,0 +1,75 @@
+# FeedMe — manual meal-request controller
+
+14 September 2026. `:shared:mealflow` implements a production-oriented, provider-independent state and persistence component for manual REQUEST → RECOMMENDATIONS → plan-context RECIPE. It does **not** wire new native screens, enable HTTP routes, configure identity, approve catalog content or complete an entire feature. The approved [44-feature V1 and 10 deferrals](V1_RELEASE_SCOPE.md) are unchanged.
+
+The focused run `52998` passed all47 common/JVM tests. The final [combined source-bound run](verification/parallel-meal-startup/verification.json) passed at2026-09-13T22:19:20.584Z, including all47 methods and a fresh mealflow JAR/AAR with zero-issue lint. [Combined handoff, independent audit and limits](PARALLEL_MEAL_STARTUP.md). This accepts the component, not a connected native or production journey.
+
+## Trusted composition, not a new identity authority
+
+Construct `AuthenticatedMealPlanningAccess.fromSession(actualPrivateSessionAccess, accountTransport)` from the real [private-session runtime](../shared/session/src/commonMain/kotlin/com/feedme/session/PrivateSessionRuntime.kt). The access object borrows its exact lease, owner-scoped store, origin and online/offline-private mode. The required `AccountTransport` must enforce the configured environment, registered account session or bounded guest token, and current backend authorization. Passing an implementation into a fixture is not authentication evidence.
+
+Construct [MealRequestController](../shared/mealflow/src/commonMain/kotlin/com/feedme/mealflow/MealRequestController.kt) with that access, the actual `SessionBoundary`, the same serialized identity dispatcher, an epoch clock, connectivity port, required native globally unique operation-ID source, and an explicit `MealFlowPolicy`. There are no provider, credential, reviewed-recipe, clock or ID fallbacks. An offline-private session cannot gain network access merely because connectivity becomes online.
+
+The controller subscribes to the actual boundary's synchronous one-shot invalidation hook before I/O. Logout, account switch and same-account lease replacement immediately redact its current reactive state, invalidate its request generation and release its process ownership claim. Suspended results cannot republish the retired lease's payload. Every action checks the captured generation and lease around awaits; cancellation propagates. Call `close()` when the composition is disposed. It removes the subscription and private state, but never closes borrowed transport/storage, erases an owner or clears a newer session lease. Previously handed-out immutable values are not revocable capabilities; the UI must render the current state and must not keep an independent private-screen cache after invalidation.
+
+Canonical `getPreferences`, `listPantry`, `createPlan` and `nextPlan` permit both `UserBearer` and `GuestBearer`. Guest support here means the same controller operating on a genuinely authorized guest lease and its own resources. It does not create guest credentials, merge an account, authorize social objects, or waive backend quotas. The normal transport still supplies the account device-session header when required.
+
+## API and observable states
+
+The [models](../shared/mealflow/src/commonMain/kotlin/com/feedme/mealflow/MealRequestModels.kt) expose a read-only `StateFlow<MealRequestState>`. Collecting it starts no request or retry. State separates `phase` from `screen`, retains the canonical `PlanWire`, and includes the explicit draft, preferences, bounded pantry page, historical plan snapshots, issue/failure reason, alternative eligibility, whether an unresolved command matches the edited draft, and an optional retry time. Diagnostic `toString` values redact private bodies.
+
+| Explicit action | Implemented behavior |
+| --- | --- |
+| `restore()` | Read and validate the encrypted record; restore draft/current candidate/history without backend access. Expire nonpending draft/history state according to the supplied policy. |
+| `refreshContext()` | Read preferences, one pantry page (`limit=50`), then preferences again; reject a mixed preference snapshot. Retain the returned pantry cursor, without treating unfetched items as absent. |
+| `edit(draft)` | Persist manual controls, fence a superseded request generation and invalidate continuation eligibility when inputs differ. Preserve an unresolved earlier command verbatim. |
+| `submit()` | Fetch current preferences, build the canonical request and explicitly create one plan. Offline submission remains a local draft and generates no command key. |
+| `retrySubmitted()` | Retry only the existing command, with its original operation, parent path, key and exact body, after current-context/time and fresh durable-ack checks. |
+| `nextAlternative()` | Browse an already-fetched immediate child when available; otherwise explicitly call canonical `nextPlan` with the current parent/cursor and constraints. |
+| `previousPlan()` / `backToDraft()` | Restore retained local history or the manual draft without creating a plan or a taste-memory event. |
+| `openRecipe()` | Navigate to the retained plan snapshot as a historical read. It does not start cooking or save a recipe. |
+| `close()` | Redact and detach this controller only; retain its encrypted record for a subsequent valid composition. |
+
+Phases are `EDITING`, `LOADING`, `NEEDS_CONFIRMATION`, `NO_MATCH`, `READY`, `OFFLINE_DRAFT`, `RESOLVING`, `ERROR` and `UNAVAILABLE`. A successful HTTP response can still represent needs-confirmation or no-match. The canonical `Plan.mode` is allowed to be absent in those two states; ready/recalled require an actual cook/assemble/improve mode. Absence is never converted into a made-up mode or cooking permission.
+
+The [builder](../shared/mealflow/src/commonMain/kotlin/com/feedme/mealflow/MealRequestBuilder.kt) produces only canonical manual `PlanRequest` fields. It preserves exact numeric spelling, uses explicit mode/energy/servings/equipment/time inputs, unions explicit hard exclusions with saved exclusions, and attaches the fetched preference revision. It neither interprets text nor issues source grants. A pending local preference edit blocks submission; the integrating preference editor must supply that flag and its explicit exclusion overlay truthfully. Pantry `usuallyHave`/`uncertain` entries are never promoted into confirmed request ingredients. Improve-mode base descriptions and IDs do not certify complete composition or safety.
+
+## Durable admission and uncertainty
+
+The [record codec](../shared/mealflow/src/commonMain/kotlin/com/feedme/mealflow/MealFlowRecord.kt) retains one schema-versioned private record under `RecordKey("mealflow.v1", origin)`, through the borrowed owner-scoped store. The production composition supplies encrypted private storage; the controller does not invent encryption or place this payload in preferences, logs or credentials storage. Exact request/response bytes are stored without flattening through demo recipe models.
+
+Before network dispatch, the controller first persists the command and then persists a dispatch-admission increment. Every write requires a successful CAS receipt with a strictly newer revision and an exact revision/schema/payload readback. A failure, including `OUTCOME_UNKNOWN`, is never promoted to success by observing matching bytes afterward. Every retried dispatch obtains a fresh admission acknowledgement. A crash or cancellation after admission but before the transport call is deliberately conservative: the next attempt cannot assume no earlier effect.
+
+Response binding checks the canonical operation/status/body/content type and Problem correlation, then the exact request constraints, parent/source relationship, concrete requested mode when applicable, recipe lineage and quoted integer ETag. Missing ETag allows this read-only cache; a present mismatched ETag is rejected. Integer comparison does not use floating point and accepts equivalent quoted leading-zero versions.
+
+Only a bound **first admitted attempt's 400/422 input rejection** releases the pending command. Authentication, rights, current-context and expiry Problems retain it. After an earlier admitted attempt, later Problems also retain it: a server authorization failure before receipt lookup does not prove that an earlier request never committed. Timeout, cancellation, malformed success and response/receipt ambiguity remain resolving with the original key/body. No key rotation is a retry strategy. Bound transient responses honor the greater header/body retry delay; the UI receives `RETRY_LATER` and, when known, `retryAtMillis`.
+
+There is no background worker or automatic initial/offline create queue. An existing pending command blocks a new submit or alternative. Expired replay windows and changed preference context require an explicit future reconciliation path; this component does not silently discard that evidence or fabricate a successful plan. The package does not yet provide the complete user-confirmed discard/reconciliation journey for such blocked commands.
+
+## Bounded retention and reply compatibility
+
+`MealFlowPolicy` requires four choices: draft retention (up to 30 days), replay window (up to six days, below canonical seven-day receipts), retained history count (1–20) and issued-ID capacity (1–4096). These are operational bounds, not legal retention approval or recommended product defaults.
+
+Issued IDs carry their creation time and remain in the local deduplication record for the full seven-day receipt horizon. Capacity exhaustion is temporary `RATE_LIMITED`/`RETRY_LATER`, with the earliest retained-ID expiry exposed; it is not a lifetime 128-request quota. Resolved IDs age out during acknowledged maintenance/writes. The unresolved command's identity/body is never evicted, including after its replay window expires. Native globally unique IDs remain mandatory after local deduplication expiry. The supplied device clock is not trusted server time: observed rollback is rejected, but this component cannot prove wall time or survive arbitrary clock manipulation as a forever-deduplication guarantee.
+
+History is constrained by both count and the real 1 MiB private-record limit. The oldest resolved, nonselected snapshots are evicted first, followed if necessary by the optional pantry cache; current snapshot, pending command and replay/recall fences are not truncated. Before any command can dispatch, the record reserves space for the **full 262,144-byte server Plan limit**, worst-case JSON-string escaping, exact request, ETag and metadata. A later draft/context edit cannot consume that reservation while a command is unresolved. If mandatory data cannot fit, admission fails before network access. The controller's Plan decode/restore bound matches `StoredReply` and [V003 planning storage](../server/src/main/resources/db/migration/V003__private_planning.sql); arbitrary context documents retain their smaller independent limits.
+
+Alternatives use canonical `AdaptRequest`, the exact immutable parent path and opaque continuation cursor, and a fresh key. **There is no `If-Match` header on `nextPlan`.** Exclusions contain only IDs from the retained current parent's ancestry, not unrelated create-plan roots with coincidentally identical constraints. The backend remains authoritative for lineage membership, cursor position/expiry and current eligibility. Changed inputs disable old continuation use; offline navigation can browse retained fetched children, never manufacture unseen alternatives. History is operational navigation, not a permanent food-dislike record.
+
+## Historical content, recall and remaining integration
+
+Plans retain full canonical recipe snapshots, quantities, changes, reasons and catalog provenance. A scaled plan-local snapshot is not replaced by the unscaled catalog version and is not published as a new reviewed catalog body. `historical` identifies cached facts, not current recall/rights or pantry confirmation. Ready status and recipe navigation are not authorization for `createCookSession` or `saveRecipe`.
+
+A valid recalled Plan or bound `RECIPE_RECALLED` Problem hides the affected local version. A successfully acknowledged marker persists with the private record; a failed marker write cannot be claimed durable across recreation. This is controller-local knowledge, not a completed application-wide recall propagation service. Cooking/save integration must connect current authorization and known-recall fences rather than allowing this cache to grant offline cooking permission.
+
+| Canonical requirement | This component | Remaining journey |
+| --- | --- | --- |
+| [F02 Smart Meal Helper](../../outputs/biteclub_blueprint/features/F02.md) | Manual canonical request, guest/account context, preserved exclusions, honest domain/offline/uncertain outcomes | Native controls/navigation, real identity/backend and reviewed catalog integration, text interpretation, complete explicit blocked-request reconciliation |
+| [F09 Something Else](../../outputs/biteclub_blueprint/features/F09.md) | Exact parent/cursor request, ancestry exclusions, bounded prior/next history, same-key retry and edit invalidation | Route-level acceptance, accessible native states/focus, cooking-entry recall/rights integration |
+| [F53 Navigation/offline](../../outputs/biteclub_blueprint/features/F53.md) | Owner-scoped draft/snapshot persistence, generation/lease fences, immediate current-state redaction, safe local navigation | Native back/picker/background/deep-link restoration, account-switch journeys, actual-device UI acceptance |
+
+Canonical operations and schemas are in [04_API_Contract.json](../../outputs/biteclub_blueprint/architecture/04_API_Contract.json); related input/explanation requirements remain in F03/F04/F05/F07/F17. No excluded P2/P3 feature is enabled here.
+
+The next UI slice must collect this controller directly and render its canonical state, keep pending versus edited drafts distinct, display historical/retry/offline limits, route explicit actions once, and close the controller with its owning composition. The current [shared app entry](../shared/app/src/commonMain/kotlin/com/feedme/app/App.kt) and platform entry points still use `DemoKitchenRuntime`; this package does not relabel or replace those fixtures. There is no new production-native screen acceptance in these 47 tests.
+
+The common tests exercise synthetic backend and detached atomic-store fixtures, including exact replay, cancellation, stale leases, response binding, lineage separation, byte budgets and full-size replies. They do not independently prove native cryptography, provider authentication or physical app-kill behavior. [U04/U05](USER_ACTIONS.md) identity/backend configuration and [U06](USER_ACTIONS.md) content rights and qualified review remain unresolved. Manual planning needs no language-provider choice, but it still requires an actual trusted planning backend and approved catalog. No HTTP activation, deployment, paid service, new provider or public snapshot refresh follows from this handoff.

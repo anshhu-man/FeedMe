@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.storage.EncryptedStateDatabaseTest" tests="36" skipped="0" failures="0" errors="0" timestamp="2026-09-13T20:30:14.744Z" hostname="ansachars-MacBook-Pro.local" time="2.926">
+  <properties/>
+  <testcase name="handleCannotReadWriteOrEraseAnotherScope[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.059"/>
+  <testcase name="eraseFailureBeforeCommitCanRetrySameHandleWhileItStaysFenced[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.119"/>
+  <testcase name="duplicateKeysRejectTheEntireBatch[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.085"/>
+  <testcase name="closeReleasesConnectionAndRejectsRetainedHandles[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.031"/>
+  <testcase name="configuredConnectionUsesRollbackJournalAndRequiredPragmas[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.117"/>
+  <testcase name="ciphertextPersistsAcrossCloseAndReopenWithoutPrivateIdentifiers[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.064"/>
+  <testcase name="concurrentCompareAndSwapHasExactlyOneWinner[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.059"/>
+  <testcase name="ciphertextCannotBeMovedBetweenRecordKeys[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.045"/>
+  <testcase name="activateRetriesPendingKeyCleanupBeforeMakingNewOwnerKey[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.066"/>
+  <testcase name="unknownSchemaVersionApplicationIdOrShapeFailsClosed[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.209"/>
+  <testcase name="cancellationDuringSynchronousCommitCanHideSuccessWithoutReplaying[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.046"/>
+  <testcase name="ciphertextModificationOrMetadataSubstitutionCannotAuthenticate[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.136"/>
+  <testcase name="failedKeyDeletionRetiresOwnerAndResumeRetriesCleanup[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.082"/>
+  <testcase name="failedPendingCleanupDuringOpenClosesTransferredConnection[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.054"/>
+  <testcase name="commitFailureBeforeExecutionRollsBackAndRemainsUsable[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.066"/>
+  <testcase name="oversizedOrNulSuffixedCleanupKeyFailsClosedWithoutDeletingKeys[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.098"/>
+  <testcase name="revisionConflictRollsBackEveryMutationInTheBatch[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.058"/>
+  <testcase name="realSqliteFullResponseRollsBackWithoutLosingPriorData[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.05"/>
+  <testcase name="corruptedPriorCiphertextCannotBeOverwrittenOrDeletedByCas[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.042"/>
+  <testcase name="oversizedOrNulSuffixedOwnerKeyFailsClosedWithoutDeletingKeys[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.081"/>
+  <testcase name="malformedCleanupQueueNeverDeletesAKeyOfAnActiveOwner[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.039"/>
+  <testcase name="boundedBatchesAndKeysRejectBeforeAnyWrite[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.055"/>
+  <testcase name="nonIntegerPersistedMetadataIsRejectedWithoutSilentCoercion[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.179"/>
+  <testcase name="environmentActorKindAndActorIdAreIndependentOwners[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.159"/>
+  <testcase name="lostOwnerKeyFailsClosedWithoutReplacingIt[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.047"/>
+  <testcase name="eraseRetiresAllOldHandlesAndSurvivesReactivationAndReopen[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.09"/>
+  <testcase name="malformedReferencingOwnerNeverLosesItsKeyDuringCleanup[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.258"/>
+  <testcase name="recordAndTotalPayloadByteLimitsAreEnforced[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.119"/>
+  <testcase name="inputListIsSnapshottedBeforeDispatchAndReturnedBytesAreDetached[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.041"/>
+  <testcase name="commitFailureAfterExecutionIsUnknownAndNeverReplayed[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.057"/>
+  <testcase name="createUpdateDeleteAndRecreateKeepMonotonicRevision[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.082"/>
+  <testcase name="existingWalDatabaseIsRejectedWithoutDestructiveConversion[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.018"/>
+  <testcase name="emptyPrivatePayloadIsAValidEncryptedRecord[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.046"/>
+  <testcase name="failedEncryptionRollsBackEarlierBatchWrites[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.043"/>
+  <testcase name="eraseCommitResponseLossKeepsRetirementAndResumesKeyCleanup[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.067"/>
+  <testcase name="reopenRetriesPersistedPendingKeyCleanup[jvm]" classname="com.feedme.storage.EncryptedStateDatabaseTest" time="0.055"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

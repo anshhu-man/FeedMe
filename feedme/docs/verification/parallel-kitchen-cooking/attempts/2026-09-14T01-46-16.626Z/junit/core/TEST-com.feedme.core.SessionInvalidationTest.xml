@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.core.SessionInvalidationTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-09-14T01:46:19.159Z" hostname="ansachars-MacBook-Pro.local" time="0.007">
+  <properties/>
+  <testcase name="disposedSubscriptionsAreIdempotentAndDoNotRetainNotificationWork[jvm]" classname="com.feedme.core.SessionInvalidationTest" time="0.001"/>
+  <testcase name="clearRedactsSynchronouslyAfterLeaseBecomesStale[jvm]" classname="com.feedme.core.SessionInvalidationTest" time="0.0"/>
+  <testcase name="alreadyStaleOrForeignLeasesSignalImmediatelyWithoutGrantingAccess[jvm]" classname="com.feedme.core.SessionInvalidationTest" time="0.004"/>
+  <testcase name="replacingTheSameScopeInvalidatesTheOldIncarnationExactlyOnce[jvm]" classname="com.feedme.core.SessionInvalidationTest" time="0.001"/>
+  <testcase name="anObserverExceptionCannotUndoClearingOrSkipOtherObservers[jvm]" classname="com.feedme.core.SessionInvalidationTest" time="0.0"/>
+  <testcase name="subscriptionDisposalDuringNotificationDoesNotCorruptTheRemainingCallbacks[jvm]" classname="com.feedme.core.SessionInvalidationTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

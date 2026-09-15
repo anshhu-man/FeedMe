@@ -11,7 +11,7 @@ data class ContractOperation(val method: String, val path: String, val id: Strin
 /** Routing metadata only; this does not validate request bodies or implement authorization. */
 class ContractCatalog private constructor(val document: JsonObject, val operations: List<ContractOperation>) {
     companion object {
-        const val SOURCE_SHA256 = "f0a5f20c4a84822813137c3e6b1ef31ec22afd1d7ee384f7f29b5df09e10aba0"
+        const val SOURCE_SHA256 = "64cb5009fc71b7428e1756b0d82d3ccdae951121f7815b7904eef10b4fb754dd"
         private val methods = setOf("get", "post", "put", "patch", "delete", "head", "options", "trace")
         private val principals = setOf("public", "user", "both", "admin", "webhook")
 

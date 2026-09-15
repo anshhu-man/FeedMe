@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.planning.PlansStoreIntegrationTest" tests="28" skipped="0" failures="0" errors="0" timestamp="2026-09-14T03:19:36.497Z" hostname="ansachars-MacBook-Pro.local" time="12.727">
+  <properties/>
+  <testcase name="recalledPendingCandidatesAreSkippedWithoutRerankingOrRecycling" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.198"/>
+  <testcase name="cursorCannotAuthorizeAnotherOwnerParentOrConstraintSet" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.329"/>
+  <testcase name="currentDeviceGuestExpiryAndRevocationAreCheckedBeforeCachedPlanDisclosure" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.397"/>
+  <testcase name="immutableRowsCannotBeOverwrittenAndTamperedEvidenceFailsClosed" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.286"/>
+  <testcase name="recallDeniesNewReadsAndReplayWhileRetirementPreservesOnlyHistoricalRead" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.587"/>
+  <testcase name="improveNeedsExactConfirmedBaseEvidenceAndUsesActualReviewedCompatibleAddition" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.268"/>
+  <testcase name="unresolvedAutomaticModePersistsHonestNonreadyPlanWithoutInventingARecipeOrMode" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.275"/>
+  <testcase name="lostCommitResponseRecoversExactChildAndNeverAdvancesTheCursorAgain" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.314"/>
+  <testcase name="directRecipeSourceRequiresCurrentAuthorityAndCannotGrantAnUnreviewedOrPaidMatch" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.254"/>
+  <testcase name="reviewedQuantityScalingPersistsMaterializedPlanWithoutReplacingCatalogSource" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.341"/>
+  <testcase name="explanationsAreStoredFactsWithPrivatePlanBoundPaginationAndNoLanguageCall" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.384"/>
+  <testcase name="historicalLifecycleUpdatesRequireMonotonicVersionAndUnchangedRecipeMaterialAndReviewEvidence" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="2.242"/>
+  <testcase name="sameKeyConcurrentAlternativesReturnOneOriginalChildWithoutSkippingTwice" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.306"/>
+  <testcase name="durableAlternativeOrderingSurvivesNewServiceInstanceAndKeepsParentsImmutable" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.367"/>
+  <testcase name="newPreferencesOrPantryRevisionFenceSelectionButHistoricalPlanRemainsExact" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.696"/>
+  <testcase name="cursorAndPlanExpiryAreAuthoritativeAndRecheckedAfterPolicyWait" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="1.612"/>
+  <testcase name="exhaustedAutoContinuationReturnsCanonicalNoMatchWithoutMadeUpMode" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.24"/>
+  <testcase name="taxonomyChangeAndUnpresentedRecipeExclusionsFailWithoutConsumingCursor" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.238"/>
+  <testcase name="boundedEvidenceFailureAndCreationKillGateNeverDisableExistingOwnedReads" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.286"/>
+  <testcase name="guestAndAccountPlansArePrivateEvenWhenOpaquePrincipalIdsCollide" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.327"/>
+  <testcase name="differentCommandKeysCannotConsumeTheSameParentCursorTwice" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.219"/>
+  <testcase name="manualNoMatchAndUncertainInputsRemainSuccessfulNonCookablePlans" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.242"/>
+  <testcase name="missingOrChangedPreferencesRequireRefreshWithoutDroppingSavedExclusions" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.281"/>
+  <testcase name="schemaAndUnsupportedLanguageSocialAndLaterScopesNeverCreateDomainOrReceipts" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.174"/>
+  <testcase name="currentTaxonomyRevisionAndCompositionFenceReadyCommandReplayWithoutChangingHistoricalPlans" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="1.074"/>
+  <testcase name="changedSameIdImmutableContentOrEditorialProofCannotBecomeAnAlternative" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.236"/>
+  <testcase name="outboxFailureRollsBackPlanLineageAndReceiptThenOriginalKeyRetries" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.265"/>
+  <testcase name="manualPlanPersistsExactRecipeReasonsInputEvidenceAndOneAtomicEvent" classname="com.feedme.server.planning.PlansStoreIntegrationTest" time="0.287"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

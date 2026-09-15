@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.http.PlanningHttpIntegrationTest" tests="18" skipped="0" failures="0" errors="0" timestamp="2026-09-14T01:33:07.584Z" hostname="ansachars-MacBook-Pro.local" time="14.47">
+  <properties/>
+  <testcase name="actualVerifiedGuestKindCannotBorrowDeviceOrAccountOwnership" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.704"/>
+  <testcase name="verifierFailuresAndExceptionsAreSanitizedAndCannotReachDatabaseAuthority" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.662"/>
+  <testcase name="decodedUuidPathsAreExactAndMalformedOrExtraSegmentsNeverSelectAnotherResource" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.702"/>
+  <testcase name="unconfiguredAndOtherProductOperationsStayClosedEvenWithPlanningCredentials" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.697"/>
+  <testcase name="preCommitDatabaseFailureRollsBackPlanReceiptAndOutboxWithoutLeakingCause" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.733"/>
+  <testcase name="duplicateQueriesAndConditionalReadsCannotCauseUnvalidated304OrDisclosure" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.766"/>
+  <testcase name="actualCioSocketServesPlanningAndRejectsDuplicateAuthorizationWithoutSecondEffect" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.826"/>
+  <testcase name="currentSessionRevocationIsRecheckedBeforeSuccessfulIdempotentReplay" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.744"/>
+  <testcase name="verifierOutputEnvironmentAndDeviceMustMatchAdmittedContext" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.694"/>
+  <testcase name="durableAlternativesUseCanonicalNoIfMatchBodyAndDoNotAdvanceTwiceOnRetry" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.916"/>
+  <testcase name="simulatedCommitReceiptLossReturnsUnknownAndExactRetryRecoversOneActualCommit" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.828"/>
+  <testcase name="malformedSchemaDuplicateUnicodeAndOversizeBodiesHaveNoDurableEffects" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.752"/>
+  <testcase name="catalogRecallDeniesReadExplanationAndCachedReadySelection" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.814"/>
+  <testcase name="cancelledHttpCallerAfterActualCommitKeepsOneDurableResultForExactRetry" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="1.066"/>
+  <testcase name="sameKeyBodyReplayIsExactButChangedBodyCannotCreateAnotherPlan" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.939"/>
+  <testcase name="configuredServiceStillDoesNotEnablePreferenceRecipeOrSocialRoutes" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.848"/>
+  <testcase name="expiredGuestAndUnknownTokenDoNotAuthorizeFreshOrCachedPlans" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.962"/>
+  <testcase name="configuredCreateReadAndExplanationReturnCanonicalPrivateResponses" classname="com.feedme.server.http.PlanningHttpIntegrationTest" time="0.817"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

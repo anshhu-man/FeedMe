@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.kitchen.KitchenStoreIntegrationTest" tests="28" skipped="0" failures="0" errors="0" timestamp="2026-09-14T01:33:35.695Z" hostname="ansachars-MacBook-Pro.local" time="9.216">
+  <properties/>
+  <testcase name="accountGuestEnvironmentAndOtherPrincipalScopesNeverShareRowsOrCommands" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.239"/>
+  <testcase name="lostApplicationReceiptAfterRealCommitRetriesExactOneEffectWithoutReplacingKey" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.307"/>
+  <testcase name="deletionIsBodylessAndOnlyExactOriginalCommandCanReplayMissingRow" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.331"/>
+  <testcase name="explicitProvisioningRequiresCompleteUserFieldsAndIndependentAuthority" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.303"/>
+  <testcase name="boundedOwnerCursorPagesExcludeTombstonesAndCannotGrantForeignAccess" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.372"/>
+  <testcase name="preferenceExactOriginalPreconditionAndBodyArePartOfDurableIdentity" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.342"/>
+  <testcase name="preferencePatchPreservesOmittedExclusionsAndCommitsOneVersionReceiptAndSafeEvent" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.299"/>
+  <testcase name="currentIdentityDeviceAndGuestExpiryAreCheckedBeforeEveryCachedDisclosure" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.362"/>
+  <testcase name="searchRunsInsideCurrentPrincipalTransactionPreservesNullableQueryAndValidatesResponse" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.332"/>
+  <testcase name="newRoughPantryReportHasExplicitNullConfirmationAndNoInventedQuantity" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.371"/>
+  <testcase name="cancellationAndUnexpectedAuthorityExceptionsNeverBecomeAuthSuccessOrLeakyFailures" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.301"/>
+  <testcase name="concurrentSameKeyCommandsSerializeOneMutationAndExactReplay" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.326"/>
+  <testcase name="exactDecimalValuesSurvivePostgresJsonbAndCanonicalEquivalentRetry" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.332"/>
+  <testcase name="missingPreferencesGetDoesNotProvisionRowsReceiptsOrPermissiveDefaults" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.343"/>
+  <testcase name="simulatedBeforeCommitFailureRemainsUnknownAndSameCommandCanApplyOnce" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.286"/>
+  <testcase name="retiredCatalogRejectsNewSelectionButPreservesOwnedReadsExactReplayAndRemoval" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.352"/>
+  <testcase name="newerPreferenceStateCannotBeOverwrittenOrDisclosedAsAnOldCachedAcknowledgement" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.361"/>
+  <testcase name="secondRemovalCannotAcknowledgeAnEarlierDeletionEvenAfterReplacementAlsoDisappears" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.32"/>
+  <testcase name="deleteRecreateUsesNewIncarnationAndIncreasingVersionAgainstBothOldWritesAndDeletes" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.36"/>
+  <testcase name="pantryOverwriteRequiresExactExpectedVersionWithoutHiddenIfMatch" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.402"/>
+  <testcase name="typedInputUnknownIngredientAndUnitFailuresRollbackAllCommandArtifacts" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.329"/>
+  <testcase name="explicitUncertainStapleAndConfirmationFieldsAreNeverUpgradedOrAutoConsumed" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.295"/>
+  <testcase name="malformedPersistedFieldsCannotHideByOverwritingResourceMetadata" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.317"/>
+  <testcase name="concurrentDifferentKeysWithSameExpectedVersionCannotLoseAnUpdate" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.262"/>
+  <testcase name="expiredReceiptNeverExecutesAgainAndVersionExhaustionFailsClosed" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.324"/>
+  <testcase name="outboxFailureRollsBackDomainVersionAndReceiptAsOneTransaction" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.349"/>
+  <testcase name="responseBoundIsEnforcedBeforeMutationReceiptAndOutboxCanCommit" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.335"/>
+  <testcase name="retiredPreferenceReferencesRemainReadableAndReplayableWithoutGrantingNewSelection" classname="com.feedme.server.kitchen.KitchenStoreIntegrationTest" time="0.364"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

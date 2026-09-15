@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.server.LocalServiceTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-09-14T01:31:48.803Z" hostname="ansachars-MacBook-Pro.local" time="1.367">
+  <properties/>
+  <testcase name="unknownPathsAndMethodsDoNotExposeRequestDetails" classname="com.feedme.server.LocalServiceTest" time="0.883"/>
+  <testcase name="configurationAndStaffHealthDenyEvenWithNoCredentials" classname="com.feedme.server.LocalServiceTest" time="0.03"/>
+  <testcase name="everyUnimplementedCanonicalRouteReturns503WithoutSuccessfulMutation" classname="com.feedme.server.LocalServiceTest" time="0.339"/>
+  <testcase name="tracesAreServerGeneratedUniqueAndNotReflected" classname="com.feedme.server.LocalServiceTest" time="0.021"/>
+  <testcase name="invalidGeneratedHealthFallsBackToRedactedProblem" classname="com.feedme.server.LocalServiceTest" time="0.035"/>
+  <testcase name="healthIsPublicAndHonestlyDegraded" classname="com.feedme.server.LocalServiceTest" time="0.014"/>
+  <testcase name="malformedHandlerInputsUseCanonicalProblem" classname="com.feedme.server.LocalServiceTest" time="0.021"/>
+  <testcase name="unexpectedHandlerErrorsAreRedacted" classname="com.feedme.server.LocalServiceTest" time="0.024"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

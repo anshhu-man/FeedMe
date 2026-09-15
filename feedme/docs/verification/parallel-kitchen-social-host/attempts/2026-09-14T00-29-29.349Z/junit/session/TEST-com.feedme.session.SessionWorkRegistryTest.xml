@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.session.SessionWorkRegistryTest" tests="53" skipped="0" failures="0" errors="0" timestamp="2026-09-14T00:29:55.543Z" hostname="ansachars-MacBook-Pro.local" time="0.095">
+  <properties/>
+  <testcase name="reservedCallbacksAndDeniedFailedThrowingExecutionPoliciesNeverExecuteEffects[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.006"/>
+  <testcase name="awaitedReadsCannotReturnStaleBindingsOrStartEffectsAfterSameOrDifferentAccountReplacement[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.005"/>
+  <testcase name="retirementFencesBlockedInstallerBeforeMutexAndCompensatesItsExactTicket[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.002"/>
+  <testcase name="emptyDiscardRejectsAmbiguousCommitAndRequiresFreshIdleAcknowledgement[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.002"/>
+  <testcase name="staleLeaseAndDifferentGuestAccountOrEnvironmentCannotTakeExistingOrigin[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.0"/>
+  <testcase name="everyFailedEffectBarrierRejectsMatchingVisibleStateWithoutReadbackPromotion[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.004"/>
+  <testcase name="retirementDuringDelayedExecutionPolicyFencesBeforeSynchronousLocalEffect[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.002"/>
+  <testcase name="callerCancellationDuringCompensationReadStopsBeforeNativeCleanup[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.002"/>
+  <testcase name="oldRetirementAndOldBindingCannotTouchNewLoginEvenWithSameOwnerAndLogicalTimer[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.001"/>
+  <testcase name="leaseChangesDuringInstallCannotAdmitTheScheduledWork[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.001"/>
+  <testcase name="finalInstallFailureCannotBypassUnreadableOrUnacknowledgedCompensationBarrier[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.002"/>
+  <testcase name="emptyDiscardRemovesOnlyExactOriginWithoutNativeEffectsAndRetriesIdempotently[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.001"/>
+  <testcase name="emptyDiscardRejectsMalformedIdentityBeforeReadingOrWriting[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.001"/>
+  <testcase name="invalidLogicalIdsUuidSourceAndCapacityFailBeforeNativeInstaller[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.002"/>
+  <testcase name="unknownUncommittedReservationOrNonmatchingReadbackCannotCallInstaller[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.001"/>
+  <testcase name="admissionDenialFailureAndInvalidScopeNeverCreateOrInstallNativeWork[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.002"/>
+  <testcase name="jumpedSuccessfulRevisionAndRevisionExhaustionNeverBecomeAuthority[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.001"/>
+  <testcase name="cancellationCheckpointFailureRetainsFenceAndRetriesExactNativeIdentity[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.002"/>
+  <testcase name="cancellationFailureDuringStaleInstallStillAllowsRetirementToRetryOriginalIdentity[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.001"/>
+  <testcase name="alreadyCancellingAndRetiringRetriesCannotSkipTheirChangedAcknowledgement[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.002"/>
+  <testcase name="postInstallAdmissionFailureCompensatesWithoutErasingTheOrigin[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.001"/>
+  <testcase name="finalInstallCheckpointFailureCleansExactIdentityAndNeverReplaysInstaller[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.001"/>
+  <testcase name="emptyDiscardCasFailurePreservesOriginAndRetriesWithoutNativeCancellation[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.001"/>
+  <testcase name="coroutineCancellationAfterFinalCommitStopsCleanupAndRetainsExactEvidence[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.002"/>
+  <testcase name="exactCancelDuringDelayedExecutionPolicyPreventsEffectWithoutRetiringOtherTasks[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.002"/>
+  <testcase name="retireContinuesIndependentCancellationFailuresAndRetriesOnlyRemainingExactWork[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.002"/>
+  <testcase name="emptyDiscardRejectsEveryNativeEntryPhaseWithoutMutationOrCancellation[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.001"/>
+  <testcase name="exactReadbackCannotHandAuthorityToReplacementLease[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.002"/>
+  <testcase name="wrongKindCancellationCannotDisableOrCancelTheLegitimateTicket[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.001"/>
+  <testcase name="exactCancelThenReplacementGetsNewGenerationAndOldTicketCannotAffectIt[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.002"/>
+  <testcase name="missingCorruptAndNewerDurableStateFailClosedWithoutInitializationOrNativeCleanup[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.002"/>
+  <testcase name="successfulReceiptStillRequiresExactCurrentReadbackBeforeInstaller[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.002"/>
+  <testcase name="reconcileCancelsOnlyUncertainEntriesContinuesFailuresAndPreservesInstalledTask[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.004"/>
+  <testcase name="delayedAdmissionCannotTransferCreateResumeOrInstallToNewSameAccountLease[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.003"/>
+  <testcase name="openIsReadOnlySingletonAndCloseReleasesOnlyManagerOwnership[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.0"/>
+  <testcase name="observedIdleAndAbsentTicketRequireFreshAcknowledgementBeforeTerminalSuccess[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.002"/>
+  <testcase name="unknownCommittedReservationAndInstalledCheckpointsRequireFreshCleanupAcknowledgement[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.001"/>
+  <testcase name="malformedFinalReceiptCompensatesExactNativeWorkAndNeverAdmitsItsCallback[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.003"/>
+  <testcase name="emptyDiscardNeverTouchesDifferentOwnerOrNewerOrigin[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.001"/>
+  <testcase name="retirementFailureAtFirstBarrierFencesCallbacksAndRetryDoesNotNeedPrivateStores[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.001"/>
+  <testcase name="failedNativeCancellationPersistsCancellingAndReconcileUsesSameIdentityAfterReopen[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.002"/>
+  <testcase name="originCasFailureNeverPromotesReadbackAndResumeRequiresFreshAcknowledgement[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.001"/>
+  <testcase name="restoredOriginAndInstalledCallbackEachAcknowledgeExactUnchangedPayloadAfresh[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.001"/>
+  <testcase name="installerTypedFailureOrExceptionCancelsExactReservationAndNeverInstallsIt[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.001"/>
+  <testcase name="nativeIdentityFactoryValidatesAndRedactsButNeverGrantsCallbackAuthority[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.001"/>
+  <testcase name="createsFreshOriginWithExactCasAndOnlyExplicitVerifiedLeaseCanResume[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.001"/>
+  <testcase name="delayedExecutionPolicyCannotTransferCapturedAuthorityToAnotherLease[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.001"/>
+  <testcase name="cancellationAfterCasOrDuringExactReadbackStopsEveryFollowingEffectAndBinding[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.004"/>
+  <testcase name="cancellationDuringInstallerPreservesReservedTicketAndQueuedCallbackCannotRun[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.002"/>
+  <testcase name="loadedCorruptionAndReadFailureNeverPermitCallbacksOrRepairWrites[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.002"/>
+  <testcase name="durableReservationPrecedesInstallerAndInstalledCallbackUsesExactPolicyContext[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.002"/>
+  <testcase name="effectFailureRemainsLocalAndPrivateDiagnosticViewsDoNotExposeIdentity[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.001"/>
+  <testcase name="malformedReservationReceiptIsNotAuthorityEvenIfUnderlyingWriteCommitted[jvm]" classname="com.feedme.session.SessionWorkRegistryTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

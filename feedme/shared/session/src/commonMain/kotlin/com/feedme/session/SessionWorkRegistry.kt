@@ -34,6 +34,13 @@ class SessionWorkRegistry private constructor(
     private var closed = false
     private val originFences = mutableSetOf<Pair<StorageScope, String>>()
     private val ticketFences = mutableSetOf<String>()
+    private val setupProtocol = SessionWorkSetupProtocol(control, {
+        when {
+            closed -> FailureReason.STORAGE_FAILURE
+            boundary.current() != null -> FailureReason.STALE_SESSION
+            else -> null
+        }
+    }, { scope, origin -> (scope to origin) in originFences })
 
     /**
      * Read-only setup preparation by the trusted identity coordinator, before a lease exists.
@@ -157,71 +164,13 @@ class SessionWorkRegistry private constructor(
     suspend fun abortOrigin(plan: SessionWorkOriginPlan): PortResult<Unit> = guarded {
         mutex.withLock {
             setupInactive()
-            val before = read()
-            val status = inspectOrigin(before, plan)
-            val aborted = if (status == SessionWorkOriginPlanStatus.ABORTED) before.state else SessionWorkState.SetupAborted(plan)
-            write(before, aborted) { setupInactive() }
+            requireResult(setupProtocol.abort(plan))
             setupInactive()
         }
     }
 
-    private suspend fun inspectOrigin(entry: Entry, plan: SessionWorkOriginPlan): SessionWorkOriginPlanStatus {
-        setupInactive()
-        val record = try { SessionWorkOriginPlanCodec.decode(plan.copyForStorage()) }
-            catch (_: SessionWorkOriginPlanFormatException) { fail(FailureReason.INVALID_DATA) }
-        val authentication = planAuthentication()
-        val unsigned = SessionWorkOriginPlanCodec.encodeUnsigned(record)
-        requireResult(native { authentication.verifyOriginPlan(record.expectedRevision, unsigned, record.proof) })
-        setupInactive()
-        if ((record.scope to record.origin) in originFences) fail(FailureReason.STALE_SESSION)
-        val status = when (val state = entry.state) {
-            SessionWorkState.Idle -> {
-                if (entry.record.revision != record.expectedRevision) fail(FailureReason.STALE_SESSION)
-                requireResult(native { authentication.verifyOriginPredecessor(entry.record, unsigned, record.proof) })
-                setupInactive()
-                SessionWorkOriginPlanStatus.PREPARED
-            }
-            is SessionWorkState.SetupSelected -> {
-                if (entry.record.revision <= record.expectedRevision ||
-                    !sameBytes(state.plan.copyForStorage(), plan.copyForStorage()) ||
-                    !sameBytes(entry.record.payload, SessionWorkCodec.encode(SessionWorkState.SetupSelected(plan))))
-                    fail(FailureReason.STALE_SESSION)
-                SessionWorkOriginPlanStatus.SELECTED
-            }
-            is SessionWorkState.SetupAborted -> {
-                if (sameBytes(state.plan.copyForStorage(), plan.copyForStorage())) {
-                    if (entry.record.revision <= record.expectedRevision ||
-                        !sameBytes(entry.record.payload, SessionWorkCodec.encode(SessionWorkState.SetupAborted(plan))))
-                        fail(FailureReason.STALE_SESSION)
-                    SessionWorkOriginPlanStatus.ABORTED
-                } else {
-                    // A successor must authenticate the exact consumed marker, not merely its
-                    // empty projection, and must have been signed at this precise raw revision.
-                    if (entry.record.revision != record.expectedRevision) fail(FailureReason.STALE_SESSION)
-                    if (inspectOrigin(entry, state.plan) != SessionWorkOriginPlanStatus.ABORTED)
-                        fail(FailureReason.STALE_SESSION)
-                    requireResult(native { authentication.verifyOriginPredecessor(entry.record, unsigned, record.proof) })
-                    setupInactive()
-                    SessionWorkOriginPlanStatus.PREPARED
-                }
-            }
-            is SessionWorkState.Origin -> {
-                val retained = state.setupPlan ?: fail(FailureReason.STALE_SESSION)
-                if (state.retiring || state.entries.isNotEmpty() || state.scope != record.scope || state.origin != record.origin ||
-                    entry.record.revision < record.expectedRevision + 2 ||
-                    !sameBytes(retained.copyForStorage(), plan.copyForStorage()) ||
-                    !sameBytes(entry.record.payload, SessionWorkCodec.encode(state))) fail(FailureReason.STALE_SESSION)
-                SessionWorkOriginPlanStatus.SEALED
-            }
-        }
-        // Authentication can suspend. Do not return an observation of a predecessor which
-        // changed while its proof was checked; selection additionally uses this exact CAS.
-        val after = read()
-        setupInactive()
-        if (after.record.revision != entry.record.revision || !sameBytes(after.record.payload, entry.record.payload))
-            fail(FailureReason.CONFLICT)
-        return status
-    }
+    private suspend fun inspectOrigin(entry: Entry, plan: SessionWorkOriginPlan): SessionWorkOriginPlanStatus =
+        requireResult(setupProtocol.inspect(entry.record, plan)).status
 
     private fun planAuthentication(): WorkOriginPlanAuthentication =
         control as? WorkOriginPlanAuthentication ?: fail(FailureReason.NOT_CONFIGURED)
@@ -411,6 +360,10 @@ class SessionWorkRegistry private constructor(
                 current(lease)
                 if (fenced(origin) || task.id in ticketFences) fail(FailureReason.STALE_SESSION)
             }
+            // The changing acknowledgement above suspends. Domain state/recall may have changed
+            // during it, so the last awaited operation must recheck current domain eligibility.
+            if (!requireResult(native { execution.allowed(origin.scope, origin.origin, task.logicalId, task.ticket()) }))
+                fail(FailureReason.STALE_SESSION)
             current(lease)
             if (fenced(origin) || task.id in ticketFences) fail(FailureReason.STALE_SESSION)
             requireResult(effect())

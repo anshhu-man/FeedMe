@@ -355,6 +355,7 @@ class CookingRepositoryTest {
     @Test fun changedOriginAndTamperedRequestsCannotPassTheRealExecutionGate() = runTest {
         val f = Fixture(StandardTestDispatcher(testScheduler))
         val initial = value(f.repo.download(f.lease, SESSION))
+        assertTrue(initial.originMatches)
         value(f.repo.edit(f.lease, SESSION, initial.localRevision, COMMAND1, CookingEdit.MoveTo("step-two")))
         value(f.repo.materializeNext(f.lease, SESSION))
         val body = f.store.records.getValue(key("action-body", COMMAND1)).payload
@@ -366,10 +367,21 @@ class CookingRepositoryTest {
         assertIs<ExecutionDecision.Wait>(f.repo.executionDecision(f.lease, intent(bytes = bytes("{}"))))
         f.reopen(OTHER_ORIGIN)
         val current = assertNotNull(value(f.repo.read(f.lease, SESSION)))
+        assertFalse(current.originMatches)
         failure(FailureReason.CONFLICT, f.repo.edit(f.lease, SESSION, current.localRevision, COMMAND2, CookingEdit.MoveTo("step-one")))
         val count = f.calls.size
         assertEquals(CommandPhase.NEEDS_RESOLUTION, assertNotNull(value(f.queue.dispatchNext(f.lease))).phase)
         assertEquals(count, f.calls.size)
+    }
+
+    @Test fun explicitRecallObservationNeverDownloadsContentOrGrantsEditAuthority() = runTest {
+        val f = Fixture(StandardTestDispatcher(testScheduler))
+        assertFalse(value(f.repo.hasRecipeRecall(f.lease, PLAN)))
+        assertTrue(f.calls.isEmpty()); assertTrue(f.store.commits.isEmpty())
+        assertNull(value(f.repo.read(f.lease, SESSION)))
+        failure(FailureReason.INVALID_DATA, f.repo.hasRecipeRecall(f.lease, "not-an-id"))
+        f.boundary.clear()
+        failure(FailureReason.STALE_SESSION, f.repo.hasRecipeRecall(f.lease, PLAN))
     }
 
     @Test fun appliedCommandIdsCannotBeReusedForANewLocalIntent() = runTest {
@@ -475,6 +487,82 @@ class CookingRepositoryTest {
             assertEquals(status, assertNotNull(value(f.repo.read(f.lease, SESSION))).remote.status)
         }
     }
+
+    @Test fun timerMetadataIsAtomicWithProgressAndOriginalImmutableCommandBody() = runTest {
+        val f = Fixture(StandardTestDispatcher(testScheduler)); val initial = value(f.repo.download(f.lease, SESSION))
+        val timer = timerFixture()
+        val next = value(f.repo.editTimersWithMetadata(f.lease, SESSION, initial.localRevision, COMMAND1, listOf(timer), null, bytes("private-clock-and-ticket")))
+        assertEquals(listOf(COMMAND1), next.pendingCommandIds)
+        val batch = f.store.commits.last()
+        assertTrue(batch.any { it.key == key("timer-metadata", SESSION) })
+        assertTrue(batch.any { it.key == key("progress", SESSION) }); assertTrue(batch.any { it.key == key("action-body", COMMAND1) })
+        val body = f.store.text(key("action-body", COMMAND1))
+        assertTrue(body.contains("timerId")); assertFalse(body.contains("private-clock")); assertFalse(body.contains("ticket"))
+        assertTrue(value(f.repo.readTimerMetadata(f.lease, SESSION))!!.matchesTimers)
+    }
+
+    @Test fun rejectedMappingCasCannotPartiallyAppendCookingIntent() = runTest {
+        val f = Fixture(StandardTestDispatcher(testScheduler)); val initial = value(f.repo.download(f.lease, SESSION)); val before = f.store.detached()
+        f.store.failWhen = { batch -> batch.any { it.key == key("timer-metadata", SESSION) } }
+        failure(FailureReason.CONFLICT, f.repo.editTimersWithMetadata(f.lease, SESSION, initial.localRevision, COMMAND1, listOf(timerFixture()), null, bytes("private")))
+        assertEquals(before, f.store.detached()); assertNull(value(f.repo.readTimerMetadata(f.lease, SESSION)))
+    }
+
+    @Test fun mappingReackChangesRealRevisionsWithoutRewritingImmutableIntent() = runTest {
+        val f = Fixture(StandardTestDispatcher(testScheduler)); val initial = value(f.repo.download(f.lease, SESSION))
+        val next = value(f.repo.editTimersWithMetadata(f.lease, SESSION, initial.localRevision, COMMAND1, listOf(timerFixture()), null, bytes("private")))
+        val old = value(f.repo.readTimerMetadata(f.lease, SESSION))!!; val body = f.store.text(key("action-body", COMMAND1))
+        val ack = value(f.repo.acknowledgeTimerMetadata(f.lease, SESSION, next.localRevision, old.record, bytes("private")))
+        assertEquals(old.record.revision + 1, ack.record.revision); assertTrue(ack.matchesTimers)
+        assertEquals(next.localRevision + 1, value(f.repo.read(f.lease, SESSION))!!.localRevision)
+        assertEquals(body, f.store.text(key("action-body", COMMAND1))); assertEquals(listOf(COMMAND1), value(f.repo.read(f.lease, SESSION))!!.pendingCommandIds)
+    }
+
+    @Test fun staleOrAlteredMappingPredecessorCannotReplaceNewerEvidence() = runTest {
+        val f = Fixture(StandardTestDispatcher(testScheduler)); val initial = value(f.repo.download(f.lease, SESSION))
+        val next = value(f.repo.editTimersWithMetadata(f.lease, SESSION, initial.localRevision, COMMAND1, listOf(timerFixture()), null, bytes("private")))
+        val old = value(f.repo.readTimerMetadata(f.lease, SESSION))!!; val before = f.store.detached()
+        failure(FailureReason.CONFLICT, f.repo.acknowledgeTimerMetadata(f.lease, SESSION, next.localRevision, old.record.copy(payload = bytes("altered")), bytes("new")))
+        failure(FailureReason.CONFLICT, f.repo.acknowledgeTimerMetadata(f.lease, SESSION, initial.localRevision, old.record, bytes("new")))
+        assertEquals(before, f.store.detached())
+    }
+
+    @Test fun ordinaryTimerReplacementMakesMappingCleanupOnlyAndReackCannotRebindIt() = runTest {
+        val f = Fixture(StandardTestDispatcher(testScheduler)); val initial = value(f.repo.download(f.lease, SESSION))
+        val next = value(f.repo.editTimersWithMetadata(f.lease, SESSION, initial.localRevision, COMMAND1, listOf(timerFixture()), null, bytes("private")))
+        val changed = value(f.repo.edit(f.lease, SESSION, next.localRevision, COMMAND2, CookingEdit.ReplaceTimers(emptyList())))
+        val old = value(f.repo.readTimerMetadata(f.lease, SESSION))!!; assertFalse(old.matchesTimers)
+        assertFalse(value(f.repo.acknowledgeTimerMetadata(f.lease, SESSION, changed.localRevision, old.record, bytes("cancelled"))).matchesTimers)
+    }
+
+    @Test fun mappingCannotCrossOriginOrRevokedLeaseAndReadHasNoWrites() = runTest {
+        val f = Fixture(StandardTestDispatcher(testScheduler)); val initial = value(f.repo.download(f.lease, SESSION))
+        value(f.repo.editTimersWithMetadata(f.lease, SESSION, initial.localRevision, COMMAND1, listOf(timerFixture()), null, bytes("private")))
+        val count = f.store.commits.size; value(f.repo.readTimerMetadata(f.lease, SESSION)); assertEquals(count, f.store.commits.size)
+        f.reopen(COMMAND2); failure(FailureReason.CONFLICT, f.repo.readTimerMetadata(f.lease, SESSION))
+        f.boundary.clear(); failure(FailureReason.STALE_SESSION, f.repo.readTimerMetadata(f.lease, SESSION)); assertEquals(count, f.store.commits.size)
+    }
+
+    @Test fun mappingPayloadBoundsFailBeforeAnyAtomicMutation() = runTest {
+        for (size in listOf(0, 16001)) {
+            val f = Fixture(StandardTestDispatcher(testScheduler)); val initial = value(f.repo.download(f.lease, SESSION)); val before = f.store.detached()
+            failure(FailureReason.INVALID_DATA, f.repo.editTimersWithMetadata(f.lease, SESSION, initial.localRevision, COMMAND1, listOf(timerFixture()), null, PrivateBytes(ByteArray(size))))
+            assertEquals(before, f.store.detached())
+        }
+    }
+
+    @Test fun mappingAdmissionStillUsesPinnedStepAndRecallGuards() = runTest {
+        val f = Fixture(StandardTestDispatcher(testScheduler)); val initial = value(f.repo.download(f.lease, SESSION))
+        val unknown = WireDocument.parse(timerFixture().encodeUtf8().decodeToString().replace("step-one", "foreign"))
+        failure(FailureReason.INVALID_DATA, f.repo.editTimersWithMetadata(f.lease, SESSION, initial.localRevision, COMMAND1, listOf(unknown), null, bytes("private")))
+        assertNull(value(f.repo.readTimerMetadata(f.lease, SESSION)))
+        f.planBody = plan(version = 4, status = "recalled")
+        f.planEtag = "\"4\""
+        val recalled = value(f.repo.download(f.lease, SESSION)); assertEquals(CookingAvailability.RECALLED, recalled.availability)
+        failure(FailureReason.FORBIDDEN, f.repo.editTimersWithMetadata(f.lease, SESSION, recalled.localRevision, COMMAND1, listOf(timerFixture()), null, bytes("private")))
+    }
+
+    private fun timerFixture() = WireDocument.parse("""{"timerId":"$COMMAND2","stepId":"step-one","status":"paused","durationSeconds":60,"pausedRemainingSeconds":60}""")
 
     private class Fixture(private val dispatcher: CoroutineDispatcher) {
         val scope = StorageScope("cook-test", ActorKind.ACCOUNT, "private-cook-owner-${nextOwner++}")

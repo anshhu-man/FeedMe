@@ -1,0 +1,8 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application android:allowBackup="false" android:usesCleartextTraffic="false"
+        android:theme="@android:style/Theme.Material.Light.NoActionBar">
+        <activity android:name="com.feedme.app.mealflow.MealFlowUiTestActivity" android:exported="false" />
+        <activity android:name="com.feedme.app.mealflow.NativeMealFlowTestActivity" android:exported="false" />
+        <activity android:name="com.feedme.app.mealflow.NativeReviewedPostTestActivity" android:exported="false" />
+    </application>
+</manifest>

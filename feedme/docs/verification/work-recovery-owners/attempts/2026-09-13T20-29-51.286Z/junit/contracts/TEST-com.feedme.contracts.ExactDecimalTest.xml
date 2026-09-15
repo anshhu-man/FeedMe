@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.feedme.contracts.ExactDecimalTest" tests="29" skipped="0" failures="0" errors="0" timestamp="2026-09-13T20:29:55.542Z" hostname="ansachars-MacBook-Pro.local" time="0.005">
+  <properties/>
+  <testcase name="mathematicalIntegersIncludeDecimalAndExponentForms[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="mathematicalFractionsRemainNoninteger[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="trailingZerosAndExponentSpellingsHaveOneEqualityKey[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="numbersBeyondFloatingPointRangeRemainOrdered[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.001"/>
+  <testcase name="fractionalDigitsIncreaseScaleForNegativeExponent[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="signRemainsPartOfNonzeroEquality[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="sortedValuesAreAntisymmetricAndTransitivelyOrdered[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="rawScaleIsCheckedBeforeTrailingZeroNormalization[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="wholeTokenCountsTowardLengthLimit[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="positiveAndNegativeScaleLimitsAreInclusive[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="tinyNegativeValuesRemainLessThanEitherZero[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="rejectsNonJsonSpelling[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="unboundedExponentsCannotOverflowIntoTheAcceptedRange[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="rejectsWhitespaceAndTrailingContent[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="rejectsMissingNumberParts[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="everySignedZeroHasOneEqualityKey[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="equalityKeysStayCompactAtExponentLimits[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="equalMagnitudeUsesImplicitTrailingZeros[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="acceptsEveryJsonNumberForm[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="acceptsOnlyAsciiDigits[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="machineIntegerBoundariesCompareExactly[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="zeroDoesNotBypassScaleLimits[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="diagnosticsNeverExposeTheCoefficientOrExponent[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="precisionPastMachineFractionsRemainsSignificant[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="thousandDigitCoefficientsCompareWithoutLosingLastDigit[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.002"/>
+  <testcase name="fractionalDigitsOffsetPositiveExponentBeforeCheckingScale[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="acceptsExactlyOneThousandCharacters[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.001"/>
+  <testcase name="leadingExponentZerosDoNotChangeScale[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <testcase name="magnitudeComparisonCrossesTheDecimalPoint[jvm]" classname="com.feedme.contracts.ExactDecimalTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

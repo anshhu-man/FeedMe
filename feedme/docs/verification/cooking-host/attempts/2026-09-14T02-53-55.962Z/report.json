@@ -1,0 +1,95 @@
+{
+  "startedAt": "2026-09-14T02:53:55.962Z",
+  "passed": false,
+  "serial": "emulator-5554",
+  "scope": "Nine actual retained Android FeedMeMealFlow/MealFlowExperience/CookingFlowController host tests using public native session factories, owner-scoped encrypted storage and the actual kitchen queue. Account verification and canonical service replies are explicitly synthetic. Proves declared UI consent, progress, Back, recreation, original create/201-download retry, preference conflict and invalidation paths only. No deployed provider/HTTP/catalog/reviewer/manifest claim; no timer, Save, Make Again, feedback/share, iOS, physical power-loss or native final-attachment-ACK injection acceptance. Screenshots are actual settled native captures, not generated images; visual acceptance remains independent review.",
+  "apk": {
+    "path": "shared/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk",
+    "bytes": 27568362,
+    "sha256": "20698c64ec92969619b545ed78759b8aa7295a3f30f493ca9b5dca5efbd282e7"
+  },
+  "apkMetadata": {
+    "path": "docs/verification/cooking-host/attempts/2026-09-14T02-53-55.962Z/output-metadata.json",
+    "bytes": 421,
+    "sha256": "cee2ae8b5f90978e068be43ebfb0455ae1b2ae6b558bf56b8d72b44296ec3f82"
+  },
+  "source": {
+    "path": "shared/app/src/androidInstrumentedTest/kotlin/com/feedme/app/mealflow/AndroidCookingFlowHostTest.kt",
+    "bytes": 18879,
+    "sha256": "efb89df30503182d453ede9591eeeb3cd23603d4fac08b761fbfd745e777d59a"
+  },
+  "attemptDirectory": "docs/verification/cooking-host/attempts/2026-09-14T02-53-55.962Z",
+  "screenshots": [],
+  "screenshotEvidence": [],
+  "invocation": {
+    "classes": "com.feedme.app.mealflow.AndroidCookingFlowHostTest",
+    "runner": "com.feedme.app.test/androidx.test.runner.AndroidJUnitRunner",
+    "expected": 9
+  },
+  "androidApi": "35",
+  "androidAbi": "arm64-v8a",
+  "nativeParent": {
+    "present": false,
+    "uid": "10207",
+    "mode": null
+  },
+  "failure": "Cooking host test failed, skipped or mismatched",
+  "finishedAt": "2026-09-14T02:57:29.220Z",
+  "evidence": [
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T02-53-55.962Z/abi.log",
+      "bytes": 10,
+      "sha256": "7f10c3cd4593d1d6ded27d658e7c05216011c955c200aac551caad0c979d4d90"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T02-53-55.962Z/api.log",
+      "bytes": 3,
+      "sha256": "90d7ec0f0acef104d8b6252794295f661a0149634868d02a1ae0c358099638f5"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T02-53-55.962Z/boot.log",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T02-53-55.962Z/capture-preflight.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T02-53-55.962Z/install.log",
+      "bytes": 36,
+      "sha256": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T02-53-55.962Z/instrumentation.log",
+      "bytes": 21922,
+      "sha256": "429b3b94f435770bd40d7ffaff9e9313a602851d447a649f375e8de211cd7a89"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T02-53-55.962Z/output-metadata.json",
+      "bytes": 421,
+      "sha256": "cee2ae8b5f90978e068be43ebfb0455ae1b2ae6b558bf56b8d72b44296ec3f82"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T02-53-55.962Z/preflight-root.log",
+      "bytes": 35,
+      "sha256": "d6aa78476b2af9f9d12a3825b217df82c82c7bb5395f9f3043e513b909da3739"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T02-53-55.962Z/preflight-uid.log",
+      "bytes": 6,
+      "sha256": "0d71386859fa3cf9fa01f649a7cb9e060f9da89f42e1fb3f1802ddc247026ab6"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T02-53-55.962Z/preflight.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/cooking-host/attempts/2026-09-14T02-53-55.962Z/runner.log",
+      "bytes": 105,
+      "sha256": "fea4b8e499b021972383b98662d206dd48075388faa6322c01baba312db9466e"
+    }
+  ]
+}

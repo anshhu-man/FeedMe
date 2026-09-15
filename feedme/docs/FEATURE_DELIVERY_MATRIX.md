@@ -2,7 +2,7 @@
 
 Baseline: 13 September 2026. Scope: all **54 features and all 98 registered screens**, including staff operations. This is an implementation and acceptance backlog, not a claim that these features are live. The Android local demo is evidence for a small shared-Kotlin foundation only; the [build status](BUILD_STATUS.md) records its actual tests and limitations. The [release plan](RELEASE_PLAN.md) owns sequencing and release decisions; [user actions](USER_ACTIONS.md) owns requests requiring the project owner's involvement.
 
-The product remains FeedMe: effortless private cooking plus optional Today, My Plate, Kitchen Circles and Make Mine. Taste/texture controls are FeedMe features, not authorization to merge TasteEcho. All existing feature IDs are retained. A smaller competition release, if proposed, must be an explicit owner-approved release subset; it does not silently complete or delete the remaining scope.
+The product remains FeedMe: effortless private cooking plus optional Today, My Plate, Kitchen Circles and Make Mine. Taste/texture controls are FeedMe features, not authorization to merge TasteEcho. All existing feature IDs are retained. On 14 September the user excluded all existing later-phase features from V1: **44 P1 features remain; F32–F38 and F44–F46 are DEFERRED**. The [V1 manifest](V1_RELEASE_SCOPE.md) controls sequencing; deferred work remains part of full-product completion. No additional feature cuts are implied.
 
 ## How to turn this matrix into work
 
@@ -15,6 +15,14 @@ For every package, attach the canonical screen/action IDs, API operation IDs, da
 The [private kitchen repository slice](PRIVATE_KITCHEN_REPOSITORIES.md) advances F12/F13/F14/F19/F30 dependencies with owner-scoped persisted pins, ordered cooking actions and recall handling. It does not check off their feature packages: actual providers/backend/UI, lifecycle/conflict resolution, native parity and release evidence remain required.
 
 ### Milestone ownership and overlap
+
+The [third parallel component batch](PARALLEL_UI_HTTP_PROCESS.md) additionally advances F02/F03/F05/F06/F07/F09/F11/F17/F20/F47/F53 dependencies through the manual meal host/picker, four planning HTTP operations and seven process-recovery scenarios. Native tests use synthetic presentation fixtures and do not close complete feature packages. Actual providers, approved catalog, complete screen/button workflows, cooking/save/share authority and dual-platform/release gates remain required.
+
+The [fourth verified component batch](PARALLEL_KITCHEN_SOCIAL_HOST.md) advances F03/F04/F23/F40/F47/F53 dependencies with pantry/preferences child pages, exact durable commands and pending-preference guards, fourteen configured social HTTP operations and nine actual native-session retained-host tests. Account/transport fixtures remain synthetic. Production pantry/preference ingress, conflict resolution, reviewed mappings/presets, real identity, social screens/media, cooking/save/share and both-platform release gates remain open; no checkbox below is closed by this component checkpoint.
+
+The [fifth component batch](PARALLEL_KITCHEN_COOKING.md) is verified as bounded components for F03/F04/F12/F13/F47/F53 dependencies: actual pantry/preferences persistence and configured HTTP ingress, shared cooking orchestration and exact private acknowledgement/recall fencing. The frozen run passes2,266 Kotlin/server/database,181 Node and345 native tests plus seven separately witnessed interruptions; independent audits pass. No new feature checkbox is closed. Current provider/catalog authority, native cooking UI/server/timer integration, complete private/social journeys, iOS and release gates remain separate requirements.
+
+The [sixth component batch](PARALLEL_COOKING_UI_TIMERS.md) advances F12/F13/F47/F53 dependencies with actual cooking persistence/four configured HTTP operations, retained consent/progress/completion screens and timer lifecycle foundations. Its full frozen run passes2,418 Kotlin/server/database,192 Node and354 native tests plus seven separately witnessed interruptions. These tests verify bounded components, not live provider-backed cooking or OS timer delivery. An interactive retained-state launcher, native timer adapters, Save/Make Again/share, social media, reviewed content, iOS and release-level accessibility remain open. No feature checkbox below is closed by this checkpoint.
 
 | Milestone | Primary feature count | Delivery responsibility |
 | --- | ---: | --- |
@@ -29,7 +37,7 @@ The [private kitchen repository slice](PRIVATE_KITCHEN_REPOSITORIES.md) advances
 | M8 — Platform parity, accessibility and release candidate | All 54 | Cross-feature certification; no duplicate feature ownership. |
 | M9 — Stores and Shipaton delivery | All release-enabled features | Signed public release and submission evidence; full-product completion still tracks all 54. |
 
-Numbers are delivery groups, not a strictly serial dependency chain. Pull F19's basic durable save work into M1/M2, F51 review/catalog administration into M1/M2, and F42/F49/F52/F54 trust controls into M1 before opening M3 social access. Start F41 preference/token foundations before any notification-producing feature. Build F50 sandbox integration early to expose store/provider risks, but do not activate F44/F45/F46 sales until the relevant content, rights and billing gates pass. These overlaps do not count a feature twice.
+Numbers are delivery groups, not a strictly serial dependency chain. Pull F19's basic durable save work into M1/M2, F51 review/catalog administration into M1/M2, and F42/F49/F52/F54 trust controls into M1 before opening M3 social access. Start F41 preference/token foundations before any notification-producing feature. Build F50 sandbox integration early to expose store/provider risks, but activate F44/F45/F46 sales only after V1 and after the relevant content, rights and billing gates pass. These overlaps do not count a feature twice.
 
 ### Shared production completion contract
 
@@ -350,7 +358,17 @@ Primary milestone: **M3**, M7 trust/media gates required before public use. Scre
 
 Acceptance evidence: double Publish, crash after commit, expired upload, failed scan, revoked circle and token refresh cannot duplicate or widen publication. Raw uploads are inaccessible. Pending draft survives process death; post-commit cancel leads to explicit deletion, not a false unpublished state.
 
+Bounded progress, 14 September 21:34 UTC: reviewed Save/publication/sole-owner consumers and tested corrections are integrated as 18 files. The main-project suite passes 1,009 exact mealflow methods, including actual controller pre-ID exclusion, retained-original recovery, natural Save-to-Publish handoff and final delivery over synthetic prerequisites/transport; 33 actual encrypted-storage regressions also pass. Configured assembly, complete choice editing and native review UI are being implemented separately. Connected HTTP/native/process recovery, photos, providers, iOS and release gates remain open; no migration/live factory or whole-feature acceptance follows. All F31 tasks remain open. [Evidence and next tasks](PARALLEL_SOCIAL_DRAFT_PUBLICATION.md#main-project-integration--14-september-2134-utc).
+
+Additional 22:20 UTC recovery evidence: three new actual SQLite publication-controller cases execute, two pass and one fails after runtime reopen with newer local pending content. The original receipt is `RECEIPT_READY`, two sends created only one synthetic remote post, and newer text remains stored. Missing fresh local-retention confirmation is a real open recovery path, not grounds to infer an old acknowledgement from a persisted marker. An explicit full-snapshot confirmation is under implementation. Frozen entry/navigation (30 methods), review presentation (25) and native host (6) packages are undergoing combined compilation; declaration counts are not passing results.
+
+Superseding isolated evidence, 22:48 UTC: explicit local-retention recovery passes all 1,053 mealflow methods, including all three actual SQLite publication cases; configured review UI/assembly separately passes 1,213 JVM methods and packages the six-case native host. The new local-retention transaction preserves the payload/logical revision and finishes the original without another send. These overlapping, differently frozen suites are not combined main/native acceptance. Explicit recovery UI, integration, navigation follow-ups and all broader F31 gates remain open. [Evidence and limits](PARALLEL_SOCIAL_DRAFT_PUBLICATION.md#isolated-review-and-recovery-gates--14-september-2248-utc).
+
+Combined main/native evidence, 23:33 UTC: all 26 reviewed assembly/UI/recovery targets are integrated and **1,239 exact JVM methods (1,055 mealflow +184 app)** pass with 739 unchanged inputs. The fresh native-six test run also passes all six, with 12 root-reviewed PNGs and independent artifact/source/installed-byte audit. Those six methods do not cover the new explicit recovery screen; the latter has ten presentation cases, not native visual acceptance. A separate two-case controlled-runtime-reopen test package is staged and peer reviewed, not executed. Existing user APK and disabled live/preview factories remain unchanged. Photos/audiences/circles, HTTP/provider journeys, actual OS process death, iOS and all whole-F31/release gates remain open. [Combined evidence](PARALLEL_SOCIAL_DRAFT_PUBLICATION.md#combined-main-integration--14-september-2322-utc).
+
 ## F32 — Fridge SOS
+
+Release: **DEFERRED — excluded from V1 (P2)**. Preserve this backlog; do not implement or expose it as a first-version feature.
 
 Primary milestone: **M4**. Screens: `SOS_CREATE`, `SOS_DETAIL`.
 
@@ -362,6 +380,8 @@ Acceptance evidence: close/respond races, late workers, stale sends, circle depa
 
 ## F33 — Tonight
 
+Release: **DEFERRED — excluded from V1 (P2)**. Preserve this backlog; do not implement or expose it as a first-version feature.
+
 Primary milestone: **M2**, basic saved-source support from F19. Screens: `COOKBOOK`, `TONIGHT`.
 
 - [ ] F33.1: Create fresh ordinary plans with Tonight intent and current rights/constraint revalidation.
@@ -371,6 +391,8 @@ Primary milestone: **M2**, basic saved-source support from F19. Screens: `COOKBO
 Acceptance evidence: out-of-order responses, app kill, account switch, recalled copies and expired source links preserve safe prior state. Checklist is explicitly device-local and does not imply pantry, shopping, cross-device calendar or reminder actions.
 
 ## F34 — Dinner Pact
+
+Release: **DEFERRED — excluded from V1 (P3)**. Preserve this backlog; do not implement or expose it as a first-version feature.
 
 Primary milestone: **M4**. Screens: `PACT_CREATE`, `PACT_DETAIL`, `PEOPLE_PICKER`.
 
@@ -382,6 +404,8 @@ Acceptance evidence: final-seat races, host-edit/accept races, time-zone changes
 
 ## F35 — Bring a Bit
 
+Release: **DEFERRED — excluded from V1 (P3)**. Preserve this backlog; do not implement or expose it as a first-version feature.
+
 Primary milestone: **M4**. Screens: `POTLUCK_CREATE`, `POTLUCK_DETAIL`, `CONTRIBUTION`, `PEOPLE_PICKER`.
 
 - [ ] F35.1: Implement accepted-participant access, explicit ingredient quantities/units and one-active-claim locking.
@@ -391,6 +415,8 @@ Primary milestone: **M4**. Screens: `POTLUCK_CREATE`, `POTLUCK_DETAIL`, `CONTRIB
 Acceptance evidence: competing claims, claimed-item withdrawal, incompatible units and plan-confirmation races cannot certify absent ingredients. Exact location is participant-only and absent from pushes/logs. No automatic pantry sharing, unit guessing or purchasing occurs.
 
 ## F36 — Shortcut Swap
+
+Release: **DEFERRED — excluded from V1 (P3)**. Preserve this backlog; do not implement or expose it as a first-version feature.
 
 Primary milestone: **M4**. Screens: `SHORTCUT_CREATE`, `SHORTCUT_DETAIL`.
 
@@ -402,6 +428,8 @@ Acceptance evidence: peer tips cannot mutate recipe steps, ingredients, timers o
 
 ## F37 — Dinner Vote
 
+Release: **DEFERRED — excluded from V1 (P3)**. Preserve this backlog; do not implement or expose it as a first-version feature.
+
 Primary milestone: **M4**. Screens: `POLL_CREATE`, `POLL_DETAIL`.
 
 - [ ] F37.1: Implement immutable supported options, one vote/member, revisioned replacement/removal and server-time closure.
@@ -411,6 +439,8 @@ Primary milestone: **M4**. Screens: `POLL_CREATE`, `POLL_DETAIL`.
 Acceptance evidence: close-time equality, delayed worker, concurrent votes, removed members and inaccessible recipes. No late votes count; no hidden voter names or claimed anonymity. Choosing an option never accepts a pact or sends an invitation.
 
 ## F38 — Short Clips
+
+Release: **DEFERRED — excluded from V1 (P3)**. Preserve this backlog; do not implement or expose it as a first-version feature.
 
 Primary milestone: **M3**, video-specific activation after M7 moderation/cost approval. Screens: `CAPTURE`, `PUBLISH_STATUS`, `VIDEO_EDIT`, `ADMIN_FLAGS`.
 
@@ -472,6 +502,8 @@ Acceptance evidence: no account/friends/push/camera/payment is required for usef
 
 ## F44 — Household Preferences
 
+Release: **DEFERRED — excluded from V1 (P3)**. Preserve this backlog; do not implement or expose it as a first-version feature.
+
 Primary milestone: **M5**, production paid activation gated by M6/F50. Screens: `HOUSEHOLDS`, `HOUSEHOLD_MEMBER`, `HOUSEHOLD_PREFS`, `PAYWALL`, `MANAGE_PLAN`, `ADMIN_FLAGS`.
 
 - [ ] F44.1: Implement owner/member/seat/invitation invariants and separate shared defaults from private consented requirements.
@@ -482,6 +514,8 @@ Acceptance evidence: final-seat races, withdrawn consent, removal mid-plan, expi
 
 ## F45 — Expanded Personal Library
 
+Release: **DEFERRED — excluded from V1 (P3)**. Preserve this backlog; do not implement or expose it as a first-version feature. F19's basic private cookbook stays in V1.
+
 Primary milestone: **M5**, premium writes gated by M6/F50. Screens: `COOKBOOK`, `COLLECTION`, `COLLECTION_EDIT`, `PAYWALL`, `MANAGE_PLAN`.
 
 - [ ] F45.1: Implement owner-scoped custom collection metadata, membership and bounded complete-order transactions.
@@ -491,6 +525,8 @@ Primary milestone: **M5**, premium writes gated by M6/F50. Screens: `COOKBOOK`, 
 Acceptance evidence: unpaid direct calls, pending purchase/refund, two-device reorder, duplicate membership and invalid IDs. Removing a grouping never deletes recipe copies; default cookbook cannot be deleted. Existing saved recipes remain searchable/openable without an upgrade or new cap.
 
 ## F46 — Reviewed Situation Packs
+
+Release: **DEFERRED — excluded from V1 (P3)**. Preserve this backlog; no paid-pack exception is approved for the first version. F50's V1 monetization decision remains separate.
 
 Primary milestone: **M6**. Screens: `PACK_STORE`, `PACK_DETAIL`, `PAYWALL`, `MANAGE_PLAN`, `ADMIN_PACK`.
 

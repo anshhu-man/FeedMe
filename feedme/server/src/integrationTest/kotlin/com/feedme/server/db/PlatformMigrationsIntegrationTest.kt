@@ -58,7 +58,16 @@ class PlatformMigrationsIntegrationTest {
         }
 
         assertEquals(
-            listOf(listOf("1", "durable_platform", migrationChecksum())),
+            listOf(listOf("1", "durable_platform", migrationChecksum()),
+                listOf("2", "circle_memberships", migrationChecksum("V002__circle_memberships.sql")),
+                listOf("3", "private_planning", migrationChecksum("V003__private_planning.sql")),
+                listOf("4", "private_kitchen", migrationChecksum("V004__private_kitchen.sql")),
+                listOf("5", "private_cooking", migrationChecksum("V005__private_cooking.sql")),
+                listOf("6", "private_saved_recipes", migrationChecksum("V006__private_saved_recipes.sql")),
+                listOf("7", "owned_photo_media", migrationChecksum("V007__owned_photo_media.sql")),
+                listOf("8", "media_processing_jobs", migrationChecksum("V008__media_processing_jobs.sql")),
+                listOf("9", "private_post_drafts", migrationChecksum("V009__private_post_drafts.sql")),
+                listOf("10", "post_publication", migrationChecksum("V010__post_publication.sql"))),
             query(dataSource, "SELECT version, description, checksum FROM platform.schema_migrations ORDER BY version"),
         )
         assertEquals(EXPECTED_TABLES, tableNames(dataSource))
@@ -241,8 +250,8 @@ class PlatformMigrationsIntegrationTest {
         }
     }
 
-    private fun migrationChecksum(): String {
-        val resource = PlatformMigrations::class.java.getResourceAsStream("/db/migration/V001__durable_platform.sql")
+    private fun migrationChecksum(name: String = "V001__durable_platform.sql"): String {
+        val resource = PlatformMigrations::class.java.getResourceAsStream("/db/migration/$name")
         val bytes = assertNotNull(resource, "The actual migration resource must be on the test classpath.").use { it.readBytes() }
         return MessageDigest.getInstance("SHA-256").digest(bytes)
             .joinToString("") { "%02x".format(it.toInt() and 0xff) }
@@ -255,7 +264,9 @@ class PlatformMigrationsIntegrationTest {
     )
 
     companion object {
-        private val EXPECTED_TABLES = setOf("schema_migrations", "idempotency", "outbox", "consumer_inbox")
+        private val EXPECTED_TABLES = setOf("schema_migrations", "idempotency", "outbox", "consumer_inbox",
+            "media_draft_lifecycles", "media_assets", "media_cleanup_jobs", "media_processing_jobs", "media_processing_inbox",
+            "media_derivative_intents", "media_processing_cleanup", "post_draft_heads", "post_drafts", "post_draft_discard_media")
         private lateinit var cluster: PostgresTestCluster
 
         @ClassRule
