@@ -9,9 +9,9 @@ for this backend build, not that older tree.
 
 ## Exact source
 
-[`context-manifest.json`](../server-deploy/context-manifest.json) binds 294 build
-input files (5,608,900 bytes). Manifest SHA256:
-`0d4edf4685460252d77e3e8de0793ef0832ff3ac84bc8ee920e62bf9069ea006`.
+[`context-manifest.json`](../server-deploy/context-manifest.json) now binds 295 build
+input files (5,610,797 bytes). Manifest SHA256:
+`6781439973ef282552bf60a4575342a01a896912afb360bfbb107c34b29ac67c`.
 The bundle preserves `feedme/` and sibling `outputs/` so contract and release-scope
 checks resolve their real inputs. It includes the current account runtime and
 203-operation contract, V001–V031 migrations, managed Auth projections and explicit
@@ -24,6 +24,15 @@ previous 294-input bundle, only the provider authority and the two private
 provider/runtime SQL resources changed for lower-assurance timeout support. The
 other 291 build inputs, including V001–V031, remain byte-identical. No source inputs
 were edited by this refresh and no bundle files were added or removed.
+
+**Subsequent public-CA increment:** the current295-input context adds exactly one
+public certificate and changes only the Dockerfile relative to that294-input
+MFA bundle;293 prior build inputs are unchanged. The reviewed public Supabase CA
+has DER SHA-256 `807025ad50d4ed219d2c9c7d299c004f824eb00cf7f65afef607d07b72e6cafa`.
+It is copied root-owned/read-only to `/opt/feedme/trust/prod-ca-2021.crt`.
+The Dockerfile checks readability and non-writability as UID/GID10001. These new
+checks still require a new cloud build; the completed preview below used the
+earlier context. A public CA is not a password or grant of database access.
 
 The 18:24 UTC preview checkpoint below supersedes the earlier statement that this
 bundle had not been image-built or started. It proves source-to-Linux-build,

@@ -1,12 +1,17 @@
 # Development snapshot — 15 September 2026
 
 **18 September backend-only addendum:** [current server deployment source](BACKEND_DEPLOYMENT.md)
-is separately packaged under `server-deploy/` with its own 294-file manifest and
+is separately packaged under `server-deploy/` with its own current295-file manifest and
 203-operation contract. The top-level full-app/source-copy checkpoint described
 below remains historical and unchanged; the public inventory additionally records
 the new bundle and these reference updates. No refreshed APK, native acceptance,
 production API readiness or store publication is implied. Current direction is Google Play
 first with Shipaton paused; Supabase/Render technical direction is now approved.
+
+The latest additive packaging change includes one pinned public database CA and
+non-root readability/non-writability checks. Its Linux build is still pending;
+the confirmed preview below used the preceding294-input context. No password or
+account-runtime configuration is included. [Exact current source](BACKEND_DEPLOYMENT.md).
 
 The live Supabase dashboard showed an enabled 15-minute AAL1 lower-assurance
 timeout. A second deliberate 294-input backend update now supports explicit

@@ -91587,8 +91587,8 @@
     },
     {
       "path": "Reference/BACKEND_DEPLOYMENT.md",
-      "bytes": 6449,
-      "sha256": "5affa8369ed2d92b261c91c6533adb866c9db0de51ecd75429adf980b1380471",
+      "bytes": 7087,
+      "sha256": "749bcc4db9400b1068d75162361482663079c0e100cc4acf935f7980112fa062",
       "mode": 420
     },
     {
@@ -91713,8 +91713,8 @@
     },
     {
       "path": "Reference/SNAPSHOT_STATUS.md",
-      "bytes": 8634,
-      "sha256": "ead0fad315841083225e5f2c622f3fb5d36ca08c17bf5ffe6aaaaf6a5b9f5ce4",
+      "bytes": 8971,
+      "sha256": "c73ffac0e49de08e16023504f8e474dbbd77d31317aafea4d61d970c9af5b14b",
       "mode": 420
     },
     {
@@ -91737,14 +91737,14 @@
     },
     {
       "path": "server-deploy/Dockerfile",
-      "bytes": 1911,
-      "sha256": "ad800e914ff023074a9802741a4a668537ab567ab26e4760b03e2366aed61208",
+      "bytes": 2441,
+      "sha256": "5cd32636576705686a7bfd569c33c721d0c111218ebfeba8ea132e1c267ce367",
       "mode": 420
     },
     {
       "path": "server-deploy/context-manifest.json",
-      "bytes": 62006,
-      "sha256": "0d4edf4685460252d77e3e8de0793ef0832ff3ac84bc8ee920e62bf9069ea006",
+      "bytes": 62177,
+      "sha256": "6781439973ef282552bf60a4575342a01a896912afb360bfbb107c34b29ac67c",
       "mode": 420
     },
     {
@@ -93552,6 +93552,12 @@
       "bytes": 6382,
       "sha256": "38287755bca39096e4aebe134e1ee3d19f878ed13815b47675221b2e88b27cdf",
       "mode": 420
+    },
+    {
+      "path": "server-deploy/feedme/deploy/trust/prod-ca-2021.crt",
+      "bytes": 1367,
+      "sha256": "700723581420dd1ac98fd7e9ac529f0ef210eadcaf87fc868a3ad7d114c2f3b7",
+      "mode": 420
     }
   ],
   "excluded": [
@@ -93582,6 +93588,12 @@
     "path": "server-deploy",
     "contextManifestSha256": "a22ea882af14ff71f16ef9cef573e33fad1069b001bc7f0ca45c0fc701734df2",
     "sourceSnapshotUnchanged": true,
-    "scope": "Backend-only source addendum; no full-app refresh, runtime or deployment acceptance."
+    "scope": "Backend-only source addendum; no full-app refresh, runtime or deployment acceptance.",
+    "currentContext": {
+      "files": 295,
+      "bytes": 5610797,
+      "manifestSha256": "6781439973ef282552bf60a4575342a01a896912afb360bfbb107c34b29ac67c",
+      "scope": "Public CA packaging; Linux verification pending; historical full-app source copies unchanged."
+    }
   }
 }

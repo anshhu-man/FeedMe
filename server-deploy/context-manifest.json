@@ -9,8 +9,8 @@
     },
     {
       "path": "Dockerfile",
-      "bytes": 1911,
-      "sha256": "ad800e914ff023074a9802741a4a668537ab567ab26e4760b03e2366aed61208"
+      "bytes": 2441,
+      "sha256": "5cd32636576705686a7bfd569c33c721d0c111218ebfeba8ea132e1c267ce367"
     },
     {
       "path": "feedme/apps/android/build.gradle.kts",
@@ -31,6 +31,11 @@
       "path": "feedme/build.gradle.kts",
       "bytes": 3527,
       "sha256": "a83714c046cdb11c0c344ada3319ee9c7fa6d63b2642ee66eb05a97947018da9"
+    },
+    {
+      "path": "feedme/deploy/trust/prod-ca-2021.crt",
+      "bytes": 1367,
+      "sha256": "700723581420dd1ac98fd7e9ac529f0ef210eadcaf87fc868a3ad7d114c2f3b7"
     },
     {
       "path": "feedme/docs/DEPENDENCY_LICENSES.json",
@@ -1473,7 +1478,7 @@
       "sha256": "e014ab416128d6061df6183ea8723b0879287ac129d93e025846dfa04d033d3b"
     }
   ],
-  "totalBytes": 5608900,
+  "totalBytes": 5610797,
   "limitations": [
     "Source snapshot only; no container build or deployment was performed.",
     "Third-party image selection, dependency authenticity and live configuration require separate review."

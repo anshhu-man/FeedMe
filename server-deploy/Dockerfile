@@ -26,9 +26,18 @@ FROM --platform=linux/amd64 eclipse-temurin:17.0.20_8-jre-jammy@sha256:24cd8eed1
 USER 0:0
 WORKDIR /opt/feedme
 COPY --from=build --chown=0:0 /workspace/feedme/server/build/install/server/ /opt/feedme/
+COPY --chown=0:0 feedme/deploy/trust/prod-ca-2021.crt /opt/feedme/trust/prod-ca-2021.crt
 RUN java -version 2>&1 | grep 'version "17\.' \
     && chmod -R a=rX /opt/feedme \
-    && chmod 0555 /opt/feedme/bin/server
+    && chmod 0555 /opt/feedme/bin/server \
+    && chmod 0444 /opt/feedme/trust/prod-ca-2021.crt
 USER 10001:10001
+# Verify the real runtime identity can read the public CA but cannot alter or
+# replace it. This is image-build evidence, not a database connectivity check.
+RUN test "$(id -u)" = 10001 && test "$(id -g)" = 10001 \
+    && test -r /opt/feedme/trust/prod-ca-2021.crt \
+    && test ! -w /opt/feedme/trust/prod-ca-2021.crt \
+    && test ! -w /opt/feedme/trust \
+    && test ! -w /opt/feedme
 STOPSIGNAL SIGTERM
 ENTRYPOINT ["/opt/feedme/bin/server"]
