@@ -37,7 +37,8 @@ The complete FeedMe project reference, from idea to implementation. Canonical so
 
 ## Status, artifacts and reproducibility
 
-- [Separate current backend deployment bundle](BACKEND_DEPLOYMENT.md) — not a full-app snapshot refresh or live service.
+- [Separate current backend deployment bundle](BACKEND_DEPLOYMENT.md) — latest source is not deployed; the older cloud preview is unconfigured.
+- [Existing-account Terms backend checkpoint](ACCOUNT_TERMS.md) — locally verified server path, not native or legal approval.
 - [Exact published checkpoint](SNAPSHOT_STATUS.md)
 - [Setup prerequisites](SETUP.md)
 - [Current Android preview and historical demo](ARTIFACTS.md)

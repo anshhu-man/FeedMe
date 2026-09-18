@@ -94,7 +94,7 @@ internal class CanonicalSchemaProgram(private val resolve: (String) -> JsonObjec
                 val length = text.length - text.count { it.isLowSurrogate() }
                 if (minLength != null && length < minLength) return@SchemaRule false
                 if (maxLength != null && length > maxLength) return@SchemaRule false
-                // Both reviewed expressions are anchored at both ends. Full matching avoids
+                // Reviewed expressions are anchored at both ends. Full matching avoids
                 // JVM/native '$' accepting a prefix before a final Unicode line terminator.
                 if (pattern != null && !pattern.matches(text)) return@SchemaRule false
                 if (format != null && !CanonicalFormats.accepts(format, text)) return@SchemaRule false
@@ -119,7 +119,8 @@ internal class CanonicalSchemaProgram(private val resolve: (String) -> JsonObjec
             "items", "required", "enum", "minLength", "maxLength", "pattern", "description", "uniqueItems", "maxItems",
             "allOf", "if", "const", "then", "else", "anyOf", "minItems", "default")
         private val TYPES = setOf("object", "array", "string", "number", "integer", "boolean", "null")
-        private val PATTERNS = setOf("^[a-z0-9_]{3,24}$", "^[a-fA-F0-9]{64}$", "^[a-z][a-z0-9-]{0,39}$")
+        private val PATTERNS = setOf("^[a-z0-9_]{3,24}$", "^[a-fA-F0-9]{64}$", "^[a-z][a-z0-9-]{0,39}$",
+            "^[0-9a-f]{64}$") // Terms descriptor SHA: exactly 64 lowercase ASCII hex characters.
     }
 }
 

@@ -13,6 +13,7 @@ import com.feedme.server.catalog.PreferenceConsentPolicy
 import com.feedme.server.cooking.CookingServicePolicy
 import com.feedme.server.identity.AccountPendingProfileRules
 import com.feedme.server.identity.AccountDeviceReconnectionRules
+import com.feedme.server.identity.AccountTermsNotice
 import com.feedme.server.identity.SupabaseAuthorityDeployment
 import com.feedme.server.kitchen.KitchenCursorCodec
 import com.feedme.server.kitchen.KitchenServicePolicy
@@ -46,6 +47,7 @@ class AccountCoreRuntimeConfig private constructor(
     val deployment: SupabaseAuthorityDeployment,
     val accountRules: AccountPendingProfileRules,
     val reconnectionRules: AccountDeviceReconnectionRules?,
+    val termsNotice: AccountTermsNotice?,
     val keyPolicy: SupabaseJwksHttpPolicy,
     val ingredientLimits: IngredientCatalogLimits,
     val searchMode: IngredientSearchMode,
@@ -93,7 +95,7 @@ class AccountCoreRuntimeConfig private constructor(
                 it.startsWith("FEEDME_SERVER_") || it.startsWith("FEEDME_MIGRATION_") ||
                 it.startsWith("FEEDME_PANTRY_") || it in conflicting })
             val root = document(requireNotNull(values[CONFIG]), 65_536)
-            exact(root, "version", "environment", "listener", "database", "deployment", "accountRules", "reconnectionRules", "keyPolicy",
+            exact(JsonObject(root - "termsNotice"), "version", "environment", "listener", "database", "deployment", "accountRules", "reconnectionRules", "keyPolicy",
                 "ingredientLimits", "searchMode", "preferencePolicy", "kitchenPolicy", "planningOperational",
                 "planningPolicy", "cookingPolicy", "newCookingEnabled", "savedPolicy", "newCopiesEnabled", "databaseParallelism")
             require(number(root, "version") == 1L)
@@ -113,6 +115,15 @@ class AccountCoreRuntimeConfig private constructor(
                     exact(rule, "revision", "consentVersion", "maximumAuthenticationAgeSeconds", "newReconnectionsEnabled")
                     AccountDeviceReconnectionRules(text(rule, "revision", 128), text(rule, "consentVersion", 256),
                         number(rule, "maximumAuthenticationAgeSeconds"), boolean(rule, "newReconnectionsEnabled"))
+                }
+            }
+            // Missing/null keeps the dedicated Terms capability unavailable. No legal
+            // notice, URL, acceptance, eligibility or new-write decision is defaulted.
+            val notice = root["termsNotice"]?.takeUnless { it == JsonNull }?.jsonObject?.let { value ->
+                exact(value, "termsVersion", "termsUrl", "privacyUrl")
+                AccountTermsNotice(text(value, "termsVersion", 256), text(value, "termsUrl", 2048),
+                    text(value, "privacyUrl", 2048)).also {
+                    require(it.termsVersion == rules.requiredTermsVersion)
                 }
             }
             val k = root.getValue("keyPolicy").jsonObject
@@ -158,7 +169,7 @@ class AccountCoreRuntimeConfig private constructor(
             val kitchenCursors = cursor(rings.getValue("kitchen").jsonObject, ::KitchenCursorCodec)
             val planningCursors = cursor(rings.getValue("planning").jsonObject, ::PlanningCursors)
             val savedCursors = cursor(rings.getValue("saved").jsonObject, ::SavedRecipeCursors)
-            AccountCoreRuntimeConfig(listener, environment, deployment, rules, reconnection, keyPolicy, ingredients, search, preferences,
+            AccountCoreRuntimeConfig(listener, environment, deployment, rules, reconnection, notice, keyPolicy, ingredients, search, preferences,
                 ingredientCursors, kitchenCursors, kitchenPolicy, planningOperational, planningPolicy, planningCursors,
                 cookingPolicy, newCooking, savedPolicy, savedCursors, newCopies, parallelism, database)
         } catch (failure: CancellationException) { throw failure }

@@ -1,14 +1,22 @@
 # Development snapshot — 15 September 2026
 
 **18 September backend-only addendum:** [current server deployment source](BACKEND_DEPLOYMENT.md)
-is separately packaged under `server-deploy/` with its own current 295-file manifest and
-203-operation contract. The top-level full-app/source-copy checkpoint described
+is separately packaged under `server-deploy/` with its own current 297-file manifest and
+205-operation contract. The top-level full-app/source-copy checkpoint described
 below remains historical and unchanged; the public inventory additionally records
 the new bundle and these reference updates. No refreshed APK, native acceptance,
 production API readiness or store publication is implied. Current direction is Google Play
 first with Shipaton paused; Supabase/Render technical direction is now approved.
 
-**18 September, 18:45 UTC public-CA checkpoint:** the current 295-input bundle,
+**19 September IST / 18 September 19:25 UTC — server Terms-only checkpoint:**
+[current Terms review and explicit acceptance](ACCOUNT_TERMS.md) pass 115 focused
+JVM, 16 isolated database/HTTP and 91 contract-generation checks in the source
+workspace. The current bundle adds V032 locally; all 31 prior migrations remain
+unchanged. It has not been cloud-built or deployed. Native review, approved legal
+content, account eligibility, email and configured-runtime acceptance remain open.
+The following cloud checkpoint describes the older deployed 295-input bundle.
+
+**18 September, 18:45 UTC public-CA checkpoint:** the preceding 295-input bundle,
 public commit `b0fadf68f03ac0f335e12b4aedd9e222bb79f1ff`, successfully rebuilt the
 same `feedme-api-preview` service as `dep-damoasid0e5s73d4dcg0`. Deployment ran
 18:39:46–18:43:43 UTC (237 seconds); Gradle passed in 2 minutes 17 seconds across

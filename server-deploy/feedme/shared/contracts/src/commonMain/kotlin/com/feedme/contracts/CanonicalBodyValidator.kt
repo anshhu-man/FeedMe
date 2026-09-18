@@ -90,7 +90,7 @@ class CanonicalBodyValidator private constructor(
                 }
                 operation.id to OperationBodies(request, responses)
             }
-            check(named.size == 190 && operations.size == 203)
+            check(named.size == 193 && operations.size == 205)
             CanonicalBodyValidator(named, operations)
         } catch (_: Exception) {
             throw IllegalStateException("Pinned common validator initialization failed")

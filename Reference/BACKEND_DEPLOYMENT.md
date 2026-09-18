@@ -1,7 +1,8 @@
 # Backend deployment source — 18 September 2026
 
-This is a separate curated backend source bundle, now used by an unconfigured
-hosting preview, not a refreshed full-app snapshot or production-ready API.
+This is a separate curated backend source bundle. The latest Terms-only increment
+is not deployed; the older public-CA bundle still backs the unconfigured hosting
+preview. Neither is a refreshed full-app snapshot or production-ready API.
 The existing top-level `feedme/` and the manifest's source-copy
 entries remain at their earlier checkpoint; its retained inventory includes this
 separately identified addendum. Use [`server-deploy/`](../server-deploy/)
@@ -9,15 +10,24 @@ for this backend build, not that older tree.
 
 ## Exact source
 
-[`context-manifest.json`](../server-deploy/context-manifest.json) now binds 295 build
-input files (5,610,797 bytes). Manifest SHA256:
-`6781439973ef282552bf60a4575342a01a896912afb360bfbb107c34b29ac67c`.
+[`context-manifest.json`](../server-deploy/context-manifest.json) now binds 297 build
+input files (5,646,331 bytes). Manifest SHA256:
+`394feab9d263b0dbc4e56a49a343061a50eb0b2bf507b70348f18ed7706bcebd`.
 The bundle preserves `feedme/` and sibling `outputs/` so contract and release-scope
 checks resolve their real inputs. It includes the current account runtime and
-203-operation contract, V001–V031 migrations, managed Auth projections and explicit
+205-operation contract, V001–V032 migrations, managed Auth projections and explicit
 runtime grants. No `.local`, credentials, caches, APKs, test fixtures/results or
 unrelated workspace trees are included. The Gradle wrapper JAR is the sole
 checked-in build-tool binary; no built server distribution is copied.
+
+**19 September IST / 18 September 19:25 UTC — Terms-only source increment:**
+two new inputs and fourteen changed inputs add authenticated current-Terms read
+and explicit acceptance, immutable evidence and restricted runtime grants. The
+other 281 inputs, including every V001–V031 migration, remain unchanged. The
+source workspace passes 115 focused JVM, 16 isolated PostgreSQL/HTTP and 91 Node
+checks. Both temporary databases stopped. See [scope and limits](ACCOUNT_TERMS.md).
+V032 is not installed on Supabase, and this context has not been image-built or
+deployed. Auto-Deploy remains off; the cloud evidence below belongs to older source.
 
 For the preceding MFA refresh, all 294 source and destination hashes were checked after copying. Relative to the
 previous 294-input bundle, only the provider authority and the two private
@@ -25,7 +35,7 @@ provider/runtime SQL resources changed for lower-assurance timeout support. The
 other 291 build inputs, including V001–V031, remain byte-identical. No source inputs
 were edited by this refresh and no bundle files were added or removed.
 
-**Accepted public-CA increment:** the current 295-input context adds exactly one
+**Historical accepted public-CA increment:** the preceding 295-input context adds exactly one
 public certificate and changes only the Dockerfile relative to that 294-input
 MFA bundle; 293 prior build inputs are unchanged. The reviewed public Supabase CA
 has DER SHA-256 `807025ad50d4ed219d2c9c7d299c004f824eb00cf7f65afef607d07b72e6cafa`.

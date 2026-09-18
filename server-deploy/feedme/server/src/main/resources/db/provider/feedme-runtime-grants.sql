@@ -1,5 +1,5 @@
 -- Fixed account-core runtime privileges. Apply only inside an installer-owned transaction
--- AFTER verified V001--V031 and the exact managed Auth projector installation. No roles,
+-- AFTER verified V001--V032 and the exact managed Auth projector installation. No roles,
 -- passwords, provider grants, policies, default privileges or database connections are
 -- created here. The installer separately controls CONNECT on its exact selected database.
 -- This is not an ACL reset: reject unexpected inherited/PUBLIC/existing privileges before
@@ -36,6 +36,10 @@ BEGIN
         WHERE version=31 AND checksum='3d6746742df8bccd7a9f95cbe32bac1892f8149bdcbf462e2558d4a46d13581c') THEN
         RAISE EXCEPTION 'Account-core immutable-key migration is not installed';
     END IF;
+    IF NOT EXISTS (SELECT 1 FROM platform.schema_migrations
+        WHERE version=32 AND checksum='e59d05ea87aea30722b43330f21653bfc078a340332110de4bdf7f08e89a2f98') THEN
+        RAISE EXCEPTION 'Account Terms evidence migration is not installed';
+    END IF;
 END;
 $feedme$;
 
@@ -46,7 +50,7 @@ LOCK TABLE ONLY catalog.ingredient_heads, ONLY catalog.ingredient_releases,
     ONLY catalog.recipe_heads, ONLY catalog.recipe_releases,
     ONLY catalog.recipe_release_entries, ONLY catalog.recipe_release_compositions,
     ONLY catalog.recipe_copy_grants, ONLY catalog.recipe_copy_revocations,
-    ONLY identity.principals, ONLY identity.device_reconnections,
+    ONLY identity.principals, ONLY identity.device_reconnections, ONLY identity.account_terms_acceptances,
     ONLY platform.outbox, ONLY profile.onboarding_decisions, ONLY planning.plans,
     ONLY cooking.step_events, ONLY memory.collection_items, ONLY memory.save_commands
     IN ROW EXCLUSIVE MODE;
@@ -107,6 +111,51 @@ BEGIN
 END;
 $feedme$;
 
+-- Terms evidence is insert/read only (no lock-only UPDATE is needed). The migration hash
+-- alone cannot establish the current guards or ACLs after administrative DDL.
+DO $feedme$
+DECLARE expected record; guard record; evidence record; api_oid oid;
+BEGIN
+    SELECT oid INTO STRICT api_oid FROM pg_catalog.pg_roles WHERE rolname='feedme_api';
+    SELECT c.oid,c.relowner,c.relkind,c.relrowsecurity,c.relforcerowsecurity,c.relacl INTO STRICT evidence
+        FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+        WHERE n.nspname='identity' AND c.relname='account_terms_acceptances';
+    IF evidence.relkind<>'r' OR NOT evidence.relrowsecurity OR NOT evidence.relforcerowsecurity
+        OR EXISTS (SELECT 1 FROM pg_catalog.pg_inherits WHERE inhrelid=evidence.oid OR inhparent=evidence.oid)
+        OR EXISTS (SELECT 1 FROM pg_catalog.aclexplode(COALESCE(evidence.relacl,pg_catalog.acldefault('r',evidence.relowner))) a
+            WHERE a.grantee<>evidence.relowner AND
+                (a.grantee<>api_oid OR a.privilege_type NOT IN ('SELECT','INSERT') OR a.is_grantable))
+        OR EXISTS (SELECT 1 FROM pg_catalog.pg_attribute col
+            CROSS JOIN LATERAL pg_catalog.aclexplode(col.attacl) a
+            WHERE col.attrelid=evidence.oid AND a.grantee<>evidence.relowner AND
+                (a.grantee<>api_oid OR a.privilege_type NOT IN ('SELECT','INSERT') OR a.is_grantable)) THEN
+        RAISE EXCEPTION 'Unsafe Account Terms evidence table';
+    END IF;
+    FOR expected IN SELECT * FROM (VALUES
+        ('account_terms_acceptance_immutable',27),('account_terms_acceptance_retained',34)
+    ) AS wanted(trigger_name,trigger_type) LOOP
+        SELECT t.*,p.prosrc,p.proowner,p.prosecdef,p.pronargs,p.prorettype,p.proconfig,p.proacl,l.lanname
+            INTO guard FROM pg_catalog.pg_trigger t JOIN pg_catalog.pg_proc p ON p.oid=t.tgfoid
+            JOIN pg_catalog.pg_namespace n ON n.oid=p.pronamespace
+            JOIN pg_catalog.pg_language l ON l.oid=p.prolang
+            WHERE t.tgrelid=evidence.oid AND t.tgname=expected.trigger_name
+                AND n.nspname='identity' AND p.proname='keep_account_terms_acceptance_immutable';
+        IF NOT FOUND THEN RAISE EXCEPTION 'Missing Account Terms evidence guard'; END IF;
+        IF guard.tgtype<>expected.trigger_type OR guard.tgenabled NOT IN ('O','A') OR guard.tgisinternal
+            OR guard.tgqual IS NOT NULL OR guard.tgattr::text<>'' OR guard.tgnargs<>0 OR guard.tgconstraint<>0
+            OR guard.proowner<>evidence.relowner OR guard.prosecdef OR guard.pronargs<>0
+            OR guard.prorettype<>'pg_catalog.trigger'::pg_catalog.regtype OR guard.lanname<>'plpgsql'
+            OR guard.proconfig IS DISTINCT FROM ARRAY['search_path=pg_catalog, pg_temp']::text[]
+            OR pg_catalog.regexp_replace(guard.prosrc,'[[:space:]]','','g') <>
+                pg_catalog.regexp_replace('BEGIN RAISE EXCEPTION ''Account Terms acceptance evidence is immutable'' USING ERRCODE=''23514''; END;','[[:space:]]','','g')
+            OR EXISTS (SELECT 1 FROM pg_catalog.aclexplode(COALESCE(guard.proacl,pg_catalog.acldefault('f',guard.proowner))) a
+                WHERE a.grantee<>guard.proowner) THEN
+            RAISE EXCEPTION 'Account Terms evidence guard differs from reviewed source';
+        END IF;
+    END LOOP;
+END;
+$feedme$;
+
 GRANT USAGE ON SCHEMA platform,identity,profile,pantry,planning,cooking,memory,catalog,feedme_auth_access TO feedme_api;
 GRANT EXECUTE ON FUNCTION feedme_auth_access.schema_lock(),feedme_auth_access.migration_versions(),
     feedme_auth_access.user_facts(uuid),feedme_auth_access.factor_facts(uuid),feedme_auth_access.session_facts(uuid),
@@ -116,7 +165,7 @@ GRANT EXECUTE ON FUNCTION feedme_auth_access.schema_lock(),feedme_auth_access.mi
 -- checks. History needs only its exact version/checksum columns. No Auth table reads.
 GRANT SELECT(version,checksum) ON platform.schema_migrations TO feedme_api;
 GRANT SELECT ON platform.idempotency,platform.outbox,
-    identity.users,identity.principals,identity.device_sessions,identity.device_reconnections,
+    identity.users,identity.principals,identity.device_sessions,identity.device_reconnections,identity.account_terms_acceptances,
     profile.profiles,profile.preferences,profile.onboarding_decisions,pantry.pantry_items,
     planning.account_plan_windows,planning.plan_requests,planning.plans,
     cooking.cook_sessions,cooking.device_cursors,cooking.step_events,
@@ -142,6 +191,8 @@ GRANT INSERT(environment,user_id,command_key,request_sha256,previous_device_id,n
     previous_provider_session_id,new_provider_session_id,provider_issuer,provider_subject,installation_id_hash,platform,
     previous_device_version,policy_revision,consent_version,maximum_authentication_age_seconds,
     provider_session_created_at,password_authenticated_at,authorized_at,valid_until) ON identity.device_reconnections TO feedme_api;
+GRANT INSERT(environment,user_id,command_key,request_sha256,device_session_id,provider_issuer,provider_subject,
+    provider_session_id,terms_version,notice_sha256,terms_url,privacy_url,accepted_at) ON identity.account_terms_acceptances TO feedme_api;
 GRANT INSERT(environment,user_id,onboarding_step,live,version) ON profile.profiles TO feedme_api;
 GRANT INSERT(environment,actor_kind,principal_id,id,version,created_at,updated_at,fields) ON profile.preferences TO feedme_api;
 GRANT INSERT(environment,user_id,command_key,request_sha256,device_session_id,prompt,disposition,next_step,

@@ -70,7 +70,7 @@ class ConfiguredSupabaseAccountCoreAssembly private constructor(
                 val reconnection = config.reconnectionRules?.let { SupabaseAccountDeviceReconnection(config.environment, authority, it) }
                 reconnection?.let { owner -> transactions.run(owner::checkCompatibility) }
                 val accounts = AccountProfileStore(config.environment, transactions,
-                    SupabaseAccountBootstrapPolicy(authority, config.accountRules), reconnection)
+                    SupabaseAccountBootstrapPolicy(authority, config.accountRules), reconnection, config.termsNotice)
                 val preferenceCatalog = PostgresPendingPreferencesCatalog(ingredients, config.ingredientCursors, config.preferencePolicy)
                 val preferences = AccountPreferencesStore(config.environment, transactions, accounts,
                     preferenceCatalog, config.kitchenCursors, config.kitchenPolicy)

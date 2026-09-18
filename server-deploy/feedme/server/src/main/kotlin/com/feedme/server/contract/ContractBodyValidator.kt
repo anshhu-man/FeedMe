@@ -189,7 +189,7 @@ class ContractBodyValidator private constructor(
                 }
                 operation.id to OperationBodies(request, responses)
             }
-            check(operationBodies.size == 203 && schemas.size == 190)
+            check(operationBodies.size == 205 && schemas.size == 193)
             ContractBodyValidator(mapper, schemas.toMap(), operationBodies.toMap())
         } catch (_: Exception) {
             // Intentionally omit a cause: upstream exception text can contain schema content.

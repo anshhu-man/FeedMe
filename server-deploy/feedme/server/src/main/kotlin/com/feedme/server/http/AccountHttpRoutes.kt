@@ -25,8 +25,9 @@ import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.runInterruptible
 import kotlinx.serialization.json.*
 
-internal val accountHttpOperations = setOf("bootstrapAccount", "getMe", "getAccountReady", "updateMe", "logoutSession")
-private val accountReadOperations = setOf("getMe", "getAccountReady")
+internal val accountHttpOperations = setOf("bootstrapAccount", "getMe", "getAccountReady", "getAccountTerms",
+    "acceptAccountTerms", "updateMe", "logoutSession")
+private val accountReadOperations = setOf("getMe", "getAccountReady", "getAccountTerms")
 
 /** Never log request metadata, provider tokens, installation IDs or private profile bodies. */
 internal class AccountHttpInput private constructor(
@@ -145,6 +146,8 @@ internal suspend fun ApplicationCall.accountOperation(operation: String, configu
                 "bootstrapAccount" -> accountReply(configuration.store.bootstrapAccount(subject, input.key!!, body!!))
                 "getMe" -> configuration.store.getMe(subject, input.device!!)
                 "getAccountReady" -> configuration.store.getAccountReady(subject, input.device!!)
+                "getAccountTerms" -> configuration.store.getAccountTerms(subject, input.device!!)
+                "acceptAccountTerms" -> accountReply(configuration.store.acceptAccountTerms(subject, input.device!!, input.key!!, body!!))
                 "logoutSession" -> accountReply(configuration.store.logoutSession(subject, input.device!!, input.key!!, body!!))
                 "updateMe" -> accountReply(configuration.store.updateMe(subject, input.device!!, input.key!!, input.ifMatch!!, body!!))
                 else -> error("Unsupported account operation")
@@ -165,7 +168,7 @@ internal fun validateAccountReply(operation: String, reply: StoredReply, validat
     val text = reply.body?.toString() ?: error("Missing account response")
     val bytes = text.encodeToByteArray(throwOnInvalidSequence = true)
     check(bytes.size <= 262_144 && validator.validateResponse(operation, 200, bytes, "application/json") == BodyValidationResult.Valid)
-    if (operation in setOf("bootstrapAccount", "getAccountReady", "logoutSession")) check(reply.etag == null)
+    if (operation in setOf("bootstrapAccount", "getAccountReady", "getAccountTerms", "acceptAccountTerms", "logoutSession")) check(reply.etag == null)
     else {
         val etag = reply.etag ?: error("Missing profile version")
         check(Regex("\"[1-9][0-9]{0,18}\"").matches(etag))

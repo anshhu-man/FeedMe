@@ -1,6 +1,6 @@
 {
   "openapi": "3.1.1",
-  "sha256": "1e3b15de98e4926e5a6c93e1620581dd29fe45b0e85feecf4cfd50be52c63106",
+  "sha256": "825a28ad3b6c4cb1d4e88938cd3271dc949cf3f94b3f5dba4553f1bb55fa920d",
   "generator": "feedme-contract-artifacts-v1",
   "scope": "Lossless schema and operation metadata; not body validation, transport or authorization."
 }

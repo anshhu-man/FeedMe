@@ -5,6 +5,15 @@
 No credential, private runtime configuration, local operator helper or raw local
 test/evidence directory is included here.
 
+## Terms-only source increment — 19 September IST
+
+The current 297-input bundle adds [locally verified account Terms support](ACCOUNT_TERMS.md)
+and V032. It is not cloud-built or deployed. Production history is still V001–V031;
+do not treat the new runtime-grant resource as already installed or point the new
+server at that older schema. The prior cloud/database evidence below is retained
+at its original checkpoint. Native review and the remaining live policy/content/
+email/runtime dependencies are still open.
+
 ## Public-CA cloud acceptance — 18 September 2026, 18:45 UTC
 
 The existing `feedme-api-preview` manually deployed public source
@@ -87,7 +96,7 @@ JWT signature freezes provider binaries/settings. Current deployment/session-pol
 review is explicit and expires after at most 24 hours; do not blindly extend it.
 
 The live Supabase dashboard showed an enabled 15-minute AAL1 lower-assurance
-timeout. The preceding 294-input MFA update, retained in the current 295-input bundle, supports its explicit non-null
+timeout. The preceding 294-input MFA update, retained in the current 297-input bundle, supports its explicit non-null
 `lowAssuranceTimeoutSeconds: 900`. Any verified factor sets the user's highest
 possible assurance to AAL2, regardless of factor type; an AAL1 session then expires
 at `created_at + 900 seconds`. Equality is conservatively refused, and the same

@@ -23,7 +23,8 @@ import kotlinx.serialization.json.*
  * provider UUID. JWT session_id only binds the distinct random FeedMe device record.
  * AccountBootstrapPolicy is mandatory; signature validity never supplies its authority. */
 class AccountProfileStore(private val environment: String, private val transactions: PgTransactions,
-    private val policy: AccountBootstrapPolicy, private val reconnection: SupabaseAccountDeviceReconnection? = null) {
+    private val policy: AccountBootstrapPolicy, private val reconnection: SupabaseAccountDeviceReconnection? = null,
+    private val termsNotice: AccountTermsNotice? = null) {
     private val commands = DurableCommands(transactions)
     private val outbox = OutboxStore(transactions)
     init { require(environment.matches(Regex("[a-z][a-z0-9-]{0,39}"))) }
@@ -166,6 +167,112 @@ class AccountProfileStore(private val environment: String, private val transacti
             provider(c, subject)
             reply("getAccountReady", result)
         }
+    }
+
+    /** Current same-device notice observation only. Pending accounts may review Terms;
+     * neither this read nor its accepted-version field grants private account access. */
+    fun getAccountTerms(subject: VerifiedSupabaseSubject, deviceSessionId: UUID): StoredReply = safe {
+        transactions.run { c ->
+            val actor = authorized(c, subject, deviceSessionId)
+            val notice = currentTermsNotice(c, subject, actor)
+            val response = buildJsonObject {
+                put("termsVersion", notice.termsVersion); put("termsUrl", notice.termsUrl); put("privacyUrl", notice.privacyUrl)
+                put("noticeSha256", notice.noticeSha256)
+                put("acceptedTermsVersion", actor.facts.acceptedTermsVersion?.let(::JsonPrimitive) ?: JsonNull)
+                put("required", actor.facts.acceptedTermsVersion != notice.termsVersion)
+            }
+            currentTermsNotice(c, subject, actor); provider(c, subject)
+            reply("getAccountTerms", response)
+        }
+    }
+
+    /** Explicit Terms-only command. It keeps the existing active provider/device, profile,
+     * eligibility and all native/bootstrap history. The original receipt and immutable audit
+     * commit together; current policy is still required on replay, without new consent time. */
+    fun acceptAccountTerms(subject: VerifiedSupabaseSubject, deviceSessionId: UUID,
+        key: UUID, body: JsonObject): CommandResult = safe {
+        val input = request("acceptAccountTerms", body)
+        transactions.run { c ->
+            val actor = authorized(c, subject, deviceSessionId)
+            val notice = currentTermsNotice(c, subject, actor)
+            val identity = CommandIdentity(PrincipalScope(environment, CommandActor.ACCOUNT, actor.facts.accountId),
+                "acceptAccountTerms", key, body = input)
+            var applied = false
+            val result = commands.executeInTransaction(c, identity,
+                { db -> authorized(db, subject, deviceSessionId); currentTermsNotice(db, subject, actor) },
+                { db -> authorizeTermsAcceptance(db, subject, actor, input, notice) },
+                { db, cached -> requireTermsReplay(db, subject, actor, deviceSessionId, identity, notice, cached) }) { db ->
+                authorizeTermsAcceptance(db, subject, actor, input, notice)
+                if (actor.version == Long.MAX_VALUE) fail(AccountFailureCode.STORAGE_UNAVAILABLE)
+                val acceptedAt = time(db)
+                exec(db, "UPDATE identity.users SET terms_version=?,terms_accepted_at=?,version=version+1," +
+                    "updated_at=clock_timestamp() WHERE environment=? AND id=?") {
+                    setString(1, notice.termsVersion); setObject(2, OffsetDateTime.ofInstant(acceptedAt, java.time.ZoneOffset.UTC))
+                    setString(3, environment); setObject(4, actor.facts.accountId)
+                }
+                exec(db, "INSERT INTO identity.account_terms_acceptances(environment,user_id,command_key,request_sha256," +
+                    "device_session_id,provider_issuer,provider_subject,provider_session_id,terms_version,notice_sha256,terms_url,privacy_url,accepted_at)" +
+                    " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)") {
+                    setString(1, environment); setObject(2, actor.facts.accountId); setObject(3, key); setString(4, identity.requestHash)
+                    setObject(5, deviceSessionId); setString(6, subject.issuer); setObject(7, subject.subject)
+                    setObject(8, subject.providerSessionId); setString(9, notice.termsVersion)
+                    setString(10, notice.noticeSha256); setString(11, notice.termsUrl); setString(12, notice.privacyUrl)
+                    setObject(13, OffsetDateTime.ofInstant(acceptedAt, java.time.ZoneOffset.UTC))
+                }
+                applied = true
+                reply("acceptAccountTerms", buildJsonObject {
+                    put("termsVersion", notice.termsVersion); put("noticeSha256", notice.noticeSha256); put("acceptedAt", acceptedAt.toString())
+                })
+            }
+            // Receipt completion can wait. Re-read actual account/provider/device and policy
+            // after the LAST write; failure rolls back acceptance, evidence and receipt.
+            val current = authorized(c, subject, deviceSessionId)
+            currentTermsNotice(c, subject, current)
+            if (applied) authorizeTermsAcceptance(c, subject, current, input, notice)
+            provider(c, subject)
+            result
+        }
+    }
+
+    private fun currentTermsNotice(c: Connection, subject: VerifiedSupabaseSubject, actor: AccountRow): AccountTermsNotice {
+        val notice = termsNotice ?: fail(AccountFailureCode.NOT_CONFIGURED)
+        if (currentPolicy(c, subject, actor).requiredTermsVersion != notice.termsVersion) fail(AccountFailureCode.NOT_CONFIGURED)
+        return notice
+    }
+
+    private fun authorizeTermsAcceptance(c: Connection, subject: VerifiedSupabaseSubject, actor: AccountRow,
+        input: JsonObject, notice: AccountTermsNotice) {
+        if (input["termsVersion"]?.jsonPrimitive?.content != notice.termsVersion ||
+            input["noticeSha256"]?.jsonPrimitive?.content != notice.noticeSha256) fail(AccountFailureCode.POLICY_BLOCKED)
+        val current = currentPolicy(c, subject, actor)
+        val decision = policy.bootstrap(c, subject, input, actor.facts)
+        validatePolicy(decision.policy); requirePolicy(actor, decision.policy)
+        if (!decision.acceptSubmittedTerms || decision.policy.requiredTermsVersion != notice.termsVersion ||
+            current.requiredTermsVersion != notice.termsVersion || decision.policy.flags != current.flags ||
+            decision.policy.entitlements != current.entitlements) fail(AccountFailureCode.POLICY_BLOCKED)
+    }
+
+    private fun requireTermsReplay(c: Connection, subject: VerifiedSupabaseSubject, actor: AccountRow,
+        deviceSessionId: UUID, identity: CommandIdentity, notice: AccountTermsNotice, cached: StoredReply) {
+        validateStored("acceptAccountTerms", cached)
+        if (cached.etag != null || actor.facts.acceptedTermsVersion != notice.termsVersion) fail(AccountFailureCode.POLICY_BLOCKED)
+        val acceptedAt = query(c, "SELECT * FROM identity.account_terms_acceptances WHERE environment=? AND user_id=? AND command_key=?", {
+            setString(1, environment); setObject(2, actor.facts.accountId); setObject(3, identity.key)
+        }) { row ->
+            if (!row.next() || row.getString("request_sha256") != identity.requestHash ||
+                row.getObject("device_session_id", UUID::class.java) != deviceSessionId ||
+                row.getString("provider_issuer") != subject.issuer || row.getObject("provider_subject", UUID::class.java) != subject.subject ||
+                row.getObject("provider_session_id", UUID::class.java) != subject.providerSessionId ||
+                row.getString("terms_version") != notice.termsVersion || row.getString("notice_sha256") != notice.noticeSha256 ||
+                row.getString("terms_url") != notice.termsUrl ||
+                row.getString("privacy_url") != notice.privacyUrl) fail(AccountFailureCode.POLICY_BLOCKED)
+            instant(row, "accepted_at")
+        }
+        val response = cached.body!!.jsonObject
+        if (response["termsVersion"]?.jsonPrimitive?.content != notice.termsVersion ||
+            response["noticeSha256"]?.jsonPrimitive?.content != notice.noticeSha256 ||
+            Instant.parse(response.getValue("acceptedAt").jsonPrimitive.content) != acceptedAt) fail(AccountFailureCode.STORAGE_UNAVAILABLE)
+        currentTermsNotice(c, subject, actor); provider(c, subject)
     }
 
     /** Baseline for a future configured social adapter, not an object/role/block grant.

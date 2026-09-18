@@ -481,6 +481,195 @@
         "x-idempotency-required": false
       }
     },
+    "/v1/account/terms": {
+      "get": {
+        "operationId": "getAccountTerms",
+        "tags": [
+          "identity"
+        ],
+        "summary": "Read current account Terms notice without accepting it",
+        "description": "Authenticated observation of the current configured Terms notice and this account's accepted version. Rechecks current provider/account/device/policy. A read or required=false is not consent, age eligibility, or private readiness. Published notice versions must be immutable; no body, query, command key, conditional headers, or ETag. noticeSha256 binds UTF-8 JSON array [termsVersion,termsUrl,privacyUrl] using SHA-256; it is not a remote document-content hash. Approved notice versions and their documents must remain immutable.",
+        "security": [
+          {
+            "UserBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-Device-Session",
+            "in": "header",
+            "required": true,
+            "description": "Registered app session from bootstrap; checked for revocation and binding to access token subject.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current notice and accepted-version observation; not acceptance.",
+            "headers": {
+              "X-Trace-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountTermsNotice"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "410": {
+            "$ref": "#/components/responses/Error410"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        },
+        "x-feature-ids": [
+          "F47",
+          "F48"
+        ],
+        "x-module": "identity",
+        "x-principal": "user",
+        "x-idempotency-required": false
+      },
+      "post": {
+        "operationId": "acceptAccountTerms",
+        "tags": [
+          "identity"
+        ],
+        "summary": "Explicitly accept current account Terms on the existing device",
+        "description": "Explicit Terms-only command for the current verified provider subject and exact active registered device. Requires a new retained idempotency key and the exact reviewed Terms version and noticeSha256 from the current authenticated descriptor. Atomically records acceptance evidence and its original receipt. Repeating an identical original returns its original acceptedAt while current authority and policy still permit delivery. Never changes eligibility, onboarding, device binding, passwords, or private-session readiness. Client must retain and acknowledge the exact original before dispatch; unknown outcomes are reconciled using that original, never a replacement key. No If-Match or ETag.",
+        "security": [
+          {
+            "UserBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-Device-Session",
+            "in": "header",
+            "required": true,
+            "description": "Registered app session from bootstrap; checked for revocation and binding to access token subject.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Original authorized Terms acceptance receipt; not an account-ready grant.",
+            "headers": {
+              "X-Trace-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountTermsAcceptance"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "410": {
+            "$ref": "#/components/responses/Error410"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        },
+        "x-feature-ids": [
+          "F47",
+          "F48"
+        ],
+        "x-module": "identity",
+        "x-principal": "user",
+        "x-idempotency-required": true,
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountTermsAcceptRequest"
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/me": {
       "get": {
         "operationId": "getMe",
@@ -21876,6 +22065,101 @@
           "importedPlanIds",
           "preferenceReviewRequired",
           "conflictFields"
+        ]
+      },
+      "AccountTermsNotice": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "termsVersion": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "noticeSha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "termsUrl": {
+            "type": "string",
+            "format": "uri",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "privacyUrl": {
+            "type": "string",
+            "format": "uri",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "acceptedTermsVersion": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "required": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "termsVersion",
+          "noticeSha256",
+          "termsUrl",
+          "privacyUrl",
+          "acceptedTermsVersion",
+          "required"
+        ]
+      },
+      "AccountTermsAcceptRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "termsVersion": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "noticeSha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          }
+        },
+        "required": [
+          "termsVersion",
+          "noticeSha256"
+        ]
+      },
+      "AccountTermsAcceptance": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "termsVersion": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "noticeSha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "acceptedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "termsVersion",
+          "noticeSha256",
+          "acceptedAt"
         ]
       },
       "BootstrapRequest": {

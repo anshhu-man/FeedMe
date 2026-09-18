@@ -91587,14 +91587,14 @@
     },
     {
       "path": "Reference/BACKEND_DEPLOYMENT.md",
-      "bytes": 8140,
-      "sha256": "270935e47454449604acf6c119dea9701cd977133d0b32d9a3d20df96f1a9403",
+      "bytes": 8885,
+      "sha256": "73e7ee3f3cd16e9e6b4cdbd16a8a24edd6da1b8389c4c00af93f673e4a11cd76",
       "mode": 420
     },
     {
       "path": "Reference/BACKEND_OPERATIONS.md",
-      "bytes": 10371,
-      "sha256": "65e576c32f1dcc8d28446e12e6eab63cc1cec40feeed68055167d850eb79bc51",
+      "bytes": 10891,
+      "sha256": "22d7d6150aa0c938e61fb18f244501e618ad114c2f9abef4283791cb4e68ab84",
       "mode": 420
     },
     {
@@ -91701,8 +91701,8 @@
     },
     {
       "path": "Reference/README.md",
-      "bytes": 3500,
-      "sha256": "27bee611e9040a64f19387a0ff811d683d678ed64603df15e5a8a58da0db393e",
+      "bytes": 3651,
+      "sha256": "9622ebbb7615c7a54cc7e9a09083ef200b325bc2b91ad2e69639a77dc0d688f5",
       "mode": 420
     },
     {
@@ -91713,8 +91713,8 @@
     },
     {
       "path": "Reference/SNAPSHOT_STATUS.md",
-      "bytes": 9612,
-      "sha256": "c7ee1989db0411cd411a654d9830d4df2a8e938bd80c165f2c22167e57feb23a",
+      "bytes": 10179,
+      "sha256": "0562454d63fd7529845e55a95fcd40d984d4877e46ef08f1170c8b653741b81d",
       "mode": 420
     },
     {
@@ -91743,8 +91743,8 @@
     },
     {
       "path": "server-deploy/context-manifest.json",
-      "bytes": 62177,
-      "sha256": "6781439973ef282552bf60a4575342a01a896912afb360bfbb107c34b29ac67c",
+      "bytes": 62606,
+      "sha256": "394feab9d263b0dbc4e56a49a343061a50eb0b2bf507b70348f18ed7706bcebd",
       "mode": 420
     },
     {
@@ -91786,7 +91786,7 @@
     {
       "path": "server-deploy/feedme/docs/verification/contract-artifacts/generated-receipt.json",
       "bytes": 1213,
-      "sha256": "b4672fca42965948caed6d6e138315a47f53c177fdb7a567d112c66266e4f502",
+      "sha256": "23c498eb6f6959c3ce70c876017d40d619285b3e48f41a854a92198dda0b119d",
       "mode": 420
     },
     {
@@ -91822,7 +91822,7 @@
     {
       "path": "server-deploy/feedme/scripts/contract-source.lock.json",
       "bytes": 255,
-      "sha256": "e421c4a72aa39ba3428f9f7094617e24ed7ccc9835e1725568dbf31c072b2203",
+      "sha256": "3d7d0aa420742d02cc521c81e977a24f61870032dacc8de0abe2a621e56bac43",
       "mode": 420
     },
     {
@@ -92085,8 +92085,8 @@
     },
     {
       "path": "server-deploy/feedme/server/src/main/kotlin/com/feedme/server/config/AccountCoreRuntimeConfig.kt",
-      "bytes": 20350,
-      "sha256": "13da4484f9d09aca900c89405c565f9a0088e1fce806e796c7ba88c3f8ffac7d",
+      "bytes": 21098,
+      "sha256": "d6b2b417657bf1afe209bc07d70fe29bb5a35b133259e895fbb2fe51de14b4b2",
       "mode": 420
     },
     {
@@ -92116,13 +92116,13 @@
     {
       "path": "server-deploy/feedme/server/src/main/kotlin/com/feedme/server/contract/ContractBodyValidator.kt",
       "bytes": 17478,
-      "sha256": "3ada5b35ce91754770993a79bd5273d45e36a52f8cce115440fec99d44d9805a",
+      "sha256": "5a2cd7814ec764e4381c3418ccef06a89bde0b4bafe80c65fdf41feecf7fdc9f",
       "mode": 420
     },
     {
       "path": "server-deploy/feedme/server/src/main/kotlin/com/feedme/server/contract/ContractCatalog.kt",
       "bytes": 3552,
-      "sha256": "6a76b1cb2bfb6a350672dc264fd57b34268cbe0ff1684dcf2a79687a28888b35",
+      "sha256": "bc836d469c38dae8174bd03f9c6edf4e71083ea8a639336cb351760ca0b45be2",
       "mode": 420
     },
     {
@@ -92181,8 +92181,8 @@
     },
     {
       "path": "server-deploy/feedme/server/src/main/kotlin/com/feedme/server/db/PlatformMigrations.kt",
-      "bytes": 11830,
-      "sha256": "fe5fa57840dc624bfb86aab36fed6b800a3b4904f913780a0f069171da5aebef",
+      "bytes": 11901,
+      "sha256": "65bf38b744fd531979341c211a65f8a0ba400117a9b61bdf9a71a1f1dccb8347",
       "mode": 420
     },
     {
@@ -92355,8 +92355,8 @@
     },
     {
       "path": "server-deploy/feedme/server/src/main/kotlin/com/feedme/server/http/AccountHttpRoutes.kt",
-      "bytes": 12158,
-      "sha256": "1a6292a185e6a7a9e9fa0603810cf8686837eedef00f6cbe8bd3c7d5d07ef32e",
+      "bytes": 12500,
+      "sha256": "7c5d1797181d06daaa85217fc5b9fa4fb9871dd68b046f22fca1a6c2d4b6d698",
       "mode": 420
     },
     {
@@ -92415,8 +92415,8 @@
     },
     {
       "path": "server-deploy/feedme/server/src/main/kotlin/com/feedme/server/http/ConfiguredSupabaseAccountCoreAssembly.kt",
-      "bytes": 8393,
-      "sha256": "6f8ccbbac429e2a94a36c4bcfa2acc0e4c4e458448282a7378093fae4540a1d2",
+      "bytes": 8413,
+      "sha256": "1398a5a7b2ed0e10a9df5ca8a4b976d588902da35b67fee4fe6663b45994aaca",
       "mode": 420
     },
     {
@@ -92625,8 +92625,8 @@
     },
     {
       "path": "server-deploy/feedme/server/src/main/kotlin/com/feedme/server/identity/AccountProfileStore.kt",
-      "bytes": 43186,
-      "sha256": "6539382ea742db7daa19b275013075b8649c18c86568e66e41f3aca71717204c",
+      "bytes": 50942,
+      "sha256": "355925876f4da426176dc915f26d00dd1877ff79dabba5261fa304cff81220b1",
       "mode": 420
     },
     {
@@ -93255,8 +93255,8 @@
     },
     {
       "path": "server-deploy/feedme/server/src/main/resources/db/provider/feedme-runtime-grants.sql",
-      "bytes": 18125,
-      "sha256": "a098c78792a1cad8846f813b0ca28513e2dd6eeec24e890ab6863df60eae9851",
+      "bytes": 22057,
+      "sha256": "ac00b4477318b9f5ffdd44bb1f46335942b8e3dc6e8831d807c46cdbb0dac17b",
       "mode": 420
     },
     {
@@ -93292,7 +93292,7 @@
     {
       "path": "server-deploy/feedme/shared/contracts/src/commonMain/kotlin/com/feedme/contracts/CanonicalBodyValidator.kt",
       "bytes": 8235,
-      "sha256": "a3525d581f7fc315c33e764e6ec12373fb915ba70a2cfa1c82984ed092a8cc5d",
+      "sha256": "d1b3df42afbb1698df10b3e4d7120c22a74208ec281217bfee2073edc7e0b230",
       "mode": 420
     },
     {
@@ -93309,8 +93309,8 @@
     },
     {
       "path": "server-deploy/feedme/shared/contracts/src/commonMain/kotlin/com/feedme/contracts/CanonicalSchemaProgram.kt",
-      "bytes": 10763,
-      "sha256": "5ab8efa66542a2e4fd9a14cc34cc4225e30ca381ee3dae2d5bf4c6e03db8da15",
+      "bytes": 10856,
+      "sha256": "2613a2de40f633076a843924e6b2333972c42b6a79f4875e4ee43fe47fd13677",
       "mode": 420
     },
     {
@@ -93345,8 +93345,8 @@
     },
     {
       "path": "server-deploy/feedme/shared/contracts/src/commonMain/kotlin/com/feedme/contracts/generated/GeneratedContract.kt",
-      "bytes": 1058895,
-      "sha256": "f7f291fbb67d7244aeb67f0ce4b2dda3038a30e8bf7abd7bce3bccbd2c06cb5c",
+      "bytes": 1068614,
+      "sha256": "35bb92b8edebfa934ad20aba5a13e4102deebeb9465b13b0297142cbff3b8bec",
       "mode": 420
     },
     {
@@ -93489,8 +93489,8 @@
     },
     {
       "path": "server-deploy/outputs/biteclub_blueprint/architecture/04_API_Contract.json",
-      "bytes": 828189,
-      "sha256": "1e3b15de98e4926e5a6c93e1620581dd29fe45b0e85feecf4cfd50be52c63106",
+      "bytes": 837040,
+      "sha256": "825a28ad3b6c4cb1d4e88938cd3271dc949cf3f94b3f5dba4553f1bb55fa920d",
       "mode": 420
     },
     {
@@ -93558,6 +93558,24 @@
       "bytes": 1367,
       "sha256": "700723581420dd1ac98fd7e9ac529f0ef210eadcaf87fc868a3ad7d114c2f3b7",
       "mode": 420
+    },
+    {
+      "path": "Reference/ACCOUNT_TERMS.md",
+      "bytes": 2516,
+      "sha256": "87d0296a84148cf191a9ea8dbc3a97b755a0145aeb8995d2df13a874f9066bb3",
+      "mode": 420
+    },
+    {
+      "path": "server-deploy/feedme/server/src/main/kotlin/com/feedme/server/identity/AccountTermsNotice.kt",
+      "bytes": 1670,
+      "sha256": "679b1ac7f31127b55a9444af69634200afee3870405604f48cabaffeb4a2ff76",
+      "mode": 420
+    },
+    {
+      "path": "server-deploy/feedme/server/src/main/resources/db/migration/V032__account_terms_acceptances.sql",
+      "bytes": 2332,
+      "sha256": "e59d05ea87aea30722b43330f21653bfc078a340332110de4bdf7f08e89a2f98",
+      "mode": 420
     }
   ],
   "excluded": [
@@ -93590,19 +93608,28 @@
     "sourceSnapshotUnchanged": true,
     "scope": "Backend-only source addendum; no full-app refresh, runtime or deployment acceptance.",
     "currentContext": {
+      "files": 297,
+      "bytes": 5646331,
+      "manifestSha256": "394feab9d263b0dbc4e56a49a343061a50eb0b2bf507b70348f18ed7706bcebd",
+      "scope": "Locally verified server Terms-only source increment; not image-built or deployed. V032 is not installed on Supabase; historical full-app source copies unchanged.",
+      "verification": {
+        "jvm": 115,
+        "isolatedPostgresAndHttp": 16,
+        "node": 91,
+        "fullRegression": false
+      },
+      "deployment": null
+    },
+    "lastVerifiedDeployment": {
       "files": 295,
-      "bytes": 5610797,
-      "manifestSha256": "6781439973ef282552bf60a4575342a01a896912afb360bfbb107c34b29ac67c",
-      "scope": "Public CA packaging and non-root checks passed in the Linux cloud build; unconfigured preview only, Supabase unconnected; historical full-app source copies unchanged.",
-      "deployment": {
-        "sourceCommit": "b0fadf68f03ac0f335e12b4aedd9e222bb79f1ff",
-        "serviceId": "srv-damo0nsri2ms73b601b0",
-        "deploymentId": "dep-damoasid0e5s73d4dcg0",
-        "liveAt": "2026-09-18T18:43:43Z",
-        "healthCheckedAt": "2026-09-18T18:45:48Z",
-        "healthStatus": 503,
-        "healthCode": "SERVICE_NOT_READY"
-      }
+      "contextManifestSha256": "6781439973ef282552bf60a4575342a01a896912afb360bfbb107c34b29ac67c",
+      "sourceCommit": "b0fadf68f03ac0f335e12b4aedd9e222bb79f1ff",
+      "serviceId": "srv-damo0nsri2ms73b601b0",
+      "deploymentId": "dep-damoasid0e5s73d4dcg0",
+      "liveAt": "2026-09-18T18:43:43Z",
+      "healthCheckedAt": "2026-09-18T18:45:48Z",
+      "healthStatus": 503,
+      "healthCode": "SERVICE_NOT_READY"
     }
   }
 }
