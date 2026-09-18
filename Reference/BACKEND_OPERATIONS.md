@@ -5,7 +5,24 @@
 No credential, private runtime configuration, local operator helper or raw local
 test/evidence directory is included here.
 
-## Unconfigured hosting preview — 18 September 2026, 18:24 UTC
+## Public-CA cloud acceptance — 18 September 2026, 18:45 UTC
+
+The existing `feedme-api-preview` manually deployed public source
+`b0fadf68f03ac0f335e12b4aedd9e222bb79f1ff` as
+`dep-damoasid0e5s73d4dcg0`, from 18:39:46 to 18:43:43 UTC (237 seconds).
+Gradle passed in 2 minutes 17 seconds across 17 tasks. At 18:42:30 UTC, build
+step `#24` passed the actual UID/GID 10001 checks: the packaged public CA was
+readable, and its file and parent directories were non-writable (`DONE 0.1s`).
+The unconfigured listener started at 18:43:19 UTC.
+
+At 18:45:48 UTC, HTTPS `/v1/health` returned **503 `SERVICE_NOT_READY`**, trace
+`91954fba-d24d-4f4e-9756-146426d42dc2`. No database password, runtime configuration
+or keys were uploaded, and no database or hosting-plan changes occurred.
+Supabase remains unconnected: this is accepted trust-root/image packaging, not
+account-core readiness. The exact 295-input manifest and CA identity/path are in
+[Backend deployment](BACKEND_DEPLOYMENT.md). The first preview remains recorded below.
+
+## First unconfigured hosting preview — 18 September 2026, 18:24 UTC (historical)
 
 Render successfully deployed public commit
 `e4b9c6656dfcadfc50ade84ad0bc4f70456ae571` as `feedme-api-preview` in Singapore
@@ -70,7 +87,7 @@ JWT signature freezes provider binaries/settings. Current deployment/session-pol
 review is explicit and expires after at most 24 hours; do not blindly extend it.
 
 The live Supabase dashboard showed an enabled 15-minute AAL1 lower-assurance
-timeout. This new 294-input bundle supports its explicit non-null
+timeout. The preceding 294-input MFA update, retained in the current 295-input bundle, supports its explicit non-null
 `lowAssuranceTimeoutSeconds: 900`. Any verified factor sets the user's highest
 possible assurance to AAL2, regardless of factor type; an AAL1 session then expires
 at `created_at + 900 seconds`. Equality is conservatively refused, and the same
@@ -118,7 +135,9 @@ as the schema. Supply `FEEDME_ACCOUNT_RUNTIME_CONFIG`,
 `FEEDME_ACCOUNT_DB_PASSWORD` and `FEEDME_ACCOUNT_CURSOR_KEYS` only through the
 host's protected runtime facility. The API password is separate from the migration
 password; cursor keyrings must remain stable across restarts. Remote JDBC requires
-`verify-full` and an explicitly mounted reviewed CA readable by UID 10001.
+`verify-full` and the reviewed public CA at `/opt/feedme/trust/prod-ca-2021.crt`.
+Its readability and non-writability under UID 10001 passed in the cloud build;
+actual runtime configuration and a Render-to-Supabase connection remain unverified.
 
 For the container listener, explicitly configure `0.0.0.0` and its validated port.
 If Render supplies `PORT`, its canonical decimal must exactly match the configured

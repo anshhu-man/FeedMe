@@ -91587,14 +91587,14 @@
     },
     {
       "path": "Reference/BACKEND_DEPLOYMENT.md",
-      "bytes": 7087,
-      "sha256": "749bcc4db9400b1068d75162361482663079c0e100cc4acf935f7980112fa062",
+      "bytes": 8140,
+      "sha256": "270935e47454449604acf6c119dea9701cd977133d0b32d9a3d20df96f1a9403",
       "mode": 420
     },
     {
       "path": "Reference/BACKEND_OPERATIONS.md",
-      "bytes": 9109,
-      "sha256": "9dfafe723cde4f201a4eec08a89c1c5041e4132a3e345aef2454789568c57318",
+      "bytes": 10371,
+      "sha256": "65e576c32f1dcc8d28446e12e6eab63cc1cec40feeed68055167d850eb79bc51",
       "mode": 420
     },
     {
@@ -91713,8 +91713,8 @@
     },
     {
       "path": "Reference/SNAPSHOT_STATUS.md",
-      "bytes": 8971,
-      "sha256": "c73ffac0e49de08e16023504f8e474dbbd77d31317aafea4d61d970c9af5b14b",
+      "bytes": 9612,
+      "sha256": "c7ee1989db0411cd411a654d9830d4df2a8e938bd80c165f2c22167e57feb23a",
       "mode": 420
     },
     {
@@ -93593,7 +93593,16 @@
       "files": 295,
       "bytes": 5610797,
       "manifestSha256": "6781439973ef282552bf60a4575342a01a896912afb360bfbb107c34b29ac67c",
-      "scope": "Public CA packaging; Linux verification pending; historical full-app source copies unchanged."
+      "scope": "Public CA packaging and non-root checks passed in the Linux cloud build; unconfigured preview only, Supabase unconnected; historical full-app source copies unchanged.",
+      "deployment": {
+        "sourceCommit": "b0fadf68f03ac0f335e12b4aedd9e222bb79f1ff",
+        "serviceId": "srv-damo0nsri2ms73b601b0",
+        "deploymentId": "dep-damoasid0e5s73d4dcg0",
+        "liveAt": "2026-09-18T18:43:43Z",
+        "healthCheckedAt": "2026-09-18T18:45:48Z",
+        "healthStatus": 503,
+        "healthCode": "SERVICE_NOT_READY"
+      }
     }
   }
 }

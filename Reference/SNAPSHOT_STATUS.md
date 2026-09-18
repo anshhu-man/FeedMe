@@ -1,17 +1,25 @@
 # Development snapshot — 15 September 2026
 
 **18 September backend-only addendum:** [current server deployment source](BACKEND_DEPLOYMENT.md)
-is separately packaged under `server-deploy/` with its own current295-file manifest and
+is separately packaged under `server-deploy/` with its own current 295-file manifest and
 203-operation contract. The top-level full-app/source-copy checkpoint described
 below remains historical and unchanged; the public inventory additionally records
 the new bundle and these reference updates. No refreshed APK, native acceptance,
 production API readiness or store publication is implied. Current direction is Google Play
 first with Shipaton paused; Supabase/Render technical direction is now approved.
 
-The latest additive packaging change includes one pinned public database CA and
-non-root readability/non-writability checks. Its Linux build is still pending;
-the confirmed preview below used the preceding294-input context. No password or
-account-runtime configuration is included. [Exact current source](BACKEND_DEPLOYMENT.md).
+**18 September, 18:45 UTC public-CA checkpoint:** the current 295-input bundle,
+public commit `b0fadf68f03ac0f335e12b4aedd9e222bb79f1ff`, successfully rebuilt the
+same `feedme-api-preview` service as `dep-damoasid0e5s73d4dcg0`. Deployment ran
+18:39:46–18:43:43 UTC (237 seconds); Gradle passed in 2 minutes 17 seconds across
+17 tasks. At 18:42:30 UTC, build step `#24` passed the real UID/GID 10001 public-CA
+readability and file/parent non-writability checks (`DONE 0.1s`). The unconfigured
+listener started at 18:43:19 UTC. At 18:45:48 UTC, HTTPS health still correctly
+returned **503 `SERVICE_NOT_READY`**, trace `91954fba-d24d-4f4e-9756-146426d42dc2`.
+No database password, account-runtime configuration or keys were uploaded; no
+database or hosting-plan changes occurred. Supabase remains unconnected. This
+supersedes pending-CA-build wording, not the launch-readiness boundary.
+[Exact current source and manifest](BACKEND_DEPLOYMENT.md).
 
 The live Supabase dashboard showed an enabled 15-minute AAL1 lower-assurance
 timeout. A second deliberate 294-input backend update now supports explicit
@@ -24,7 +32,7 @@ security rather than disable the setting or substitute
 `null`. [Operational status](BACKEND_OPERATIONS.md).
 The historical full-app checkpoint below remains unchanged.
 
-**18 September, 18:24 UTC hosting checkpoint:** public source commit
+**First hosting checkpoint — 18 September, 18:24 UTC (historical):** public source commit
 `e4b9c6656dfcadfc50ade84ad0bc4f70456ae571` built and deployed successfully as
 `feedme-api-preview` on Render's Singapore Free instance ($0, 0.1 CPU, 512 MB,
 no card). The deployment took 4 minutes 33 seconds and was live at 18:22:43 UTC.

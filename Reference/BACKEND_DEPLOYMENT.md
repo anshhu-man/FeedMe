@@ -19,20 +19,20 @@ runtime grants. No `.local`, credentials, caches, APKs, test fixtures/results or
 unrelated workspace trees are included. The Gradle wrapper JAR is the sole
 checked-in build-tool binary; no built server distribution is copied.
 
-All 294 source and destination hashes were checked after copying. Relative to the
+For the preceding MFA refresh, all 294 source and destination hashes were checked after copying. Relative to the
 previous 294-input bundle, only the provider authority and the two private
 provider/runtime SQL resources changed for lower-assurance timeout support. The
 other 291 build inputs, including V001–V031, remain byte-identical. No source inputs
 were edited by this refresh and no bundle files were added or removed.
 
-**Subsequent public-CA increment:** the current295-input context adds exactly one
-public certificate and changes only the Dockerfile relative to that294-input
-MFA bundle;293 prior build inputs are unchanged. The reviewed public Supabase CA
+**Accepted public-CA increment:** the current 295-input context adds exactly one
+public certificate and changes only the Dockerfile relative to that 294-input
+MFA bundle; 293 prior build inputs are unchanged. The reviewed public Supabase CA
 has DER SHA-256 `807025ad50d4ed219d2c9c7d299c004f824eb00cf7f65afef607d07b72e6cafa`.
 It is copied root-owned/read-only to `/opt/feedme/trust/prod-ca-2021.crt`.
-The Dockerfile checks readability and non-writability as UID/GID10001. These new
-checks still require a new cloud build; the completed preview below used the
-earlier context. A public CA is not a password or grant of database access.
+The Dockerfile's UID/GID 10001 readability and file/parent non-writability checks
+passed in the real cloud build recorded below. A public CA is not a password or
+grant of database access.
 
 The 18:24 UTC preview checkpoint below supersedes the earlier statement that this
 bundle had not been image-built or started. It proves source-to-Linux-build,
@@ -41,7 +41,24 @@ The separate SQL and managed-database checks are summarized in
 [Backend operations](BACKEND_OPERATIONS.md); that database was not connected to
 this preview. No connected Android journey or production readiness is implied.
 
-## Render preview — 18 September 2026, 18:24 UTC
+## Public-CA cloud acceptance — 18 September 2026, 18:45 UTC
+
+The same `feedme-api-preview` service manually deployed public commit
+`b0fadf68f03ac0f335e12b4aedd9e222bb79f1ff` as
+`dep-damoasid0e5s73d4dcg0`. Deployment started at 18:39:46 UTC and was live at
+18:43:43 UTC: **237 seconds (3 minutes 57 seconds)**. Gradle reported a successful
+2-minute-17-second build across 17 tasks. Build step `#24` passed the actual
+UID/GID 10001 CA-readability and file/parent non-writability checks at 18:42:30 UTC
+(`DONE 0.1s`). The server logged its unconfigured listener at 18:43:19 UTC.
+
+At 18:45:48 UTC, HTTPS `/v1/health` returned **503 `SERVICE_NOT_READY`**, trace
+`91954fba-d24d-4f4e-9756-146426d42dc2`. This accepts the public trust-root packaging
+and non-root image checks, not database connectivity. No database password,
+account-runtime configuration or keys were uploaded; no hosting plan or database
+settings changed. Supabase remains unconnected. The earlier preview below is
+retained as historical evidence; service settings remain unchanged.
+
+## First Render preview — 18 September 2026, 18:24 UTC (historical)
 
 Service `feedme-api-preview` (`srv-damo0nsri2ms73b601b0`) was created at
 18:18:10 UTC from public Git source commit
