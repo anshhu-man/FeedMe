@@ -8,11 +8,28 @@ the new bundle and these reference updates. No refreshed APK, native acceptance,
 production API readiness or store publication is implied. Current direction is Google Play
 first with Shipaton paused; Supabase/Render technical direction is now approved.
 
-**19 September IST / 18 September 19:25 UTC — server Terms-only checkpoint:**
-[current Terms review and explicit acceptance](ACCOUNT_TERMS.md) pass 115 focused
+**19 September IST — current server-only historical Terms-receipt recovery:**
+the 297-input bundle is 5,650,097 bytes; context-manifest SHA256
+`bf158f70f2005dc8aa0e3ef791aa0aea96ebdfea570cc013eec90d45c2c22a48`.
+Exact prior acceptance can be recovered from immutable audit after notice rollover
+or response-cache expiry, with current same-account/device/provider checks and no
+new consent, cache mutation or private-access grant. Thirty selected server checks
+(10 unit, 15 Terms SQL, 5 Terms HTTP) and 92 Node checks passed. Eighty selected
+shared checks and a debug APK build passed locally only: those mobile changes are
+not published here and have not established device/live acceptance. V032, narrow
+runtime grants and the runtime probe were installed/verified at the preceding
+20:35 managed-database checkpoint; this increment makes no database changes.
+No new image or deployment: Render remains on `b0fadf68f03ac0f335e12b4aedd9e222bb79f1ff`,
+unconfigured, with Auto-Deploy off. Approved legal/policy/email/content, protected
+runtime configuration, safe offline sign-out and actual connected-app acceptance
+remain open. The historical full-app source-copy snapshot below is unchanged.
+
+**Historical: 19 September IST / 18 September 19:25 UTC — initial server Terms-only checkpoint:**
+[current Terms review and explicit acceptance](ACCOUNT_TERMS.md) passed 115 focused
 JVM, 16 isolated database/HTTP and 91 contract-generation checks in the source
-workspace. The current bundle adds V032 locally; all 31 prior migrations remain
-unchanged. It has not been cloud-built or deployed. Native review, approved legal
+workspace. At that time the bundle added V032 locally; all 31 prior migrations
+remained unchanged, and V032 had not yet been installed remotely. That source was
+not cloud-built or deployed. Native review, approved legal
 content, account eligibility, email and configured-runtime acceptance remain open.
 The following cloud checkpoint describes the older deployed 295-input bundle.
 

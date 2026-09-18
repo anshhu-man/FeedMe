@@ -50,7 +50,7 @@
     {
       "path": "feedme/docs/verification/contract-artifacts/generated-receipt.json",
       "bytes": 1213,
-      "sha256": "23c498eb6f6959c3ce70c876017d40d619285b3e48f41a854a92198dda0b119d"
+      "sha256": "ca728b993706943699c915f6852d5a5db288e51832dcf7fb7010068d8bceea67"
     },
     {
       "path": "feedme/gradle.properties",
@@ -80,7 +80,7 @@
     {
       "path": "feedme/scripts/contract-source.lock.json",
       "bytes": 255,
-      "sha256": "3d7d0aa420742d02cc521c81e977a24f61870032dacc8de0abe2a621e56bac43"
+      "sha256": "2f39e21a369c29c9c1c1ca0347c1c5c0a16785b86a067d994a8c99b36c03c52b"
     },
     {
       "path": "feedme/scripts/dependency-locking.gradle",
@@ -325,7 +325,7 @@
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/contract/ContractCatalog.kt",
       "bytes": 3552,
-      "sha256": "bc836d469c38dae8174bd03f9c6edf4e71083ea8a639336cb351760ca0b45be2"
+      "sha256": "7b037dfe0a3f3f5a45a110f5317063660d55fae3eb2845688450fd750177acbf"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/cooking/AccountCookingStore.kt",
@@ -744,8 +744,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/AccountProfileStore.kt",
-      "bytes": 50942,
-      "sha256": "355925876f4da426176dc915f26d00dd1877ff79dabba5261fa304cff81220b1"
+      "bytes": 53672,
+      "sha256": "233c80031509197c5ec6208aac15faf542d3380c9a81dc32c8457f0b41cee44c"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/AccountTermsNotice.kt",
@@ -1349,8 +1349,8 @@
     },
     {
       "path": "feedme/shared/contracts/src/commonMain/kotlin/com/feedme/contracts/generated/GeneratedContract.kt",
-      "bytes": 1068614,
-      "sha256": "35bb92b8edebfa934ad20aba5a13e4102deebeb9465b13b0297142cbff3b8bec"
+      "bytes": 1069132,
+      "sha256": "0bc1e3e87480ab3d992133439de5ec6923e49a8de9588ecdec10250fa0f985e7"
     },
     {
       "path": "feedme/shared/contracts/src/commonMain/kotlin/com/feedme/contracts/IngredientLabelSelection.kt",
@@ -1479,8 +1479,8 @@
     },
     {
       "path": "outputs/biteclub_blueprint/architecture/04_API_Contract.json",
-      "bytes": 837040,
-      "sha256": "825a28ad3b6c4cb1d4e88938cd3271dc949cf3f94b3f5dba4553f1bb55fa920d"
+      "bytes": 837558,
+      "sha256": "b9d28313363d110d4b7a103333a441733c7c1e2a540f8b95b41490fd1636a3dd"
     },
     {
       "path": "outputs/biteclub_blueprint/registry/screen_registry.json",
@@ -1488,7 +1488,7 @@
       "sha256": "e014ab416128d6061df6183ea8723b0879287ac129d93e025846dfa04d033d3b"
     }
   ],
-  "totalBytes": 5646331,
+  "totalBytes": 5650097,
   "limitations": [
     "Source snapshot only; no container build or deployment was performed.",
     "Third-party image selection, dependency authenticity and live configuration require separate review."

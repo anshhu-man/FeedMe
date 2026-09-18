@@ -2,9 +2,9 @@
   "generator": "feedme-contract-artifacts-v1",
   "generatorSourceSha256": "0d4048f4f182bfb6d3bbf74e1180050fc05b31024b9a20c1acd1854cfbf75061",
   "scope": "Lossless schema and operation metadata; not body validation, transport or authorization.",
-  "canonicalSha256": "825a28ad3b6c4cb1d4e88938cd3271dc949cf3f94b3f5dba4553f1bb55fa920d",
+  "canonicalSha256": "b9d28313363d110d4b7a103333a441733c7c1e2a540f8b95b41490fd1636a3dd",
   "registrySha256": "e014ab416128d6061df6183ea8723b0879287ac129d93e025846dfa04d033d3b",
-  "generatedSha256": "35bb92b8edebfa934ad20aba5a13e4102deebeb9465b13b0297142cbff3b8bec",
+  "generatedSha256": "0bc1e3e87480ab3d992133439de5ec6923e49a8de9588ecdec10250fa0f985e7",
   "counts": {
     "schemas": 193,
     "paths": 158,

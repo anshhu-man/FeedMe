@@ -1,18 +1,29 @@
 # Backend operations — public handoff
 
-18 September 2026. This document describes the separately curated
+19 September 2026 IST. This document describes the separately curated
 [server bundle](BACKEND_DEPLOYMENT.md), not the older top-level app snapshot.
 No credential, private runtime configuration, local operator helper or raw local
 test/evidence directory is included here.
 
-## Terms-only source increment — 19 September IST
+## Historical Terms-receipt recovery — 19 September IST
 
-The current 297-input bundle adds [locally verified account Terms support](ACCOUNT_TERMS.md)
-and V032. It is not cloud-built or deployed. Production history is still V001–V031;
-do not treat the new runtime-grant resource as already installed or point the new
-server at that older schema. The prior cloud/database evidence below is retained
-at its original checkpoint. Native review and the remaining live policy/content/
-email/runtime dependencies are still open.
+The current 297-input bundle adds [exact historical receipt recovery](ACCOUNT_TERMS.md)
+for already committed Terms acceptance. Current account/device/provider authority,
+the original command fingerprint and immutable notice descriptor must match.
+Recovery bypasses neither current authentication nor missing evidence, and does
+not change consent, eligibility, profile/device state or the response cache.
+
+V032, its narrow SELECT/thirteen-column INSERT grants and the runtime probe were
+already installed/verified at the preceding 20:35 managed-database checkpoint.
+There are no new database changes in this increment. The bundle is source-only:
+297 inputs, 5,650,097 bytes, context-manifest SHA256
+`bf158f70f2005dc8aa0e3ef791aa0aea96ebdfea570cc013eec90d45c2c22a48`.
+Thirty selected server checks (10 unit, 15 Terms SQL, 5 Terms HTTP) and 92 Node
+checks passed. Eighty selected shared checks and a debug APK build passed only
+locally; mobile changes are not part of this public server bundle or device/live
+acceptance. The Render image/source below is unchanged, with Auto-Deploy off.
+Legal, policy, email, reviewed content, configured runtime, safe offline sign-out
+and connected-app acceptance remain open.
 
 ## Public-CA cloud acceptance — 18 September 2026, 18:45 UTC
 
@@ -28,7 +39,7 @@ At 18:45:48 UTC, HTTPS `/v1/health` returned **503 `SERVICE_NOT_READY`**, trace
 `91954fba-d24d-4f4e-9756-146426d42dc2`. No database password, runtime configuration
 or keys were uploaded, and no database or hosting-plan changes occurred.
 Supabase remains unconnected: this is accepted trust-root/image packaging, not
-account-core readiness. The exact 295-input manifest and CA identity/path are in
+account-core readiness. The historical 295-input source and CA identity/path are described in
 [Backend deployment](BACKEND_DEPLOYMENT.md). The first preview remains recorded below.
 
 ## First unconfigured hosting preview — 18 September 2026, 18:24 UTC (historical)
@@ -59,8 +70,10 @@ pending. No paid deployment commitment is implied.
 
 ## Recorded database checkpoint
 
-The operator workspace records completed managed-database installation and checks
-through V031 and a dedicated `feedme_api` login. The historical 17:33 UTC checkpoint
+The latest recorded managed-database checkpoint includes V032, the dedicated
+`feedme_api` login, its narrow Terms evidence grants and a successful runtime
+probe. The following earlier counts describe the V031 checkpoint, not a new
+execution or the current schema inventory. The historical 17:33 UTC checkpoint
 covered six private Auth projection functions. At 18:03:49 UTC, a guarded
 transactional upgrade completed to seven, after a dry-run rollback confirmed the
 old six remained intact. Exact helper bodies, signatures, attributes, trusted
@@ -115,10 +128,12 @@ the later unconfigured container preview is a separate hosting checkpoint above.
 verified, but metadata compatibility is not complete live deployment/session-policy
 review or configured account API readiness. Preserve the observed security setting and configure its
 real value; never disable it or set this field to `null` to conceal the policy.
-The current source has now built and started as an unconfigured preview, but no
+The older public-CA source built and started as an unconfigured preview; the current
+historical-receipt recovery source has not been image-built or deployed. No
 live signup or connected Android journey has been accepted. Complete protected
 runtime configuration, actual eligibility/content policy, production email,
-configured production HTTPS deployment and the
+configured production HTTPS deployment, approved immutable legal documents,
+safe offline sign-out preserving unresolved requests, and the
 essential native/end-to-end gates before claiming launch readiness.
 
 The [runtime grant resource](../server-deploy/feedme/server/src/main/resources/db/provider/feedme-runtime-grants.sql)

@@ -1,7 +1,7 @@
-# Backend deployment source — 18 September 2026
+# Backend deployment source — 19 September 2026 IST
 
-This is a separate curated backend source bundle. The latest Terms-only increment
-is not deployed; the older public-CA bundle still backs the unconfigured hosting
+This is a separate curated backend source bundle. The latest recovery of historical
+Terms receipts is not deployed; the older public-CA bundle still backs the unconfigured hosting
 preview. Neither is a refreshed full-app snapshot or production-ready API.
 The existing top-level `feedme/` and the manifest's source-copy
 entries remain at their earlier checkpoint; its retained inventory includes this
@@ -11,8 +11,8 @@ for this backend build, not that older tree.
 ## Exact source
 
 [`context-manifest.json`](../server-deploy/context-manifest.json) now binds 297 build
-input files (5,646,331 bytes). Manifest SHA256:
-`394feab9d263b0dbc4e56a49a343061a50eb0b2bf507b70348f18ed7706bcebd`.
+input files (5,650,097 bytes). Manifest SHA256:
+`bf158f70f2005dc8aa0e3ef791aa0aea96ebdfea570cc013eec90d45c2c22a48`.
 The bundle preserves `feedme/` and sibling `outputs/` so contract and release-scope
 checks resolve their real inputs. It includes the current account runtime and
 205-operation contract, V001–V032 migrations, managed Auth projections and explicit
@@ -20,14 +20,30 @@ runtime grants. No `.local`, credentials, caches, APKs, test fixtures/results or
 unrelated workspace trees are included. The Gradle wrapper JAR is the sole
 checked-in build-tool binary; no built server distribution is copied.
 
-**19 September IST / 18 September 19:25 UTC — Terms-only source increment:**
-two new inputs and fourteen changed inputs add authenticated current-Terms read
+**19 September IST — current historical-receipt recovery increment:** exact
+previously committed Terms acceptance can now be recovered from its permanent
+audit after notice rollover or response-cache expiry. The original account,
+device, provider session, command key and body must still match; current authority
+is rechecked. Recovery does not accept the new notice, rewrite consent, refresh a
+cache or grant private access. See [Terms scope and limits](ACCOUNT_TERMS.md).
+
+The source workspace passed 30 selected server checks (10 unit, 15 Terms SQL and
+5 Terms HTTP) and 92 Node checks. Separately, 80 selected shared checks and a debug
+APK build passed locally; those mobile sources/APK are not published in this
+server-only update and are not device or live-flow acceptance. V032, its narrow
+runtime grants and the runtime probe were already installed/verified at the prior
+20:35 managed-database checkpoint; this increment made no database changes.
+No new image was built or deployed. Render remains on the older public-CA source
+below with Auto-Deploy off.
+
+**Historical: 19 September IST / 18 September 19:25 UTC — initial Terms-only source increment:**
+two new inputs and fourteen changed inputs added authenticated current-Terms read
 and explicit acceptance, immutable evidence and restricted runtime grants. The
-other 281 inputs, including every V001–V031 migration, remain unchanged. The
-source workspace passes 115 focused JVM, 16 isolated PostgreSQL/HTTP and 91 Node
+other 281 inputs, including every V001–V031 migration, remained unchanged. The
+source workspace passed 115 focused JVM, 16 isolated PostgreSQL/HTTP and 91 Node
 checks. Both temporary databases stopped. See [scope and limits](ACCOUNT_TERMS.md).
-V032 is not installed on Supabase, and this context has not been image-built or
-deployed. Auto-Deploy remains off; the cloud evidence below belongs to older source.
+At that checkpoint V032 was not yet installed on Supabase; its later installation
+is recorded above. That source context was not image-built or deployed.
 
 For the preceding MFA refresh, all 294 source and destination hashes were checked after copying. Relative to the
 previous 294-input bundle, only the provider authority and the two private
@@ -44,8 +60,8 @@ The Dockerfile's UID/GID 10001 readability and file/parent non-writability check
 passed in the real cloud build recorded below. A public CA is not a password or
 grant of database access.
 
-The 18:24 UTC preview checkpoint below supersedes the earlier statement that this
-bundle had not been image-built or started. It proves source-to-Linux-build,
+The 18:24 UTC preview checkpoint below superseded the earlier statement that its
+then-current bundle had not been image-built or started. It proves source-to-Linux-build,
 host startup and HTTPS reachability, not configured account/core functionality.
 The separate SQL and managed-database checks are summarized in
 [Backend operations](BACKEND_OPERATIONS.md); that database was not connected to
@@ -115,8 +131,9 @@ manufacture readiness; product operations remain unavailable.
 
 ## Still required
 
-Managed-database history through V031 and the dedicated runtime role were already
-installed. At 18:03:49 UTC on 18 September, the guarded transactional upgrade from
+Managed-database history through V032 and its narrow runtime grants are installed;
+the current source-only receipt-recovery change adds no migration. Historically,
+at 18:03:49 UTC on 18 September, the guarded transactional upgrade from
 six to seven Auth projections completed, including the factor-status projection.
 Exact helper-source/ownership/ACL checks, actual runtime-role login/effective-ACL
 verification and the metadata-compatibility probe passed. No Auth data or provider
@@ -134,10 +151,11 @@ cluster. These are not live deployment-policy or user-flow acceptance. Preserve
 the provider security setting and declare its real value; never substitute `null`
 to conceal it. The earlier schema-only probe did not establish that live policy.
 
-Still required: truthful current provider/session-policy review, actual account
-policy and reviewed content, stable protected runtime configuration, production
+Still required: approved immutable Terms/Privacy, truthful current provider/session-policy
+review, actual account/child-eligibility policy and reviewed content, stable protected runtime configuration, production
 email sender, configured production HTTPS acceptance, Android public configuration and
-essential sign-in/isolation/cooking/Saved checks. Supabase Auth and the Ktor API
+essential sign-in/isolation/cooking/Saved checks, including safe offline sign-out
+while preserving unresolved originals. Supabase Auth and the Ktor API
 have different origins. Never include a DB password in the app/image or disable
 confirmation and readiness checks to make an unconfigured service appear live.
 

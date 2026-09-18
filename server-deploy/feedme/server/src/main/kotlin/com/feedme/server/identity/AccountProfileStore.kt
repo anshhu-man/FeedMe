@@ -188,15 +188,23 @@ class AccountProfileStore(private val environment: String, private val transacti
 
     /** Explicit Terms-only command. It keeps the existing active provider/device, profile,
      * eligibility and all native/bootstrap history. The original receipt and immutable audit
-     * commit together; current policy is still required on replay, without new consent time. */
+     * commit together. An exact immutable audit can recover its historical receipt after
+     * notice rollover or cache expiry; it is never current consent or private readiness. */
     fun acceptAccountTerms(subject: VerifiedSupabaseSubject, deviceSessionId: UUID,
         key: UUID, body: JsonObject): CommandResult = safe {
         val input = request("acceptAccountTerms", body)
         transactions.run { c ->
             val actor = authorized(c, subject, deviceSessionId)
-            val notice = currentTermsNotice(c, subject, actor)
             val identity = CommandIdentity(PrincipalScope(environment, CommandActor.ACCOUNT, actor.facts.accountId),
                 "acceptAccountTerms", key, body = input)
+            retainedTermsAcceptance(c, subject, actor, deviceSessionId, identity, input)?.let { historical ->
+                // No idempotency INSERT, expiry compaction, account mutation or new consent.
+                // Reauthorize after the read and serialize only an exact retained receipt.
+                authorized(c, subject, deviceSessionId)
+                provider(c, subject)
+                return@run historical
+            }
+            val notice = currentTermsNotice(c, subject, actor)
             var applied = false
             val result = commands.executeInTransaction(c, identity,
                 { db -> authorized(db, subject, deviceSessionId); currentTermsNotice(db, subject, actor) },
@@ -233,6 +241,35 @@ class AccountProfileStore(private val environment: String, private val transacti
             result
         }
     }
+
+    /** The permanent V032 audit is independent of the seven-day response cache. Auth/account/
+     * device locks precede this single-row read; immutable evidence needs no UPDATE grant. */
+    private fun retainedTermsAcceptance(c: Connection, subject: VerifiedSupabaseSubject, actor: AccountRow,
+        deviceSessionId: UUID, identity: CommandIdentity, input: JsonObject): CommandResult? =
+        query(c, "SELECT request_sha256,device_session_id,provider_issuer,provider_subject,provider_session_id," +
+            "terms_version,notice_sha256,terms_url,privacy_url,accepted_at FROM identity.account_terms_acceptances " +
+            "WHERE environment=? AND user_id=? AND command_key=?", {
+            setString(1, environment); setObject(2, actor.facts.accountId); setObject(3, identity.key)
+        }) { row ->
+            if (!row.next()) return@query null
+            if (row.getObject("device_session_id", UUID::class.java) != deviceSessionId ||
+                row.getString("provider_issuer") != subject.issuer ||
+                row.getObject("provider_subject", UUID::class.java) != subject.subject ||
+                row.getObject("provider_session_id", UUID::class.java) != subject.providerSessionId)
+                fail(AccountFailureCode.POLICY_BLOCKED)
+            if (row.getString("request_sha256") != identity.requestHash) return@query CommandResult.Mismatch
+            val retained = AccountTermsNotice(row.getString("terms_version"), row.getString("terms_url"), row.getString("privacy_url"))
+            if (retained.noticeSha256 != row.getString("notice_sha256") ||
+                input.getValue("termsVersion").jsonPrimitive.content != retained.termsVersion ||
+                input.getValue("noticeSha256").jsonPrimitive.content != retained.noticeSha256)
+                fail(AccountFailureCode.STORAGE_UNAVAILABLE)
+            val acceptedAt = instant(row, "accepted_at")
+            check(!row.next())
+            CommandResult.Replayed(reply("acceptAccountTerms", buildJsonObject {
+                put("termsVersion", retained.termsVersion); put("noticeSha256", retained.noticeSha256)
+                put("acceptedAt", acceptedAt.toString())
+            }))
+        }
 
     private fun currentTermsNotice(c: Connection, subject: VerifiedSupabaseSubject, actor: AccountRow): AccountTermsNotice {
         val notice = termsNotice ?: fail(AccountFailureCode.NOT_CONFIGURED)
