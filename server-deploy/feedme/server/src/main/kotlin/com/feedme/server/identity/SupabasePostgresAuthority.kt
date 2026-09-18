@@ -46,10 +46,15 @@ class SupabaseAuthorityDeployment(
 }
 
 /** Same-PostgreSQL current authority, no network, credentials, mirror or accepting fallback.
- * Order: schema stability locks -> actual user FOR UPDATE -> exact session FOR UPDATE ->
+ * Private fixed SECURITY DEFINER projections isolate provider privileges from the runtime.
+ * Order: exact fact-table ROW EXCLUSIVE locks -> actual user FOR UPDATE -> exact session FOR UPDATE ->
  * all existing AMR rows FOR UPDATE -> FeedMe's existing subject/account/device locks.
  * Validated non-deferrable FKs make new session/AMR inserts take a conflicting parent key
  * lock too. Thus an unseen recovery AMR cannot be inserted behind this transaction.
+ * Fact-table locks preserve the checked schema/FKs without blocking ordinary Auth DML.
+ * The reviewed migration vector is observed at each admission, not frozen through commit:
+ * unrelated history appends can coexist with an admitted transaction, but the next check
+ * refuses them. As before, deployment review is not a lock on provider binaries/settings.
  * Every invocation rechecks actual rows and DB wall time; nothing is cached as authority.
  * Deadlocks/timeouts are failures handled by the existing bounded DB transaction runner.
  */
@@ -60,10 +65,10 @@ class SupabasePostgresAuthority(val deployment: SupabaseAuthorityDeployment) : A
     fun checkCompatibility(connection: Connection) {
         requireTransaction(connection)
         if (closed.get()) unavailable()
-        // No DDL or provider writes. Locks live only for the caller-owned transaction.
+        // Fixed projections are installed separately by the trusted operator, never on startup.
+        // No provider writes. Locks live only for the caller-owned transaction.
         connection.createStatement().use {
-            it.execute("LOCK TABLE auth.schema_migrations IN SHARE MODE")
-            it.execute("LOCK TABLE auth.users, auth.sessions, auth.mfa_amr_claims IN ACCESS SHARE MODE")
+            it.execute("SELECT feedme_auth_access.schema_lock()")
         }
         val now = time(connection)
         checkReview(now)
@@ -71,7 +76,7 @@ class SupabasePostgresAuthority(val deployment: SupabaseAuthorityDeployment) : A
             statement.executeQuery("SELECT current_database(),current_setting('session_replication_role')").use { r ->
                 if (!r.next() || r.getString(1) != deployment.databaseName || r.getString(2) != "origin" || r.next()) unavailable()
             }
-            statement.executeQuery("SELECT version FROM auth.schema_migrations ORDER BY version LIMIT 513").use { r ->
+            statement.executeQuery("SELECT version FROM feedme_auth_access.migration_versions() ORDER BY version LIMIT 513").use { r ->
                 val actual = mutableListOf<String>()
                 while (r.next()) actual += r.getString(1) ?: unavailable()
                 if (actual != deployment.migrations()) unavailable()
@@ -80,10 +85,11 @@ class SupabasePostgresAuthority(val deployment: SupabaseAuthorityDeployment) : A
         for ((table, columns) in REQUIRED_COLUMNS) {
             connection.prepareStatement("SELECT c.relkind, c.relrowsecurity, c.relforcerowsecurity, " +
                 "c.relowner=(SELECT oid FROM pg_roles WHERE rolname=current_user), " +
-                "(SELECT rolsuper OR rolbypassrls FROM pg_roles WHERE rolname=current_user) " +
+                "(SELECT rolsuper OR rolbypassrls FROM pg_roles WHERE rolname=current_user), " +
+                "EXISTS(SELECT 1 FROM pg_inherits i WHERE i.inhrelid=c.oid OR i.inhparent=c.oid) " +
                 "FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='auth' AND c.relname=?").use { s ->
                 s.setString(1, table); s.executeQuery().use { r ->
-                    if (!r.next() || r.getString(1) != "r" ||
+                    if (!r.next() || r.getString(1) != "r" || r.getBoolean(6) ||
                         (r.getBoolean(2) && !(r.getBoolean(5) || (r.getBoolean(4) && !r.getBoolean(3)))) || r.next()) unavailable()
                 }
             }
@@ -124,7 +130,7 @@ class SupabasePostgresAuthority(val deployment: SupabaseAuthorityDeployment) : A
         checkCompatibility(connection)
         if (subject.issuer != deployment.verification.issuer) denied()
         val user = connection.prepareStatement("SELECT aud,role,email_confirmed_at,deleted_at,banned_until,is_anonymous " +
-            "FROM auth.users WHERE id=? FOR UPDATE").use { s ->
+            "FROM feedme_auth_access.user_facts(?)").use { s ->
             s.setObject(1, subject.subject); s.executeQuery().use { r ->
                 if (!r.next()) denied()
                 User(r.getString(1), r.getString(2), instant(r, 3), instant(r, 4), instant(r, 5),
@@ -132,7 +138,7 @@ class SupabasePostgresAuthority(val deployment: SupabaseAuthorityDeployment) : A
             }
         }
         val session = connection.prepareStatement("SELECT user_id,created_at,not_after,refreshed_at,aal,oauth_client_id " +
-            "FROM auth.sessions WHERE id=? FOR UPDATE").use { s ->
+            "FROM feedme_auth_access.session_facts(?)").use { s ->
             s.setObject(1, subject.providerSessionId); s.executeQuery().use { r ->
                 if (!r.next()) denied()
                 Session(r.getObject(1, UUID::class.java), instant(r, 2) ?: denied(), instant(r, 3),
@@ -142,8 +148,7 @@ class SupabasePostgresAuthority(val deployment: SupabaseAuthorityDeployment) : A
             }
         }
         if (session.user != subject.subject) denied()
-        val methods = connection.prepareStatement("SELECT authentication_method,updated_at FROM auth.mfa_amr_claims " +
-            "WHERE session_id=? ORDER BY id LIMIT 33 FOR UPDATE").use { s ->
+        val methods = connection.prepareStatement("SELECT authentication_method,updated_at FROM feedme_auth_access.amr_facts(?)").use { s ->
             s.setObject(1, subject.providerSessionId); s.executeQuery().use { r ->
                 buildList { while (r.next()) add((r.getString(1) ?: denied()) to (instant(r, 2) ?: denied())) }
             }
@@ -215,8 +220,7 @@ class SupabasePostgresAuthority(val deployment: SupabaseAuthorityDeployment) : A
     }
 
     private fun passwordFacts(c: Connection, subject: VerifiedSupabaseSubject): Pair<Instant, Instant> =
-        c.prepareStatement("SELECT s.created_at,a.updated_at FROM auth.sessions s JOIN auth.mfa_amr_claims a ON a.session_id=s.id " +
-            "WHERE s.id=? AND s.user_id=? AND a.authentication_method='password' FOR UPDATE OF s,a").use { statement ->
+        c.prepareStatement("SELECT created_at,updated_at FROM feedme_auth_access.password_facts(?,?)").use { statement ->
             statement.setObject(1, subject.providerSessionId); statement.setObject(2, subject.subject)
             statement.executeQuery().use { rows ->
                 if (!rows.next()) denied()

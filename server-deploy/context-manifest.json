@@ -369,8 +369,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/db/PlatformMigrations.kt",
-      "bytes": 11764,
-      "sha256": "cd335ef7964a28704481f9846d19fc24901cf3082fc2a9d06d3200b401651a9e"
+      "bytes": 11830,
+      "sha256": "fe5fa57840dc624bfb86aab36fed6b800a3b4904f913780a0f069171da5aebef"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/guest/GuestBootstrapRequest.kt",
@@ -754,8 +754,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/SupabasePostgresAuthority.kt",
-      "bytes": 19707,
-      "sha256": "0c5704873c9b70ebc880e03282bf33757c2029f3a24e581d8db03d678b9f8ac7"
+      "bytes": 20100,
+      "sha256": "d4c260a32662ca6c6957b94204e19ca9f435638287e908b22516ec5eb4ab9611"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/kitchen/AccountPantryStore.kt",
@@ -1263,6 +1263,21 @@
       "sha256": "2f4be20eb3e07cc8c1e41ad02e394302ae50ea5885d9950c35d3b6af4c3c8d2d"
     },
     {
+      "path": "feedme/server/src/main/resources/db/migration/V031__lock_only_key_guards.sql",
+      "bytes": 1965,
+      "sha256": "3d6746742df8bccd7a9f95cbe32bac1892f8149bdcbf462e2558d4a46d13581c"
+    },
+    {
+      "path": "feedme/server/src/main/resources/db/provider/feedme-runtime-grants.sql",
+      "bytes": 18085,
+      "sha256": "abb55035a02406853a44d596a9cdf7bcd4e00ce97184a603162fd6cc9d092a51"
+    },
+    {
+      "path": "feedme/server/src/main/resources/db/provider/supabase-authority.sql",
+      "bytes": 5594,
+      "sha256": "7b2db6b9bdd8f597af5d7fc9fede27ce3037f17b5124cff974fe7e8b618841ad"
+    },
+    {
       "path": "feedme/settings-gradle.lockfile",
       "bytes": 198,
       "sha256": "e58bb2ed80db9f829601a658d7c33b9802eb7d2191c31e79c28e01f14c225926"
@@ -1458,7 +1473,7 @@
       "sha256": "e014ab416128d6061df6183ea8723b0879287ac129d93e025846dfa04d033d3b"
     }
   ],
-  "totalBytes": 5579693,
+  "totalBytes": 5605796,
   "limitations": [
     "Source snapshot only; no container build or deployment was performed.",
     "Third-party image selection, dependency authenticity and live configuration require separate review."
