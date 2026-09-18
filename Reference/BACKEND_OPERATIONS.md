@@ -5,6 +5,32 @@
 No credential, private runtime configuration, local operator helper or raw local
 test/evidence directory is included here.
 
+## Unconfigured hosting preview — 18 September 2026, 18:24 UTC
+
+Render successfully deployed public commit
+`e4b9c6656dfcadfc50ade84ad0bc4f70456ae571` as `feedme-api-preview` in Singapore
+on a $0 Free instance (0.1 CPU, 512 MB; no card). Deployment
+`dep-damo0okri2ms73b6057g` took 4 minutes 33 seconds. The Linux build succeeded in
+2 minutes 19 seconds across 17 tasks; the server logged its unconfigured listener
+at 18:22:19 UTC and Render marked it live at 18:22:43 UTC. See the exact service,
+source and Docker settings in [Backend deployment](BACKEND_DEPLOYMENT.md).
+
+This uses Public Git Repository deployment without OAuth/new repository grants;
+Auto-Deploy is off. Only container mode, port `10000`, minimum app version `0.1.0`
+and request limit `16` were supplied. No `FEEDME_ACCOUNT_*` configuration, runtime
+password, cursor keys or other secrets were uploaded. The preview never connected
+to Supabase. At 18:24:02 UTC, HTTPS GET
+[`/v1/health`](https://feedme-api-preview.onrender.com/v1/health) returned HTTP/2
+503, `application/problem+json`, code `SERVICE_NOT_READY`.
+
+The default [TCP health check](https://render.com/docs/health-checks) establishes
+listener availability only. The 503 honestly preserves unavailable account/core
+readiness and product operations. This checkpoint supersedes earlier no-service/
+image-not-built wording, but does not prove production signup, account isolation,
+cooking/Saved or Android/Play readiness. [Free services](https://render.com/docs/free)
+sleep after 15 minutes without inbound traffic; production hosting budget remains
+pending. No paid deployment commitment is implied.
+
 ## Recorded database checkpoint
 
 The operator workspace records completed managed-database installation and checks
@@ -56,15 +82,17 @@ past the locked user; factor row locks prevent concurrent verification or deleti
 More than 100 factors, unknown/null statuses, or incompatible schema are refused.
 The source workspace passed 48 focused unit tests, integration-test compilation
 and distribution packaging; thirteen focused managed-Auth SQL cases passed in
-one stopped isolated cluster. No container or live user journey was exercised.
+one stopped isolated cluster. Those tests did not exercise a live user journey;
+the later unconfigured container preview is a separate hosting checkpoint above.
 
 **Remaining launch boundary:** the seven required helpers are now installed and
 verified, but metadata compatibility is not complete live deployment/session-policy
-review or a running API. Preserve the observed security setting and configure its
+review or configured account API readiness. Preserve the observed security setting and configure its
 real value; never disable it or set this field to `null` to conceal the policy.
-The current image has not been built, and no live signup or connected Android
-journey has been accepted. Complete protected runtime configuration, actual
-eligibility/content policy, production email, Render HTTPS deployment and the
+The current source has now built and started as an unconfigured preview, but no
+live signup or connected Android journey has been accepted. Complete protected
+runtime configuration, actual eligibility/content policy, production email,
+configured production HTTPS deployment and the
 essential native/end-to-end gates before claiming launch readiness.
 
 The [runtime grant resource](../server-deploy/feedme/server/src/main/resources/db/provider/feedme-runtime-grants.sql)
@@ -106,6 +134,6 @@ use a history check as proof of physical schema or product readiness.
 
 Before serving users, complete truthful provider/session-policy and legal/age/consent
 configuration, reviewed ingredients/recipes/Saved-copy rights, email delivery,
-the current image build/runtime checks, HTTPS deployment and the connected
+configured production image/runtime checks, HTTPS acceptance and the connected
 Android sign-in/isolation/cook/Saved journey. A successful account-core health
 check remains a bounded component result, not whole-V1 or Play release approval.

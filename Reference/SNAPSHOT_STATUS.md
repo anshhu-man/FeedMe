@@ -5,7 +5,7 @@ is separately packaged under `server-deploy/` with its own 294-file manifest and
 203-operation contract. The top-level full-app/source-copy checkpoint described
 below remains historical and unchanged; the public inventory additionally records
 the new bundle and these reference updates. No refreshed APK, native acceptance,
-cloud service or store publication is implied. Current direction is Google Play
+production API readiness or store publication is implied. Current direction is Google Play
 first with Shipaton paused; Supabase/Render technical direction is now approved.
 
 The live Supabase dashboard showed an enabled 15-minute AAL1 lower-assurance
@@ -14,10 +14,23 @@ timeout. A second deliberate 294-input backend update now supports explicit
 The guarded live upgrade to seven helpers completed at 18:03:49 UTC, with exact
 helper/ACL, runtime-role login and metadata-compatibility checks. No Auth data or
 provider MFA settings changed. These checks and focused source tests do not
-establish complete live deployment-policy or API/native acceptance; the current
-image is not built. Preserve security rather than disable the setting or substitute
+establish complete live deployment-policy or API/native acceptance. Preserve
+security rather than disable the setting or substitute
 `null`. [Operational status](BACKEND_OPERATIONS.md).
 The historical full-app checkpoint below remains unchanged.
+
+**18 September, 18:24 UTC hosting checkpoint:** public source commit
+`e4b9c6656dfcadfc50ade84ad0bc4f70456ae571` built and deployed successfully as
+`feedme-api-preview` on Render's Singapore Free instance ($0, 0.1 CPU, 512 MB,
+no card). The deployment took 4 minutes 33 seconds and was live at 18:22:43 UTC.
+At 18:24:02 UTC, its HTTPS `/v1/health` returned the expected HTTP/2 503
+`SERVICE_NOT_READY`. Only four non-secret listener settings were supplied;
+no account configuration, runtime password or keys were uploaded, and Supabase
+was not connected. Default TCP health proves the listener, not product readiness.
+This supersedes earlier no-service/current-image-not-built statements, not the
+historical app evidence below. The preview sleeps after 15 idle minutes;
+production budget and account/core/native acceptance remain pending.
+[Deployment details](BACKEND_DEPLOYMENT.md), [operational boundary](BACKEND_OPERATIONS.md).
 
 This is the user-requested public reference snapshot, not a release announcement. The original FeedMe idea is intact: effortless healthy cooking, Make Mine, Today, My Plate and Kitchen Circles. All 54 features/98 screens remain documented; 44 features are in V1 and the existing ten are deferred.
 
