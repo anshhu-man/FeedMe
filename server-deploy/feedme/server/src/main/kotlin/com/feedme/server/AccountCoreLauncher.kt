@@ -1,0 +1,33 @@
+package com.feedme.server
+
+import com.feedme.server.config.AccountCoreRuntimeConfig
+import com.feedme.server.runtime.AccountCoreRuntime
+import kotlinx.coroutines.CancellationException
+import kotlin.system.exitProcess
+
+/** Called by the packaged Main only when the explicit FEEDME_ACCOUNT_* settings are
+ * present. Incomplete/conflicting configuration fails; never fall back to local liveness.
+ * The environment is supplied once by Main, not queried by individual routes/stores. */
+internal fun runAccountCore(environment: Map<String, String>) {
+    try {
+        val config = AccountCoreRuntimeConfig.fromEnvironment(environment)
+        val runtime = AccountCoreRuntime.start(config)
+        val shutdown = Thread({
+            try { runtime.close() }
+            catch (_: Exception) { System.err.println("FeedMe account core shutdown incomplete; retain original command identities.") }
+        }, "feedme-account-core-shutdown")
+        try {
+            Runtime.getRuntime().addShutdownHook(shutdown)
+            println("FeedMe account core listener started; dependency health is not whole-app release readiness.")
+            runtime.awaitTermination()
+        } finally {
+            try { runtime.close() }
+            finally { runCatching { Runtime.getRuntime().removeShutdownHook(shutdown) } }
+        }
+    } catch (failure: CancellationException) { throw failure }
+      catch (failure: InterruptedException) { Thread.currentThread().interrupt(); throw failure }
+      catch (_: Exception) {
+        System.err.println("FeedMe account core startup/shutdown failed; explicit valid configuration and current dependencies are required.")
+        exitProcess(1)
+    }
+}

@@ -1,0 +1,540 @@
+{
+  "schemaVersion": 1,
+  "scope": "direct-version-catalog",
+  "dependencies": [
+    {
+      "kind": "library",
+      "alias": "androidx-activity-compose",
+      "coordinate": "androidx.activity:activity-compose",
+      "version": "1.11.0",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://dl.google.com/dl/android/maven2/androidx/activity/activity-compose/1.11.0/activity-compose-1.11.0.pom",
+          "description": "Exact-version artifact POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: d4156a6498962c42bd7eb389ccd3f7e0036da5f7add2c84adcfbcb594ad2670b. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "library",
+      "alias": "ktor-server-core",
+      "coordinate": "io.ktor:ktor-server-core-jvm",
+      "version": "3.5.2",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://repo.maven.apache.org/maven2/io/ktor/ktor-server-core-jvm/3.5.2/ktor-server-core-jvm-3.5.2.pom",
+          "description": "Exact-version artifact POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: 4641419b9c26f66a9fd27be85a6b0fe8874b459877661f59f7f55841524e9113. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/ktorio/ktor/3.5.2/LICENSE",
+          "description": "Primary release-tagged LICENSE reviewed online; Apache-2.0 text corroborates the exact artifact POM."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "library",
+      "alias": "ktor-server-cio",
+      "coordinate": "io.ktor:ktor-server-cio-jvm",
+      "version": "3.5.2",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://repo.maven.apache.org/maven2/io/ktor/ktor-server-cio-jvm/3.5.2/ktor-server-cio-jvm-3.5.2.pom",
+          "description": "Exact-version artifact POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: 8e06e7a4b53ee4942e95b161d9e52aec5758216d470f9cbc718566c04bf96bf1. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/ktorio/ktor/3.5.2/LICENSE",
+          "description": "Primary release-tagged LICENSE reviewed online; Apache-2.0 text corroborates the exact artifact POM."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "library",
+      "alias": "ktor-server-status-pages",
+      "coordinate": "io.ktor:ktor-server-status-pages-jvm",
+      "version": "3.5.2",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://repo.maven.apache.org/maven2/io/ktor/ktor-server-status-pages-jvm/3.5.2/ktor-server-status-pages-jvm-3.5.2.pom",
+          "description": "Exact-version artifact POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: dc106b6c4bc895b659d8addb8a88ed8d6c5e084b7be66248a8e307bfe8352130. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/ktorio/ktor/3.5.2/LICENSE",
+          "description": "Primary release-tagged LICENSE reviewed online; Apache-2.0 text corroborates the exact artifact POM."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "library",
+      "alias": "ktor-server-test-host",
+      "coordinate": "io.ktor:ktor-server-test-host-jvm",
+      "version": "3.5.2",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://repo.maven.apache.org/maven2/io/ktor/ktor-server-test-host-jvm/3.5.2/ktor-server-test-host-jvm-3.5.2.pom",
+          "description": "Exact-version artifact POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: b8907f1a4982e78f67b962d125a5fdc003e2e6eca7afc0b6a59cc7eb08f120c8. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/ktorio/ktor/3.5.2/LICENSE",
+          "description": "Primary release-tagged LICENSE reviewed online; Apache-2.0 text corroborates the exact artifact POM."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "library",
+      "alias": "kotlinx-serialization-json",
+      "coordinate": "org.jetbrains.kotlinx:kotlinx-serialization-json",
+      "version": "1.11.0",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-serialization-json/1.11.0/kotlinx-serialization-json-1.11.0.pom",
+          "description": "Exact-version artifact POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: 2bd8c5e79d2fee8183a45ed869024e1d74571936960b18125d603b0718f536e3. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Kotlin/kotlinx.serialization/v1.11.0/LICENSE.txt",
+          "description": "Primary release-tagged LICENSE reviewed online; Apache-2.0 text corroborates the exact artifact POM."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "library",
+      "alias": "postgresql-jdbc",
+      "coordinate": "org.postgresql:postgresql",
+      "version": "42.7.13",
+      "license": "BSD-2-Clause",
+      "evidence": [
+        {
+          "url": "https://repo.maven.apache.org/maven2/org/postgresql/postgresql/42.7.13/postgresql-42.7.13.pom",
+          "description": "Exact-version artifact POM reviewed from local Gradle cache; declares BSD-2-Clause. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: 3957417ecaee342521b61310fdc21bd37fcb8bba3f7547ece9b78fd03cd53f26. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/pgjdbc/pgjdbc/REL42.7.13/LICENSE",
+          "description": "Primary release-tagged LICENSE reviewed online; its two-condition BSD text corroborates the POM BSD-2-Clause declaration, not the distinct PostgreSQL SPDX license."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "library",
+      "alias": "json-schema-validator",
+      "coordinate": "com.networknt:json-schema-validator",
+      "version": "3.0.7",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://repo.maven.apache.org/maven2/com/networknt/json-schema-validator/3.0.7/json-schema-validator-3.0.7.pom",
+          "description": "Exact-version artifact POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: 5bbf1ad11cb724186826f43502acf547f1780135bf6228d6ca933c78fab7434b. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "library",
+      "alias": "joni",
+      "coordinate": "org.jruby.joni:joni",
+      "version": "2.2.6",
+      "license": "MIT",
+      "evidence": [
+        {
+          "url": "https://repo.maven.apache.org/maven2/org/jruby/joni/joni/2.2.6/joni-2.2.6.pom",
+          "description": "Exact-version artifact POM reviewed from local Gradle cache; declares MIT. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: 2d3eb6eca38d730221b56240d03b509a98b64baab959f1e2b8b4c0dfe816aa34. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/jruby/joni/joni-2.2.6/LICENSE",
+          "description": "Primary release-tagged LICENSE reviewed online; MIT text corroborates the exact POM declaration."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "library",
+      "alias": "nimbus-jose-jwt",
+      "coordinate": "com.nimbusds:nimbus-jose-jwt",
+      "version": "10.9.1",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://repo.maven.apache.org/maven2/com/nimbusds/nimbus-jose-jwt/10.9.1/nimbus-jose-jwt-10.9.1.pom",
+          "description": "Exact-version artifact POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: d729b6d5d9efcb6bf54e77a9513c54deb2f1a2d9e9aab5ff3ddffbc1cbf716aa. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "library",
+      "alias": "ktor-client-core",
+      "coordinate": "io.ktor:ktor-client-core",
+      "version": "3.5.2",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://repo.maven.apache.org/maven2/io/ktor/ktor-client-core/3.5.2/ktor-client-core-3.5.2.pom",
+          "description": "Exact-version artifact POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: 8af441a64b2dbc2e4c1f008db2ab7a1bd420955e061ff89441a0c056219b2829. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/ktorio/ktor/3.5.2/LICENSE",
+          "description": "Primary release-tagged LICENSE reviewed online; Apache-2.0 text corroborates the exact artifact POM."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "library",
+      "alias": "ktor-client-cio",
+      "coordinate": "io.ktor:ktor-client-cio",
+      "version": "3.5.2",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://repo.maven.apache.org/maven2/io/ktor/ktor-client-cio/3.5.2/ktor-client-cio-3.5.2.pom",
+          "description": "Exact-version artifact POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: c230e08fe6030a1ac000ea819f826a45afcf0494b6cb77ba062ad341c882b807. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/ktorio/ktor/3.5.2/LICENSE",
+          "description": "Primary release-tagged LICENSE reviewed online; Apache-2.0 text corroborates the exact artifact POM."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "library",
+      "alias": "ktor-client-okhttp",
+      "coordinate": "io.ktor:ktor-client-okhttp",
+      "version": "3.5.2",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://repo.maven.apache.org/maven2/io/ktor/ktor-client-okhttp/3.5.2/ktor-client-okhttp-3.5.2.pom",
+          "description": "Exact-version artifact POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: 829e0738a03caec36bfa03dbaf4753f8ba78dd20b956b3348bf9776653aea0e2. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/ktorio/ktor/3.5.2/LICENSE",
+          "description": "Primary release-tagged LICENSE reviewed online; Apache-2.0 text corroborates the exact artifact POM."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "library",
+      "alias": "ktor-client-darwin",
+      "coordinate": "io.ktor:ktor-client-darwin",
+      "version": "3.5.2",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://repo.maven.apache.org/maven2/io/ktor/ktor-client-darwin/3.5.2/ktor-client-darwin-3.5.2.pom",
+          "description": "Exact-version artifact POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: 124ad129e9e2bc252252b951146589f241a1fe5319ae5e3e862db18e0856d1f9. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/ktorio/ktor/3.5.2/LICENSE",
+          "description": "Primary release-tagged LICENSE reviewed online; Apache-2.0 text corroborates the exact artifact POM."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "library",
+      "alias": "ktor-client-mock",
+      "coordinate": "io.ktor:ktor-client-mock",
+      "version": "3.5.2",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://repo.maven.apache.org/maven2/io/ktor/ktor-client-mock/3.5.2/ktor-client-mock-3.5.2.pom",
+          "description": "Exact-version artifact POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: 0a2571d63dbed7517e123594fa1f145e500baa29be50f44212e6b87f33ec5519. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/ktorio/ktor/3.5.2/LICENSE",
+          "description": "Primary release-tagged LICENSE reviewed online; Apache-2.0 text corroborates the exact artifact POM."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "library",
+      "alias": "kotlinx-coroutines-core",
+      "coordinate": "org.jetbrains.kotlinx:kotlinx-coroutines-core",
+      "version": "1.11.0",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.11.0/kotlinx-coroutines-core-1.11.0.pom",
+          "description": "Exact-version artifact POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: 41b6e78c1b0d11bc99de795390df9e4ece64dc113f482d6e308f1b7a421c1d30. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Kotlin/kotlinx.coroutines/1.11.0/LICENSE.txt",
+          "description": "Primary release-tagged LICENSE reviewed online; Apache-2.0 text corroborates the exact artifact POM."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "library",
+      "alias": "kotlinx-coroutines-test",
+      "coordinate": "org.jetbrains.kotlinx:kotlinx-coroutines-test",
+      "version": "1.11.0",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-test/1.11.0/kotlinx-coroutines-test-1.11.0.pom",
+          "description": "Exact-version artifact POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: 9fe5cd4c606c785cc14fc4692ed1ec6cb4053c1f5e67fa8b3fa3adf1c71af9aa. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Kotlin/kotlinx.coroutines/1.11.0/LICENSE.txt",
+          "description": "Primary release-tagged LICENSE reviewed online; Apache-2.0 text corroborates the exact artifact POM."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "library",
+      "alias": "androidx-sqlite",
+      "coordinate": "androidx.sqlite:sqlite",
+      "version": "2.7.1",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://dl.google.com/dl/android/maven2/androidx/sqlite/sqlite/2.7.1/sqlite-2.7.1.pom",
+          "description": "Exact-version artifact POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: 67945c1ed0bb9531c634287592c6a3bf4449635e60bb3ed3a3453fc612ad3065. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "library",
+      "alias": "androidx-sqlite-bundled",
+      "coordinate": "androidx.sqlite:sqlite-bundled",
+      "version": "2.7.1",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://dl.google.com/dl/android/maven2/androidx/sqlite/sqlite-bundled/2.7.1/sqlite-bundled-2.7.1.pom",
+          "description": "Exact-version artifact POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: be1ee196adf49d4263aad10254b57409dd85a5efb35d037c6082c6ce48bf2fd4. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "library",
+      "alias": "androidx-test-runner",
+      "coordinate": "androidx.test:runner",
+      "version": "1.7.0",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://dl.google.com/dl/android/maven2/androidx/test/runner/1.7.0/runner-1.7.0.pom",
+          "description": "Exact-version artifact POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: 622831c6d31666fb3438cb0d2ee1fbbbc78cabcd49717699578d92550062207f. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "library",
+      "alias": "androidx-test-junit",
+      "coordinate": "androidx.test.ext:junit",
+      "version": "1.3.0",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://dl.google.com/dl/android/maven2/androidx/test/ext/junit/1.3.0/junit-1.3.0.pom",
+          "description": "Exact-version artifact POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: 92af7f253e5eabe2caec5c56f308312653d123042b22754d6ff664e1752dcf3f. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "library",
+      "alias": "androidx-work-runtime",
+      "coordinate": "androidx.work:work-runtime",
+      "version": "2.11.2",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://dl.google.com/dl/android/maven2/androidx/work/work-runtime/2.11.2/work-runtime-2.11.2.pom",
+          "description": "Exact-version artifact POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: f0703497ea0c6cf4c3b242ef9baa6d8cc28c194563f95340e57f0eff4ae29ee4. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "library",
+      "alias": "androidx-startup-runtime",
+      "coordinate": "androidx.startup:startup-runtime",
+      "version": "1.2.0",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://dl.google.com/dl/android/maven2/androidx/startup/startup-runtime/1.2.0/startup-runtime-1.2.0.pom",
+          "description": "Exact-version artifact POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: 69594163d8bb148df97a9fbb5aa8a92486bb8961db5f73871b8a84122616593b. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "library",
+      "alias": "compose-material3",
+      "coordinate": "org.jetbrains.compose.material3:material3",
+      "version": "1.9.0",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://repo.maven.apache.org/maven2/org/jetbrains/compose/material3/material3/1.9.0/material3-1.9.0.pom",
+          "description": "Exact-version artifact POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: 9728f08703824e04fac8f84e66e1e7f286ee430890f327ff8b1e75431ddf1ada. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "plugin",
+      "alias": "kotlin-jvm",
+      "coordinate": "org.jetbrains.kotlin.jvm",
+      "version": "2.3.21",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/jvm/org.jetbrains.kotlin.jvm.gradle.plugin/2.3.21/org.jetbrains.kotlin.jvm.gradle.plugin-2.3.21.pom",
+          "description": "Exact-version plugin marker POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: 2fd3266ee13e745e767a01305e4854127eb9e406c981202aafaa01ce09149d46. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin/2.3.21/kotlin-gradle-plugin-2.3.21.pom",
+          "description": "Exact-version plugin implementation referenced by this marker POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: 6a6e2fe71c9832d0f66be768e20228ce02525149ea92f2742b66125e397a58c9. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/JetBrains/kotlin/v2.3.21/license/LICENSE.txt",
+          "description": "Primary Kotlin release-tagged LICENSE reviewed online; Apache-2.0 text corroborates the marker and implementation POM declarations."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "plugin",
+      "alias": "kotlin-multiplatform",
+      "coordinate": "org.jetbrains.kotlin.multiplatform",
+      "version": "2.3.21",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/multiplatform/org.jetbrains.kotlin.multiplatform.gradle.plugin/2.3.21/org.jetbrains.kotlin.multiplatform.gradle.plugin-2.3.21.pom",
+          "description": "Exact-version plugin marker POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: d72bd83949a0c26fe6ccbdbe5fd818d79d58bdd95d084cea963e718987eb80a3. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin/2.3.21/kotlin-gradle-plugin-2.3.21.pom",
+          "description": "Exact-version plugin implementation referenced by this marker POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: 6a6e2fe71c9832d0f66be768e20228ce02525149ea92f2742b66125e397a58c9. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/JetBrains/kotlin/v2.3.21/license/LICENSE.txt",
+          "description": "Primary Kotlin release-tagged LICENSE reviewed online; Apache-2.0 text corroborates the marker and implementation POM declarations."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "plugin",
+      "alias": "kotlin-android",
+      "coordinate": "org.jetbrains.kotlin.android",
+      "version": "2.3.21",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/android/org.jetbrains.kotlin.android.gradle.plugin/2.3.21/org.jetbrains.kotlin.android.gradle.plugin-2.3.21.pom",
+          "description": "Exact-version plugin marker POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: ef986eb89e6a4ec53a27befa4b127181308ff1408b0849677d21f102fb514168. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin/2.3.21/kotlin-gradle-plugin-2.3.21.pom",
+          "description": "Exact-version plugin implementation referenced by this marker POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: 6a6e2fe71c9832d0f66be768e20228ce02525149ea92f2742b66125e397a58c9. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/JetBrains/kotlin/v2.3.21/license/LICENSE.txt",
+          "description": "Primary Kotlin release-tagged LICENSE reviewed online; Apache-2.0 text corroborates the marker and implementation POM declarations."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "plugin",
+      "alias": "compose-compiler",
+      "coordinate": "org.jetbrains.kotlin.plugin.compose",
+      "version": "2.3.21",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/plugin/compose/org.jetbrains.kotlin.plugin.compose.gradle.plugin/2.3.21/org.jetbrains.kotlin.plugin.compose.gradle.plugin-2.3.21.pom",
+          "description": "Exact-version plugin marker POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: 49e705db8a543e7e59c40cb1e11633d9bc37348bffe4f115f1979cdf889f9228. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/compose-compiler-gradle-plugin/2.3.21/compose-compiler-gradle-plugin-2.3.21.pom",
+          "description": "Exact-version plugin implementation referenced by this marker POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: c927d7c4470d22bc585374c6056c7dcea5b386507dc4540c1c988b9fb259976c. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/JetBrains/kotlin/v2.3.21/license/LICENSE.txt",
+          "description": "Primary Kotlin release-tagged LICENSE reviewed online; Apache-2.0 text corroborates the marker and implementation POM declarations."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "plugin",
+      "alias": "compose-multiplatform",
+      "coordinate": "org.jetbrains.compose",
+      "version": "1.10.3",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://repo.maven.apache.org/maven2/org/jetbrains/compose/org.jetbrains.compose.gradle.plugin/1.10.3/org.jetbrains.compose.gradle.plugin-1.10.3.pom",
+          "description": "Exact-version plugin marker POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: d1a6d6298596ae6e2bb0678031bbf8c25e782840426a50c9e307a85cb45706c4. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://repo.maven.apache.org/maven2/org/jetbrains/compose/compose-gradle-plugin/1.10.3/compose-gradle-plugin-1.10.3.pom",
+          "description": "Exact-version plugin implementation referenced by this marker POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: e7e96d6816ac162b947f87f77fd1351b9d8130ef5a9843610a5105daa2324353. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "plugin",
+      "alias": "android-application",
+      "coordinate": "com.android.application",
+      "version": "8.13.2",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://dl.google.com/dl/android/maven2/com/android/application/com.android.application.gradle.plugin/8.13.2/com.android.application.gradle.plugin-8.13.2.pom",
+          "description": "Exact-version plugin marker POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: d4590cc0488efba782fb37d13e52812932f7efff10222ed2a96b7520bfdaa2af. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://dl.google.com/dl/android/maven2/com/android/tools/build/gradle/8.13.2/gradle-8.13.2.pom",
+          "description": "Exact-version plugin implementation referenced by this marker POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: fc7edba93c5b91ce7267fa7bfdc1fa49422efc633ac279a363e02eb0fd29bcad. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    },
+    {
+      "kind": "plugin",
+      "alias": "android-library",
+      "coordinate": "com.android.library",
+      "version": "8.13.2",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://dl.google.com/dl/android/maven2/com/android/library/com.android.library.gradle.plugin/8.13.2/com.android.library.gradle.plugin-8.13.2.pom",
+          "description": "Exact-version plugin marker POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: c58553fcc90ee3579ceeffcae961f4ac4722b24854921afaac9b7a668986ebbd. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        },
+        {
+          "url": "https://dl.google.com/dl/android/maven2/com/android/tools/build/gradle/8.13.2/gradle-8.13.2.pom",
+          "description": "Exact-version plugin implementation referenced by this marker POM reviewed from local Gradle cache; declares Apache-2.0. Upstream retrieval URL, not a live-fetch claim. Cached POM SHA-256: fc7edba93c5b91ce7267fa7bfdc1fa49422efc633ac279a363e02eb0fd29bcad. Direct component declaration only; bundled, transitive and native notices are outside this inventory."
+        }
+      ],
+      "reviewedAt": "2026-09-16"
+    }
+  ]
+}

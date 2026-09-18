@@ -37,6 +37,7 @@ The complete FeedMe project reference, from idea to implementation. Canonical so
 
 ## Status, artifacts and reproducibility
 
+- [Separate current backend deployment bundle](BACKEND_DEPLOYMENT.md) — not a full-app snapshot refresh or live service.
 - [Exact published checkpoint](SNAPSHOT_STATUS.md)
 - [Setup prerequisites](SETUP.md)
 - [Current Android preview and historical demo](ARTIFACTS.md)

@@ -1,0 +1,216 @@
+import groovy.json.JsonOutput
+import org.gradle.api.artifacts.component.ModuleComponentIdentifier
+import org.gradle.api.artifacts.component.ModuleComponentSelector
+import org.gradle.api.artifacts.component.ProjectComponentIdentifier
+import org.gradle.api.artifacts.component.ProjectComponentSelector
+import org.gradle.api.artifacts.result.ResolvedDependencyResult
+import org.gradle.api.artifacts.result.UnresolvedDependencyResult
+import org.gradle.api.artifacts.type.ArtifactTypeDefinition
+import java.nio.file.Files
+import java.security.MessageDigest
+import java.util.zip.ZipFile
+
+// Diagnostic evidence for actual selected production graphs. This never creates a
+// release variant, changes dependency versions, enables signing, or clears caches.
+def inventoryTaskName = 'writeResolvedDependencyInventory'
+if (gradle.startParameter.taskNames.any { it.tokenize(':').last() == inventoryTaskName }) {
+    // The root script runs before androidApp configuration, which otherwise reads
+    // signing material for an explicit opt-in. Reject that combination before then.
+    if (!gradle.startParameter.offline || gradle.startParameter.projectProperties.containsKey('feedmeUploadSigning')) {
+        throw new GradleException('Dependency inventory requires --offline without signing opt-in.')
+    }
+}
+
+gradle.projectsEvaluated {
+    def selections = [
+        [project: ':apps:androidApp', name: 'debugCompileClasspath'],
+        [project: ':apps:androidApp', name: 'debugRuntimeClasspath'],
+        [project: ':server', name: 'compileClasspath'],
+        [project: ':server', name: 'runtimeClasspath'],
+    ]
+    def selected = selections.collect { selection ->
+        def owner = project(selection.project)
+        def configuration = owner.configurations.findByName(selection.name)
+        if (configuration == null || !configuration.canBeResolved) {
+            throw new GradleException('A required dependency inventory configuration is unavailable.')
+        }
+        // Android project variants publish several secondary artifact sets (classes,
+        // resources, metadata, etc.). An unqualified FileCollection is ambiguous.
+        // Keep external AAR/JAR bytes intact; request only local project bytecode as
+        // JARs. Neither that view nor the APK hash proves resource/native attribution.
+        def views = selection.project == ':apps:androidApp' ? [
+            [name: 'external-default', attributes: [:], collection: configuration.incoming.artifactView {
+                componentFilter { it instanceof ModuleComponentIdentifier }
+            }.artifacts],
+            [name: 'project-jar', attributes: [artifactType: 'jar'], collection: configuration.incoming.artifactView {
+                componentFilter { it instanceof ProjectComponentIdentifier }
+                attributes { attribute(ArtifactTypeDefinition.ARTIFACT_TYPE_ATTRIBUTE, 'jar') }
+            }.artifacts],
+        ] : [[name: 'default', attributes: [:], collection: configuration.incoming.artifacts]]
+        [selection: selection, configuration: configuration, views: views]
+    }
+    tasks.register(inventoryTaskName) {
+        group = 'verification'
+        description = 'Exports exact resolved Android-debug and server production graphs and artifact hashes, without legal/security/release approval.'
+        notCompatibleWithConfigurationCache('Explicit local diagnostic traverses the selected live Gradle resolution model.')
+        dependsOn(rootProject.tasks.named('verifyDependencyLicenses'),
+            project(':server').tasks.named('installDist'), project(':apps:androidApp').tasks.named('assembleDebug'))
+        selected.each { entry -> entry.views.each { view -> inputs.files(view.collection.artifactFiles) } }
+        inputs.files(rootProject.file('scripts/resolved-dependency-inventory.gradle'),
+            rootProject.file('gradle/libs.versions.toml'), rootProject.file('settings.gradle.kts'))
+        def output = rootProject.layout.buildDirectory.file('reports/dependencies/resolved.json')
+        def serverJar = project(':server').tasks.named('jar').get().archiveFile
+        def androidApk = rootProject.file('apps/androidApp/build/outputs/apk/debug/androidApp-debug.apk')
+        outputs.file(output)
+        outputs.upToDateWhen { false }
+        doLast {
+            if (!gradle.startParameter.offline || gradle.startParameter.projectProperties.containsKey('feedmeUploadSigning')) {
+                throw new GradleException('Dependency inventory requires offline mode without signing opt-in.')
+            }
+            def fail = { throw new GradleException('Resolved dependency inventory could not be completed; no partial acceptance.') }
+            def componentId = { id ->
+                if (id instanceof ModuleComponentIdentifier) return "module:${id.group}:${id.module}:${id.version}".toString()
+                if (id instanceof ProjectComponentIdentifier && id.build.buildPath == ':') return "project:${id.projectPath}".toString()
+                fail()
+            }
+            def attributes = { container ->
+                def result = new TreeMap<String, String>()
+                container.keySet().each { key -> result[key.name] = container.getAttribute(key).toString() }
+                result
+            }
+            def variant = { value -> [
+                owner: componentId(value.owner), displayName: value.displayName,
+                attributes: attributes(value.attributes),
+                capabilities: value.capabilities.collect { cap ->
+                    [group: cap.group, name: cap.name, version: cap.version ?: '']
+                }.sort { JsonOutput.toJson(it) },
+            ] }
+            def selector = { value ->
+                if (value instanceof ModuleComponentSelector) return [kind: 'module', group: value.group,
+                    module: value.module, version: value.version, versionConstraint: [
+                        required: value.versionConstraint.requiredVersion, preferred: value.versionConstraint.preferredVersion,
+                        strict: value.versionConstraint.strictVersion, rejected: value.versionConstraint.rejectedVersions.toList().sort(),
+                    ]]
+                if (value instanceof ProjectComponentSelector) return [kind: 'project', path: value.projectPath]
+                fail()
+            }
+            def shaStream = { stream, long maximum ->
+                def digest = MessageDigest.getInstance('SHA-256')
+                byte[] buffer = new byte[65536]
+                long count = 0
+                int size
+                while ((size = stream.read(buffer)) != -1) {
+                    count += size
+                    if (count > maximum) fail()
+                    digest.update(buffer, 0, size)
+                }
+                [bytes: count, sha256: digest.digest().encodeHex().toString()]
+            }
+            def safeArchivePath = { String value ->
+                value && !value.startsWith('/') && !value.contains('\\') && !value.contains('\u0000') &&
+                    !value.split('/').any { it == '..' || it == '.' } && !(value ==~ /^[A-Za-z]:.*/)
+            }
+            def archive = { File file ->
+                def result = [entries: 0, nativeLibraries: [], notices: [], embeddedArchives: []]
+                long examined = 0
+                def names = new HashSet<String>()
+                new ZipFile(file).withCloseable { zip ->
+                    zip.entries().each { entry ->
+                        if (++result.entries > 100000 || !safeArchivePath(entry.name) || !names.add(entry.name)) fail()
+                        if (!entry.directory) {
+                            String name = entry.name
+                            String leaf = name.tokenize('/').last()
+                            String bucket = name ==~ /(?i).+\.(so(\.\d+)*|dylib|dll)/ ? 'nativeLibraries' :
+                                leaf ==~ /(?i)(license|notice|copying)([._-].*)?/ ? 'notices' :
+                                name ==~ /(?i).+\.(jar|aar|zip)/ ? 'embeddedArchives' : null
+                            if (bucket != null) {
+                                if (entry.size < 0 || entry.size > 192L * 1024 * 1024) fail()
+                                def value = zip.getInputStream(entry).withCloseable { stream -> shaStream(stream, 192L * 1024 * 1024) }
+                                examined += value.bytes
+                                if (value.bytes != entry.size || examined > 1024L * 1024 * 1024) fail()
+                                result[bucket].add([path: name] + value)
+                            }
+                        }
+                    }
+                }
+                ['nativeLibraries', 'notices', 'embeddedArchives'].each { result[it].sort { a, b -> a.path <=> b.path } }
+                result
+            }
+            def projectRoot = rootProject.projectDir.toPath().toRealPath()
+            def cacheRoot = gradle.gradleUserHomeDir.toPath().toRealPath()
+            def memo = [:]
+            def describeFile = { File file ->
+                def filePath = file.toPath().toAbsolutePath().normalize()
+                if (!Files.isRegularFile(filePath, java.nio.file.LinkOption.NOFOLLOW_LINKS) || Files.isSymbolicLink(filePath)) fail()
+                def actual = filePath.toRealPath()
+                if (actual != filePath) fail()
+                String base = actual.startsWith(projectRoot) ? 'project' : actual.startsWith(cacheRoot) ? 'gradle-user-home' : null
+                if (base == null) fail()
+                String relative = (base == 'project' ? projectRoot : cacheRoot).relativize(actual).toString().replace('\\', '/')
+                if (!safeArchivePath(relative)) fail()
+                if (!memo.containsKey(actual)) {
+                    def value = Files.newInputStream(actual).withCloseable { stream -> shaStream(stream, 512L * 1024 * 1024) }
+                    if (value.bytes != Files.size(actual)) fail()
+                    def description = [fileName: file.name, location: [base: base, path: relative]] + value
+                    if (file.name ==~ /(?i).+\.(jar|aar|zip|apk)/) description.archive = archive(file)
+                    // ZipFile reopens the file; refuse mixed observations if generated
+                    // artifacts change during ordinary concurrent local build activity.
+                    def after = Files.newInputStream(actual).withCloseable { stream -> shaStream(stream, 512L * 1024 * 1024) }
+                    if (after != value || actual.toRealPath() != actual || Files.isSymbolicLink(actual)) fail()
+                    memo[actual] = description
+                }
+                memo[actual]
+            }
+            def graphs = selected.collect { entry ->
+                def configuration = entry.configuration
+                def resolution = configuration.incoming.resolutionResult
+                def components = resolution.allComponents.collect { component ->
+                    def id = component.id
+                    def identity = id instanceof ModuleComponentIdentifier ? [kind: 'module', group: id.group, module: id.module, version: id.version] :
+                        id instanceof ProjectComponentIdentifier ? [kind: 'project', path: id.projectPath] : fail()
+                    [id: componentId(id)] + identity + [
+                        variants: component.variants.collect { variant(it) }.sort { JsonOutput.toJson(it) },
+                        selectionReasons: component.selectionReason.descriptions.collect { [cause: it.cause.toString(), description: it.description] }
+                            .sort { JsonOutput.toJson(it) },
+                    ]
+                }.sort { a, b -> a.id <=> b.id }
+                def edges = resolution.allDependencies.collect { edge ->
+                    if (edge instanceof UnresolvedDependencyResult || !(edge instanceof ResolvedDependencyResult)) fail()
+                    [from: componentId(edge.from.id), requested: selector(edge.requested), selected: componentId(edge.selected.id),
+                        constraint: edge.constraint, resolvedVariant: variant(edge.resolvedVariant)]
+                }.sort { JsonOutput.toJson(it) }
+                def artifacts = entry.views.collectMany { view ->
+                    def collection = view.collection
+                    if (!collection.failures.empty) fail()
+                    collection.artifacts.collect { artifact ->
+                        [componentId: componentId(artifact.id.componentIdentifier), displayName: artifact.id.displayName,
+                            variant: variant(artifact.variant), view: view.name, viewAttributes: view.attributes] + describeFile(artifact.file)
+                    }
+                }.sort { JsonOutput.toJson(it) }
+                entry.selection + [root: componentId(resolution.rootComponent.get().id), canBeResolved: configuration.canBeResolved,
+                    attributes: attributes(configuration.attributes), components: components, edges: edges, artifacts: artifacts, unresolved: []]
+            }
+            def report = [schemaVersion: 1, scope: 'resolved-android-server', gradleVersion: gradle.gradleVersion,
+                offline: true, configurations: graphs, distributions: [
+                    server: [mainArtifact: describeFile(serverJar.get().asFile)],
+                    android: [debugApk: describeFile(androidApk)],
+                ], excludedScopes: [
+                    'Disabled Android release variant; debug is not release equivalence',
+                    'iOS, progress shell, test graphs, build plugins and toolchains',
+                    'Upstream artifact authentication, dependency locking and vulnerability scanning',
+                    'License interpretation, nested-archive contents and complete bundled notice obligations',
+                    'APK dex/resource-to-component attribution and native stripping provenance',
+                    'Android project JAR view is bytecode evidence, not complete project AAR/resource/native coverage',
+                ]]
+            def destination = output.get().asFile
+            memo.each { filePath, expected ->
+                if (filePath.toRealPath() != filePath || Files.isSymbolicLink(filePath)) fail()
+                def current = Files.newInputStream(filePath).withCloseable { stream -> shaStream(stream, 512L * 1024 * 1024) }
+                if (current.bytes != expected.bytes || current.sha256 != expected.sha256) fail()
+            }
+            destination.parentFile.mkdirs()
+            destination.setText(JsonOutput.prettyPrint(JsonOutput.toJson(report)) + '\n', 'UTF-8')
+            logger.lifecycle('Resolved dependency inventory written for four exact production configurations; release remains disabled.')
+        }
+    }
+}

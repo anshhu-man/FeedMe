@@ -1,0 +1,34 @@
+import org.gradle.api.artifacts.dsl.LockMode
+
+// Enforce the four production graphs already covered by the resolved inventory.
+// This locks module versions, not artifact bytes or upstream authenticity. It does
+// not enable release variants, resolve new scopes, or lock buildscript/test/KMP graphs.
+def lockedConfigurations = [
+    ':apps:androidApp': ['debugCompileClasspath', 'debugRuntimeClasspath'],
+    ':server': ['compileClasspath', 'runtimeClasspath'],
+]
+
+lockedConfigurations.each { projectPath, names ->
+    def owner = project(projectPath)
+    owner.dependencyLocking.lockMode.set(LockMode.STRICT)
+    // Install before subproject plugins create/resolve their configurations. Avoid
+    // lockAllConfigurations: unrelated configurations retain their prior behavior.
+    owner.configurations.configureEach { configuration ->
+        if (names.contains(configuration.name)) {
+            configuration.resolutionStrategy.activateDependencyLocking()
+        }
+    }
+}
+
+// A renamed/missing graph must not silently turn this fixed-scope policy into a no-op.
+// Looking up these configurations does not resolve dependencies or create variants.
+gradle.projectsEvaluated {
+    lockedConfigurations.each { projectPath, names ->
+        names.each { name ->
+            def configuration = project(projectPath).configurations.findByName(name)
+            if (configuration == null || !configuration.canBeResolved) {
+                throw new GradleException('A required locked production configuration is unavailable.')
+            }
+        }
+    }
+}

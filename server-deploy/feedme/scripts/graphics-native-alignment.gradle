@@ -1,0 +1,101 @@
+import org.gradle.api.artifacts.transform.InputArtifact
+import org.gradle.api.artifacts.transform.TransformAction
+import org.gradle.api.artifacts.transform.TransformOutputs
+import org.gradle.api.artifacts.transform.TransformParameters
+import org.gradle.api.artifacts.type.ArtifactTypeDefinition
+import org.gradle.api.attributes.Attribute
+import org.gradle.api.file.ConfigurableFileCollection
+import org.gradle.api.file.DirectoryProperty
+import org.gradle.api.file.FileSystemLocation
+import org.gradle.api.file.RegularFileProperty
+import org.gradle.api.provider.Provider
+import org.gradle.api.tasks.InputFile
+import org.gradle.api.tasks.InputFiles
+import org.gradle.api.tasks.Internal
+import org.gradle.api.tasks.PathSensitive
+import org.gradle.api.tasks.PathSensitivity
+import org.gradle.process.ExecOperations
+import javax.inject.Inject
+import java.nio.file.Files
+import java.security.MessageDigest
+
+// Preserve the upstream component/graph and AGP's own AAR extraction transforms.
+// The output is explicitly a FeedMe derivation, not an official AndroidX binary.
+// No component-variant attributes: those reject graph selection before transforms.
+interface FeedMeGraphicsParameters extends TransformParameters {
+    @Internal DirectoryProperty getProjectDirectory()
+    @InputFiles @PathSensitive(PathSensitivity.RELATIVE) ConfigurableFileCollection getRecipeInputs()
+    @InputFiles @PathSensitive(PathSensitivity.RELATIVE) ConfigurableFileCollection getToolchainInputs()
+    @InputFile @PathSensitive(PathSensitivity.NONE) RegularFileProperty getNodeExecutable()
+}
+
+abstract class FeedMeGraphicsNativeAlignment implements TransformAction<FeedMeGraphicsParameters> {
+    @InputArtifact @PathSensitive(PathSensitivity.NAME_ONLY)
+    abstract Provider<FileSystemLocation> getInputArtifact()
+    @Inject abstract ExecOperations getExecOperations()
+
+    @Override void transform(TransformOutputs outputs) {
+        File original = inputArtifact.get().asFile
+        if (original.name != 'graphics-path-1.0.1.aar') {
+            outputs.file(original) // Every unrelated AAR is passed through, byte-identical.
+            return
+        }
+        if (Files.isSymbolicLink(original.toPath()) || !original.isFile() || original.length() != 39380L ||
+            MessageDigest.getInstance('SHA-256').digest(Files.readAllBytes(original.toPath())).encodeHex().toString() !=
+                '8ca4032b6d79b351f0b59ad4b580eddbb9423e1652f7c958830687f1eee2ec03') {
+            throw new GradleException('FeedMe graphics-path original AAR authentication failed.')
+        }
+        File derived = outputs.file('feedme-graphics-path-1.0.1-relro16k-r1.aar')
+        execOperations.exec {
+            workingDir(parameters.projectDirectory.get().asFile)
+            executable(parameters.nodeExecutable.get().asFile.absolutePath)
+            args('scripts/prepare-graphics-derivative.mjs', '--input', original.absolutePath, '--output', derived.absolutePath)
+        }.assertNormalExitValue()
+        if (!derived.isFile()) throw new GradleException('FeedMe graphics derivative was not produced.')
+    }
+}
+
+def alignment = Attribute.of('com.feedme.native-derivation', String)
+def artifactType = ArtifactTypeDefinition.ARTIFACT_TYPE_ATTRIBUTE
+def repository = rootProject.projectDir
+// This native recipe uses the local macOS SDK; do not publish an operator's home path.
+def sdk = new File(System.getProperty('user.home'), 'Library/Android/sdk')
+def ndk = new File(sdk, 'ndk/28.2.13676358')
+def recipeFiles = rootProject.files(
+    rootProject.fileTree('third_party/androidx/graphics-path/1.0.1'),
+    ['prepare-graphics-derivative.mjs', 'graphics-native-alignment.gradle', 'probe-graphics-native-rebuild.mjs',
+     'verify-graphics-derivative.mjs', 'verify-android-native-alignment.mjs', 'verify-elf-page-alignment.mjs']
+        .collect { rootProject.file('scripts/' + it) })
+def toolFiles = rootProject.files(
+    new File('/usr/bin/zip'), new File('/usr/bin/unzip'),
+    ['cmake/3.22.1/bin/cmake', 'cmake/3.22.1/bin/ninja', 'cmake/3.22.1/source.properties'].collect { new File(sdk, it) },
+    ['source.properties', 'build/cmake/android.toolchain.cmake'].collect { new File(ndk, it) },
+    ['clang++', 'llvm-readelf', 'llvm-strip'].collect { new File(ndk, 'toolchains/llvm/prebuilt/darwin-x86_64/bin/' + it).canonicalFile })
+
+subprojects { owner ->
+    def configure = {
+        owner.dependencies.attributesSchema.attribute(alignment)
+        owner.dependencies.artifactTypes.maybeCreate('aar').attributes.attribute(alignment, 'upstream')
+        owner.dependencies.registerTransform(FeedMeGraphicsNativeAlignment) {
+            from.attribute(artifactType, 'aar').attribute(alignment, 'upstream')
+            to.attribute(artifactType, 'aar').attribute(alignment, 'feedme-aligned')
+            parameters {
+                projectDirectory.set(repository)
+                recipeInputs.from(recipeFiles)
+                toolchainInputs.from(toolFiles)
+                nodeExecutable.set(new File('/opt/homebrew/bin/node').canonicalFile)
+            }
+        }
+        def androidComponents = owner.extensions.getByName('androidComponents')
+        androidComponents.onVariants(androidComponents.selector().all(), { variant ->
+            // AGP's public Component API selects Android + its nested test
+            // configurations without touching KMP JVM/metadata configurations.
+            ([variant] + variant.nestedComponents).each { component ->
+                component.compileConfiguration.attributes.attribute(alignment, 'feedme-aligned')
+                component.runtimeConfiguration.attributes.attribute(alignment, 'feedme-aligned')
+            }
+        } as org.gradle.api.Action)
+    }
+    owner.pluginManager.withPlugin('com.android.application') { configure() }
+    owner.pluginManager.withPlugin('com.android.library') { configure() }
+}

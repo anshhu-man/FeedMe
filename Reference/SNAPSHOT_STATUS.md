@@ -1,5 +1,13 @@
 # Development snapshot — 15 September 2026
 
+**18 September backend-only addendum:** [current server deployment source](BACKEND_DEPLOYMENT.md)
+is separately packaged under `server-deploy/` with its own291-file manifest and
+203-operation contract. The top-level full-app/source-copy checkpoint described
+below remains historical and unchanged; the public inventory additionally records
+the new bundle and these reference updates. No refreshed APK, native acceptance,
+cloud service or store publication is implied. Current direction is Google Play
+first with Shipaton paused; Supabase/Render technical direction is now approved.
+
 This is the user-requested public reference snapshot, not a release announcement. The original FeedMe idea is intact: effortless healthy cooking, Make Mine, Today, My Plate and Kitchen Circles. All 54 features/98 screens remain documented; 44 features are in V1 and the existing ten are deferred.
 
 ## Included
