@@ -35,9 +35,11 @@ class SupabaseAuthorityDeployment(
         require(authSourceRevision == SUPPORTED_AUTH_REVISION && versions.size in 1..512 &&
             versions == versions.distinct().sorted() && versions.all { it.matches(Regex("[0-9]{1,14}")) }) { "Unsupported authority schema" }
         require(reviewedAt < validUntil && Duration.between(reviewedAt, validUntil) <= Duration.ofHours(24)) { "Invalid authority review window" }
-        require(listOf(timeboxSeconds, inactivitySeconds).all { it == null || it in 60..31_536_000 }) { "Invalid authority session policy" }
-        // These need additional provider queries/settings and are not silently approximated.
-        require(!singleSessionPerUser && lowAssuranceTimeoutSeconds == null) { "Unsupported authority session policy" }
+        require(listOf(timeboxSeconds, inactivitySeconds, lowAssuranceTimeoutSeconds).all {
+            it == null || it in 60..31_536_000
+        }) { "Invalid authority session policy" }
+        // Single-session mode needs additional provider queries and is not approximated.
+        require(!singleSessionPerUser) { "Unsupported authority session policy" }
     }
     override fun toString() = "SupabaseAuthorityDeployment(<redacted>)"
     companion object {
@@ -47,10 +49,12 @@ class SupabaseAuthorityDeployment(
 
 /** Same-PostgreSQL current authority, no network, credentials, mirror or accepting fallback.
  * Private fixed SECURITY DEFINER projections isolate provider privileges from the runtime.
- * Order: exact fact-table ROW EXCLUSIVE locks -> actual user FOR UPDATE -> exact session FOR UPDATE ->
- * all existing AMR rows FOR UPDATE -> FeedMe's existing subject/account/device locks.
- * Validated non-deferrable FKs make new session/AMR inserts take a conflicting parent key
- * lock too. Thus an unseen recovery AMR cannot be inserted behind this transaction.
+ * Order: exact fact-table ROW EXCLUSIVE locks -> actual user FOR UPDATE -> all user factors
+ * FOR UPDATE -> exact session FOR UPDATE -> all existing AMR rows FOR UPDATE -> FeedMe roots.
+ * Validated non-deferrable FKs make new factor/session/AMR inserts take a conflicting parent
+ * key lock too. Unverified factors are locked as well, so concurrent verification cannot
+ * silently change the user's highest assurance. Factor-before-session follows provider MFA
+ * mutation order but does not guarantee freedom from deadlocks with every provider action.
  * Fact-table locks preserve the checked schema/FKs without blocking ordinary Auth DML.
  * The reviewed migration vector is observed at each admission, not frozen through commit:
  * unrelated history appends can coexist with an admitted transaction, but the next check
@@ -109,11 +113,18 @@ class SupabasePostgresAuthority(val deployment: SupabaseAuthorityDeployment) : A
                 val levels = buildList { while (r.next()) add(r.getString(1)) }
                 if (levels != listOf("aal1", "aal2", "aal3")) unavailable()
             }
+            s.executeQuery("SELECT e.enumlabel FROM pg_enum e JOIN pg_type t ON t.oid=e.enumtypid JOIN pg_namespace n ON n.oid=t.typnamespace " +
+                "WHERE n.nspname='auth' AND t.typname='factor_status' ORDER BY e.enumsortorder").use { r ->
+                val statuses = buildList { while (r.next()) add(r.getString(1)) }
+                if (statuses != listOf("unverified", "verified")) unavailable()
+            }
         }
         primaryKey(connection, "users", "id")
+        primaryKey(connection, "mfa_factors", "id")
         primaryKey(connection, "sessions", "id")
         primaryKey(connection, "mfa_amr_claims", "id")
         foreignKey(connection, "sessions", "user_id", "users")
+        foreignKey(connection, "mfa_factors", "user_id", "users")
         foreignKey(connection, "mfa_amr_claims", "session_id", "sessions")
         checkReview(time(connection))
         if (closed.get()) unavailable()
@@ -137,6 +148,14 @@ class SupabasePostgresAuthority(val deployment: SupabaseAuthorityDeployment) : A
                     r.getObject(6) as? Boolean ?: denied()).also { if (r.next()) unavailable() }
             }
         }
+        // Read every status, not only verified factors: a verification UPDATE need not
+        // acquire the parent FK lock. Overflow refuses admission rather than truncating.
+        val factors = connection.prepareStatement("SELECT status FROM feedme_auth_access.factor_facts(?)").use { s ->
+            s.setObject(1, subject.subject); s.executeQuery().use { r ->
+                buildList { while (r.next()) add(r.getString(1) ?: denied()) }
+            }
+        }
+        if (factors.size > 100 || factors.any { it !in setOf("unverified", "verified") }) denied()
         val session = connection.prepareStatement("SELECT user_id,created_at,not_after,refreshed_at,aal,oauth_client_id " +
             "FROM feedme_auth_access.session_facts(?)").use { s ->
             s.setObject(1, subject.providerSessionId); s.executeQuery().use { r ->
@@ -163,6 +182,13 @@ class SupabasePostgresAuthority(val deployment: SupabaseAuthorityDeployment) : A
             session.aal != subject.assuranceLevel || session.notAfter?.let { now >= it } == true ||
             subject.issuedAtEpochSeconds + deployment.verification.allowedFutureClockSkewSeconds < session.created.epochSecond) denied()
         deployment.timeboxSeconds?.let { if (now >= session.created.plusSeconds(it)) denied() }
+        // Pinned Auth highest-possible-AAL is AAL2 iff ANY factor is verified, regardless
+        // of factor type or currently enabled enrollment methods. The source uses After;
+        // FeedMe conservatively refuses equality to keep its existing exclusive deadlines.
+        val lowAssuranceDeadline = deployment.lowAssuranceTimeoutSeconds
+            ?.takeIf { session.aal == "aal1" && "verified" in factors }
+            ?.let { session.created.plusSeconds(it) }
+        lowAssuranceDeadline?.let { if (now >= it) denied() }
         deployment.inactivitySeconds?.let {
             // A legacy session with no refreshed_at needs the provider refresh-token fallback;
             // this slice does not read refresh secrets or guess that timestamp.
@@ -178,6 +204,7 @@ class SupabasePostgresAuthority(val deployment: SupabaseAuthorityDeployment) : A
         var until = minOf(Instant.ofEpochSecond(subject.expiresAtEpochSeconds), deployment.validUntil)
         session.notAfter?.let { until = minOf(until, it) }
         deployment.timeboxSeconds?.let { until = minOf(until, session.created.plusSeconds(it)) }
+        lowAssuranceDeadline?.let { until = minOf(until, it) }
         deployment.inactivitySeconds?.let { until = minOf(until, (session.refreshed ?: denied()).plusSeconds(it)) }
         return CurrentProviderTime(now, until)
     }
@@ -276,6 +303,8 @@ class SupabasePostgresAuthority(val deployment: SupabaseAuthorityDeployment) : A
             "schema_migrations" to mapOf("version" to TEXT),
             "users" to mapOf("id" to setOf("pg_catalog.uuid"), "aud" to TEXT, "role" to TEXT, "email_confirmed_at" to setOf("pg_catalog.timestamptz"),
                 "deleted_at" to setOf("pg_catalog.timestamptz"), "banned_until" to setOf("pg_catalog.timestamptz"), "is_anonymous" to setOf("pg_catalog.bool")),
+            "mfa_factors" to mapOf("id" to setOf("pg_catalog.uuid"), "user_id" to setOf("pg_catalog.uuid"),
+                "status" to setOf("auth.factor_status")),
             "sessions" to mapOf("id" to setOf("pg_catalog.uuid"), "user_id" to setOf("pg_catalog.uuid"), "created_at" to setOf("pg_catalog.timestamptz"),
                 "not_after" to setOf("pg_catalog.timestamptz"), "refreshed_at" to setOf("pg_catalog.timestamp"), "aal" to setOf("auth.aal_level"), "oauth_client_id" to setOf("pg_catalog.uuid")),
             "mfa_amr_claims" to mapOf("id" to setOf("pg_catalog.uuid"), "session_id" to setOf("pg_catalog.uuid"), "authentication_method" to TEXT, "updated_at" to setOf("pg_catalog.timestamptz")),

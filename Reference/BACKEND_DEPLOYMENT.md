@@ -9,8 +9,8 @@ for this backend build, not that older tree.
 ## Exact source
 
 [`context-manifest.json`](../server-deploy/context-manifest.json) binds 294 build
-input files (5,605,796 bytes). Manifest SHA256:
-`39d3255255af252b5b12196b23592d543a41abe69ff317a24ab523f8a648ea37`.
+input files (5,608,900 bytes). Manifest SHA256:
+`0d4edf4685460252d77e3e8de0793ef0832ff3ac84bc8ee920e62bf9069ea006`.
 The bundle preserves `feedme/` and sibling `outputs/` so contract and release-scope
 checks resolve their real inputs. It includes the current account runtime and
 203-operation contract, V001–V031 migrations, managed Auth projections and explicit
@@ -19,10 +19,10 @@ unrelated workspace trees are included. The Gradle wrapper JAR is the sole
 checked-in build-tool binary; no built server distribution is copied.
 
 All 294 source and destination hashes were checked after copying. Relative to the
-previous bundle, only the migration registry and provider authority changed;
-V031 and the two private provider/runtime SQL resources were added. The other
-289 build inputs, including V001–V030, remain byte-identical. No source inputs
-were edited by this refresh and no bundle files were removed.
+previous 294-input bundle, only the provider authority and the two private
+provider/runtime SQL resources changed for lower-assurance timeout support. The
+other 291 build inputs, including V001–V031, remain byte-identical. No source inputs
+were edited by this refresh and no bundle files were added or removed.
 
 This exact refreshed bundle has not been image-built or started. Earlier Linux
 image and Gradle dry-run results describe older sources, not this manifest. The
@@ -48,17 +48,24 @@ table does not select a service plan, name, region, public host or billing commi
 
 ## Still required
 
-Managed-database history through V031, the six private Auth projections and the
-dedicated runtime role were installed and checked in the operator workspace on
-18 September. Do not rerun provisioning merely to deploy this source.
+Managed-database history through V031 and the dedicated runtime role were already
+installed. At 18:03:49 UTC on 18 September, the guarded transactional upgrade from
+six to seven Auth projections completed, including the factor-status projection.
+Exact helper-source/ownership/ACL checks, actual runtime-role login/effective-ACL
+verification and the metadata-compatibility probe passed. No Auth data or provider
+MFA settings were changed. Do not rerun fresh provisioning merely to deploy this
+source; these bounded checks do not establish live API or deployment-policy acceptance.
 
-**Provider-policy blocker:** the live Supabase dashboard showed the AAL1
-lower-assurance timeout enabled at 15 minutes. This exact bundle rejects any
-non-null `lowAssuranceTimeoutSeconds`. The schema-only probe did not verify the
-actual deployment/session policy and is not proof that this configuration can
-launch. Faithful support is required before API launch; never disable that
-security setting or supply `null` to conceal it. Any implementation change needs
-a deliberate new bundle and verification; this 294-input manifest stays frozen.
+The live Supabase dashboard showed the AAL1 lower-assurance timeout enabled at
+15 minutes. This deliberate bundle update supports the explicit non-null
+`lowAssuranceTimeoutSeconds: 900`: any verified factor makes an AAL1 session expire
+at its creation time plus that timeout, with equality conservatively refused.
+All factor statuses are locked and overflow is refused. The source workspace
+passed 48 focused unit tests, integration-test compilation and distribution
+packaging, plus thirteen focused managed-Auth SQL cases in one stopped isolated
+cluster. These are not live deployment-policy or user-flow acceptance. Preserve
+the provider security setting and declare its real value; never substitute `null`
+to conceal it. The earlier schema-only probe did not establish that live policy.
 
 Still required: truthful current provider/session-policy review, actual account
 policy and reviewed content, stable protected runtime configuration, production

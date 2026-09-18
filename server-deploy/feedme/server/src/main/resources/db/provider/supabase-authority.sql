@@ -4,10 +4,11 @@
 -- No runtime role, membership, Auth grant, or provider mutation is created here.
 -- The managed deployment uses its existing trusted postgres owner; that owner's broad
 -- privileges are NOT a claim of a least-privileged helper owner. Runtime receives only
--- separately reviewed schema USAGE and EXECUTE on these six fixed projections.
+-- separately reviewed schema USAGE and EXECUTE on these seven fixed projections.
 --
 -- Callers must use their existing READ COMMITTED transaction and schema_lock before
--- checking the schema and locking user -> session -> ordered AMR -> FeedMe roots.
+-- checking the schema and locking user -> ordered factors -> session -> ordered AMR
+-- -> FeedMe roots. Factor statuses are locked even when currently unverified.
 -- Fact-table ROW EXCLUSIVE locks coexist with normal Auth DML and concurrent callers,
 -- but exclude incompatible schema/FK-trigger changes for that transaction. The history
 -- vector is observed, not frozen: ACCESS SHARE does not prevent history DML. These
@@ -24,7 +25,7 @@ SET row_security = off
 AS $feedme$
 BEGIN
     LOCK TABLE ONLY auth.schema_migrations IN ACCESS SHARE MODE;
-    LOCK TABLE ONLY auth.users, ONLY auth.sessions, ONLY auth.mfa_amr_claims
+    LOCK TABLE ONLY auth.users, ONLY auth.mfa_factors, ONLY auth.sessions, ONLY auth.mfa_amr_claims
         IN ROW EXCLUSIVE MODE;
 END;
 $feedme$;
@@ -71,6 +72,28 @@ BEGIN
 END;
 $feedme$;
 REVOKE ALL ON FUNCTION feedme_auth_access.user_facts(pg_catalog.uuid) FROM PUBLIC;
+
+CREATE FUNCTION feedme_auth_access.factor_facts(p_user_id pg_catalog.uuid)
+RETURNS TABLE(status pg_catalog.text)
+LANGUAGE plpgsql VOLATILE SECURITY DEFINER STRICT
+SET search_path = pg_catalog, pg_temp
+SET row_security = off
+AS $feedme$
+BEGIN
+    -- The caller already holds the exact user FOR UPDATE. Its validated immediate
+    -- FK blocks new/reparented factors; row locks prevent verification or deletion.
+    -- No factor secret, phone, challenge or credential is projected. Row 101 signals
+    -- overflow; the authority refuses it, never treats a truncated set as complete.
+    RETURN QUERY
+        SELECT f.status::pg_catalog.text
+        FROM ONLY auth.mfa_factors AS f
+        WHERE f.user_id = p_user_id
+        ORDER BY f.id
+        LIMIT 101
+        FOR UPDATE OF f;
+END;
+$feedme$;
+REVOKE ALL ON FUNCTION feedme_auth_access.factor_facts(pg_catalog.uuid) FROM PUBLIC;
 
 CREATE FUNCTION feedme_auth_access.session_facts(p_session_id pg_catalog.uuid)
 RETURNS TABLE(

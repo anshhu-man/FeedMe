@@ -109,7 +109,7 @@ $feedme$;
 
 GRANT USAGE ON SCHEMA platform,identity,profile,pantry,planning,cooking,memory,catalog,feedme_auth_access TO feedme_api;
 GRANT EXECUTE ON FUNCTION feedme_auth_access.schema_lock(),feedme_auth_access.migration_versions(),
-    feedme_auth_access.user_facts(uuid),feedme_auth_access.session_facts(uuid),
+    feedme_auth_access.user_facts(uuid),feedme_auth_access.factor_facts(uuid),feedme_auth_access.session_facts(uuid),
     feedme_auth_access.amr_facts(uuid),feedme_auth_access.password_facts(uuid,uuid) TO feedme_api;
 
 -- Whole-row reads are required by the existing SELECT */to_jsonb retained-observation
@@ -208,4 +208,4 @@ GRANT UPDATE(command_id) ON memory.save_commands TO feedme_api;
 -- Plans do not enter the format2/3 trigger workflows; their discriminator INSERT columns
 -- are intentionally absent. Other exercised row guards use NEW/OLD or already-granted
 -- tables. Invocation of installed triggers does not require exposing their functions as
--- callable runtime helpers. Only the six explicit managed Auth functions receive EXECUTE.
+-- callable runtime helpers. Only the seven explicit managed Auth functions receive EXECUTE.

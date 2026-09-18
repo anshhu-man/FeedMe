@@ -9,11 +9,15 @@ cloud service or store publication is implied. Current direction is Google Play
 first with Shipaton paused; Supabase/Render technical direction is now approved.
 
 The live Supabase dashboard showed an enabled 15-minute AAL1 lower-assurance
-timeout. This backend bundle rejects non-null `lowAssuranceTimeoutSeconds`; its
-schema-only probe did not verify that deployment policy. Faithful support is
-required before API launch, not disabling security or substituting `null`.
-[Operational limitation](BACKEND_OPERATIONS.md). The 294-input bundle is frozen;
-any runtime fix requires another deliberate update, not a rewritten historical claim.
+timeout. A second deliberate 294-input backend update now supports explicit
+`lowAssuranceTimeoutSeconds: 900` and adds a locked factor-status projection.
+The guarded live upgrade to seven helpers completed at 18:03:49 UTC, with exact
+helper/ACL, runtime-role login and metadata-compatibility checks. No Auth data or
+provider MFA settings changed. These checks and focused source tests do not
+establish complete live deployment-policy or API/native acceptance; the current
+image is not built. Preserve security rather than disable the setting or substitute
+`null`. [Operational status](BACKEND_OPERATIONS.md).
+The historical full-app checkpoint below remains unchanged.
 
 This is the user-requested public reference snapshot, not a release announcement. The original FeedMe idea is intact: effortless healthy cooking, Make Mine, Today, My Plate and Kitchen Circles. All 54 features/98 screens remain documented; 44 features are in V1 and the existing ten are deferred.
 

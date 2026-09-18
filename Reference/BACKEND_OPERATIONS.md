@@ -8,23 +8,30 @@ test/evidence directory is included here.
 ## Recorded database checkpoint
 
 The operator workspace records completed managed-database installation and checks
-through V031, six exact private Auth projection functions, and a dedicated
-`feedme_api` login. At 17:33 UTC, actual role authentication/effective-ACL checks
-covered 79 tables, 798 columns, ten schemas, 74 functions and all eighteen exact
-immutable-key guards. The actual runtime-role schema probe and helper-source
-verification passed. Five focused restricted-role PostgreSQL cases passed locally
-with synthetic identity/content and a stopped isolated cluster.
+through V031 and a dedicated `feedme_api` login. The historical 17:33 UTC checkpoint
+covered six private Auth projection functions. At 18:03:49 UTC, a guarded
+transactional upgrade completed to seven, after a dry-run rollback confirmed the
+old six remained intact. Exact helper bodies, signatures, attributes, trusted
+ownership and private execution ACLs were verified after commit.
+
+Actual runtime-role login/effective-ACL checks then covered 79 tables, 798 columns,
+ten schemas, 75 functions, seven helpers and all eighteen exact immutable-key
+guards. No direct Auth access, role membership, owned objects or schema-CREATE
+privilege was admitted; the actual runtime-role metadata-compatibility probe
+passed. Five focused restricted-role PostgreSQL cases had passed locally with
+synthetic identity/content and a stopped isolated cluster.
 
 Those are database/permission checks, not evidence of Render deployment, production
 signup, a live user transaction or Android connectivity. No production user rows,
-eligibility, content or email settings were created by this checkpoint. The raw
+eligibility, content or email settings were created by these checkpoints, and the
+upgrade changed no Auth data or provider MFA settings. The raw
 operator receipts remain outside this curated build context.
 
 ## Auth and runtime privilege boundaries
 
 The [authority](../server-deploy/feedme/server/src/main/kotlin/com/feedme/server/identity/SupabasePostgresAuthority.kt)
-checks current provider user/session/authentication-method facts in the same
-database transaction as FeedMe's account/device checks. The six fixed
+checks current provider user/factor/session/authentication-method facts in the same
+database transaction as FeedMe's account/device checks. The seven fixed
 [private projections](../server-deploy/feedme/server/src/main/resources/db/provider/supabase-authority.sql)
 are owned by the trusted installer, not by the API role. Their fixed search path,
 RLS visibility checks and private execution permissions are part of the boundary.
@@ -36,14 +43,29 @@ an unreviewed vector is refused on the next check. Neither this mechanism nor th
 JWT signature freezes provider binaries/settings. Current deployment/session-policy
 review is explicit and expires after at most 24 hours; do not blindly extend it.
 
-**Current deployment blocker:** the live Supabase dashboard showed an enabled
-15-minute AAL1 lower-assurance timeout. The bundled authority rejects any non-null
-`lowAssuranceTimeoutSeconds`; it does not yet support that observed policy. The
-schema-only probe used an ephemeral inspection declaration and did not validate
-the live deployment/session policy. Implement and verify faithful timeout support
-before API launch. Do not disable the provider security setting or set this field
-to `null` to hide the mismatch. The current 294-input bundle remains unchanged;
-supporting code must be exported and reviewed as a subsequent deliberate update.
+The live Supabase dashboard showed an enabled 15-minute AAL1 lower-assurance
+timeout. This new 294-input bundle supports its explicit non-null
+`lowAssuranceTimeoutSeconds: 900`. Any verified factor sets the user's highest
+possible assurance to AAL2, regardless of factor type; an AAL1 session then expires
+at `created_at + 900 seconds`. Equality is conservatively refused, and the same
+deadline caps fresh-password evidence and its final revalidation.
+
+The authority locks user, all factor statuses, session and authentication-method
+rows in that order. Validated immediate foreign keys prevent insertion/reparenting
+past the locked user; factor row locks prevent concurrent verification or deletion.
+More than 100 factors, unknown/null statuses, or incompatible schema are refused.
+The source workspace passed 48 focused unit tests, integration-test compilation
+and distribution packaging; thirteen focused managed-Auth SQL cases passed in
+one stopped isolated cluster. No container or live user journey was exercised.
+
+**Remaining launch boundary:** the seven required helpers are now installed and
+verified, but metadata compatibility is not complete live deployment/session-policy
+review or a running API. Preserve the observed security setting and configure its
+real value; never disable it or set this field to `null` to conceal the policy.
+The current image has not been built, and no live signup or connected Android
+journey has been accepted. Complete protected runtime configuration, actual
+eligibility/content policy, production email, Render HTTPS deployment and the
+essential native/end-to-end gates before claiming launch readiness.
 
 The [runtime grant resource](../server-deploy/feedme/server/src/main/resources/db/provider/feedme-runtime-grants.sql)
 permits the account/profile/preferences, ingredient, pantry, planning, cooking and
