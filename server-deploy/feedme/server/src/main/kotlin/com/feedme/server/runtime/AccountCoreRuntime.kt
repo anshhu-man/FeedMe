@@ -1,6 +1,7 @@
 package com.feedme.server.runtime
 
 import com.feedme.server.config.AccountCoreRuntimeConfig
+import com.feedme.server.config.DependencyHoldConfig
 import com.feedme.server.contract.ContractCatalog
 import com.feedme.server.http.*
 import io.ktor.server.application.ApplicationStopped
@@ -35,6 +36,47 @@ class AccountCoreRuntime private constructor(
     override fun toString() = "AccountCoreRuntime(<redacted>)"
 
     companion object {
+        /** Real dependencies, closed public ingress. No full account config or product store
+         * is constructed. Healthy dependencies still report canonical launch-not-ready 503. */
+        internal fun startHeld(config: DependencyHoldConfig, database: DataSource = config.dataSource(),
+            clock: Clock = Clock.systemUTC()): AccountCoreRuntime {
+            val catalog = ContractCatalog.bundled()
+            val executor = Executors.newFixedThreadPool(config.databaseParallelism) { task ->
+                Thread(task, "feedme-held-db").apply { isDaemon = true }
+            }
+            val dispatcher = executor.asCoroutineDispatcher()
+            val lifecycle = ServiceLifecycle()
+            val stopped = CountDownLatch(1)
+            val resources = AccountCoreRuntimeResources(executor, lifecycle, { dispatcher.close() }, stopped)
+            try {
+                val dependencies = DependencyHoldProbe.open(config, database, dispatcher, clock)
+                resources.assembly = dependencies
+                // Prove actual dependencies before binding; no fallback to an unconfigured server.
+                check(runBlocking { dependencies.available() })
+                val diagnostics = createRuntimeHttpDiagnostics()
+                resources.diagnostics = diagnostics
+                val listener = config.listener
+                val server = embeddedServer(CIO, host = listener.host, port = listener.port) {
+                    feedMeLocalService(listener.service, catalog, clock = clock, lifecycle = lifecycle,
+                        observationSink = diagnostics, healthMode = ServiceHealthMode.UNCONFIGURED_READINESS,
+                        dependencyHold = dependencies::available)
+                    monitor.subscribe(ApplicationStopped) { diagnostics.close(); stopped.countDown() }
+                }
+                resources.stopListener = { server.stop(gracePeriodMillis = 1_000, timeoutMillis = 5_000) }
+                startAccountCoreListener {
+                    server.start(wait = false)
+                    runBlocking { withTimeout(10_000) {
+                        val bound = server.engine.resolvedConnectors().single()
+                        check(bound.host == listener.host && bound.port == listener.port)
+                    } }
+                }
+                return AccountCoreRuntime(listener.port, resources, stopped, diagnostics)
+            } catch (failure: Throwable) {
+                val cleanup = try { resources.close(); null } catch (problem: Throwable) { problem }
+                rethrowAccountCoreFailure(failure, cleanup)
+            }
+        }
+
         fun start(config: AccountCoreRuntimeConfig, database: DataSource = config.dataSource(),
             clock: Clock = Clock.systemUTC()): AccountCoreRuntime {
             val catalog = ContractCatalog.bundled()

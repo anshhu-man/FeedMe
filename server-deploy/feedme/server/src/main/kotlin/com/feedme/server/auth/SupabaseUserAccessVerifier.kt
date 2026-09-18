@@ -169,7 +169,11 @@ class SupabaseUserAccessVerifier(
                 "RSA" -> setOf("n", "e")
                 else -> error("Unsupported public key")
             }
-            require(fields.keys.all { it in publicParameters + setOf("kty", "kid", "alg", "use", "key_ops") })
+            require(fields.keys.all { it in publicParameters + setOf("kty", "kid", "alg", "use", "key_ops", "ext") })
+            // WebCrypto's optional extractability metadata is boolean, not signing or
+            // private-key authority. Keep the original fields passed to the JWK parser.
+            if (fields.containsKey("ext")) require(fields.getValue("ext") == JsonPrimitive(true) ||
+                fields.getValue("ext") == JsonPrimitive(false))
             if (fields.containsKey("use")) require(fields.text("use") == "sig")
             if (fields.containsKey("key_ops")) require(fields.getValue("key_ops") == JsonArray(listOf(JsonPrimitive("verify"))))
             val key = JWK.parse(fields.toString())

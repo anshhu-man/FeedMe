@@ -5,9 +5,44 @@
 No credential, private runtime configuration, local operator helper or raw local
 test/evidence directory is included here.
 
-## Historical Terms-receipt recovery — 19 September IST
+## Current dependency-hold source — 19 September IST
 
-The current 297-input bundle adds [exact historical receipt recovery](ACCOUNT_TERMS.md)
+The latest source-only bundle has **299 inputs, 5,666,558 bytes**, with context
+manifest SHA-256 `c0bc25a984c0588012cc2bd0f00b7558733ca9fd125eec6e1f48dc7f12303e61`.
+It adds an explicit dependency-hold configuration and bounded operational probe:
+real database metadata and public signing keys must pass before listener startup.
+It does not instantiate account/product stores, use placeholder product policies,
+or grant account, consent or eligibility authority. Public-key validation accepts
+the provider's optional boolean WebCrypto `ext` field without accepting private
+key material or arbitrary unknown fields.
+
+The hold intercepts public ingress before product routing, authentication, body
+consumption and store dispatch. All requests remain 503 `SERVICE_NOT_READY` with
+`X-FeedMe-Access: held`; only exact `GET /v1/health` probes dependencies and adds
+`X-FeedMe-Dependencies: available` or `unavailable`. The database diagnostic is
+rollback-only metadata inspection, not current-user authorization. Even a positive
+diagnostic is not signup, cooking/Saved, connected Android or launch acceptance.
+
+The packaged runtime passed an actual restricted-role connection to Supabase from
+the source computer. Health reported dependencies available but stayed 503; a
+malformed bootstrap request and unknown path were refused, and the process stopped.
+Only the public CA filesystem path was adapted locally. 65 selected server checks
+passed. The measured 45-second diagnostic budget is not a product performance goal.
+Supabase's public JWKS uses a 10-minute edge cache; the held configuration accounts
+for that age while retaining certificate, key-type and signature validation.
+No Render connection, image build, deployment, automatic policy review renewal or
+database change is claimed by this source refresh. The latest recorded hosting
+checkpoint remains the historical unconfigured public-CA preview below until
+separate verification is recorded. Private runtime inputs and local helpers are
+not in this publication. Two new and six changed backend inputs leave 291
+unchanged; all 8,319 historical full-app copies and generated lists are preserved.
+
+The operator's current decision is to keep the credential local. Do not upload it
+or deploy this connected mode until that decision changes explicitly.
+
+## Preceding historical Terms-receipt recovery — 19 September IST
+
+The preceding 297-input bundle added [exact historical receipt recovery](ACCOUNT_TERMS.md)
 for already committed Terms acceptance. Current account/device/provider authority,
 the original command fingerprint and immutable notice descriptor must match.
 Recovery bypasses neither current authentication nor missing evidence, and does

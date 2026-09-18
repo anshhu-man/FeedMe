@@ -21,6 +21,9 @@ import io.ktor.server.application.call
 import io.ktor.server.application.ApplicationStopPreparing
 import io.ktor.server.application.createApplicationPlugin
 import io.ktor.server.application.install
+import io.ktor.server.application.ApplicationCallPipeline
+import io.ktor.server.request.httpMethod
+import io.ktor.server.request.uri
 import io.ktor.server.plugins.BadRequestException
 import io.ktor.server.plugins.statuspages.StatusPages
 import io.ktor.server.response.respondText
@@ -79,7 +82,12 @@ fun Application.feedMeLocalService(
     accountCooking: AccountCookingHttpConfiguration? = null,
     accountSaved: AccountSavedRecipeHttpConfiguration? = null,
     accountCoreHealth: AccountCoreDependencyHealth? = null,
+    dependencyHold: (suspend () -> Boolean)? = null,
 ) {
+    // A closed operational deployment may not accidentally acquire even one product adapter.
+    require(dependencyHold == null || listOf(planning, social, kitchen, cooking, savedRecipe, media,
+        postDraft, postPublication, account, pendingPreferences, accountPreferences, pantry, accountPantry,
+        guest, accountPlanning, accountCooking, accountSaved, accountCoreHealth).all { it == null })
     require((healthMode == ServiceHealthMode.ACCOUNT_CORE_DEPENDENCIES) == (accountCoreHealth != null)) {
         "Configured core health requires its owned dependency checker"
     }
@@ -99,6 +107,20 @@ fun Application.feedMeLocalService(
     monitor.subscribe(ApplicationStopped) { lifecycle.markStopped() }
     installHttpObservability(catalog, observationSink)
     install(responseContext)
+    if (dependencyHold != null) intercept(ApplicationCallPipeline.Plugins) {
+        // Before routing, auth, body consumption and all store dispatch. Unknown paths and
+        // methods stay closed too. Only the exact canonical health request may probe.
+        val health = call.request.httpMethod == HttpMethod.Get && call.request.uri == "/v1/health"
+        call.response.headers.append("X-FeedMe-Access", "held")
+        if (health) {
+            call.markHttpOperation("getServiceHealth")
+            val available = lifecycle.tryAdmit() && dependencyHold()
+            call.response.headers.append("X-FeedMe-Dependencies", if (available) "available" else "unavailable")
+        }
+        call.problem(bodyValidator, HttpStatusCode.ServiceUnavailable, "SERVICE_NOT_READY", "Service unavailable",
+            operationId = if (health) "getServiceHealth" else null)
+        finish()
+    }
     install(StatusPages) {
         exception<Throwable> { call, cause ->
             when (cause) {

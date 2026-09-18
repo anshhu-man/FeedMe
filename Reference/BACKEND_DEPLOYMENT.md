@@ -1,5 +1,40 @@
 # Backend deployment source — 19 September 2026 IST
 
+## Current dependency-hold source increment — not deployed to Render
+
+The curated backend bundle now contains **299 build inputs (5,666,558 bytes)**.
+Its [context manifest](../server-deploy/context-manifest.json) SHA-256 is
+`c0bc25a984c0588012cc2bd0f00b7558733ca9fd125eec6e1f48dc7f12303e61`.
+Two production files were added and six changed; the other 291 inputs are
+byte-identical to the preceding Terms-recovery bundle. No inputs were removed.
+
+The new explicit `dependency-hold` mode checks real configured database metadata
+and public signing-key dependencies before binding a listener, without constructing
+product stores or accepting product requests. Every public request remains
+503 `SERVICE_NOT_READY`; exact `GET /v1/health` can additionally report coarse
+dependency availability. An available dependency is not product readiness or
+permission to sign in, mutate accounts, plan, cook or save. There is no fallback
+to an accepting or unconfigured listener after a failed dependency check.
+Public-key validation also accepts the provider's optional boolean WebCrypto
+`ext` field; private key material and unknown key fields remain refused.
+
+The source workspace passed 65 focused server checks and a real packaged-runtime
+connection to Supabase with the restricted API role, exact migration/provider
+metadata and public JWKS. The local runtime kept health and all product/unknown
+requests at 503 and was stopped afterward. Startup took 33.568 seconds; the
+dependency-health check took 33.430 seconds. This is operational connectivity,
+not product latency or user-journey acceptance. No Render image build/deployment
+or connection is claimed for this increment. Protected configuration and hosting
+acceptance are separate. No private preparation helper,
+configuration, credential, `.local` file, APK or raw test evidence is exported.
+The 8,319 historical full-app source copies and generated reference lists remain
+unchanged; this is not a mobile release or a refreshed full-app snapshot.
+
+The operator has chosen to keep the database credential local for now. No connected
+Render deployment is authorized or claimed; the existing unconfigured preview is unchanged.
+
+## Preceding Terms-recovery checkpoint (historical)
+
 This is a separate curated backend source bundle. The latest recovery of historical
 Terms receipts is not deployed; the older public-CA bundle still backs the unconfigured hosting
 preview. Neither is a refreshed full-app snapshot or production-ready API.
@@ -8,10 +43,9 @@ entries remain at their earlier checkpoint; its retained inventory includes this
 separately identified addendum. Use [`server-deploy/`](../server-deploy/)
 for this backend build, not that older tree.
 
-## Exact source
+### Previous exact source
 
-[`context-manifest.json`](../server-deploy/context-manifest.json) now binds 297 build
-input files (5,650,097 bytes). Manifest SHA256:
+The preceding context bound 297 build input files (5,650,097 bytes). Its historical manifest SHA256 was:
 `bf158f70f2005dc8aa0e3ef791aa0aea96ebdfea570cc013eec90d45c2c22a48`.
 The bundle preserves `feedme/` and sibling `outputs/` so contract and release-scope
 checks resolve their real inputs. It includes the current account runtime and
@@ -20,7 +54,7 @@ runtime grants. No `.local`, credentials, caches, APKs, test fixtures/results or
 unrelated workspace trees are included. The Gradle wrapper JAR is the sole
 checked-in build-tool binary; no built server distribution is copied.
 
-**19 September IST — current historical-receipt recovery increment:** exact
+**19 September IST — preceding historical-receipt recovery increment:** exact
 previously committed Terms acceptance can now be recovered from its permanent
 audit after notice rollover or response-cache expiry. The original account,
 device, provider session, command key and body must still match; current authority

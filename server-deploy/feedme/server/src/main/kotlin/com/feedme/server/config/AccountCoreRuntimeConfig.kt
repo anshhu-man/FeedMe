@@ -66,20 +66,23 @@ class AccountCoreRuntimeConfig private constructor(
     val databaseParallelism: Int,
     private val database: Database,
 ) {
-    internal fun dataSource(): DataSource = PGSimpleDataSource().also {
-        it.setServerNames(arrayOf(database.host)); it.setPortNumbers(intArrayOf(database.port))
-        it.setDatabaseName(database.name); it.setUser(database.user); it.setPassword(database.password)
-        it.setSslMode(database.sslMode); it.setGssEncMode("disable")
-        database.sslRootCert?.let(it::setSslRootCert)
-        it.setConnectTimeout(database.connectTimeout); it.setLoginTimeout(database.loginTimeout)
-        it.setSocketTimeout(database.socketTimeout); it.setApplicationName("feedme-account-core")
-    }
+    internal fun dataSource(): DataSource = database.dataSource("feedme-account-core")
 
     override fun toString() = "AccountCoreRuntimeConfig(<redacted>)"
 
-    private class Database(val host: String, val port: Int, val name: String, val user: String,
+    internal class Database(val host: String, val port: Int, val name: String, val user: String,
         val password: String, val sslMode: String, val sslRootCert: String?, val connectTimeout: Int,
-        val loginTimeout: Int, val socketTimeout: Int)
+        val loginTimeout: Int, val socketTimeout: Int) {
+        fun dataSource(applicationName: String): DataSource = PGSimpleDataSource().also {
+            it.setServerNames(arrayOf(host)); it.setPortNumbers(intArrayOf(port))
+            it.setDatabaseName(name); it.setUser(user); it.setPassword(password)
+            it.setSslMode(sslMode); it.setGssEncMode("disable")
+            sslRootCert?.let(it::setSslRootCert)
+            it.setConnectTimeout(connectTimeout); it.setLoginTimeout(loginTimeout)
+            it.setSocketTimeout(socketTimeout); it.setApplicationName(applicationName)
+        }
+        override fun toString() = "AccountDatabase(<redacted>)"
+    }
 
     companion object {
         private const val CONFIG = "FEEDME_ACCOUNT_RUNTIME_CONFIG"
@@ -126,12 +129,7 @@ class AccountCoreRuntimeConfig private constructor(
                     require(it.termsVersion == rules.requiredTermsVersion)
                 }
             }
-            val k = root.getValue("keyPolicy").jsonObject
-            exact(k, "connectTimeoutMillis", "socketTimeoutMillis", "totalTimeoutMillis", "cacheSeconds",
-                "minimumFetchIntervalMillis", "maximumAdmittedCalls")
-            val keyPolicy = SupabaseJwksHttpPolicy(number(k, "connectTimeoutMillis"), number(k, "socketTimeoutMillis"),
-                number(k, "totalTimeoutMillis"), number(k, "cacheSeconds"), number(k, "minimumFetchIntervalMillis"),
-                integer(k, "maximumAdmittedCalls", 1..32))
+            val keyPolicy = keyPolicy(root.getValue("keyPolicy").jsonObject)
             require(keyPolicy.cacheSeconds <= deployment.verification.maximumJwksAgeSeconds)
             val i = root.getValue("ingredientLimits").jsonObject
             exact(i, "maxReleaseBytes", "maxIngredients", "cursorLifetimeSeconds")
@@ -176,7 +174,7 @@ class AccountCoreRuntimeConfig private constructor(
           catch (failure: InterruptedException) { Thread.currentThread().interrupt(); throw failure }
           catch (_: Exception) { throw IllegalArgumentException("Account core runtime configuration unavailable") }
 
-        private fun listener(value: JsonObject, environment: String): ServerStartupConfig {
+        internal fun listener(value: JsonObject, environment: String): ServerStartupConfig {
             exact(value, "mode", "host", "port", "minimumAppVersion", "maximumInFlightRequests")
             val mode = text(value, "mode", 16)
             val host = text(value, "host", 64)
@@ -190,7 +188,7 @@ class AccountCoreRuntimeConfig private constructor(
                 mapOf("FEEDME_SERVER_HOST" to host, "FEEDME_SERVER_PORT" to port) else mapOf("PORT" to port))
         }
 
-        private fun database(value: JsonObject, environment: String, password: String): Database {
+        internal fun database(value: JsonObject, environment: String, password: String): Database {
             exact(value, "host", "port", "name", "user", "sslMode", "sslRootCert",
                 "connectTimeoutSeconds", "loginTimeoutSeconds", "socketTimeoutSeconds")
             val host = text(value, "host", 253)
@@ -215,7 +213,7 @@ class AccountCoreRuntimeConfig private constructor(
                 integer(value, "socketTimeoutSeconds", 1..60))
         }
 
-        private fun deployment(d: JsonObject, databaseName: String): SupabaseAuthorityDeployment {
+        internal fun deployment(d: JsonObject, databaseName: String): SupabaseAuthorityDeployment {
             exact(d, "verification", "databaseName", "authSourceRevision", "migrationVersions", "reviewedAt", "validUntil",
                 "timeboxSeconds", "inactivitySeconds", "singleSessionPerUser", "lowAssuranceTimeoutSeconds")
             require(text(d, "databaseName", 63) == databaseName)
@@ -269,7 +267,15 @@ class AccountCoreRuntimeConfig private constructor(
             } finally { decoded.values.forEach { it.fill(0) } }
         }
 
-        private fun document(raw: String, limit: Int): JsonObject = Json.parseToJsonElement(
+        internal fun keyPolicy(k: JsonObject): SupabaseJwksHttpPolicy {
+            exact(k, "connectTimeoutMillis", "socketTimeoutMillis", "totalTimeoutMillis", "cacheSeconds",
+                "minimumFetchIntervalMillis", "maximumAdmittedCalls")
+            return SupabaseJwksHttpPolicy(number(k, "connectTimeoutMillis"), number(k, "socketTimeoutMillis"),
+                number(k, "totalTimeoutMillis"), number(k, "cacheSeconds"), number(k, "minimumFetchIntervalMillis"),
+                integer(k, "maximumAdmittedCalls", 1..32))
+        }
+
+        internal fun document(raw: String, limit: Int): JsonObject = Json.parseToJsonElement(
             WireDocument.parse(raw, WireLimits(limit, 12, 32)).encodeUtf8().decodeToString()).jsonObject
         private fun exact(value: JsonObject, vararg fields: String) { require(value.keys == fields.toSet()) }
         private fun text(value: JsonObject, field: String, max: Int): String = value.getValue(field).jsonPrimitive.let {

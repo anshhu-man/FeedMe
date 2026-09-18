@@ -91587,14 +91587,14 @@
     },
     {
       "path": "Reference/BACKEND_DEPLOYMENT.md",
-      "bytes": 10192,
-      "sha256": "4d804c0332ad6c211541c90a20823d8cf81dcdfa1216a9955336bb81da4f46e7",
+      "bytes": 12403,
+      "sha256": "404ce12f40faf966adc0955144105c05cf972822a99dcec36d7c970ec3543de2",
       "mode": 420
     },
     {
       "path": "Reference/BACKEND_OPERATIONS.md",
-      "bytes": 11972,
-      "sha256": "6f7768a28c8b60e85c2c5358d4a7fd17dee1943e07e11cddbb73dbce9031d1a3",
+      "bytes": 14344,
+      "sha256": "324919f07e069f4dd4d2f445ee139e8a98c5fa1dc4e48462e2ba8462ffc25507",
       "mode": 420
     },
     {
@@ -91743,8 +91743,8 @@
     },
     {
       "path": "server-deploy/context-manifest.json",
-      "bytes": 62606,
-      "sha256": "bf158f70f2005dc8aa0e3ef791aa0aea96ebdfea570cc013eec90d45c2c22a48",
+      "bytes": 63032,
+      "sha256": "c0bc25a984c0588012cc2bd0f00b7558733ca9fd125eec6e1f48dc7f12303e61",
       "mode": 420
     },
     {
@@ -91875,8 +91875,8 @@
     },
     {
       "path": "server-deploy/feedme/server/src/main/kotlin/com/feedme/server/AccountCoreLauncher.kt",
-      "bytes": 1681,
-      "sha256": "6780300aab70e609b72aed7b1b1b94969c87b236ad0751d77cd330418bc87bae",
+      "bytes": 2000,
+      "sha256": "30f4125596b69fe0433ae3795966c2138d8b87d58fe5df0a82879e7404506a3c",
       "mode": 420
     },
     {
@@ -91905,8 +91905,8 @@
     },
     {
       "path": "server-deploy/feedme/server/src/main/kotlin/com/feedme/server/auth/SupabaseUserAccessVerifier.kt",
-      "bytes": 14461,
-      "sha256": "1b819e5304a7bbb4f47ebfd0159d6885a8db23530aaba94c31147b39e7f549a9",
+      "bytes": 14808,
+      "sha256": "5cfdbd4dd937e9199e28c121f6ac5176641cc0451ecff8b5a87c65c483b329af",
       "mode": 420
     },
     {
@@ -92085,8 +92085,8 @@
     },
     {
       "path": "server-deploy/feedme/server/src/main/kotlin/com/feedme/server/config/AccountCoreRuntimeConfig.kt",
-      "bytes": 21098,
-      "sha256": "d6b2b417657bf1afe209bc07d70fe29bb5a35b133259e895fbb2fe51de14b4b2",
+      "bytes": 21305,
+      "sha256": "514f76a56fc30628cc5f6879431853cf773cc6300da0fde3edf240ca5ef84f78",
       "mode": 420
     },
     {
@@ -92463,8 +92463,8 @@
     },
     {
       "path": "server-deploy/feedme/server/src/main/kotlin/com/feedme/server/http/FeedMeApplication.kt",
-      "bytes": 15547,
-      "sha256": "0d277bb7eac784f2552cc06a203fdcad311c9d9dac503dcdbdbfcd594fa827f1",
+      "bytes": 17031,
+      "sha256": "35031223b0a96b21d387a3348d65efad81cf3c1d35d211bad243ad8c1fd87e95",
       "mode": 420
     },
     {
@@ -92643,8 +92643,8 @@
     },
     {
       "path": "server-deploy/feedme/server/src/main/kotlin/com/feedme/server/identity/SupabasePostgresAuthority.kt",
-      "bytes": 22177,
-      "sha256": "2a578a492164ff59b5d31f68ba01297fe61d5e5d4e314ffbe67b85198c1aa5eb",
+      "bytes": 23048,
+      "sha256": "1362773737a8587210fcb3c326ddafff6e734216f1f613bc96fb2865ca565be1",
       "mode": 420
     },
     {
@@ -92955,8 +92955,8 @@
     },
     {
       "path": "server-deploy/feedme/server/src/main/kotlin/com/feedme/server/runtime/AccountCoreRuntime.kt",
-      "bytes": 5538,
-      "sha256": "c0edb0944c2b906ac7c9a44fd23ef7bca66dfe55b74b3c8e0adc6b61e132c9a3",
+      "bytes": 8223,
+      "sha256": "117e8da718a994a64320de1643e823b45a0d6eaf2145b45d46e4029e5befd012",
       "mode": 420
     },
     {
@@ -93576,6 +93576,18 @@
       "bytes": 2332,
       "sha256": "e59d05ea87aea30722b43330f21653bfc078a340332110de4bdf7f08e89a2f98",
       "mode": 420
+    },
+    {
+      "path": "server-deploy/feedme/server/src/main/kotlin/com/feedme/server/config/DependencyHoldConfig.kt",
+      "bytes": 3563,
+      "sha256": "6d03d78ca544597f56d77a86fc637a3561088e316bf1905a613773922ea015bc",
+      "mode": 420
+    },
+    {
+      "path": "server-deploy/feedme/server/src/main/kotlin/com/feedme/server/runtime/DependencyHoldProbe.kt",
+      "bytes": 6985,
+      "sha256": "6bc3fb08940d234ef12a6e0fbd77d61fa7fa31312a8222b2abd292b5616dffdb",
+      "mode": 420
     }
   ],
   "excluded": [
@@ -93608,18 +93620,20 @@
     "sourceSnapshotUnchanged": true,
     "scope": "Backend-only source addendum; no full-app refresh, runtime or deployment acceptance.",
     "currentContext": {
-      "files": 297,
-      "bytes": 5650097,
-      "manifestSha256": "bf158f70f2005dc8aa0e3ef791aa0aea96ebdfea570cc013eec90d45c2c22a48",
-      "scope": "Locally verified historical Terms receipt recovery; not image-built or deployed. Supabase V032 and restricted grants were installed at the prior checkpoint. Historical full-app source copies unchanged.",
+      "files": 299,
+      "bytes": 5666558,
+      "manifestSha256": "c0bc25a984c0588012cc2bd0f00b7558733ca9fd125eec6e1f48dc7f12303e61",
+      "scope": "Dependency-hold source; actual local packaged runtime verified with Supabase, all requests held. Not image-built or deployed to Render. Historical full-app sources unchanged.",
       "verification": {
-        "serverJvm": 10,
-        "isolatedPostgresAndHttp": 20,
-        "node": 92,
-        "separateUnpublishedSharedChecks": 80,
+        "serverJvm": 65,
+        "preparationNode": 4,
+        "separateUnpublishedAndroidAndSharedChecks": 36,
+        "liveSupabaseReadOnlyFromLocal": true,
+        "renderConnectivity": false,
         "fullRegression": false
       },
-      "deployment": null
+      "deployment": null,
+      "credentialHandoff": "User chose to keep credential local; connected deployment paused."
     },
     "lastVerifiedDeployment": {
       "files": 295,

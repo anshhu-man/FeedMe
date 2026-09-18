@@ -124,8 +124,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/AccountCoreLauncher.kt",
-      "bytes": 1681,
-      "sha256": "6780300aab70e609b72aed7b1b1b94969c87b236ad0751d77cd330418bc87bae"
+      "bytes": 2000,
+      "sha256": "30f4125596b69fe0433ae3795966c2138d8b87d58fe5df0a82879e7404506a3c"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/AccountPantryMain.kt",
@@ -144,8 +144,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/auth/SupabaseUserAccessVerifier.kt",
-      "bytes": 14461,
-      "sha256": "1b819e5304a7bbb4f47ebfd0159d6885a8db23530aaba94c31147b39e7f549a9"
+      "bytes": 14808,
+      "sha256": "5cfdbd4dd937e9199e28c121f6ac5176641cc0451ecff8b5a87c65c483b329af"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/catalog/ConfiguredIngredientPreferencePolicy.kt",
@@ -294,13 +294,18 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/config/AccountCoreRuntimeConfig.kt",
-      "bytes": 21098,
-      "sha256": "d6b2b417657bf1afe209bc07d70fe29bb5a35b133259e895fbb2fe51de14b4b2"
+      "bytes": 21305,
+      "sha256": "514f76a56fc30628cc5f6879431853cf773cc6300da0fde3edf240ca5ef84f78"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/config/AccountPantryRuntimeConfig.kt",
       "bytes": 12453,
       "sha256": "6f2f48a337aa06856d004eac2a5e8eec5c63353d8fe565b7e1fc62e57cb50116"
+    },
+    {
+      "path": "feedme/server/src/main/kotlin/com/feedme/server/config/DependencyHoldConfig.kt",
+      "bytes": 3563,
+      "sha256": "6d03d78ca544597f56d77a86fc637a3561088e316bf1905a613773922ea015bc"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/config/LocalServerConfig.kt",
@@ -609,8 +614,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/http/FeedMeApplication.kt",
-      "bytes": 15547,
-      "sha256": "0d277bb7eac784f2552cc06a203fdcad311c9d9dac503dcdbdbfcd594fa827f1"
+      "bytes": 17031,
+      "sha256": "35031223b0a96b21d387a3348d65efad81cf3c1d35d211bad243ad8c1fd87e95"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/http/GuestBootstrapHttpInput.kt",
@@ -764,8 +769,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/SupabasePostgresAuthority.kt",
-      "bytes": 22177,
-      "sha256": "2a578a492164ff59b5d31f68ba01297fe61d5e5d4e314ffbe67b85198c1aa5eb"
+      "bytes": 23048,
+      "sha256": "1362773737a8587210fcb3c326ddafff6e734216f1f613bc96fb2865ca565be1"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/kitchen/AccountPantryStore.kt",
@@ -1029,8 +1034,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/runtime/AccountCoreRuntime.kt",
-      "bytes": 5538,
-      "sha256": "c0edb0944c2b906ac7c9a44fd23ef7bca66dfe55b74b3c8e0adc6b61e132c9a3"
+      "bytes": 8223,
+      "sha256": "117e8da718a994a64320de1643e823b45a0d6eaf2145b45d46e4029e5befd012"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/runtime/AccountCoreRuntimeResources.kt",
@@ -1041,6 +1046,11 @@
       "path": "feedme/server/src/main/kotlin/com/feedme/server/runtime/AccountPantryRuntime.kt",
       "bytes": 9247,
       "sha256": "af2a323da0381a6092649450cd4323f077cf70feb9725e2ff77ef322c370d182"
+    },
+    {
+      "path": "feedme/server/src/main/kotlin/com/feedme/server/runtime/DependencyHoldProbe.kt",
+      "bytes": 6985,
+      "sha256": "6bc3fb08940d234ef12a6e0fbd77d61fa7fa31312a8222b2abd292b5616dffdb"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/runtime/ServiceHealthMode.kt",
@@ -1488,7 +1498,7 @@
       "sha256": "e014ab416128d6061df6183ea8723b0879287ac129d93e025846dfa04d033d3b"
     }
   ],
-  "totalBytes": 5650097,
+  "totalBytes": 5666558,
   "limitations": [
     "Source snapshot only; no container build or deployment was performed.",
     "Third-party image selection, dependency authenticity and live configuration require separate review."

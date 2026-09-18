@@ -67,11 +67,28 @@ class SupabasePostgresAuthority(val deployment: SupabaseAuthorityDeployment) : A
     private val passwordEvidenceSeal = Any()
 
     fun checkCompatibility(connection: Connection) {
+        checkCompatibility(connection, lockSchema = true)
+    }
+
+    /** Diagnostic only: READ ONLY cannot take the authorization path's ROW EXCLUSIVE
+     * schema locks. A metadata race can refuse this observation; it cannot admit a user.
+     * No provider user/session/factor/AMR rows or current-account authority are read here. */
+    internal fun inspectReadOnlyCompatibility(connection: Connection) {
+        requireTransaction(connection)
+        connection.createStatement().use { statement ->
+            statement.executeQuery("SELECT current_setting('transaction_read_only')").use { rows ->
+                check(rows.next() && rows.getString(1) == "on" && !rows.next())
+            }
+        }
+        checkCompatibility(connection, lockSchema = false)
+    }
+
+    private fun checkCompatibility(connection: Connection, lockSchema: Boolean) {
         requireTransaction(connection)
         if (closed.get()) unavailable()
         // Fixed projections are installed separately by the trusted operator, never on startup.
         // No provider writes. Locks live only for the caller-owned transaction.
-        connection.createStatement().use {
+        if (lockSchema) connection.createStatement().use {
             it.execute("SELECT feedme_auth_access.schema_lock()")
         }
         val now = time(connection)
