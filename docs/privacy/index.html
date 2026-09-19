@@ -27,7 +27,11 @@
     <h2>Information kept on your device</h2>
     <p>FeedMe remembers your ingredient and meal-preference draft and the identifiers of recipes you explicitly save. It uses these to restore your choices and show your Saved recipes. They are stored in the app's private on-device storage (Android SharedPreferences), not an online account.</p>
     <p>FeedMe does not upload these choices or send them to Supabase, Render or another service. Recipe matching and cooking screens run on your device.</p>
-    <p>This edition has no sign-in, account creation, social posting, photo or camera features, advertising, purchases, analytics or crash-reporting service. It does not request Internet, camera, microphone, contacts or location access. It does not require an email address, date of birth or advertising identifier to use the cooking features.</p>
+    <p>This edition has no sign-in, account creation, social posting, photo or camera features, advertising or purchases. FeedMe's offline cooking implementation includes no analytics or crash-reporting service. The developer-built offline package does not request Internet, camera, microphone, contacts or location access. It does not require an email address, date of birth or advertising identifier to use the cooking features.</p>
+
+    <h2 id="play-verification">Google Play installation verification</h2>
+    <p>Meal matching, recipes and Saved choices work locally. Google Play can add installation verification to the version it distributes. These checks generally work offline, but may occasionally require a connection if the Play Store has been offline for a prolonged period.</p>
+    <p>Google Play's own services handle information under Google's policies; the local-package description above is not a claim that Google processes no information. See <a href="https://support.google.com/googleplay/android-developer/answer/10183279?hl=en">Google's automatic protection guidance</a> and the <a href="https://policies.google.com/privacy">Google Privacy Policy</a>. Installation verification does not change FeedMe's local storage of your ingredient draft and Saved choices.</p>
 
     <h2>Keeping and removing local information</h2>
     <p>Your draft and Saved recipe choices remain on this device until you change or remove them. <strong>Clear local data</strong>, followed by confirmation, removes both the draft and Saved recipe identifiers. Uninstalling FeedMe removes its local files.</p>
