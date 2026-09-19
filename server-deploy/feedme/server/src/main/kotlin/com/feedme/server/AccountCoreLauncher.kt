@@ -3,6 +3,7 @@ package com.feedme.server
 import com.feedme.server.config.AccountCoreRuntimeConfig
 import com.feedme.server.config.DependencyHoldConfig
 import com.feedme.server.runtime.AccountCoreRuntime
+import com.feedme.server.runtime.DependencyHoldStartupStage
 import kotlinx.coroutines.CancellationException
 import kotlin.system.exitProcess
 
@@ -10,9 +11,11 @@ import kotlin.system.exitProcess
  * present. Incomplete/conflicting configuration fails; never fall back to local liveness.
  * The environment is supplied once by Main, not queried by individual routes/stores. */
 internal fun runAccountCore(environment: Map<String, String>) {
+    val held = DependencyHoldConfig.CONFIG in environment
+    var heldStage = DependencyHoldStartupStage.CONFIGURATION
     try {
-        val held = DependencyHoldConfig.CONFIG in environment
-        val runtime = if (held) AccountCoreRuntime.startHeld(DependencyHoldConfig.fromEnvironment(environment))
+        val runtime = if (held) AccountCoreRuntime.startHeld(DependencyHoldConfig.fromEnvironment(environment),
+            onStartupStage = { heldStage = it })
             else AccountCoreRuntime.start(AccountCoreRuntimeConfig.fromEnvironment(environment))
         val shutdown = Thread({
             try { runtime.close() }
@@ -30,7 +33,8 @@ internal fun runAccountCore(environment: Map<String, String>) {
     } catch (failure: CancellationException) { throw failure }
       catch (failure: InterruptedException) { Thread.currentThread().interrupt(); throw failure }
       catch (_: Exception) {
-        System.err.println("FeedMe account core startup/shutdown failed; explicit valid configuration and current dependencies are required.")
+        if (held) System.err.println("FeedMe dependency hold startup/shutdown failed; stage=${heldStage.diagnostic}.")
+        else System.err.println("FeedMe account core startup/shutdown failed; explicit valid configuration and current dependencies are required.")
         exitProcess(1)
     }
 }

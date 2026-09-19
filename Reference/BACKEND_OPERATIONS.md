@@ -5,7 +5,20 @@
 No credential, private runtime configuration, local operator helper or raw local
 test/evidence directory is included here.
 
-## Current dependency-hold source — 19 September IST
+## Current closed deployment attempt — 19 September UTC
+
+The operator has now approved storing the existing restricted `feedme_api`
+credential in the existing free Render preview and deploying connection-check
+mode only. The saved configuration and credential match the approved local import;
+they are not published here. Public account/product access remains unauthorized.
+
+The first approved deployment (`dep-damtvluk1f9s73eni430`, source `4d4f559`)
+built successfully but failed closed during startup. Cloud connectivity is not
+yet verified. Constant startup-stage diagnostics are being added without logging
+secrets or weakening checks. No database migrations/grants, provider settings,
+paid plan, public app launch or Play publication are part of this increment.
+
+## Previous dependency-hold source — historical
 
 The latest source-only bundle has **299 inputs, 5,666,558 bytes**, with context
 manifest SHA-256 `c0bc25a984c0588012cc2bd0f00b7558733ca9fd125eec6e1f48dc7f12303e61`.
@@ -37,8 +50,8 @@ separate verification is recorded. Private runtime inputs and local helpers are
 not in this publication. Two new and six changed backend inputs leave 291
 unchanged; all 8,319 historical full-app copies and generated lists are preserved.
 
-The operator's current decision is to keep the credential local. Do not upload it
-or deploy this connected mode until that decision changes explicitly.
+The local-only decision at this historical checkpoint has been explicitly
+superseded by the narrow closed-deployment approval above.
 
 ## Preceding historical Terms-receipt recovery — 19 September IST
 

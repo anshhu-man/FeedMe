@@ -39,7 +39,8 @@ class AccountCoreRuntime private constructor(
         /** Real dependencies, closed public ingress. No full account config or product store
          * is constructed. Healthy dependencies still report canonical launch-not-ready 503. */
         internal fun startHeld(config: DependencyHoldConfig, database: DataSource = config.dataSource(),
-            clock: Clock = Clock.systemUTC()): AccountCoreRuntime {
+            clock: Clock = Clock.systemUTC(),
+            onStartupStage: (DependencyHoldStartupStage) -> Unit = {}): AccountCoreRuntime {
             val catalog = ContractCatalog.bundled()
             val executor = Executors.newFixedThreadPool(config.databaseParallelism) { task ->
                 Thread(task, "feedme-held-db").apply { isDaemon = true }
@@ -52,14 +53,15 @@ class AccountCoreRuntime private constructor(
                 val dependencies = DependencyHoldProbe.open(config, database, dispatcher, clock)
                 resources.assembly = dependencies
                 // Prove actual dependencies before binding; no fallback to an unconfigured server.
-                check(runBlocking { dependencies.available() })
+                check(runBlocking { dependencies.available(onStartupStage) })
+                onStartupStage(DependencyHoldStartupStage.LISTENER)
                 val diagnostics = createRuntimeHttpDiagnostics()
                 resources.diagnostics = diagnostics
                 val listener = config.listener
                 val server = embeddedServer(CIO, host = listener.host, port = listener.port) {
                     feedMeLocalService(listener.service, catalog, clock = clock, lifecycle = lifecycle,
                         observationSink = diagnostics, healthMode = ServiceHealthMode.UNCONFIGURED_READINESS,
-                        dependencyHold = dependencies::available)
+                        dependencyHold = { dependencies.available() })
                     monitor.subscribe(ApplicationStopped) { diagnostics.close(); stopped.countDown() }
                 }
                 resources.stopListener = { server.stop(gracePeriodMillis = 1_000, timeoutMillis = 5_000) }

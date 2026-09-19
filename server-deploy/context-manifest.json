@@ -124,8 +124,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/AccountCoreLauncher.kt",
-      "bytes": 2000,
-      "sha256": "30f4125596b69fe0433ae3795966c2138d8b87d58fe5df0a82879e7404506a3c"
+      "bytes": 2290,
+      "sha256": "0541803822f5562e29497ae294a664baf8ae8da95bd746ab8edfbedfb3d93431"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/AccountPantryMain.kt",
@@ -1034,8 +1034,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/runtime/AccountCoreRuntime.kt",
-      "bytes": 8223,
-      "sha256": "117e8da718a994a64320de1643e823b45a0d6eaf2145b45d46e4029e5befd012"
+      "bytes": 8381,
+      "sha256": "a073362b7046c018ed05845c556ef092216050cb43321cb8763703fdddbcd63b"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/runtime/AccountCoreRuntimeResources.kt",
@@ -1049,8 +1049,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/runtime/DependencyHoldProbe.kt",
-      "bytes": 6985,
-      "sha256": "6bc3fb08940d234ef12a6e0fbd77d61fa7fa31312a8222b2abd292b5616dffdb"
+      "bytes": 8216,
+      "sha256": "66f3b2bceca0894f350e4a24600f7e47c9ba308ad5d83805c799472ce001180c"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/runtime/ServiceHealthMode.kt",
@@ -1498,7 +1498,7 @@
       "sha256": "e014ab416128d6061df6183ea8723b0879287ac129d93e025846dfa04d033d3b"
     }
   ],
-  "totalBytes": 5666558,
+  "totalBytes": 5668237,
   "limitations": [
     "Source snapshot only; no container build or deployment was performed.",
     "Third-party image selection, dependency authenticity and live configuration require separate review."

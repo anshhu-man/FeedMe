@@ -91587,14 +91587,14 @@
     },
     {
       "path": "Reference/BACKEND_DEPLOYMENT.md",
-      "bytes": 12403,
-      "sha256": "404ce12f40faf966adc0955144105c05cf972822a99dcec36d7c970ec3543de2",
+      "bytes": 13352,
+      "sha256": "fcec1916c5dfd09b8cad17473185ff081e677c7db5d5a1bb5e1ead2b8ec6f8d6",
       "mode": 420
     },
     {
       "path": "Reference/BACKEND_OPERATIONS.md",
-      "bytes": 14344,
-      "sha256": "324919f07e069f4dd4d2f445ee139e8a98c5fa1dc4e48462e2ba8462ffc25507",
+      "bytes": 15091,
+      "sha256": "4bb1753a86b73b5ac7589888153f2f1bd90a59541d3f28f8afb6b52427115910",
       "mode": 420
     },
     {
@@ -91744,7 +91744,7 @@
     {
       "path": "server-deploy/context-manifest.json",
       "bytes": 63032,
-      "sha256": "c0bc25a984c0588012cc2bd0f00b7558733ca9fd125eec6e1f48dc7f12303e61",
+      "sha256": "6bd135ee32f65bf0d46f24c29479b9a6594e3911fb1d8a43606ffa195a8ed74f",
       "mode": 420
     },
     {
@@ -91875,8 +91875,8 @@
     },
     {
       "path": "server-deploy/feedme/server/src/main/kotlin/com/feedme/server/AccountCoreLauncher.kt",
-      "bytes": 2000,
-      "sha256": "30f4125596b69fe0433ae3795966c2138d8b87d58fe5df0a82879e7404506a3c",
+      "bytes": 2290,
+      "sha256": "0541803822f5562e29497ae294a664baf8ae8da95bd746ab8edfbedfb3d93431",
       "mode": 420
     },
     {
@@ -92955,8 +92955,8 @@
     },
     {
       "path": "server-deploy/feedme/server/src/main/kotlin/com/feedme/server/runtime/AccountCoreRuntime.kt",
-      "bytes": 8223,
-      "sha256": "117e8da718a994a64320de1643e823b45a0d6eaf2145b45d46e4029e5befd012",
+      "bytes": 8381,
+      "sha256": "a073362b7046c018ed05845c556ef092216050cb43321cb8763703fdddbcd63b",
       "mode": 420
     },
     {
@@ -93585,8 +93585,8 @@
     },
     {
       "path": "server-deploy/feedme/server/src/main/kotlin/com/feedme/server/runtime/DependencyHoldProbe.kt",
-      "bytes": 6985,
-      "sha256": "6bc3fb08940d234ef12a6e0fbd77d61fa7fa31312a8222b2abd292b5616dffdb",
+      "bytes": 8216,
+      "sha256": "66f3b2bceca0894f350e4a24600f7e47c9ba308ad5d83805c799472ce001180c",
       "mode": 420
     }
   ],

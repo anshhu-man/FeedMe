@@ -15,6 +15,16 @@ import kotlinx.coroutines.runInterruptible
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.withTimeoutOrNull
 
+/** Constant labels only. Never derive diagnostics from configuration or a Throwable. */
+internal enum class DependencyHoldStartupStage(val diagnostic: String) {
+    CONFIGURATION("configuration"),
+    MIGRATION_HISTORY("migration-history"),
+    DATABASE_AUTHORITY("database-authority"),
+    PUBLIC_SIGNING_KEYS("public-signing-keys"),
+    PROBE_DEADLINE("probe-deadline"),
+    LISTENER("listener"),
+}
+
 /** Coarse operational observation only. No product assembly, provider user rows, account
  * grants or readiness. One nonqueued caller, bounded attempts, no positive health cache. */
 internal class DependencyHoldProbe(
@@ -22,25 +32,35 @@ internal class DependencyHoldProbe(
     private val keyMaterial: suspend () -> Boolean,
     private val closeResources: () -> Unit = {},
     private val nanos: () -> Long = System::nanoTime,
+    private val migrationHistory: suspend () -> Unit = {},
 ) : AutoCloseable {
     private val admission = Semaphore(1)
     private val closed = java.util.concurrent.atomic.AtomicBoolean()
     private var lastAttempt: Long? = null
 
-    suspend fun available(): Boolean {
+    suspend fun available(onStartupStage: (DependencyHoldStartupStage) -> Unit = {}): Boolean {
         if (closed.get() || !admission.tryAcquire()) return false
         try {
             if (closed.get()) return false
             val now = nanos()
             if (lastAttempt?.let { now - it < 1_000_000_000L } == true) return false
             lastAttempt = now
-            return withTimeoutOrNull(PROBE_BUDGET_MILLIS) {
+            val observed = withTimeoutOrNull(PROBE_BUDGET_MILLIS) {
+                onStartupStage(DependencyHoldStartupStage.MIGRATION_HISTORY)
+                migrationHistory()
+                onStartupStage(DependencyHoldStartupStage.DATABASE_AUTHORITY)
                 metadata()
+                onStartupStage(DependencyHoldStartupStage.PUBLIC_SIGNING_KEYS)
                 if (closed.get() || !keyMaterial()) false else {
                     // Recheck current DB review/shape after network I/O, without holding DB locks.
+                    onStartupStage(DependencyHoldStartupStage.MIGRATION_HISTORY)
+                    migrationHistory()
+                    onStartupStage(DependencyHoldStartupStage.DATABASE_AUTHORITY)
                     metadata(); !closed.get()
                 }
-            } == true
+            }
+            if (observed == null) onStartupStage(DependencyHoldStartupStage.PROBE_DEADLINE)
+            return observed == true
         } catch (failure: CancellationException) { throw failure }
           catch (failure: InterruptedException) { Thread.currentThread().interrupt(); throw failure }
           catch (_: Exception) { return false }
@@ -66,11 +86,14 @@ internal class DependencyHoldProbe(
                 val verifier = SupabaseUserAccessVerifier(config.deployment.verification, keys, clock)
                 return DependencyHoldProbe(metadata = {
                     runInterruptible(dispatcher) {
-                        check(PlatformMigrations(database).inspect().status == PlatformMigrationInspectionStatus.CURRENT)
                         inspectHeldDatabase(database, authority)
                     }
                 }, keyMaterial = verifier::keyMaterialAvailable, closeResources = {
                     try { authority.close() } finally { keys.close() }
+                }, migrationHistory = {
+                    runInterruptible(dispatcher) {
+                        check(PlatformMigrations(database).inspect().status == PlatformMigrationInspectionStatus.CURRENT)
+                    }
                 })
             } catch (failure: Throwable) {
                 val failures = mutableListOf(failure)

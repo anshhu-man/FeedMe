@@ -1,6 +1,22 @@
 # Backend deployment source — 19 September 2026 IST
 
-## Current dependency-hold source increment — not deployed to Render
+## Current Render connection attempt — 19 September 2026 UTC
+
+The operator explicitly approved uploading the existing restricted runtime
+credential to `feedme-api-preview` and deploying only the closed connection check.
+That approval supersedes the earlier local-only decision; it does not authorize
+public product access, new database migrations/grants or paid infrastructure.
+The three saved Render values were compared in memory with the protected local
+import and matched exactly. No credential is included in this repository.
+
+Deployment `dep-damtvluk1f9s73eni430` at commit `4d4f559` built successfully
+(2m9s, 17 tasks), but exited during startup and was not accepted as live.
+The following source change adds constant-name startup failure stages only:
+no exception messages, configuration values or database contents are logged.
+All existing checks and the closed public-request boundary remain unchanged.
+The database remains on V032; unfinished V033/V034 feature work is not included.
+
+## Previous dependency-hold source increment — historical
 
 The curated backend bundle now contains **299 build inputs (5,666,558 bytes)**.
 Its [context manifest](../server-deploy/context-manifest.json) SHA-256 is
@@ -30,8 +46,8 @@ configuration, credential, `.local` file, APK or raw test evidence is exported.
 The 8,319 historical full-app source copies and generated reference lists remain
 unchanged; this is not a mobile release or a refreshed full-app snapshot.
 
-The operator has chosen to keep the database credential local for now. No connected
-Render deployment is authorized or claimed; the existing unconfigured preview is unchanged.
+The earlier local-only decision applied at this checkpoint. It is superseded only
+by the narrow closed-deployment approval recorded above.
 
 ## Preceding Terms-recovery checkpoint (historical)
 
