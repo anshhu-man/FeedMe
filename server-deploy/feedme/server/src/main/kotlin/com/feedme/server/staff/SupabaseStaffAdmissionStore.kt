@@ -57,7 +57,10 @@ internal class SupabaseStaffAdmissionStore(
                 put("screens", JsonArray(buildList {
                     add(JsonPrimitive("ADMIN_HOME"))
                     if (policy.catalogDraftsEnabled && (observed.canPublish || observed.canReview)) add(JsonPrimitive("ADMIN_RECIPE"))
-                    if (policy.catalogReviewsEnabled && (observed.canPublish || observed.canReview)) add(JsonPrimitive("ADMIN_REVIEW"))
+                    if (policy.catalogReviewsEnabled && (observed.canPublish || observed.canReview)) {
+                        add(JsonPrimitive("ADMIN_REVIEW"))
+                        add(JsonPrimitive("ADMIN_SUBSTITUTION"))
+                    }
                     if (policy.moderationEnabled && observed.canModerate) {
                         add(JsonPrimitive("ADMIN_REPORTS")); add(JsonPrimitive("ADMIN_CASE")); add(JsonPrimitive("ADMIN_AUDIT"))
                     }

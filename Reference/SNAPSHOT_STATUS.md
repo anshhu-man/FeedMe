@@ -2,7 +2,7 @@
 
 **23 September backend-only addendum:** [current server deployment source](BACKEND_DEPLOYMENT.md)
 is separately packaged under `server-deploy/` with its own current 556-file /
-8,571,006-byte manifest and locked 207-operation server contract. Its offline
+8,571,119-byte manifest and locked 207-operation server contract. Its offline
 JDK 17 release-scope/server-distribution build passes, and its publication scan
 passes all 557 files. The top-level full-app/source-copy checkpoint described
 below remains historical and unchanged; the public inventory additionally records
@@ -11,6 +11,8 @@ V088-ready, while Render still runs the historical closed V032 image. No refresh
 APK, native acceptance, production API readiness or store publication is implied.
 Current direction is Google Play first with Shipaton paused; Supabase/Render
 technical direction is approved but current configuration/acceptance remains open.
+The latest server-only delta adds a screen-scoped `ADMIN_SUBSTITUTION` admission
+projection; it does not activate a live staff console or substitution handlers.
 
 **19 September IST — current server-only historical Terms-receipt recovery:**
 the 297-input bundle is 5,650,097 bytes; context-manifest SHA256

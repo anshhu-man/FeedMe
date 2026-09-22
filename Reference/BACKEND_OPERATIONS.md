@@ -13,6 +13,11 @@ V088, and the restricted `feedme_api` role has passed its exact current-core ACL
 check. Public Supabase settings also report Google OAuth enabled, email enabled,
 anonymous sign-in disabled, signup open and mail auto-confirm disabled.
 
+The latest source-only increment projects `ADMIN_SUBSTITUTION` in staff admission
+only when catalog reviews are enabled and the already-authorized actor has a
+catalog role. It adds no accepting HTTP handler, role, credential or deployed
+staff configuration. The exact handoff remains fail-closed at runtime.
+
 These facts do not make the API live. The Render service remains on the old
 closed V032 dependency-hold image. The current account runtime configuration,
 session-policy review, OAuth mobile return, content, legal/deletion operation and

@@ -2059,8 +2059,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/staff/SupabaseStaffAdmissionStore.kt",
-      "bytes": 23510,
-      "sha256": "58933cb0ecd43c7ae276c4f222e59f663c6092e3510353b30858f1629c2f7b4e"
+      "bytes": 23623,
+      "sha256": "9f34b92c11b9c5af071d376668a13cd1fdc3219aa054b6839c637c891f451776"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/staff/SupabaseStaffModerationServingCompatibility.kt",
@@ -2783,7 +2783,7 @@
       "sha256": "5e17e5ce6ea0a96b35adf873261ebed147bd4ac0e43d4f0ac9da53ea4bf0d6ff"
     }
   ],
-  "totalBytes": 8571006,
+  "totalBytes": 8571119,
   "limitations": [
     "Source snapshot only; no container build or deployment was performed.",
     "Third-party image selection, dependency authenticity and live configuration require separate review."
