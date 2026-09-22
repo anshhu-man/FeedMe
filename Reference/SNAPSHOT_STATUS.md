@@ -1,13 +1,14 @@
 # Development snapshot — 15 September 2026
 
 **23 September backend-only addendum:** [current server deployment source](BACKEND_DEPLOYMENT.md)
-is separately packaged under `server-deploy/` with its own current 556-file /
-8,571,796-byte manifest and locked 207-operation server contract. Its offline
+is separately packaged under `server-deploy/` with its own current 557-input /
+8,631,681-byte manifest and locked 207-operation server contract. Its offline
 JDK 17 release-scope/server-distribution build passes, and its publication scan
-passes all 557 files. The top-level full-app/source-copy checkpoint described
+passes all 558 files. The top-level full-app/source-copy checkpoint described
 below remains historical and unchanged; the public inventory additionally records
-the refreshed bundle and these reference updates. Hosted Supabase is separately
-V088-ready, while Render still runs the historical closed V032 image. No refreshed
+the refreshed bundle and these reference updates. The V089 source adds guarded
+cleanup for never-dispatched exact-owner account exports; hosted Supabase remains
+V088, while Render still runs the historical closed V032 image. No refreshed
 APK, native acceptance, production API readiness or store publication is implied.
 Current direction is Google Play first with Shipaton paused; Supabase/Render
 technical direction is approved but current configuration/acceptance remains open.

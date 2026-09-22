@@ -36,7 +36,7 @@ internal object NotificationInboxServingCompatibility {
             // This shared erasure capability is replaced as later reviewed account-
             // deletion slices are added. Pin the current body, not the migration that
             // originally introduced Inbox, or a fully current schema is rejected.
-            function(c, "identity.account_erasure_delete_allowed(oid,text,uuid,uuid)", "boolean", sources.getValue(88), "\$feedme_core_allowed\$")
+            function(c, "identity.account_erasure_delete_allowed(oid,text,uuid,uuid)", "boolean", sources.getValue(89), "\$feedme_core_allowed\$")
             for ((table, name, type) in triggers) c.prepareStatement("""SELECT tgtype,tgenabled,NOT tgisinternal,
                 tgfoid='platform.guard_notification_inbox()'::regprocedure,tgqual IS NULL,tgnargs=0,tgattr::text=''
                 FROM pg_catalog.pg_trigger WHERE tgrelid=?::regclass AND tgname=?""").use { s ->
@@ -91,6 +91,7 @@ internal object NotificationInboxServingCompatibility {
             75 to "/db/migration/V075__account_notification_inbox.sql",
             76 to "/db/migration/V076__notification_inbox_erasure_inventory.sql",
             88 to "/db/migration/V088__reaction_actor_erasure.sql",
+            89 to "/db/migration/V089__never_dispatched_export_erasure.sql",
         )
             .mapValues { (_, path) -> checkNotNull(NotificationInboxServingCompatibility::class.java.getResourceAsStream(path)).use { it.readBytes().decodeToString() } }
     }

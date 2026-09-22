@@ -1,5 +1,5 @@
 -- Fixed account-core runtime privileges. Apply only inside an installer-owned transaction
--- AFTER verified V001--V088 and the exact managed Auth projector installation. No roles,
+-- AFTER verified V001--V089 and the exact managed Auth projector installation. No roles,
 -- passwords, provider grants, policies, default privileges or database connections are
 -- created here. The installer separately controls CONNECT on its exact selected database.
 -- This is not an ACL reset: reject unexpected inherited/PUBLIC/existing privileges before
@@ -81,8 +81,8 @@ BEGIN
         RAISE EXCEPTION 'Accepted account media capture boundary is not installed';
     END IF;
     IF NOT EXISTS (SELECT 1 FROM platform.schema_migrations
-        WHERE version=88 AND checksum='fad15605c0c1be6c21b31b04d950413fa66baa46a4111f413372b4db1b80e81f') THEN
-        RAISE EXCEPTION 'Reaction actor erasure boundary is not installed';
+        WHERE version=89 AND checksum='da4f0903499b3257c97bc8a9f2f86159e0f78a0a9ef8b6a205ebd11cca87dc5f') THEN
+        RAISE EXCEPTION 'Never-dispatched export erasure boundary is not installed';
     END IF;
 END;
 $feedme$;
@@ -103,6 +103,7 @@ LOCK TABLE ONLY catalog.ingredient_heads, ONLY catalog.ingredient_releases,
     ONLY erasure.media_source_deletions, ONLY erasure.media_source_observations,
     ONLY erasure.media_source_captures,
     ONLY social.post_reactions, ONLY platform.account_reaction_notifications,
+    ONLY platform.account_export_jobs, ONLY platform.account_export_artifacts,
     ONLY platform.outbox, ONLY profile.onboarding_decisions, ONLY planning.plans,
     ONLY cooking.step_events, ONLY memory.collection_items, ONLY memory.save_commands
     IN ROW EXCLUSIVE MODE;
@@ -533,7 +534,7 @@ BEGIN
         END IF;
     END LOOP;
     FOR expected IN SELECT * FROM (VALUES
-        ('identity.account_erasure_delete_allowed(oid,text,uuid,uuid)',4,'pg_catalog.bool','d1846fa7d024e467eaa6066f3a7637ec3ce54fd3b929bb754785267daa68b03e'),
+        ('identity.account_erasure_delete_allowed(oid,text,uuid,uuid)',4,'pg_catalog.bool','338d951b6492cb7687d71ad32bc6fc220f0a028139587e7cb38b3c0ad2352d39'),
         ('social.protect_post_reaction_history()',0,'pg_catalog.trigger','43e91a4dfda213b272fd587c69ade48f2eacedccdad4819ab2bdd59ae12c6d7d'),
         ('platform.guard_reaction_notification()',0,'pg_catalog.trigger','9868586627d80c1d1dbe384d0b4193c48eda21a121d813aaa7646f56dac1e249'),
         ('profile.keep_onboarding_decision_immutable()',0,'pg_catalog.trigger','a54640ac9019bf9410723ea6d57951e4a258c4490cca098dde128ad6d716cfc0'),
@@ -544,7 +545,7 @@ BEGIN
         ('planning.guard_account_manifest_erasure()',0,'pg_catalog.trigger','08f5bb3adeeaf4112d9c2297557b165364aa6676900fd5cd9ac11abca3f60c1a'),
         ('planning.guard_account_manifest_owner_insert()',0,'pg_catalog.trigger','5420705ceebfd5e48997a575878f098838202b1ea352ca298b2daaa057b8d2c1'),
         ('platform.guard_account_draft_owner_write()',0,'pg_catalog.trigger','3aeb70fc0c2a911555d59c17d414f8807d19a9eaf1249f608e12177e35287128'),
-        ('identity.purge_account_core(text,uuid,uuid,bigint)',4,'pg_catalog.text','bc80a7e95febf2db06d5d26e3e68e2500c14f48c725a52d614890816b81d4bd5')
+        ('identity.purge_account_core(text,uuid,uuid,bigint)',4,'pg_catalog.text','85a7e0cdcba5ad9abdbc8a49cfc02e7efa85b2450b29dbc24c74baebab83c446')
     ) AS wanted(signature,argument_count,return_type,body_sha256) LOOP
         SELECT p.*,l.lanname,(o.rolsuper OR o.rolbypassrls) AS bypass INTO STRICT actual
             FROM pg_catalog.pg_proc p JOIN pg_catalog.pg_language l ON l.oid=p.prolang
@@ -564,6 +565,25 @@ BEGIN
         END IF;
     END LOOP;
     FOR expected IN SELECT * FROM (VALUES
+        ('platform.guard_account_export_jobs()','platform.account_export_jobs','535e46b390fa48a1acdf6cf0796688486f0b7e7ea05f286d11437b6e138dc60b'),
+        ('platform.guard_account_export_artifacts()','platform.account_export_artifacts','260ad9e7d29d6012df45b8064964ff16f44694ad1b84aeb4defddd4729c42881')
+    ) AS wanted(signature,table_name,body_sha256) LOOP
+        SELECT p.*,l.lanname,t.relowner AS table_owner INTO STRICT actual
+            FROM pg_catalog.pg_proc p JOIN pg_catalog.pg_language l ON l.oid=p.prolang
+            JOIN pg_catalog.pg_class t ON t.oid=expected.table_name::pg_catalog.regclass
+            WHERE p.oid=expected.signature::pg_catalog.regprocedure;
+        IF actual.proowner<>actual.table_owner OR actual.prosecdef OR actual.pronargs<>0
+            OR actual.prokind<>'f' OR actual.proretset
+            OR actual.prorettype<>'pg_catalog.trigger'::pg_catalog.regtype OR actual.lanname<>'plpgsql'
+            OR actual.proconfig IS DISTINCT FROM ARRAY['search_path=pg_catalog, pg_temp']::text[]
+            OR pg_catalog.encode(pg_catalog.sha256(pg_catalog.convert_to(actual.prosrc,'UTF8')),'hex')<>expected.body_sha256
+            OR pg_catalog.has_function_privilege(api_oid,actual.oid,'EXECUTE')
+            OR EXISTS (SELECT 1 FROM pg_catalog.aclexplode(COALESCE(actual.proacl,pg_catalog.acldefault('f',actual.proowner))) a
+                WHERE a.grantee<>actual.proowner) THEN
+            RAISE EXCEPTION 'Account export erasure guard differs from reviewed source or boundary';
+        END IF;
+    END LOOP;
+    FOR expected IN SELECT * FROM (VALUES
         ('profile.onboarding_decisions','onboarding_decision_immutable','profile.keep_onboarding_decision_immutable()',27),
         ('identity.device_reconnections','device_reconnection_immutable','identity.keep_device_reconnection_immutable()',27),
         ('identity.device_reconnections','device_reconnection_retained','identity.keep_device_reconnection_immutable()',34),
@@ -579,6 +599,10 @@ BEGIN
         ('social.post_reactions','post_reaction_history_truncate','social.protect_post_reaction_history()',34),
         ('platform.account_reaction_notifications','account_reaction_notification_write','platform.guard_reaction_notification()',31),
         ('platform.account_reaction_notifications','account_reaction_notification_retained','platform.guard_reaction_notification()',34),
+        ('platform.account_export_jobs','account_export_jobs_guard','platform.guard_account_export_jobs()',31),
+        ('platform.account_export_jobs','account_export_jobs_truncate','platform.guard_account_export_jobs()',34),
+        ('platform.account_export_artifacts','account_export_artifacts_guard','platform.guard_account_export_artifacts()',31),
+        ('platform.account_export_artifacts','account_export_artifacts_truncate','platform.guard_account_export_artifacts()',34),
         ('identity.account_erasure_work','account_core_erasure_checkpoint','identity.guard_account_core_erasure_checkpoint()',19),
         ('identity.account_erasure_work','account_core_erasure_checkpoint_delete','identity.guard_account_core_erasure_checkpoint()',11),
         ('identity.account_erasure_work','account_core_erasure_checkpoint_retained','identity.guard_account_core_erasure_checkpoint()',34)

@@ -261,5 +261,6 @@ class PlatformMigrations(private val dataSource: DataSource) {
             .plus("/db/migration/V086__reaction_notification_erasure_inventory.sql")
             .plus("/db/migration/V087__staff_moderation_audit_reader.sql")
             .plus("/db/migration/V088__reaction_actor_erasure.sql")
+            .plus("/db/migration/V089__never_dispatched_export_erasure.sql")
     }
 }

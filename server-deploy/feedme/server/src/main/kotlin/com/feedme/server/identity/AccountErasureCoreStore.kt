@@ -184,6 +184,7 @@ internal class AccountErasureCoreStore(internal val environment: String, interna
             85 to "/db/migration/V085__reaction_notifications.sql",
             86 to "/db/migration/V086__reaction_notification_erasure_inventory.sql",
             88 to "/db/migration/V088__reaction_actor_erasure.sql",
+            89 to "/db/migration/V089__never_dispatched_export_erasure.sql",
         ).mapValues { (_, path) ->
             checkNotNull(AccountErasureCoreStore::class.java.getResourceAsStream(path)).use { it.readBytes() }
         }
@@ -193,8 +194,12 @@ internal class AccountErasureCoreStore(internal val environment: String, interna
             val securityDefiner: Boolean = true,
             val configuration: Set<String>? = setOf("search_path=pg_catalog, pg_temp", "row_security=off"))
         private val functions = listOf(
-            Function("identity.purge_account_core(text,uuid,uuid,bigint)", "feedme_core_purge", "text", 88),
-            Function("identity.account_erasure_delete_allowed(oid,text,uuid,uuid)", "feedme_core_allowed", "boolean", 88),
+            Function("identity.purge_account_core(text,uuid,uuid,bigint)", "feedme_core_purge", "text", 89),
+            Function("identity.account_erasure_delete_allowed(oid,text,uuid,uuid)", "feedme_core_allowed", "boolean", 89),
+            Function("platform.guard_account_export_jobs()", "feedme_export_jobs", "trigger", 89,
+                securityDefiner = false, configuration = setOf("search_path=pg_catalog, pg_temp")),
+            Function("platform.guard_account_export_artifacts()", "feedme_export_artifacts", "trigger", 89,
+                securityDefiner = false, configuration = setOf("search_path=pg_catalog, pg_temp")),
             Function("social.protect_post_reaction_history()", "feedme_reaction_history", "trigger", 88),
             Function("platform.guard_reaction_notification()", "feedme_reaction_notification", "trigger", 88),
             Function("profile.guard_notification_settings()", "feedme_notification_settings", "trigger", 60),
@@ -215,6 +220,10 @@ internal class AccountErasureCoreStore(internal val environment: String, interna
             Function("social.guard_recipe_request_message()", "feedme_recipe_message_guard", "trigger", 54),
         )
         private val guards = listOf(
+            Triple("platform.account_export_jobs", "platform.guard_account_export_jobs()", 31),
+            Triple("platform.account_export_jobs", "platform.guard_account_export_jobs()", 34),
+            Triple("platform.account_export_artifacts", "platform.guard_account_export_artifacts()", 31),
+            Triple("platform.account_export_artifacts", "platform.guard_account_export_artifacts()", 34),
             Triple("social.post_reactions", "social.protect_post_reaction_history()", 31),
             Triple("social.post_reactions", "social.protect_post_reaction_history()", 34),
             Triple("platform.account_reaction_notifications", "platform.guard_reaction_notification()", 31),

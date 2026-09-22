@@ -47,7 +47,7 @@ internal class AccountErasureReceiptOwnership(environment: String, accountId: UU
                 "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
         )
 
-        /** Closed source-reviewed writers through V088; canonical API existence alone is not
+        /** Closed source-reviewed writers through V089; canonical API existence alone is not
          * evidence of a deployed receipt producer or its account/private ID namespace.
          * Guest reconstructions/MakeAgain use the same private operation names with the guest
          * tag. No production STAFF CommandIdentity writer was found; staff uses separate ledgers.
@@ -71,6 +71,11 @@ internal class AccountErasureReceiptOwnership(environment: String, accountId: UU
             // after their full row/event dependency inventory passes.
             for (operation in listOf("markNotificationRead", "markNotificationsRead", "setReaction", "removeReaction"))
                 put(operation, OperationFamily.ACCOUNT_CORE)
+
+            // export/AccountExportStore. V089 admits only jobs/artifacts that never
+            // crossed the durable upload-dispatch marker; dispatched inventory still
+            // holds independently of this pure command-namespace classification.
+            put("requestAccountExport", OperationFamily.ACCOUNT_CORE)
 
             // kitchen/KitchenStore.kt; planning/PlansStore.kt, DerivedPlanMaterial.kt,
             // RootRecipePlanMaterial.kt; cooking/CookingStore.kt; memory/SavedRecipeStore.kt,
@@ -96,7 +101,7 @@ internal class AccountErasureReceiptOwnership(environment: String, accountId: UU
                 "prepareMediaUpload", "completeMediaUpload", "deleteDraftMedia",
                 "publishPost", "updatePost", "deletePost",
                 "blockUser", "unblockUser", "createReport", "createThread", "sendMessage", "markThreadRead",
-                "requestRecipe", "respondToRecipeRequest", "cancelRecipeRequest", "requestAccountExport",
+                "requestRecipe", "respondToRecipeRequest", "cancelRecipeRequest",
             )) put(operation, OperationFamily.ACCOUNT_UNSUPPORTED)
         }
 

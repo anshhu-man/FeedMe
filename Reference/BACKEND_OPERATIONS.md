@@ -7,11 +7,18 @@ test/evidence directory is included here.
 
 ## Current source/runtime boundary — 23 September 2026 IST
 
-The public source handoff now contains the exact current V001–V088 server closure
+The public source handoff now contains the exact current V001–V089 server closure
 and compiles offline with JDK 17. Hosted Supabase is independently current through
 V088, and the restricted `feedme_api` role has passed its exact current-core ACL
 check. Public Supabase settings also report Google OAuth enabled, email enabled,
 anonymous sign-in disabled, signup open and mail auto-confirm disabled.
+
+V089 is source-only. It permits the deletion worker to remove a private account
+export only before any durable object-store write attempt, with exact command,
+receipt and owned-event lineage. Any dispatch/verification marker, foreign owner
+or malformed/duplicate lineage fails closed. Focused PostgreSQL and ACL checks
+pass, but the hosted database has not received V089. Do not deploy this source
+against the hosted V088 schema.
 
 The latest source-only increment aligns the protected Render-environment exporter
 with the actual runtime parser for optional Supabase media and account-export

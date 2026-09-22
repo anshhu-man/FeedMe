@@ -1,13 +1,20 @@
 # Backend deployment source
 
-## Current V088 source handoff — 23 September 2026 IST
+## Current V089 source handoff — 23 September 2026 IST
 
 The credential-free [`server-deploy/`](../server-deploy/) handoff is refreshed
-from the current production source closure: **556 build inputs / 8,571,796
-bytes**, all **V001–V088** application migrations, the locked 207-operation
+from the current production source closure: **557 build inputs / 8,631,681
+bytes**, all **V001–V089** application migrations, the locked 207-operation
 server contract, public build metadata, reviewed Dockerfile and pinned public
 Supabase CA. Its context-manifest SHA-256 is
-`734e7df5040cd61f742ed8b306538b7c27cb0eaae328821a88e8527acd0b1064`.
+`4713f08970949e9fad07c8fdabc00d298f2de6a341187a377da7a97d85237d01`.
+
+V089 adds only exact-owner deletion of account-export data that never crossed a
+durable upload-dispatch or verification marker. Dispatched, verified, foreign,
+duplicated or malformed export history remains a deletion hold. Direct DELETE
+and TRUNCATE stay denied, and the ordinary API receives no erasure privilege.
+The source passed 6 core-erasure and 15 runtime-role real PostgreSQL methods, 11
+receipt-ownership methods and 15 current-core package/ACL checks.
 
 The production-source delta from the preceding V088 handoff closes a protected
 configuration-export mismatch. The packaged validator now accepts the same
@@ -28,17 +35,19 @@ verified temporary export apart from ignored local build caches. An offline JDK
 `:verifyReleaseScope :server:installDist`: 44 included and 10 deferred features,
 all 98 canonical screens retained, dependency inventory accepted, 208 schemas /
 160 paths / 207 operations contract-locked, and all 17 requested Gradle tasks
-executed. The publication scanner passes all 557 files. Separately, 11 focused
+executed. The publication scanner passes all 558 files. Separately, 11 focused
 Kotlin validator checks and 15 protected-export checks pass, including the actual
 packaged Kotlin validator.
 
 No credential, cursor key, AI token, private Android configuration, signing
 material, build output or local evidence is included. This is a buildable source
-handoff, not a container image or live deployment. Hosted Supabase is separately
+handoff, not a container image or live deployment. Hosted Supabase remains
 current through V088, but the existing Render preview still runs the historical
 closed V032 dependency-hold revision. Current reviewed runtime configuration,
 provider/session-policy approval, recipe content and connected end-to-end
 acceptance remain required before replacing that service or calling the API live.
+Do not deploy this V089 source until the controlled hosted V089 database rollout
+and postflight are complete.
 
 ## Current Render connection attempt — 19 September 2026 UTC
 

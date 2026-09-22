@@ -459,8 +459,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/db/PlatformMigrations.kt",
-      "bytes": 16009,
-      "sha256": "4f1cd7edb293573cb101998e9cc46c134c820c586c7cb649d473d52beab6359f"
+      "bytes": 16086,
+      "sha256": "aeb73aeedfb88b9a5a22bd898704f87e5cb688b2903c7eb8a375347add18b1d3"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/export/AccountExportDownloadService.kt",
@@ -484,8 +484,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/export/AccountExportServingCompatibility.kt",
-      "bytes": 3297,
-      "sha256": "bfc4e83014645da29553ece9b4d3edb203c45580193a0fd32c60e66685def767"
+      "bytes": 6270,
+      "sha256": "4046a1b671e6af19e071d97c057df4128424045e047349f264bca9cfd62879bf"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/export/AccountExportStore.kt",
@@ -1119,13 +1119,13 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/AccountErasureCoreStore.kt",
-      "bytes": 21852,
-      "sha256": "51f6778e294b7876c2270ec830e81a27693263b2cb1e5377f6901db9a76dafe7"
+      "bytes": 22739,
+      "sha256": "514d02e57bf92fbab92e483b0b80ba5a7155a3bfb7e0d77d0c6b0920db3f0ade"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/AccountErasureReceiptOwnership.kt",
-      "bytes": 7071,
-      "sha256": "e716e9e822e859d3fd1465e76af3f9f3b4b1522c96e9871cce9d7173d5a56cdc"
+      "bytes": 7371,
+      "sha256": "0a8c4d6fa86c092f0208e6f8a639d836cc808d62fc5345e615fd021952f0ee57"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/AccountErasureWorkStore.kt",
@@ -1209,8 +1209,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/NotificationInboxServingCompatibility.kt",
-      "bytes": 7983,
-      "sha256": "e2b841ade283fcdd2d513e10ff65b1561abfa97466935c89d650e83f211a0a8d"
+      "bytes": 8060,
+      "sha256": "86a31cccc72ceaab0d77865fffc456a8c4ca53ecb5ac86b9f5f70a5554d9dcfa"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/NotificationServingCompatibility.kt",
@@ -2563,14 +2563,19 @@
       "sha256": "fad15605c0c1be6c21b31b04d950413fa66baa46a4111f413372b4db1b80e81f"
     },
     {
+      "path": "feedme/server/src/main/resources/db/migration/V089__never_dispatched_export_erasure.sql",
+      "bytes": 53413,
+      "sha256": "da4f0903499b3257c97bc8a9f2f86159e0f78a0a9ef8b6a205ebd11cca87dc5f"
+    },
+    {
       "path": "feedme/server/src/main/resources/db/provider/feedme-account-deletion-serving-grants.sql",
       "bytes": 11845,
       "sha256": "07c5a01338fabf2678a458b71ab9a9b0c9527efebc3ea75e3279444c9b8b6c1e"
     },
     {
       "path": "feedme/server/src/main/resources/db/provider/feedme-runtime-grants.sql",
-      "bytes": 64118,
-      "sha256": "0a276114800375babcae6de71f79d0988dd291d13d1a705505626432117b469d"
+      "bytes": 66276,
+      "sha256": "ece860c702aacd2bfedaf9666f10c149fad74e0593465e04bf51579153ecf1c2"
     },
     {
       "path": "feedme/server/src/main/resources/db/provider/supabase-authority.sql",
@@ -2783,7 +2788,7 @@
       "sha256": "5e17e5ce6ea0a96b35adf873261ebed147bd4ac0e43d4f0ac9da53ea4bf0d6ff"
     }
   ],
-  "totalBytes": 8571796,
+  "totalBytes": 8631681,
   "limitations": [
     "Source snapshot only; no container build or deployment was performed.",
     "Third-party image selection, dependency authenticity and live configuration require separate review."
