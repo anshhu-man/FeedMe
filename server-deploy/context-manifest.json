@@ -379,8 +379,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/config/AccountRuntimeExportMain.kt",
-      "bytes": 4310,
-      "sha256": "06bdc1eb70240e6114e80e2a29293161c34f0b578eab7921a7477b3a2df86e6c"
+      "bytes": 4629,
+      "sha256": "755a976f945079593ae65a0456d3aa198f954f949f54d63988bb9dac2f7c0bfb"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/config/DependencyHoldConfig.kt",
@@ -2783,7 +2783,7 @@
       "sha256": "5e17e5ce6ea0a96b35adf873261ebed147bd4ac0e43d4f0ac9da53ea4bf0d6ff"
     }
   ],
-  "totalBytes": 8571119,
+  "totalBytes": 8571438,
   "limitations": [
     "Source snapshot only; no container build or deployment was performed.",
     "Third-party image selection, dependency authenticity and live configuration require separate review."

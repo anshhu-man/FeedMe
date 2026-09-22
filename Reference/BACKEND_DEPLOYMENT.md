@@ -3,17 +3,18 @@
 ## Current V088 source handoff — 23 September 2026 IST
 
 The credential-free [`server-deploy/`](../server-deploy/) handoff is refreshed
-from the current production source closure: **556 build inputs / 8,571,119
+from the current production source closure: **556 build inputs / 8,571,438
 bytes**, all **V001–V088** application migrations, the locked 207-operation
 server contract, public build metadata, reviewed Dockerfile and pinned public
 Supabase CA. Its context-manifest SHA-256 is
-`a1d07d64ba11d735f118feeabc7ae02c1cb01f0f773a9b0e6c36396c5f458240`.
+`cc2db96a122ccc56964d6a33160c5f17aadd9af0b3275628c1d9f700d6b24306`.
 
-The only production-source delta from the preceding V088 handoff is the guarded
-staff-admission projection for the original `ADMIN_SUBSTITUTION` screen. It is
-listed only when catalog reviews are enabled and the current actor already has a
-catalog role. This server-only handoff does not include or activate the browser
-staff client, live substitution handlers or staff runtime configuration.
+The production-source delta from the preceding V088 handoff closes a protected
+configuration-export mismatch. The packaged validator now accepts the same
+explicit optional Supabase media and account-export environment families as the
+actual runtime parser, and its redacted report separately exposes AI, media,
+account-export and account-deletion configuration status. No optional capability
+is defaulted or enabled; no credential value is reported or published.
 
 The exact copied tree passed byte-for-byte comparison with the independently
 verified temporary export apart from ignored local build caches. An offline JDK
@@ -21,9 +22,9 @@ verified temporary export apart from ignored local build caches. An offline JDK
 `:verifyReleaseScope :server:installDist`: 44 included and 10 deferred features,
 all 98 canonical screens retained, dependency inventory accepted, 208 schemas /
 160 paths / 207 operations contract-locked, and all 17 requested Gradle tasks
-executed. The publication scanner passed all 557 files after fixing a false
-positive that had treated lowercase HTTP user routes as macOS home paths; its
-focused suites pass 25/25.
+executed. The publication scanner passes all 557 files. Separately, 11 focused
+Kotlin validator checks and 15 protected-export checks pass, including the actual
+packaged Kotlin validator.
 
 No credential, cursor key, AI token, private Android configuration, signing
 material, build output or local evidence is included. This is a buildable source

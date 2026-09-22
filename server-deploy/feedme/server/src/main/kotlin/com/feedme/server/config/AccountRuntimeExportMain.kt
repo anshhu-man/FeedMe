@@ -21,7 +21,8 @@ fun main(args: Array<String>) {
 internal const val ACCOUNT_RUNTIME_EXPORT_MAX_BYTES = 131_072
 private const val EXPORT_REFUSAL = "{\"status\":\"config-invalid-local\",\"code\":\"ACCOUNT_RUNTIME_CONFIGURATION_REJECTED\"}"
 private val exportRequiredKeys = setOf("FEEDME_ACCOUNT_RUNTIME_CONFIG", "FEEDME_ACCOUNT_DB_PASSWORD", "FEEDME_ACCOUNT_CURSOR_KEYS")
-private val exportAllowedKeys = exportRequiredKeys + AccountMealIntentRuntimeConfig.ENVIRONMENT_KEYS + "PORT"
+private val exportAllowedKeys = exportRequiredKeys + AccountMealIntentRuntimeConfig.ENVIRONMENT_KEYS +
+    AccountMediaRuntimeConfig.ENVIRONMENT_KEYS + AccountExportRuntimeConfig.ENVIRONMENT_KEYS + "PORT"
 
 /** The clock seam is test-only; production always uses the actual UTC clock. This result
  * is neither current dependency health nor evidence that an operator reviewed these facts.
@@ -53,6 +54,9 @@ internal fun validateAccountRuntimeExport(bytes: ByteArray, clock: Clock): Strin
         put("cookingEnabled", config.newCookingEnabled)
         put("savedCopiesEnabled", config.newCopiesEnabled)
         put("aiConfigured", config.mealIntent != null)
+        put("mediaConfigured", config.media != null)
+        put("accountExportConfigured", config.exportPolicy != null && config.exportStorage != null)
+        put("accountDeletionConfigured", config.deletionRules != null)
         put("providerReviewValidUntil", config.deployment.validUntil.toString())
     }.toString()
 } catch (failure: InterruptedException) {
