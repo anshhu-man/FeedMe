@@ -20,6 +20,12 @@ deletion configuration instead of allowing an incomplete configuration to appear
 feature-complete. Optional files remain owner-only, exact and absent by default;
 this source contains none of their secret values and activates nothing.
 
+The same refresh corrects notification Inbox admission from the original V076
+erasure-helper body to the actual current V088 body. Without this correction, a
+correctly migrated V088 database could be refused during configured runtime
+startup. The public source compiles with this fix; no hosted setting, database
+row, runtime secret or notification state changed.
+
 These facts do not make the API live. The Render service is not verified on this
 source handoff and its public health endpoint returned no response bytes in the
 latest bounded observation. The current account runtime configuration,

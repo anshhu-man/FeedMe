@@ -3,11 +3,11 @@
 ## Current V088 source handoff — 23 September 2026 IST
 
 The credential-free [`server-deploy/`](../server-deploy/) handoff is refreshed
-from the current production source closure: **556 build inputs / 8,571,438
+from the current production source closure: **556 build inputs / 8,571,796
 bytes**, all **V001–V088** application migrations, the locked 207-operation
 server contract, public build metadata, reviewed Dockerfile and pinned public
 Supabase CA. Its context-manifest SHA-256 is
-`cc2db96a122ccc56964d6a33160c5f17aadd9af0b3275628c1d9f700d6b24306`.
+`734e7df5040cd61f742ed8b306538b7c27cb0eaae328821a88e8527acd0b1064`.
 
 The production-source delta from the preceding V088 handoff closes a protected
 configuration-export mismatch. The packaged validator now accepts the same
@@ -15,6 +15,12 @@ explicit optional Supabase media and account-export environment families as the
 actual runtime parser, and its redacted report separately exposes AI, media,
 account-export and account-deletion configuration status. No optional capability
 is defaulted or enabled; no credential value is reported or published.
+
+This refresh also fixes a current-schema admission mismatch in the optional
+notification Inbox. Its compatibility check now pins the shared account-erasure
+helper to the current V088 definition rather than the superseded V076 body. This
+is a startup/readiness correction only; it does not weaken erasure guards, enable
+notifications or complete account deletion.
 
 The exact copied tree passed byte-for-byte comparison with the independently
 verified temporary export apart from ignored local build caches. An offline JDK

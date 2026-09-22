@@ -33,7 +33,10 @@ internal object NotificationInboxServingCompatibility {
                 s.setString(1, table); s.executeQuery().use { check(it.next() && it.getBoolean(1) && !it.next()) }
             }
             function(c, "platform.guard_notification_inbox()", "trigger", sources.getValue(75), "\$feedme_notification_inbox\$")
-            function(c, "identity.account_erasure_delete_allowed(oid,text,uuid,uuid)", "boolean", sources.getValue(76), "\$feedme_core_allowed\$")
+            // This shared erasure capability is replaced as later reviewed account-
+            // deletion slices are added. Pin the current body, not the migration that
+            // originally introduced Inbox, or a fully current schema is rejected.
+            function(c, "identity.account_erasure_delete_allowed(oid,text,uuid,uuid)", "boolean", sources.getValue(88), "\$feedme_core_allowed\$")
             for ((table, name, type) in triggers) c.prepareStatement("""SELECT tgtype,tgenabled,NOT tgisinternal,
                 tgfoid='platform.guard_notification_inbox()'::regprocedure,tgqual IS NULL,tgnargs=0,tgattr::text=''
                 FROM pg_catalog.pg_trigger WHERE tgrelid=?::regclass AND tgname=?""").use { s ->
@@ -84,7 +87,11 @@ internal object NotificationInboxServingCompatibility {
         Triple("platform.idempotency", "INSERT", "principal_scope,operation_id,key,request_hash,state,expires_at"),
         Triple("platform.idempotency", "UPDATE", "state,response_code,response_json,response_etag,updated_at,expires_at,tombstoned_at"))
     private val sources by lazy {
-        mapOf(75 to "/db/migration/V075__account_notification_inbox.sql", 76 to "/db/migration/V076__notification_inbox_erasure_inventory.sql")
+        mapOf(
+            75 to "/db/migration/V075__account_notification_inbox.sql",
+            76 to "/db/migration/V076__notification_inbox_erasure_inventory.sql",
+            88 to "/db/migration/V088__reaction_actor_erasure.sql",
+        )
             .mapValues { (_, path) -> checkNotNull(NotificationInboxServingCompatibility::class.java.getResourceAsStream(path)).use { it.readBytes().decodeToString() } }
     }
     private fun hash(source: String) = MessageDigest.getInstance("SHA-256").digest(source.encodeToByteArray())

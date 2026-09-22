@@ -2,7 +2,7 @@
 
 **23 September backend-only addendum:** [current server deployment source](BACKEND_DEPLOYMENT.md)
 is separately packaged under `server-deploy/` with its own current 556-file /
-8,571,438-byte manifest and locked 207-operation server contract. Its offline
+8,571,796-byte manifest and locked 207-operation server contract. Its offline
 JDK 17 release-scope/server-distribution build passes, and its publication scan
 passes all 557 files. The top-level full-app/source-copy checkpoint described
 below remains historical and unchanged; the public inventory additionally records
@@ -13,7 +13,10 @@ Current direction is Google Play first with Shipaton paused; Supabase/Render
 technical direction is approved but current configuration/acceptance remains open.
 The latest server-only delta aligns the protected runtime exporter with optional
 media/account-export settings and reports deletion readiness explicitly. It does
-not include private settings or activate those capabilities.
+not include private settings or activate those capabilities. The same source-only
+refresh makes notification Inbox admission compare the current V088 shared
+erasure helper instead of the obsolete V076 body; no live service or notification
+delivery is claimed.
 
 **19 September IST — current server-only historical Terms-receipt recovery:**
 the 297-input bundle is 5,650,097 bytes; context-manifest SHA256

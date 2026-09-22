@@ -1209,8 +1209,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/NotificationInboxServingCompatibility.kt",
-      "bytes": 7625,
-      "sha256": "e6184d2b27a64323fa4cbb1bae39d48aa6ebd53f05e5f840b6dfdc8aa0f46c73"
+      "bytes": 7983,
+      "sha256": "e2b841ade283fcdd2d513e10ff65b1561abfa97466935c89d650e83f211a0a8d"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/NotificationServingCompatibility.kt",
@@ -2783,7 +2783,7 @@
       "sha256": "5e17e5ce6ea0a96b35adf873261ebed147bd4ac0e43d4f0ac9da53ea4bf0d6ff"
     }
   ],
-  "totalBytes": 8571438,
+  "totalBytes": 8571796,
   "limitations": [
     "Source snapshot only; no container build or deployment was performed.",
     "Third-party image selection, dependency authenticity and live configuration require separate review."
