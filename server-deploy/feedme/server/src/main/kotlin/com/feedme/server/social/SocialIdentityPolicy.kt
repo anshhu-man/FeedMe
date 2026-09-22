@@ -1,13 +1,26 @@
 package com.feedme.server.social
 
+import com.feedme.server.auth.VerifiedSupabaseSubject
+import com.feedme.server.identity.AccountProfileStore
 import java.sql.Connection
 import java.util.UUID
 import kotlinx.serialization.json.*
 
 /** Construct only after a trusted adapter verifies provider identity and its registered device session. */
-class VerifiedSocialAccount(val environment: String, val accountId: UUID, val deviceSessionId: UUID) {
+class VerifiedSocialAccount private constructor(val environment: String, val accountId: UUID, val deviceSessionId: UUID,
+    internal val providerSubject: VerifiedSupabaseSubject?) {
+    /** Unbound seam for explicit fixture policies, never accepted by the account-backed policy. */
+    constructor(environment: String, accountId: UUID, deviceSessionId: UUID) : this(environment, accountId, deviceSessionId, null)
     init { require(environment.matches(Regex("[a-z][a-z0-9-]{0,39}"))) }
     override fun toString() = "VerifiedSocialAccount(<redacted>)"
+    internal companion object {
+        fun resolveSafety(connection: Connection, accounts: AccountProfileStore, subject: VerifiedSupabaseSubject,
+            deviceSessionId: UUID): VerifiedSocialAccount = VerifiedSocialAccount(accounts.environment,
+                accounts.lockAccountSafety(connection, subject, deviceSessionId), deviceSessionId, subject)
+        fun resolve(connection: Connection, accounts: AccountProfileStore, subject: VerifiedSupabaseSubject,
+            deviceSessionId: UUID): VerifiedSocialAccount = VerifiedSocialAccount(accounts.environment,
+                accounts.lockSocialEligibility(connection, subject, deviceSessionId), deviceSessionId, subject)
+    }
 }
 
 /**
@@ -18,7 +31,8 @@ class VerifiedSocialAccount(val environment: String, val accountId: UUID, val de
  * Acquire principal locks before durable command locks; circle locks precede block-pair locks.
  * Block/unblock writers must share those pair locks AND atomically invalidate affected invite
  * relationships as required by F42; merely removing a boolean block must never resurrect an
- * invite cancelled by blocking. This persistence slice does not implement that writer.
+ * invite cancelled by blocking. requireInvitationPair checks the immutable issue order against
+ * the pair's retained cancellation cutoff, as well as current blocks in both directions.
  * Account lifecycle handlers must respect
  * the same ordering. readProfile returns only approved public/circle display fields, not email,
  * provider subject, preferences, credentials or a fabricated profile for a missing account.
@@ -31,6 +45,7 @@ interface SocialIdentityPolicy {
     fun lockPrincipal(connection: Connection, principal: VerifiedSocialAccount)
     fun requireCreationEnabled(connection: Connection, principal: VerifiedSocialAccount, invitations: Boolean)
     fun lockUnblockedPair(connection: Connection, environment: String, first: UUID, second: UUID)
+    fun requireInvitationPair(connection: Connection, environment: String, first: UUID, second: UUID, issuedOrder: Long)
     fun readProfile(connection: Connection, environment: String, accountId: UUID): SocialProfileSummary
 }
 

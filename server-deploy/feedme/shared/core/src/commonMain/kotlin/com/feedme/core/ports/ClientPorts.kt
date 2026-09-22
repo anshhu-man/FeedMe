@@ -215,8 +215,10 @@ class SessionBoundary {
     private var active: SessionLease? = null
     private class Invalidation(val lease: SessionLease, var callback: (() -> Unit)?)
     private val invalidations = mutableListOf<Invalidation>()
+    private val invalidating = mutableListOf<Invalidation>()
 
     fun activate(scope: StorageScope): SessionLease {
+        notifyInvalidating()
         advanceEpoch()
         return SessionLease(scope, epoch).also {
             active = it
@@ -225,6 +227,7 @@ class SessionBoundary {
     }
 
     fun clear() {
+        notifyInvalidating()
         advanceEpoch()
         active = null
         notifyInvalidated()
@@ -233,6 +236,21 @@ class SessionBoundary {
     fun current(): SessionLease? = active
 
     fun isCurrent(lease: SessionLease): Boolean = active === lease && lease.epoch == epoch
+
+    /** Native delivery revocation before the lease changes. Same dispatcher and one-shot;
+     * callbacks may only invalidate RAM/atomic delivery fences, never re-enter this boundary,
+     * suspend or perform I/O. This is not authentication or permission to keep a lease alive. */
+    fun onInvalidating(lease: SessionLease, callback: () -> Unit): SessionInvalidationSubscription {
+        val entry = Invalidation(lease, callback)
+        if (isCurrent(lease)) invalidating += entry else notify(entry)
+        return SessionInvalidationSubscription { entry.callback = null; invalidating.remove(entry) }
+    }
+
+    private fun notifyInvalidating() {
+        val retiring = invalidating.toList()
+        invalidating.clear()
+        retiring.forEach(::notify)
+    }
 
     /**
      * One-shot lifecycle signal, never authentication or a replacement for isCurrent checks.

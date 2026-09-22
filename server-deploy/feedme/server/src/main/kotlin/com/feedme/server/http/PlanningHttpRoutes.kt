@@ -27,13 +27,15 @@ import kotlinx.coroutines.runInterruptible
 import kotlinx.serialization.json.*
 
 internal val planningHttpOperations = setOf("createPlan", "getPlan", "getPlanExplanation", "nextPlan")
+internal val accountPlanningHttpOperations = planningHttpOperations + setOf("simplifyPlan", "adaptPlan", "listRecipes", "getRecipeVersion")
 
 /** Decoded HTTP metadata only. Arbitrary incoming trace IDs and URI text never become diagnostics. */
 internal class PlanningHttpInput private constructor(
     val operation: String, val bearer: PlanningHttpBearer, val key: UUID?, val planId: UUID?,
-    val cursor: String?, val limit: Int, val contentLength: Long?, val mediaType: String?,
+    val cursor: String?, val limit: Int, val contentLength: Long?, val mediaType: String?, val ifMatch: String?,
+    val query: String = "", val recipeId: UUID? = null, val recipeVersionId: UUID? = null,
 ) {
-    val hasBody: Boolean get() = operation in setOf("createPlan", "nextPlan")
+    val hasBody: Boolean get() = operation in setOf("createPlan", "nextPlan", "simplifyPlan", "adaptPlan")
     override fun toString() = "PlanningHttpInput(<redacted>)"
 
     suspend fun readBody(channel: ByteReadChannel, validator: ContractBodyValidator): JsonObject? {
@@ -54,8 +56,17 @@ internal class PlanningHttpInput private constructor(
     }
 
     companion object {
-        fun parse(operation: String, headers: Headers, query: Parameters, paths: Parameters): PlanningHttpInput {
-            if (operation !in planningHttpOperations) invalid()
+        fun parse(operation: String, headers: Headers, query: Parameters, paths: Parameters): PlanningHttpInput =
+            parseFor(operation, headers, query, paths, planningHttpOperations)
+
+        /** The account composition owns derived proposals; this does not activate them on
+         * the independent legacy/guest planning authority. */
+        fun parseAccount(operation: String, headers: Headers, query: Parameters, paths: Parameters): PlanningHttpInput =
+            parseFor(operation, headers, query, paths, accountPlanningHttpOperations)
+
+        private fun parseFor(operation: String, headers: Headers, query: Parameters, paths: Parameters,
+            supported: Set<String>): PlanningHttpInput {
+            if (operation !in supported) invalid()
             fun header(name: String): String? = headers.getAll(name)?.let { values ->
                 if (values.size != 1 || values.single().any(Char::isISOControl)) invalid()
                 values.single()
@@ -68,11 +79,20 @@ internal class PlanningHttpInput private constructor(
             if (token.length !in 1..16_384 || !Regex("[A-Za-z0-9._~+/-]+=*").matches(token))
                 throw PlanningHttpFailure(401, "UNAUTHENTICATED")
             val device = header("X-Device-Session")?.let(::uuid)
-            val body = operation in setOf("createPlan", "nextPlan")
+            val body = operation in setOf("createPlan", "nextPlan", "simplifyPlan", "adaptPlan")
             val keyText = header("Idempotency-Key")
             val key = if (body) keyText?.let(::uuid) ?: invalid() else { if (keyText != null) invalid(); null }
-            if (header(HttpHeaders.IfMatch) != null || header(HttpHeaders.IfNoneMatch) != null) invalid()
-            val allowedQuery = if (operation == "getPlanExplanation") setOf("cursor", "limit") else emptySet()
+            val ifMatch = header(HttpHeaders.IfMatch)
+            if (operation in setOf("simplifyPlan", "adaptPlan")) {
+                if (ifMatch == null) throw PlanningHttpFailure(428, "PRECONDITION_REQUIRED")
+                if (!Regex("\"[0-9]{1,64}\"").matches(ifMatch)) invalid()
+            } else if (ifMatch != null) invalid()
+            if (header(HttpHeaders.IfNoneMatch) != null) invalid()
+            val allowedQuery = when (operation) {
+                "getPlanExplanation" -> setOf("cursor", "limit")
+                "listRecipes" -> setOf("cursor", "limit", "q")
+                else -> emptySet()
+            }
             if (!allowedQuery.containsAll(query.names())) invalid()
             fun parameter(name: String): String? = query.getAll(name)?.let { values ->
                 if (values.size != 1 || values.single().any(Char::isISOControl)) invalid()
@@ -83,11 +103,18 @@ internal class PlanningHttpInput private constructor(
                 if (!Regex("[1-9][0-9]?").matches(it)) invalid()
                 it.toInt().also { number -> if (number !in 1..50) invalid() }
             } ?: 20
-            val planId = if (operation == "createPlan") null else {
+            val queryText = parameter("q") ?: ""
+            if (queryText.codePointCount(0, queryText.length) > 100) invalid()
+            val planId = if (operation in setOf("createPlan", "listRecipes", "getRecipeVersion")) null else {
                 paths.getAll("planId")?.let { values ->
                     if (values.size != 1) invalid(); uuid(values.single())
                 } ?: invalid()
             }
+            fun pathId(name: String): UUID = paths.getAll(name)?.let { values ->
+                if (values.size != 1) invalid(); uuid(values.single())
+            } ?: invalid()
+            val recipeId = if (operation == "getRecipeVersion") pathId("recipeId") else null
+            val recipeVersionId = if (operation == "getRecipeVersion") pathId("recipeVersionId") else null
             val length = header(HttpHeaders.ContentLength)?.let {
                 if (!Regex("[0-9]{1,20}").matches(it)) invalid()
                 it.toLongOrNull()?.takeIf { number -> number <= PlanningHttpConfiguration.MAX_REQUEST_BYTES } ?: invalid()
@@ -101,7 +128,8 @@ internal class PlanningHttpInput private constructor(
                 if (media == null || !Regex("application/json(?:\\s*;\\s*charset\\s*=\\s*(?:utf-8|\"utf-8\"))?", RegexOption.IGNORE_CASE).matches(media))
                     throw PlanningHttpFailure(400, "UNSUPPORTED_MEDIA")
             } else if (media != null || (length != null && length != 0L)) invalid()
-            return PlanningHttpInput(operation, PlanningHttpBearer(SecretText(token), device), key, planId, cursor, limit, length, media)
+            return PlanningHttpInput(operation, PlanningHttpBearer(SecretText(token), device), key, planId, cursor, limit, length, media, ifMatch,
+                queryText, recipeId, recipeVersionId)
         }
         private fun uuid(value: String): UUID {
             if (!CanonicalFormats.accepts("uuid", value)) invalid()
@@ -166,9 +194,10 @@ internal suspend fun ApplicationCall.planningOperation(operation: String, config
 internal fun validatePlanningReply(operation: String, reply: StoredReply, validator: ContractBodyValidator): String {
     val text = reply.body?.toString() ?: error("Missing planning response")
     val expectedStatus = if (operation == "createPlan") 201 else 200
-    check(reply.status == expectedStatus && text.toByteArray(Charsets.UTF_8).size <= 262_144 &&
+    val maximum = if (operation == "listRecipes") 1_048_576 else 262_144
+    check(reply.status == expectedStatus && text.toByteArray(Charsets.UTF_8).size <= maximum &&
         validator.validateResponse(operation, reply.status, text.toByteArray(Charsets.UTF_8), "application/json") == BodyValidationResult.Valid)
-    if (operation == "getPlanExplanation") check(reply.etag == null)
+    if (operation in setOf("getPlanExplanation", "listRecipes")) check(reply.etag == null)
     else {
         val etag = reply.etag ?: error("Missing planning version")
         check(Regex("\"[0-9]+\"").matches(etag) && etag.length <= 256)

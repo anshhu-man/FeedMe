@@ -113,7 +113,7 @@ class PostPublicationStore(val environment: String, private val transactions: Pg
                 }
                 outbox.append(c, EventDraft(UUID.randomUUID(), "social.post.published.v1", 1, "post", postId, 1, "social", UUID.randomUUID().toString(), key, buildJsonObject {
                     put("postId", postId.toString()); put("authorUserId", actor.accountId.toString()); put("aclVersion", 1); put("expiresAt", at.plusSeconds(86400).toString())
-                }))
+                }, owner = EventOwner.account(environment, actor.accountId)))
                 fresh(c, grantDeadline); current(); response
             }).also { current() }
     }
@@ -272,7 +272,7 @@ class PostPublicationStore(val environment: String, private val transactions: Pg
         is JsonPrimitive -> if(value.isString||value==JsonNull||value.booleanOrNull!=null)value.toString() else BigDecimal(value.content).stripTrailingZeros().toString()
     }
     private fun hash(value: JsonElement)=MessageDigest.getInstance("SHA-256").digest(canonical(value).encodeToByteArray()).joinToString("") { "%02x".format(it.toInt() and 255) }
-    private fun mediaActor(actor: VerifiedSocialAccount)=VerifiedMediaAccount(environment,actor.accountId,actor.deviceSessionId)
+    private fun mediaActor(actor: VerifiedSocialAccount)=VerifiedMediaAccount.fromSocial(actor)
     private fun PreparedStatement.owner(actor: VerifiedSocialAccount,start: Int=1) { setString(start,environment);setObject(start+1,actor.accountId) }
     private fun now(c: Connection)=c.createStatement().use { s->s.executeQuery("SELECT clock_timestamp()").use { it.next();it.getObject(1,OffsetDateTime::class.java).toInstant() } }
     private fun time(at: Instant)=OffsetDateTime.ofInstant(at,ZoneOffset.UTC)

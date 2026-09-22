@@ -4,6 +4,7 @@ import com.feedme.core.ports.*
 import com.feedme.server.contract.ContractBodyValidator
 import com.feedme.server.db.*
 import com.feedme.server.planning.PlanningServiceFailure
+import com.feedme.server.planning.PlanningFailureCode
 import io.ktor.http.*
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receiveChannel
@@ -14,7 +15,7 @@ internal suspend fun ApplicationCall.accountPlanningOperation(operation: String,
     configuration: AccountPlanningHttpConfiguration, validator: ContractBodyValidator) {
     try {
         currentCoroutineContext().ensureActive()
-        val input = PlanningHttpInput.parse(operation, request.headers, request.queryParameters, parameters)
+        val input = PlanningHttpInput.parseAccount(operation, request.headers, request.queryParameters, parameters)
         val device = input.bearer.deviceSessionId ?: throw PlanningHttpFailure(401, "UNAUTHENTICATED")
         val verified = configuration.verifier.verify(input.bearer.token)
         currentCoroutineContext().ensureActive()
@@ -32,8 +33,16 @@ internal suspend fun ApplicationCall.accountPlanningOperation(operation: String,
             when (operation) {
                 "createPlan" -> accountPlanningReply(configuration.store.createPlan(subject, device, input.key!!, body!!))
                 "nextPlan" -> accountPlanningReply(configuration.store.nextPlan(subject, device, input.key!!, input.planId!!, body!!))
+                "simplifyPlan" -> accountPlanningReply(configuration.store.simplifyPlan(subject, device, input.key!!,
+                    input.planId!!, input.ifMatch!!, body!!))
+                "adaptPlan" -> accountPlanningReply(configuration.store.adaptPlan(subject, device, input.key!!,
+                    input.planId!!, input.ifMatch!!, body!!))
                 "getPlan" -> configuration.store.getPlan(subject, device, input.planId!!)
                 "getPlanExplanation" -> configuration.store.getPlanExplanation(subject, device, input.planId!!, input.cursor, input.limit)
+                "listRecipes" -> (configuration.recipes ?: throw PlanningServiceFailure(PlanningFailureCode.NOT_CONFIGURED))
+                    .list(subject, device, input.query, input.cursor, input.limit)
+                "getRecipeVersion" -> (configuration.recipes ?: throw PlanningServiceFailure(PlanningFailureCode.NOT_CONFIGURED))
+                    .get(subject, device, input.recipeId!!, input.recipeVersionId!!)
                 else -> error("Unsupported account planning operation")
             }
         }

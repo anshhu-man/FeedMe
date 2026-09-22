@@ -10,6 +10,7 @@ plugins {
 
 tasks.wrapper {
     gradleVersion = "8.14"
+    networkTimeout = 60_000
     distributionType = Wrapper.DistributionType.ALL
     distributionSha256Sum = "efe9a3d147d948d7528a9887fa35abcf24ca1a43ad06439996490f77569b02d1"
 }

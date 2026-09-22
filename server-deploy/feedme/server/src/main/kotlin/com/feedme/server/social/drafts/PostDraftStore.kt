@@ -211,7 +211,7 @@ class PostDraftStore(val environment: String, private val transactions: PgTransa
         exec(c,"UPDATE platform.post_draft_heads SET revision=revision+1 WHERE environment=? AND owner_user_id=? AND revision<9223372036854775807"){owner(actor)}
         outbox.append(c,EventDraft(UUID.randomUUID(),"social.post_draft.changed.v1",1,"post-draft",row.id,row.version,"social",UUID.randomUUID().toString(),key,buildJsonObject{
             put("environment",environment);put("ownerId",actor.accountId.toString());put("draftId",row.id.toString());put("version",row.version);put("state",row.state)
-        }))
+        }, EventOwner.account(environment, actor.accountId)))
     }
     private fun head(c:Connection,actor:VerifiedSocialAccount,create:Boolean):Long {
         if(create)c.prepareStatement("INSERT INTO platform.post_draft_heads VALUES(?,?,1) ON CONFLICT DO NOTHING").use{it.owner(actor);it.executeUpdate()}
@@ -246,7 +246,7 @@ class PostDraftStore(val environment: String, private val transactions: PgTransa
     private fun bytes(body:JsonObject,code:PostDraftFailureCode=PostDraftFailureCode.STORAGE_UNAVAILABLE)=try{body.toString().encodeToByteArray(throwOnInvalidSequence=true)}
         catch(_:IllegalArgumentException){fail(code)}catch(_:CharacterCodingException){fail(code)}
     private fun checkActor(actor:VerifiedSocialAccount){if(actor.environment!=environment)fail(PostDraftFailureCode.UNAUTHENTICATED)}
-    private fun mediaActor(actor:VerifiedSocialAccount)=VerifiedMediaAccount(environment,actor.accountId,actor.deviceSessionId)
+    private fun mediaActor(actor:VerifiedSocialAccount)=VerifiedMediaAccount.fromSocial(actor)
     private fun verifyClient(row:Row,client:UUID){if(row.client!=client)fail(PostDraftFailureCode.DRAFT_CONFLICT)}
     private fun exact(a:StoredReply,b:StoredReply){if(a.status!=b.status||a.etag!=b.etag||a.body!=b.body)fail(PostDraftFailureCode.DRAFT_CONFLICT)}
     private fun replyId(reply:StoredReply)=uuid(reply.body!!.jsonObject.getValue("id"))

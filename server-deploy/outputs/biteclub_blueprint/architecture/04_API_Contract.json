@@ -1726,6 +1726,78 @@
         "x-idempotency-required": false
       }
     },
+    "/v1/meal-interpretations": {
+      "post": {
+        "operationId": "interpretMealRequest",
+        "tags": [
+          "planning"
+        ],
+        "summary": "Suggest cooking-request details for explicit confirmation",
+        "description": "Account-only non-mutating inference request. No Plan, preferences, pantry, command receipt or recipe is written. POST keeps private text out of URLs. No automatic retry or idempotency key; user may explicitly request another interpretation. Requires actual ready account/device, authorized current catalog, provider audience eligibility and bounded inference admission. Returns unconfirmed suggestions; explicit confirmation later edits the local draft before ordinary createPlan. Source changes during inference return 409. Unconfigured provider/audience admission returns unavailable; never switch to a paid model.",
+        "security": [
+          {
+            "UserBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/DeviceSession"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Unconfirmed interpretation; do not cache or automatically apply.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MealInterpretationProposal"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        },
+        "x-feature-ids": [
+          "F01"
+        ],
+        "x-module": "planning",
+        "x-principal": "user",
+        "x-idempotency-required": false,
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MealInterpretationRequest"
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/plans": {
       "post": {
         "operationId": "createPlan",
@@ -6252,6 +6324,45 @@
         "x-feature-ids": [
           "F22"
         ],
+        "x-module": "social",
+        "x-principal": "user",
+        "x-idempotency-required": false
+      }
+    },
+    "/v1/posts/{postId}/recipe-source": {
+      "get": {
+        "operationId": "getPostRecipeSource",
+        "tags": ["social"],
+        "summary": "Read the current authorized recipe attached to a post",
+        "description": "Read an exact current post version and its separately authorized recipe source. This observation grants no saved copy, plan, publication or continuing access. The server intersects post, media, provider and deployment validity and caps validUntil at serverTime plus 60 seconds. A subsequent Make Mine command must provide the reviewed sourcePostVersion with sourcePostId and reauthorize in its own transaction.",
+        "security": [{"UserBearer": []}],
+        "parameters": [
+          {"name": "postId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}},
+          {"name": "X-Device-Session", "in": "header", "required": true, "description": "Registered app session bound to the current access-token subject.", "schema": {"type": "string", "format": "uuid"}}
+        ],
+        "responses": {
+          "200": {
+            "description": "An exact, currently authorized post recipe source; not a copy or planning grant.",
+            "headers": {
+              "X-Trace-Id": {"schema": {"type": "string"}},
+              "ETag": {"schema": {"type": "string"}, "description": "Quoted current postVersion, not the recipe version."}
+            },
+            "content": {"application/json": {"schema": {"$ref": "#/components/schemas/PostRecipeSource"}}}
+          },
+          "400": {"$ref": "#/components/responses/Error400"},
+          "401": {"$ref": "#/components/responses/Error401"},
+          "403": {"$ref": "#/components/responses/Error403"},
+          "404": {"$ref": "#/components/responses/Error404"},
+          "409": {"$ref": "#/components/responses/Error409"},
+          "410": {"$ref": "#/components/responses/Error410"},
+          "412": {"$ref": "#/components/responses/Error412"},
+          "422": {"$ref": "#/components/responses/Error422"},
+          "428": {"$ref": "#/components/responses/Error428"},
+          "429": {"$ref": "#/components/responses/Error429"},
+          "500": {"$ref": "#/components/responses/Error500"},
+          "503": {"$ref": "#/components/responses/Error503"}
+        },
+        "x-feature-ids": ["F22", "F24", "F40"],
         "x-module": "social",
         "x-principal": "user",
         "x-idempotency-required": false
@@ -14990,7 +15101,7 @@
         ],
         "responses": {
           "202": {
-            "description": "Durably accepted; poll owned job.",
+            "description": "Durably accepted deletion request, not completed erasure. Return and retain the original receipt with jobId and status pending; it is not a progress response or a public status credential. Registered app sessions are revoked on acceptance. Use the approved receipt/support process after revocation; do not poll the protected job endpoint with revoked credentials. This operation supplies no polling instruction.",
             "headers": {
               "X-Trace-Id": {
                 "schema": {
@@ -15955,7 +16066,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Empty"
+                "$ref": "#/components/schemas/RecipeSubmissionWrite"
               }
             }
           }
@@ -16747,7 +16858,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ReportPage"
+                  "$ref": "#/components/schemas/AdminReportPage"
                 }
               }
             }
@@ -19483,6 +19594,9 @@
           },
           {
             "$ref": "#/components/parameters/IdempotencyKey"
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
           }
         ],
         "responses": {
@@ -21552,6 +21666,11 @@
           "downloadExpiresAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "serverTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Server observation time. Required by clients when admitting a bounded export download; convert downloadExpiresAt minus serverTime to a request-start-relative local deadline."
           }
         },
         "required": [
@@ -21869,6 +21988,10 @@
           "defaultServings": {
             "type": "number",
             "minimum": 0.1
+          },
+          "personalizationEnabled": {
+            "type": "boolean",
+            "description": "Whether authorized explicit meal memories may influence future recommendations. Absent means enabled for legacy records. False preserves feedback, saved meals, explicit preferences and historical explanations; hard exclusions always remain active."
           }
         },
         "required": [
@@ -21938,6 +22061,10 @@
           "defaultServings": {
             "type": "number",
             "minimum": 0.1
+          },
+          "personalizationEnabled": {
+            "type": "boolean",
+            "description": "Explicit personalization choice. Patch only this field to pause learned ranking without changing dietary preferences or deleting history."
           }
         },
         "required": []
@@ -22200,7 +22327,7 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 256,
-            "description": "Exact server-configured reconnection notice intentionally confirmed by the user. This is separate from terms or eligibility and requires current server-verified fresh password authentication."
+            "description": "Exact server-configured reconnection notice intentionally confirmed by the user. This is separate from terms or eligibility and requires current server-verified fresh Supabase primary authentication using the explicitly server-configured method (password or OAuth). The client does not supply an authentication method or authentication proof in this request."
           }
         },
         "allOf": [
@@ -22613,6 +22740,8 @@
               "draft",
               "inReview",
               "approved",
+              "changesRequested",
+              "rejected",
               "published",
               "recalled",
               "personal",
@@ -22620,6 +22749,8 @@
             ],
             "description": "approved is an independent review result; separate publish operation exposes content"
           },
+          "submission": { "$ref": "#/components/schemas/RecipeSubmission" },
+          "latestReview": { "$ref": "#/components/schemas/Review" },
           "ingredients": {
             "type": "array",
             "items": {
@@ -22896,6 +23027,19 @@
             "minimum": 0,
             "description": "Optional cleanup limit in minutes. When present, a meal requires a supported cleanup estimate at or below this limit; omission leaves cleanup unconstrained."
           },
+          "requiredPreparationTags": {
+            "type": "array",
+            "maxItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "enum": [
+                "oneBowl",
+                "onePan"
+              ]
+            },
+            "description": "Optional exact reviewed preparation style required by the user. Omission leaves vessel style unconstrained."
+          },
           "energy": {
             "type": "string",
             "enum": [
@@ -22964,6 +23108,143 @@
           "hardExcludedIngredientIds"
         ]
       },
+      "MealInterpretationRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          }
+        },
+        "required": [
+          "text"
+        ]
+      },
+      "MealInterpretationProposal": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Unconfirmed suggestions only, not a Plan, ingredient availability, dietary/medical facts or permission to cook. sourceSha256 correlates exact text/options only. Never automatically apply on retry or restoration.",
+        "properties": {
+          "status": {
+            "type": "string",
+            "const": "unconfirmed"
+          },
+          "requiresUserConfirmation": {
+            "type": "boolean",
+            "const": true
+          },
+          "originalText": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "sourceSha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "ingredientOptions": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 64,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100
+                }
+              },
+              "required": [
+                "id",
+                "name"
+              ]
+            }
+          },
+          "ingredientIds": {
+            "type": "array",
+            "maxItems": 32,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "unresolvedIngredients": {
+            "type": "array",
+            "maxItems": 32,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "reason": {
+                  "type": "string",
+                  "enum": [
+                    "unknown",
+                    "ambiguous"
+                  ]
+                }
+              },
+              "required": [
+                "text",
+                "reason"
+              ]
+            }
+          },
+          "energy": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "assemble",
+              "little",
+              "happy",
+              null
+            ]
+          },
+          "maxTotalMinutes": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 2147483647
+          },
+          "maxActiveMinutes": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 2147483647
+          }
+        },
+        "required": [
+          "status",
+          "requiresUserConfirmation",
+          "originalText",
+          "sourceSha256",
+          "ingredientOptions",
+          "ingredientIds",
+          "unresolvedIngredients",
+          "energy",
+          "maxTotalMinutes",
+          "maxActiveMinutes"
+        ]
+      },
       "PlanRequest": {
         "type": "object",
         "additionalProperties": false,
@@ -22984,6 +23265,11 @@
           "sourcePostId": {
             "type": "string",
             "format": "uuid"
+          },
+          "sourcePostVersion": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Exact reviewed post version. Required with sourcePostId; forbidden without sourcePostId. The server rejects a changed post before creating a new plan."
           },
           "savedRecipeId": {
             "type": "string",
@@ -23046,7 +23332,7 @@
           "mode",
           "constraints"
         ],
-        "description": "mode=improve requires baseMeal; auto resolves to a supported cook/assemble/improve mode and is not a stored Plan mode. Choose at most one source reference; server rejects ambiguous source IDs. Unknown base-meal ingredients never become safety assertions.",
+        "description": "mode=improve requires baseMeal; auto resolves to a supported cook/assemble/improve mode and is not a stored Plan mode. Choose at most one source reference; server rejects ambiguous source IDs. sourcePostId and sourcePostVersion are paired and supported only with intent=makeMine. Unknown base-meal ingredients never become safety assertions.",
         "allOf": [
           {
             "if": {
@@ -23064,6 +23350,17 @@
                 "baseMeal"
               ]
             }
+          },
+          {
+            "if": {"required": ["sourcePostId"]},
+            "then": {
+              "required": ["sourcePostVersion", "intent"],
+              "properties": {"intent": {"const": "makeMine"}}
+            }
+          },
+          {
+            "if": {"required": ["sourcePostVersion"]},
+            "then": {"required": ["sourcePostId"]}
           }
         ]
       },
@@ -24092,6 +24389,19 @@
         ],
         "description": "Client selects circleIds; server derives/stamps bindings at publish. Client-supplied authorMembershipGeneration is never trusted. Leaving/rejoining increments generation so old post audience grants do not resurrect."
       },
+      "PostRecipeSource": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "postId": {"type": "string", "format": "uuid"},
+          "postVersion": {"type": "integer", "minimum": 1},
+          "recipeSnapshot": {"$ref": "#/components/schemas/RecipeVersion"},
+          "serverTime": {"type": "string", "format": "date-time"},
+          "validUntil": {"type": "string", "format": "date-time"}
+        },
+        "required": ["postId", "postVersion", "recipeSnapshot", "serverTime", "validUntil"],
+        "description": "Short-lived, current authorized source observation. validUntil must be after serverTime and at most 60 seconds later; consumers measure the interval from their request start and reauthorize every later operation. This is not a saved copy or permission to re-share."
+      },
       "Attachment": {
         "type": "object",
         "additionalProperties": false,
@@ -24157,6 +24467,7 @@
       },
       "Post": {
         "type": "object",
+        "description": "Current authorized post projection. myReaction is only the viewer's current reaction. With reaction capability enabled, absence means none. reactionCounts and reactionActors are author-only; nonauthors receive an empty count array and no actor list. reactionActorsHasMore describes the bounded author list, not a public ranking.",
         "additionalProperties": false,
         "properties": {
           "id": {
@@ -24242,6 +24553,32 @@
                 "remix"
               ]
             }
+          },
+          "myReaction": {
+            "$ref": "#/components/schemas/Reaction"
+          },
+          "reactionActors": {
+            "type": "array",
+            "maxItems": 50,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "reaction": {
+                  "$ref": "#/components/schemas/Reaction"
+                },
+                "user": {
+                  "$ref": "#/components/schemas/ProfileSummary"
+                }
+              },
+              "required": [
+                "reaction",
+                "user"
+              ]
+            }
+          },
+          "reactionActorsHasMore": {
+            "type": "boolean"
           },
           "reactionCounts": {
             "type": "array",
@@ -27086,6 +27423,104 @@
           "reason"
         ]
       },
+      "RecipeProvenance": {
+        "type": "object", "additionalProperties": false,
+        "properties": {
+          "sourceKind": { "type": "string", "enum": ["original", "licensed", "publicDomain"] },
+          "sourceReference": { "type": "string", "minLength": 1, "maxLength": 2048 },
+          "rightsEvidenceReference": { "type": "string", "minLength": 1, "maxLength": 256 },
+          "requestedLicense": { "type": "string", "enum": ["catalogRedistributable", "creatorOriginal"] },
+          "attribution": { "type": "string", "maxLength": 1000 }
+        },
+        "required": ["sourceKind", "sourceReference", "rightsEvidenceReference", "requestedLicense"],
+        "description": "Author-supplied source and rights declarations. Recording them grants no license or publication approval."
+      },
+      "RecipeSubmissionWrite": {
+        "type": "object", "additionalProperties": false,
+        "properties": {
+          "provenance": { "$ref": "#/components/schemas/RecipeProvenance" },
+          "requiredReviewScopes": {
+            "type": "array", "minItems": 6, "maxItems": 6, "uniqueItems": true,
+            "items": { "type": "string", "enum": ["recipeSafety", "ingredientIdentity", "allergenComposition", "instructions", "effortEstimates", "rights"] }
+          },
+          "declaredExclusionIngredientIds": {
+            "type": "array", "maxItems": 128, "uniqueItems": true,
+            "items": { "type": "string", "format": "uuid" }
+          }
+        },
+        "required": ["provenance", "requiredReviewScopes"],
+        "description": "Explicit source declarations and required editorial review scopes for the exact If-Match draft. Exclusions are author declarations, not verified allergen or medical guarantees."
+      },
+      "RecipeSubmission": {
+        "type": "object", "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "sourceVersion": { "type": "integer", "minimum": 1 },
+          "submittedVersion": { "type": "integer", "minimum": 2 },
+          "submittedAt": { "type": "string", "format": "date-time" },
+          "materialSha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "provenance": { "$ref": "#/components/schemas/RecipeProvenance" },
+          "requiredReviewScopes": {
+            "type": "array", "minItems": 6, "maxItems": 6, "uniqueItems": true,
+            "items": { "type": "string", "enum": ["recipeSafety", "ingredientIdentity", "allergenComposition", "instructions", "effortEstimates", "rights"] }
+          },
+          "declaredExclusionIngredientIds": {
+            "type": "array", "maxItems": 128, "uniqueItems": true,
+            "items": { "type": "string", "format": "uuid" }
+          }
+        },
+        "required": ["id", "sourceVersion", "submittedVersion", "submittedAt", "materialSha256", "provenance", "requiredReviewScopes", "declaredExclusionIngredientIds"]
+      },
+      "RecipeIngredientComposition": {
+        "type": "object", "additionalProperties": false,
+        "properties": {
+          "ingredientId": { "type": "string", "format": "uuid" },
+          "componentIds": { "type": ["array", "null"], "maxItems": 128, "uniqueItems": true, "items": { "type": "string", "format": "uuid" } }
+        },
+        "required": ["ingredientId", "componentIds"],
+        "description": "Explicit reviewed composition. Null is unknown and cannot satisfy approval; an empty array asserts an atomic ingredient."
+      },
+      "RecipePlanningReview": {
+        "type": "object", "additionalProperties": false,
+        "properties": {
+          "reviewReference": { "type": "string", "minLength": 1, "maxLength": 256 },
+          "policyVersion": { "type": "string", "minLength": 1, "maxLength": 128 },
+          "kind": { "type": "string", "enum": ["MEAL", "ADDITION"] },
+          "minimumEnergy": { "type": "string", "enum": ["ASSEMBLE", "LITTLE", "HAPPY"] },
+          "heatingRequired": { "type": "boolean" },
+          "substantialPreparation": { "type": "boolean" },
+          "freeCatalogEligible": { "type": "boolean" },
+          "linearQuantityScalingReviewed": { "type": "boolean" },
+          "stepsValidForScalingRange": { "type": "boolean" },
+          "effortValidForScalingRange": { "type": "boolean" },
+          "compatibleBaseTypes": { "type": "array", "maxItems": 128, "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 128 } },
+          "scalableUnits": { "type": "array", "maxItems": 128, "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 128 } }
+        },
+        "required": ["reviewReference", "policyVersion", "kind", "minimumEnergy", "heatingRequired", "substantialPreparation", "freeCatalogEligible", "linearQuantityScalingReviewed", "stepsValidForScalingRange", "effortValidForScalingRange", "compatibleBaseTypes", "scalableUnits"]
+      },
+      "RecipeReviewEvidence": {
+        "type": "object", "additionalProperties": false,
+        "properties": {
+          "rightsEvidenceReference": { "type": "string", "minLength": 1, "maxLength": 256 },
+          "safetyEvidenceReference": { "type": "string", "minLength": 1, "maxLength": 256 },
+          "taxonomyRevision": { "type": "string", "minLength": 1, "maxLength": 128 },
+          "ingredientComposition": { "type": "array", "minItems": 1, "maxItems": 1024, "items": { "$ref": "#/components/schemas/RecipeIngredientComposition" } },
+          "planningReview": { "$ref": "#/components/schemas/RecipePlanningReview" }
+        },
+        "required": ["rightsEvidenceReference", "safetyEvidenceReference", "taxonomyRevision", "ingredientComposition", "planningReview"],
+        "description": "Independent editorial findings and evidence references bound to the submitted revision. Not proof of professional credentials, not a publication or saved-copy grant."
+      },
+      "RecipeProfessionalReview": {
+        "type": "object", "additionalProperties": false,
+        "properties": {
+          "qualificationId": { "type": "string", "format": "uuid" },
+          "qualificationVersion": { "type": "integer", "minimum": 1 },
+          "scope": { "type": "string", "enum": ["nutritionReview"] },
+          "evidenceReference": { "type": "string", "minLength": 1, "maxLength": 256 }
+        },
+        "required": ["qualificationId", "qualificationVersion", "scope", "evidenceReference"],
+        "description": "Explicit professional nutrition-review attestation bound to the exact submitted material by the immutable review. The server verifies the real reviewer qualification at review time and again at publication; supplying an ID does not create a qualification. Evidence references remain staff-only."
+      },
       "Review": {
         "type": "object",
         "additionalProperties": false,
@@ -27114,11 +27549,16 @@
             "type": "string",
             "format": "uuid"
           },
+          "submissionId": { "type": "string", "format": "uuid" },
+          "submittedVersion": { "type": "integer", "minimum": 2 },
+          "professionalReview": { "$ref": "#/components/schemas/RecipeProfessionalReview" },
+          "evidence": { "$ref": "#/components/schemas/RecipeReviewEvidence" },
           "decision": {
             "type": "string",
             "enum": [
               "approve",
               "changesRequested",
+              "reject",
               "recall"
             ]
           },
@@ -27153,9 +27593,13 @@
             "enum": [
               "approve",
               "changesRequested",
+              "reject",
               "recall"
             ]
           },
+          "professionalReview": { "$ref": "#/components/schemas/RecipeProfessionalReview" },
+          "recallReasonCode": { "type": "string", "minLength": 1, "maxLength": 128 },
+          "evidence": { "$ref": "#/components/schemas/RecipeReviewEvidence" },
           "notes": {
             "type": "string",
             "minLength": 1,
@@ -27293,6 +27737,256 @@
           "requiredStepChanges"
         ]
       },
+      "AdminReport": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "targetType": {
+            "type": "string",
+            "enum": [
+              "post",
+              "message",
+              "user",
+              "shortcut"
+            ]
+          },
+          "targetId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "reason": {
+            "type": "string",
+            "enum": [
+              "harassment",
+              "unsafeFood",
+              "privacy",
+              "spam",
+              "other"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "received",
+              "triaged",
+              "resolved",
+              "dismissed"
+            ]
+          },
+          "caseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "caseVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "urgent",
+              "high",
+              "normal"
+            ]
+          },
+          "caseStatus": {
+            "type": "string",
+            "enum": [
+              "open",
+              "assigned",
+              "resolved",
+              "appealed"
+            ]
+          },
+          "assigneeId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "createdAt",
+          "updatedAt",
+          "targetType",
+          "targetId",
+          "reason",
+          "status",
+          "caseId",
+          "caseVersion",
+          "priority",
+          "caseStatus"
+        ]
+      },
+      "AdminReportPage": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "maxItems": 50,
+            "items": {
+              "$ref": "#/components/schemas/AdminReport"
+            }
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "serverTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor",
+          "serverTime"
+        ]
+      },
+      "StaffReportEvidenceField": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "label": {
+            "type": "string",
+            "enum": [
+              "Caption",
+              "Media count",
+              "Post status",
+              "Message kind",
+              "Message",
+              "Sent at",
+              "Display name",
+              "Handle",
+              "Bio"
+            ]
+          },
+          "value": {
+            "type": "string",
+            "maxLength": 4000
+          }
+        },
+        "required": [
+          "label",
+          "value"
+        ]
+      },
+      "StaffReportEvidence": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "targetVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "capturedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "originalSourceValidUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "fields": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 12,
+            "items": {
+              "$ref": "#/components/schemas/StaffReportEvidenceField"
+            }
+          }
+        },
+        "required": [
+          "targetVersion",
+          "capturedAt",
+          "originalSourceValidUntil",
+          "fields"
+        ]
+      },
+      "StaffCaseHistory": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "claim",
+              "dismiss",
+              "remove"
+            ]
+          },
+          "actorId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "reasonCode": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "notes": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "caseVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "targetVersion": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "id",
+          "action",
+          "actorId",
+          "reasonCode",
+          "notes",
+          "createdAt",
+          "caseVersion"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": { "action": { "const": "remove" } },
+              "required": ["action"]
+            },
+            "then": { "required": ["targetVersion"] }
+          }
+        ]
+      },
       "ModerationCase": {
         "type": "object",
         "additionalProperties": false,
@@ -27361,6 +28055,24 @@
           },
           "reasonCode": {
             "type": "string"
+          },
+          "evidence": {
+            "$ref": "#/components/schemas/StaffReportEvidence"
+          },
+          "history": {
+            "type": "array",
+            "maxItems": 2,
+            "items": { "$ref": "#/components/schemas/StaffCaseHistory" }
+          },
+          "dismissible": {
+            "type": "boolean"
+          },
+          "removable": {
+            "type": "boolean"
+          },
+          "removalTargetVersion": {
+            "type": ["integer", "null"],
+            "minimum": 1
           }
         },
         "required": [
@@ -27402,12 +28114,25 @@
           "assigneeId": {
             "type": "string",
             "format": "uuid"
+          },
+          "targetVersion": {
+            "type": "integer",
+            "minimum": 1
           }
         },
         "required": [
           "action",
           "reasonCode",
           "notes"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": { "action": { "const": "remove" } },
+              "required": ["action"]
+            },
+            "then": { "required": ["targetVersion"] }
+          }
         ]
       },
       "Audit": {

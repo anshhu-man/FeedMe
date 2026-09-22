@@ -12,6 +12,7 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicLong
+import javax.net.SocketFactory
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
@@ -179,6 +180,14 @@ class HttpsSupabaseJwksSource private constructor(
         fun create(configuration: SupabaseUserAccessConfiguration, policy: SupabaseJwksHttpPolicy, clock: Clock): HttpsSupabaseJwksSource {
             require(policy.cacheSeconds <= configuration.maximumJwksAgeSeconds) { "Key cache exceeds verification policy" }
             return HttpsSupabaseJwksSource(configuration, policy, clock, System::nanoTime, KtorSupabaseJwksExchange.create(policy))
+        }
+        /** Internal integration seam, never selected by configuration or the public factory.
+         * Only the transport's TCP sockets differ; exact endpoint and key verification do not. */
+        internal fun forSocketFactory(configuration: SupabaseUserAccessConfiguration, policy: SupabaseJwksHttpPolicy,
+            clock: Clock, socketFactory: SocketFactory): HttpsSupabaseJwksSource {
+            require(policy.cacheSeconds <= configuration.maximumJwksAgeSeconds) { "Key cache exceeds verification policy" }
+            return HttpsSupabaseJwksSource(configuration, policy, clock, System::nanoTime,
+                KtorSupabaseJwksExchange.forSocketFactory(policy, socketFactory))
         }
         internal fun forExchange(configuration: SupabaseUserAccessConfiguration, policy: SupabaseJwksHttpPolicy,
             clock: Clock, monotonicNanos: () -> Long, exchange: SupabaseJwksExchange) =

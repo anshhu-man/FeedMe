@@ -4,6 +4,9 @@ import com.feedme.server.config.AccountCoreRuntimeConfig
 import com.feedme.server.config.DependencyHoldConfig
 import com.feedme.server.contract.ContractCatalog
 import com.feedme.server.http.*
+import com.feedme.server.auth.HttpsSupabaseJwksSource
+import com.feedme.server.auth.SupabaseJwksHttpPolicy
+import com.feedme.server.auth.SupabaseUserAccessConfiguration
 import io.ktor.server.application.ApplicationStopped
 import io.ktor.server.cio.CIO
 import io.ktor.server.engine.embeddedServer
@@ -20,7 +23,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 
 /** Explicit account core runtime: account/preferences/ingredients/pantry/planning/cooking/
- * Saved. One listener and provider lifetime, bounded DB executor and admission, no migrations,
+ * Saved and optional explicit account safety/deletion acceptance. One listener and provider lifetime, bounded DB executor and admission, no migrations,
  * data seeding, eligibility grants or implicit deployment. Container binding does not supply
  * HTTPS termination. Missing content may bind for diagnosis, but dependency health is 503.
  */
@@ -80,7 +83,15 @@ class AccountCoreRuntime private constructor(
         }
 
         fun start(config: AccountCoreRuntimeConfig, database: DataSource = config.dataSource(),
-            clock: Clock = Clock.systemUTC()): AccountCoreRuntime {
+            clock: Clock = Clock.systemUTC()): AccountCoreRuntime =
+            startWithKeySource(config, database, clock, HttpsSupabaseJwksSource::create)
+
+        /** Same runtime lifetime for owned TLS fixtures. This is not selectable from Main,
+         * runtime JSON, environment variables or HTTP. Production keeps the fixed factory. */
+        internal fun startWithKeySource(config: AccountCoreRuntimeConfig, database: DataSource,
+            clock: Clock = Clock.systemUTC(),
+            keySourceFactory: (SupabaseUserAccessConfiguration, SupabaseJwksHttpPolicy, Clock) -> HttpsSupabaseJwksSource,
+        ): AccountCoreRuntime {
             val catalog = ContractCatalog.bundled()
             val number = AtomicInteger()
             val executor = Executors.newFixedThreadPool(config.databaseParallelism) { task ->
@@ -91,7 +102,7 @@ class AccountCoreRuntime private constructor(
             val stopped = CountDownLatch(1)
             val resources = AccountCoreRuntimeResources(executor, lifecycle, { dispatcher.close() }, stopped)
             try {
-                val assembly = ConfiguredSupabaseAccountCoreAssembly.open(config, database, dispatcher, clock)
+                val assembly = ConfiguredSupabaseAccountCoreAssembly.openWithKeySource(config, database, dispatcher, clock, keySourceFactory)
                 resources.assembly = assembly
                 val diagnostics = createRuntimeHttpDiagnostics()
                 resources.diagnostics = diagnostics
@@ -101,7 +112,23 @@ class AccountCoreRuntime private constructor(
                         observationSink = diagnostics, healthMode = ServiceHealthMode.ACCOUNT_CORE_DEPENDENCIES,
                         accountCoreHealth = assembly.dependencyHealth, account = assembly.account,
                         accountPreferences = assembly.preferences, accountPantry = assembly.pantry,
-                        accountPlanning = assembly.planning, accountCooking = assembly.cooking, accountSaved = assembly.saved)
+                        accountPlanning = assembly.planning, accountCooking = assembly.cooking, accountSaved = assembly.saved,
+                        accountBlocks = assembly.blocks, accountMealIntent = assembly.mealIntent,
+                        accountDeletion = assembly.deletion, accountPostReads = assembly.postReads, social = assembly.social,
+                        accountReports = assembly.reports, media = assembly.media,
+                        accountMemory = assembly.memory, accountReuse = assembly.reuse,
+                        postDraft = assembly.postDrafts, postPublication = assembly.postPublication,
+                        accountConversations = assembly.conversations, accountPostDeletion = assembly.postDeletion,
+                        accountPostPlacement = assembly.postPlacement,
+                        accountPostReactions = assembly.postReactions,
+                        accountRecipeRequests = assembly.recipeRequests,
+                        accountSessions = assembly.sessions,
+                        accountNotifications = assembly.notifications,
+                        accountNotificationInbox = assembly.notificationInbox,
+                        accountMediaAccess = assembly.mediaAccess,
+                        accountRemixes = assembly.remixes, accountPostRecipes = assembly.postRecipes,
+                        accountExports = assembly.exports, accountExportDelivery = assembly.exportDelivery,
+                        staff = assembly.staff)
                     monitor.subscribe(ApplicationStopped) { diagnostics.close(); stopped.countDown() }
                 }
                 resources.stopListener = { server.stop(gracePeriodMillis = 1_000, timeoutMillis = 5_000) }
@@ -111,6 +138,16 @@ class AccountCoreRuntime private constructor(
                         val bound = server.engine.resolvedConnectors().single()
                         check(bound.host == listener.host && bound.port == listener.port)
                     } }
+                }
+                if (config.reactionNotificationPolicy?.enabled == true) {
+                    val worker = checkNotNull(assembly.reactionNotificationStore)
+                    val loop = ReactionNotificationLoop(dispatcher) {
+                        kotlinx.coroutines.runInterruptible(dispatcher) { worker.consumeBatch(20) }
+                    }
+                    resources.backgroundWorker = loop
+                    // Only a successfully admitted and bound configured runtime polls.
+                    // Retirement joins this owner before DB/provider resources close.
+                    loop.start()
                 }
                 return AccountCoreRuntime(listener.port, resources, stopped, diagnostics)
             } catch (failure: Throwable) {

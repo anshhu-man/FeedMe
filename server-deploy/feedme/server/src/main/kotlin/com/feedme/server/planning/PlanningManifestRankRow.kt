@@ -59,6 +59,9 @@ internal class PlanningManifestRankRow private constructor(
     companion object {
         const val MAX_BYTES = 4096
         fun fromScan(source: RecipeCatalogVersion, rank: PlanningRank): PlanningManifestRankRow = rankFormat {
+            // This legacy guest storage format has no learned-memory rank column.
+            // Refuse unsupported use rather than silently persisting a different order.
+            require(rank.memoryPreference == 0)
             require(source.entry.recipeVersionId.toString() == rank.recipeVersionId)
             require(UUID.fromString(source.entry.recipe.getValue("recipeId").jsonPrimitive.content).toString() == rank.recipeId)
             decode(wire(buildJsonObject {

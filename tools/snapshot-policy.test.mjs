@@ -54,6 +54,11 @@ test('existing sanitized homes remain idempotent while encoded private homes are
   assert.deepEqual(result.published, input); assert.equal(result.homePathRedactions, 0);
   assert.throws(() => validatePublished('README.md', Buffer.from(syntheticEncodedHome.toLowerCase() + '%2fsecret')));
 });
+test('lowercase HTTP user routes are not mistaken for macOS home paths', () => {
+  for (const route of ['/admin/users/{id}', '/auth/v1/admin/users/$providerUserId'])
+    assert.doesNotThrow(() => validatePublished('feedme/src/Client.kt', Buffer.from(route)));
+  assert.throws(() => validatePublished('feedme/src/Client.kt', Buffer.from('/Users/example/private.txt')));
+});
 test('NUL bytes do not exempt obvious private data from publication checks', () => {
   assert.throws(() => validatePublished('Reference/image.png', Buffer.from('\0' + syntheticHome + '/secret')));
   assert.throws(() => validatePublished('Reference/image.png', Buffer.from('\0-----BEGIN ' + 'PRIVATE KEY-----')));

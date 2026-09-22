@@ -107,7 +107,8 @@ class DeterministicPlanner(private val policy: PlanningPolicy,
             val id = continuation.ordered[position]
             val previous = original.entries.single { normalized(it.recipe.id.value) == id }
             val current = currentCatalog.entries.find { normalized(it.recipe.id.value) == id } ?: continue
-            if (current.recipe.reviewStatus != "published" || !current.evidence.freeCatalogEligible) continue
+            if (current.recipe.reviewStatus != "published" ||
+                (input.savedSource == null && !current.evidence.freeCatalogEligible)) continue
             if (!sameCandidate(previous, current)) fail(FailureReason.CONFLICT)
             val evaluated = evaluate(current, input, currentCatalog)
             if (evaluated.issues.isNotEmpty()) continue
@@ -127,9 +128,9 @@ class DeterministicPlanner(private val policy: PlanningPolicy,
         val energy: PlanningEnergy, val servings: PlanningDecimal, val available: Set<String>,
         val pantry: Map<String, PlanningAvailability>, val excluded: Set<String>, val disliked: Set<String>,
         val equipment: Set<String>, val taste: Set<String>, val active: PlanningDecimal?, val total: PlanningDecimal?,
-        val cleanup: PlanningDecimal?,
+        val cleanup: PlanningDecimal?, val requiredPreparationTags: Set<String>,
         val baseType: String?, val confirmation: Set<PlanningIssue>?, val preferenceVersion: String,
-        val taxonomy: Taxonomy)
+        val taxonomy: Taxonomy, val savedSource: PlanningSavedSource?, val memories: List<PlanningMemory>)
 
     private fun input(request: WireDocument, context: PlanningContext, catalog: PlanningCatalog): Input {
         if (validator.validateSchema("PlanRequest", request.encodeUtf8()) != ContractValidationResult.Valid) fail(FailureReason.INVALID_DATA)
@@ -138,12 +139,33 @@ class DeterministicPlanner(private val policy: PlanningPolicy,
         if (root["intent"]?.jsonPrimitive?.content == "tonight" || c.keys.any { it.startsWith("household") }) fail(FailureReason.NOT_CONFIGURED)
         val sources = listOf("sourceRecipeVersionId", "sourcePostId", "savedRecipeId").filter(root::containsKey)
         if (sources.size > 1) fail(FailureReason.INVALID_DATA)
-        if (sources.any { it != "sourceRecipeVersionId" }) fail(FailureReason.NOT_CONFIGURED)
+        if (sources.contains("sourcePostId")) fail(FailureReason.NOT_CONFIGURED)
+        val savedId = root["savedRecipeId"]?.jsonPrimitive?.content
+        val saved = context.savedSource
+        if (savedId != null && saved == null) fail(FailureReason.NOT_CONFIGURED)
+        if ((savedId == null) != (saved == null) || (saved != null &&
+                (checkedId(saved.savedRecipeId) != checkedId(savedId!!) ||
+                    catalog.entries.any { !it.recipe.document.encodeUtf8().contentEquals(saved.recipe.document.encodeUtf8()) })))
+            fail(FailureReason.INVALID_DATA)
         if (!context.preferences.version.matches(Regex("[1-9][0-9]{0,127}"))) fail(FailureReason.INVALID_DATA)
         val ingredientIds = ids(c, "ingredientIds")
         val excluded = ids(c, "hardExcludedIngredientIds") + checkedIds(context.preferences.exclusions)
         val disliked = checkedIds(context.preferences.dislikes)
+        val memories = context.preferences.memories
+        if (memories.size > 50 || memories.map { checkedId(it.id) }.distinct().size != memories.size)
+            fail(FailureReason.INVALID_DATA)
+        for (memory in memories) {
+            if (!memory.version.matches(Regex("[1-9][0-9]{0,18}")) ||
+                memory.kind !in setOf("taste", "effort", "repeat") || memory.value !in setOf("prefer", "neutral", "show_less") ||
+                memory.tasteTag?.let { it !in setOf("crunch", "fresh", "creamy", "heat") } == true ||
+                memory.effortAspect?.let { it !in setOf("chopping", "activeCooking", "cleanup") } == true)
+                fail(FailureReason.INVALID_DATA)
+            memory.recipeVersionId?.let(::checkedId); memory.ingredientId?.let(::checkedId)
+        }
         val equipment = strings(c, "equipmentIds"); val taste = strings(c, "tasteTags")
+        val requiredPreparationTags = strings(c, "requiredPreparationTags")
+        if (requiredPreparationTags.size > 1 || requiredPreparationTags.any { it !in setOf("oneBowl", "onePan") })
+            fail(FailureReason.INVALID_DATA)
         if (equipment.any { it.isBlank() || it.length > 128 }) fail(FailureReason.INVALID_DATA)
         if (context.pantry.size > 256) fail(FailureReason.INVALID_DATA)
         val pantry = context.pantry.associate { checkedId(it.ingredientId) to it.availability }
@@ -184,13 +206,15 @@ class DeterministicPlanner(private val policy: PlanningPolicy,
         }
         return Input(root, wire(effective), mode, energy, decimal(c.getValue("servings")), ingredientIds, pantry,
             excluded, disliked, equipment, taste, c["maxActiveMinutes"]?.let(::decimal), c["maxTotalMinutes"]?.let(::decimal),
-            c["maxCleanupMinutes"]?.let(::decimal),
-            baseType, confirmation.takeIf { it.isNotEmpty() }, context.preferences.version, taxonomy)
+            c["maxCleanupMinutes"]?.let(::decimal), requiredPreparationTags,
+            baseType, confirmation.takeIf { it.isNotEmpty() }, context.preferences.version, taxonomy, saved,
+            if (context.preferences.personalizationEnabled) memories else emptyList())
     }
 
     private class Evaluation(val id: String, val recipe: RecipeVersionWire, val mode: String?,
         val issues: Set<PlanningIssue>, val missing: List<WireDocument>, val tasteMatches: Int,
-        val confirmed: Int, val disliked: Int, val active: PlanningDecimal?, val cleanup: PlanningDecimal?, val scaled: Boolean)
+        val confirmed: Int, val disliked: Int, val active: PlanningDecimal?, val cleanup: PlanningDecimal?, val scaled: Boolean,
+        val memories: List<PlanningMemory>)
 
     private class ScanTier {
         var bestEligible: Evaluation? = null
@@ -214,7 +238,9 @@ class DeterministicPlanner(private val policy: PlanningPolicy,
         if (source != null && normalized(source) != normalized(recipe.id.value)) issues += PlanningIssue.CONTENT_UNAVAILABLE
         if (recipe.reviewStatus != "published" || recipe.reviewedAt !is WireField.Value ||
             evidence.reviewReference.isBlank() || evidence.reviewReference.length > 256 || evidence.policyVersion != policy.version ||
-            !evidence.freeCatalogEligible || r["estimateBasis"]?.jsonPrimitive?.content !in setOf("reviewerEstimate", "pilotObserved"))
+            (input.savedSource == null && !evidence.freeCatalogEligible) ||
+            (input.savedSource != null && !recipe.document.encodeUtf8().contentEquals(input.savedSource.recipe.document.encodeUtf8())) ||
+            r["estimateBasis"]?.jsonPrimitive?.content !in setOf("reviewerEstimate", "pilotObserved"))
             issues += PlanningIssue.CONTENT_UNAVAILABLE
         if (active == null || total == null || originalServings == null || active > total ||
             recipe.steps.isEmpty() || recipe.ingredients.isEmpty() || ingredientIds.toSet().size != ingredientIds.size ||
@@ -235,6 +261,7 @@ class DeterministicPlanner(private val policy: PlanningPolicy,
         // Unknown/unsupported cleanup cannot demonstrate compliance with an explicit cap.
         // Absent caps preserve the existing ranking of known and unknown estimates.
         if (input.cleanup != null && (cleanup == null || cleanup > input.cleanup)) issues += PlanningIssue.CLEANUP_TIME
+        if (!tags.containsAll(input.requiredPreparationTags)) issues += PlanningIssue.CLEANUP_TIME
         if (evidence.minimumEnergy > input.energy || (input.energy == PlanningEnergy.ASSEMBLE &&
             (evidence.heatingRequired || evidence.substantialPreparation || "noHeat" !in tags))) issues += PlanningIssue.ENERGY
         val improve = input.mode == "improve" || (input.mode == "auto" && input.raw.containsKey("baseMeal"))
@@ -258,6 +285,7 @@ class DeterministicPlanner(private val policy: PlanningPolicy,
             if (minimum == null || maximum == null || minimum > maximum || originalServings < minimum || originalServings > maximum ||
                 input.servings < minimum || input.servings > maximum || !evidence.linearQuantityScalingReviewed ||
                 !evidence.stepsValidForScalingRange || !evidence.effortValidForScalingRange ||
+                (input.savedSource != null && !input.savedSource.allowReviewedScaling) ||
                 recipe.ingredients.any { it.unit !in evidence.units }) issues += PlanningIssue.SERVINGS
             else {
                 val quantities = recipe.ingredients.map { ingredient ->
@@ -285,11 +313,21 @@ class DeterministicPlanner(private val policy: PlanningPolicy,
             (improve || !policy.relatedTasteExplicitlyRequested)) issues += PlanningIssue.TASTE
         return Evaluation(normalized(recipe.id.value), materialized, mode, issues, missing.map { it.document }, tasteMatches,
             recipe.ingredients.count { availability(normalized(it.ingredientId.value), input) == PlanningAvailability.CONFIRMED },
-            ingredientIds.count { closure(it, taxonomy)?.any(input.disliked::contains) == true }, active, cleanup, scaled)
+            ingredientIds.count { closure(it, taxonomy)?.any(input.disliked::contains) == true }, active, cleanup, scaled,
+            // Unknown effort operations cannot be inferred from a title, steps or time.
+            // Whole-recipe effort feedback can still match its explicit recipe context.
+            if (issues.isEmpty()) input.memories.filter { memory ->
+                memory.value != "neutral" && memory.effortAspect == null &&
+                    (memory.recipeVersionId != null || memory.ingredientId != null || memory.tasteTag != null) &&
+                    (memory.recipeVersionId == null || normalized(memory.recipeVersionId) == normalized(recipe.id.value)) &&
+                    (memory.ingredientId == null || ingredientIds.any { closure(it, taxonomy)?.contains(normalized(memory.ingredientId)) == true }) &&
+                    (memory.tasteTag == null || memory.tasteTag in recipe.tasteTags)
+            }.sortedBy { normalized(it.id) } else emptyList())
     }
 
     private fun rank(value: Evaluation) = PlanningRank(value.id, normalized(value.recipe.recipeId.value),
-        value.tasteMatches, value.disliked, value.confirmed, value.active?.text(), value.cleanup?.text())
+        value.tasteMatches, value.disliked, value.confirmed, value.active?.text(), value.cleanup?.text(),
+        value.memories.sumOf { if (it.value == "prefer") 1 else -1 })
 
     private val order = Comparator<Evaluation> { a, b -> rank(a).compareTo(rank(b)) }
 
@@ -302,6 +340,10 @@ class DeterministicPlanner(private val policy: PlanningPolicy,
             if (input.taste.isNotEmpty()) add(PlanningFact("tasteFit", if (evaluated.tasteMatches == input.taste.size)
                 "Matches your selected sensory tags." else "Related option: does not match every selected sensory tag."))
             if (alternative) add(PlanningFact("variety", "Another eligible recipe within the same confirmed choices."))
+            evaluated.memories.firstOrNull { it.value == "prefer" }?.let { memory ->
+                add(PlanningFact(if (memory.kind == "effort") "easyBefore" else "likedBefore",
+                    "At planning time, your explicit feedback favored this matching recipe context.", memory.id))
+            }
         } else listOf(PlanningFact("ingredientFit", "Confirm the missing essential ingredients before accepting this meal."))
         return PlanningPage(PlanningDecision(if (ready) PlanningStatus.READY else PlanningStatus.NEEDS_CONFIRMATION,
             evaluated.mode, input.constraints, if (ready) evaluated.recipe else null, evaluated.missing, evaluated.issues,
@@ -340,7 +382,7 @@ class DeterministicPlanner(private val policy: PlanningPolicy,
                 PlanningIssue.EQUIPMENT -> "Required equipment is not available."
                 PlanningIssue.TOTAL_TIME -> "The reviewed total time exceeds the selected limit."
                 PlanningIssue.ACTIVE_TIME -> "The reviewed active time exceeds the selected limit."
-                PlanningIssue.CLEANUP_TIME -> "The cleanup estimate is unavailable, unsupported or exceeds the selected limit."
+                PlanningIssue.CLEANUP_TIME -> "The reviewed cleanup estimate or selected preparation style does not match your limit."
                 PlanningIssue.ENERGY -> "The reviewed preparation exceeds the selected energy limit."
                 PlanningIssue.SERVINGS -> "These servings lack a supported reviewed scaling result."
                 PlanningIssue.INGREDIENT_UNAVAILABLE -> "An essential ingredient is reported unavailable."
@@ -414,7 +456,12 @@ class DeterministicPlanner(private val policy: PlanningPolicy,
             b.taxonomy.associate { normalized(it.ingredientId) to it.components?.map(::normalized)?.toSet() }
     private fun sameContext(a: PlanningContext, b: PlanningContext): Boolean =
         a.preferences.version == b.preferences.version && a.preferences.exclusions == b.preferences.exclusions &&
-            a.preferences.dislikes == b.preferences.dislikes &&
+            a.preferences.dislikes == b.preferences.dislikes && a.preferences.personalizationEnabled == b.preferences.personalizationEnabled &&
+            a.preferences.memories == b.preferences.memories &&
+            ((a.savedSource == null && b.savedSource == null) || (a.savedSource != null && b.savedSource != null &&
+                a.savedSource.savedRecipeId == b.savedSource.savedRecipeId &&
+                a.savedSource.allowReviewedScaling == b.savedSource.allowReviewedScaling &&
+                a.savedSource.recipe.document.encodeUtf8().contentEquals(b.savedSource.recipe.document.encodeUtf8()))) &&
             a.pantry.map { it.ingredientId to it.availability } == b.pantry.map { it.ingredientId to it.availability } &&
             ((a.baseMeal == null && b.baseMeal == null) || (a.baseMeal != null && b.baseMeal != null &&
                 a.baseMeal.catalogType == b.baseMeal.catalogType && a.baseMeal.compositionComplete == b.baseMeal.compositionComplete &&

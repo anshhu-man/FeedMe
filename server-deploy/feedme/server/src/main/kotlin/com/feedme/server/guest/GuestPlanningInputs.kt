@@ -190,7 +190,7 @@ internal class GuestPlanningInputs(private val environment: String) {
     private companion object {
         val validator by lazy { ContractBodyValidator.bundled() }
         val preferenceFields = setOf("hardExcludedIngredientIds", "dietaryPatterns", "dislikedIngredientIds", "equipmentIds",
-            "preferredTasteTags", "defaultEnergy", "consentVersion", "defaultServings")
+            "preferredTasteTags", "defaultEnergy", "consentVersion", "defaultServings", "personalizationEnabled")
         val pantryFields = setOf("presence", "quantity", "unit", "confirmedAt", "staple", "confirmationStatus")
         fun fail(code: PlanningFailureCode): Nothing = throw PlanningServiceFailure(code)
         fun interrupted() { if (Thread.currentThread().isInterrupted) throw InterruptedException("Guest planning inputs interrupted") }

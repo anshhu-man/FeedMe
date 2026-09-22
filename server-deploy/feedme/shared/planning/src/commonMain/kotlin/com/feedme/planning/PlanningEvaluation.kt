@@ -16,6 +16,7 @@ class PlanningRank internal constructor(
     val confirmedIngredients: Int,
     val activeMinutes: String?,
     val cleanupMinutes: String?,
+    val memoryPreference: Int = 0,
 ) : Comparable<PlanningRank> {
     private val active = activeMinutes?.let { checkNotNull(PlanningDecimal.parse(it)) }
     private val cleanup = cleanupMinutes?.let { checkNotNull(PlanningDecimal.parse(it)) }
@@ -23,6 +24,7 @@ class PlanningRank internal constructor(
     override fun compareTo(other: PlanningRank): Int =
         compareValues(other.tasteMatches, tasteMatches).takeUnless { it == 0 }
             ?: compareValues(dislikedIngredients, other.dislikedIngredients).takeUnless { it == 0 }
+            ?: compareValues(other.memoryPreference, memoryPreference).takeUnless { it == 0 }
             ?: compareValues(other.confirmedIngredients, confirmedIngredients).takeUnless { it == 0 }
             ?: compareValues(active, other.active).takeUnless { it == 0 }
             ?: compareValues(cleanup == null, other.cleanup == null).takeUnless { it == 0 }

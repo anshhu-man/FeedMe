@@ -20,12 +20,14 @@ internal class PlanningPrivateInputsSnapshot private constructor(
     val preferenceRevision: String get() = root.getValue("preferences").jsonObject.text("revision")
     val pantryRevision: String get() = root.getValue("pantry").jsonObject.text("revision")
     fun copyForStorage(): WireDocument = document
-    fun samePrivateInputs(other: PlanningPrivateInputsSnapshot): Boolean = root == other.root
+    fun samePrivateInputs(other: PlanningPrivateInputsSnapshot): Boolean =
+        PlanningMemorySnapshot.normalized(root.getValue("preferences").jsonObject) ==
+            PlanningMemorySnapshot.normalized(other.root.getValue("preferences").jsonObject) &&
+            root["pantry"] == other.root["pantry"] && root["baseMeal"] == other.root["baseMeal"]
     fun context(): PlanningContext {
         val p = root.getValue("preferences").jsonObject
         val pantry = root.getValue("pantry").jsonObject
-        return PlanningContext(PlanningPreferences(p.text("revision"), p.strings("excludedIngredientIds").toSet(),
-            p.strings("dislikedIngredientIds").toSet()), pantry.getValue("items").jsonArray.map {
+        return PlanningContext(PlanningMemorySnapshot.preferences(p), pantry.getValue("items").jsonArray.map {
             val item = it.jsonObject
             ReportedIngredient(item.text("ingredientId"), PlanningAvailability.valueOf(item.text("availability")))
         }, root.getValue("baseMeal").takeUnless { it == JsonNull }?.jsonObject?.let {
@@ -40,9 +42,15 @@ internal class PlanningPrivateInputsSnapshot private constructor(
             val document = WireDocument.decode(bytes, WireLimits(MAX_BYTES, 16))
             val root = json(document)
             manifestExact(root, "version", "preferences", "pantry", "baseMeal")
-            require(root["version"] == JsonPrimitive(2))
+            require(root["version"] in setOf(JsonPrimitive(2), JsonPrimitive(3)))
             val p = root.getValue("preferences").jsonObject
-            manifestExact(p, "revision", "excludedIngredientIds", "dislikedIngredientIds")
+            if (root["version"] == JsonPrimitive(2)) manifestExact(p, "revision", "excludedIngredientIds", "dislikedIngredientIds")
+            else {
+                manifestExact(p, "revision", "excludedIngredientIds", "dislikedIngredientIds", "personalizationEnabled", "memories")
+                val enabled = p.bool("personalizationEnabled")
+                PlanningMemorySnapshot.validate(p.getValue("memories").jsonArray)
+                require(enabled || p.getValue("memories").jsonArray.isEmpty())
+            }
             require(p.text("revision").matches(Regex("[1-9][0-9]{0,127}")))
             manifestIds(p, "excludedIngredientIds"); manifestIds(p, "dislikedIngredientIds")
             val pantry = root.getValue("pantry").jsonObject

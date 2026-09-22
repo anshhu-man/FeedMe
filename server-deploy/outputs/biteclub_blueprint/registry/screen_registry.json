@@ -2212,7 +2212,8 @@
               "preferredTasteTags",
               "defaultEnergy",
               "consentVersion",
-              "defaultServings"
+              "defaultServings",
+              "personalizationEnabled"
             ],
             "requiredHeaders": [
               "Idempotency-Key",
@@ -2440,7 +2441,8 @@
               "preferredTasteTags",
               "defaultEnergy",
               "consentVersion",
-              "defaultServings"
+              "defaultServings",
+              "personalizationEnabled"
             ],
             "requiredHeaders": [
               "Idempotency-Key",
@@ -7133,7 +7135,8 @@
               "preferredTasteTags",
               "defaultEnergy",
               "consentVersion",
-              "defaultServings"
+              "defaultServings",
+              "personalizationEnabled"
             ],
             "requiredHeaders": [
               "Idempotency-Key",
@@ -21293,10 +21296,12 @@
               "action",
               "reasonCode",
               "notes",
-              "assigneeId"
+              "assigneeId",
+              "targetVersion"
             ],
             "requiredHeaders": [
-              "Idempotency-Key"
+              "Idempotency-Key",
+              "If-Match"
             ],
             "example": null
           }
@@ -21327,10 +21332,12 @@
               "action",
               "reasonCode",
               "notes",
-              "assigneeId"
+              "assigneeId",
+              "targetVersion"
             ],
             "requiredHeaders": [
-              "Idempotency-Key"
+              "Idempotency-Key",
+              "If-Match"
             ],
             "example": null
           }

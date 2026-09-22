@@ -39,18 +39,21 @@ class SavedRecipeStore(val environment: String, private val transactions: PgTran
         saveRecipeIn(null, actor, key, body).result
     internal fun saveRecipe(connection: Connection, actor: VerifiedSavedRecipePrincipal, key: UUID,
         body: JsonObject): Pending<CommandResult> = saveRecipeIn(connection, actor, key, body)
+    internal fun savePostRecipe(connection: Connection, actor: VerifiedSavedRecipePrincipal, key: UUID,
+        postId: UUID, body: JsonObject): Pending<CommandResult> = saveRecipeIn(connection, actor, key, body, postId = postId)
     /** Explicit caller-owned composition only; the existing/public paths have no effect. */
     internal fun saveRecipe(connection: Connection, actor: VerifiedSavedRecipePrincipal, key: UUID,
         body: JsonObject, effect: SavedRecipeMakeAgainEffect): Pending<CommandResult> =
         saveRecipeIn(connection, actor, key, body, effect)
     private fun saveRecipeIn(connection: Connection?, actor: VerifiedSavedRecipePrincipal, key: UUID,
-        body: JsonObject, effect: SavedRecipeMakeAgainEffect? = null): Pending<CommandResult> {
-        val input = request(body)
+        body: JsonObject, effect: SavedRecipeMakeAgainEffect? = null, postId: UUID? = null): Pending<CommandResult> {
+        val operation = if (postId == null) "saveRecipe" else "savePostRecipe"
+        val input = request(body, operation)
         val makeAgain = input["markMakeAgain"]?.jsonPrimitive?.boolean == true
         if (makeAgain && effect == null) fail(SavedRecipeFailureCode.NOT_CONFIGURED)
         val planId = optionalId(input, "planId"); val versionId = optionalId(input, "recipeVersionId")
         val targetCollection = optionalId(input, "collectionId")
-        return command(connection, actor, "saveRecipe", key, body = input, replay = { c, cached, trace ->
+        return command(connection, actor, operation, key, paths = postId?.let { mapOf("postId" to it.toString()) } ?: emptyMap(), body = input, replay = { c, cached, trace ->
             val marker = query(c, "SELECT saved_recipe_id,collection_id,generation FROM memory.save_commands WHERE environment=? AND actor_kind=? AND principal_id=? AND command_id=?",
                 { owner(actor); setObject(4, key) }) { r -> if (!r.next()) fail(SavedRecipeFailureCode.STORAGE_UNAVAILABLE)
                 Triple(r.getObject(1, UUID::class.java), r.getObject(2, UUID::class.java), r.getLong(3)) }
@@ -63,7 +66,13 @@ class SavedRecipeStore(val environment: String, private val transactions: PgTran
             // This check is not a copy grant. It prevents an adapter from substituting catalog
             // amounts or another principal's Plan for the exact immutable materialized ownPlan.
             val pinned = planId?.let { ownedPlanRecipe(c, actor, it) }
-            val permit = authority.authorizeNewCopy(c, actor, planId, versionId); current()
+            val permit = if (postId == null) authority.authorizeNewCopy(c, actor, planId, versionId)
+                else authority.authorizePostCopy(c, actor, postId, versionId ?: fail(SavedRecipeFailureCode.INPUT_INVALID),
+                    input.getValue("grantPolicyVersion").jsonPrimitive.longOrNull?.takeIf { it > 0 }
+                        ?: fail(SavedRecipeFailureCode.INPUT_INVALID))
+            current()
+            if ((postId == null) != (permit.postSource == null) || permit.postSource?.postId?.let { it != postId } == true)
+                fail(SavedRecipeFailureCode.STORAGE_UNAVAILABLE)
             if (permit.recipe["id"] != JsonPrimitive(permit.recipeVersionId.toString()) ||
                 (versionId != null && versionId != permit.recipeVersionId) || (pinned != null && canonical(pinned) != canonical(permit.recipe)))
                 fail(SavedRecipeFailureCode.RECIPE_UNAVAILABLE)
@@ -81,18 +90,22 @@ class SavedRecipeStore(val environment: String, private val transactions: PgTran
                 existing
             } else {
                 val id = UUID.randomUUID(); val generation = increment(previous?.generation ?: 0)
-                val type = if (planId == null) "catalog" else "ownPlan"
+                val type = if (postId != null) "postGrant" else if (planId == null) "catalog" else "ownPlan"
                 val snapshot = buildJsonObject {
                     put("id", id.toString()); put("version", 1); put("createdAt", at.toString()); put("updatedAt", at.toString())
                     put("title", input["title"] ?: permit.recipe.getValue("title")); put("snapshot", permit.recipe)
                     put("sourceType", type); put("recalled", false); put("contentLicense", permit.contentLicense)
+                    permit.postSource?.let { source ->
+                        put("sourcePostId", source.postId.toString()); put("grantId", source.grantId.toString())
+                        put("creatorLabel", source.creatorLabel)
+                    }
                 }
                 // Reserve an envelope/cursor budget, so every accepted item can later be paged.
                 if (bytes(snapshot).size + PAGE_RESERVE > policy.maxResponseBytes) fail(SavedRecipeFailureCode.RESPONSE_TOO_LARGE)
-                reply("saveRecipe", 201, snapshot, 1)
+                reply(operation, 201, snapshot, 1)
                 exec(c, "INSERT INTO memory.saved_recipes(environment,actor_kind,principal_id,id,generation,version,recipe_version_id,recipe_hash,source_type,source_id,origin_plan_id,content_license,snapshot,copy_evidence,created_at,updated_at) VALUES(?,?,?,?,?,1,?,?,?,?,?,?,?::jsonb,?::jsonb,?,?)") {
                     owner(actor); setObject(4, id); setLong(5, generation); setObject(6, permit.recipeVersionId); setString(7, hash)
-                    setString(8, type); setObject(9, planId ?: permit.recipeVersionId); setObject(10, planId); setString(11, permit.contentLicense)
+                    setString(8, type); setObject(9, postId ?: planId ?: permit.recipeVersionId); setObject(10, planId); setString(11, permit.contentLicense)
                     setString(12, snapshot.toString()); setString(13, permit.evidence.toString()); setObject(14, time(at)); setObject(15, time(at))
                 }
                 val persisted = row(c, actor, id)
@@ -124,7 +137,7 @@ class SavedRecipeStore(val environment: String, private val transactions: PgTran
                     fail(SavedRecipeFailureCode.STORAGE_UNAVAILABLE)
                 current(); effect!!.applied(c, actor, key, input, actual.body!!, actual.generation, existing == null); current()
             }
-            reply("saveRecipe", 201, saved.body, saved.version)
+            reply(operation, 201, saved.body, saved.version)
         }
     }
 
@@ -276,14 +289,21 @@ class SavedRecipeStore(val environment: String, private val transactions: PgTran
         "SELECT snapshot_text,snapshot_hash,status,recipe_version_id,storage_format FROM planning.plans WHERE environment=? AND actor_kind=? AND principal_id=? AND id=? FOR SHARE",
         { owner(actor); setObject(4, id) }) { r ->
         if (!r.next()) fail(SavedRecipeFailureCode.PLAN_UNAVAILABLE)
-        // Existing v1/v2 owners retain their explicit copy authorities. Derived Plans
-        // require provenance-aware copy authorization before they enter this old path.
-        if (r.getInt(5) !in 1..2) fail(SavedRecipeFailureCode.NOT_CONFIGURED)
+        val format = r.getInt(5)
+        // Existing v1/v2 owners retain their explicit copy authorities. Formats3/4 are
+        // admitted only through the concrete current account/provenance reader below,
+        // never by an arbitrary SavedRecipeAuthority returning an accepting copy permit.
+        if (format !in 1..5) fail(SavedRecipeFailureCode.NOT_CONFIGURED)
         val text = r.getString(1); val document = Json.parseToJsonElement(text).jsonObject
         if (digest(text) != r.getString(2) || document["id"] != JsonPrimitive(id.toString())) fail(SavedRecipeFailureCode.STORAGE_UNAVAILABLE)
         if (r.getString(3) != "ready" || document["status"] != JsonPrimitive("ready")) fail(SavedRecipeFailureCode.RECIPE_UNAVAILABLE)
         val recipe = document["recipeSnapshot"]?.jsonObject ?: fail(SavedRecipeFailureCode.STORAGE_UNAVAILABLE)
         if (recipe["id"] != JsonPrimitive(r.getObject(4, UUID::class.java).toString())) fail(SavedRecipeFailureCode.STORAGE_UNAVAILABLE)
+        if (format in setOf(3, 4, 5)) {
+            val account = authority as? AccountSavedRecipeAccess ?: fail(SavedRecipeFailureCode.NOT_CONFIGURED)
+            val authorized = account.lockOwnedDerivedPlanRecipe(c, actor, id)
+            if (canonical(recipe) != canonical(authorized)) fail(SavedRecipeFailureCode.RECIPE_UNAVAILABLE)
+        }
         recipe
     }
 
@@ -355,7 +375,8 @@ class SavedRecipeStore(val environment: String, private val transactions: PgTran
     private fun event(c: Connection, actor: VerifiedSavedRecipePrincipal, key: UUID, type: String, aggregate: String,
         id: UUID, version: Long, data: JsonObject, trace: Trace? = null) {
         current()
-        val draft = EventDraft(UUID.randomUUID(), type, 1, aggregate, id, version, "memory", UUID.randomUUID().toString(), key, data)
+        val draft = EventDraft(UUID.randomUUID(), type, 1, aggregate, id, version, "memory", UUID.randomUUID().toString(), key, data,
+            owner = EventOwner.principal(environment, actor.kind, actor.principalId))
         outbox.append(c, draft); trace?.events?.add(draft)
     }
     private fun command(connection: Connection?, actor: VerifiedSavedRecipePrincipal, op: String, key: UUID,
@@ -528,7 +549,7 @@ class SavedRecipeStore(val environment: String, private val transactions: PgTran
             receiptExpires = storedInstant(retained, "expires_at")
             observe("receipt", retained, ::receipt)
             val saved = when (identity.operationId) {
-                "saveRecipe" -> {
+                "saveRecipe", "savePostRecipe" -> {
                     val id = UUID.fromString(response.body!!.jsonObject.text("id"))
                     val value = row(connection, actor, id)
                     if (value.deleted || response.status != 201 || response.etag != "\"${value.version}\"" ||
@@ -650,9 +671,9 @@ class SavedRecipeStore(val environment: String, private val transactions: PgTran
         }
     private fun storedInstant(value: JsonObject, name: String) = OffsetDateTime.parse(value.text(name)).toInstant()
     private fun nullableId(id: UUID?) = id?.let { JsonPrimitive(it.toString()) } ?: JsonNull
-    private fun request(body: JsonObject): JsonObject {
+    private fun request(body: JsonObject, operation: String = "saveRecipe"): JsonObject {
         val bytes = bytes(body, SavedRecipeFailureCode.INPUT_INVALID)
-        if (validator.validateRequest("saveRecipe", bytes, "application/json") != BodyValidationResult.Valid) fail(SavedRecipeFailureCode.INPUT_INVALID)
+        if (validator.validateRequest(operation, bytes, "application/json") != BodyValidationResult.Valid) fail(SavedRecipeFailureCode.INPUT_INVALID)
         return Json.parseToJsonElement(bytes.toString(Charsets.UTF_8)).jsonObject
     }
     private fun reply(op: String, status: Int, body: JsonObject?, version: Long? = null): StoredReply {

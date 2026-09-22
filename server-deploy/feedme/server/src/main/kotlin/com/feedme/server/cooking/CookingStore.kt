@@ -288,7 +288,7 @@ class CookingStore internal constructor(val environment: String, private val tra
             "cooking", key.toString(), key, buildJsonObject {
                 put("principalId", actor.principalId.toString()); put("sessionId", sessionId.toString())
                 if (kind == "progressed") put("deviceSequence", sequence) else put("planId", planId.toString())
-            })
+            }, owner = EventOwner.principal(environment, actor.kind, actor.principalId))
         outbox.append(c, draft)
         current()
         return draft

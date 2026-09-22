@@ -31,7 +31,12 @@ export const maxBytes = 50 * 1024 * 1024;
 const ignoredDirectories = new Set(['.git', '.gradle', '.kotlin', '.local', 'node_modules', 'build', 'xcuserdata', 'Pods']);
 const ignoredFile = name => name === '.DS_Store' || name === 'local.properties' || /^\.env(?:\.|$)/.test(name) || /\.(?:keystore|jks|p12|pfx|mobileprovision|pem|key)$/i.test(name);
 const secrets = /-----BEGIN (?:[A-Z ]+ )?PRIVATE KEY-----|\bgh[pousr]_[A-Za-z0-9]{30,}\b|\bgithub_pat_[A-Za-z0-9_]{40,}\b|\bAKIA[A-Z0-9]{16}\b|\bAIza[0-9A-Za-z_-]{30,}\b/;
-const privateHome = /\/Users\/(?!LOCAL_USER(?:\/|\b))[^/\s"'<>]+|%2fUsers%2f(?!LOCAL_USER(?:%2f|\b))[A-Za-z0-9._-]+/i;
+// macOS home paths use a case-sensitive `/Users/` segment. Keep percent-escape
+// hex case flexible without treating ordinary lowercase HTTP `/users/` routes as
+// local home directories.
+const privateHomes = [/\/Users\/(?!LOCAL_USER(?:\/|\b))[^/\s"'<>]+/,
+  /%2fUsers%2f(?!LOCAL_USER(?:%2f|\b))[A-Za-z0-9._-]+/i];
+const hasPrivateHome = text => privateHomes.some(pattern => pattern.test(text));
 export const need = (value, message) => { if (!value) throw new Error(message); };
 export const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 export const under = (name, prefix) => name === prefix || name.startsWith(prefix + '/');
@@ -88,10 +93,10 @@ export function validatePublished(relative, bytes) {
   need(!relative.split('/').some(part => ignoredDirectories.has(part)) && !ignoredFile(path.posix.basename(relative)), 'Private/generated publication path: ' + relative);
   need(bytes.length <= maxBytes, 'Unreviewed large file: ' + relative);
   // Inspect raw ASCII as well as UTF-8 text; NUL bytes never exempt obvious credentials/home paths.
-  need(!secrets.test(bytes.toString('latin1')) && !privateHome.test(bytes.toString('latin1')), 'Private data requires review: ' + relative);
+  need(!secrets.test(bytes.toString('latin1')) && !hasPrivateHome(bytes.toString('latin1')), 'Private data requires review: ' + relative);
   if (!bytes.includes(0)) {
     const text = bytes.toString('utf8'); need(Buffer.from(text).equals(bytes), 'Invalid UTF-8: ' + relative);
-    need(!secrets.test(text) && !privateHome.test(text), 'Private text requires review: ' + relative);
+    need(!secrets.test(text) && !hasPrivateHome(text), 'Private text requires review: ' + relative);
     need(sanitizeDiagnostics(relative, text).unrelatedInstrumentationRedactions === 0, 'Unrelated instrumentation inventory: ' + relative);
   }
 }

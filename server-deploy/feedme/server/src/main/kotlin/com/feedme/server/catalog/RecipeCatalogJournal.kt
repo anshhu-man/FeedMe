@@ -19,7 +19,13 @@ class RecipeCatalogJournal(val environment: String, private val transactions: Pg
     init { require(environment.matches(Regex("[a-z][a-z0-9-]{0,39}"))) }
 
     fun publish(change: RecipeCatalogChangeset): RecipePublicationReceipt = safe {
-        transactions.run { c ->
+        transactions.run { c -> publishInTransaction(c, change) }
+    }
+
+    /** Same authoritative write kernel for a larger owned transaction. No nested
+     * connection/commit; exact authority and outbox checks remain mandatory. */
+    internal fun publishInTransaction(c: Connection, change: RecipeCatalogChangeset): RecipePublicationReceipt = run {
+            transaction(c)
             checkCompatibility(c)
             authority.lockPublication(c, environment, change)
             if (change.expectedRevision == 0L) c.prepareStatement(
@@ -103,7 +109,6 @@ class RecipeCatalogJournal(val environment: String, private val transactions: Pg
                 transaction(c)
                 RecipePublicationReceipt(change.releaseId, revision, change.requestSha256, false)
             }
-        }
     }
 
     /** No catalog initialization or authority decision. Both immutable migration pins required. */

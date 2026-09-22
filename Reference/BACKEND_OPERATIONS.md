@@ -1,9 +1,24 @@
 # Backend operations — public handoff
 
-19 September 2026 IST. This document describes the separately curated
+This document describes the separately curated
 [server bundle](BACKEND_DEPLOYMENT.md), not the older top-level app snapshot.
 No credential, private runtime configuration, local operator helper or raw local
 test/evidence directory is included here.
+
+## Current source/runtime boundary — 23 September 2026 IST
+
+The public source handoff now contains the exact current V001–V088 server closure
+and compiles offline with JDK 17. Hosted Supabase is independently current through
+V088, and the restricted `feedme_api` role has passed its exact current-core ACL
+check. Public Supabase settings also report Google OAuth enabled, email enabled,
+anonymous sign-in disabled, signup open and mail auto-confirm disabled.
+
+These facts do not make the API live. The Render service remains on the old
+closed V032 dependency-hold image. The current account runtime configuration,
+session-policy review, OAuth mobile return, content, legal/deletion operation and
+connected app acceptance are not in this public source bundle. Do not deploy the
+V088 handoff with the historical V032 runtime environment or infer readiness from
+successful compilation.
 
 ## Current closed deployment attempt — 19 September UTC
 

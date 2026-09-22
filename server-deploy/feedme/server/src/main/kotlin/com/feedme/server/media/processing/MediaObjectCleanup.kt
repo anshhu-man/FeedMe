@@ -75,10 +75,16 @@ class MediaObjectCleanup(private val environment: String, private val transactio
         }
         authority.lockDraft(c, lease.owner, draft.first, draft.second, MediaWorkerPurpose.CLEANUP); processingCurrent()
         pq(c, "SELECT generation FROM platform.media_draft_lifecycles WHERE environment=? AND owner_user_id=? AND client_draft_id=? FOR UPDATE",
-            { owner(lease.owner); setObject(3, draft.first) }) { if (!it.next() || it.getLong(1) != draft.second) processingFail(MediaProcessingFailureCode.CONFLICT) }
-        pq(c, "SELECT state,quarantine_key,derivative_set FROM platform.media_assets WHERE environment=? AND owner_user_id=? AND id=? FOR UPDATE",
+            { owner(lease.owner); setObject(3, draft.first) }) {
+            // Cancelling/replacing a draft advances its lifecycle, but the retained exact
+            // old object still needs cleanup. This never admits stale PROCESS work.
+            if (!it.next() || draft.second <= 0 || it.getLong(1) < draft.second)
+                processingFail(MediaProcessingFailureCode.CONFLICT)
+        }
+        pq(c, "SELECT state,quarantine_key,derivative_set,client_draft_id,draft_generation FROM platform.media_assets WHERE environment=? AND owner_user_id=? AND id=? FOR UPDATE",
             { owner(lease.owner); setObject(3, lease.mediaId) }) {
-            if (!it.next()) processingFail(MediaProcessingFailureCode.CONFLICT)
+            if (!it.next() || it.getObject("client_draft_id", UUID::class.java) != draft.first ||
+                it.getLong("draft_generation") != draft.second) processingFail(MediaProcessingFailureCode.CONFLICT)
             val state = it.getString("state"); val quarantine = it.getString("quarantine_key")
             val liveKeys = it.getString("derivative_set")?.let { raw -> Json.parseToJsonElement(raw).jsonObject.getValue("variants").jsonArray.map { v -> v.jsonObject.getValue("key").jsonPrimitive.content } }.orEmpty()
             if (lease.objectKey in liveKeys || (lease.objectKey == quarantine && state !in setOf("ready", "rejected", "deleted"))) processingFail(MediaProcessingFailureCode.CONFLICT)

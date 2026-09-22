@@ -61,6 +61,7 @@ internal class PlanningManifestFirstDecision private constructor(
         fun fromDecision(decision: PlanningDecision): PlanningManifestFirstDecision = firstDecisionFormat {
             // These are per-result ingredient/fact bounds, never a candidate/ordered-ID limit.
             require(decision.missingIngredients.size <= 128 && decision.facts.size <= 128)
+            require(decision.facts.all { it.sourceMemoryId == null }) // Legacy guest format cannot drop private evidence links.
             fun exact(value: WireDocument): String {
                 val bytes = value.encodeUtf8(); require(bytes.size <= COMPONENT_BYTES)
                 return bytes.decodeToString(throwOnInvalidSequence = true)

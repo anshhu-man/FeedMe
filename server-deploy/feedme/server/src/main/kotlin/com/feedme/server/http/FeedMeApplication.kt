@@ -83,11 +83,33 @@ fun Application.feedMeLocalService(
     accountSaved: AccountSavedRecipeHttpConfiguration? = null,
     accountCoreHealth: AccountCoreDependencyHealth? = null,
     dependencyHold: (suspend () -> Boolean)? = null,
+    accountBlocks: AccountBlockHttpConfiguration? = null,
+    accountPostReads: AccountPostReadHttpConfiguration? = null,
+    accountReports: AccountReportHttpConfiguration? = null,
+    accountMealIntent: AccountMealIntentHttpConfiguration? = null,
+    accountDeletion: AccountDeletionHttpConfiguration? = null,
+    accountMemory: AccountMemoryHttpConfiguration? = null,
+    accountReuse: AccountReuseHttpConfiguration? = null,
+    accountConversations: AccountConversationHttpConfiguration? = null,
+    accountPostDeletion: AccountPostDeletionHttpConfiguration? = null,
+    accountRecipeRequests: AccountRecipeRequestHttpConfiguration? = null,
+    accountSessions: AccountSessionHttpConfiguration? = null,
+    accountNotifications: AccountNotificationHttpConfiguration? = null,
+    accountMediaAccess: AccountMediaAccessHttpConfiguration? = null,
+    accountRemixes: AccountRemixReadHttpConfiguration? = null,
+    accountPostRecipes: AccountPostRecipeSourceHttpConfiguration? = null,
+    accountExports: AccountExportHttpConfiguration? = null,
+    accountExportDelivery: AccountExportDeliveryHttpConfiguration? = null,
+    staff: SupabaseStaffHttpConfiguration? = null,
+    accountNotificationInbox: AccountNotificationInboxHttpConfiguration? = null,
+    accountPostPlacement: AccountPostPlacementHttpConfiguration? = null,
+    accountPostReactions: AccountPostReactionHttpConfiguration? = null,
 ) {
     // A closed operational deployment may not accidentally acquire even one product adapter.
     require(dependencyHold == null || listOf(planning, social, kitchen, cooking, savedRecipe, media,
         postDraft, postPublication, account, pendingPreferences, accountPreferences, pantry, accountPantry,
-        guest, accountPlanning, accountCooking, accountSaved, accountCoreHealth).all { it == null })
+        guest, accountPlanning, accountCooking, accountSaved, accountCoreHealth, accountBlocks, accountPostReads,
+        accountReports, accountMealIntent, accountDeletion, accountMemory, accountReuse, accountConversations, accountPostDeletion, accountPostPlacement, accountPostReactions, accountRecipeRequests, accountSessions, accountNotifications, accountNotificationInbox, accountMediaAccess, accountRemixes, accountPostRecipes, accountExports, accountExportDelivery, staff).all { it == null })
     require((healthMode == ServiceHealthMode.ACCOUNT_CORE_DEPENDENCIES) == (accountCoreHealth != null)) {
         "Configured core health requires its owned dependency checker"
     }
@@ -148,6 +170,56 @@ fun Application.feedMeLocalService(
         finally { call.attributes.getOrNull(admissionPermitKey)?.close() }
     }
     routing {
+        if (staff != null) route("/v1/staff/session", HttpMethod.Get) {
+            handle {
+                if (!lifecycle.tryAdmit()) {
+                    call.problem(bodyValidator, HttpStatusCode.ServiceUnavailable, "SERVICE_NOT_READY", "Service unavailable")
+                    return@handle
+                }
+                currentCoroutineContext().ensureActive()
+                val permit = requestAdmission.tryAcquire()
+                if (permit == null) {
+                    call.problem(bodyValidator, HttpStatusCode.ServiceUnavailable, "SERVICE_BUSY", "Service unavailable")
+                    return@handle
+                }
+                call.attributes.put(admissionPermitKey, permit)
+                call.supabaseStaffSession(staff, bodyValidator)
+            }
+        }
+        if (accountMediaAccess != null) route("/v1/media-delivery/{capability}", HttpMethod.Get) {
+            handle {
+                // Private byte capabilities are not extra canonical user operations, but
+                // share the same readiness, concurrency and request-lifetime boundaries.
+                if (!lifecycle.tryAdmit()) {
+                    call.problem(bodyValidator, HttpStatusCode.ServiceUnavailable, "SERVICE_NOT_READY", "Service unavailable")
+                    return@handle
+                }
+                currentCoroutineContext().ensureActive()
+                val permit = requestAdmission.tryAcquire()
+                if (permit == null) {
+                    call.problem(bodyValidator, HttpStatusCode.ServiceUnavailable, "SERVICE_BUSY", "Service unavailable")
+                    return@handle
+                }
+                call.attributes.put(admissionPermitKey, permit)
+                call.accountMediaByteDelivery(accountMediaAccess)
+            }
+        }
+        if (accountExportDelivery != null) route("/v1/account/export-downloads/{capability}", HttpMethod.Get) {
+            handle {
+                if (!lifecycle.tryAdmit()) {
+                    call.problem(bodyValidator, HttpStatusCode.ServiceUnavailable, "SERVICE_NOT_READY", "Service unavailable")
+                    return@handle
+                }
+                currentCoroutineContext().ensureActive()
+                val permit = requestAdmission.tryAcquire()
+                if (permit == null) {
+                    call.problem(bodyValidator, HttpStatusCode.ServiceUnavailable, "SERVICE_BUSY", "Service unavailable")
+                    return@handle
+                }
+                call.attributes.put(admissionPermitKey, permit)
+                call.accountExportByteDelivery(accountExportDelivery)
+            }
+        }
         catalog.operations.forEach { operation ->
             route(operation.path, HttpMethod.parse(operation.method)) {
                 handle {
@@ -187,15 +259,35 @@ fun Application.feedMeLocalService(
                             "Local response violates the bundled contract"
                         }
                         call.respondText(text, ContentType.Application.Json, HttpStatusCode.OK)
+                    } else if (staff?.recipes != null && operation.id in staffRecipeHttpOperations) {
+                        call.staffRecipeOperation(operation.id, staff, bodyValidator)
+                    } else if (staff?.moderation != null && operation.id in staffModerationHttpOperations) {
+                        call.staffModerationOperation(operation.id, staff, bodyValidator)
                     } else if (guest != null && operation.id == "createGuestSession") {
                         call.guestBootstrapOperation(guest, bodyValidator)
                     } else if (guest != null && operation.id == "getCurrentGuestSession") {
                         call.guestCurrentSessionOperation(guest, bodyValidator)
                     } else if (account != null && operation.id in accountHttpOperations) {
                         call.accountOperation(operation.id, account, bodyValidator)
+                    } else if (accountDeletion != null && operation.id == accountDeletionOperation) {
+                        call.accountDeletionOperation(accountDeletion, bodyValidator)
+                    } else if (accountBlocks != null && operation.id in accountBlockHttpOperations) {
+                        call.accountBlockOperation(operation.id, accountBlocks, bodyValidator)
+                    } else if (accountPostReads != null && operation.id in accountPostReadHttpOperations) {
+                        call.accountPostReadOperation(operation.id, accountPostReads, bodyValidator)
+                    } else if (accountReports != null && operation.id in accountReportHttpOperations) {
+                        call.accountReportOperation(operation.id, accountReports, bodyValidator)
+                    } else if (accountConversations != null && operation.id in accountConversationHttpOperations) {
+                        call.accountConversationOperation(operation.id, accountConversations, bodyValidator)
+                    } else if (accountMemory != null && operation.id in accountMemoryOperations) {
+                        call.accountMemoryOperation(operation.id, accountMemory, bodyValidator)
+                    } else if (accountReuse != null && operation.id == "createReuseOptions") {
+                        call.accountReuseOperation(accountReuse, bodyValidator)
+                    } else if (accountMealIntent != null && operation.id == "interpretMealRequest") {
+                        call.accountMealIntentOperation(accountMealIntent, bodyValidator)
                     } else if (planning != null && operation.id in planningHttpOperations) {
                         call.planningOperation(operation.id, planning, bodyValidator)
-                    } else if (accountPlanning != null && operation.id in planningHttpOperations) {
+                    } else if (accountPlanning != null && operation.id in accountPlanningHttpOperations) {
                         call.accountPlanningOperation(operation.id, accountPlanning, bodyValidator)
                     } else if (social != null && operation.id in socialHttpOperations) {
                         call.socialOperation(operation.id, social, bodyValidator)
@@ -220,7 +312,11 @@ fun Application.feedMeLocalService(
                         call.accountCookingOperation(operation.id, accountCooking, bodyValidator)
                     } else if (savedRecipe != null && operation.id in savedRecipeHttpOperations) {
                         call.savedRecipeOperation(operation.id, savedRecipe, bodyValidator)
-                    } else if (accountSaved != null && operation.id in savedRecipeHttpOperations) {
+                    } else if (accountExports != null && operation.id in accountExportHttpOperations) {
+                        call.accountExportOperation(operation.id, accountExports, bodyValidator)
+                    } else if (accountPostRecipes != null && operation.id == "getPostRecipeSource") {
+                        call.accountPostRecipeSourceOperation(accountPostRecipes, bodyValidator)
+                    } else if (accountSaved != null && (operation.id in savedRecipeHttpOperations || operation.id in accountCollectionHttpOperations || operation.id in accountPostSaveHttpOperations)) {
                         call.accountSavedRecipeOperation(operation.id, accountSaved, bodyValidator)
                     } else if (media != null && operation.id in mediaHttpOperations) {
                         call.mediaOperation(operation.id, media, bodyValidator)
@@ -228,6 +324,24 @@ fun Application.feedMeLocalService(
                         call.postDraftOperation(operation.id, postDraft, bodyValidator)
                     } else if (postPublication != null && operation.id == "publishPost") {
                         call.postPublicationOperation(postPublication, bodyValidator)
+                    } else if (accountPostDeletion != null && operation.id == "deletePost") {
+                        call.accountPostDeletionOperation(accountPostDeletion, bodyValidator)
+                    } else if (accountPostPlacement != null && operation.id == "updatePost") {
+                        call.accountPostPlacementOperation(accountPostPlacement, bodyValidator)
+                    } else if (accountPostReactions != null && operation.id in setOf("setReaction", "removeReaction")) {
+                        call.accountPostReactionOperation(operation.id, accountPostReactions, bodyValidator)
+                    } else if (accountRecipeRequests != null && operation.id in accountRecipeRequestHttpOperations) {
+                        call.accountRecipeRequestOperation(operation.id, accountRecipeRequests, bodyValidator)
+                    } else if (accountSessions != null && operation.id in accountSessionHttpOperations) {
+                        call.accountSessionOperation(operation.id, accountSessions, bodyValidator)
+                    } else if (accountNotifications != null && operation.id in accountNotificationHttpOperations) {
+                        call.accountNotificationOperation(operation.id, accountNotifications, bodyValidator)
+                    } else if (accountNotificationInbox != null && operation.id in accountNotificationInboxHttpOperations) {
+                        call.accountNotificationInboxOperation(operation.id, accountNotificationInbox, bodyValidator)
+                    } else if (accountMediaAccess != null && operation.id == "getMediaAccess") {
+                        call.accountMediaAccessOperation(accountMediaAccess, bodyValidator)
+                    } else if (accountRemixes != null && operation.id == "getRemixTrail") {
+                        call.accountRemixReadOperation(accountRemixes, bodyValidator)
                     } else {
                         // Do not accept fake tokens, grant access, parse/mutate data or acknowledge webhooks.
                         // No Retry-After promise: this is missing implementation, not transient capacity.

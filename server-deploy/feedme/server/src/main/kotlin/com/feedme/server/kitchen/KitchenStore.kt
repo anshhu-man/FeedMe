@@ -282,17 +282,18 @@ class KitchenStore(private val environment: String, private val transactions: Pg
     private fun metadata(row: Row) = buildJsonObject {
         put("id", row.id.toString()); put("version", row.version); put("createdAt", row.created.toString()); put("updatedAt", row.updated.toString())
     }
-    private fun preferenceEvent(c: Connection, actor: VerifiedKitchenPrincipal, key: UUID, row: Row, fields: Set<String>) = event(c, key,
+    private fun preferenceEvent(c: Connection, actor: VerifiedKitchenPrincipal, key: UUID, row: Row, fields: Set<String>) = event(c, actor, key,
         "profile.preferences.changed.v1", "preference", row, "profile", buildJsonObject {
             put("principalId", actor.principalId.toString()); put("preferenceVersion", row.version)
             put("changedFieldKinds", JsonArray(fields.sorted().map(::JsonPrimitive)))
         })
-    private fun pantryEvent(c: Connection, actor: VerifiedKitchenPrincipal, key: UUID, row: Row, action: String) = event(c, key,
+    private fun pantryEvent(c: Connection, actor: VerifiedKitchenPrincipal, key: UUID, row: Row, action: String) = event(c, actor, key,
         "pantry.item.changed.v1", "pantryItem", row, "pantry", buildJsonObject {
             put("principalId", actor.principalId.toString()); put("ingredientId", row.ingredientId.toString()); put("action", action)
         })
-    private fun event(c: Connection, key: UUID, type: String, aggregate: String, row: Row, producer: String, data: JsonObject) {
-        outbox.append(c, EventDraft(UUID.randomUUID(), type, 1, aggregate, row.id, row.version, producer, UUID.randomUUID().toString(), key, data))
+    private fun event(c: Connection, actor: VerifiedKitchenPrincipal, key: UUID, type: String, aggregate: String, row: Row, producer: String, data: JsonObject) {
+        outbox.append(c, EventDraft(UUID.randomUUID(), type, 1, aggregate, row.id, row.version, producer, UUID.randomUUID().toString(), key, data,
+            owner = EventOwner.principal(environment, actor.kind, actor.principalId)))
     }
     private fun PreparedStatement.owner(actor: VerifiedKitchenPrincipal, start: Int = 1) {
         setString(start, environment); setString(start + 1, actor.kind.name.lowercase()); setObject(start + 2, actor.principalId)
@@ -309,7 +310,7 @@ class KitchenStore(private val environment: String, private val transactions: Pg
     private companion object {
         val validator by lazy { ContractBodyValidator.bundled() }
         val preferenceFields = setOf("hardExcludedIngredientIds", "dietaryPatterns", "dislikedIngredientIds", "equipmentIds",
-            "preferredTasteTags", "defaultEnergy", "consentVersion", "defaultServings")
+            "preferredTasteTags", "defaultEnergy", "consentVersion", "defaultServings", "personalizationEnabled")
         val pantryFields = setOf("presence", "quantity", "unit", "confirmedAt", "staple", "confirmationStatus")
     }
 }

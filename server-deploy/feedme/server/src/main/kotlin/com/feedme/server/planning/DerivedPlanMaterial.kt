@@ -228,7 +228,8 @@ internal class DerivedPlanMaterial private constructor(val command: DerivedPlanC
                 is PortResult.Value -> dpJson(value.value.document)
                 is PortResult.Failure -> throw DerivedPlanMaterialException()
             }
-            val snapshot = JsonObject(projected + ("changes" to JsonArray(projected.getValue("changes").jsonArray + changes)))
+            val snapshot = JsonObject(projected + ("changes" to JsonArray(projected.getValue("changes").jsonArray + changes)) +
+                (dpJson(parent.plan.document)["sourcePostId"]?.let { mapOf("sourcePostId" to it) } ?: emptyMap()))
             val snapshotText = snapshot.toString(); val snapshotHash = digest(snapshotText.toByteArray(Charsets.UTF_8))
             require(snapshotText.toByteArray(Charsets.UTF_8).size <= 262_144 && dpValidator.validateResponse(command.operationId, 200,
                 snapshotText.toByteArray(Charsets.UTF_8), "application/json") == BodyValidationResult.Valid)
@@ -307,6 +308,7 @@ internal class DerivedPlanStoredRecord private constructor(val snapshotText: Str
             require(dpValidator.validateResponse(operation, 200, snapshotText.toByteArray(Charsets.UTF_8), "application/json") == BodyValidationResult.Valid)
             val id = dpUuid(snapshot.getValue("id")); val parentId = dpUuid(snapshot.getValue("parentPlanId"))
             require(id != parentId && parentId == parent.id && snapshot.getValue("version") == JsonPrimitive(1))
+            require(snapshot["sourcePostId"] == dpJson(parent.plan.document)["sourcePostId"])
             require(snapshot["id"] == context["planId"] && snapshot["createdAt"] == context["createdAt"] && snapshot["updatedAt"] == context["createdAt"])
             require(snapshot["status"] == proof["status"] && snapshot["nextAlternativeCursor"] == JsonNull)
             require(dpSemantic(snapshot.getValue("constraints")) == dpSemantic(dpJson(body).getValue("constraints")))
@@ -325,16 +327,16 @@ internal class DerivedPlanStoredRecord private constructor(val snapshotText: Str
 }
 
 internal class DerivedPlanMaterialException : IllegalArgumentException("Derived Plan material unavailable")
-private inline fun <T> dpFormat(block: () -> T): T = try {
+internal inline fun <T> dpFormat(block: () -> T): T = try {
     if (Thread.currentThread().isInterrupted) throw InterruptedException("Derived Plan material interrupted")
     block()
 } catch (cancelled: CancellationException) { throw cancelled }
 catch (interrupted: InterruptedException) { Thread.currentThread().interrupt(); throw interrupted }
 catch (_: Exception) { throw DerivedPlanMaterialException() }
-private val dpValidator by lazy { ContractBodyValidator.bundled() }
-private fun dpJson(document: WireDocument) = Json.parseToJsonElement(document.encodeUtf8().decodeToString()).jsonObject
-private fun dpHash(value: String) { require(value.matches(Regex("[0-9a-f]{64}"))) }
-private fun dpDocument(text: String, hash: String, limit: Int): WireDocument {
+internal val dpValidator by lazy { ContractBodyValidator.bundled() }
+internal fun dpJson(document: WireDocument) = Json.parseToJsonElement(document.encodeUtf8().decodeToString()).jsonObject
+internal fun dpHash(value: String) { require(value.matches(Regex("[0-9a-f]{64}"))) }
+internal fun dpDocument(text: String, hash: String, limit: Int): WireDocument {
     dpHash(hash)
     // Validate the original UTF-16 text before encoding: Java's permissive encoder would
     // otherwise replace an unpaired surrogate and hash different material silently.
@@ -342,13 +344,13 @@ private fun dpDocument(text: String, hash: String, limit: Int): WireDocument {
         require(it.kind == WireKind.OBJECT && digest(it.encodeUtf8()) == hash)
     }
 }
-private fun dpInteger(value: String): BigInteger {
+internal fun dpInteger(value: String): BigInteger {
     val decimal = BigDecimal(value).stripTrailingZeros()
     require(decimal.precision().toLong() - decimal.scale().toLong() <= 128 && decimal.scale() <= 0)
     return decimal.toBigIntegerExact()
 }
-private fun dpUuid(value: JsonElement): UUID { val text = value.jsonPrimitive.content; require(value.jsonPrimitive.isString && CanonicalFormats.accepts("uuid", text) && text == text.lowercase()); return UUID.fromString(text) }
-private fun dpTime(value: Instant) {
+internal fun dpUuid(value: JsonElement): UUID { val text = value.jsonPrimitive.content; require(value.jsonPrimitive.isString && CanonicalFormats.accepts("uuid", text) && text == text.lowercase()); return UUID.fromString(text) }
+internal fun dpTime(value: Instant) {
     require(value.nano % 1_000_000 == 0 && value.toString().matches(
         Regex("[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]{3})?Z")))
 }
@@ -393,15 +395,15 @@ private fun dpSimplificationConstraints(operation: String, parent: DerivedPlanPa
     if (operation == "simplifyPlan") require(dpSemantic(dpJson(body).getValue("constraints")) ==
         dpSemantic(dpJson(parent.request).getValue("constraints")))
 }
-private fun dpOwner(principal: VerifiedPlanningPrincipal) = buildJsonObject {
+internal fun dpOwner(principal: VerifiedPlanningPrincipal) = buildJsonObject {
     put("environment", principal.environment); put("actorKind", principal.kind.name.lowercase()); put("principalId", principal.principalId.toString())
 }
-private fun dpPolicy(policy: PlanningPolicy) = buildJsonObject {
+internal fun dpPolicy(policy: PlanningPolicy) = buildJsonObject {
     require(policy.version.isNotBlank() && policy.version.length <= 128 && policy.version.none(Char::isISOControl))
     put("version", policy.version); put("heatEnabled", policy.heatEnabled); put("improveEnabled", policy.improveEnabled)
     put("relatedTasteExplicitlyRequested", policy.relatedTasteExplicitlyRequested)
 }
-private fun dpVersion(value: RecipeCatalogVersion): JsonObject {
+internal fun dpVersion(value: RecipeCatalogVersion): JsonObject {
     require(value.revision > 0); dpHash(value.requestSha256)
     return buildJsonObject {
         put("recipeVersionId", value.entry.recipeVersionId.toString()); put("materialSha256", value.entry.materialSha256)
@@ -498,11 +500,11 @@ private fun dpStoredContext(context: JsonObject, parent: DerivedPlanParent, body
         }
     }
 }
-private fun dpLong(value: JsonElement): Long {
+internal fun dpLong(value: JsonElement): Long {
     require(value.jsonPrimitive.isString && value.jsonPrimitive.content.matches(Regex("0|[1-9][0-9]{0,18}")))
     return value.jsonPrimitive.content.toLong().also { require(it >= 0) }
 }
-private fun dpSemantic(value: JsonElement): String = when (value) {
+internal fun dpSemantic(value: JsonElement): String = when (value) {
     is JsonObject -> value.toSortedMap().entries.joinToString(",", "{", "}") { (key, entry) -> "${JsonPrimitive(key)}:${dpSemantic(entry)}" }
     is JsonArray -> value.joinToString(",", "[", "]", transform = ::dpSemantic)
     is JsonPrimitive -> if (value.isString || value == JsonNull || value.booleanOrNull != null) value.toString() else value.content.toBigDecimal().stripTrailingZeros().toString()

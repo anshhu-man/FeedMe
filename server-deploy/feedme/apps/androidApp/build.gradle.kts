@@ -26,6 +26,18 @@ if (uploadSigningProperty != null && (uploadSigningProperty != "true" ||
     throw GradleException("Omit feedmeUploadSigning or explicitly pass -PfeedmeUploadSigning=true.")
 }
 val uploadSigningEnabled = uploadSigningProperty == "true"
+
+// Publishing can deliberately expose the release variant without changing normal debug
+// builds. Both switches must be supplied on this invocation, never inherited from a file.
+val releaseBuildProperty = providers.gradleProperty("feedmeReleaseBuild").orNull
+if (releaseBuildProperty != null && (releaseBuildProperty != "true" ||
+        gradle.startParameter.projectProperties["feedmeReleaseBuild"] != "true")) {
+    throw GradleException("Omit feedmeReleaseBuild or explicitly pass -PfeedmeReleaseBuild=true.")
+}
+val releaseBuildEnabled = releaseBuildProperty == "true"
+if (releaseBuildEnabled && !uploadSigningEnabled) {
+    throw GradleException("Release builds require explicit -PfeedmeUploadSigning=true with -PfeedmeReleaseBuild=true.")
+}
 val localUploadSigning = if (uploadSigningEnabled) {
     val configurationCache = objects.newInstance(UploadSigningBuildFeatures::class.java)
         .buildFeatures.configurationCache
@@ -83,6 +95,23 @@ val prepareClientConfiguration by tasks.registering(Exec::class) {
     }
 }
 
+// Independently invokable without exposing release variants. Required preparation also
+// gates preReleaseBuild whenever this invocation explicitly enables the release variant.
+val prepareReleaseClientConfiguration by tasks.registering(Exec::class) {
+    group = "verification"
+    description = "Validates required public release configuration without packaging or enabling release."
+    workingDir(rootProject.projectDir)
+    commandLine("node", "scripts/prepare-android-client-config.mjs", "--release")
+    standardOutput = ByteArrayOutputStream()
+    errorOutput = ByteArrayOutputStream()
+    isIgnoreExitValue = true
+    doLast {
+        if (executionResult.get().exitValue != 0) {
+            throw GradleException("Public Android client configuration is unavailable or invalid; private diagnostics were not printed.")
+        }
+    }
+}
+
 android {
     namespace = "com.feedme.android"
     compileSdk = 36
@@ -92,7 +121,9 @@ android {
         // The authenticated native credential adapter requires API 27.
         minSdk = 27
         targetSdk = 36
-        versionCode = 1
+        // Play already serves the separate offline edition at code 1. Connected builds
+        // must advance that shared application ID without rewriting the offline artifact.
+        versionCode = 2
         versionName = "0.1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -116,20 +147,24 @@ android {
         }
     }
     buildFeatures { compose = true; buildConfig = true }
-    // Optional local, public client configuration only. No default tenant or credentials.
-    sourceSets["main"].assets.srcDir(layout.buildDirectory.dir("generated/clientConfiguration"))
+    // Distinct variant assets: optional debug preparation cannot supply a release fallback.
+    // Both contain public client configuration only, with no default tenant or credentials.
+    sourceSets["debug"].assets.srcDir(layout.buildDirectory.dir("generated/clientConfiguration"))
+    sourceSets["release"].assets.srcDir(layout.buildDirectory.dir("generated/releaseClientConfiguration"))
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
 }
 kotlin { jvmToolchain(17) }
-tasks.named("preBuild") { dependsOn(prepareClientConfiguration) }
+tasks.matching { it.name == "preDebugBuild" }.configureEach { dependsOn(prepareClientConfiguration) }
+tasks.matching { it.name == "preReleaseBuild" }.configureEach { dependsOn(prepareReleaseClientConfiguration) }
 
-// This is the real account-entry composition, not yet the complete release application.
-// The guard remains until all V1, signing, provider, legal and platform gates are verified.
+// Explicit publication preparation only. This switch is not connected-service acceptance,
+// policy compliance, a Play upload or approval. Release still requires real configuration
+// and the protected upload-signing path; no unsigned or unconfigured fallback is supplied.
 androidComponents {
-    beforeVariants(selector().withBuildType("release")) { it.enable = false }
+    beforeVariants(selector().withBuildType("release")) { it.enable = releaseBuildEnabled }
 }
 
 // Deliberately not a debug dependency and never signs, packages, uploads or enables release.
@@ -138,6 +173,9 @@ tasks.register<Exec>("verifyLocalUploadSigning") {
     description = "Verifies the opted-in local upload certificate and dormant release signing reference."
     val publicOutput = ByteArrayOutputStream()
     workingDir(rootProject.projectDir)
+    // The verifier intentionally invokes this JDK's keytool. Gradle's
+    // org.gradle.java.home selection does not export JAVA_HOME to child processes.
+    environment("JAVA_HOME", System.getProperty("java.home"))
     commandLine("node", "scripts/prepare-android-upload-key.mjs", "--verify")
     standardOutput = publicOutput
     errorOutput = ByteArrayOutputStream()
@@ -170,6 +208,9 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.startup.runtime)
+    implementation(libs.androidx.credentials.core)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
     implementation("org.jetbrains.compose.foundation:foundation:${libs.versions.compose.get()}")
     implementation(libs.compose.material3)
     testImplementation(kotlin("test-junit"))

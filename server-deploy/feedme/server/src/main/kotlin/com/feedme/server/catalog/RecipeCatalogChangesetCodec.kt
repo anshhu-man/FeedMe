@@ -11,7 +11,8 @@ internal fun decodeRecipeChangeset(text: String): RecipeCatalogChangeset {
     val bytes = text.encodeToByteArray(throwOnInvalidSequence = true)
     val root = Json.parseToJsonElement(WireDocument.decode(bytes, WireLimits(RecipeCatalogChangeset.MAX_BYTES, 32))
         .encodeUtf8().decodeToString()).jsonObject
-    require(root.keys == setOf("releaseId", "expectedRevision", "publisherId", "reviewerId", "publicationReference", "content"))
+    val fields = setOf("releaseId", "expectedRevision", "publisherId", "reviewerId", "publicationReference", "content")
+    require(root.keys == fields || root.keys == fields + "recallActorId")
     val content = root.getValue("content").jsonObject
     require(content.keys == setOf("formatVersion", "taxonomyRevision", "ingredients", "entries") && content["formatVersion"] == JsonPrimitive(2))
     val ingredients = content.getValue("ingredients").jsonArray.map { raw ->
@@ -30,7 +31,8 @@ internal fun decodeRecipeChangeset(text: String): RecipeCatalogChangeset {
     val result = RecipeCatalogChangeset(UUID.fromString(root.changeText("releaseId")), root.getValue("expectedRevision").jsonPrimitive.let {
         require(!it.isString); it.content.toBigDecimal().longValueExact()
     }, UUID.fromString(root.changeText("publisherId")), UUID.fromString(root.changeText("reviewerId")), root.changeText("publicationReference"),
-        content.changeText("taxonomyRevision"), ingredients, entries)
+        content.changeText("taxonomyRevision"), ingredients, entries,
+        root["recallActorId"]?.let { UUID.fromString(root.changeText("recallActorId")) })
     require(result.exactDocument == text)
     return result
 }

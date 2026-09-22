@@ -4,6 +4,7 @@ import com.feedme.server.contract.BodyValidationResult
 import com.feedme.server.contract.ContractBodyValidator
 import com.feedme.server.db.CommandActor
 import com.feedme.server.db.EventDraft
+import com.feedme.server.db.EventOwner
 import com.feedme.server.db.OutboxStore
 import com.feedme.server.db.StoredReply
 import java.nio.charset.CharacterCodingException
@@ -70,7 +71,7 @@ internal object KitchenPreferenceProvisioning {
             "preference", id, 1, "profile", UUID.randomUUID().toString(), causationKey, buildJsonObject {
                 put("principalId", principalId.toString()); put("preferenceVersion", 1)
                 put("changedFieldKinds", JsonArray(fields.keys.sorted().map(::JsonPrimitive)))
-            }))
+            }, owner = EventOwner.principal(environment, kind, principalId)))
         return reply(read(c, environment, kind, principalId) ?: fail(KitchenFailureCode.STORAGE_UNAVAILABLE), maxResponseBytes)
     }
 
@@ -108,5 +109,5 @@ internal object KitchenPreferenceProvisioning {
     private val validator by lazy { ContractBodyValidator.bundled() }
     private val required = setOf("hardExcludedIngredientIds", "dietaryPatterns", "dislikedIngredientIds", "equipmentIds")
     private val metadata = setOf("id", "version", "createdAt", "updatedAt")
-    private val allowed = required + setOf("preferredTasteTags", "defaultEnergy", "consentVersion", "defaultServings")
+    private val allowed = required + setOf("preferredTasteTags", "defaultEnergy", "consentVersion", "defaultServings", "personalizationEnabled")
 }

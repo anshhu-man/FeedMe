@@ -1,13 +1,27 @@
 package com.feedme.server.media
 
+import com.feedme.server.auth.VerifiedSupabaseSubject
+import com.feedme.server.identity.AccountProfileStore
 import java.sql.Connection
 import java.time.Instant
 import java.util.UUID
 
 /** Only actual verified account/device output. Guest and caller-selected owner identities are not accepted. */
-class VerifiedMediaAccount(val environment: String, val accountId: UUID, val deviceSessionId: UUID) {
+class VerifiedMediaAccount private constructor(val environment: String, val accountId: UUID, val deviceSessionId: UUID,
+    internal val providerSubject: VerifiedSupabaseSubject?) {
+    /** Explicit unbound fixture seam; the production account authority rejects it. */
+    constructor(environment: String, accountId: UUID, deviceSessionId: UUID) : this(environment, accountId, deviceSessionId, null)
     init { require(environment.matches(Regex("[a-z][a-z0-9-]{0,39}"))) }
     override fun toString() = "VerifiedMediaAccount(<redacted>)"
+    internal companion object {
+        /** Preserve the provider proof; fixture actors remain unbound and are rejected by
+         * the real media authority. This is no account/device reauthorization shortcut. */
+        fun fromSocial(actor: com.feedme.server.social.VerifiedSocialAccount): VerifiedMediaAccount =
+            VerifiedMediaAccount(actor.environment, actor.accountId, actor.deviceSessionId, actor.providerSubject)
+        fun resolve(connection: Connection, accounts: AccountProfileStore, subject: VerifiedSupabaseSubject,
+            deviceSessionId: UUID): VerifiedMediaAccount = VerifiedMediaAccount(accounts.environment,
+                accounts.lockAccountSafety(connection, subject, deviceSessionId), deviceSessionId, subject)
+    }
 }
 
 /**
@@ -34,15 +48,17 @@ interface MediaAuthority {
 class MediaServicePolicy(val maxSourceBytes: Long, supportedContentTypes: Set<String>,
     val reservationLifetimeSeconds: Int, val capabilityLifetimeSeconds: Int,
     val maxCapabilityBytes: Int, val maxResponseBytes: Int, val maxObjectVersionBytes: Int,
-    uploadOrigins: Set<String>) {
+    uploadOrigins: Set<String>, allowedProtocols: Set<String> = setOf(LEGACY_MEDIA_PROTOCOL, SUPABASE_MEDIA_PROTOCOL)) {
     val supportedContentTypes = supportedContentTypes.toSet()
     val uploadOrigins = uploadOrigins.toSet()
+    val allowedProtocols = allowedProtocols.toSet()
     init {
         require(maxSourceBytes in 1..10_000_000)
         require(this.supportedContentTypes.isNotEmpty() && this.supportedContentTypes.all { it in setOf("image/jpeg", "image/png", "image/heic") })
         require(reservationLifetimeSeconds in 1..86400 && capabilityLifetimeSeconds in 1..reservationLifetimeSeconds)
         require(maxCapabilityBytes in 1..65536 && maxResponseBytes in 1..262144 && maxObjectVersionBytes in 1..4096)
         require(this.uploadOrigins.isNotEmpty() && this.uploadOrigins.size <= 8)
+        require(this.allowedProtocols.isNotEmpty() && this.allowedProtocols.all { it in setOf(LEGACY_MEDIA_PROTOCOL, SUPABASE_MEDIA_PROTOCOL) })
         this.uploadOrigins.forEach { require(mediaOrigin(it) == it) }
     }
     override fun toString() = "MediaServicePolicy(<redacted>)"

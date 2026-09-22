@@ -17,6 +17,20 @@ class RecipeSubstitutionScanBudget(val recipeBudget: PlanningScanBudget,
     override fun toString() = "RecipeSubstitutionScanBudget(<redacted>)"
 }
 
+/** Structural binding supplied only after the owning account transaction resolves its
+ * exact retained Saved copy. This is NOT copy, account or adaptation authority; those
+ * checks and their final-time revalidation remain with the transaction owner. */
+class RecipeSubstitutionSavedSource internal constructor(val savedRecipeId: UUID,
+    val source: RecipeCatalogVersion) {
+    override fun toString() = "RecipeSubstitutionSavedSource(<redacted>)"
+}
+
+/** Structural binding only; the transaction owner holds current post/recipe authority. */
+class RecipeSubstitutionPostSource internal constructor(val postId: UUID, val postVersion: Long,
+    val source: RecipeCatalogVersion) {
+    override fun toString() = "RecipeSubstitutionPostSource(<redacted>)"
+}
+
 /** Complete structural selection under the original live transaction, not a Plan, source
  * access, private-input or copy grant. Only READY has a selected pair and canonical changes.
  * Originals remain exact; the future service owns parent If-Match/receipts and acceptance. */
@@ -48,11 +62,13 @@ class RecipeSubstitutionScanResult internal constructor(val originalRequest: Wir
 class RecipeSubstitutionCatalogScanner(private val view: RecipeSubstitutionReadView,
     private val policy: PlanningPolicy) {
     fun scan(request: WireDocument, context: PlanningContext, budget: RecipeSubstitutionScanBudget,
-        pageSize: Int = 32, adaptation: WireDocument? = null): PortResult<RecipeSubstitutionScanResult> = try {
+        pageSize: Int = 32, adaptation: WireDocument? = null,
+        savedSource: RecipeSubstitutionSavedSource? = null,
+        postSource: RecipeSubstitutionPostSource? = null): PortResult<RecipeSubstitutionScanResult> = try {
         view.checkCurrent()
         if (pageSize !in 1..128 || budget.maxEdges < 0 || budget.maxEdgePages < 1)
             scanFail(FailureReason.INVALID_DATA)
-        val input = when (val decoded = substitutionSelectionInput(request, adaptation)) {
+        val input = when (val decoded = substitutionSelectionInput(request, adaptation, savedSource, postSource)) {
             is PortResult.Failure -> scanFail(decoded.reason)
             is PortResult.Value -> decoded.value
         }
@@ -60,8 +76,14 @@ class RecipeSubstitutionCatalogScanner(private val view: RecipeSubstitutionReadV
         // heat is absent from constraints.tasteTags. Do not rewrite the exact constraints.
         if (input.retainTasteTag == "heat" && !policy.heatEnabled) scanFail(FailureReason.NOT_CONFIGURED)
         val parent = view.recipes.lookupCurrent(input.sourceId) ?: scanFail(FailureReason.UNAVAILABLE)
-        if (parent.entry.status != "published" || !parent.entry.review.getValue("freeCatalogEligible").jsonPrimitive.boolean)
+        if (parent.entry.status != "published" ||
+            (savedSource == null && !parent.entry.review.getValue("freeCatalogEligible").jsonPrimitive.boolean))
             scanFail(FailureReason.UNAVAILABLE)
+        (savedSource?.source ?: postSource?.source)?.let { bound ->
+            if (bound.releaseId != parent.releaseId || bound.revision != parent.revision ||
+                bound.requestSha256 != parent.requestSha256 || bound.entry.document() != parent.entry.document())
+                scanFail(FailureReason.UNAVAILABLE)
+        }
         if (parent.entry.review.getValue("policyVersion").jsonPrimitive.content != policy.version)
             scanFail(FailureReason.NOT_CONFIGURED)
         if (input.replaceIngredientId != null && parent.entry.recipe.getValue("ingredients").jsonArray.none {
@@ -126,7 +148,7 @@ class RecipeSubstitutionCatalogScanner(private val view: RecipeSubstitutionReadV
             val chosen = best ?: storageFailure()
             val current = view.resolvePair(chosen.edge.record.definition.id) ?: storageFailure()
             if (current.edge.requestSha256 != chosen.edge.requestSha256 || current.edge.revision != chosen.edge.revision ||
-                current.edge.record.status != "reviewed" || !available(current.source.entry) || !available(current.target.entry) ||
+                current.edge.record.status != "reviewed" || !available(current.source.entry, savedSource != null) || !available(current.target.entry) ||
                 result.decision.recipe?.id?.value?.let(UUID::fromString) != current.target.entry.recipeVersionId) storageFailure()
             current
         } else null
@@ -145,8 +167,8 @@ class RecipeSubstitutionCatalogScanner(private val view: RecipeSubstitutionReadV
             RecipeSubstitutionFailureCode.NOT_CONFIGURED else RecipeSubstitutionFailureCode.STORAGE_UNAVAILABLE)
     }
 
-    private fun available(entry: RecipeCatalogEntry) = entry.status == "published" &&
-        entry.review.getValue("freeCatalogEligible").jsonPrimitive.boolean &&
+    private fun available(entry: RecipeCatalogEntry, retainedSource: Boolean = false) = entry.status == "published" &&
+        (retainedSource || entry.review.getValue("freeCatalogEligible").jsonPrimitive.boolean) &&
         entry.review.getValue("policyVersion").jsonPrimitive.content == policy.version
     override fun toString() = "RecipeSubstitutionCatalogScanner(<redacted>)"
 }
@@ -159,15 +181,28 @@ internal class RecipeSubstitutionSelectionInput(val sourceId: UUID, val effectiv
 }
 
 /** Structural request checks only. Neither input document proves parent/source authority. */
-internal fun substitutionSelectionInput(request: WireDocument, adaptation: WireDocument?): PortResult<RecipeSubstitutionSelectionInput> = try {
+internal fun substitutionSelectionInput(request: WireDocument, adaptation: WireDocument?,
+    savedSource: RecipeSubstitutionSavedSource? = null,
+    postSource: RecipeSubstitutionPostSource? = null): PortResult<RecipeSubstitutionSelectionInput> = try {
     val validator = substitutionSelectionValidator
     if (validator.validateSchema("PlanRequest", request.encodeUtf8()) != BodyValidationResult.Valid)
         scanFail(FailureReason.INVALID_DATA)
     val root = Json.parseToJsonElement(request.encodeUtf8().decodeToString()).jsonObject
     if (listOf("sourceRecipeVersionId", "sourcePostId", "savedRecipeId").count(root::containsKey) > 1)
         scanFail(FailureReason.INVALID_DATA)
-    if (root.containsKey("sourcePostId") || root.containsKey("savedRecipeId")) scanFail(FailureReason.NOT_CONFIGURED)
-    if (root["intent"]?.jsonPrimitive?.content != "makeMine" || !root.containsKey("sourceRecipeVersionId"))
+    val postId = root["sourcePostId"]?.jsonPrimitive?.content?.let(UUID::fromString)
+    val postVersion = root["sourcePostVersion"]?.jsonPrimitive?.longOrNull
+    if (postId != null && postSource == null) scanFail(FailureReason.NOT_CONFIGURED)
+    if ((postId == null) != (postSource == null) || (postId == null) != (postVersion == null) ||
+        (postSource != null && (postSource.postId != postId || postSource.postVersion != postVersion ||
+            postSource.postVersion < 1 || adaptation != null || savedSource != null))) scanFail(FailureReason.INVALID_DATA)
+    val savedId = root["savedRecipeId"]?.jsonPrimitive?.content?.let(UUID::fromString)
+    if (savedId != null && savedSource == null) scanFail(FailureReason.NOT_CONFIGURED)
+    if ((savedId == null) != (savedSource == null) ||
+        (savedSource != null && (savedId != savedSource.savedRecipeId || adaptation != null)))
+        scanFail(FailureReason.INVALID_DATA)
+    if (root["intent"]?.jsonPrimitive?.content != "makeMine" ||
+        (savedId == null && postId == null && !root.containsKey("sourceRecipeVersionId")))
         scanFail(FailureReason.INVALID_DATA)
     val constraints = root.getValue("constraints").jsonObject
     val adapted = adaptation?.let {
@@ -193,8 +228,9 @@ internal fun substitutionSelectionInput(request: WireDocument, adaptation: WireD
     val excludedValues = adapted?.get("excludeRecipeVersionIds")?.jsonArray?.map { UUID.fromString(it.jsonPrimitive.content) }.orEmpty()
     val excluded = excludedValues.toSet()
     if (excluded.size != excludedValues.size) scanFail(FailureReason.INVALID_DATA)
-    PortResult.Value(RecipeSubstitutionSelectionInput(UUID.fromString(root.getValue("sourceRecipeVersionId").jsonPrimitive.content),
-        WireDocument.parse(JsonObject(root - "sourceRecipeVersionId").toString()),
+    PortResult.Value(RecipeSubstitutionSelectionInput(savedSource?.source?.entry?.recipeVersionId ?: postSource?.source?.entry?.recipeVersionId
+            ?: UUID.fromString(root.getValue("sourceRecipeVersionId").jsonPrimitive.content),
+        WireDocument.parse(JsonObject(root - setOf("sourceRecipeVersionId", "savedRecipeId", "sourcePostId", "sourcePostVersion")).toString()),
         constraints.getValue("servings").jsonPrimitive.content.toBigDecimal(), from, to, taste, excluded))
 } catch (failure: SubstitutionScanFailure) { PortResult.Failure(failure.reason) }
 catch (_: IllegalArgumentException) { PortResult.Failure(FailureReason.INVALID_DATA) }

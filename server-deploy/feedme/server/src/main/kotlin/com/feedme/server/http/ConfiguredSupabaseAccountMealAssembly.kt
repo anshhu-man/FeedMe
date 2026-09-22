@@ -29,20 +29,24 @@ class ConfiguredSupabaseAccountMealAssembly private constructor(
             planningPolicy: PlanningServicePolicy, planningCursors: PlanningCursors,
             cookingPolicy: CookingServicePolicy, newCookingEnabled: Boolean,
             savedPolicy: SavedRecipeServicePolicy, savedCursors: SavedRecipeCursors, newCopiesEnabled: Boolean,
-            databaseDispatcher: CoroutineDispatcher, clock: Clock): ConfiguredSupabaseAccountMealAssembly {
+            databaseDispatcher: CoroutineDispatcher, clock: Clock,
+            journal: RecipeCatalogJournal? = null,
+            substitutions: RecipeSubstitutionJournal? = null): ConfiguredSupabaseAccountMealAssembly {
             require(environment.matches(Regex("[a-z][a-z0-9-]{0,39}")) && catalog.environment == environment && rights.environment == environment)
             val transactions = PgTransactions(database)
             val authority = SupabasePostgresAuthority(deployment)
             try { transactions.run { authority.checkCompatibility(it); operational.checkCompatibility(it)
-                catalog.checkCompatibility(it); rights.checkCompatibility(it) } }
+                catalog.checkCompatibility(it); rights.checkCompatibility(it); journal?.checkCompatibility(it)
+                substitutions?.checkCompatibility(it) } }
             catch (f: Exception) { authority.close(); unavailable(f) }
             val keys = try { HttpsSupabaseJwksSource.create(deployment.verification, keyPolicy, clock) }
                 catch (f: Exception) { authority.close(); unavailable(f) }
             return try {
                 val accounts = AccountProfileStore(environment, transactions, SupabaseAccountBootstrapPolicy(authority, accountRules))
-                val plans = AccountPlanningStore(environment, transactions, accounts, catalog, operational, planningPolicy, planningCursors)
+                val plans = AccountPlanningStore(environment, transactions, accounts, catalog, operational, planningPolicy,
+                    planningCursors, rights, journal = journal, substitutions = substitutions)
                 val cooking = AccountCookingStore(environment, transactions, accounts, plans, cookingPolicy, newCookingEnabled)
-                val saved = AccountSavedRecipeStore(environment, transactions, accounts, rights, savedCursors, savedPolicy, newCopiesEnabled)
+                val saved = AccountSavedRecipeStore(environment, transactions, accounts, rights, savedCursors, savedPolicy, newCopiesEnabled, planning = plans)
                 val verifier = SupabaseUserAccessVerifier(deployment.verification, keys, clock)
                 ConfiguredSupabaseAccountMealAssembly(AccountPlanningHttpConfiguration(plans, verifier, databaseDispatcher),
                     AccountCookingHttpConfiguration(cooking, verifier, databaseDispatcher),

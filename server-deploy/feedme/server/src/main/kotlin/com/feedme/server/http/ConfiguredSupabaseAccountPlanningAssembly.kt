@@ -2,6 +2,8 @@ package com.feedme.server.http
 
 import com.feedme.server.auth.*
 import com.feedme.server.catalog.RecipeCatalogStore
+import com.feedme.server.catalog.RecipeCatalogJournal
+import com.feedme.server.catalog.RecipeSubstitutionJournal
 import com.feedme.server.db.PgTransactions
 import com.feedme.server.identity.*
 import com.feedme.server.planning.*
@@ -26,21 +28,26 @@ class ConfiguredSupabaseAccountPlanningAssembly private constructor(
         fun open(environment: String, database: DataSource, deployment: SupabaseAuthorityDeployment,
             accountRules: AccountPendingProfileRules, keyPolicy: SupabaseJwksHttpPolicy,
             catalog: RecipeCatalogStore, operational: AccountPlanningPolicy, policy: PlanningServicePolicy,
-            cursors: PlanningCursors, databaseDispatcher: CoroutineDispatcher, clock: Clock): ConfiguredSupabaseAccountPlanningAssembly {
+            cursors: PlanningCursors, databaseDispatcher: CoroutineDispatcher, clock: Clock,
+            journal: RecipeCatalogJournal? = null,
+            substitutions: RecipeSubstitutionJournal? = null): ConfiguredSupabaseAccountPlanningAssembly {
             require(environment.matches(Regex("[a-z][a-z0-9-]{0,39}")) && catalog.environment == environment) {
                 "Invalid planning environment configuration"
             }
             val transactions = PgTransactions(database)
             val authority = SupabasePostgresAuthority(deployment)
-            try { transactions.run { authority.checkCompatibility(it); operational.checkCompatibility(it); catalog.checkCompatibility(it) } }
+            try { transactions.run { authority.checkCompatibility(it); operational.checkCompatibility(it); catalog.checkCompatibility(it)
+                journal?.checkCompatibility(it); substitutions?.checkCompatibility(it) } }
             catch (failure: Exception) { authority.close(); failOpen(failure) }
             val keys = try { HttpsSupabaseJwksSource.create(deployment.verification, keyPolicy, clock) }
                 catch (failure: Exception) { authority.close(); failOpen(failure) }
             return try {
                 val accounts = AccountProfileStore(environment, transactions, SupabaseAccountBootstrapPolicy(authority, accountRules))
-                val store = AccountPlanningStore(environment, transactions, accounts, catalog, operational, policy, cursors)
+                val store = AccountPlanningStore(environment, transactions, accounts, catalog, operational, policy, cursors,
+                    journal = journal, substitutions = substitutions)
                 val verifier = SupabaseUserAccessVerifier(deployment.verification, keys, clock)
-                ConfiguredSupabaseAccountPlanningAssembly(AccountPlanningHttpConfiguration(store, verifier, databaseDispatcher), authority, keys)
+                val recipes = journal?.let { AccountRecipeCatalogStore(environment, transactions, accounts, it, cursors, policy.cursorLifetimeSeconds) }
+                ConfiguredSupabaseAccountPlanningAssembly(AccountPlanningHttpConfiguration(store, verifier, databaseDispatcher, recipes), authority, keys)
             } catch (failure: Exception) { authority.close(); keys.close(); failOpen(failure) }
         }
         private fun failOpen(failure: Exception): Nothing = when (failure) {

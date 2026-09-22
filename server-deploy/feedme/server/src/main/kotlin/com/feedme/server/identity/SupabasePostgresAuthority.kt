@@ -65,9 +65,36 @@ class SupabaseAuthorityDeployment(
 class SupabasePostgresAuthority(val deployment: SupabaseAuthorityDeployment) : AutoCloseable {
     private val closed = AtomicBoolean()
     private val passwordEvidenceSeal = Any()
+    private val oauthEvidenceSeal = Any()
+    private val deletionEvidenceSeal = Any()
 
     fun checkCompatibility(connection: Connection) {
         checkCompatibility(connection, lockSchema = true)
+    }
+
+    /** Accepted background work has no continuing uploader session. It still requires the
+     * real provider user to exist and remain active under the current deployment review.
+     * This grants neither a user request nor account/draft/content access. Retain this
+     * transaction. Cleanup-to-processing upgrades may already hold FeedMe roots, so the
+     * worker must impose bounded lock/statement timeouts and retry whole failed transactions.
+     * Logout alone does not cancel an accepted job. */
+    internal fun lockAcceptedWorkAccount(connection: Connection, issuer: String, subject: java.util.UUID) {
+        if (Thread.currentThread().isInterrupted) throw InterruptedException("Provider worker authority interrupted")
+        if (closed.get() || connection.isClosed || issuer != deployment.verification.issuer) denied()
+        checkCompatibility(connection)
+        val user = connection.prepareStatement("SELECT aud,role,email_confirmed_at,deleted_at,banned_until,is_anonymous " +
+            "FROM feedme_auth_access.user_facts(?)").use { statement ->
+            statement.setObject(1, subject)
+            statement.executeQuery().use { rows ->
+                if (!rows.next()) denied()
+                User(rows.getString(1), rows.getString(2), instant(rows, 3), instant(rows, 4), instant(rows, 5),
+                    rows.getObject(6) as? Boolean ?: denied()).also { if (rows.next()) unavailable() }
+            }
+        }
+        val now = time(connection)
+        checkReview(now)
+        if (closed.get() || user.audience != "authenticated" || user.role != "authenticated" || user.anonymous ||
+            user.deleted != null || user.confirmed == null || user.confirmed > now || user.banned?.let { it > now } == true) denied()
     }
 
     /** Diagnostic only: READ ONLY cannot take the authorization path's ROW EXCLUSIVE
@@ -151,9 +178,31 @@ class SupabasePostgresAuthority(val deployment: SupabaseAuthorityDeployment) : A
         lockCurrentTime(connection, subject)
     }
 
+    /** Private observation deadline, derived from the same real locked provider facts.
+     * It is not a reusable bearer or authorization outside the caller's transaction. */
+    internal fun lockCurrentValidUntil(connection: Connection, subject: VerifiedSupabaseSubject): Instant =
+        lockCurrentTime(connection, subject).validUntil
+
+    /** Export initiation requires a genuinely recent provider session and primary
+     * password/OAuth authentication, not a recently refreshed JWT or client clock. */
+    internal fun lockRecentExportValidUntil(connection: Connection, subject: VerifiedSupabaseSubject,
+        maximumAgeSeconds: Int): Instant {
+        require(maximumAgeSeconds in 1..900)
+        val current = lockCurrentTime(connection, subject)
+        val authenticated = connection.prepareStatement("SELECT max(updated_at) FROM feedme_auth_access.amr_facts(?) WHERE authentication_method IN ('oauth','password')").use { s ->
+            s.setObject(1, subject.providerSessionId)
+            s.executeQuery().use { r -> if (!r.next()) denied(); instant(r, 1) ?: denied() }
+        }
+        val until = minOf(current.validUntil, current.sessionCreatedAt.plusSeconds(maximumAgeSeconds.toLong()), authenticated.plusSeconds(maximumAgeSeconds.toLong()))
+        val at = time(connection)
+        if (authenticated < current.sessionCreatedAt || authenticated > at || at >= until) denied()
+        return until
+    }
+
     /** Locked provider facts remain useful only through their earliest real deadline. This
      * projection is private and cannot serve as an independently constructed authority. */
-    private class CurrentProviderTime(val observedAt: Instant, val validUntil: Instant)
+    private class CurrentProviderTime(val observedAt: Instant, val validUntil: Instant,
+        val sessionCreatedAt: Instant, val oauthAuthenticatedAt: Instant?)
     private fun lockCurrentTime(connection: Connection, subject: VerifiedSupabaseSubject): CurrentProviderTime {
         checkCompatibility(connection)
         if (subject.issuer != deployment.verification.issuer) denied()
@@ -223,7 +272,109 @@ class SupabasePostgresAuthority(val deployment: SupabaseAuthorityDeployment) : A
         deployment.timeboxSeconds?.let { until = minOf(until, session.created.plusSeconds(it)) }
         lowAssuranceDeadline?.let { until = minOf(until, it) }
         deployment.inactivitySeconds?.let { until = minOf(until, (session.refreshed ?: denied()).plusSeconds(it)) }
-        return CurrentProviderTime(now, until)
+        return CurrentProviderTime(now, until, session.created, methods.singleOrNull { it.first == "oauth" }?.second)
+    }
+
+    /** Fresh Supabase OAuth session evidence from the already locked provider rows. This
+     * proves neither a particular upstream provider, a password/MFA challenge nor PKCE.
+     * Device replacement still needs its exact target, explicit consent and account policy.
+     * Existing fixed session/AMR projections suffice; no new provider helper is installed. */
+    fun lockFreshOAuthSession(connection: Connection, subject: VerifiedSupabaseSubject,
+        maximumAgeSeconds: Long): SupabaseOAuthReauthenticationEvidence = oauthOperation {
+        require(maximumAgeSeconds in 1..900) { "Invalid OAuth reauthentication policy" }
+        oauthLocal(connection)
+        val transaction = oauthTransaction(connection)
+        val provider = lockCurrentTime(connection, subject)
+        val authenticated = provider.oauthAuthenticatedAt ?: denied()
+        val until = oauthReauthenticationDeadline(provider.sessionCreatedAt, authenticated, maximumAgeSeconds,
+            Instant.ofEpochSecond(subject.expiresAtEpochSeconds), deployment.validUntil, provider.validUntil)
+        if (oauthTransaction(connection) != transaction) unavailable()
+        val accepted = time(connection)
+        oauthLocal(connection); checkReview(accepted)
+        if (accepted < provider.observedAt) denied()
+        requireOAuthReauthenticationTime(provider.sessionCreatedAt, authenticated, accepted, until)
+        SupabaseOAuthReauthenticationEvidence(this, oauthEvidenceSeal, connection,
+            Thread.currentThread(), transaction, subject, provider.sessionCreatedAt, authenticated, accepted, until)
+    }
+
+    internal fun revalidateOAuth(connection: Connection, evidence: SupabaseOAuthReauthenticationEvidence) = oauthOperation {
+        evidence.requireBinding(this, oauthEvidenceSeal, connection)
+        oauthLocal(connection)
+        if (oauthTransaction(connection) != evidence.transaction) unavailable()
+        val provider = lockCurrentTime(connection, evidence.subject)
+        val authenticated = provider.oauthAuthenticatedAt ?: denied()
+        if (provider.sessionCreatedAt != evidence.sessionCreatedAt || authenticated != evidence.oauthAuthenticatedAt) denied()
+        if (oauthTransaction(connection) != evidence.transaction) unavailable()
+        val now = time(connection)
+        evidence.requireBinding(this, oauthEvidenceSeal, connection)
+        oauthLocal(connection); checkReview(now)
+        if (now < evidence.acceptedAt || now < provider.observedAt) denied()
+        requireOAuthReauthenticationTime(provider.sessionCreatedAt, authenticated, now, minOf(evidence.validUntil, provider.validUntil))
+    }
+
+    /** Separate signed proof plus the original app bearer, both for the same provider user.
+     * Hold the original user/factor/session/AMR locks before the proof session locks; the
+     * shared user lock serializes same-user attempts. No app/command lock or network here.
+     * Final time includes BOTH sessions' current deadlines, not just the fresh proof JWT.
+     */
+    internal fun lockAccountDeletionOAuth(connection: Connection, proof: VerifiedAccountDeletionProof,
+        maximumAgeSeconds: Long): AccountDeletionReauthenticationEvidence = oauthOperation {
+        require(maximumAgeSeconds in 1..900) { "Invalid deletion reauthentication policy" }
+        requireDeletionSubjects(proof)
+        oauthLocal(connection)
+        val transaction = oauthTransaction(connection)
+        val original = lockCurrentTime(connection, proof.original)
+        val fresh = lockCurrentTime(connection, proof.fresh)
+        val authenticated = fresh.oauthAuthenticatedAt ?: denied()
+        val until = minOf(original.validUntil, oauthReauthenticationDeadline(fresh.sessionCreatedAt,
+            authenticated, maximumAgeSeconds, Instant.ofEpochSecond(proof.fresh.expiresAtEpochSeconds),
+            deployment.validUntil, fresh.validUntil))
+        if (oauthTransaction(connection) != transaction) unavailable()
+        val now = time(connection)
+        oauthLocal(connection); checkReview(now)
+        if (now < original.observedAt || now < fresh.observedAt) denied()
+        requireOAuthReauthenticationTime(fresh.sessionCreatedAt, authenticated, now, until)
+        AccountDeletionReauthenticationEvidence(this, deletionEvidenceSeal, connection,
+            Thread.currentThread(), transaction, proof, fresh.sessionCreatedAt, authenticated, now, until)
+    }
+
+    internal fun revalidateAccountDeletionOAuth(connection: Connection,
+        evidence: AccountDeletionReauthenticationEvidence) = oauthOperation {
+        evidence.requireBinding(this, deletionEvidenceSeal, connection)
+        oauthLocal(connection)
+        if (oauthTransaction(connection) != evidence.transaction) unavailable()
+        requireDeletionSubjects(evidence.proof)
+        val original = lockCurrentTime(connection, evidence.proof.original)
+        val fresh = lockCurrentTime(connection, evidence.proof.fresh)
+        val authenticated = fresh.oauthAuthenticatedAt ?: denied()
+        if (fresh.sessionCreatedAt != evidence.sessionCreatedAt || authenticated != evidence.oauthAuthenticatedAt) denied()
+        if (oauthTransaction(connection) != evidence.transaction) unavailable()
+        val now = time(connection)
+        evidence.requireBinding(this, deletionEvidenceSeal, connection)
+        oauthLocal(connection); checkReview(now)
+        if (now < evidence.acceptedAt || now < original.observedAt || now < fresh.observedAt) denied()
+        requireOAuthReauthenticationTime(fresh.sessionCreatedAt, authenticated, now,
+            minOf(evidence.validUntil, original.validUntil, fresh.validUntil))
+    }
+
+    private fun requireDeletionSubjects(proof: VerifiedAccountDeletionProof) {
+        if (proof.original.issuer != deployment.verification.issuer || proof.fresh.issuer != proof.original.issuer ||
+            proof.fresh.subject != proof.original.subject ||
+            proof.fresh.providerSessionId == proof.original.providerSessionId) denied()
+    }
+
+    private fun oauthLocal(c: Connection) {
+        if (Thread.currentThread().isInterrupted) throw InterruptedException("OAuth reauthentication interrupted")
+        if (closed.get() || c.isClosed || c.autoCommit) unavailable()
+    }
+    private fun <T> oauthOperation(action: () -> T): T = try { action() }
+        catch (failure: InterruptedException) { Thread.currentThread().interrupt(); throw failure }
+    private fun oauthTransaction(c: Connection): Long {
+        oauthLocal(c); requireTransaction(c)
+        return c.createStatement().use { statement -> statement.executeQuery("SELECT txid_current()").use { rows ->
+            if (!rows.next()) unavailable()
+            rows.getLong(1).also { if (rows.wasNull() || rows.next()) unavailable() }
+        } }
     }
 
     /** Fresh password authentication is actual provider evidence, not a newer JWT or refresh.

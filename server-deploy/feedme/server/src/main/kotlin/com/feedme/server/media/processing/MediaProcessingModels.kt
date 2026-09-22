@@ -45,7 +45,8 @@ class MediaProcessingPolicy(val revision: String, val codecRevision: String, val
 }
 
 enum class MediaProcessingFailureCode { INVALID_EVENT, CONFLICT, STALE_LEASE, NOT_CONFIGURED,
-    STORAGE_UNAVAILABLE, OBJECT_UNAVAILABLE, OBJECT_MISMATCH, SAFETY_UNAVAILABLE, LIMIT_EXCEEDED }
+    STORAGE_UNAVAILABLE, OBJECT_UNAVAILABLE, OBJECT_MISMATCH, SAFETY_UNAVAILABLE, LIMIT_EXCEEDED,
+    PHOTO_REJECTED, SAFETY_REJECTED }
 class MediaProcessingFailure(val code: MediaProcessingFailureCode) : RuntimeException("Media processing unavailable: ${code.name}")
 
 class MediaProcessingOwner(val environment: String, val ownerId: UUID) {

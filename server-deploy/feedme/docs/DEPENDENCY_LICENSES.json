@@ -4,6 +4,52 @@
   "dependencies": [
     {
       "kind": "library",
+      "alias": "androidx-credentials-core",
+      "coordinate": "androidx.credentials:credentials",
+      "version": "1.6.0",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://dl.google.com/dl/android/maven2/androidx/credentials/credentials/1.6.0/credentials-1.6.0.pom",
+          "description": "Exact-version primary Google Maven POM retrieved over HTTPS on 20 September 2026; declares The Apache Software License, Version 2.0. Direct component declaration only, not transitive or bundled notice clearance."
+        }
+      ],
+      "reviewedAt": "2026-09-20"
+    },
+    {
+      "kind": "library",
+      "alias": "androidx-credentials-play-services-auth",
+      "coordinate": "androidx.credentials:credentials-play-services-auth",
+      "version": "1.6.0",
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "url": "https://dl.google.com/dl/android/maven2/androidx/credentials/credentials-play-services-auth/1.6.0/credentials-play-services-auth-1.6.0.pom",
+          "description": "Exact-version primary Google Maven POM retrieved over HTTPS on 20 September 2026; declares The Apache Software License, Version 2.0. This declaration applies to this AndroidX adapter, not every Google Play services transitive dependency."
+        }
+      ],
+      "reviewedAt": "2026-09-20"
+    },
+    {
+      "kind": "library",
+      "alias": "googleid",
+      "coordinate": "com.google.android.libraries.identity.googleid:googleid",
+      "version": "1.2.1",
+      "license": "LicenseRef-Android-SDK",
+      "evidence": [
+        {
+          "url": "https://dl.google.com/dl/android/maven2/com/google/android/libraries/identity/googleid/googleid/1.2.1/googleid-1.2.1.pom",
+          "description": "Exact-version primary Google Maven POM retrieved over HTTPS on 20 September 2026; declares Android Software Development Kit License, not Apache-2.0. LicenseRef-Android-SDK is this inventory's explicit identifier for that declaration, not general LicenseRef acceptance."
+        },
+        {
+          "url": "https://developer.android.com/studio/terms.html",
+          "description": "Exact license URL declared by the googleid 1.2.1 POM; official Android SDK License Agreement reviewed on 20 September 2026. The native Google SDK is not recorded as OSS. Free-tier use does not mean all dependencies are open source. Inventory acceptance is not legal approval, acceptance of terms on the user's behalf, or complete distribution-notice clearance."
+        }
+      ],
+      "reviewedAt": "2026-09-20"
+    },
+    {
+      "kind": "library",
       "alias": "androidx-activity-compose",
       "coordinate": "androidx.activity:activity-compose",
       "version": "1.11.0",

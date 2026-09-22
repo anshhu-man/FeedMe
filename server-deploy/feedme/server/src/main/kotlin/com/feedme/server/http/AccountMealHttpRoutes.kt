@@ -43,6 +43,7 @@ internal suspend fun ApplicationCall.accountCookingOperation(operation: String,
 
 internal suspend fun ApplicationCall.accountSavedRecipeOperation(operation: String,
     configuration: AccountSavedRecipeHttpConfiguration, validator: ContractBodyValidator) {
+    response.headers.append(HttpHeaders.CacheControl, "no-store")
     try {
         val input = SavedRecipeHttpInput.parse(operation, request.headers, request.queryParameters, parameters)
         val device = input.bearer.deviceSessionId ?: throw AccountMealHttpFailure(401, "UNAUTHENTICATED")
@@ -53,11 +54,17 @@ internal suspend fun ApplicationCall.accountSavedRecipeOperation(operation: Stri
         val reply = runInterruptible(configuration.databaseDispatcher) {
             when (operation) {
                 "saveRecipe" -> accountMealReply(store.saveRecipe(subject, device, input.key!!, body!!))
+                "savePostRecipe" -> accountMealReply(store.savePostRecipe(subject, device, input.key!!, input.postId!!, body!!))
                 "getSavedRecipe" -> store.getSavedRecipe(subject, device, input.savedRecipeId!!)
                 "listSavedRecipes" -> store.listSavedRecipes(subject, device, input.q, input.cursor, input.limit)
                 "deleteSavedRecipe" -> accountMealReply(store.deleteSavedRecipe(subject, device, input.key!!, input.savedRecipeId!!, input.ifMatch!!))
                 "listCollections" -> store.listCollections(subject, device, input.cursor, input.limit)
                 "getCollection" -> store.getCollection(subject, device, input.collectionId!!, input.cursor, input.limit)
+                "createCollection" -> accountMealReply(store.createCollection(subject,device,input.key!!,body!!))
+                "updateCollection" -> accountMealReply(store.updateCollection(subject,device,input.key!!,input.collectionId!!,input.ifMatch!!,body!!))
+                "deleteCollection" -> accountMealReply(store.deleteCollection(subject,device,input.key!!,input.collectionId!!,input.ifMatch!!))
+                "addCollectionItem" -> accountMealReply(store.addCollectionItem(subject,device,input.key!!,input.collectionId!!,body!!))
+                "removeCollectionItem" -> accountMealReply(store.removeCollectionItem(subject,device,input.key!!,input.collectionId!!,input.savedRecipeId!!,input.ifMatch!!))
                 else -> error("Unsupported account saved operation")
             }
         }

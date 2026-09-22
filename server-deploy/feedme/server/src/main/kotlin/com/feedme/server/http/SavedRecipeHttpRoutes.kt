@@ -29,13 +29,16 @@ import kotlinx.serialization.json.*
 
 internal val savedRecipeHttpOperations = setOf("saveRecipe", "getSavedRecipe", "listSavedRecipes",
     "deleteSavedRecipe", "listCollections", "getCollection")
+internal val accountCollectionHttpOperations = setOf("createCollection", "updateCollection", "deleteCollection", "addCollectionItem", "removeCollectionItem")
+internal val accountPostSaveHttpOperations = setOf("savePostRecipe")
+private val savedBodyOperations = setOf("saveRecipe", "savePostRecipe", "createCollection", "updateCollection", "addCollectionItem")
 
 internal class SavedRecipeHttpInput private constructor(
     val operation: String, val bearer: SavedRecipeHttpBearer, val key: UUID?,
     val savedRecipeId: UUID?, val collectionId: UUID?, val ifMatch: String?, val contentLength: Long?, val mediaType: String?,
-    val q: String?, val cursor: String?, val limit: Int,
+    val q: String?, val cursor: String?, val limit: Int, val postId: UUID? = null,
 ) {
-    val hasBody: Boolean get() = operation == "saveRecipe"
+    val hasBody: Boolean get() = operation in savedBodyOperations
     override fun toString() = "SavedRecipeHttpInput(<redacted>)"
 
     suspend fun readBody(channel: ByteReadChannel, validator: ContractBodyValidator): JsonObject? {
@@ -57,7 +60,7 @@ internal class SavedRecipeHttpInput private constructor(
 
     companion object {
         fun parse(operation: String, headers: Headers, query: Parameters, paths: Parameters): SavedRecipeHttpInput {
-            if (operation !in savedRecipeHttpOperations) invalidSavedRecipe()
+            if (operation !in savedRecipeHttpOperations && operation !in accountCollectionHttpOperations && operation !in accountPostSaveHttpOperations) invalidSavedRecipe()
             val allowedQuery = when (operation) { "listSavedRecipes" -> setOf("q", "cursor", "limit")
                 "listCollections", "getCollection" -> setOf("cursor", "limit"); else -> emptySet() }
             if (!allowedQuery.containsAll(query.names())) invalidSavedRecipe()
@@ -83,22 +86,25 @@ internal class SavedRecipeHttpInput private constructor(
             if (token.length !in 1..16_384 || !Regex("[A-Za-z0-9._~+/-]+=*").matches(token))
                 throw SavedRecipeHttpFailure(401, "UNAUTHENTICATED")
             val bearer = SavedRecipeHttpBearer(SecretText(token), header("X-Device-Session")?.let(::uuid))
-            val hasBody = operation == "saveRecipe"
-            val isMutation = hasBody || operation == "deleteSavedRecipe"
+            val hasBody = operation in savedBodyOperations
+            val isMutation = hasBody || operation == "deleteSavedRecipe" || operation in accountCollectionHttpOperations
             val keyText = header("Idempotency-Key")
             val key = if (isMutation) keyText?.let(::uuid) ?: invalidSavedRecipe()
                 else { if (keyText != null) invalidSavedRecipe(); null }
             val ifMatch = header(HttpHeaders.IfMatch)
-            if (operation == "deleteSavedRecipe") {
+            if (operation in setOf("deleteSavedRecipe", "updateCollection", "deleteCollection", "removeCollectionItem")) {
                 if (ifMatch == null) throw SavedRecipeHttpFailure(428, "PRECONDITION_REQUIRED")
                 if (!Regex("\"[0-9]{1,64}\"").matches(ifMatch)) invalidSavedRecipe()
             } else if (ifMatch != null) invalidSavedRecipe()
             if (header(HttpHeaders.IfNoneMatch) != null) invalidSavedRecipe()
-            val pathName = when (operation) { "getSavedRecipe", "deleteSavedRecipe" -> "savedRecipeId"; "getCollection" -> "collectionId"; else -> null }
+            val pathNames = when (operation) { "savePostRecipe" -> setOf("postId")
+                "getSavedRecipe", "deleteSavedRecipe" -> setOf("savedRecipeId")
+                "getCollection", "updateCollection", "deleteCollection", "addCollectionItem" -> setOf("collectionId")
+                "removeCollectionItem" -> setOf("collectionId", "savedRecipeId"); else -> emptySet() }
             // Ktor's call.parameters merges route and query parameters. Remove only the exact
             // query names already validated above; never allow a query to supply a path identity.
-            if (paths.names() - query.names() != if (pathName != null) setOf(pathName) else emptySet()) invalidSavedRecipe()
-            val id = if (pathName != null) paths.getAll(pathName)?.let {
+            if (paths.names() - query.names() != pathNames) invalidSavedRecipe()
+            fun path(name: String): UUID? = if (name in pathNames) paths.getAll(name)?.let {
                 if (it.size != 1) invalidSavedRecipe()
                 uuid(it.single())
             } ?: invalidSavedRecipe() else null
@@ -115,8 +121,8 @@ internal class SavedRecipeHttpInput private constructor(
                 if (media == null || !Regex("application/json(?:\\s*;\\s*charset\\s*=\\s*(?:utf-8|\"utf-8\"))?", RegexOption.IGNORE_CASE).matches(media))
                     throw SavedRecipeHttpFailure(400, "UNSUPPORTED_MEDIA")
             } else if (media != null || (length != null && length != 0L)) invalidSavedRecipe()
-            return SavedRecipeHttpInput(operation, bearer, key, id.takeIf { pathName == "savedRecipeId" },
-                id.takeIf { pathName == "collectionId" }, ifMatch, length, media, q, cursor, limit)
+            return SavedRecipeHttpInput(operation, bearer, key, path("savedRecipeId"),
+                path("collectionId"), ifMatch, length, media, q, cursor, limit, path("postId"))
         }
         private fun uuid(value: String): UUID {
             if (!CanonicalFormats.accepts("uuid", value)) invalidSavedRecipe()
@@ -195,13 +201,14 @@ internal suspend fun ApplicationCall.savedRecipeOperation(operation: String, con
 }
 
 internal fun validateSavedRecipeReply(operation: String, reply: StoredReply, validator: ContractBodyValidator, maxBytes: Int): String {
-    check(operation in savedRecipeHttpOperations && maxBytes in 1..262_144)
-    check(reply.status == when (operation) { "saveRecipe" -> 201; "deleteSavedRecipe" -> 204; else -> 200 })
-    if (operation == "deleteSavedRecipe") { check(reply.body == null && reply.etag == null); return "" }
+    check((operation in savedRecipeHttpOperations || operation in accountCollectionHttpOperations || operation in accountPostSaveHttpOperations) && maxBytes in 1..262_144)
+    check(reply.status == when (operation) { "saveRecipe", "savePostRecipe", "createCollection", "addCollectionItem" -> 201
+        "deleteSavedRecipe", "deleteCollection", "removeCollectionItem" -> 204; else -> 200 })
+    if (reply.status == 204) { check(reply.body == null && reply.etag == null); return "" }
     val text = reply.body?.toString() ?: error("Missing savedRecipe response")
     val bytes = text.encodeToByteArray(throwOnInvalidSequence = true)
     check(bytes.size <= maxBytes && validator.validateResponse(operation, reply.status, bytes, "application/json") == BodyValidationResult.Valid)
-    if (operation in setOf("saveRecipe", "getSavedRecipe", "getCollection")) {
+    if (operation in setOf("saveRecipe", "savePostRecipe", "getSavedRecipe", "getCollection", "createCollection", "updateCollection", "addCollectionItem")) {
         val etag = reply.etag ?: error("Missing saved recipe version")
         check(Regex("\"[0-9]+\"").matches(etag) && etag.length <= 256)
         check(BigDecimal(etag.substring(1, etag.lastIndex)).compareTo(BigDecimal(reply.body.jsonObject.getValue("version").jsonPrimitive.content)) == 0)

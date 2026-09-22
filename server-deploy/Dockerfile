@@ -14,6 +14,9 @@ COPY feedme/ /workspace/feedme/
 COPY outputs/ /workspace/outputs/
 RUN test "$(javac -version 2>&1)" = 'javac 17.0.20' \
     && test "$(node --version)" = 'v22.23.2'
+# Optional exact public ZIP only, copied by the context exporter. No host cache,
+# extracted distribution or .ok marker; the unchanged wrapper verifies/extracts it.
+RUN node deploy/gradle-distribution.mjs
 # Exact project tasks and dependencies. Do not replace shared code, disable checks,
 # write locks, run Android packaging/signing, or invoke the local native transform.
 RUN sh ./gradlew :verifyReleaseScope :server:installDist \

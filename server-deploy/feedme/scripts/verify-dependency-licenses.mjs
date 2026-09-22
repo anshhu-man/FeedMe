@@ -6,12 +6,20 @@ import { fileURLToPath } from 'node:url';
 
 const SCOPE = 'direct-version-catalog';
 const LICENSES = new Set(['Apache-2.0', 'BSD-2-Clause', 'BSD-3-Clause', 'MIT', 'PostgreSQL']);
+// One exact upstream declaration, not general LicenseRef support or legal approval.
+const GOOGLE_ID = Object.freeze({
+  coordinate: 'com.google.android.libraries.identity.googleid:googleid', version: '1.2.1',
+  license: 'LicenseRef-Android-SDK',
+  pom: 'https://dl.google.com/dl/android/maven2/com/google/android/libraries/identity/googleid/googleid/1.2.1/googleid-1.2.1.pom',
+  terms: 'https://developer.android.com/studio/terms.html',
+});
 const LIMITATIONS = Object.freeze([
   'Coverage is limited to aliases declared in gradle/libs.versions.toml, not every direct dependency.',
   'Hardcoded Gradle dependencies and compose.* / kotlin(...) plugin-provided libraries are outside this inventory.',
   'Resolved dependencies, transitives, and bundled native or other components are outside this inventory.',
   'Upstream-declared component licenses and evidence URL syntax are checked, not complete bundled notices or legal approval.',
   'No evidence URL is fetched; no artifact integrity, dependency resolution, or CVE/security scan is performed.',
+  'googleid 1.2.1 is recorded under the Android SDK License, not an open-source license; free-tier use does not mean all dependencies are OSS.',
 ]);
 const textOrder = (a, b) => a < b ? -1 : a > b ? 1 : 0;
 const identity = entry => `${entry.kind}:${entry.alias}`;
@@ -187,7 +195,12 @@ export function verifyDependencyLicenses(input = {}) {
       else for (const field of ['coordinate', 'version']) {
         if (entry[field] !== dependency[field]) error('catalog-mismatch', `${path}.${field}`, `Does not match catalog ${key}`);
       }
-      if (!LICENSES.has(entry.license)) error('unsupported-license', `${path}.license`, 'Expected a supported, resolved SPDX license identifier');
+      const exactGoogleId = entry.kind === 'library' && entry.coordinate === GOOGLE_ID.coordinate && entry.version === GOOGLE_ID.version;
+      if (exactGoogleId ? entry.license !== GOOGLE_ID.license : !LICENSES.has(entry.license))
+        error('unsupported-license', `${path}.license`, 'Expected a supported SPDX identifier or the exact reviewed googleid 1.2.1 Android SDK License declaration');
+      if (exactGoogleId && entry.license === GOOGLE_ID.license &&
+          ![GOOGLE_ID.pom, GOOGLE_ID.terms].every(url => Array.isArray(entry.evidence) && entry.evidence.some(item => item?.url === url)))
+        error('android-sdk-evidence', `${path}.evidence`, 'Exact googleid 1.2.1 POM and Android SDK terms evidence URLs are required');
       if (!validDate(entry.reviewedAt)) error('review-date', `${path}.reviewedAt`, 'Expected a valid Gregorian YYYY-MM-DD date');
       if (!Array.isArray(entry.evidence) || entry.evidence.length === 0) error('evidence-empty', `${path}.evidence`, 'License evidence is required');
       else entry.evidence.forEach((evidence, evidenceIndex) => {

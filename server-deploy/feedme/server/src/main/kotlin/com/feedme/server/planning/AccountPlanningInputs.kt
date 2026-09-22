@@ -33,7 +33,8 @@ import kotlinx.serialization.json.*
 internal class AccountPlanningInputs(private val environment: String) {
     init { require(environment.matches(Regex("[a-z][a-z0-9-]{0,39}"))) }
 
-    fun lock(connection: Connection, principal: VerifiedKitchenPrincipal): PlanningPrivateInputsSnapshot = safe {
+    fun lock(connection: Connection, principal: VerifiedKitchenPrincipal,
+        memoryRead: (() -> List<JsonObject>)? = null): PlanningPrivateInputsSnapshot = safe {
         if (principal.environment != environment || principal.kind != CommandActor.ACCOUNT || principal.deviceSessionId == null)
             fail(PlanningFailureCode.UNAUTHENTICATED)
         val guard = Guard(connection)
@@ -57,6 +58,7 @@ internal class AccountPlanningInputs(private val environment: String) {
                     put("revision", version.toString())
                     put("excludedIngredientIds", normalizedIds(fields.getValue("hardExcludedIngredientIds")))
                     put("dislikedIngredientIds", normalizedIds(fields.getValue("dislikedIngredientIds")))
+                    put("personalizationEnabled", fields["personalizationEnabled"]?.jsonPrimitive?.boolean ?: true)
                 }
             }
         }
@@ -117,8 +119,12 @@ internal class AccountPlanningInputs(private val environment: String) {
         }
         guard.check(); frame("end"); frame(count.toString())
         val pantryHash = digest.digest().joinToString("") { "%02x".format(it.toInt() and 255) }
+        val memories = if (preference.getValue("personalizationEnabled").jsonPrimitive.boolean)
+            memoryRead?.invoke().orEmpty() else emptyList()
+        guard.check()
         val snapshot = buildJsonObject {
-            put("version", 2); put("preferences", preference)
+            put("version", 3); put("preferences", JsonObject(preference +
+                ("memories" to PlanningMemorySnapshot.fromMemories(memories))))
             put("pantry", buildJsonObject { put("revision", pantryHash); put("items", JsonArray(items)) })
             put("baseMeal", JsonNull)
         }
@@ -177,7 +183,7 @@ internal class AccountPlanningInputs(private val environment: String) {
     private companion object {
         val validator by lazy { ContractBodyValidator.bundled() }
         val preferenceFields = setOf("hardExcludedIngredientIds", "dietaryPatterns", "dislikedIngredientIds", "equipmentIds",
-            "preferredTasteTags", "defaultEnergy", "consentVersion", "defaultServings")
+            "preferredTasteTags", "defaultEnergy", "consentVersion", "defaultServings", "personalizationEnabled")
         val pantryFields = setOf("presence", "quantity", "unit", "confirmedAt", "staple", "confirmationStatus")
         fun fail(code: PlanningFailureCode): Nothing = throw PlanningServiceFailure(code)
         fun interrupted() { if (Thread.currentThread().isInterrupted) throw InterruptedException("Account planning inputs interrupted") }

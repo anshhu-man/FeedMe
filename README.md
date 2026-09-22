@@ -33,6 +33,11 @@ Everything starts in the **[Reference library](Reference/README.md)**.
 
 ## Current state — development, not shipped
 
+The separately curated backend handoff under `server-deploy/` now contains the
+current V001–V088 source closure and passes an offline JDK 17 server-distribution
+build. It contains no credentials or runtime configuration and has not replaced
+the historical closed Render preview; this is build-ready source, not a live API.
+
 The blueprint covers **54 features, 98 screens, 900 canonical actions and 201 API operations**. Those numbers describe design/contract coverage, not completed native features.
 
 The retained Android preview connects meal requests, pantry/preferences, guided cooking, foreground timers, cookbook storage, private text drafts and explicit reviewed publication. Accounts, recipes and the service are synthetic; publishing is self-only on the device. Real sign-in, photo upload, circles/live feeds, reviewed cooking content, billing, iOS verification and store release remain open. The earlier memory-only demo is preserved separately.

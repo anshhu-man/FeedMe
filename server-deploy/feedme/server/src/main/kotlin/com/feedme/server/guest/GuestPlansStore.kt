@@ -135,7 +135,7 @@ internal class GuestPlansStore(
                             put("principalId", actor.principalId.toString()); put("planId", id.toString())
                             material.recipeVersionId?.let { put("recipeVersionId", it.toString()) }
                             put("status", material.status); put("rankingVersion", verified.decision.policyVersion)
-                        })
+                        }, owner = EventOwner.principal(environment, actor.kind, actor.principalId))
                     outbox.append(actual, draft); event = draft
                     guard.check()
                     material.reply

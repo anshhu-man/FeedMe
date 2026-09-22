@@ -380,9 +380,14 @@ internal class MemoryStore(val environment: String, private val transactions: Pg
             receipt["response_code"] != JsonPrimitive(if (deleted) 204 else if (version == 1L) 201 else 200) ||
             receipt["response_etag"] != (if (deleted) JsonNull else JsonPrimitive("\"$version\"")))) unavailable()
         if (receipt["state"] == JsonPrimitive("tombstone") && listOf("response_code", "response_json", "response_etag").any { receipt[it] != JsonNull }) unavailable()
+        // Account serving requires positively attributed V042 events. UUIDs and payloads
+        // alone do not identify an environment; legacy unattributed account rows stay held.
+        val accountOwner = if (actor.kind == CommandActor.ACCOUNT)
+            " AND owner_environment=? AND owner_kind='private_principal' AND owner_id=?" else ""
         val event = query(c, "SELECT to_jsonb(e),(e.xmin::text::bigint<>mod(txid_current(),4294967296)) FROM platform.outbox e " +
-            "WHERE event_type='memory.feedback.changed.v1' AND aggregate_type='feedback' AND aggregate_id=? AND aggregate_version=? AND causation_id=? LIMIT 2 FOR SHARE", {
+            "WHERE event_type='memory.feedback.changed.v1' AND aggregate_type='feedback' AND aggregate_id=? AND aggregate_version=? AND causation_id=?$accountOwner LIMIT 2 FOR SHARE", {
             setObject(1, id); setLong(2, version); setObject(3, key)
+            if (actor.kind == CommandActor.ACCOUNT) { setString(4, environment); setObject(5, actor.principalId) }
         }) { r -> if (!r.next() || !r.getBoolean(2)) unavailable(); json(r.getString(1)).also { if (r.next()) unavailable() } }
         val payload = buildJsonObject { put("principalId", actor.principalId.toString()); put("feedbackId", id.toString())
             put("action", if (deleted) "deleted" else if (version == 1L) "created" else "updated") }
@@ -592,7 +597,8 @@ internal class MemoryStore(val environment: String, private val transactions: Pg
         fun cursor(revision: Long, limit: Int, cursor: String) { times += { cursors.decode(actor, revision, limit, cursor, it); Unit } }
         fun event(key: UUID, id: UUID, version: Long, action: String) {
             val draft = EventDraft(UUID.randomUUID(), "memory.preference.changed.v1", 1, "memory", id, version, "memory", UUID.randomUUID().toString(), key,
-                buildJsonObject { put("principalId", actor.principalId.toString()); put("memoryId", id.toString()); put("action", action) })
+                buildJsonObject { put("principalId", actor.principalId.toString()); put("memoryId", id.toString()); put("action", action) },
+                owner = EventOwner.principal(environment, actor.kind, actor.principalId))
             outbox.append(c, draft)
             val actual = image(c, "platform.outbox", "event_id=?") { setObject(1, draft.eventId) } ?: unavailable()
             if (actual["event_type"] != JsonPrimitive(draft.eventType) || actual["aggregate_type"] != JsonPrimitive("memory") ||

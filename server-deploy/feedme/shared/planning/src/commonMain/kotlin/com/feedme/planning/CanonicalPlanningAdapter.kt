@@ -35,7 +35,10 @@ class CanonicalPlanningAdapter(private val validator: CanonicalBodyValidator = C
             put("missingIngredients", JsonArray(decision.missingIngredients.map(::json)))
             put("changes", buildJsonArray { if (decision.scaled && decision.status == PlanningStatus.READY)
                 add(buildJsonObject { put("explanation", "Quantities scaled exactly within the reviewed serving range; reviewed steps and effort estimates retained.") }) })
-            put("reasons", buildJsonArray { decision.facts.forEach { fact -> add(buildJsonObject { put("code", fact.code); put("label", fact.label) }) } })
+            put("reasons", buildJsonArray { decision.facts.forEach { fact -> add(buildJsonObject {
+                put("code", fact.code); put("label", fact.label)
+                fact.sourceMemoryId?.let { put("sourceMemoryId", it) }
+            }) } })
             put("catalogRevision", decision.catalogRevision)
             put("nextAlternativeCursor", receipt.nextAlternativeCursor?.let(::JsonPrimitive) ?: JsonNull)
         }

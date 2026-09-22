@@ -2,6 +2,7 @@ package com.feedme.server.planning
 
 import java.security.MessageDigest
 import java.util.Base64
+import java.util.UUID
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 
@@ -21,6 +22,30 @@ class PlanningCursors(private val currentKeyId: String, keys: Map<String, ByteAr
         val expected = mac(parts[0], binding, offset).toByteArray(Charsets.US_ASCII)
         if (!MessageDigest.isEqual(expected, parts[2].toByteArray(Charsets.US_ASCII))) fail()
         return offset
+    }
+    /** Separate domain from Plan explanations; the caller binds the current account,
+     * device, catalog head and exact query/limit, and checks expiry again before return. */
+    internal fun recipe(binding: String, after: UUID, expiresAt: Long): String {
+        require(expiresAt > 0)
+        val payload = "$expiresAt.$after"
+        return "$currentKeyId.$payload.${recipeMac(currentKeyId, binding, payload)}"
+    }
+    internal fun recipePosition(binding: String, cursor: String, now: Long): Pair<UUID, Long> {
+        if (cursor.length !in 1..2048) fail()
+        val p = cursor.split('.')
+        if (p.size != 4 || p[0] !in keys || !p[1].matches(Regex("[1-9][0-9]{0,18}"))) fail()
+        val expiry = p[1].toLongOrNull() ?: fail()
+        val after = try { UUID.fromString(p[2]) } catch (_: IllegalArgumentException) { fail() }
+        if (after.toString() != p[2]) fail()
+        val expected = recipeMac(p[0], binding, "${p[1]}.${p[2]}").toByteArray(Charsets.US_ASCII)
+        if (!MessageDigest.isEqual(expected, p[3].toByteArray(Charsets.US_ASCII))) fail()
+        if (now >= expiry) throw PlanningServiceFailure(PlanningFailureCode.CURSOR_EXPIRED)
+        return after to expiry
+    }
+    private fun recipeMac(key: String, binding: String, payload: String): String {
+        val mac = Mac.getInstance("HmacSHA256"); mac.init(SecretKeySpec(keys.getValue(key), "HmacSHA256"))
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(mac.doFinal(
+            "feedme.recipe.browse.v1\u0000$binding\u0000$payload".toByteArray(Charsets.UTF_8)))
     }
     private fun mac(key: String, binding: String, offset: Int): String {
         val mac = Mac.getInstance("HmacSHA256"); mac.init(SecretKeySpec(keys.getValue(key), "HmacSHA256"))

@@ -2,6 +2,7 @@ package com.feedme.server.config
 
 import com.feedme.contracts.WireDocument
 import com.feedme.contracts.WireLimits
+import com.feedme.core.FeedMeAdultPolicy
 import com.feedme.server.auth.SupabaseJwksHttpPolicy
 import com.feedme.server.auth.SupabaseSigningAlgorithm
 import com.feedme.server.auth.SupabaseUserAccessConfiguration
@@ -13,21 +14,53 @@ import com.feedme.server.catalog.PreferenceConsentPolicy
 import com.feedme.server.cooking.CookingServicePolicy
 import com.feedme.server.identity.AccountPendingProfileRules
 import com.feedme.server.identity.AccountDeviceReconnectionRules
+import com.feedme.server.identity.AccountDeletionRules
 import com.feedme.server.identity.AccountTermsNotice
+import com.feedme.server.identity.AccountSessionPolicy
+import com.feedme.server.identity.AccountSessionCursors
+import com.feedme.server.identity.AccountNotificationPolicy
+import com.feedme.server.identity.AccountNotificationInboxPolicy
+import com.feedme.server.identity.NotificationInboxCursors
+import com.feedme.server.media.access.AccountMediaAccessPolicy
+import com.feedme.server.social.posts.RemixReadPolicy
+import com.feedme.server.social.posts.RemixCursors
 import com.feedme.server.identity.SupabaseAuthorityDeployment
+import com.feedme.server.identity.SupabaseAuthErasureClient
 import com.feedme.server.kitchen.KitchenCursorCodec
 import com.feedme.server.kitchen.KitchenServicePolicy
 import com.feedme.server.memory.SavedRecipeCursors
 import com.feedme.server.memory.SavedRecipeServicePolicy
+import com.feedme.server.memory.MemoryServicePolicy
+import com.feedme.server.memory.MemoryCursors
 import com.feedme.server.planning.AccountPlanningPolicy
 import com.feedme.server.planning.PlanningCursors
 import com.feedme.server.planning.PlanningServicePolicy
+import com.feedme.server.reuse.AccountReusePolicy
+import com.feedme.server.reuse.ReuseCursors
+import com.feedme.server.social.BlockCursors
+import com.feedme.server.social.BlockServicePolicy
+import com.feedme.server.social.CircleCapabilities
+import com.feedme.server.social.CircleLaunchPolicy
+import com.feedme.server.social.posts.PostFeedCursors
+import com.feedme.server.social.posts.PostReadPolicy
+import com.feedme.server.social.posts.PostReadMediaSafetyPolicy
+import com.feedme.server.social.posts.AccountPostAdmissionPolicy
+import com.feedme.server.social.posts.AccountPostDeletionPolicy
+import com.feedme.server.social.reciperequests.AccountRecipeRequestPolicy
+import com.feedme.server.social.posts.PostPublicationPolicy
+import com.feedme.server.social.drafts.PostDraftCursors
+import com.feedme.server.social.drafts.PostDraftServicePolicy
+import com.feedme.server.social.conversations.AccountConversationPolicy
+import com.feedme.server.social.conversations.ConversationCursors
+import com.feedme.server.social.reports.ReportServicePolicy
 import java.net.URI
 import java.math.BigDecimal
 import java.nio.file.Path
 import java.time.Instant
 import java.util.Base64
 import javax.sql.DataSource
+import javax.crypto.Mac
+import javax.crypto.spec.SecretKeySpec
 import kotlinx.coroutines.CancellationException
 import kotlinx.serialization.json.*
 import org.postgresql.ds.PGSimpleDataSource
@@ -39,7 +72,12 @@ import org.postgresql.ds.PGSimpleDataSource
  * A container listener does not establish HTTPS termination. The configured assembly must
  * still perform all compatibility, current provider/account and operation-specific checks.
  * Environment/JVM strings cannot be erased; temporary decoded cursor key arrays are wiped
- * after the four purpose-specific codecs take detached copies. There are no launch defaults.
+ * after the purpose-specific codecs take detached copies. Optional safety cursor keys are
+ * HMAC-derived from the existing saved keyring under separate fixed purpose labels, as are
+ * optional post-feed cursors and circle capabilities. Each codec also uses its own
+ * cryptographic domain. No provider or database credential is a capability key.
+ * Optional media serving has separate explicit storage credentials; no launch
+ * configuration or secret value is inferred.
  */
 class AccountCoreRuntimeConfig private constructor(
     val listener: ServerStartupConfig,
@@ -63,8 +101,45 @@ class AccountCoreRuntimeConfig private constructor(
     val savedPolicy: SavedRecipeServicePolicy,
     val savedCursors: SavedRecipeCursors,
     val newCopiesEnabled: Boolean,
+    val makeAgainEnabled: Boolean,
+    internal val collectionMutationsEnabled: Boolean,
+    val safetyPolicy: BlockServicePolicy?,
+    val blockCursors: BlockCursors?,
+    val postReadPolicy: PostReadPolicy?,
+    val postFeedCursors: PostFeedCursors?,
+    internal val circlePolicy: AccountCircleRuntimePolicy?,
+    val reportPolicy: ReportServicePolicy?,
+    internal val mealIntent: AccountMealIntentRuntimeConfig?,
+    internal val media: AccountMediaRuntimeConfig?,
+    internal val memoryPolicy: MemoryServicePolicy?,
+    internal val memoryCursors: MemoryCursors?,
+    internal val reusePolicy: AccountReusePolicy?,
+    internal val reuseCursors: ReuseCursors?,
+    internal val postAuthoring: AccountPostAuthoringRuntimePolicy?,
+    internal val conversationPolicy: AccountConversationPolicy?,
+    internal val conversationCursors: ConversationCursors?,
+    internal val postDeletionPolicy: AccountPostDeletionPolicy?,
+    internal val recipeRequestPolicy: AccountRecipeRequestPolicy?,
+    internal val sessionPolicy: AccountSessionPolicy?,
+    internal val sessionCursors: AccountSessionCursors?,
+    internal val notificationPolicy: AccountNotificationPolicy?,
+    internal val notificationInboxPolicy: AccountNotificationInboxPolicy?,
+    internal val notificationInboxCursors: NotificationInboxCursors?,
+    internal val mediaAccessPolicy: AccountMediaAccessPolicy?,
+    internal val remixReadPolicy: RemixReadPolicy?,
+    internal val remixCursors: RemixCursors?,
+    internal val postRecipePolicy: AccountCorePostRecipePolicy?,
+    internal val exportPolicy: com.feedme.server.export.AccountExportPolicy?,
+    internal val exportStorage: AccountExportRuntimeConfig?,
+    internal val staffPolicy: com.feedme.server.staff.SupabaseStaffAdmissionPolicy?,
+    internal val deletionRules: AccountDeletionRules?,
     val databaseParallelism: Int,
     private val database: Database,
+    internal val memoryRankingEnabled: Boolean = false,
+    internal val staffModerationCursors: com.feedme.server.staff.StaffModerationCursors? = null,
+    internal val postPlacementPolicy: com.feedme.server.social.posts.AccountPostPlacementPolicy? = null,
+    internal val postReactionPolicy: com.feedme.server.social.posts.AccountPostReactionPolicy? = null,
+    internal val reactionNotificationPolicy: com.feedme.server.identity.AccountReactionNotificationPolicy? = null,
 ) {
     internal fun dataSource(): DataSource = database.dataSource("feedme-account-core")
 
@@ -88,7 +163,8 @@ class AccountCoreRuntimeConfig private constructor(
         private const val CONFIG = "FEEDME_ACCOUNT_RUNTIME_CONFIG"
         private const val PASSWORD = "FEEDME_ACCOUNT_DB_PASSWORD"
         private const val KEYS = "FEEDME_ACCOUNT_CURSOR_KEYS"
-        private val allowed = setOf(CONFIG, PASSWORD, KEYS)
+        private val allowed = setOf(CONFIG, PASSWORD, KEYS) + AccountMealIntentRuntimeConfig.ENVIRONMENT_KEYS +
+            AccountMediaRuntimeConfig.ENVIRONMENT_KEYS + AccountExportRuntimeConfig.ENVIRONMENT_KEYS
         private val conflicting = setOf("FEEDME_MINIMUM_APP_VERSION", "DATABASE_URL", "JDBC_DATABASE_URL",
             "JDBC_DATABASE_USERNAME", "JDBC_DATABASE_PASSWORD", "PGHOST", "PGHOSTADDR", "PGPORT", "PGDATABASE",
             "PGUSER", "PGPASSWORD", "PGSERVICE", "PGSERVICEFILE", "PGSSLMODE", "PGSSLROOTCERT", "PGOPTIONS", "PGPASSFILE")
@@ -98,7 +174,7 @@ class AccountCoreRuntimeConfig private constructor(
                 it.startsWith("FEEDME_SERVER_") || it.startsWith("FEEDME_MIGRATION_") ||
                 it.startsWith("FEEDME_PANTRY_") || it in conflicting })
             val root = document(requireNotNull(values[CONFIG]), 65_536)
-            exact(JsonObject(root - "termsNotice"), "version", "environment", "listener", "database", "deployment", "accountRules", "reconnectionRules", "keyPolicy",
+            exact(JsonObject(root - "termsNotice" - "safetyPolicy" - "deletionPolicy" - "postReadPolicy" - "circlePolicy" - "reportPolicy" - "memoryPolicy" - "reusePolicy" - "collectionMutationsEnabled" - "postAuthoringPolicy" - "conversationPolicy" - "postDeletionPolicy" - "postPlacementPolicy" - "postReactionPolicy" - "reactionNotificationPolicy" - "recipeRequestPolicy" - "sessionPolicy" - "notificationPolicy" - "notificationInboxPolicy" - "mediaAccessPolicy" - "remixReadPolicy" - "postRecipePolicy" - "exportPolicy" - "staffPolicy"), "version", "environment", "listener", "database", "deployment", "accountRules", "reconnectionRules", "keyPolicy",
                 "ingredientLimits", "searchMode", "preferencePolicy", "kitchenPolicy", "planningOperational",
                 "planningPolicy", "cookingPolicy", "newCookingEnabled", "savedPolicy", "newCopiesEnabled", "databaseParallelism")
             require(number(root, "version") == 1L)
@@ -110,14 +186,21 @@ class AccountCoreRuntimeConfig private constructor(
             val database = database(root.getValue("database").jsonObject, environment, requireNotNull(values[PASSWORD]))
             val deployment = deployment(root.getValue("deployment").jsonObject, database.name)
             val r = root.getValue("accountRules").jsonObject
-            exact(r, "eligibilityPolicyVersion", "requiredTermsVersion", "acceptExactSubmittedTerms")
+            exact(JsonObject(r - "adultSelfAttestationEnabled"), "eligibilityPolicyVersion", "requiredTermsVersion", "acceptExactSubmittedTerms")
             val rules = AccountPendingProfileRules(text(r, "eligibilityPolicyVersion", 256),
-                text(r, "requiredTermsVersion", 256), boolean(r, "acceptExactSubmittedTerms"))
+                text(r, "requiredTermsVersion", 256), boolean(r, "acceptExactSubmittedTerms"),
+                if ("adultSelfAttestationEnabled" in r) boolean(r, "adultSelfAttestationEnabled") else false)
+            val mealIntent = AccountMealIntentRuntimeConfig.fromEnvironment(values)
+            val media = AccountMediaRuntimeConfig.fromEnvironment(values, environment, deployment, rules)
+            if (mealIntent != null || media != null) require(rules.adultSelfAttestationEnabled && rules.acceptExactSubmittedTerms &&
+                rules.eligibilityPolicyVersion == FeedMeAdultPolicy.ELIGIBILITY_POLICY_VERSION &&
+                rules.requiredTermsVersion == FeedMeAdultPolicy.TERMS_VERSION)
             val reconnection = root.getValue("reconnectionRules").let { value ->
                 if (value == JsonNull) null else value.jsonObject.let { rule ->
-                    exact(rule, "revision", "consentVersion", "maximumAuthenticationAgeSeconds", "newReconnectionsEnabled")
+                    exact(JsonObject(rule - "authenticationMethod"), "revision", "consentVersion", "maximumAuthenticationAgeSeconds", "newReconnectionsEnabled")
                     AccountDeviceReconnectionRules(text(rule, "revision", 128), text(rule, "consentVersion", 256),
-                        number(rule, "maximumAuthenticationAgeSeconds"), boolean(rule, "newReconnectionsEnabled"))
+                        number(rule, "maximumAuthenticationAgeSeconds"), boolean(rule, "newReconnectionsEnabled"),
+                        if ("authenticationMethod" in rule) text(rule, "authenticationMethod", 8) else "password")
                 }
             }
             // Missing/null keeps the dedicated Terms capability unavailable. No legal
@@ -128,6 +211,17 @@ class AccountCoreRuntimeConfig private constructor(
                     text(value, "privacyUrl", 2048)).also {
                     require(it.termsVersion == rules.requiredTermsVersion)
                 }
+            }
+            // Explicit serving policy only: no worker/admin credential, deployment or
+            // retention approval is inferred. Missing/null preserves the unavailable route.
+            // Deletion is independent of meal eligibility, current Terms and reconnection.
+            val deletionRules = root["deletionPolicy"]?.takeUnless { it == JsonNull }?.jsonObject?.let { policy ->
+                // The implemented provider/media worker can erase only this approved
+                // project. Never accept a deletion for an unsupported issuer, even locally.
+                require(deployment.verification.issuer == SupabaseAuthErasureClient.APPROVED_ISSUER)
+                exact(policy, "revision", "confirmationVersion", "maximumAuthenticationAgeSeconds")
+                AccountDeletionRules(text(policy, "revision", 128), text(policy, "confirmationVersion", 256),
+                    number(policy, "maximumAuthenticationAgeSeconds"))
             }
             val keyPolicy = keyPolicy(root.getValue("keyPolicy").jsonObject)
             require(keyPolicy.cacheSeconds <= deployment.verification.maximumJwksAgeSeconds)
@@ -155,11 +249,56 @@ class AccountCoreRuntimeConfig private constructor(
             val cookingPolicy = CookingServicePolicy(integer(c, "maxResponseBytes", 1..262144),
                 integer(c, "sessionRetentionSeconds", 60..2_592_000))
             val s = root.getValue("savedPolicy").jsonObject
-            exact(s, "maxResponseBytes", "cursorLifetimeSeconds", "defaultCollectionName")
+            exact(JsonObject(s - "makeAgainEnabled"), "maxResponseBytes", "cursorLifetimeSeconds", "defaultCollectionName")
             val savedPolicy = SavedRecipeServicePolicy(integer(s, "maxResponseBytes", 1..262144),
                 integer(s, "cursorLifetimeSeconds", 1..86400), text(s, "defaultCollectionName", 120))
+            val makeAgainEnabled = if ("makeAgainEnabled" in s) boolean(s, "makeAgainEnabled") else false
+            // Safety is independently configured: social creation need not be enabled.
+            // Missing/null supplies no handler or policy defaults.
+            val safetyPolicy = root["safetyPolicy"]?.takeUnless { it == JsonNull }?.jsonObject?.let { policy ->
+                exact(policy, "maxResponseBytes", "cursorLifetimeSeconds")
+                BlockServicePolicy(integer(policy, "maxResponseBytes", 1..262144),
+                    integer(policy, "cursorLifetimeSeconds", 1..86400))
+            }
+            // Complaints are independently configured. This does not turn on social
+            // creation, require meal eligibility/Terms, assign staff or decide a report.
+            val reportPolicy = root["reportPolicy"]?.takeUnless { it == JsonNull }?.jsonObject?.let { policy ->
+                exact(policy, "maxResponseBytes")
+                ReportServicePolicy(integer(policy, "maxResponseBytes", 1..262144))
+            }
+            val memoryPolicy = root["memoryPolicy"]?.takeUnless { it == JsonNull }?.jsonObject?.let { policy ->
+                exact(JsonObject(policy - "rankingEnabled"), "maxResponseBytes", "maxProjectionFeedback", "cursorLifetimeSeconds", "maxSourcesPerMemory")
+                MemoryServicePolicy(integer(policy, "maxResponseBytes", 1..262144),
+                    integer(policy, "maxProjectionFeedback", 1..1000),
+                    integer(policy, "cursorLifetimeSeconds", 1..86400).toLong(),
+                    integer(policy, "maxSourcesPerMemory", 1..4096))
+            }
+            val memoryRankingEnabled = root["memoryPolicy"]?.takeUnless { it == JsonNull }?.jsonObject?.let {
+                if ("rankingEnabled" in it) boolean(it, "rankingEnabled") else false
+            } ?: false
+            require(!makeAgainEnabled || memoryPolicy != null) { "Make again requires explicit memory policy" }
+            val reusePolicy = root["reusePolicy"]?.takeUnless { it == JsonNull }?.jsonObject?.let { policy ->
+                exact(policy, "maxResponseBytes", "maxCandidates", "maxCatalogPages", "maxRelationships",
+                    "proposalLifetimeSeconds", "cursorLifetimeSeconds", "maxRequestsPerUtcDay")
+                AccountReusePolicy(integer(policy, "maxResponseBytes", 4096..262144),
+                    integer(policy, "maxCandidates", 1..10000).toLong(),
+                    integer(policy, "maxCatalogPages", 1..1000).toLong(),
+                    integer(policy, "maxRelationships", 1..1000),
+                    integer(policy, "proposalLifetimeSeconds", 60..86400),
+                    integer(policy, "cursorLifetimeSeconds", 1..600),
+                    integer(policy, "maxRequestsPerUtcDay", 1..1000))
+            }
+            // Explicit intermediate metadata reads only. This neither enables social
+            // publication nor attests media/recipe rights or installs database privileges.
+            val postReadPolicy = root["postReadPolicy"]?.takeUnless { it == JsonNull }?.jsonObject?.let { policy ->
+                exact(policy, "maxResponseBytes", "maxCandidates", "cursorLifetimeSeconds")
+                PostReadPolicy(integer(policy, "maxResponseBytes", 1..262144),
+                    integer(policy, "maxCandidates", 50..500), integer(policy, "cursorLifetimeSeconds", 1..86400))
+            }
             val newCooking = boolean(root, "newCookingEnabled")
             val newCopies = boolean(root, "newCopiesEnabled")
+            val collectionMutations = if (root["collectionMutationsEnabled"] == null || root["collectionMutationsEnabled"] == JsonNull)
+                false else boolean(root, "collectionMutationsEnabled")
             val parallelism = integer(root, "databaseParallelism", 1..8)
             val rings = document(requireNotNull(values[KEYS]), 32_768)
             exact(rings, "ingredient", "kitchen", "planning", "saved")
@@ -167,9 +306,152 @@ class AccountCoreRuntimeConfig private constructor(
             val kitchenCursors = cursor(rings.getValue("kitchen").jsonObject, ::KitchenCursorCodec)
             val planningCursors = cursor(rings.getValue("planning").jsonObject, ::PlanningCursors)
             val savedCursors = cursor(rings.getValue("saved").jsonObject, ::SavedRecipeCursors)
+            val blockCursors = safetyPolicy?.let { derivedBlockCursors(rings.getValue("saved").jsonObject) }
+            val postFeedCursors = postReadPolicy?.let { derivedPostFeedCursors(rings.getValue("saved").jsonObject) }
+            val memoryCursors = memoryPolicy?.let { derivedMemoryCursors(rings.getValue("saved").jsonObject) }
+            val reuseCursors = reusePolicy?.let { derivedReuseCursors(rings.getValue("saved").jsonObject) }
+            val conversationPolicy = root["conversationPolicy"]?.takeUnless { it == JsonNull }?.jsonObject?.let { policy ->
+                exact(policy, "maxResponseBytes", "cursorLifetimeSeconds", "sendsEnabled", "maxThreadsPerAccount", "maxMessagesPer24Hours")
+                AccountConversationPolicy(integer(policy, "maxResponseBytes", 1024..262144),
+                    integer(policy, "cursorLifetimeSeconds", 1..86400), boolean(policy, "sendsEnabled"),
+                    integer(policy, "maxThreadsPerAccount", 1..1000), integer(policy, "maxMessagesPer24Hours", 1..10000))
+            }
+            val conversationCursors = conversationPolicy?.let { derivedConversationCursors(rings.getValue("saved").jsonObject) }
+            val sessionPolicy = root["sessionPolicy"]?.takeUnless { it == JsonNull }?.jsonObject?.let { policy ->
+                exact(policy, "maxResponseBytes", "cursorLifetimeSeconds")
+                require(deployment.verification.issuer == SupabaseAuthErasureClient.APPROVED_ISSUER)
+                AccountSessionPolicy(integer(policy, "maxResponseBytes", 4096..262144),
+                    integer(policy, "cursorLifetimeSeconds", 1..600))
+            }
+            val sessionCursors = sessionPolicy?.let { derivedSessionCursors(rings.getValue("saved").jsonObject) }
+            val remixReadPolicy = root["remixReadPolicy"]?.takeUnless { it == JsonNull }?.jsonObject?.let { policy ->
+                exact(policy, "maxResponseBytes", "maxDepth", "cursorLifetimeSeconds")
+                require(postReadPolicy != null)
+                RemixReadPolicy(integer(policy, "maxResponseBytes", 1..262144), integer(policy, "maxDepth", 20..200),
+                    integer(policy, "cursorLifetimeSeconds", 1..60))
+            }
+            // RemixCursors derives its own encryption purpose from these configured keys.
+            val remixCursors = remixReadPolicy?.let { cursor(rings.getValue("saved").jsonObject, ::RemixCursors) }
+            val notificationPolicy = root["notificationPolicy"]?.takeUnless { it == JsonNull }?.jsonObject?.let { policy ->
+                exact(policy, "maxResponseBytes")
+                AccountNotificationPolicy(integer(policy, "maxResponseBytes", 4096..262144))
+            }
+            // Explicit Inbox activation only. Message receipts do not imply notifications,
+            // permission to deliver push, or authority to bypass current notification settings.
+            val notificationInboxPolicy = root["notificationInboxPolicy"]?.takeUnless { it == JsonNull }?.jsonObject?.let { policy ->
+                exact(policy, "maxResponseBytes", "cursorLifetimeSeconds")
+                require(notificationPolicy != null && conversationPolicy != null)
+                AccountNotificationInboxPolicy(integer(policy, "maxResponseBytes", 4096..262144),
+                    integer(policy, "cursorLifetimeSeconds", 1..86400))
+            }
+            val notificationInboxCursors = notificationInboxPolicy?.let {
+                derivedNotificationInboxCursors(rings.getValue("saved").jsonObject)
+            }
+            val postDeletionPolicy = root["postDeletionPolicy"]?.takeUnless { it == JsonNull }?.jsonObject?.let { policy ->
+                exact(policy, "enabled")
+                require(media != null && postReadPolicy != null)
+                AccountPostDeletionPolicy(boolean(policy, "enabled"))
+            }
+            val postPlacementPolicy = root["postPlacementPolicy"]?.takeUnless { it == JsonNull }?.jsonObject?.let { policy ->
+                exact(policy, "enabled", "maxResponseBytes")
+                require(postReadPolicy != null)
+                com.feedme.server.social.posts.AccountPostPlacementPolicy(boolean(policy, "enabled"),
+                    integer(policy, "maxResponseBytes", 4096..262144))
+            }
+            val postReactionPolicy = root["postReactionPolicy"]?.takeUnless { it == JsonNull }?.jsonObject?.let { policy ->
+                exact(policy, "enabled", "maxResponseBytes")
+                require(postReadPolicy != null)
+                com.feedme.server.social.posts.AccountPostReactionPolicy(boolean(policy, "enabled"),
+                    integer(policy, "maxResponseBytes", 4096..262144))
+            }
+            val reactionNotificationPolicy = root["reactionNotificationPolicy"]?.takeUnless { it == JsonNull }?.jsonObject?.let { policy ->
+                exact(policy, "enabled", "coalesceSeconds", "maxEventAgeSeconds")
+                require(notificationInboxPolicy != null && notificationPolicy != null && postReactionPolicy != null)
+                val enabled = boolean(policy, "enabled")
+                require(!enabled || postReactionPolicy.enabled)
+                com.feedme.server.identity.AccountReactionNotificationPolicy(enabled,
+                    integer(policy, "coalesceSeconds", 1..300), integer(policy, "maxEventAgeSeconds", 2..3600))
+            }
+            val recipeRequestPolicy = root["recipeRequestPolicy"]?.takeUnless { it == JsonNull }?.jsonObject?.let { policy ->
+                exact(policy, "enabled", "lifetimeSeconds", "maxRequestsPer24Hours", "maxResponseBytes")
+                require(conversationPolicy != null && postReadPolicy != null)
+                AccountRecipeRequestPolicy(boolean(policy, "enabled"), integer(policy, "lifetimeSeconds", 1..604800),
+                    integer(policy, "maxRequestsPer24Hours", 1..100), integer(policy, "maxResponseBytes", 1024..262144))
+            }
+            val postAuthoring = root["postAuthoringPolicy"]?.takeUnless { it == JsonNull }?.jsonObject?.let { policy ->
+                // No accepting media substitute. A single configured provider/store owns
+                // upload, draft cleanup and publication checks. READY still needs real safety.
+                require(media != null && postReadPolicy != null)
+                exact(policy, "maxResponseBytes", "draftLifetimeSeconds", "cursorLifetimeSeconds",
+                    "draftMutationsEnabled", "publishingEnabled", "saveDisclosureVersion",
+                    "maximumDraftsPerAccount", "maximumPublicationsPer24Hours", "mediaSafety")
+                val safety = policy.getValue("mediaSafety").takeUnless { it == JsonNull }?.jsonObject?.let { value ->
+                    exact(value, "processingRevision", "codecRevision", "safetyRevision")
+                    PostReadMediaSafetyPolicy(text(value, "processingRevision", 80), text(value, "codecRevision", 80),
+                        text(value, "safetyRevision", 80))
+                }
+                val maxBytes = integer(policy, "maxResponseBytes", 1..262144)
+                AccountPostAuthoringRuntimePolicy(AccountPostAdmissionPolicy(rules.eligibilityPolicyVersion,
+                    rules.requiredTermsVersion, boolean(policy, "draftMutationsEnabled"), boolean(policy, "publishingEnabled"),
+                    text(policy, "saveDisclosureVersion", 256), integer(policy, "maximumDraftsPerAccount", 1..1000),
+                    integer(policy, "maximumPublicationsPer24Hours", 1..1000), safety),
+                    PostDraftServicePolicy(maxBytes, integer(policy, "draftLifetimeSeconds", 1..2592000),
+                        integer(policy, "cursorLifetimeSeconds", 1..86400)), PostPublicationPolicy(maxBytes),
+                    derivedPostDraftCursors(rings.getValue("saved").jsonObject))
+            }
+            val circlePolicy = root["circlePolicy"]?.takeUnless { it == JsonNull }?.jsonObject?.let { policy ->
+                exact(policy, "memberLimit", "invitationLifetimeHours", "circleCreationEnabled", "invitationCreationEnabled", "invitationEndpoint")
+                AccountCircleRuntimePolicy(CircleLaunchPolicy(integer(policy, "memberLimit", 2..50),
+                    integer(policy, "invitationLifetimeHours", 1..168)),
+                    derivedCircleCapabilities(rings.getValue("saved").jsonObject, URI(text(policy, "invitationEndpoint", 2048))),
+                    boolean(policy, "circleCreationEnabled"), boolean(policy, "invitationCreationEnabled"))
+            }
+            val mediaAccessPolicy = root["mediaAccessPolicy"]?.takeUnless { it == JsonNull }?.jsonObject?.let { policy ->
+                exact(policy, "enabled", "deliveryOrigin", "lifetimeSeconds", "maxObjectBytes", "maxRetainedBytes", "maxItems", "maxConcurrentFetches")
+                require(media != null && postReadPolicy != null && postAuthoring?.admission?.mediaSafety != null)
+                AccountMediaAccessPolicy(boolean(policy, "enabled"), text(policy, "deliveryOrigin", 2048),
+                    integer(policy, "lifetimeSeconds", 1..60), integer(policy, "maxObjectBytes", 1..10000000),
+                    number(policy, "maxRetainedBytes"), integer(policy, "maxItems", 1..1024),
+                    integer(policy, "maxConcurrentFetches", 1..8))
+            }
+            val postRecipePolicy = root["postRecipePolicy"]?.takeUnless { it == JsonNull }?.jsonObject?.let { policy ->
+                exact(policy, "makeMineEnabled", "saveEnabled", "disclosureVersion")
+                require(postReadPolicy != null && postAuthoring?.admission?.mediaSafety != null)
+                AccountCorePostRecipePolicy(boolean(policy, "makeMineEnabled"), boolean(policy, "saveEnabled"),
+                    text(policy, "disclosureVersion", 128)).also {
+                    require(!it.saveEnabled || newCopies)
+                    require(!it.makeMineEnabled || planningOperational.newPlanningEnabled)
+                    require(!it.saveEnabled || it.disclosureVersion == checkNotNull(postAuthoring).admission.saveDisclosureVersion)
+                }
+            }
+            val exportPolicy = root["exportPolicy"]?.takeUnless { it == JsonNull }?.jsonObject?.let { policy ->
+                exact(policy, "enabled", "policyRevision", "recentAuthSeconds", "jobLifetimeSeconds", "downloadSeconds", "pollAfterSeconds", "maxResponseBytes")
+                com.feedme.server.export.AccountExportPolicy(boolean(policy, "enabled"), text(policy, "policyRevision", 128),
+                    integer(policy, "recentAuthSeconds", 1..900), integer(policy, "jobLifetimeSeconds", 60..86400),
+                    integer(policy, "downloadSeconds", 1..60), integer(policy, "pollAfterSeconds", 1..60), integer(policy, "maxResponseBytes", 4096..262144))
+            }
+            val exportStorage = AccountExportRuntimeConfig.fromEnvironment(values, environment, deployment)
+            require((exportPolicy == null) == (exportStorage == null)) { "Exports require explicit policy and private storage" }
+            require(exportStorage == null || exportStorage.storage.bucket != media?.storage?.bucket) { "Exports require a separate private bucket" }
+            val staffPolicy = root["staffPolicy"]?.takeUnless { it == JsonNull }?.jsonObject?.let { policy ->
+                exact(JsonObject(policy - "catalogDraftsEnabled" - "catalogReviewsEnabled" - "catalogPublicationEnabled" - "moderationEnabled"), "policyVersion", "policyClientId", "maximumTotpAgeSeconds", "observationSeconds", "maxResponseBytes")
+                com.feedme.server.staff.SupabaseStaffAdmissionPolicy(text(policy, "policyVersion", 128),
+                    text(policy, "policyClientId", 256), integer(policy, "maximumTotpAgeSeconds", 1..900).toLong(),
+                    integer(policy, "observationSeconds", 1..60).toLong(), integer(policy, "maxResponseBytes", 1024..16384),
+                    if ("catalogDraftsEnabled" in policy) boolean(policy, "catalogDraftsEnabled") else false,
+                    if ("catalogReviewsEnabled" in policy) boolean(policy, "catalogReviewsEnabled") else false,
+                    if ("catalogPublicationEnabled" in policy) boolean(policy, "catalogPublicationEnabled") else false,
+                    if ("moderationEnabled" in policy) boolean(policy, "moderationEnabled") else false)
+            }
+            val staffModerationCursors = if (staffPolicy?.moderationEnabled == true)
+                derivedStaffModerationCursors(rings.getValue("saved").jsonObject) else null
             AccountCoreRuntimeConfig(listener, environment, deployment, rules, reconnection, notice, keyPolicy, ingredients, search, preferences,
                 ingredientCursors, kitchenCursors, kitchenPolicy, planningOperational, planningPolicy, planningCursors,
-                cookingPolicy, newCooking, savedPolicy, savedCursors, newCopies, parallelism, database)
+                cookingPolicy, newCooking, savedPolicy, savedCursors, newCopies, makeAgainEnabled, collectionMutations, safetyPolicy, blockCursors,
+                postReadPolicy, postFeedCursors, circlePolicy, reportPolicy, mealIntent, media, memoryPolicy, memoryCursors,
+                reusePolicy, reuseCursors, postAuthoring, conversationPolicy, conversationCursors, postDeletionPolicy, recipeRequestPolicy, sessionPolicy, sessionCursors, notificationPolicy, notificationInboxPolicy, notificationInboxCursors, mediaAccessPolicy, remixReadPolicy, remixCursors,
+                postRecipePolicy, exportPolicy, exportStorage, staffPolicy, deletionRules, parallelism, database, memoryRankingEnabled, staffModerationCursors,
+                postPlacementPolicy, postReactionPolicy, reactionNotificationPolicy)
         } catch (failure: CancellationException) { throw failure }
           catch (failure: InterruptedException) { Thread.currentThread().interrupt(); throw failure }
           catch (_: Exception) { throw IllegalArgumentException("Account core runtime configuration unavailable") }
@@ -267,6 +549,116 @@ class AccountCoreRuntimeConfig private constructor(
             } finally { decoded.values.forEach { it.fill(0) } }
         }
 
+        private fun derivedSessionCursors(root: JsonObject): AccountSessionCursors = cursor(root) { current, savedKeys ->
+            val derived = linkedMapOf<String, ByteArray>()
+            try {
+                for ((id, key) in savedKeys) derived[id] = Mac.getInstance("HmacSHA256").run {
+                    init(SecretKeySpec(key, "HmacSHA256"))
+                    doFinal("feedme:account-session-cursors:v1".toByteArray(Charsets.US_ASCII))
+                }
+                AccountSessionCursors(current, derived)
+            } finally { derived.values.forEach { it.fill(0) } }
+        }
+
+        private fun derivedStaffModerationCursors(root: JsonObject): com.feedme.server.staff.StaffModerationCursors = cursor(root) { current, savedKeys ->
+            val derived = linkedMapOf<String, ByteArray>()
+            try {
+                for ((id, key) in savedKeys) derived[id] = Mac.getInstance("HmacSHA256").run {
+                    init(SecretKeySpec(key, "HmacSHA256"))
+                    doFinal("feedme:staff-moderation-cursors:v1".toByteArray(Charsets.US_ASCII))
+                }
+                com.feedme.server.staff.StaffModerationCursors(current, derived)
+            } finally { derived.values.forEach { it.fill(0) } }
+        }
+
+        private fun derivedNotificationInboxCursors(root: JsonObject): NotificationInboxCursors = cursor(root) { current, savedKeys ->
+            val derived = linkedMapOf<String, ByteArray>()
+            try {
+                for ((id, key) in savedKeys) derived[id] = Mac.getInstance("HmacSHA256").run {
+                    init(SecretKeySpec(key, "HmacSHA256"))
+                    doFinal("feedme:account-notification-inbox-cursors:v1".toByteArray(Charsets.US_ASCII))
+                }
+                NotificationInboxCursors(current, derived)
+            } finally { derived.values.forEach { it.fill(0) } }
+        }
+
+        private fun derivedConversationCursors(root: JsonObject): ConversationCursors = cursor(root) { current, savedKeys ->
+            val derived = linkedMapOf<String, ByteArray>()
+            try {
+                for ((id, key) in savedKeys) derived[id] = Mac.getInstance("HmacSHA256").run {
+                    init(SecretKeySpec(key, "HmacSHA256"))
+                    doFinal("feedme:account-conversation-cursors:v1".toByteArray(Charsets.US_ASCII))
+                }
+                ConversationCursors(current, derived)
+            } finally { derived.values.forEach { it.fill(0) } }
+        }
+
+        private fun derivedPostDraftCursors(root: JsonObject): PostDraftCursors = cursor(root) { current, savedKeys ->
+            val derived = linkedMapOf<String, ByteArray>()
+            try {
+                for ((id, key) in savedKeys) derived[id] = Mac.getInstance("HmacSHA256").run {
+                    init(SecretKeySpec(key, "HmacSHA256"))
+                    doFinal("feedme:account-post-draft-cursors:v1".toByteArray(Charsets.US_ASCII))
+                }
+                PostDraftCursors(current, derived)
+            } finally { derived.values.forEach { it.fill(0) } }
+        }
+
+        private fun derivedReuseCursors(root: JsonObject): ReuseCursors = cursor(root) { current, savedKeys ->
+            val derived = linkedMapOf<String, ByteArray>()
+            try {
+                for ((id, key) in savedKeys) derived[id] = Mac.getInstance("HmacSHA256").run {
+                    init(SecretKeySpec(key, "HmacSHA256"))
+                    doFinal("feedme:account-reuse-cursors:v1".toByteArray(Charsets.US_ASCII))
+                }
+                ReuseCursors(current, derived)
+            } finally { derived.values.forEach { it.fill(0) } }
+        }
+
+        private fun derivedMemoryCursors(root: JsonObject): MemoryCursors = cursor(root) { current, savedKeys ->
+            val derived = linkedMapOf<String, ByteArray>()
+            try {
+                for ((id, key) in savedKeys) derived[id] = Mac.getInstance("HmacSHA256").run {
+                    init(SecretKeySpec(key, "HmacSHA256"))
+                    doFinal("feedme:account-memory-cursors:v1".toByteArray(Charsets.US_ASCII))
+                }
+                MemoryCursors(current, derived)
+            } finally { derived.values.forEach { it.fill(0) } }
+        }
+
+        private fun derivedBlockCursors(root: JsonObject): BlockCursors = cursor(root) { current, savedKeys ->
+            val derived = linkedMapOf<String, ByteArray>()
+            try {
+                for ((id, key) in savedKeys) derived[id] = Mac.getInstance("HmacSHA256").run {
+                    init(SecretKeySpec(key, "HmacSHA256"))
+                    doFinal("feedme:account-block-cursors:v1".toByteArray(Charsets.US_ASCII))
+                }
+                BlockCursors(current, derived)
+            } finally { derived.values.forEach { it.fill(0) } }
+        }
+
+        private fun derivedPostFeedCursors(root: JsonObject): PostFeedCursors = cursor(root) { current, savedKeys ->
+            val derived = linkedMapOf<String, ByteArray>()
+            try {
+                for ((id, key) in savedKeys) derived[id] = Mac.getInstance("HmacSHA256").run {
+                    init(SecretKeySpec(key, "HmacSHA256"))
+                    doFinal("feedme:account-post-feed-cursors:v1".toByteArray(Charsets.US_ASCII))
+                }
+                PostFeedCursors(current, derived)
+            } finally { derived.values.forEach { it.fill(0) } }
+        }
+
+        private fun derivedCircleCapabilities(root: JsonObject, endpoint: URI): CircleCapabilities = cursor(root) { current, savedKeys ->
+            val derived = linkedMapOf<String, ByteArray>()
+            try {
+                for ((id, key) in savedKeys) derived[id] = Mac.getInstance("HmacSHA256").run {
+                    init(SecretKeySpec(key, "HmacSHA256"))
+                    doFinal("feedme:account-circle-capabilities:v1".toByteArray(Charsets.US_ASCII))
+                }
+                CircleCapabilities(current, derived, endpoint)
+            } finally { derived.values.forEach { it.fill(0) } }
+        }
+
         internal fun keyPolicy(k: JsonObject): SupabaseJwksHttpPolicy {
             exact(k, "connectTimeoutMillis", "socketTimeoutMillis", "totalTimeoutMillis", "cacheSeconds",
                 "minimumFetchIntervalMillis", "maximumAdmittedCalls")
@@ -301,4 +693,14 @@ class AccountCoreRuntimeConfig private constructor(
             Instant.parse(it).also { parsed -> require(parsed.toString() == it) }
         }
     }
+}
+
+/** Explicit circle launch choices only; no new production endpoint/key or serving grant is
+ * invented. invitationEndpoint is the HTTPS native/join link base (without query/fragment),
+ * not the JSON preview API. Native accepted-link configuration must use the same base.
+ * Existing saved application signing keys are purpose-separated, with old IDs retained for
+ * the invitation lifetime. Missing/null circlePolicy leaves the entire route group closed. */
+internal class AccountCircleRuntimePolicy(val launch: CircleLaunchPolicy, val capabilities: CircleCapabilities,
+    val circleCreationEnabled: Boolean, val invitationCreationEnabled: Boolean) {
+    override fun toString() = "AccountCircleRuntimePolicy(<redacted>)"
 }

@@ -82,6 +82,16 @@ tasks.named<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>("compileTestKotlinJ
     doFirst { check(photoContainerJvmTestSources.all { it.isFile }) { "Photo container implementation missing" } }
 }
 
+// One platform-neutral synthetic reporting service is shared by joined JVM and native
+// tests. Do not pull every common test into the Android instrumentation source set.
+val reportServiceTestSource = file("src/commonTest/kotlin/com/feedme/app/reports/SyntheticReportService.kt")
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    if (name == "compileDebugAndroidTestKotlinAndroid") {
+        source(reportServiceTestSource)
+        doFirst { check(reportServiceTestSource.isFile) { "Synthetic report test service missing" } }
+    }
+}
+
 android {
     namespace = "com.feedme.app"
     compileSdk = 36

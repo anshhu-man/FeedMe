@@ -31,6 +31,13 @@ class PlansStore(val environment: String, private val transactions: PgTransactio
     private val cursors: PlanningCursors) {
     private val commands = DurableCommands(transactions)
     private val outbox = OutboxStore(transactions)
+    private var derivedReaders: ((Connection, VerifiedPlanningPrincipal) -> AccountDerivedPlanReader)? = null
+    internal constructor(environment: String, transactions: PgTransactions, authority: PlanningAuthority,
+        policy: PlanningServicePolicy, cursors: PlanningCursors,
+        derivedReaders: (Connection, VerifiedPlanningPrincipal) -> AccountDerivedPlanReader) :
+        this(environment, transactions, authority, policy, cursors) {
+        this.derivedReaders = derivedReaders
+    }
     init { require(environment.matches(Regex("[a-z][a-z0-9-]{0,39}"))) }
 
     fun createPlan(principal: VerifiedPlanningPrincipal, key: UUID, body: JsonObject): CommandResult {
@@ -60,9 +67,27 @@ class PlansStore(val environment: String, private val transactions: PgTransactio
     }
 
     fun getPlan(principal: VerifiedPlanningPrincipal, planId: UUID): StoredReply = read(principal, planId) { c ->
+        derivedReader(c, principal, planId)?.let { return@read it.getPlan(planId) }
         val plan = plan(c, principal, planId); val lineage = lineage(c, principal, plan.requestId)
         authorizeStored(c, principal, lineage, plan, selection = false)
         checkedReply("getPlan", 200, plan.body, plan.version)
+    }
+
+    /** Explicit same-transaction READ for a separately authorized post attachment. This
+     * proves the actual owned Plan, not redistribution or confirmation of its changes. */
+    internal fun readOwnedPostPlan(connection: Connection, principal: VerifiedPlanningPrincipal, planId: UUID): JsonObject = safe {
+        check(!connection.autoCommit)
+        checkPrincipal(principal); authority.lockPrincipal(connection, principal)
+        val derived = derivedReader(connection, principal, planId)
+        val reply = if (derived != null) derived.getPlan(planId) else {
+            val plan = plan(connection, principal, planId)
+            val lineage = lineage(connection, principal, plan.requestId)
+            authorizeStored(connection, principal, lineage, plan, selection = false)
+            requireReadLifetime(connection, principal, lineage, plan, selection = false)
+            checkedReply("getPlan", 200, plan.body, plan.version)
+        }
+        authority.lockPrincipal(connection, principal); derived?.revalidate()
+        reply.body?.jsonObject ?: fail(PlanningFailureCode.STORAGE_UNAVAILABLE)
     }
 
     /**
@@ -77,6 +102,12 @@ class PlansStore(val environment: String, private val transactions: PgTransactio
         check(!connection.autoCommit) { "Cooking selection requires an owned transaction" }
         checkPrincipal(principal)
         authority.lockPrincipal(connection, principal)
+        derivedReader(connection, principal, planId)?.let { reader ->
+            val snapshot = reader.lockCookingPlan(planId, use, sessionId)
+            authority.lockPrincipal(connection, principal)
+            reader.revalidate()
+            return@safe snapshot
+        }
         val plan = plan(connection, principal, planId); val lineage = lineage(connection, principal, plan.requestId)
         if (use == CookingPlanUse.NEW_SELECTION) {
             if (sessionId != null) fail(PlanningFailureCode.INPUT_INVALID)
@@ -98,6 +129,7 @@ class PlansStore(val environment: String, private val transactions: PgTransactio
 
     fun getPlanExplanation(principal: VerifiedPlanningPrincipal, planId: UUID, cursor: String? = null, limit: Int = 20): StoredReply = read(principal, planId) { c ->
         if (limit !in 1..50) fail(PlanningFailureCode.INPUT_INVALID)
+        derivedReader(c, principal, planId)?.let { return@read it.getExplanation(planId, cursor, limit, cursors) }
         val plan = plan(c, principal, planId); val lineage = lineage(c, principal, plan.requestId)
         authorizeStored(c, principal, lineage, plan, selection = false)
         val binding = "$environment:${principal.kind}:${principal.principalId}:$planId:${plan.hash}"
@@ -128,7 +160,7 @@ class PlansStore(val environment: String, private val transactions: PgTransactio
             authority.requireNewPlanningEnabledAndQuota(c, principal)
             val current = authority.lockCurrentSnapshot(c, principal, lineage.request)
             requirePreferences(lineage.request, current)
-            if (!lineage.evidence.samePrivateInputs(current)) fail(PlanningFailureCode.INPUTS_CHANGED)
+            if (!lineage.evidence.samePrivateInputs(current) || !lineage.evidence.sameSavedSource(current)) fail(PlanningFailureCode.INPUTS_CHANGED)
             requireDirectSource(lineage.request, current)
             val excluded = root["excludeRecipeVersionIds"]?.jsonArray?.map { it.jsonPrimitive.content.lowercase() }?.toSet().orEmpty()
             val presented = query(c, "SELECT recipe_version_id FROM planning.plans WHERE environment=? AND actor_kind=? AND principal_id=? AND request_id=? AND recipe_version_id IS NOT NULL", {
@@ -156,6 +188,12 @@ class PlansStore(val environment: String, private val transactions: PgTransactio
             plan.proof.text("preferenceVersion") != lineage.evidence.preferences.text("revision") ||
             plan.proof.text("pantryRevision") != lineage.evidence.pantry.text("revision")) fail(PlanningFailureCode.STORAGE_UNAVAILABLE)
         val current = authority.lockCurrentSnapshot(c, principal, lineage.request)
+        if (json(lineage.request).containsKey("savedRecipeId")) requireDirectSource(lineage.request, current)
+        if (!lineage.evidence.sameSavedSource(current)) fail(PlanningFailureCode.RECIPE_UNAVAILABLE)
+        current.savedSource?.let { saved ->
+            if (principal.kind != CommandActor.ACCOUNT || saved.text("environment") != environment ||
+                saved.text("principalId") != principal.principalId.toString()) fail(PlanningFailureCode.RECIPE_UNAVAILABLE)
+        }
         if (selection) {
             requirePreferences(lineage.request, current)
             if (lineage.policy != policyText() || !lineage.evidence.samePrivateInputs(current) ||
@@ -164,6 +202,12 @@ class PlansStore(val environment: String, private val transactions: PgTransactio
         plan.recipeId?.let { id ->
             val old = lineage.evidence.candidate(id.toString()) ?: fail(PlanningFailureCode.STORAGE_UNAVAILABLE)
             val fresh = current.candidate(id.toString()) ?: fail(PlanningFailureCode.RECIPE_UNAVAILABLE)
+            if (current.savedSource != null) {
+                // The current account adapter revalidates the exact established grant/copy
+                // and current recall. It deliberately need not certify free/new publication.
+                if (old != fresh) fail(PlanningFailureCode.RECIPE_UNAVAILABLE)
+                return@let
+            }
             val recipe = fresh.getValue("recipe").jsonObject
             if (recipe.text("reviewStatus") == "recalled") fail(PlanningFailureCode.RECIPE_RECALLED)
             if (recipe.text("reviewStatus") !in (if (selection) setOf("published") else setOf("published", "retired")) ||
@@ -218,7 +262,8 @@ class PlansStore(val environment: String, private val transactions: PgTransactio
         }
         outbox.append(c, EventDraft(UUID.randomUUID(), "planning.plan.created.v1", 1, "plan", planId, 1, "planning", command.toString(), command,
             buildJsonObject { put("principalId", principal.principalId.toString()); put("planId", planId.toString())
-                decision.recipe?.let { put("recipeVersionId", it.id.value) }; put("status", body.text("status")); put("rankingVersion", decision.policyVersion) }))
+                decision.recipe?.let { put("recipeVersionId", it.id.value) }; put("status", body.text("status")); put("rankingVersion", decision.policyVersion) },
+            owner = EventOwner.principal(environment, principal.kind, principal.principalId)))
         return checkedReply(operation, status, body, 1)
     }
 
@@ -282,10 +327,34 @@ class PlansStore(val environment: String, private val transactions: PgTransactio
             authority.lockPrincipal(c, principal)
             action(c).also {
                 authority.lockPrincipal(c, principal)
-                val stored = plan(c, principal, planId); val row = lineage(c, principal, stored.requestId)
-                requireReadLifetime(c, principal, row, stored, selection = false)
+                val derived = derivedReader(c, principal, planId)
+                if (derived != null) derived.revalidate()
+                else {
+                    val stored = plan(c, principal, planId); val row = lineage(c, principal, stored.requestId)
+                    requireReadLifetime(c, principal, row, stored, selection = false)
+                }
             }
         }
+    }
+
+    /** Historical format-3 material for a separately authorized NEW Saved copy. Neither this
+     * reader nor Plan expiry waives the caller's actual new-copy grant and final rights fence. */
+    internal fun lockOwnedDerivedCopy(connection: Connection, principal: VerifiedPlanningPrincipal, planId: UUID): JsonObject = safe {
+        check(!connection.autoCommit)
+        checkPrincipal(principal); authority.lockPrincipal(connection, principal)
+        val reader = derivedReader(connection, principal, planId) ?: fail(PlanningFailureCode.NOT_CONFIGURED)
+        val recipe = reader.ownedCopy(planId)
+        authority.lockPrincipal(connection, principal); reader.revalidate()
+        recipe
+    }
+
+    private fun derivedReader(c: Connection, principal: VerifiedPlanningPrincipal, id: UUID): AccountDerivedPlanReader? {
+        val format = query(c, "SELECT storage_format FROM planning.plans WHERE environment=? AND actor_kind=? AND principal_id=? AND id=?", {
+            bindOwner(principal); setObject(4, id)
+        }) { rows -> if (!rows.next()) null else rows.getInt(1).also { if (rows.next()) fail(PlanningFailureCode.STORAGE_UNAVAILABLE) } }
+        if (format !in setOf(3, 4, 5, 6)) return null
+        if (principal.kind != CommandActor.ACCOUNT) fail(PlanningFailureCode.NOT_CONFIGURED)
+        return derivedReaders?.invoke(c, principal) ?: fail(PlanningFailureCode.NOT_CONFIGURED)
     }
     private fun plan(c: Connection, principal: VerifiedPlanningPrincipal, id: UUID): PlanRow = query(c,
         "SELECT * FROM planning.plans WHERE environment=? AND actor_kind=? AND principal_id=? AND id=?", { bindOwner(principal); setObject(4, id) }) { r ->
@@ -330,7 +399,15 @@ class PlansStore(val environment: String, private val transactions: PgTransactio
         if (BigDecimal(version).compareTo(BigDecimal(snapshot.preferences.text("revision"))) != 0) fail(PlanningFailureCode.PREFERENCE_CHANGED)
     }
     private fun requireDirectSource(request: WireDocument, snapshot: PlanningEvidenceSnapshot) {
-        val source = json(request)["sourceRecipeVersionId"]?.jsonPrimitive?.content ?: return
+        val body = json(request)
+        val savedId = body["savedRecipeId"]?.jsonPrimitive?.content
+        if (savedId != null) {
+            val saved = snapshot.savedSource ?: fail(PlanningFailureCode.NOT_CONFIGURED)
+            if (!saved.text("savedRecipeId").equals(savedId, true)) fail(PlanningFailureCode.RECIPE_UNAVAILABLE)
+            return
+        }
+        if (snapshot.savedSource != null) fail(PlanningFailureCode.STORAGE_UNAVAILABLE)
+        val source = body["sourceRecipeVersionId"]?.jsonPrimitive?.content ?: return
         val candidate = snapshot.candidate(source) ?: fail(PlanningFailureCode.RECIPE_UNAVAILABLE)
         val recipe = candidate.getValue("recipe").jsonObject
         if (recipe.text("reviewStatus") == "recalled") fail(PlanningFailureCode.RECIPE_RECALLED)
@@ -342,7 +419,7 @@ class PlansStore(val environment: String, private val transactions: PgTransactio
     }
     private fun supported(request: WireDocument) {
         val body = json(request)
-        if (listOf("sourcePostId", "savedRecipeId").any(body::containsKey) || body["naturalLanguage"]?.jsonPrimitive?.content?.isNotEmpty() == true ||
+        if (body.containsKey("sourcePostId") || body["naturalLanguage"]?.jsonPrimitive?.content?.isNotEmpty() == true ||
             body["intent"]?.jsonPrimitive?.content == "tonight" || body.getValue("constraints").jsonObject.keys.any { it.startsWith("household") }) fail(PlanningFailureCode.NOT_CONFIGURED)
         if (listOf("sourcePostId", "savedRecipeId", "sourceRecipeVersionId").count(body::containsKey) > 1) fail(PlanningFailureCode.INPUT_INVALID)
     }

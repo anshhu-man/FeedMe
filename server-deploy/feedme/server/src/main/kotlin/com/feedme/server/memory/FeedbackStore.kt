@@ -241,7 +241,7 @@ internal class FeedbackStore(val environment: String, private val transactions: 
         val event = EventDraft(UUID.randomUUID(), "memory.feedback.changed.v1", 1, "feedback", id, version, "memory",
             UUID.randomUUID().toString(), key, buildJsonObject {
                 put("principalId", actor.principalId.toString()); put("feedbackId", id.toString()); put("action", action)
-            })
+            }, owner = EventOwner.principal(environment, actor.kind, actor.principalId))
         outbox.append(c, event)
         return event
     }

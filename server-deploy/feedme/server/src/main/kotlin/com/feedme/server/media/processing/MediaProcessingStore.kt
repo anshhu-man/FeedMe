@@ -70,15 +70,119 @@ class MediaProcessingStore(val environment: String, private val transactions: Pg
     }
 
     /** One short, bounded claim. Attempt exhaustion is operational quarantine, not rejection. */
-    fun claim(): MediaProcessingLease? = processingSafe { transactions.run { c ->
-        px(c, "WITH exhausted AS (SELECT id FROM platform.media_processing_jobs WHERE environment=? AND state IN ('queued','retry','working') AND attempts>=? AND (lease_expires_at IS NULL OR lease_expires_at<=clock_timestamp()) LIMIT 100 FOR UPDATE SKIP LOCKED) UPDATE platform.media_processing_jobs j SET state='quarantined',lease_token=NULL,lease_expires_at=NULL,last_failure_code='ATTEMPTS_EXHAUSTED' FROM exhausted e WHERE j.id=e.id",
-            { setString(1, environment); setInt(2, policy.maxAttempts) })
+    fun claim(): MediaProcessingLease? = claimMatching(null)
+
+    /** A Supabase-only runner must not consume or exhaust another protocol/bucket's jobs. */
+    fun claimSupabase(bucket: String): MediaProcessingLease? {
+        require(bucket.matches(Regex("[a-z0-9][a-z0-9_-]{0,62}")))
+        return claimMatching(bucket)
+    }
+
+    private fun claimMatching(bucket: String?): MediaProcessingLease? = processingSafe { transactions.run { c ->
+        val filter = if (bucket == null) "" else " AND j.source->>'protocol'=? AND j.source->>'bucket'=? AND j.policy_revision=? AND j.codec_revision=?"
+        fun java.sql.PreparedStatement.bindFilter(start: Int) {
+            if (bucket != null) { setString(start, SUPABASE_MEDIA_PROTOCOL); setString(start + 1, bucket)
+                setString(start + 2, policy.revision); setString(start + 3, policy.codecRevision) }
+        }
+        px(c, "WITH exhausted AS (SELECT id FROM platform.media_processing_jobs j WHERE environment=? AND state IN ('queued','retry','working') AND attempts>=? AND (lease_expires_at IS NULL OR lease_expires_at<=clock_timestamp()) AND NOT EXISTS(SELECT 1 FROM platform.media_private_materializations h WHERE h.job_id=j.id)" + filter + " LIMIT 100 FOR UPDATE SKIP LOCKED) UPDATE platform.media_processing_jobs j SET state='quarantined',lease_token=NULL,lease_expires_at=NULL,last_failure_code='ATTEMPTS_EXHAUSTED' FROM exhausted e WHERE j.id=e.id",
+            { setString(1, environment); setInt(2, policy.maxAttempts); bindFilter(3) })
         val token = UUID.randomUUID()
-        pq(c, "WITH candidate AS (SELECT id FROM platform.media_processing_jobs WHERE environment=? AND policy_revision=? AND codec_revision=? AND state IN ('queued','retry','working') AND attempts<? AND available_at<=clock_timestamp() AND (lease_expires_at IS NULL OR lease_expires_at<=clock_timestamp()) ORDER BY available_at,id LIMIT 1 FOR UPDATE SKIP LOCKED) UPDATE platform.media_processing_jobs j SET state='working',lease_token=?,lease_generation=lease_generation+1,lease_expires_at=clock_timestamp()+(? * interval '1 second'),attempts=attempts+1 FROM candidate x WHERE j.id=x.id RETURNING j.*",
-            { setString(1, environment); setString(2, policy.revision); setString(3, policy.codecRevision); setInt(4, policy.maxAttempts); setObject(5, token); setInt(6, policy.leaseSeconds) }) {
+        pq(c, "WITH candidate AS (SELECT id FROM platform.media_processing_jobs j WHERE environment=? AND policy_revision=? AND codec_revision=? AND state IN ('queued','retry','working') AND attempts<? AND available_at<=clock_timestamp() AND (lease_expires_at IS NULL OR lease_expires_at<=clock_timestamp()) AND NOT EXISTS(SELECT 1 FROM platform.media_private_materializations h WHERE h.job_id=j.id)" + filter + " ORDER BY available_at,id LIMIT 1 FOR UPDATE SKIP LOCKED) UPDATE platform.media_processing_jobs j SET state='working',lease_token=?,lease_generation=lease_generation+1,lease_expires_at=clock_timestamp()+(? * interval '1 second'),attempts=attempts+1 FROM candidate x WHERE j.id=x.id RETURNING j.*",
+            { setString(1, environment); setString(2, policy.revision); setString(3, policy.codecRevision); setInt(4, policy.maxAttempts)
+                bindFilter(5); val offset = if (bucket == null) 0 else 4; setObject(5 + offset, token); setInt(6 + offset, policy.leaseSeconds) }) {
             if (it.next()) MediaProcessingLease(it.getObject("id", UUID::class.java), token, it.getLong("lease_generation"), it.getInt("attempts"), processingSource(it.getString("source"))) else null
         }
     } }
+
+    /** Explicit promotion only; generic processing never reclaims an acknowledged HOLD.
+     * This claims no object write and never extends/renews the original safety evidence. */
+    fun claimSupabaseReady(jobId: UUID): MediaProcessingLease? = processingSafe { transactions.run { c ->
+        SupabaseMediaReadiness.checkCompatibility(c)
+        val source = pq(c, "SELECT source FROM platform.media_processing_jobs WHERE environment=? AND id=?", {
+            setString(1, environment); setObject(2, jobId)
+        }) { if (!it.next()) processingFail(MediaProcessingFailureCode.CONFLICT); processingSource(it.getString(1)) }
+        requireSupabaseOutputs(source)
+        val asset = lockAsset(c, source, MediaWorkerPurpose.PROCESS); val job = job(c, jobId)
+        if (job.state in setOf("ready", "rejected", "cancelled")) return@run null
+        requireProcessing(c, asset, source)
+        val token = UUID.randomUUID()
+        pq(c, "UPDATE platform.media_processing_jobs j SET state='working',last_failure_code='SUPABASE_READY_PROMOTION',lease_token=?," +
+            "lease_generation=lease_generation+1,lease_expires_at=clock_timestamp()+(? * interval '1 second'),attempts=attempts+1 " +
+            "WHERE id=? AND attempts<? AND available_at<=clock_timestamp() AND (lease_expires_at IS NULL OR lease_expires_at<=clock_timestamp()) " +
+            "AND ((state='quarantined' AND last_failure_code IN('PRIVATE_DERIVATIVES_HELD','SUPABASE_READY_PROMOTION')) " +
+            "OR (state='working' AND last_failure_code='SUPABASE_READY_PROMOTION')) " +
+            "AND EXISTS(SELECT 1 FROM platform.media_private_materializations h WHERE h.job_id=j.id) RETURNING j.*", {
+            setObject(1, token); setInt(2, policy.leaseSeconds); setObject(3, jobId); setInt(4, policy.maxAttempts)
+        }) { if (it.next()) MediaProcessingLease(jobId, token, it.getLong("lease_generation"), it.getInt("attempts"), source) else null }
+    } }
+
+    fun prepareSupabaseReady(lease: MediaProcessingLease): SupabaseReadyInspection = processingSafe { transactions.run { c ->
+        requireSupabaseOutputs(lease.source)
+        val asset = lockAsset(c, lease.source, MediaWorkerPurpose.PROCESS); val job = job(c, lease.jobId)
+        currentLease(c, job, lease); requireProcessing(c, asset, lease.source)
+        requirePromotion(c, lease)
+        val outputs = intents(c, lease.source, lease.jobId); requirePrivateAcknowledgements(outputs)
+        SupabaseMediaReadiness.manifest(lease.source, outputs)
+        val safety = MediaSafetyRecords.requireHeldForPromotion(c, lease.source, job.id, policy, outputs)
+        authority.requireSafety(c, lease.source, safety.evidence, policy.revision, pnow(c)); processingCurrent()
+        currentLease(c, job, lease)
+        val at = pnow(c)
+        if (at >= safety.validUntil) processingFail(MediaProcessingFailureCode.SAFETY_UNAVAILABLE)
+        SupabaseReadyInspection(lease, outputs, at)
+    } }
+
+    /** Receipts must come from full actual reads made after prepareSupabaseReady. No provider
+     * metadata/version fiction, POST retry, mutable safety replacement or cleanup completion. */
+    fun finishSupabaseReady(inspection: SupabaseReadyInspection, receipts: List<SupabaseDerivativeReceipt>): MediaProcessingReceipt = processingSafe {
+        val lease = inspection.lease
+        transactions.run { c ->
+            requireSupabaseOutputs(lease.source)
+            val asset = lockAsset(c, lease.source, MediaWorkerPurpose.CLEANUP); val job = job(c, lease.jobId)
+            sameSource(lease.source, job.source); terminal(job, lease)?.let { return@run it }
+            currentLease(c, job, lease); requireProcessing(c, asset, lease.source); requirePromotion(c, lease)
+            val outputs = intents(c, lease.source, lease.jobId); requirePrivateAcknowledgements(outputs)
+            if (inspection.outputs.size != 2 || receipts.size != 2 || receipts.map { it.objectKey }.distinct().size != 2 || inspection.startedAt > pnow(c))
+                processingFail(MediaProcessingFailureCode.OBJECT_MISMATCH)
+            for (output in outputs) {
+                sameIntent(output, inspection.outputs.singleOrNull { it.id == output.id } ?: processingFail(MediaProcessingFailureCode.CONFLICT))
+                val receipt = receipts.singleOrNull { it.objectKey == output.objectKey } ?: processingFail(MediaProcessingFailureCode.OBJECT_MISMATCH)
+                if (receipt.bucket != output.bucket || receipt.sha256 != output.sha256 || receipt.bytes != output.bytes || receipt.contentType != output.contentType)
+                    processingFail(MediaProcessingFailureCode.OBJECT_MISMATCH)
+            }
+            val safety = MediaSafetyRecords.requireHeldForPromotion(c, lease.source, job.id, policy, outputs)
+            authority.requireSafety(c, lease.source, safety.evidence, policy.revision, pnow(c)); processingCurrent()
+            currentLease(c, job, lease)
+            val manifest = SupabaseMediaReadiness.manifest(lease.source, outputs)
+            if (manifest.toString().encodeToByteArray().size > policy.maxManifestBytes) processingFail(MediaProcessingFailureCode.LIMIT_EXCEEDED)
+            val eventId = UUID.randomUUID(); val version = asset.version + 1
+            SupabaseMediaReadiness.record(c, lease, outputs, safety, inspection.startedAt, version, eventId)
+            currentLease(c, job, lease)
+            one(px(c, "UPDATE platform.media_assets SET state='ready',version=version+1,updated_at=clock_timestamp(),derivative_set=?::jsonb WHERE environment=? AND owner_user_id=? AND id=? AND state='processing' AND version=?", {
+                setString(1, manifest.toString()); owner(lease.source.owner, 2); setObject(4, lease.source.mediaId); setLong(5, asset.version)
+            }))
+            one(px(c, "UPDATE platform.media_processing_jobs SET state='ready',terminal_token=?,terminal_generation=?,terminal_media_version=?,terminal_event_id=?,terminal_at=clock_timestamp(),lease_token=NULL,lease_expires_at=NULL WHERE id=?", {
+                setObject(1, lease.token); setLong(2, lease.generation); setLong(3, version); setObject(4, eventId); setObject(5, job.id)
+            }))
+            outbox.append(c, EventDraft(eventId, "platform.media.ready.v1", 1, "media", lease.source.mediaId, version, "platform", job.id.toString(), lease.source.completionKey,
+                buildJsonObject { put("mediaId", lease.source.mediaId.toString()); put("derivativeSetVersion", 2) }, EventOwner.account(environment, lease.source.owner.ownerId)))
+            cleanupTarget(c, lease.source.owner, lease.source.mediaId, lease.source.objectKey, lease.source.reservationDeadline, null)
+            if (safety.validUntil <= pnow(c)) processingFail(MediaProcessingFailureCode.SAFETY_UNAVAILABLE)
+            // Revalidate current provider/account/policy and safety deadlines after writes
+            // that may have waited, without relabelling the retained private-held evidence.
+            authority.requireSafety(c, lease.source, safety.evidence, policy.revision, pnow(c)); processingCurrent()
+            // Retain the original locked lease snapshot even though terminal fields were
+            // cleared above. Outbox/cleanup writes may wait; expiry still rolls all of this back.
+            currentLease(c, job, lease)
+            MediaProcessingReceipt(job.id, MediaProcessingTerminal.READY, version, eventId)
+        }
+    }
+
+    private fun requirePromotion(c: Connection, lease: MediaProcessingLease) {
+        pq(c, "SELECT 1 FROM platform.media_processing_jobs j JOIN platform.media_private_materializations h ON h.job_id=j.id " +
+            "WHERE j.id=? AND j.last_failure_code='SUPABASE_READY_PROMOTION' AND h.lease_generation<? AND h.attempt<?", {
+            setObject(1, lease.jobId); setLong(2, lease.generation); setInt(3, lease.attempt)
+        }) { if (!it.next()) processingFail(MediaProcessingFailureCode.CONFLICT) }
+    }
 
     /** An original terminal receipt may survive a later deletion; it is not current access. */
     fun begin(lease: MediaProcessingLease): MediaProcessingReceipt? = processingSafe { transactions.run { c ->
@@ -216,12 +320,17 @@ class MediaProcessingStore(val environment: String, private val transactions: Pg
         authority.requireSafety(c, lease.source, evidence, policy.revision, at); processingCurrent()
         if (evidence.validUntil <= pnow(c)) processingFail(MediaProcessingFailureCode.SAFETY_UNAVAILABLE)
         currentLease(c, job, lease)
+        // Retain the exact authenticated assessment atomically with this private checkpoint.
+        // It remains a historical HOLD receipt, never a READY/publication grant.
+        MediaSafetyRecords.record(c, lease.source, job.id, policy, evidence, outputs, "privateHeld", asset.version)
+        currentLease(c, job, lease)
         val recorded = pnow(c)
         one(px(c, "INSERT INTO platform.media_private_materializations(job_id,lease_token,lease_generation,attempt,acknowledged_at) VALUES(?,?,?,?,?)",
             { setObject(1, job.id); setObject(2, lease.token); setLong(3, lease.generation); setInt(4, lease.attempt); setObject(5, pt(recorded)) }))
         currentLease(c, job, lease)
         one(px(c, "UPDATE platform.media_processing_jobs SET state='quarantined',last_failure_code='PRIVATE_DERIVATIVES_HELD',lease_token=NULL,lease_expires_at=NULL WHERE id=?",
             { setObject(1, job.id) }))
+        if (evidence.validUntil <= pnow(c)) processingFail(MediaProcessingFailureCode.SAFETY_UNAVAILABLE)
         SupabasePrivateMaterialization(job.id, lease.source.mediaId, recorded)
     } }
 
@@ -243,6 +352,24 @@ class MediaProcessingStore(val environment: String, private val transactions: Pg
     fun ready(lease: MediaProcessingLease, evidence: MediaSafetyEvidence): MediaProcessingReceipt = finish(lease, null, evidence)
     fun reject(lease: MediaProcessingLease, reason: PhotoRejection): MediaProcessingReceipt = finish(lease, reason.name, null)
     fun reject(lease: MediaProcessingLease, reason: MediaSafetyRejection): MediaProcessingReceipt = finish(lease, reason.name, null)
+
+    /** Supabase has no versioned terminal-rejection path. Retain a nonretryable operational
+     * hold, not a fake rejection receipt, READY, cleanup completion or reusable write permit. */
+    internal fun quarantineSupabaseRejection(lease: MediaProcessingLease, reason: PhotoRejection) =
+        quarantineSupabaseRejection(lease, "PHOTO_${reason.name}")
+    internal fun quarantineSupabaseRejection(lease: MediaProcessingLease, reason: MediaSafetyRejection) =
+        quarantineSupabaseRejection(lease, "SAFETY_${reason.name}")
+    private fun quarantineSupabaseRejection(lease: MediaProcessingLease, reason: String) = processingSafe { transactions.run { c ->
+        requireSupabaseOutputs(lease.source)
+        val asset = lockAsset(c, lease.source, MediaWorkerPurpose.PROCESS); val job = job(c, lease.jobId)
+        sameSource(lease.source, job.source); currentLease(c, job, lease); requireProcessing(c, asset, lease.source)
+        if (pq(c, "SELECT 1 FROM platform.media_private_materializations WHERE job_id=?", { setObject(1, job.id) }) { it.next() })
+            processingFail(MediaProcessingFailureCode.CONFLICT)
+        one(px(c, "UPDATE platform.media_processing_jobs SET state='quarantined',last_failure_code=?,lease_token=NULL,lease_expires_at=NULL WHERE id=?", {
+            setString(1, "SUPABASE_$reason"); setObject(2, job.id)
+        }))
+        currentLease(c, job, lease)
+    } }
     private fun finish(lease: MediaProcessingLease, rejection: String?, evidence: MediaSafetyEvidence?): MediaProcessingReceipt = processingSafe {
         transactions.run { c ->
             val asset = lockAsset(c, lease.source, MediaWorkerPurpose.CLEANUP); val job = job(c, lease.jobId)
@@ -264,6 +391,10 @@ class MediaProcessingStore(val environment: String, private val transactions: Pg
             if (manifest != null && manifest.toString().encodeToByteArray().size > policy.maxManifestBytes) processingFail(MediaProcessingFailureCode.LIMIT_EXCEEDED)
             // Fresh lease and time AFTER every authority callback/lock. Completion pins are untouched.
             currentLease(c, job, lease)
+            if (rejection == null) {
+                MediaSafetyRecords.record(c, lease.source, job.id, policy, checkNotNull(evidence), outputs, "ready", asset.version + 1)
+                currentLease(c, job, lease)
+            }
             val state = if (rejection == null) "ready" else "rejected"; val eventId = UUID.randomUUID()
             one(px(c, "UPDATE platform.media_assets SET state=?,version=version+1,updated_at=clock_timestamp(),derivative_set=?::jsonb,rejection_code=? WHERE environment=? AND owner_user_id=? AND id=? AND state='processing' AND version=?",
                 { setString(1, state); setString(2, manifest?.toString()); setString(3, rejection); owner(lease.source.owner, 4); setObject(6, lease.source.mediaId); setLong(7, asset.version) }))
@@ -277,14 +408,19 @@ class MediaProcessingStore(val environment: String, private val transactions: Pg
                 px(c, "UPDATE platform.media_derivative_intents SET cleanup_required=true WHERE id=?", { setObject(1, v.id) })
                 cleanupTarget(c, lease.source.owner, lease.source.mediaId, v.objectKey, v.acceptanceDeadline, v.id)
             }
+            // Later receipt/outbox/cleanup statements may wait. Never commit a new READY
+            // with an assessment that expired after the earlier authority check.
+            if (rejection == null && checkNotNull(evidence).validUntil <= pnow(c))
+                processingFail(MediaProcessingFailureCode.SAFETY_UNAVAILABLE)
             MediaProcessingReceipt(job.id, if (rejection == null) MediaProcessingTerminal.READY else MediaProcessingTerminal.REJECTED, asset.version + 1, eventId)
         }
     }
 
     fun defer(lease: MediaProcessingLease, reason: MediaProcessingFailureCode) = processingSafe { transactions.run { c ->
         val job = job(c, lease.jobId); currentLease(c, job, lease)
+        val held = pq(c, "SELECT 1 FROM platform.media_private_materializations WHERE job_id=?", { setObject(1, job.id) }) { it.next() }
         one(px(c, "UPDATE platform.media_processing_jobs SET state=?,last_failure_code=?,available_at=clock_timestamp()+(? * interval '1 second'),lease_token=NULL,lease_expires_at=NULL WHERE id=?",
-            { setString(1, if (job.attempt >= policy.maxAttempts) "quarantined" else "retry"); setString(2, reason.name); setInt(3, policy.retrySeconds); setObject(4, job.id) }))
+            { setString(1, if (held || job.attempt >= policy.maxAttempts) "quarantined" else "retry"); setString(2, if (held) "SUPABASE_READY_PROMOTION" else reason.name); setInt(3, policy.retrySeconds); setObject(4, job.id) }))
     } }
 
     internal fun lockAsset(c: Connection, source: MediaProcessingSource, purpose: MediaWorkerPurpose): Asset {
@@ -293,7 +429,11 @@ class MediaProcessingStore(val environment: String, private val transactions: Pg
         authority.lockDraft(c, source.owner, source.draftId, source.draftGeneration, purpose); processingCurrent()
         pq(c, "SELECT generation FROM platform.media_draft_lifecycles WHERE environment=? AND owner_user_id=? AND client_draft_id=? FOR UPDATE",
             { owner(source.owner); setObject(3, source.draftId) }) {
-            if (!it.next() || it.getLong(1) != source.draftGeneration) processingFail(MediaProcessingFailureCode.CONFLICT)
+            if (!it.next()) processingFail(MediaProcessingFailureCode.CONFLICT)
+            val generation = it.getLong(1)
+            if (generation <= 0 || generation < source.draftGeneration ||
+                (purpose == MediaWorkerPurpose.PROCESS && generation != source.draftGeneration))
+                processingFail(MediaProcessingFailureCode.CONFLICT)
         }
         return pq(c, "SELECT * FROM platform.media_assets WHERE environment=? AND owner_user_id=? AND id=? FOR UPDATE",
             { owner(source.owner); setObject(3, source.mediaId) }) {

@@ -27,6 +27,9 @@ internal class AccountCoreRuntimeResources(
     init { require(drainMillis in 1..60_000) }
 
     var assembly: AutoCloseable? = null
+    // Optional separately configured owner. Never create/start privileged work here.
+    // Retire it before the borrowed DB dispatcher is drained or provider keys are closed.
+    var backgroundWorker: AutoCloseable? = null
     var stopListener: (() -> Unit)? = null
     var diagnostics: AutoCloseable? = null
     private var closed = false
@@ -55,6 +58,7 @@ internal class AccountCoreRuntimeResources(
         fun cleanup(action: () -> Unit) { try { action() } catch (failure: Throwable) { retain(failure) } }
         try {
             cleanup { stopListener?.invoke() }
+            cleanup { backgroundWorker?.close() }
             try {
                 executor.shutdown()
                 val deadline = System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(drainMillis)

@@ -5,7 +5,24 @@ import com.feedme.server.catalog.*
 import com.feedme.server.config.AccountCoreRuntimeConfig
 import com.feedme.server.db.PgTransactions
 import com.feedme.server.identity.SupabasePostgresAuthority
+import com.feedme.server.identity.AccountDeletionStore
+import com.feedme.server.identity.AccountDeletionServingCompatibility
 import com.feedme.server.memory.requireAccountSavedMaterial
+import com.feedme.server.memory.MemoryServingCompatibility
+import com.feedme.server.memory.CollectionServingCompatibility
+import com.feedme.server.reuse.ReuseServingCompatibility
+import com.feedme.server.social.AccountBlockCompatibility
+import com.feedme.server.social.CircleServingCompatibility
+import com.feedme.server.social.posts.PostReadServingCompatibility
+import com.feedme.server.social.posts.PostAuthoringServingCompatibility
+import com.feedme.server.social.posts.PostDeletionServingCompatibility
+import com.feedme.server.social.reciperequests.RecipeRequestServingCompatibility
+import com.feedme.server.identity.SessionServingCompatibility
+import com.feedme.server.identity.NotificationServingCompatibility
+import com.feedme.server.identity.NotificationInboxServingCompatibility
+import com.feedme.server.social.conversations.ConversationServingCompatibility
+import com.feedme.server.social.reports.ReportServingCompatibility
+import com.feedme.server.media.MediaServingCompatibility
 import java.sql.Connection
 import java.time.OffsetDateTime
 import java.util.UUID
@@ -28,10 +45,11 @@ class AccountCoreDependencyHealth internal constructor(
     private val transactions: PgTransactions,
     private val authority: SupabasePostgresAuthority,
     private val ingredients: IngredientCatalogStore,
-    private val recipes: RecipeCatalogStore,
+    private val recipes: RecipeCatalogJournal,
     private val rights: RecipeCopyRightsStore,
     private val verifier: SupabaseUserAccessVerifier,
     private val databaseDispatcher: CoroutineDispatcher,
+    private val deletionStore: AccountDeletionStore? = null,
 ) {
     private val admission = Semaphore(1)
     internal suspend fun available(): Boolean {
@@ -57,26 +75,59 @@ class AccountCoreDependencyHealth internal constructor(
     }
 
     private fun checkContent(c: Connection): Boolean {
+        deletionStore?.let { AccountDeletionServingCompatibility.check(c, it) }
+        if (config.safetyPolicy != null) AccountBlockCompatibility.check(c)
+        if (config.postReadPolicy != null) PostReadServingCompatibility.check(c)
+        config.postRecipePolicy?.let { policy ->
+            com.feedme.server.social.posts.PostRecipeServingCompatibility.check(c, policy.makeMineEnabled)
+            if (policy.saveEnabled) com.feedme.server.memory.PostRecipeSaveServingCompatibility.check(c)
+        }
+        config.circlePolicy?.let { CircleServingCompatibility.check(c, it.circleCreationEnabled, it.invitationCreationEnabled) }
+        if (config.reportPolicy != null) ReportServingCompatibility.check(c)
+        if (config.media != null) MediaServingCompatibility.check(c)
+        if (config.memoryPolicy != null) MemoryServingCompatibility.check(c)
+        if (config.makeAgainEnabled) com.feedme.server.memory.AccountMakeAgainServingCompatibility.check(c)
+        if (config.collectionMutationsEnabled) CollectionServingCompatibility.check(c)
+        if (config.reusePolicy != null) ReuseServingCompatibility.check(c)
+        if (config.postAuthoring != null) PostAuthoringServingCompatibility.check(c)
+        if (config.conversationPolicy != null) ConversationServingCompatibility.check(c)
+        if (config.postDeletionPolicy != null) PostDeletionServingCompatibility.check(c)
+        if (config.postPlacementPolicy != null) com.feedme.server.social.posts.PostPlacementServingCompatibility.check(c)
+        if (config.postReactionPolicy != null) com.feedme.server.social.posts.PostReactionServingCompatibility.check(c)
+        if (config.recipeRequestPolicy != null) RecipeRequestServingCompatibility.check(c)
+        if (config.sessionPolicy != null) SessionServingCompatibility.check(c)
+        if (config.notificationPolicy != null) NotificationServingCompatibility.check(c)
+        if (config.notificationInboxPolicy != null) NotificationInboxServingCompatibility.check(c)
+        if (config.reactionNotificationPolicy != null) com.feedme.server.identity.AccountReactionNotificationCompatibility.check(c)
+        if (config.exportPolicy != null) com.feedme.server.export.AccountExportServingCompatibility.check(c)
+        if (config.staffPolicy != null) com.feedme.server.staff.SupabaseStaffServingCompatibility.check(c)
+        if (config.staffPolicy?.catalogDraftsEnabled == true) com.feedme.server.staff.SupabaseStaffRecipeServingCompatibility.check(c)
+        if (config.staffPolicy?.catalogPublicationEnabled == true) com.feedme.server.staff.SupabaseStaffRecipeQualificationServingCompatibility.check(c)
         authority.checkCompatibility(c)
         config.planningOperational.checkCompatibility(c)
         ingredients.checkCompatibility(c)
         val selectable = ingredients.current(c).original.items.filter { it.reviewed && it.published && it.freeAccess }.map { it.id }.toSet()
         if (selectable.isEmpty()) return false
-        val catalog = recipes.lockCurrent(c)
-        // This format-one planning adapter has a finite, checked 128-entry catalog. At
-        // least one current published free recipe must have searchable ingredient IDs and
-        // a real current Saved-copy grant. A license string never supplies that grant.
-        val candidates = catalog.original.entries.filter { entry ->
-            entry.status == "published" && entry.recall == null && entry.review["freeCatalogEligible"] == JsonPrimitive(true) &&
-                entry.recipe.getValue("ingredients").jsonArray.all {
+        val catalog = recipes.openView(c)
+        // Use the same complete, bounded projection as ordinary account planning, including
+        // unchanged history beneath a format-two delta. An unsupported >128-version history
+        // must not look healthy when that planner cannot run. A license string supplies no
+        // copy permission: a current real grant and the final clock fence remain mandatory.
+        val candidates = catalog.planningCatalogDocument().getValue("candidates").jsonArray.map { it.jsonObject }
+            .filter { candidate ->
+                val recipe = candidate.getValue("recipe").jsonObject
+                recipe["reviewStatus"] == JsonPrimitive("published") &&
+                    candidate.getValue("review").jsonObject["freeCatalogEligible"] == JsonPrimitive(true) &&
+                    recipe.getValue("ingredients").jsonArray.all {
                     UUID.fromString(it.jsonObject.getValue("ingredientId").jsonPrimitive.content) in selectable
                 }
-        }.sortedBy { it.recipeVersionId.toString() }
-        for (entry in candidates) {
+            }.map { it.getValue("recipe").jsonObject }
+        for (recipe in candidates) {
             try {
-                val grant = rights.openNew(c, entry.recipeVersionId, guest = false)
-                requireAccountSavedMaterial(grant.source.entry, entry.recipe, scaling = false)
+                val grant = rights.openNew(c, UUID.fromString(recipe.getValue("id").jsonPrimitive.content), guest = false)
+                requireAccountSavedMaterial(grant.source.entry, recipe, scaling = false)
                 grant.revalidate(c)
+                catalog.checkCurrent()
                 val now = c.createStatement().use { statement -> statement.executeQuery("SELECT clock_timestamp()").use {
                     check(it.next()); it.getObject(1, OffsetDateTime::class.java).toInstant()
                 } }

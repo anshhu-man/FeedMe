@@ -1,4 +1,30 @@
-# Backend deployment source — 19 September 2026 IST
+# Backend deployment source
+
+## Current V088 source handoff — 23 September 2026 IST
+
+The credential-free [`server-deploy/`](../server-deploy/) handoff is refreshed
+from the current production source closure: **556 build inputs / 8,571,006
+bytes**, all **V001–V088** application migrations, the locked 207-operation
+server contract, public build metadata, reviewed Dockerfile and pinned public
+Supabase CA. Its context-manifest SHA-256 is
+`4fba4c93fe2dbb0002aff6acec4aafeefb8417e9de785e5bbbb14f14f8f20594`.
+
+The exact copied tree passed byte-for-byte comparison with the independently
+verified temporary export. An offline JDK 17 build then passed
+`:verifyReleaseScope :server:installDist`: 44 included and 10 deferred features,
+all 98 canonical screens retained, dependency inventory accepted, 208 schemas /
+160 paths / 207 operations contract-locked, and all 17 requested Gradle tasks
+executed. The publication scanner passed all 557 files after fixing a false
+positive that had treated lowercase HTTP `/users/` routes as macOS `/Users/`
+home paths; its focused suites pass 25/25.
+
+No credential, cursor key, AI token, private Android configuration, signing
+material, build output or local evidence is included. This is a buildable source
+handoff, not a container image or live deployment. Hosted Supabase is separately
+current through V088, but the existing Render preview still runs the historical
+closed V032 dependency-hold revision. Current reviewed runtime configuration,
+provider/session-policy approval, recipe content and connected end-to-end
+acceptance remain required before replacing that service or calling the API live.
 
 ## Current Render connection attempt — 19 September 2026 UTC
 

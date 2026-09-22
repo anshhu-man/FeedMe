@@ -9,7 +9,10 @@ import kotlinx.serialization.json.*
  * These exact review/rights references require current external publication authority. */
 class RecipeCatalogChangeset(val releaseId: UUID, val expectedRevision: Long,
     val publisherId: UUID, val reviewerId: UUID, val publicationReference: String,
-    val taxonomyRevision: String, ingredients: List<RecipeIngredientComposition>, entries: List<RecipeCatalogEntry>) {
+    val taxonomyRevision: String, ingredients: List<RecipeIngredientComposition>, entries: List<RecipeCatalogEntry>,
+    /** For withdrawal only: publisher/reviewer retain the material's original
+     * provenance, while this explicit actor performed the current recall. */
+    val recallActorId: UUID? = null) {
     private val retainedIngredients = ingredients.toList()
     private val retainedEntries = entries.toList()
     val ingredients: List<RecipeIngredientComposition> get() = retainedIngredients.toList()
@@ -22,6 +25,7 @@ class RecipeCatalogChangeset(val releaseId: UUID, val expectedRevision: Long,
         require(expectedRevision in 0 until Long.MAX_VALUE && publisherId != reviewerId)
         recipeReference(publicationReference, 256); recipeReference(taxonomyRevision, 128)
         require(retainedIngredients.size <= 1024 && retainedEntries.size in 1..128)
+        require(recallActorId == null || retainedEntries.all { it.status == "recalled" && it.recall != null })
         val ids = retainedIngredients.map { it.ingredientId }.toSet()
         require(ids.size == retainedIngredients.size)
         require(retainedEntries.map { it.recipeVersionId }.distinct().size == retainedEntries.size)
@@ -40,6 +44,8 @@ class RecipeCatalogChangeset(val releaseId: UUID, val expectedRevision: Long,
             put("releaseId", releaseId.toString()); put("expectedRevision", expectedRevision)
             put("publisherId", publisherId.toString()); put("reviewerId", reviewerId.toString())
             put("publicationReference", publicationReference); put("content", content)
+            // Omitted on every prior format-2 original; never reinterpret old bytes.
+            recallActorId?.let { put("recallActorId", it.toString()) }
         }.toString()
         require(exactDocument.encodeToByteArray(throwOnInvalidSequence = true).size <= MAX_BYTES)
         requestSha256 = catalogSha(exactDocument)

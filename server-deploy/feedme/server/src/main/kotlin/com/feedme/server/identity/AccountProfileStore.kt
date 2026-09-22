@@ -1,6 +1,7 @@
 package com.feedme.server.identity
 
 import com.feedme.server.auth.VerifiedSupabaseSubject
+import com.feedme.core.FeedMeAdultPolicy
 import com.feedme.server.contract.BodyValidationResult
 import com.feedme.server.contract.ContractBodyValidator
 import com.feedme.server.db.*
@@ -22,7 +23,7 @@ import kotlinx.serialization.json.*
  * are committed in one transaction. Profile.id is the genuine random app account UUID, not a
  * provider UUID. JWT session_id only binds the distinct random FeedMe device record.
  * AccountBootstrapPolicy is mandatory; signature validity never supplies its authority. */
-class AccountProfileStore(private val environment: String, private val transactions: PgTransactions,
+class AccountProfileStore(internal val environment: String, private val transactions: PgTransactions,
     private val policy: AccountBootstrapPolicy, private val reconnection: SupabaseAccountDeviceReconnection? = null,
     private val termsNotice: AccountTermsNotice? = null) {
     private val commands = DurableCommands(transactions)
@@ -44,7 +45,7 @@ class AccountProfileStore(private val environment: String, private val transacti
             if(decision.acceptSubmittedTerms && submitted!=decision.policy.requiredTermsVersion)fail(AccountFailureCode.POLICY_BLOCKED)
             val actor=existing ?: createAccount(c,subject,decision.policy)
             val identity=CommandIdentity(PrincipalScope(environment,CommandActor.ACCOUNT,actor.facts.accountId),"bootstrapAccount",key,body=input)
-            var reconnectProof: SupabasePasswordReauthenticationEvidence? = null
+            var reconnectProof: AccountDeviceReconnectionEvidence? = null
             val result=commands.executeInTransaction(c,identity,{ provider(it,subject); requireActive(actor) },{},
                 { db,cached -> authorizeBootstrapReplay(db,subject,actor,input,cached,key,identity.requestHash) }) { db ->
                 val currentPolicy=policy.current(db,subject,actor.facts);validatePolicy(currentPolicy);requirePolicy(actor,currentPolicy)
@@ -73,13 +74,14 @@ class AccountProfileStore(private val environment: String, private val transacti
                     put("entitlements",currentPolicy.entitlements);put("serverTime",time(db).toString())
                 }
                 if(existing==null)outbox.append(db,EventDraft(UUID.randomUUID(),"identity.account.bootstrapped.v1",1,"account",current.facts.accountId,current.version,
-                    "identity",key.toString(),key,buildJsonObject{put("userId",current.facts.accountId.toString());put("deviceSessionId",device.id.toString())}))
+                    "identity",key.toString(),key,buildJsonObject{put("userId",current.facts.accountId.toString());put("deviceSessionId",device.id.toString())},
+                    owner=EventOwner.account(environment,current.facts.accountId)))
                 provider(db,subject);reply("bootstrapAccount",result)
             }
             // DurableCommands completes the receipt after mutate. Fresh-auth validity must
             // survive that final write/wait too; expiry rolls back consent, both devices,
             // events, terms changes and the receipt together. Known replay needs no new
-            // password ceremony; its current provider/device/original evidence was checked.
+            // sign-in ceremony; its current provider/device/original evidence was checked.
             provider(c,subject)
             reconnectProof?.revalidate(c)
             result
@@ -118,7 +120,8 @@ class AccountProfileStore(private val environment: String, private val transacti
                     setObject(1,key);setString(2,environment);setObject(3,actor.facts.accountId);setObject(4,old.id);setLong(5,old.version)
                 }
                 outbox.append(db,EventDraft(UUID.randomUUID(),"identity.session.revoked.v1",1,"device_session",old.id,old.version+1,
-                    "identity",key.toString(),key,buildJsonObject{put("userId",actor.facts.accountId.toString());put("sessionId",old.id.toString())}))
+                    "identity",key.toString(),key,buildJsonObject{put("userId",actor.facts.accountId.toString());put("sessionId",old.id.toString())},
+                    owner=EventOwner.account(environment,actor.facts.accountId)))
                 provider(db,subject)
                 reply("logoutSession",JsonObject(emptyMap()))
             }
@@ -312,15 +315,29 @@ class AccountProfileStore(private val environment: String, private val transacti
         currentTermsNotice(c, subject, actor); provider(c, subject)
     }
 
-    /** Baseline for a future configured social adapter, not an object/role/block grant.
+    /** Baseline for the configured social adapter, not an object/role/block grant.
      * Its caller must retain this same transaction and perform all domain-specific checks. */
-    internal fun lockSocialEligibility(c: Connection,subject: VerifiedSupabaseSubject,deviceSessionId: UUID) {
-        require(!c.autoCommit)
+    internal fun lockSocialEligibility(c: Connection,subject: VerifiedSupabaseSubject,deviceSessionId: UUID): UUID {
+        require(!c.autoCommit && c.transactionIsolation == Connection.TRANSACTION_READ_COMMITTED)
         val actor=authorized(c,subject,deviceSessionId);val p=profile(c,actor.facts.accountId)
         val rules=currentPolicy(c,subject,actor)
         if(p.step!="ready" || p.name==null || p.handle==null || actor.facts.eligibility!=AccountEligibility.ELIGIBLE ||
             actor.facts.acceptedTermsVersion!=rules.requiredTermsVersion)fail(AccountFailureCode.POLICY_BLOCKED)
         provider(c,subject)
+        return actor.facts.accountId
+    }
+
+    /** Safety controls remain available to an active registered account independently of
+     * onboarding, eligibility reconciliation, current Terms and social creation switches.
+     * This is only the actual account mapping in the caller's transaction, not a social grant.
+     * Repeat after domain/receipt waits before returning or committing. */
+    internal fun lockAccountSafety(c: Connection, subject: VerifiedSupabaseSubject, deviceSessionId: UUID): UUID {
+        require(!c.autoCommit && c.transactionIsolation == Connection.TRANSACTION_READ_COMMITTED)
+        provider(c, subject); subjectLock(c, subject)
+        val actor = account(c, subject) ?: fail(AccountFailureCode.UNAUTHENTICATED)
+        requireActive(actor); requireDevice(device(c, deviceSessionId, actor.facts.accountId), subject)
+        provider(c, subject)
+        return actor.facts.accountId
     }
 
     /** Resolve a ready account's actual private owner inside the domain caller's transaction.
@@ -342,6 +359,32 @@ class AccountProfileStore(private val environment: String, private val transacti
             fail(AccountFailureCode.POLICY_BLOCKED)
         provider(c, subject)
         return AccountPrivateMapping(environment, actor.facts.accountId, actor.facts.principalId, deviceSessionId)
+    }
+
+    /** Current adult self-attestation admission for optional inference. This is not verified
+     * DOB, a model-provider permission, or a reusable grant. Keep the caller's transaction and
+     * repeat after waits. A legacy eligibility label or Terms acceptance alone is insufficient;
+     * the immutable fresh-signup declaration must exist for this actual resolved account. */
+    internal fun lockAdultMealIntentAccount(c: Connection, subject: VerifiedSupabaseSubject,
+        deviceSessionId: UUID): AccountPrivateMapping {
+        val owner = lockPrivateAccount(c, subject, deviceSessionId)
+        val actor = account(c, subject) ?: fail(AccountFailureCode.UNAUTHENTICATED)
+        if (actor.facts.accountId != owner.accountId || actor.facts.principalId != owner.principalId ||
+            actor.facts.eligibility != AccountEligibility.ELIGIBLE ||
+            actor.facts.eligibilityPolicyVersion != FeedMeAdultPolicy.ELIGIBILITY_POLICY_VERSION ||
+            actor.facts.acceptedTermsVersion != FeedMeAdultPolicy.TERMS_VERSION) fail(AccountFailureCode.POLICY_BLOCKED)
+        // V011 makes these audit rows immutable. The existing account lock fences policy
+        // changes; this read does not request an unnecessary write/locking privilege.
+        val declared = query(c, "SELECT EXISTS(SELECT 1 FROM identity.bootstrap_consents WHERE environment=? AND user_id=? " +
+            "AND submitted_terms_version=? AND accepted_terms_version=? AND eligibility_declaration=? " +
+            "AND eligibility_state='eligible' AND eligibility_policy_version=?)", {
+            setString(1, environment); setObject(2, owner.accountId)
+            setString(3, FeedMeAdultPolicy.TERMS_VERSION); setString(4, FeedMeAdultPolicy.TERMS_VERSION)
+            setString(5, FeedMeAdultPolicy.BOOTSTRAP_DECLARATION); setString(6, FeedMeAdultPolicy.ELIGIBILITY_POLICY_VERSION)
+        }) { row -> row.next() && row.getBoolean(1) }
+        if (!declared) fail(AccountFailureCode.POLICY_BLOCKED)
+        provider(c, subject)
+        return owner
     }
 
     /** Restricted self-preferences authority, not a private/social lease or a bootstrap grant.
@@ -427,7 +470,8 @@ class AccountProfileStore(private val environment: String, private val transacti
                 val updated=profile(db,actor.facts.accountId)
                 outbox.append(db,EventDraft(UUID.randomUUID(),"profile.profile.changed.v1",1,"profile",actor.facts.accountId,updated.version,
                     "profile",key.toString(),key,buildJsonObject{put("userId",actor.facts.accountId.toString());put("profileVersion",updated.version)
-                        put("changedFieldKinds",JsonArray(fields.keys.filter{before[it]!=proposed[it]}.sorted().map(::JsonPrimitive)))}))
+                        put("changedFieldKinds",JsonArray(fields.keys.filter{before[it]!=proposed[it]}.sorted().map(::JsonPrimitive)))},
+                    owner=EventOwner.account(environment,actor.facts.accountId)))
                 provider(db,subject);currentPolicy(db,subject,actor)
                 reply("updateMe",profileJson(actor,updated),updated.version)
             }
@@ -561,7 +605,7 @@ class AccountProfileStore(private val environment: String, private val transacti
     }
     private fun registerDevice(c: Connection, subject: VerifiedSupabaseSubject, actor: AccountRow, input: JsonObject, key: UUID,
         reconnect: AccountDeviceReconnectionIntent?, requestHash: String,
-        retainProof: (SupabasePasswordReauthenticationEvidence) -> Unit): DeviceRow {
+        retainProof: (AccountDeviceReconnectionEvidence) -> Unit): DeviceRow {
         val hash=installationHash(input.getValue("installationId").jsonPrimitive.content);val platform=input.getValue("platform").jsonPrimitive.content
         val old=query(c,"SELECT * FROM identity.device_sessions WHERE environment=? AND user_id=? AND installation_id_hash=? AND revoked_at IS NULL FOR UPDATE",{
             setString(1,environment);setObject(2,actor.facts.accountId);setString(3,hash)
@@ -587,7 +631,8 @@ class AccountProfileStore(private val environment: String, private val transacti
             if(old.version==Long.MAX_VALUE)fail(AccountFailureCode.STORAGE_UNAVAILABLE)
             exec(c,"UPDATE identity.device_sessions SET revoked_at=clock_timestamp(),updated_at=clock_timestamp(),version=version+1 WHERE environment=? AND id=?") {setString(1,environment);setObject(2,old.id)}
             outbox.append(c,EventDraft(UUID.randomUUID(),"identity.session.revoked.v1",1,"device_session",old.id,old.version+1,"identity",key.toString(),key,
-                buildJsonObject{put("userId",actor.facts.accountId.toString());put("sessionId",old.id.toString())}))
+                buildJsonObject{put("userId",actor.facts.accountId.toString());put("sessionId",old.id.toString())},
+                owner=EventOwner.account(environment,actor.facts.accountId)))
         }
         exec(c,"INSERT INTO identity.device_sessions(environment,id,user_id,installation_id_hash,provider_session_id,platform,device_label,app_version,version) VALUES(?,?,?,?,?,?,?,?,1)") {
             setString(1,environment);setObject(2,id);setObject(3,actor.facts.accountId);setString(4,hash);setObject(5,subject.providerSessionId)

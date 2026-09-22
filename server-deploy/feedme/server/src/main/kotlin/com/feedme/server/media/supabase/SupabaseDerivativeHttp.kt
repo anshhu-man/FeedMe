@@ -89,28 +89,39 @@ class SupabaseDerivativeHttp private constructor(
         } finally { owned.fill(0) }
     }
 
-    override fun inspect(intent: MediaDerivativeIntent): SupabaseDerivativeReceipt? = guarded {
-        validate(intent)
-        // Historical recovery may inspect after the write-admission deadline.
-        val request = authenticated("/object/authenticated/$bucket/${intent.objectKey}")
-            .header("Accept", "image/png").get().build()
-        client.newCall(request).execute().use { response ->
-            headers(response)
-            if (response.code != 200) {
-                if (canonicalMissing(response)) { current(); return@use null }
-                unavailable()
+    override fun inspect(intent: MediaDerivativeIntent): SupabaseDerivativeReceipt? {
+        val bytes = readVerified(intent) ?: return null
+        return try { SupabaseDerivativeReceipt(bucket, intent.objectKey, intent.sha256, intent.bytes, intent.contentType) }
+        finally { bytes.fill(0) }
+    }
+
+    /** Complete bounded private bytes. This is NOT viewer authority or a delivery grant.
+     * The caller owns/zeroes the returned buffer and must authorize after the external read. */
+    internal fun readVerified(intent: MediaDerivativeIntent): ByteArray? {
+        var retained: ByteArray? = null
+        try { return guarded {
+            validate(intent)
+            // Historical recovery may inspect after the write-admission deadline.
+            val request = authenticated("/object/authenticated/$bucket/${intent.objectKey}")
+                .header("Accept", "image/png").get().build()
+            client.newCall(request).execute().use { response ->
+                headers(response)
+                if (response.code != 200) {
+                    if (canonicalMissing(response)) { current(); return@use null }
+                    unavailable()
+                }
+                if (single(response, "Content-Type") != "image/png" || single(response, "Content-Range") != null)
+                    fail(MediaProcessingFailureCode.OBJECT_MISMATCH)
+                val declared = length(response)
+                if (declared != null && declared != intent.bytes) fail(MediaProcessingFailureCode.OBJECT_MISMATCH)
+                val bytes = body(response, intent.bytes.toInt(), MediaProcessingFailureCode.OBJECT_MISMATCH)
+                try {
+                    verifyMaterial(intent, bytes)
+                    current()
+                    bytes.also { retained = it }
+                } catch (failure: Throwable) { bytes.fill(0); throw failure }
             }
-            if (single(response, "Content-Type") != "image/png" || single(response, "Content-Range") != null)
-                fail(MediaProcessingFailureCode.OBJECT_MISMATCH)
-            val declared = length(response)
-            if (declared != null && declared != intent.bytes) fail(MediaProcessingFailureCode.OBJECT_MISMATCH)
-            val bytes = body(response, intent.bytes.toInt(), MediaProcessingFailureCode.OBJECT_MISMATCH)
-            try {
-                verifyMaterial(intent, bytes)
-                current()
-                SupabaseDerivativeReceipt(bucket, intent.objectKey, intent.sha256, intent.bytes, intent.contentType)
-            } finally { bytes.fill(0) }
-        }
+        } } catch (failure: Throwable) { retained?.fill(0); throw failure }
     }
 
     private fun validate(intent: MediaDerivativeIntent) {

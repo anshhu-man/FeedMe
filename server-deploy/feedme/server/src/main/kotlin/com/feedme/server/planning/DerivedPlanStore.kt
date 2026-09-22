@@ -78,7 +78,7 @@ internal class DerivedPlanStore(private val outbox: OutboxStore) {
                     material.recipeVersionId?.let { put("recipeVersionId", it.toString()) }
                     put("status", material.status)
                     put("rankingVersion", parse(material.contextText).getValue("policy").jsonObject.getValue("version"))
-                })
+                }, owner = EventOwner.principal(command.principal.environment, command.principal.kind, command.principal.principalId))
             outbox.append(actual, event)
             val child = planImage(actual, command.principal, material.planId)
             val request = requestImage(actual, command.principal, requestId)
@@ -174,7 +174,7 @@ internal class DerivedPlanStore(private val outbox: OutboxStore) {
     private fun parentRows(c: Connection, command: DerivedPlanCommand, fresh: Boolean): ParentRows {
         val plan = planImage(c, command.principal, command.parentId)
         val request = requestImage(c, command.principal, uuid(plan, "request_id"))
-        if (integer(plan, "storage_format") !in 1L..3L || plan["storage_format"] != request["storage_format"]) unavailable()
+        if (integer(plan, "storage_format") !in 1L..6L || plan["storage_format"] != request["storage_format"]) unavailable()
         val parent = parentMaterial(ParentRows(plan, request, instant(request, "expires_at")))
         if (parent.id != command.parentId || parent.version.toString() != integer(plan, "version").toString()) unavailable()
         if (parent.version != command.originalIfMatch.removeSurrounding("\"").toBigInteger())
@@ -187,6 +187,10 @@ internal class DerivedPlanStore(private val outbox: OutboxStore) {
             val original = DerivedPlanCommand(command.principal, text(request, "derived_operation"), uuid(request, "derived_command_key"),
                 uuid(request, "derived_parent_plan_id"), text(request, "derived_if_match"), wire(parse(text(request, "request_text"))))
             record(plan, request, original)
+        } else if (integer(plan, "storage_format") in 4L..6L) {
+            // A genuine no-parent root can itself become an explicitly chosen parent.
+            // Validate its own complete immutable row/context binding, never invent one.
+            RootRecipePlanRows.decode(command.principal, plan, request)
         }
         val expires = instant(request, "expires_at")
         if (fresh) live(expires, now(c))
@@ -199,6 +203,10 @@ internal class DerivedPlanStore(private val outbox: OutboxStore) {
             val contextText = text(rows.request, "evidence_text")
             if (digest(contextText.toByteArray(Charsets.UTF_8)) != text(rows.request, "evidence_hash")) unavailable()
             text(parse(contextText), "effectiveRequestText")
+        } else if (integer(rows.plan, "storage_format") in 5L..6L) {
+            val original = RootRecipePlanRecord.decode(text(rows.plan, "snapshot_text"), text(rows.plan, "snapshot_hash"),
+                text(rows.request, "evidence_text"), text(rows.request, "evidence_hash"), text(rows.plan, "proof_text"), text(rows.plan, "proof_hash"))
+            rootParentPlanningRequest(requestText, original)
         } else requestText
         return DerivedPlanParent.fromStored(text(rows.plan, "snapshot_text"), text(rows.plan, "snapshot_hash"),
             text(rows.plan, "proof_text"), text(rows.plan, "proof_hash"), requestText, text(rows.request, "request_hash"), effective)

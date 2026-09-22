@@ -8,6 +8,33 @@ import java.util.UUID
 import java.util.concurrent.ThreadLocalRandom
 import kotlinx.serialization.json.*
 
+/** Internal storage attribution, not an authentication credential or a list of every data subject.
+ * Account IDs and private principal IDs are deliberately different namespaces. Legacy events
+ * without attribution remain unknown; neither payload UUIDs nor aggregate IDs may fill the gap.
+ */
+enum class EventOwnerKind(val storageValue: String) {
+    ACCOUNT("account"), PRIVATE_PRINCIPAL("private_principal"), GUEST_PRINCIPAL("guest_principal");
+
+    companion object {
+        internal fun parse(value: String) = entries.singleOrNull { it.storageValue == value }
+            ?: throw IllegalArgumentException("Unknown event owner kind")
+    }
+}
+
+data class EventOwner(val environment: String, val kind: EventOwnerKind, val id: UUID) {
+    init { require(environment.matches(Regex("[a-z][a-z0-9-]{0,39}"))) }
+    override fun toString() = "EventOwner([redacted])"
+
+    companion object {
+        fun account(environment: String, id: UUID) = EventOwner(environment, EventOwnerKind.ACCOUNT, id)
+        fun principal(environment: String, kind: CommandActor, id: UUID) = EventOwner(environment, when (kind) {
+            CommandActor.ACCOUNT -> EventOwnerKind.PRIVATE_PRINCIPAL
+            CommandActor.GUEST -> EventOwnerKind.GUEST_PRINCIPAL
+            CommandActor.STAFF -> throw IllegalArgumentException("A staff actor is not a private cooking principal")
+        }, id)
+    }
+}
+
 /** Module owners validate the type-specific data and exclude private content before appending. */
 class EventDraft(
     val eventId: UUID,
@@ -20,6 +47,7 @@ class EventDraft(
     val correlationId: String,
     val causationId: UUID,
     data: JsonObject,
+    val owner: EventOwner? = null,
 ) {
     val data: JsonObject = Json.parseToJsonElement(data.toString()).jsonObject
     init {
@@ -31,6 +59,45 @@ class EventDraft(
         require(data.toString().toByteArray(Charsets.UTF_8).size <= 65536)
     }
     override fun toString() = "EventDraft(type=$eventType, schemaVersion=$schemaVersion, data=[redacted])"
+
+    /** Enforced on new writes, not historical reads. Unknown event families remain explicitly
+     * unattributed until their producer has an independently reviewed ownership contract. */
+    internal fun requireAppendOwnership() {
+        val field = when (eventType) {
+            "social.post_draft.changed.v1" -> {
+                require(owner?.kind == EventOwnerKind.ACCOUNT) { "Draft event ownership is required" }
+                val claimedEnvironment = data["environment"] as? JsonPrimitive
+                require(claimedEnvironment?.isString == true && claimedEnvironment.content == owner!!.environment) {
+                    "Draft event environment and owner differ"
+                }
+                "ownerId"
+            }
+            in ACCOUNT_EVENTS -> {
+                require(owner?.kind == EventOwnerKind.ACCOUNT) { "Account event ownership is required" }
+                "userId"
+            }
+            in PRINCIPAL_EVENTS -> {
+                require(owner?.kind in setOf(EventOwnerKind.PRIVATE_PRINCIPAL, EventOwnerKind.GUEST_PRINCIPAL)) {
+                    "Private event ownership is required"
+                }
+                "principalId"
+            }
+            else -> return
+        }
+        val claimedId = data[field] as? JsonPrimitive
+        require(claimedId?.isString == true && claimedId.content == owner!!.id.toString()) {
+            "Event owner and domain fact differ"
+        }
+    }
+
+    companion object {
+        private val ACCOUNT_EVENTS = setOf("identity.account.bootstrapped.v1", "identity.session.revoked.v1",
+            "profile.profile.changed.v1", "identity.account.deletion_requested.v1")
+        private val PRINCIPAL_EVENTS = setOf("profile.preferences.changed.v1", "pantry.item.changed.v1",
+            "planning.plan.created.v1", "cooking.session.started.v1", "cooking.session.progressed.v1",
+            "cooking.session.completed.v1", "memory.recipe.saved.v1", "memory.recipe.deleted.v1",
+            "memory.collection.changed.v1", "memory.feedback.changed.v1", "memory.preference.changed.v1")
+    }
 }
 
 class CommittedEvent(val draft: EventDraft, val occurredAt: Instant) {
@@ -55,16 +122,19 @@ enum class DeliveryFailure { DELIVERY_FAILED, UNSUPPORTED_EVENT, PERMANENT_FAILU
 class OutboxStore(private val transactions: PgTransactions) {
     fun append(connection: Connection, event: EventDraft) {
         require(!connection.autoCommit) { "Append an event inside the domain transaction" }
+        event.requireAppendOwnership()
         connection.prepareStatement("""
             INSERT INTO platform.outbox(event_id,event_type,schema_version,aggregate_type,aggregate_id,
-                aggregate_version,producer,correlation_id,causation_id,payload)
-            VALUES (?,?,?,?,?,?,?,?,?,?::jsonb)
+                aggregate_version,producer,correlation_id,causation_id,payload,owner_environment,owner_kind,owner_id)
+            VALUES (?,?,?,?,?,?,?,?,?,?::jsonb,?,?,?)
         """.trimIndent()).use { statement ->
             statement.setObject(1, event.eventId); statement.setString(2, event.eventType)
             statement.setInt(3, event.schemaVersion); statement.setString(4, event.aggregateType)
             statement.setObject(5, event.aggregateId); statement.setLong(6, event.aggregateVersion)
             statement.setString(7, event.producer); statement.setString(8, event.correlationId)
             statement.setObject(9, event.causationId); statement.setString(10, event.data.toString())
+            statement.setString(11, event.owner?.environment); statement.setString(12, event.owner?.kind?.storageValue)
+            statement.setObject(13, event.owner?.id)
             statement.executeUpdate()
         }
     }
@@ -153,7 +223,17 @@ class OutboxStore(private val transactions: PgTransactions) {
         row.getString("aggregate_type"), row.getObject("aggregate_id", UUID::class.java), row.getLong("aggregate_version"),
         row.getString("producer"), row.getString("correlation_id"), row.getObject("causation_id", UUID::class.java),
         Json.parseToJsonElement(row.getString("payload")).jsonObject,
+        owner = readOwner(row),
     ), row.getObject("occurred_at", OffsetDateTime::class.java).toInstant())
+
+    private fun readOwner(row: ResultSet): EventOwner? {
+        val environment = row.getString("owner_environment")
+        val kind = row.getString("owner_kind")
+        val id = row.getObject("owner_id", UUID::class.java)
+        if (environment == null && kind == null && id == null) return null
+        require(environment != null && kind != null && id != null) { "Incomplete event ownership" }
+        return EventOwner(environment, EventOwnerKind.parse(kind), id)
+    }
 }
 
 /**

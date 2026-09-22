@@ -1,12 +1,15 @@
 package com.feedme.server.identity
 
 import com.feedme.server.auth.VerifiedSupabaseSubject
+import com.feedme.core.FeedMeAdultPolicy
 import java.sql.Connection
 import kotlinx.serialization.json.*
 
 /** Explicit server-owned rules for the first account/profile vertical, not a rollout or
- * eligibility grant. First-use eligibility is deliberately PENDING; adultPilot input and
- * editable provider metadata cannot change it. Existing eligibility is read from locked
+ * automatic eligibility grant. First-use eligibility stays PENDING unless the explicit
+ * adult self-attestation policy is enabled and the exact new declaration/Terms are supplied.
+ * That policy records a declaration, not verified age. Editable provider metadata never
+ * supplies it. Existing eligibility is read from locked
  * identity.users facts by AccountProfileStore, never silently promoted/reconciled here.
  * No flags or entitlements are enabled by this bounded policy. A broader policy requires
  * its own authoritative readers/writers, tests and explicit configured assembly.
@@ -15,11 +18,15 @@ class AccountPendingProfileRules(
     val eligibilityPolicyVersion: String,
     val requiredTermsVersion: String,
     val acceptExactSubmittedTerms: Boolean,
+    val adultSelfAttestationEnabled: Boolean = false,
 ) {
     init {
         require(listOf(eligibilityPolicyVersion, requiredTermsVersion).all {
             it.length in 1..256 && it.none(Char::isISOControl)
         }) { "Invalid account policy configuration" }
+        require(!adultSelfAttestationEnabled ||
+            (eligibilityPolicyVersion == FeedMeAdultPolicy.ELIGIBILITY_POLICY_VERSION &&
+                requiredTermsVersion == FeedMeAdultPolicy.TERMS_VERSION)) { "Invalid adult self-attestation policy" }
     }
     override fun toString() = "AccountPendingProfileRules(<redacted>)"
 }
@@ -38,9 +45,12 @@ class SupabaseAccountBootstrapPolicy(
     override fun bootstrap(connection: Connection, subject: VerifiedSupabaseSubject, input: JsonObject,
         existing: AccountPolicyFacts?): AccountBootstrapDecision {
         currentProvider(connection, subject)
-        val snapshot = snapshot(existing)
         val submitted = (input["termsVersion"] as? JsonPrimitive)?.takeIf { it.isString }?.content
-        return AccountBootstrapDecision(snapshot, rules.acceptExactSubmittedTerms && submitted == rules.requiredTermsVersion)
+        val acceptsTerms = rules.acceptExactSubmittedTerms && submitted == rules.requiredTermsVersion
+        val declared = input["eligibilityDeclaration"] == JsonPrimitive(FeedMeAdultPolicy.BOOTSTRAP_DECLARATION)
+        val state = if (existing == null && rules.adultSelfAttestationEnabled && acceptsTerms && declared)
+            AccountEligibility.ELIGIBLE else null
+        return AccountBootstrapDecision(snapshot(existing, state), acceptsTerms)
     }
 
     override fun current(connection: Connection, subject: VerifiedSupabaseSubject, account: AccountPolicyFacts): AccountPolicySnapshot {
@@ -70,9 +80,9 @@ class SupabaseAccountBootstrapPolicy(
     }
 
     private fun currentProvider(connection: Connection, subject: VerifiedSupabaseSubject) = authority.lockCurrent(connection, subject)
-    private fun snapshot(account: AccountPolicyFacts?): AccountPolicySnapshot {
+    private fun snapshot(account: AccountPolicyFacts?, newEligibility: AccountEligibility? = null): AccountPolicySnapshot {
         if (account != null && account.eligibilityPolicyVersion != rules.eligibilityPolicyVersion) blocked()
-        return AccountPolicySnapshot(account?.eligibility ?: AccountEligibility.PENDING,
+        return AccountPolicySnapshot(account?.eligibility ?: newEligibility ?: AccountEligibility.PENDING,
             rules.eligibilityPolicyVersion, rules.requiredTermsVersion, JsonArray(emptyList()), JsonArray(emptyList()))
     }
     override fun toString() = "SupabaseAccountBootstrapPolicy(<redacted>)"

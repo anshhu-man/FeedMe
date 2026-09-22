@@ -5,7 +5,6 @@ import com.feedme.server.contract.ContractBodyValidator
 import com.feedme.server.db.*
 import com.feedme.server.media.processing.MediaProcessingDeletion
 import java.nio.charset.CharacterCodingException
-import java.security.MessageDigest
 import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.ResultSet
@@ -40,6 +39,7 @@ class MediaStore(val environment: String, private val transactions: PgTransactio
         val input = request("prepareMediaUpload", body)
         val protocol = input["protocol"]?.jsonPrimitive?.content ?: LEGACY_MEDIA_PROTOCOL
         if (protocol !in setOf(LEGACY_MEDIA_PROTOCOL, SUPABASE_MEDIA_PROTOCOL)) fail(MediaFailureCode.INPUT_INVALID)
+        if (protocol !in policy.allowedProtocols) fail(MediaFailureCode.NOT_CONFIGURED)
         val bucket = if (protocol == SUPABASE_MEDIA_PROTOCOL) configuredSupabase().bucket else null
         if (input.text("kind") != "photo") fail(MediaFailureCode.NOT_CONFIGURED)
         val type = input.text("contentType")
@@ -93,6 +93,7 @@ class MediaStore(val environment: String, private val transactions: PgTransactio
         val input = request("completeMediaUpload", body)
         val protocol = input["protocol"]?.jsonPrimitive?.content ?: LEGACY_MEDIA_PROTOCOL
         if (protocol !in setOf(LEGACY_MEDIA_PROTOCOL, SUPABASE_MEDIA_PROTOCOL)) fail(MediaFailureCode.INPUT_INVALID)
+        if (protocol !in policy.allowedProtocols) fail(MediaFailureCode.NOT_CONFIGURED)
         val versionId = if (protocol == LEGACY_MEDIA_PROTOCOL) input.text("objectVersionId").also { text(it, policy.maxObjectVersionBytes) }
             else null
         if (protocol == SUPABASE_MEDIA_PROTOCOL && input.containsKey("objectVersionId")) fail(MediaFailureCode.INPUT_INVALID)
@@ -203,6 +204,70 @@ class MediaStore(val environment: String, private val transactions: PgTransactio
 
     internal data class PublicationMedia(val id: UUID, val version: Long, val derivatives: JsonObject)
 
+    /** Exact owned post-removal composition only. The caller has tombstoned the post in
+     * THIS transaction and retains principal/command/head/lifecycle/post locks. This is
+     * not the draft-delete path: immutable publication links remain, and only their exact
+     * assets can pass the attached-object fence. No capability, remote erase, processing
+     * readiness or new publication grant is inferred. Existing cleanup is verified on
+     * replay; original upload deadlines and all derivative write intents stay retained. */
+    internal fun discardDeletedPostMedia(c: Connection, actor: VerifiedMediaAccount, postId: UUID,
+        clientDraftId: UUID, generation: Long, key: UUID, replay: Boolean) {
+        check(!c.autoCommit); checkActor(actor); authority.lockPrincipal(c, actor); current()
+        val selected = query(c, "SELECT m.media_id,m.media_version,m.derivative_set FROM social.post_media m " +
+            "JOIN social.posts p ON p.environment=m.environment AND p.owner_user_id=m.owner_user_id AND p.id=m.post_id " +
+            "WHERE m.environment=? AND m.owner_user_id=? AND m.post_id=? AND p.status='deleted' AND p.content IS NULL ORDER BY m.media_id FOR SHARE OF m,p NOWAIT", {
+            owner(actor); setObject(3, postId)
+        }) { r -> buildMap {
+            while (r.next()) {
+                // More than can fit in the existing 64 KiB publication request.
+                if (size >= 2048) fail(MediaFailureCode.STORAGE_UNAVAILABLE)
+                put(r.getObject(1, UUID::class.java), PublicationMedia(r.getObject(1, UUID::class.java), r.getLong(2), Json.parseToJsonElement(r.getString(3)).jsonObject))
+            }
+        } }
+        val terminal = query(c, "SELECT 1 FROM social.posts p JOIN social.post_publications x ON x.environment=p.environment AND x.owner_user_id=p.owner_user_id AND x.post_id=p.id " +
+            "WHERE p.environment=? AND p.owner_user_id=? AND p.id=? AND p.status='deleted' AND p.content IS NULL AND x.client_draft_id=? AND x.draft_generation=? FOR SHARE OF p,x NOWAIT", {
+            owner(actor); setObject(3, postId); setObject(4, clientDraftId); setLong(5, generation)
+        }) { it.next() }
+        if (!terminal) fail(MediaFailureCode.MEDIA_CONFLICT)
+        if (generation <= 0 || authority.lockDraftLifecycle(c, actor, clientDraftId, false) != generation || lifecycle(c, actor, clientDraftId) != generation)
+            fail(MediaFailureCode.DRAFT_UNAVAILABLE)
+        for (original in selected.values) {
+            val row = row(c, actor, original.id)
+            if (row.draftId != clientDraftId || row.draftGeneration != generation || row.version < original.version) fail(MediaFailureCode.MEDIA_CONFLICT)
+            requireDeletedPostAttachment(c, actor, row.id, postId)
+            if (row.state == "deleted") {
+                requireCleanup(c, actor, row)
+                val originalCaptured = query(c, "SELECT derivative_set FROM platform.media_cleanup_jobs WHERE environment=? AND owner_user_id=? AND media_id=?", {
+                    owner(actor); setObject(3, row.id)
+                }) { it.next() && it.getString(1)?.let { value -> Json.parseToJsonElement(value) } == original.derivatives }
+                if (!originalCaptured) fail(MediaFailureCode.MEDIA_CONFLICT)
+            }
+            else {
+                if (replay) fail(MediaFailureCode.MEDIA_CONFLICT)
+                // Keep the immutable publication's original variants even if an intervening
+                // terminal processing transition cleared its live derivative pointer.
+                if (row.derivatives != null && row.derivatives != original.derivatives) fail(MediaFailureCode.MEDIA_CONFLICT)
+                discardLocked(c, actor, row.copy(derivatives = original.derivatives), key, postId)
+                requireCleanup(c, actor, row(c, actor, row.id))
+            }
+            current()
+        }
+        authority.lockPrincipal(c, actor); current()
+    }
+
+    private fun requireDeletedPostAttachment(c: Connection, actor: VerifiedMediaAccount, id: UUID, postId: UUID) {
+        val exact = query(c, "SELECT 1 FROM social.post_media m JOIN social.posts p ON p.environment=m.environment AND p.owner_user_id=m.owner_user_id AND p.id=m.post_id " +
+            "WHERE m.environment=? AND m.owner_user_id=? AND m.media_id=? AND m.post_id=? AND p.status='deleted' AND p.content IS NULL FOR SHARE OF m,p NOWAIT", {
+            owner(actor); setObject(3, id); setObject(4, postId)
+        }) { it.next() }
+        if (!exact) fail(MediaFailureCode.MEDIA_ATTACHED)
+        // A later avatar choice is an independent live use, never silently removed here.
+        val avatar = query(c, "SELECT avatar_media_id FROM profile.profiles WHERE environment=? AND user_id=? FOR SHARE NOWAIT", { owner(actor) }) {
+            it.next() && it.getObject(1, UUID::class.java) == id
+        }
+        if (avatar) fail(MediaFailureCode.MEDIA_ATTACHED)
+    }
+
     /** Same transaction as publication. Selected READY objects remain attached; unused exact-root
      * uploads are tombstoned with their original late-acceptance/derivative cleanup evidence. */
     internal fun preparePublication(c: Connection, actor: VerifiedMediaAccount, client: UUID, generation: Long,
@@ -246,6 +311,12 @@ class MediaStore(val environment: String, private val transactions: PgTransactio
 
     private fun requirePublicationReady(c: Connection, actor: VerifiedMediaAccount, r: Row) {
         if (r.state != "ready" || r.derivatives == null) fail(MediaFailureCode.MEDIA_CONFLICT)
+        if (r.storageProtocol == SUPABASE_MEDIA_PROTOCOL) {
+            // Structural digest readiness only. The caller's mandatory publication authority
+            // still checks current safety/policy and its deadline in this same transaction.
+            com.feedme.server.media.processing.PostMediaReadVerifier(environment).verify(c, actor.accountId, r.id, r.version, r.derivatives)
+            return
+        }
         validateDerivatives(r)
         val manifest = r.derivatives.getValue("variants").jsonArray
         if (r.derivatives.getValue("version") != JsonPrimitive(1) || manifest.size != 2 ||
@@ -302,8 +373,10 @@ class MediaStore(val environment: String, private val transactions: PgTransactio
         current()
     }
 
-    private fun discardLocked(c: Connection, actor: VerifiedMediaAccount, row: Row, key: UUID) {
-        requireUnattached(c, actor, row.id); val at = now(c)
+    private fun discardLocked(c: Connection, actor: VerifiedMediaAccount, row: Row, key: UUID, deletedPostId: UUID? = null) {
+        if (deletedPostId == null) requireUnattached(c, actor, row.id)
+        else requireDeletedPostAttachment(c, actor, row.id, deletedPostId)
+        val at = now(c)
         validateDerivatives(row)
         val manifestHash = cleanupHash(row, row.derivatives)
         exec(c, "UPDATE platform.media_assets SET state='deleted',version=?,deletion_key=?,cleanup_manifest_hash=?,derivative_set=NULL,rejection_code=NULL,updated_at=? WHERE environment=? AND owner_user_id=? AND id=? AND version=?") {
@@ -447,6 +520,10 @@ class MediaStore(val environment: String, private val transactions: PgTransactio
     /** Internal future processor shape, not a public API or evidence that processing is implemented. */
     private fun validateDerivatives(row:Row) {
         val d=row.derivatives?:return
+        if (row.storageProtocol == SUPABASE_MEDIA_PROTOCOL) {
+            com.feedme.server.media.processing.SupabaseMediaReadiness.validateManifest(d, environment, row.id, row.bucket)
+            return
+        }
         if(d.keys!=setOf("version","variants")||d["version"]?.jsonPrimitive?.longOrNull?.let{it>0}!=true)fail(MediaFailureCode.STORAGE_UNAVAILABLE)
         val variants=d["variants"]?.jsonArray?:fail(MediaFailureCode.STORAGE_UNAVAILABLE)
         if(variants.size !in 1..2)fail(MediaFailureCode.STORAGE_UNAVAILABLE)
@@ -457,14 +534,9 @@ class MediaStore(val environment: String, private val transactions: PgTransactio
             if(!v.text("key").matches(Regex("derivatives/${Regex.escape(environment)}/${row.id}/[a-zA-Z0-9_-]{1,80}")))fail(MediaFailureCode.STORAGE_UNAVAILABLE)
         }
     }
-    private fun cleanupHash(row:Row,derivatives:JsonObject?):String {
-        val value=buildJsonObject{put("mediaId",row.id.toString());put("quarantineKey",row.objectKey);put("knownVersionId",row.objectVersion?.let(::JsonPrimitive)?:JsonNull)
-            if(row.storageProtocol==SUPABASE_MEDIA_PROTOCOL){put("protocol",row.storageProtocol);put("bucket",checkNotNull(row.bucket));put("sha256",row.checksum)}
-            put("derivatives",derivatives?:JsonNull);put("finalSweepAfter",row.deadline.toString())}
-        fun canonical(v:JsonElement):String=when(v){is JsonObject->v.toSortedMap().entries.joinToString(",","{","}"){(k,x)->"${JsonPrimitive(k)}:${canonical(x)}"}
-            is JsonArray->v.joinToString(",","[","]"){canonical(it)};is JsonPrimitive->v.toString()}
-        return MessageDigest.getInstance("SHA-256").digest(canonical(value).toByteArray(Charsets.UTF_8)).joinToString(""){"%02x".format(it.toInt() and 255)}
-    }
+    private fun cleanupHash(row:Row,derivatives:JsonObject?):String = MediaCleanupManifest.hash(
+        MediaCleanupManifest.canonical(row.id,row.objectKey,row.objectVersion,row.storageProtocol,
+            row.bucket,row.checksum,derivatives,row.deadline))
     private fun awaiting(c: Connection, row: Row, exactSupabaseReplay:Boolean = false): Boolean =
         mediaAwaitingUploadWindow(row.state, row.version, row.deadline, now(c), row.storageProtocol, exactSupabaseReplay)
     private fun core(row: Row, operation: String, status: Int): StoredReply = reply(operation, status, buildJsonObject {
@@ -497,10 +569,16 @@ class MediaStore(val environment: String, private val transactions: PgTransactio
         ifMatch: String? = null, replay: (Connection,StoredReply)->Unit, mutate: (Connection)->StoredReply): CommandResult = safe {
         checkActor(actor); current()
         commands.execute(CommandIdentity(PrincipalScope(environment,CommandActor.ACCOUNT,actor.accountId),operation,key,paths,body=body,ifMatch=ifMatch),
-            { authority.lockPrincipal(it,actor); current() }, {}, { c,r -> replay(c,r); current() }, { mutate(it).also { current() } })
+            { authority.lockPrincipal(it,actor); current() },
+            { authority.lockPrincipal(it,actor); current() },
+            { c,r -> replay(c,r); authority.lockPrincipal(c,actor); current() },
+            { c -> mutate(c).also { authority.lockPrincipal(c,actor); current() } })
     }
     private fun <T> read(actor: VerifiedMediaAccount, action: (Connection)->T): T = safe {
-        checkActor(actor); current(); transactions.run { authority.lockPrincipal(it,actor); current(); action(it).also { current() } }
+        checkActor(actor); current(); transactions.run { c ->
+            authority.lockPrincipal(c,actor); current()
+            action(c).also { authority.lockPrincipal(c,actor); current() }
+        }
     }
     private fun <T> external(action: ()->T): T = try { current(); action().also { current() } }
         catch (e: CancellationException) { throw e } catch (e: InterruptedException) { Thread.currentThread().interrupt(); throw e }

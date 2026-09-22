@@ -75,7 +75,9 @@ object CanonicalFormats {
         val utcMonth = if (utcDay == 0) { if (month == 1) 12 else month - 1 } else month
         val utcYear = if (utcDay == 0 && month == 1) year - 1 else year
         val utcDate = utcYear * 10_000 + utcMonth * 100 + daysInMonth(utcYear, utcMonth)
-        return positiveLeapDates.binarySearch(utcDate) >= 0
+        // Keep the common source independent of platform-specific primitive-array
+        // search overloads. The reviewed table is tiny and bounded.
+        return positiveLeapDates.any { it == utcDate }
     }
 
     // IERS Leap_Second.dat, verified through Bulletin C 72 (2026-07-06). Its

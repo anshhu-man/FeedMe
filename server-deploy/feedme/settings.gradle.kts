@@ -19,3 +19,5 @@ include(":shared:core", ":shared:contracts", ":shared:transport", ":shared:stora
 include(":shared:planning")
 include(":shared:mealflow")
 include(":apps:androidApp")
+// Approved offline-first store release; connected implementation remains intact.
+include(":shared:offline", ":apps:offline")

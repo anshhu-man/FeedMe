@@ -70,7 +70,15 @@ internal class KtorSupabaseJwksExchange internal constructor(private val client:
     private fun unavailable() = PortResult.Failure(FailureReason.UNAVAILABLE)
 
     companion object {
-        fun create(policy: SupabaseJwksHttpPolicy): KtorSupabaseJwksExchange = KtorSupabaseJwksExchange(HttpClient(OkHttp) {
+        fun create(policy: SupabaseJwksHttpPolicy): KtorSupabaseJwksExchange =
+            build(policy, JwksDirectSocketFactory(policy.connectTimeoutMillis.toInt()))
+
+        /** Internal integration seam changes only TCP routing. The public factory never
+         * accepts it; TLS, hostname verification and every HTTP boundary stay shared. */
+        internal fun forSocketFactory(policy: SupabaseJwksHttpPolicy, sockets: SocketFactory): KtorSupabaseJwksExchange =
+            build(policy, sockets)
+
+        private fun build(policy: SupabaseJwksHttpPolicy, sockets: SocketFactory): KtorSupabaseJwksExchange = KtorSupabaseJwksExchange(HttpClient(OkHttp) {
             followRedirects = false
             expectSuccess = false
             install(HttpTimeout) {
@@ -85,7 +93,7 @@ internal class KtorSupabaseJwksExchange internal constructor(private val client:
                     retryOnConnectionFailure(false)
                     fastFallback(false)
                     proxy(Proxy.NO_PROXY)
-                    socketFactory(JwksDirectSocketFactory(policy.connectTimeoutMillis.toInt()))
+                    socketFactory(sockets)
                     cookieJar(CookieJar.NO_COOKIES)
                     cache(null)
                     authenticator(Authenticator.NONE)

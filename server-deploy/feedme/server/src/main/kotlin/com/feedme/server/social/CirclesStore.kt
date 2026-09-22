@@ -10,6 +10,7 @@ import java.nio.charset.CharacterCodingException
 import java.time.Instant
 import java.time.OffsetDateTime
 import java.util.UUID
+import java.util.concurrent.CancellationException
 import kotlinx.serialization.json.*
 
 /**
@@ -22,13 +23,23 @@ import kotlinx.serialization.json.*
  * "circles", aggregate type "circle", ID the circle UUID, aggregateVersion its incremented
  * version. No name/description is published. Projection/cache consumers remain unimplemented.
  */
-class CirclesStore(
+class CirclesStore private constructor(
     private val environment: String,
     private val transactions: PgTransactions,
     private val identity: SocialIdentityPolicy,
-    private val capabilities: CircleCapabilities,
-    private val launch: CircleLaunchPolicy,
+    private val configuredCapabilities: CircleCapabilities?,
+    private val configuredLaunch: CircleLaunchPolicy?,
+    @Suppress("UNUSED_PARAMETER") audienceReadOnly: Boolean,
 ) {
+    constructor(environment: String, transactions: PgTransactions, identity: SocialIdentityPolicy,
+        capabilities: CircleCapabilities, launch: CircleLaunchPolicy) :
+        this(environment, transactions, identity, capabilities, launch, false)
+
+    private val capabilities: CircleCapabilities
+        get() = configuredCapabilities ?: fail(SocialFailureCode.NOT_CONFIGURED)
+    private val launch: CircleLaunchPolicy
+        get() = configuredLaunch ?: fail(SocialFailureCode.NOT_CONFIGURED)
+
     private val commands = DurableCommands(transactions)
     private val outbox = OutboxStore(transactions)
     init { require(environment.matches(Regex("[a-z][a-z0-9-]{0,39}"))) }
@@ -85,7 +96,7 @@ class CirclesStore(
         // is never exposed as a profile or used to infer a short page of otherwise visible members.
         val visible = members.mapNotNull { target ->
             try { unblocked(c, actor.accountId, target.userId); target.userId to memberJson(c, target) }
-            catch (failure: SocialFailure) { if (failure.code == SocialFailureCode.CIRCLE_UNAVAILABLE) null else throw failure }
+            catch (failure: SocialFailure) { if (failure.code == SocialFailureCode.CIRCLE_UNAVAILABLE && failure.suppressed.isEmpty()) null else throw failure }
         }
         reply("listCircleMembers", 200, page(c, visible.take(limit).map { it.second },
             if (visible.size > limit) capabilities.cursor(actor, "members", circleId, visible[limit - 1].first) else null))
@@ -156,11 +167,14 @@ class CirclesStore(
         return command(actor, "transferCircleOwnership", key, paths(circleId), input, ifMatch, replay = { c, reply ->
             val current = circle(c, circleId); val viewer = member(c, circleId, actor.accountId)
             requireActive(current, viewer); if (current.ownerId != userId) fail(SocialFailureCode.CIRCLE_UNAVAILABLE)
-            activeTarget(c, current, actor, userId); requireReplyRole(reply, viewer)
+            activeTarget(c, current, actor, userId); eligibleProfile(c, userId); requireReplyRole(reply, viewer)
         }) { c ->
             val current = circle(c, circleId); val owner = member(c, circleId, actor.accountId)
             requireActive(current, owner); requireRole(owner, "owner"); expect(current.version, version)
             val target = activeTarget(c, current, actor, userId)
+            // A retained active membership is not proof that its account is still eligible
+            // to own the circle. Lock current target lifecycle/profile before changing roles.
+            eligibleProfile(c, userId)
             updateRole(c, owner!!, "member"); updateRole(c, target, "owner")
             exec(c, "UPDATE social.circles SET owner_id=?,version=version+1,updated_at=clock_timestamp() WHERE environment=? AND id=?") {
                 setObject(1, userId); setString(2, environment); setObject(3, circleId)
@@ -244,6 +258,7 @@ class CirclesStore(
                     put("inviterLabel", inviter.displayName); put("expiresAt", invite.expiresAt.toString())
                 })
             } catch (failure: SocialFailure) {
+                if (failure.suppressed.isNotEmpty()) throw failure
                 if (failure.code in setOf(SocialFailureCode.STORAGE_UNAVAILABLE, SocialFailureCode.NOT_CONFIGURED)) throw failure
                 reply("previewInvitation", 200, unavailablePreview())
             }
@@ -347,12 +362,47 @@ class CirclesStore(
     }
 
     /** Foundation for F40; callers must ALSO authorize the post's status, placement and other grants. */
-    fun hasCurrentAudienceMembership(actor: VerifiedSocialAccount, circleId: UUID, authorId: UUID, authorGeneration: Long): Boolean = read(actor) { c ->
-        val current = circleOrNull(c, circleId) ?: return@read false
-        val viewer = member(c, circleId, actor.accountId); val author = member(c, circleId, authorId)
-        if (current.status != "active" || viewer?.status != "active" || author?.status != "active" || author.generation != authorGeneration) return@read false
-        try { unblocked(c, actor.accountId, authorId); eligibleProfile(c, authorId); true }
-        catch (failure: SocialFailure) { if (failure.code == SocialFailureCode.CIRCLE_UNAVAILABLE) false else throw failure }
+    fun hasCurrentAudienceMembership(actor: VerifiedSocialAccount, circleId: UUID, authorId: UUID, authorGeneration: Long): Boolean = safe {
+        transactions.run { c -> hasCurrentAudienceMembership(c, actor, circleId, authorId, authorGeneration) }
+    }
+
+    /** Same-transaction audience admission, not a reusable content grant. Keep the caller's
+     * principal -> circle -> shared pair -> nonwaiting foreign profile order; acquire several
+     * circle roots in UUID order, before acquiring conflicting post/domain locks. This helper
+     * does not establish the lock order of any post publisher. No nested transaction, commit,
+     * network or exception mapping:
+     * NOWAIT's retryable failure must reach the owning PgTransactions for whole-attempt retry.
+     * These locks remain held after return. The caller must ALSO check the post's current
+     * status/placement/rights and repeat final principal admission after its remaining waits. */
+    fun hasCurrentAudienceMembership(c: Connection, actor: VerifiedSocialAccount, circleId: UUID,
+        authorId: UUID, authorGeneration: Long): Boolean {
+        require(!c.isClosed && !c.autoCommit && c.transactionIsolation == Connection.TRANSACTION_READ_COMMITTED)
+        checkActor(actor); identity.lockPrincipal(c, actor)
+        val allowed = audienceMembership(c, actor, circleId, authorId, authorGeneration)
+        identity.lockPrincipal(c, actor)
+        return allowed
+    }
+
+    private fun audienceMembership(c: Connection, actor: VerifiedSocialAccount, circleId: UUID,
+        authorId: UUID, authorGeneration: Long): Boolean =
+        audienceMembership(c, actor.accountId, circleId, authorId, authorGeneration)
+
+    /** Worker-only current membership proof; no user session or reusable grant is
+     * manufactured. The caller must separately prove actual provider accounts. */
+    internal fun reactionNotificationMembership(c: Connection, viewerId: UUID, circleId: UUID,
+        authorId: UUID, authorGeneration: Long): Boolean {
+        require(!c.isClosed && !c.autoCommit && c.transactionIsolation == Connection.TRANSACTION_READ_COMMITTED)
+        eligibleProfile(c, viewerId)
+        return audienceMembership(c, viewerId, circleId, authorId, authorGeneration)
+    }
+
+    private fun audienceMembership(c: Connection, viewerId: UUID, circleId: UUID,
+        authorId: UUID, authorGeneration: Long): Boolean {
+        val current = circleOrNull(c, circleId) ?: return false
+        val viewer = member(c, circleId, viewerId); val author = member(c, circleId, authorId)
+        if (current.status != "active" || viewer?.status != "active" || author?.status != "active" || author.generation != authorGeneration) return false
+        return try { unblocked(c, viewerId, authorId); eligibleProfile(c, authorId); true }
+        catch (failure: SocialFailure) { if (failure.code == SocialFailureCode.CIRCLE_UNAVAILABLE && failure.suppressed.isEmpty()) false else throw failure }
     }
 
     private fun invitationCapability(actor: VerifiedSocialAccount, cached: StoredReply): StoredReply = read(actor) { c ->
@@ -365,7 +415,8 @@ class CirclesStore(
     }
 
     private fun joinPolicy(c: Connection, actor: VerifiedSocialAccount, circle: CircleRow, invite: InvitationRow) {
-        unblocked(c, actor.accountId, circle.ownerId); unblocked(c, actor.accountId, invite.createdBy)
+        identity.requireInvitationPair(c, environment, actor.accountId, circle.ownerId, invite.issuedOrder)
+        identity.requireInvitationPair(c, environment, actor.accountId, invite.createdBy, invite.issuedOrder)
         setOf(actor.accountId, circle.ownerId, invite.createdBy).sortedBy(UUID::toString).forEach { eligibleProfile(c, it) }
     }
     private fun eligibleProfile(c: Connection, userId: UUID): SocialProfileSummary = identity.readProfile(c, environment, userId).also {
@@ -428,15 +479,27 @@ class CirclesStore(
         ifMatch: String? = null, replay: (Connection, StoredReply) -> Unit, mutate: (Connection) -> StoredReply): CommandResult = safe {
         checkActor(actor)
         val command = CommandIdentity(PrincipalScope(environment, CommandActor.ACCOUNT, actor.accountId), op, key, paths, body = body, ifMatch = ifMatch)
-        commands.execute(command, { identity.lockPrincipal(it, actor) }, {}, replay, mutate)
+        transactions.run { c ->
+            val result = commands.executeInTransaction(c, command, { identity.lockPrincipal(it, actor) }, {}, replay, mutate)
+            // Receipt completion/replay authorization can wait. Provider/session deadlines
+            // must still hold after that final database work, not only on initial admission.
+            identity.lockPrincipal(c, actor)
+            result
+        }
     }
     private fun <T> read(actor: VerifiedSocialAccount, action: (Connection) -> T): T = safe {
-        checkActor(actor); transactions.run { c -> identity.lockPrincipal(c, actor); action(c) }
+        checkActor(actor); transactions.run { c ->
+            identity.lockPrincipal(c, actor)
+            val result = action(c)
+            identity.lockPrincipal(c, actor)
+            result
+        }
     }
     private fun checkActor(actor: VerifiedSocialAccount) { if (actor.environment != environment) fail(SocialFailureCode.UNAUTHENTICATED) }
     private fun <T> safe(action: () -> T): T = try { action() }
         catch (failure: SocialFailure) { throw failure }
         catch (failure: CommitOutcomeUnknown) { throw failure }
+        catch (failure: CancellationException) { throw failure }
         catch (failure: InterruptedException) { Thread.currentThread().interrupt(); throw failure }
         catch (_: Exception) { fail(SocialFailureCode.STORAGE_UNAVAILABLE) }
 
@@ -466,7 +529,8 @@ class CirclesStore(
     private fun invitationRow(r: ResultSet) = InvitationRow(r.getObject("id", UUID::class.java), r.getObject("circle_id", UUID::class.java),
         r.getObject("created_by", UUID::class.java), r.getString("token_hash"), r.getString("token_key_id"), r.getString("status"),
         r.getObject("consumed_by", UUID::class.java), r.getLong("consumed_generation").takeUnless { r.wasNull() }, r.getLong("version"),
-        instant(r, "created_at"), instant(r, "updated_at"), instant(r, "expires_at"), r.getLong("issuer_generation"), r.getLong("issuer_version"))
+        instant(r, "created_at"), instant(r, "updated_at"), instant(r, "expires_at"), r.getLong("issuer_generation"), r.getLong("issuer_version"),
+        r.getLong("issued_order").takeIf { it > 0 } ?: fail(SocialFailureCode.STORAGE_UNAVAILABLE))
     private fun bumpCircle(c: Connection, id: UUID) = exec(c, "UPDATE social.circles SET version=version+1,updated_at=clock_timestamp() WHERE environment=? AND id=?") {
         setString(1, environment); setObject(2, id)
     }
@@ -523,8 +587,13 @@ class CirclesStore(
         val removalKey: UUID?, val removalOperation: String?, val removedBy: UUID?, val removedGeneration: Long?)
     private class InvitationRow(val id: UUID, val circleId: UUID, val createdBy: UUID, val tokenHash: String, val keyId: String,
         val status: String, val consumedBy: UUID?, val consumedGeneration: Long?, val version: Long, val createdAt: Instant, val updatedAt: Instant, val expiresAt: Instant,
-        val issuerGeneration: Long, val issuerVersion: Long)
+        val issuerGeneration: Long, val issuerVersion: Long, val issuedOrder: Long)
     companion object {
+        /** Membership admission only. No invented invitation endpoint, secret or launch
+         * policy is needed by the post reader; no circle routes are exposed by this factory. */
+        internal fun forPostReads(environment: String, transactions: PgTransactions, identity: SocialIdentityPolicy): CirclesStore =
+            CirclesStore(environment, transactions, identity, null, null, true)
+
         private val validator by lazy { ContractBodyValidator.bundled() }
         private fun uuid(body: JsonObject, name: String) = UUID.fromString(body.getValue(name).jsonPrimitive.content)
         private fun integer(value: JsonElement): Int = try { value.jsonPrimitive.content.toBigDecimal().intValueExact() }

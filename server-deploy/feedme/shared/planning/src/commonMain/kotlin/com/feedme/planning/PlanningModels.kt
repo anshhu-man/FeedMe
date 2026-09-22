@@ -53,10 +53,20 @@ class ReportedIngredient(val ingredientId: String, val availability: PlanningAva
 }
 
 /** Exact current explicit preferences, never memory-inferred hard exclusions. */
-class PlanningPreferences(val version: String, excluded: Set<String>, disliked: Set<String>) {
+class PlanningPreferences(val version: String, excluded: Set<String>, disliked: Set<String>,
+    val personalizationEnabled: Boolean = true, memories: List<PlanningMemory> = emptyList()) {
     internal val exclusions = excluded.toSet()
     internal val dislikes = disliked.toSet()
+    internal val memories = memories.toList()
     override fun toString() = "PlanningPreferences(<redacted>)"
+}
+
+/** Trusted owner read-model only, not feedback inference or permission to use a recipe.
+ * Every supplied context dimension must match; an empty context has no ranking effect. */
+data class PlanningMemory(val id: String, val version: String, val kind: String, val value: String,
+    val recipeVersionId: String? = null, val ingredientId: String? = null,
+    val tasteTag: String? = null, val effortAspect: String? = null) {
+    override fun toString() = "PlanningMemory(<redacted>)"
 }
 
 /** Resolution from an explicit user confirmation, tied to the exact canonical baseMeal input.
@@ -66,16 +76,26 @@ class ConfirmedBaseMeal(val document: WireDocument, val catalogType: String, val
     override fun toString() = "ConfirmedBaseMeal(<redacted>)"
 }
 
+/** Exact selected private copy, supplied only after the caller has checked ownership, current
+ * retained rights and recall. Structural evidence, never a grant by itself. The recipe is the
+ * saved material (including any previously authorized scaling), not the live catalog body. */
+class PlanningSavedSource(val savedRecipeId: String, val recipe: RecipeVersionWire,
+    val allowReviewedScaling: Boolean) {
+    override fun toString() = "PlanningSavedSource(<redacted>)"
+}
+
 class PlanningContext(val preferences: PlanningPreferences, availability: List<ReportedIngredient>,
-    val baseMeal: ConfirmedBaseMeal? = null) {
+    val baseMeal: ConfirmedBaseMeal? = null, val savedSource: PlanningSavedSource? = null) {
     internal val pantry = availability.toList()
     override fun toString() = "PlanningContext(<redacted>)"
 }
 
 /** A versioned implementation policy, not a client request field. Heat/improve need release
  * approval AND reviewed coverage supplied by the trusted caller. Taste fallback is explicit.
- * Lexicographic policy v1: exact taste, fewer soft dislikes, confirmed ingredients, lower active time, known cleanup,
- * then stable recipe/version IDs. No medical, nutrition or inferred-memory score is produced.
+ * Lexicographic policy: exact requested taste, fewer explicit dislikes, optional authorized
+ * contextual memory preference, confirmed ingredients, lower active time, known cleanup,
+ * then stable recipe/version IDs. With no memories the historical v1 ordering is unchanged.
+ * Memories never become hard constraints or medical inference.
  */
 class PlanningPolicy(val version: String, val heatEnabled: Boolean, val improveEnabled: Boolean,
     val relatedTasteExplicitlyRequested: Boolean = false) {
@@ -93,7 +113,7 @@ enum class PlanningIssue {
 }
 
 /** Immutable explanation facts belong to a private plan. No raw text enters diagnostics. */
-class PlanningFact(val code: String, val label: String) {
+class PlanningFact(val code: String, val label: String, val sourceMemoryId: String? = null) {
     override fun toString() = "PlanningFact(<redacted>)"
 }
 

@@ -21,7 +21,7 @@ class VerifiedSavedRecipePrincipal(val environment: String, val kind: CommandAct
 
 /** A positive, current copy decision, not borrowed cooking/read access or a caught expiry failure. */
 class AuthorizedRecipeCopy(val recipeVersionId: UUID, recipe: JsonObject, val contentLicense: String,
-    evidence: JsonObject) {
+    evidence: JsonObject, val postSource: AuthorizedPostCopySource? = null) {
     val recipe = Json.parseToJsonElement(recipe.toString()).jsonObject
     val evidence = Json.parseToJsonElement(evidence.toString()).jsonObject
     init {
@@ -29,6 +29,12 @@ class AuthorizedRecipeCopy(val recipeVersionId: UUID, recipe: JsonObject, val co
         require(this.evidence.isNotEmpty() && this.evidence.toString().toByteArray().size <= 32768)
     }
     override fun toString() = "AuthorizedRecipeCopy(<redacted>)"
+}
+
+/** Actual transaction-bound post grant, never accepted from an HTTP caller. */
+class AuthorizedPostCopySource internal constructor(val postId: UUID, val grantId: UUID,
+    val creatorLabel: String) {
+    override fun toString() = "AuthorizedPostCopySource(<redacted>)"
 }
 
 /** Persisted permission provenance; contains no token, account credential or whole original Plan. */
@@ -56,6 +62,9 @@ interface SavedRecipeAuthority {
     fun lockPrincipal(connection: Connection, principal: VerifiedSavedRecipePrincipal)
     fun authorizeNewCopy(connection: Connection, principal: VerifiedSavedRecipePrincipal,
         planId: UUID?, recipeVersionId: UUID?): AuthorizedRecipeCopy
+    fun authorizePostCopy(connection: Connection, principal: VerifiedSavedRecipePrincipal,
+        postId: UUID, recipeVersionId: UUID, grantPolicyVersion: Long): AuthorizedRecipeCopy =
+        throw SavedRecipeFailure(SavedRecipeFailureCode.NOT_CONFIGURED)
     fun requireExistingCopyAllowed(connection: Connection, principal: VerifiedSavedRecipePrincipal,
         copy: SavedRecipeCopyEvidence)
 }

@@ -29,7 +29,7 @@ internal class AccountCookingStore(private val environment: String, private val 
         action: (Connection, VerifiedCookingPrincipal, CookingStore) -> CookingStore.Pending<T>): T = safe {
         transactions.run { c ->
             val access = AccountMealAccess(environment, c, accounts, subject, device)
-            planning.withOwnedTransaction(c, subject, device) { planningActor, plans ->
+            planning.withOwnedTransaction(c, subject, device) { planningActor, plans, checkSourceAt ->
                 if (planningActor.principalId != access.principalId) fail(CookingFailureCode.UNAUTHENTICATED)
                 val actor = VerifiedCookingPrincipal(environment, CommandActor.ACCOUNT, access.principalId, device)
                 fun current(connection: Connection, principal: VerifiedCookingPrincipal): Unit = safe {
@@ -79,6 +79,7 @@ internal class AccountCookingStore(private val environment: String, private val 
                 pending.revalidate(c, actor)
                 access.current(c)
                 val at = AccountMealAccess.now(c)
+                checkSourceAt(at)
                 if (pins.values.any { it.deadline?.isAfter(at) == false }) fail(CookingFailureCode.PLAN_EXPIRED)
                 pending.checkAt(c, actor, at)
                 access.checkAt(c, at)
