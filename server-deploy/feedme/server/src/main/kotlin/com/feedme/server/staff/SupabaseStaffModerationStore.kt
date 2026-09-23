@@ -76,6 +76,110 @@ internal class SupabaseStaffModerationStore(private val environment: String, tra
         reply
     }
 
+    /** Exact snapshot paging over the owner-created flag inventory. Rollout is
+     * intentionally not projected because the canonical FeatureFlag DTO does not
+     * contain it; the server still validates the stored value before every read. */
+    fun adminListFlags(subject: VerifiedSupabaseSubject, cursor: String?, limit: Int,
+        traceId: String): StoredReply = access(subject) { c, actor ->
+        StaffFlagServingCompatibility.check(c)
+        trace(traceId); if (limit !in 1..50) invalid()
+        val at = current(c, actor)
+        val position = cursor?.let { cursors.decodeFlags(it, environment, actor.actorId, limit, at) }
+        val through = position?.through ?: at
+        val expires = position?.expires ?: through.plusSeconds(policy.cursorLifetimeSeconds)
+        val page = query(c, "SELECT * FROM platform.feature_flags WHERE environment=? AND updated_at<=? " +
+            (if (position == null) "" else "AND flag_key>? ") +
+            "ORDER BY flag_key LIMIT ? FOR SHARE NOWAIT", {
+                setString(1, environment); setObject(2, time(through)); var index = 3
+                if (position != null) setString(index++, position.after)
+                setInt(index, limit + 1)
+            }) { rows -> buildList { while (rows.next()) add(flag(rows)) } }
+        val selected = mutableListOf<Flag>()
+        var next: String? = null
+        for (item in page.take(limit)) {
+            val candidate = selected + item
+            val possibleNext = cursors.encodeFlags(environment, actor.actorId, limit,
+                StaffModerationCursors.FlagPosition(through, item.key, expires))
+            if (flagPage(candidate, possibleNext, at).toString().encodeToByteArray().size + 64 > policy.maxResponseBytes) {
+                if (selected.isEmpty()) unavailable()
+                break
+            }
+            selected += item
+        }
+        if (selected.size < page.size) {
+            val last = selected.lastOrNull() ?: unavailable()
+            next = cursors.encodeFlags(environment, actor.actorId, limit,
+                StaffModerationCursors.FlagPosition(through, last.key, expires))
+        }
+        val finalAt = current(c, actor)
+        if (finalAt < at || finalAt >= expires) fail(StaffModerationFailureCode.CURSOR_EXPIRED)
+        val reply = reply(FLAGS, flagPage(selected, next, finalAt))
+        auditFlags(c, actor, "flags-list", selected, traceId, finalAt)
+        current(c, actor); reply
+    }
+
+    /** Compatibility PATCH is an emergency complete kill only. The permissive
+     * wire schema cannot enable or partially roll out a feature through this path. */
+    fun adminUpdateFlag(subject: VerifiedSupabaseSubject, flagKey: String, key: UUID,
+        ifMatch: String, body: JsonObject, traceId: String): CommandResult {
+        val input = flagRequest(body)
+        val expected = version(ifMatch)
+        trace(traceId)
+        return access(subject) { c, actor ->
+            StaffFlagServingCompatibility.check(c)
+            val identity = CommandIdentity(PrincipalScope(environment, CommandActor.STAFF, actor.actorId),
+                UPDATE_FLAG, key, mapOf("flagKey" to flagKey), body = input, ifMatch = ifMatch)
+            val result = commands.executeInTransaction(c, identity,
+                validatePrincipal = { same(c, it); current(c, actor) },
+                authorizeNew = { same(c, it); current(c, actor) },
+                authorizeReplay = { actual, cached ->
+                    same(c, actual)
+                    val action = flagAction(c, actor, flagKey, key) ?: unavailable()
+                    if (action.requestHash != identity.requestHash || action.request != input || action.ifMatch != ifMatch ||
+                        cached.status != 200 || cached.body != action.response || cached.etag != null) unavailable()
+                    val currentFlag = byFlag(c, flagKey, write = false) ?: flagMissing()
+                    if (currentFlag.enabled || currentFlag.revision != action.revision || currentFlag.lastAction != action.id ||
+                        flagJson(currentFlag) != cached.body) unavailable()
+                    validateReply(UPDATE_FLAG, cached)
+                    auditFlags(c, actor, "flag-disable-receipt", listOf(currentFlag), traceId, current(c, actor))
+                }) { actual ->
+                    same(c, actual)
+                    val before = byFlag(c, flagKey, write = true) ?: flagMissing()
+                    val decision = try {
+                        RestrictiveStaffFlagPolicy.directUpdate(flagKey, before.enabled, before.revision,
+                            expected, input)
+                    } catch (failure: RestrictiveStaffFlagFailure) {
+                        when (failure.code) {
+                            RestrictiveStaffFlagFailureCode.INPUT_INVALID -> invalid()
+                            RestrictiveStaffFlagFailureCode.VERSION_CONFLICT -> fail(StaffModerationFailureCode.VERSION_CONFLICT)
+                            RestrictiveStaffFlagFailureCode.REVIEW_REQUIRED -> fail(StaffModerationFailureCode.REVIEW_REQUIRED)
+                            RestrictiveStaffFlagFailureCode.ALREADY_RESTRICTED -> fail(StaffModerationFailureCode.FLAG_CONFLICT)
+                        }
+                    }
+                    val at = current(c, actor)
+                    if (at < before.updated) unavailable()
+                    val actionId = UUID.randomUUID(); val eventId = UUID.randomUUID()
+                    exec(c, "UPDATE platform.feature_flags SET enabled=false,rollout_percent=0,revision=?," +
+                        "last_action_id=?,updated_at=? WHERE environment=? AND flag_key=? AND revision=?") {
+                        setLong(1, decision.revision); setObject(2, actionId); setObject(3, time(at));
+                        setString(4, environment); setString(5, flagKey); setLong(6, before.revision)
+                    }
+                    val after = before.copy(enabled = false, rollout = BigDecimal.ZERO,
+                        revision = decision.revision, lastAction = actionId, updated = at)
+                    val response = flagJson(after)
+                    val reply = reply(UPDATE_FLAG, response)
+                    insertFlagAction(c, actor, after, actionId, eventId, identity, input, ifMatch,
+                        response, traceId, at)
+                    outbox.append(c, EventDraft(eventId, "platform.feature_flag.disabled.v1", 1,
+                        "featureFlagAction", actionId, after.revision, "platform", key.toString(), key,
+                        buildJsonObject { put("flagKey", flagKey); put("revision", after.revision); put("enabled", false) }))
+                    auditFlags(c, actor, "flag-disable-receipt", listOf(after), traceId, at)
+                    current(c, actor); reply
+                }
+            current(c, actor); result
+        }
+    }
+
     fun adminListReports(subject: VerifiedSupabaseSubject, cursor: String?, limit: Int, traceId: String): StoredReply = access(subject) { c, actor ->
         trace(traceId); if (limit !in 1..50) invalid()
         val at = current(c, actor)
@@ -258,6 +362,12 @@ internal class SupabaseStaffModerationStore(private val environment: String, tra
     private data class HealthMetric(val observedAt: Instant, val outboxDepth: Long,
         val outboxOldest: Instant?, val mediaOldest: Instant?)
 
+    private data class Flag(val key: String, val enabled: Boolean, val rollout: BigDecimal,
+        val variant: String?, val revision: Long, val lastAction: UUID?, val created: Instant, val updated: Instant)
+
+    private data class FlagAction(val id: UUID, val revision: Long, val requestHash: String,
+        val request: JsonObject, val ifMatch: String, val response: JsonObject)
+
     private fun auditRow(r: ResultSet): Audit {
         val value = Audit(r.getObject("id", UUID::class.java), r.getLong("version"), instant(r, "created_at"),
             r.getObject("actor_id", UUID::class.java), r.getString("operation_id"), r.getString("target_type"),
@@ -267,8 +377,8 @@ internal class SupabaseStaffModerationStore(private val environment: String, tra
             value.traceId.length !in 1..128 || value.traceId.any(Char::isISOControl)) unavailable()
         if (value.source == 0) {
             if (value.version != 1L || value.targetType != "moderationAccess" || value.targetId != value.id.toString() ||
-                value.action !in setOf(LIST, GET, CLAIM, DISMISS, AUDIT, HEALTH) ||
-                value.reason !in setOf("queue-list", "case-review", "claim-receipt", "dismiss-receipt", "remove-receipt", "audit-list", "health-read")) unavailable()
+                value.action !in setOf(LIST, GET, CLAIM, DISMISS, AUDIT, HEALTH, FLAGS, UPDATE_FLAG) ||
+                value.reason !in setOf("queue-list", "case-review", "claim-receipt", "dismiss-receipt", "remove-receipt", "audit-list", "health-read", "flags-list", "flag-disable-receipt")) unavailable()
         } else if (value.source == 1) {
             if (value.version !in 2L..3L || value.action !in setOf(CLAIM, DISMISS) ||
                 value.targetType !in setOf("post", "message", "user", "shortcut") || !uuid(value.targetId)) unavailable()
@@ -283,6 +393,80 @@ internal class SupabaseStaffModerationStore(private val environment: String, tra
             put("targetType", item.targetType); put("targetId", item.targetId); put("reason", item.reason); put("traceId", item.traceId)
         } }))
         put("nextCursor", cursor?.let(::JsonPrimitive) ?: JsonNull); put("serverTime", at.toString())
+    }
+
+    private fun flag(r: ResultSet): Flag {
+        val value = Flag(r.getString("flag_key"), r.getBoolean("enabled"),
+            r.getBigDecimal("rollout_percent"), r.getString("variant"), r.getLong("revision"),
+            r.getObject("last_action_id", UUID::class.java), instant(r, "created_at"), instant(r, "updated_at"))
+        if (!value.key.matches(Regex("[a-z][a-z0-9_.-]{1,100}")) || value.revision <= 0 ||
+            value.rollout < BigDecimal.ZERO || value.rollout > BigDecimal("100") ||
+            (!value.enabled && value.rollout.compareTo(BigDecimal.ZERO) != 0) || value.updated < value.created ||
+            value.variant?.let { it.length > 256 || it.any(Char::isISOControl) } == true ||
+            (value.revision == 1L) != (value.lastAction == null)) unavailable()
+        return value
+    }
+
+    private fun flagJson(value: Flag) = buildJsonObject {
+        put("key", value.key); put("enabled", value.enabled); value.variant?.let { put("variant", it) }
+        put("revision", value.revision)
+    }
+
+    private fun flagPage(items: List<Flag>, cursor: String?, at: Instant) = buildJsonObject {
+        put("items", JsonArray(items.map(::flagJson)))
+        put("nextCursor", cursor?.let(::JsonPrimitive) ?: JsonNull); put("serverTime", at.toString())
+    }
+
+    private fun byFlag(c: Connection, key: String, write: Boolean): Flag? = query(c,
+        "SELECT * FROM platform.feature_flags WHERE environment=? AND flag_key=? FOR ${if (write) "UPDATE" else "SHARE"} NOWAIT",
+        { setString(1, environment); setString(2, key) }) { r ->
+            if (!r.next()) null else flag(r).also { if (r.next()) unavailable() }
+        }
+
+    private fun flagAction(c: Connection, actor: SupabaseStaffModeratorActor, flagKey: String,
+        key: UUID): FlagAction? = query(c, "SELECT * FROM platform.feature_flag_actions WHERE environment=? " +
+        "AND actor_id=? AND operation_id=? AND command_key=? FOR SHARE NOWAIT", {
+            setString(1, environment); setObject(2, actor.actorId); setString(3, UPDATE_FLAG); setObject(4, key)
+        }) { r ->
+            if (!r.next()) null else {
+                val id = r.getObject("id", UUID::class.java); val revision = r.getLong("flag_revision")
+                val request = document(r.getString("request_text"), 4096)
+                val responseText = r.getString("response_text"); val response = document(responseText, 4096)
+                val value = FlagAction(id, revision, r.getString("request_sha256"), request,
+                    r.getString("if_match"), response)
+                if (r.getString("flag_key") != flagKey || revision <= 1 ||
+                    hash(responseText) != r.getString("response_sha256") || r.next()) unavailable()
+                value
+            }
+        }
+
+    private fun insertFlagAction(c: Connection, actor: SupabaseStaffModeratorActor, flag: Flag,
+        actionId: UUID, eventId: UUID, identity: CommandIdentity, input: JsonObject, match: String,
+        response: JsonObject, traceId: String, at: Instant) {
+        val responseText = response.toString()
+        exec(c, "INSERT INTO platform.feature_flag_actions(environment,id,flag_key,flag_revision,actor_id," +
+            "provider_session_id,authority_revision,operation_id,command_key,request_sha256,request_text,if_match," +
+            "reason,response_text,response_sha256,event_id,trace_id,created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?::text,?,?,?,?,?,?,?)") {
+            setString(1, environment); setObject(2, actionId); setString(3, flag.key); setLong(4, flag.revision)
+            setObject(5, actor.actorId); setObject(6, actor.providerSessionId); setString(7, actor.authorityRevision)
+            setString(8, identity.operationId); setObject(9, identity.key); setString(10, identity.requestHash)
+            setString(11, input.toString()); setString(12, match); setString(13, input.getValue("reason").jsonPrimitive.content)
+            setString(14, responseText); setString(15, hash(responseText)); setObject(16, eventId)
+            setString(17, traceId); setObject(18, time(at))
+        }
+    }
+
+    private fun auditFlags(c: Connection, actor: SupabaseStaffModeratorActor, purpose: String,
+        items: List<Flag>, traceId: String, at: Instant) {
+        val observed = JsonArray(items.map { buildJsonObject {
+            put("flagKey", it.key); put("flagRevision", it.revision)
+        } })
+        exec(c, "INSERT INTO safety.moderation_access_audit(environment,id,actor_id,provider_session_id," +
+            "authority_revision,purpose,observed_cases,trace_id,created_at) VALUES(?,?,?,?,?,?,?::jsonb,?,?)") {
+            setString(1, environment); setObject(2, UUID.randomUUID()); setObject(3, actor.actorId)
+            setObject(4, actor.providerSessionId); setString(5, actor.authorityRevision); setString(6, purpose)
+            setString(7, observed.toString()); setString(8, traceId); setObject(9, time(at))
+        }
     }
 
     private fun row(r: ResultSet): Case {
@@ -523,6 +707,16 @@ internal class SupabaseStaffModerationStore(private val environment: String, tra
         if (reason.length !in 1..100 || reason.isBlank() || reason.any(Char::isISOControl) || notes.length !in 1..2000 || notes.isBlank()) invalid()
         return document(text, 16384)
     }
+    private fun flagRequest(value: JsonObject): JsonObject {
+        val text = value.toString(); val bytes = text.encodeToByteArray(throwOnInvalidSequence = true)
+        if (bytes.size > 4096 || validator.validateRequest(UPDATE_FLAG, bytes, "application/json") != BodyValidationResult.Valid)
+            invalid()
+        val captured = document(text, 4096)
+        // The shared policy owns the narrower direct-kill decision; this step
+        // only preserves the exact canonical body for command fingerprinting.
+        if (captured.keys != setOf("enabled", "rolloutPercent", "reason")) invalid()
+        return captured
+    }
     private fun trace(value: String) { if (value.length !in 1..128 || value.any(Char::isISOControl)) invalid() }
     private fun version(value: String): Long {
         if (!value.matches(Regex("\"[1-9][0-9]{0,18}\""))) invalid()
@@ -587,6 +781,8 @@ internal class SupabaseStaffModerationStore(private val environment: String, tra
         private const val DISMISS = "adminActOnReport"
         private const val AUDIT = "adminListAudit"
         private const val HEALTH = "adminGetHealth"
+        private const val FLAGS = "adminListFlags"
+        private const val UPDATE_FLAG = "adminUpdateFlag"
         private const val MAX_SAFE_JSON_INTEGER = 9_007_199_254_740_991L
         private const val PRIORITY = "CASE c.priority WHEN 'urgent' THEN 0 WHEN 'high' THEN 1 ELSE 2 END"
         private const val HEALTH_SELECT = "SELECT clock_timestamp() observed_at," +
@@ -605,7 +801,8 @@ internal class SupabaseStaffModerationStore(private val environment: String, tra
             "SELECT a.id,1::bigint version,a.created_at,a.actor_id," +
             "CASE a.purpose WHEN 'queue-list' THEN 'adminListReports' WHEN 'case-review' THEN 'adminGetCase' " +
             "WHEN 'claim-receipt' THEN 'adminClaimReport' WHEN 'dismiss-receipt' THEN 'adminActOnReport' " +
-            "WHEN 'remove-receipt' THEN 'adminActOnReport' WHEN 'health-read' THEN 'adminGetHealth' ELSE 'adminListAudit' END operation_id," +
+            "WHEN 'remove-receipt' THEN 'adminActOnReport' WHEN 'health-read' THEN 'adminGetHealth' " +
+            "WHEN 'flags-list' THEN 'adminListFlags' WHEN 'flag-disable-receipt' THEN 'adminUpdateFlag' ELSE 'adminListAudit' END operation_id," +
             "'moderationAccess'::varchar target_type,a.id::text target_id,a.purpose reason,a.trace_id,0 source_rank " +
             "FROM safety.moderation_access_audit a WHERE a.environment=? UNION ALL " +
             "SELECT m.id,m.case_version,m.created_at,m.actor_id,m.operation_id,c.target_type,c.target_id::text," +
@@ -615,6 +812,7 @@ internal class SupabaseStaffModerationStore(private val environment: String, tra
         private fun fail(code: StaffModerationFailureCode): Nothing = throw StaffModerationFailure(code)
         private fun invalid(): Nothing = fail(StaffModerationFailureCode.INPUT_INVALID)
         private fun missing(): Nothing = fail(StaffModerationFailureCode.CASE_UNAVAILABLE)
+        private fun flagMissing(): Nothing = fail(StaffModerationFailureCode.FLAG_UNAVAILABLE)
         private fun conflict(): Nothing = fail(StaffModerationFailureCode.CASE_CONFLICT)
         private fun unavailable(): Nothing = fail(StaffModerationFailureCode.STORAGE_UNAVAILABLE)
     }

@@ -1,18 +1,20 @@
 # Development snapshot — 15 September 2026
 
 **23 September backend-only addendum:** [current server deployment source](BACKEND_DEPLOYMENT.md)
-is separately packaged under `server-deploy/` with its own current 559-input /
-8,653,116-byte V090 manifest and locked 207-operation server contract. Its offline
-JDK 17 release-scope/server-distribution build passes, and its context/preflight
-suites report 10 pass / 3 explicit skips / 0 failures. The top-level full-app/source-copy checkpoint described
-below remains historical and unchanged; the public inventory additionally records
-the refreshed bundle and these reference updates. V090 adds the restricted,
-audited read-only staff health backend while retaining V089 guarded cleanup for
-never-dispatched exact-owner account exports. The optional reviewed staff serving
-grant package is now included and passes four database-role plus 12 workflow
-methods without creating any staff authority; hosted Supabase remains
-V088, while Render still runs the historical closed V032 image. No refreshed
-APK, native acceptance, production API readiness or store publication is implied.
+is separately packaged under `server-deploy/` with its own current 734-input /
+11,134,003-byte V091 manifest and locked 207-operation server contract. Its exact
+offline JDK 17 release-scope/server-distribution build passes all 18 requested
+tasks. The publication policy passes 33/33 methods and an exact scan verifies all
+734 listed files, their sizes and hashes. The top-level full-app/source-copy
+checkpoint described below remains historical and unchanged; the public inventory
+additionally records the refreshed bundle and these reference updates. V091 adds
+the restrictive, audited complete-kill staff-flag path; V090 retains the restricted
+read-only staff health backend and V089 retains guarded cleanup for never-dispatched
+exact-owner account exports. Selected Android/shared production source is included
+only as evidence for the free-V1 runtime-surface gate and is not packaged into the
+server. Hosted Supabase remains V088 and the current Render service was not
+deployed or verified by this refresh. No refreshed APK, native acceptance,
+production API readiness or store publication is implied.
 Current direction is Google Play first with Shipaton paused; Supabase/Render
 technical direction is approved but current configuration/acceptance remains open.
 The latest server-only delta aligns the protected runtime exporter with optional

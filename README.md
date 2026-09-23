@@ -34,9 +34,12 @@ Everything starts in the **[Reference library](Reference/README.md)**.
 ## Current state — development, not shipped
 
 The separately curated backend handoff under `server-deploy/` now contains the
-current V001–V088 source closure and passes an offline JDK 17 server-distribution
-build. It contains no credentials or runtime configuration and has not replaced
-the historical closed Render preview; this is build-ready source, not a live API.
+current V001–V091 source closure and passes the exact offline JDK 17 release-scope
+and server-distribution build. The handoff also carries selected Android/shared
+production source only as evidence for the free-V1 runtime-surface gate; those
+files are not compiled or packaged into the server. It contains no credentials
+or runtime configuration and has not replaced the historical closed Render
+preview; this is build-ready source, not a live API.
 
 The blueprint covers **54 features, 98 screens, 900 canonical actions and 201 API operations**. Those numbers describe design/contract coverage, not completed native features.
 

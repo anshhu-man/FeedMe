@@ -4,7 +4,7 @@ import java.security.MessageDigest
 import java.sql.Connection
 import kotlinx.coroutines.CancellationException
 
-/** Observes V077 and required read/lock rights only. Never creates an enrollment or
+/** Observes V077/V090/V091 and required read/lock rights only. Never creates an enrollment or
  * grants access. Serving may SELECT and execute the exact locking helper, not write
  * moderator authority, policies or staff identity. Catalog compatibility is separate. */
 internal object SupabaseStaffModerationServingCompatibility {
@@ -12,10 +12,11 @@ internal object SupabaseStaffModerationServingCompatibility {
         try {
             require(!c.isClosed && !c.autoCommit && c.transactionIsolation == Connection.TRANSACTION_READ_COMMITTED)
             if (Thread.currentThread().isInterrupted) throw InterruptedException("Staff moderation compatibility interrupted")
-            c.prepareStatement("SELECT version,description,checksum FROM platform.schema_migrations WHERE version IN (77,90) ORDER BY version").use { s ->
+            c.prepareStatement("SELECT version,description,checksum FROM platform.schema_migrations WHERE version IN (77,90,91) ORDER BY version").use { s ->
                 s.executeQuery().use { r ->
                     check(r.next() && r.getInt(1) == 77 && r.getString(2) == "staff_moderator_enrollments" && r.getString(3) == sha(source))
                     check(r.next() && r.getInt(1) == 90 && r.getString(2) == "staff_operational_health_reader" && r.getString(3) == sha(healthSource))
+                    check(r.next() && r.getInt(1) == 91 && r.getString(2) == "restrictive_staff_feature_flags" && r.getString(3) == sha(flagSource))
                     check(!r.next())
                 }
             }
@@ -29,7 +30,7 @@ internal object SupabaseStaffModerationServingCompatibility {
                         (r.getArray(3).array as Array<*>).map { it.toString() } == listOf("purpose"))
                     val values = Regex("'([^']+)'").findAll(r.getString(4)).map { it.groupValues[1] }.toSet()
                     check(values == setOf("queue-list", "case-review", "claim-receipt", "dismiss-receipt",
-                        "remove-receipt", "audit-list", "health-read") && !r.next())
+                        "remove-receipt", "audit-list", "health-read", "flags-list", "flag-disable-receipt") && !r.next())
                 }
                 s.executeQuery("SELECT " +
                     "has_column_privilege(current_user,'platform.outbox','owner_environment','SELECT')," +
@@ -152,6 +153,10 @@ internal object SupabaseStaffModerationServingCompatibility {
     }
     private val healthSource by lazy {
         checkNotNull(javaClass.getResourceAsStream("/db/migration/V090__staff_operational_health_reader.sql"))
+            .use { it.readBytes().decodeToString() }
+    }
+    private val flagSource by lazy {
+        checkNotNull(javaClass.getResourceAsStream("/db/migration/V091__restrictive_staff_feature_flags.sql"))
             .use { it.readBytes().decodeToString() }
     }
     private fun body(marker: String): String {

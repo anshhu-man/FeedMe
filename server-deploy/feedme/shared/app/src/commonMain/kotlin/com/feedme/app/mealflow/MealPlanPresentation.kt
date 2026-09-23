@@ -1,0 +1,155 @@
+package com.feedme.app.mealflow
+
+import com.feedme.contracts.*
+import com.feedme.mealflow.MealFlowIssue
+import com.feedme.mealflow.MealFlowPhase
+import com.feedme.mealflow.*
+import com.feedme.core.ports.FailureReason
+
+/** Detached view state, not a session/plan capability. Internal construction is for projection
+ * and presentation tests only; the public host always projects the actual retained controller. */
+class MealScreenState internal constructor(val phase: MealFlowPhase, val screen: MealFlowScreen,
+    val issue: MealFlowIssue, val failureReason: FailureReason?, val plan: PlanWire?,
+    val historical: Boolean, val alternativesAvailable: Boolean, val previousAvailable: Boolean,
+    val pendingMatchesDraft: Boolean, val retryAtMillis: Long?,
+    val proposal: MealSimplificationProposal? = null, val simplificationAvailable: Boolean = false,
+    val adaptation: MealAdaptationProposal? = null, val adaptationAvailable: Boolean = false,
+    val pendingAdaptation: MealAdaptationRequest? = null, val catalog: MealCatalogPage? = null,
+    val catalogSource: MealCatalogRecipe? = null, val rootProposal: MealRootProposal? = null,
+    val pendingRootDraft: ManualMealDraft? = null, val directRecipeMakeMineAvailable: Boolean = false,
+    val savedSource: MealSavedRootSource? = null, val savedMakeMineAvailable: Boolean = false,
+    val postSource: MealPostRootSource? = null, val postMakeMineAvailable: Boolean = false,
+    val postSourceNeedsRefresh: Boolean = false) {
+    val rootSource: MealRootSource? get() = postSource ?: savedSource ?: catalogSource
+    val rootMakeMineAvailable: Boolean get() = when {
+        postSource != null -> postMakeMineAvailable
+        savedSource != null -> savedMakeMineAvailable
+        else -> directRecipeMakeMineAvailable
+    }
+    override fun toString() = "MealScreenState(phase=$phase, private=<redacted>)"
+    companion object {
+        fun from(state: MealRequestState) = MealScreenState(state.phase, state.screen, state.issue, state.failureReason,
+            state.plan?.plan, state.plan?.historical ?: true, state.alternativesAvailable,
+            state.plan?.let { current -> state.history.indexOfFirst { it.plan.id == current.plan.id } > 0 } ?: false,
+            state.pendingMatchesDraft, state.retryAtMillis, state.proposal, state.simplificationAvailable,
+            state.adaptation, state.adaptationAvailable, state.pendingAdaptation, state.catalog,
+            state.catalogSource, state.rootProposal, state.pendingRootDraft, state.directRecipeMakeMineAvailable,
+            state.savedSource, state.savedMakeMineAvailable, state.postSource, state.postMakeMineAvailable, state.postSourceNeedsRefresh)
+    }
+}
+class IngredientRow internal constructor(val id: String, val name: String, val historical: Boolean) {
+    override fun toString() = "IngredientRow(<redacted>)"
+}
+class PantryRow internal constructor(val ingredientId: String, val name: String?, val presence: String,
+    val confirmationStatus: WireField<String>, val confirmedAt: WireField<String>, val historical: Boolean) {
+    override fun toString() = "PantryRow(<redacted>)"
+}
+class MealPickerPresentation internal constructor(val searchPhase: IngredientPickerPhase,
+    val searchResults: List<IngredientRow>, val knownIngredients: List<IngredientRow>, val pantryItems: List<PantryRow>,
+    val searchHasMore: Boolean, val pantryHasMore: Boolean, val issue: IngredientPickerIssue,
+    val retryAfterSeconds: Long?, val labelPhase: IngredientPickerPhase = IngredientPickerPhase.IDLE,
+    val labelIssue: IngredientPickerIssue = IngredientPickerIssue.NONE,
+    val requestedLabelIds: List<String> = emptyList(), val labelRetryAfterSeconds: Long? = null) {
+    override fun toString() = "MealPickerPresentation(<redacted>)"
+    companion object {
+        fun from(state: IngredientPickerState) = MealPickerPresentation(state.searchPhase,
+            state.searchResults.map { IngredientRow(it.id, it.name, it.historical) },
+            state.knownIngredients.map { IngredientRow(it.id, it.name, it.historical) },
+            state.pantryItems.map { PantryRow(it.ingredientId, it.resolvedIngredient?.name, it.presence,
+                it.confirmationStatus, it.confirmedAt, it.historical) }, state.searchHasMore, state.pantryHasMore,
+            state.issue, state.retryAfterSeconds, state.labelPhase, state.labelIssue,
+            state.requestedLabelIds, state.labelRetryAfterSeconds)
+    }
+}
+
+/** Display projections only; no authorization, recipe transformation, numeric rounding or IDs. */
+class MealPlanPresentation(val plan: PlanWire, val historical: Boolean, labels: Map<String, String>) {
+    private val names = labels.toMap()
+    val recipe: RecipeVersionWire? get() = (plan.recipeSnapshot as? WireField.Value)?.value
+    val title get() = recipe?.title ?: when (plan.status) {
+        "needsConfirmation" -> "A little clarity first."
+        "noMatch" -> "No fit this time."
+        "recalled" -> "This recipe is unavailable."
+        else -> "Your meal plan"
+    }
+    val recipeVisible get() = plan.status == "ready" && recipe != null && recipe?.reviewStatus !in setOf("recalled", "retired")
+    /** Exact recorded estimates only. Unknown cleanup is not zero or a selected preference. */
+    val effortSummary get(): String {
+        val current = recipe.takeIf { recipeVisible }
+        return "Total: ${current?.totalMinutes?.jsonToken?.let { "$it min" } ?: "unknown"}" +
+            " · Hands-on: ${current?.activeMinutes?.jsonToken?.let { "$it min" } ?: "unknown"}" +
+            " · Cleanup: ${current?.cleanupMinutes?.valueOrNull()?.jsonToken?.let { "$it min" } ?: "unknown"}"
+    }
+    val previewIngredients get() = if (recipeVisible) recipe!!.ingredients.map(::ingredientLine) else emptyList()
+    fun ingredientName(id: String): String? = recipeIngredientLabel(id, names)
+    fun ingredientLine(ingredient: IngredientAmountWire): String = buildString {
+        append(ingredient.quantity.jsonToken); append(' '); append(ingredient.unit); append(" · ")
+        append(ingredientName(ingredient.ingredientId.value) ?: "Ingredient label unavailable (${ingredient.ingredientId.value})")
+        if (ingredient.optional) append(" · optional")
+        (ingredient.preparation as? WireField.Value)?.value?.let { append(" · "); append(it) }
+    }
+    val unresolvedIngredientCount get() = (recipe?.ingredients.orEmpty() + plan.missingIngredients)
+        .map { it.ingredientId.value }.distinct().count { ingredientName(it) == null }
+    val reasons get() = plan.reasons.mapNotNull { it.text("label") }
+    val changes get() = plan.changes.mapNotNull { it.text("explanation") }
+    override fun toString() = "MealPlanPresentation(<redacted>)"
+}
+
+internal fun WireDocument.text(name: String) = (field(name) as? WireField.Value)?.value?.stringOrNull()
+internal fun <T> WireField<T>.valueOrNull(): T? = (this as? WireField.Value)?.value
+
+internal fun simplificationGoalLabel(goal: SimplificationGoal): String = when (goal) {
+    SimplificationGoal.LESS_PREP -> "Less prep"
+    SimplificationGoal.LESS_CLEANUP -> "Less cleanup"
+    SimplificationGoal.LESS_TIME -> "Less time"
+    SimplificationGoal.OVERALL -> "Easier overall"
+}
+internal fun simplificationDimensionLabel(dimension: SimplificationDimension): String = when (dimension) {
+    SimplificationDimension.ACTIVE_TIME -> "Hands-on time"
+    SimplificationDimension.TOTAL_TIME -> "Total time"
+    SimplificationDimension.CLEANUP_TIME -> "Cleanup time"
+    SimplificationDimension.UTENSILS -> "Utensil count"
+}
+/** Preserve recorded decimal spelling; missing cleanup is not zero. */
+internal fun simplificationEffortLine(label: String, before: String?, after: String?, suffix: String = " min") =
+    "$label: ${before?.let { it + suffix } ?: "unknown"} → ${after?.let { it + suffix } ?: "unknown"}"
+internal fun simplificationEnergyLabel(value: String) = when (value) {
+    "assemble" -> "Barely any energy"
+    "little" -> "A little effort"
+    "happy" -> "Happy to cook"
+    else -> "Not recorded"
+}
+internal fun simplificationModeLabel(value: String) = when (value) {
+    "cook" -> "Cook"
+    "assemble" -> "Assemble"
+    "improve" -> "Improve a meal"
+    else -> "Not recorded"
+}
+
+fun mealPhaseMessage(phase: MealFlowPhase): Pair<String, String> = when (phase) {
+    MealFlowPhase.EDITING -> "Your dinner, your pace." to "Choose what you have and what feels doable."
+    MealFlowPhase.LOADING -> "Working on it." to "Your saved request stays intact. Back is still available."
+    MealFlowPhase.NEEDS_CONFIRMATION -> "One quick check." to "Review the missing or changed inputs. Nothing has been assumed for you."
+    MealFlowPhase.NO_MATCH -> "No fit this time." to "Try changing your time, equipment or ingredients. Your exclusions stay in place."
+    MealFlowPhase.READY -> "A meal that fits." to "Review the ingredients, effort and any missing items."
+    MealFlowPhase.OFFLINE_DRAFT -> "Offline, not forgotten." to "Save a valid draft on this device. Matching waits for your explicit action online."
+    MealFlowPhase.RESOLVING -> "Checking that last request." to "It may have reached the server. Retry keeps the original request and key; it does not send your new edits."
+    MealFlowPhase.ERROR -> "That needs a second look." to "Your input is retained. Review it before trying again."
+    MealFlowPhase.UNAVAILABLE -> "This kitchen is unavailable." to "Return to your account or recovery screen. This view cannot restore access."
+}
+
+fun mealIssueMessage(issue: MealFlowIssue): String? = when (issue) {
+    MealFlowIssue.NONE -> null
+    MealFlowIssue.CONTEXT_REQUIRED -> "Load your preferences and pantry before matching."
+    MealFlowIssue.PREFERENCES_PENDING -> "Your preference changes are waiting to sync. Resolve those before matching."
+    MealFlowIssue.CONTEXT_CHANGED -> "Your inputs changed. Review them; an earlier unresolved command must be reconciled before a new request."
+    MealFlowIssue.REPLAY_EXPIRED -> "The retry window ended. The original command is retained; do not recreate it with a new key. Account recovery/support integration is still required."
+    MealFlowIssue.RETRY_LATER -> "A retry is not available yet. Your original request is retained."
+    MealFlowIssue.REQUEST_UNRESOLVED -> "The original request still needs a confirmed outcome. Edited inputs have not replaced it."
+    MealFlowIssue.INVALID_REPLY -> "The response could not be verified. No unverified recipe is shown as a new success."
+    MealFlowIssue.STORAGE -> "Your device could not confirm the save. Keep this screen open and try again."
+    MealFlowIssue.SESSION_UNAVAILABLE -> "Your session changed or ended. Private details have been hidden."
+    MealFlowIssue.DRAFT_EXPIRED -> "The retained draft expired. Start a new draft; unresolved commands are not silently discarded."
+    MealFlowIssue.NO_MORE_ALTERNATIVES -> "No further alternative is available for these inputs. You can revisit a saved candidate or edit the request."
+    MealFlowIssue.PARENT_CHANGED -> "The original meal changed on the server. Your exact request is retained; it has not been applied to a different or unseen meal."
+}

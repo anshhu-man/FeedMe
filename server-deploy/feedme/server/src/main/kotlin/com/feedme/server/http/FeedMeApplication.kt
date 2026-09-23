@@ -9,6 +9,7 @@ import com.feedme.server.runtime.ServiceLifecycle
 import com.feedme.server.runtime.ServiceLifecycleState
 import com.feedme.server.runtime.ServiceRequestAdmission
 import com.feedme.server.runtime.AccountCoreDependencyHealth
+import com.feedme.server.runtime.V1ReleaseScope
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
@@ -259,6 +260,12 @@ fun Application.feedMeLocalService(
                             "Local response violates the bundled contract"
                         }
                         call.respondText(text, ContentType.Application.Json, HttpStatusCode.OK)
+                    } else if (V1ReleaseScope.isDeferredOnly(operation)) {
+                        // The retained 98-screen blueprint includes later-only features. Keep
+                        // their direct API surface closed even if an adapter is wired by mistake.
+                        call.problem(bodyValidator, HttpStatusCode.ServiceUnavailable,
+                            "FEATURE_DEFERRED", "Feature unavailable",
+                            "This feature is not included in this release.", operation.id)
                     } else if (staff?.recipes != null && operation.id in staffRecipeHttpOperations) {
                         call.staffRecipeOperation(operation.id, staff, bodyValidator)
                     } else if (staff?.moderation != null && operation.id in staffModerationHttpOperations) {

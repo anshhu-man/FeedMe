@@ -8,6 +8,7 @@ internal class StaffModerationPolicy(val maxResponseBytes: Int, val cursorLifeti
 
 internal enum class StaffModerationFailureCode(val status: Int) {
     INPUT_INVALID(422), CASE_UNAVAILABLE(404), CASE_CONFLICT(409), VERSION_CONFLICT(412),
+    FLAG_UNAVAILABLE(404), FLAG_CONFLICT(409), REVIEW_REQUIRED(422),
     CURSOR_EXPIRED(410), NOT_CONFIGURED(503), STORAGE_UNAVAILABLE(503),
 }
 internal class StaffModerationFailure(val code: StaffModerationFailureCode) :

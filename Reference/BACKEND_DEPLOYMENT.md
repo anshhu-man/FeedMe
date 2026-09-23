@@ -1,13 +1,20 @@
 # Backend deployment source
 
-## Current V090 source handoff — 23 September 2026 IST
+## Current V091 source handoff — 23 September 2026 IST
 
 The credential-free [`server-deploy/`](../server-deploy/) handoff is refreshed
-from the current production source closure: **559 build inputs / 8,653,116
-bytes**, all **V001–V090** application migrations, the locked 207-operation
-server contract, public build metadata, reviewed Dockerfile and pinned public
-Supabase CA. Its context-manifest SHA-256 is
-`4ec5bccad0d50d687997d2f2a00030b5b5af38bdb88611a52724bbb6a637113a`.
+from the current production source closure: **734 inputs / 11,134,003 bytes**,
+all **V001–V091** application migrations, the locked 207-operation server
+contract, public build metadata, reviewed Dockerfile and pinned public Supabase
+CA. Its context-manifest SHA-256 is
+`dbea124f80c6e883393af9ef47c2f242d63ca4f67bdc07d73b706f70f447f750`.
+
+V091 adds the restrictive staff-flag serving path: an environment-scoped flag
+inventory, immutable action history, durable command receipt/outbox agreement,
+forced-RLS protection and only the complete enabled-to-disabled transition with
+rollout zero. The existing canonical list/PATCH routes and original confirmed
+staff action use current workforce, MFA and moderator admission. Enablement,
+partial rollout, repeat kills and stale revisions remain closed.
 
 The current packaged runtime validator also reports each staff capability
 explicitly—session, catalog drafts, catalog review, catalog publication and
@@ -53,15 +60,15 @@ is a startup/readiness correction only; it does not weaken erasure guards, enabl
 notifications or complete account deletion.
 
 The exact copied tree passed byte-for-byte comparison with the independently
-verified temporary export apart from ignored local build caches. An offline JDK
-17 build then passed
+verified temporary export apart from ignored local build caches. All 734 files
+and the manifest passed the publication policy and exact SHA/size scan; the 33
+publication-policy methods also passed. An offline JDK 17 build then passed
 `:verifyReleaseScope :server:installDist`: 44 included and 10 deferred features,
 all 98 canonical screens retained, dependency inventory accepted, 208 schemas /
-160 paths / 207 operations contract-locked, and all 17 requested Gradle tasks
-executed. The V090 context/preflight suites report 10 pass, 3 explicit skips and
-0 failures. Separately, 11 focused
-Kotlin validator checks and 15 protected-export checks pass, including the actual
-packaged Kotlin validator.
+160 paths / 207 operations contract-locked, and all 18 requested Gradle tasks
+executed. The free-V1 runtime-surface gate scanned 18 dependency sources and 569
+product sources. The selected Android/shared production source in this handoff is
+evidence for that gate only; it is not compiled or packaged into the server.
 
 No credential, cursor key, AI token, private Android configuration, signing
 material, build output or local evidence is included. This is a buildable source
@@ -70,7 +77,7 @@ current through V088, but the existing Render preview still runs the historical
 closed V032 dependency-hold revision. Current reviewed runtime configuration,
 provider/session-policy approval, recipe content and connected end-to-end
 acceptance remain required before replacing that service or calling the API live.
-Do not deploy this V090 source until the controlled hosted V089/V090 database
+Do not deploy this V091 source until the controlled hosted V089–V091 database
 rollout, optional staff grants, runtime configuration and postflight are complete.
 
 ## Current Render connection attempt — 19 September 2026 UTC

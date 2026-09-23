@@ -92,6 +92,11 @@ class AccountCoreRuntime private constructor(
             clock: Clock = Clock.systemUTC(),
             keySourceFactory: (SupabaseUserAccessConfiguration, SupabaseJwksHttpPolicy, Clock) -> HttpsSupabaseJwksSource,
         ): AccountCoreRuntime {
+            val background = if (config.reactionNotificationPolicy?.enabled == true)
+                setOf(V1ReleaseScope.reactionNotificationRegistration) else emptySet()
+            // The approved free V1 has no paid-offer registration. This check runs before
+            // provider/database assembly or listener binding, so a changed surface fails closed.
+            V1ReleaseScope.requireProductionRegistrations(background, paidOfferIds = emptySet())
             val catalog = ContractCatalog.bundled()
             val number = AtomicInteger()
             val executor = Executors.newFixedThreadPool(config.databaseParallelism) { task ->

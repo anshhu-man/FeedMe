@@ -22,10 +22,10 @@ Verification:
 - 12/12 focused Kotlin validator methods pass;
 - 16/16 protected exporter methods pass against the actual packaged Kotlin
   validator;
-- the exact 559-input / 8,653,116-byte context passes its 17-task offline JDK 17
-  release-scope/server-distribution build; and
+- the superseding exact 734-input / 11,134,003-byte V091 context passes its
+  18-task offline JDK 17 release-scope/server-distribution build; and
 - context-manifest SHA-256 is
-  `4ec5bccad0d50d687997d2f2a00030b5b5af38bdb88611a52724bbb6a637113a`.
+  `dbea124f80c6e883393af9ef47c2f242d63ca4f67bdc07d73b706f70f447f750`.
 
 The owner-only reviewed runtime configuration file is not present. Export is
 therefore correctly refused. A real staff policy registry binding, staff actor,

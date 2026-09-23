@@ -70,6 +70,36 @@ internal class StaffModerationCursors(private val currentKeyId: String, keys: Ma
         } catch (failure: StaffModerationFailure) { throw failure }
         catch (_: Exception) { invalid() }
     }
+    internal class FlagPosition(val through: Instant, val after: String, val expires: Instant)
+    internal fun encodeFlags(environment: String, actor: UUID, limit: Int, p: FlagPosition): String {
+        require(p.after.matches(Regex("[a-z][a-z0-9_.-]{1,100}")))
+        val encodedKey = Base64.getUrlEncoder().withoutPadding().encodeToString(p.after.toByteArray(Charsets.UTF_8))
+        val body = listOf(currentKeyId, p.through.epochSecond, p.through.nano, encodedKey,
+            p.expires.epochSecond, p.expires.nano).joinToString(".")
+        return "$body.${flagMac(currentKeyId, environment, actor, limit, body)}"
+    }
+    internal fun decodeFlags(value: String, environment: String, actor: UUID, limit: Int, now: Instant): FlagPosition {
+        try {
+            if (value.length !in 1..2048) invalid()
+            val parts = value.split('.')
+            if (parts.size != 7 || parts[0] !in keys || !parts[6].matches(Regex("[A-Za-z0-9_-]{43}"))) invalid()
+            val body = parts.take(6).joinToString(".")
+            if (!MessageDigest.isEqual(flagMac(parts[0], environment, actor, limit, body).toByteArray(), parts[6].toByteArray())) invalid()
+            fun time(at: Int): Instant {
+                val seconds = parts[at].toLong(); val nano = parts[at + 1].toInt()
+                if (seconds.toString() != parts[at] || nano.toString() != parts[at + 1] || nano !in 0..999999999) invalid()
+                return Instant.ofEpochSecond(seconds, nano.toLong())
+            }
+            val raw = Base64.getUrlDecoder().decode(parts[3]).toString(Charsets.UTF_8)
+            if (!raw.matches(Regex("[a-z][a-z0-9_.-]{1,100}")) ||
+                Base64.getUrlEncoder().withoutPadding().encodeToString(raw.toByteArray(Charsets.UTF_8)) != parts[3]) invalid()
+            val p = FlagPosition(time(1), raw, time(4))
+            if (p.through > now || p.expires <= p.through) invalid()
+            if (now >= p.expires) throw StaffModerationFailure(StaffModerationFailureCode.CURSOR_EXPIRED)
+            return p
+        } catch (failure: StaffModerationFailure) { throw failure }
+        catch (_: Exception) { invalid() }
+    }
     private fun mac(id: String, environment: String, actor: UUID, limit: Int, body: String) = Mac.getInstance("HmacSHA256").run {
         init(SecretKeySpec(keys.getValue(id), "HmacSHA256"))
         Base64.getUrlEncoder().withoutPadding().encodeToString(doFinal(
@@ -79,6 +109,11 @@ internal class StaffModerationCursors(private val currentKeyId: String, keys: Ma
         init(SecretKeySpec(keys.getValue(id), "HmacSHA256"))
         Base64.getUrlEncoder().withoutPadding().encodeToString(doFinal(
             "feedme.staff-audit-cursor.v1\u0000$environment\u0000$actor\u0000$limit\u0000$body".toByteArray(Charsets.UTF_8)))
+    }
+    private fun flagMac(id: String, environment: String, actor: UUID, limit: Int, body: String) = Mac.getInstance("HmacSHA256").run {
+        init(SecretKeySpec(keys.getValue(id), "HmacSHA256"))
+        Base64.getUrlEncoder().withoutPadding().encodeToString(doFinal(
+            "feedme.staff-flags-cursor.v1\u0000$environment\u0000$actor\u0000$limit\u0000$body".toByteArray(Charsets.UTF_8)))
     }
     private fun invalid(): Nothing = throw StaffModerationFailure(StaffModerationFailureCode.INPUT_INVALID)
     override fun toString() = "StaffModerationCursors(<redacted>)"

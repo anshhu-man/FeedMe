@@ -15,7 +15,8 @@ import kotlinx.coroutines.*
 import kotlinx.serialization.json.*
 
 internal val staffModerationHttpOperations = setOf(
-    "adminListReports", "adminGetCase", "adminClaimReport", "adminActOnReport", "adminListAudit", "adminGetHealth")
+    "adminListReports", "adminGetCase", "adminClaimReport", "adminActOnReport", "adminListAudit", "adminGetHealth",
+    "adminListFlags", "adminUpdateFlag")
 
 /** Every operation obtains actual current moderator/MFA authority in its own audited
  * transaction. A consumer token, queue item or prior HOME observation is not authority. */
@@ -28,14 +29,15 @@ internal suspend fun ApplicationCall.staffModerationOperation(operation: String,
         currentCoroutineContext().ensureActive()
         val store = configuration.moderation ?: throw StaffModerationHttpFailure(503, "STAFF_NOT_CONFIGURED")
         if (operation !in staffModerationHttpOperations) invalidModeration()
-        val writing = operation in setOf("adminClaimReport", "adminActOnReport")
+        val writing = operation in setOf("adminClaimReport", "adminActOnReport", "adminUpdateFlag")
         val pathName = when (operation) {
             "adminGetCase" -> "caseId"
-            "adminListReports", "adminListAudit", "adminGetHealth" -> null
+            "adminUpdateFlag" -> "flagKey"
+            "adminListReports", "adminListAudit", "adminGetHealth", "adminListFlags" -> null
             else -> "reportId"
         }
         if (parameters.names() != (pathName?.let { setOf(it) } ?: emptySet<String>())) invalidModeration()
-        if (request.queryParameters.names().any { operation !in setOf("adminListReports", "adminListAudit") || it !in setOf("cursor", "limit") }) invalidModeration()
+        if (request.queryParameters.names().any { operation !in setOf("adminListReports", "adminListAudit", "adminListFlags") || it !in setOf("cursor", "limit") }) invalidModeration()
         fun query(name: String): String? = request.queryParameters.getAll(name)?.let {
             if (it.size != 1 || it.single().any(Char::isISOControl)) invalidModeration(); it.single()
         }
@@ -46,9 +48,13 @@ internal suspend fun ApplicationCall.staffModerationOperation(operation: String,
             if (!CanonicalFormats.accepts("uuid", value)) invalidModeration()
             return UUID.fromString(value)
         }
-        val target = pathName?.let { name -> parameters.getAll(name)?.let {
-            if (it.size != 1) invalidModeration(); uuid(it.single())
+        val pathValue = pathName?.let { name -> parameters.getAll(name)?.let {
+            if (it.size != 1 || it.single().any(Char::isISOControl)) invalidModeration(); it.single()
         } ?: invalidModeration() }
+        val target = pathValue?.takeUnless { pathName == "flagKey" }?.let(::uuid)
+        val flagKey = pathValue?.takeIf { pathName == "flagKey" }?.also {
+            if (!it.matches(Regex("[a-z][a-z0-9_.-]{1,100}"))) invalidModeration()
+        }
         val cursor = query("cursor")?.also { if (it.length !in 1..4096) invalidModeration() }
         val limit = query("limit")?.let {
             if (!it.matches(Regex("[1-9][0-9]?"))) invalidModeration()
@@ -65,13 +71,13 @@ internal suspend fun ApplicationCall.staffModerationOperation(operation: String,
         val key = if (writing) keyText?.let(::uuid) ?: invalidModeration() else {
             if (keyText != null || match != null) invalidModeration(); null
         }
-        if (operation == "adminActOnReport") {
+        if (operation in setOf("adminActOnReport", "adminUpdateFlag")) {
             if (match == null) throw StaffModerationHttpFailure(428, "PRECONDITION_REQUIRED")
             if (!match.matches(Regex("\"[1-9][0-9]{0,18}\"")) || match.removeSurrounding("\"").toLongOrNull() == null) invalidModeration()
         } else if (match != null) invalidModeration()
         val length = header(HttpHeaders.ContentLength)?.let {
             if (!it.matches(Regex("[0-9]{1,5}"))) invalidModeration()
-            it.toLong().also { count -> if (count > if (writing) 16384L else 0L) invalidModeration() }
+            it.toLong().also { count -> if (count > when { operation == "adminUpdateFlag" -> 4096L; writing -> 16384L; else -> 0L }) invalidModeration() }
         }
         val transfer = header(HttpHeaders.TransferEncoding)
         if (transfer != null && (!writing || length != null || transfer.lowercase() != "chunked")) invalidModeration()
@@ -81,7 +87,8 @@ internal suspend fun ApplicationCall.staffModerationOperation(operation: String,
             if (media == null || !Regex("application/json(?:\\s*;\\s*charset\\s*=\\s*(?:utf-8|\"utf-8\"))?", RegexOption.IGNORE_CASE).matches(media))
                 throw StaffModerationHttpFailure(400, "UNSUPPORTED_MEDIA")
         } else if (media != null) invalidModeration()
-        val bytes = readBoundedHttpBody(receiveChannel(), if (writing) 16384 else 0, length, ::invalidModeration)
+        val bodyLimit = if (operation == "adminUpdateFlag") 4096 else if (writing) 16384 else 0
+        val bytes = readBoundedHttpBody(receiveChannel(), bodyLimit, length, ::invalidModeration)
         val body = try {
             if (!writing) { if (bytes.isNotEmpty()) invalidModeration(); null }
             else {
@@ -107,6 +114,8 @@ internal suspend fun ApplicationCall.staffModerationOperation(operation: String,
                 "adminListReports" -> store.adminListReports(subject, cursor, limit, trace)
                 "adminListAudit" -> store.adminListAudit(subject, cursor, limit, trace)
                 "adminGetHealth" -> store.adminGetHealth(subject, trace)
+                "adminListFlags" -> store.adminListFlags(subject, cursor, limit, trace)
+                "adminUpdateFlag" -> moderationReply(store.adminUpdateFlag(subject, flagKey!!, key!!, match!!, body!!, trace))
                 "adminGetCase" -> store.adminGetCase(subject, target!!, trace)
                 "adminClaimReport" -> moderationReply(store.adminClaimReport(subject, target!!, key!!, body!!, trace))
                 "adminActOnReport" -> moderationReply(when (body!!["action"]) {

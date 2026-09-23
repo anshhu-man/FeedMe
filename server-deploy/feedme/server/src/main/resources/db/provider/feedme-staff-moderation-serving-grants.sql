@@ -1,6 +1,6 @@
 -- OPTIONAL staff-moderation serving privileges. Apply explicitly, inside an
 -- installer-owned transaction, after the canonical account runtime grants and
--- migrations V001--V090. This file creates no role, password, staff actor,
+-- migrations V001--V091. This file creates no role, password, staff actor,
 -- moderator enrollment, policy, incident, feature flag or public route.
 --
 -- The application role remains unable to edit workforce or moderator authority.
@@ -9,14 +9,15 @@
 -- needed for a removal decision, and three aggregate health columns. Keep auth,
 -- staff and safety outside the client Data API.
 
-SELECT pg_catalog.pg_advisory_xact_lock(x'464545444d450090'::bit(64)::bigint);
+SELECT pg_catalog.pg_advisory_xact_lock(x'464545444d450091'::bit(64)::bigint);
 
 LOCK TABLE ONLY staff.publication_policies, ONLY staff.actors,
     ONLY staff.moderator_enrollments, ONLY auth.sessions, ONLY auth.mfa_factors,
     ONLY safety.reports, ONLY safety.report_evidence, ONLY safety.moderation_cases,
     ONLY safety.moderation_actions, ONLY safety.moderation_access_audit,
     ONLY safety.moderation_removals, ONLY social.posts, ONLY social.thread_messages,
-    ONLY platform.media_processing_jobs IN ACCESS SHARE MODE;
+    ONLY platform.media_processing_jobs, ONLY platform.feature_flags,
+    ONLY platform.feature_flag_actions IN ACCESS SHARE MODE;
 
 DO $feedme_staff_serving$
 DECLARE api pg_catalog.pg_roles%ROWTYPE; wanted record; relation record;
@@ -44,7 +45,8 @@ BEGIN
         (77,'staff_moderator_enrollments','7370ae2a9ad96dc639512d5c858a880661689ac11ac2f21fdb795b83f6121329'),
         (78,'staff_moderation_workflow','103771dbf7e1bdcedf3753d3960e5f87bf2639503b96d662b6b969a89fd2f405'),
         (80,'staff_moderation_removal','3ab00b252bec17c04f2bb13e3ff470c51edc3bc54fb13b279078ae78dc5c2fa6'),
-        (90,'staff_operational_health_reader','13b093289a20928b91bbf439714a788525ea179bbe3ec52a87e5ce47e8d20b0d')
+        (90,'staff_operational_health_reader','13b093289a20928b91bbf439714a788525ea179bbe3ec52a87e5ce47e8d20b0d'),
+        (91,'restrictive_staff_feature_flags','5d80a16f31b52bb031731f9b895181e6309ba2936b382cf12d7eb85bf4f1f3d8')
     ) x(version,description,checksum) LOOP
         IF NOT EXISTS (SELECT 1 FROM platform.schema_migrations m
             WHERE m.version=wanted.version AND m.description=wanted.description
@@ -55,7 +57,8 @@ BEGIN
     FOR wanted IN SELECT * FROM (VALUES
         ('staff','publication_policies'),('staff','actors'),('staff','moderator_enrollments'),
         ('safety','reports'),('safety','report_evidence'),('safety','moderation_cases'),
-        ('safety','moderation_actions'),('safety','moderation_access_audit'),('safety','moderation_removals')
+        ('safety','moderation_actions'),('safety','moderation_access_audit'),('safety','moderation_removals'),
+        ('platform','feature_flags'),('platform','feature_flag_actions')
     ) x(schema_name,table_name) LOOP
         SELECT c.* INTO STRICT relation FROM pg_catalog.pg_class c
             JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
@@ -90,6 +93,12 @@ BEGIN
         OR pg_catalog.has_table_privilege(api.oid,'auth.sessions','DELETE,TRUNCATE,TRIGGER')
         OR pg_catalog.has_table_privilege(api.oid,'auth.mfa_factors','DELETE,TRUNCATE,TRIGGER') THEN
         RAISE EXCEPTION 'Staff-moderation role already has authority-changing privileges';
+    END IF;
+    IF pg_catalog.has_table_privilege(api.oid,'platform.feature_flags','INSERT,DELETE,TRUNCATE,TRIGGER')
+        OR pg_catalog.has_table_privilege(api.oid,'platform.feature_flags','UPDATE WITH GRANT OPTION')
+        OR pg_catalog.has_table_privilege(api.oid,'platform.feature_flag_actions','UPDATE,DELETE,TRUNCATE,TRIGGER')
+        OR pg_catalog.has_table_privilege(api.oid,'platform.feature_flag_actions','INSERT WITH GRANT OPTION') THEN
+        RAISE EXCEPTION 'Staff feature-flag role already has prohibited privileges';
     END IF;
 END;
 $feedme_staff_serving$;
@@ -126,6 +135,14 @@ GRANT UPDATE(report_id) ON safety.report_evidence TO feedme_api;
 GRANT UPDATE(id) ON safety.moderation_actions,safety.moderation_removals,
     social.posts,social.thread_messages TO feedme_api;
 GRANT SELECT(environment,state,created_at) ON platform.media_processing_jobs TO feedme_api;
+GRANT SELECT ON platform.feature_flags,platform.feature_flag_actions TO feedme_api;
+GRANT UPDATE(enabled,rollout_percent,revision,last_action_id,updated_at)
+    ON platform.feature_flags TO feedme_api;
+GRANT INSERT(environment,id,flag_key,flag_revision,actor_id,provider_session_id,
+    authority_revision,operation_id,command_key,request_sha256,request_text,if_match,
+    reason,response_text,response_sha256,event_id,trace_id,created_at)
+    ON platform.feature_flag_actions TO feedme_api;
+GRANT UPDATE(id) ON platform.feature_flag_actions TO feedme_api;
 
 DO $feedme_staff_serving_verify$
 DECLARE api oid; wanted record;
@@ -143,7 +160,8 @@ BEGIN
         ('staff.publication_policies','SELECT'),('staff.actors','SELECT'),('staff.moderator_enrollments','SELECT'),
         ('safety.reports','SELECT'),('safety.report_evidence','SELECT'),('safety.moderation_cases','SELECT'),
         ('safety.moderation_actions','SELECT'),('safety.moderation_access_audit','SELECT'),
-        ('safety.moderation_removals','SELECT'),('social.posts','SELECT'),('social.thread_messages','SELECT')
+        ('safety.moderation_removals','SELECT'),('social.posts','SELECT'),('social.thread_messages','SELECT'),
+        ('platform.feature_flags','SELECT'),('platform.feature_flag_actions','SELECT')
     ) x(relation_name,privilege_name) LOOP
         IF NOT pg_catalog.has_table_privilege(api,wanted.relation_name,wanted.privilege_name)
             OR pg_catalog.has_table_privilege(api,wanted.relation_name,wanted.privilege_name||' WITH GRANT OPTION') THEN
@@ -168,7 +186,12 @@ BEGIN
         ('safety.moderation_actions','UPDATE',ARRAY['id']::text[]),
         ('safety.moderation_removals','UPDATE',ARRAY['id']::text[]),
         ('social.posts','UPDATE',ARRAY['id']::text[]),
-        ('social.thread_messages','UPDATE',ARRAY['id']::text[])
+        ('social.thread_messages','UPDATE',ARRAY['id']::text[]),
+        ('platform.feature_flags','UPDATE',ARRAY['enabled','rollout_percent','revision','last_action_id','updated_at']::text[]),
+        ('platform.feature_flag_actions','INSERT',ARRAY['environment','id','flag_key','flag_revision','actor_id',
+            'provider_session_id','authority_revision','operation_id','command_key','request_sha256','request_text','if_match',
+            'reason','response_text','response_sha256','event_id','trace_id','created_at']::text[]),
+        ('platform.feature_flag_actions','UPDATE',ARRAY['id']::text[])
     ) x(relation_name,privilege_name,columns) LOOP
         IF EXISTS (SELECT 1 FROM unnest(wanted.columns) column_name
             WHERE NOT pg_catalog.has_column_privilege(api,wanted.relation_name,column_name,wanted.privilege_name)
@@ -184,7 +207,11 @@ BEGIN
         OR pg_catalog.has_any_column_privilege(api,'staff.moderator_enrollments','INSERT,UPDATE,REFERENCES')
         OR pg_catalog.has_table_privilege(api,'safety.moderation_actions','DELETE,TRUNCATE,TRIGGER')
         OR pg_catalog.has_table_privilege(api,'safety.moderation_access_audit','UPDATE,DELETE,TRUNCATE,TRIGGER')
-        OR pg_catalog.has_table_privilege(api,'safety.moderation_removals','UPDATE,DELETE,TRUNCATE,TRIGGER') THEN
+        OR pg_catalog.has_table_privilege(api,'safety.moderation_removals','UPDATE,DELETE,TRUNCATE,TRIGGER')
+        OR pg_catalog.has_table_privilege(api,'platform.feature_flags','INSERT,DELETE,TRUNCATE,TRIGGER')
+        OR pg_catalog.has_table_privilege(api,'platform.feature_flags','UPDATE WITH GRANT OPTION')
+        OR pg_catalog.has_table_privilege(api,'platform.feature_flag_actions','UPDATE,DELETE,TRUNCATE,TRIGGER')
+        OR pg_catalog.has_table_privilege(api,'platform.feature_flag_actions','INSERT WITH GRANT OPTION') THEN
         RAISE EXCEPTION 'Staff-moderation serving role has prohibited authority';
     END IF;
 END;

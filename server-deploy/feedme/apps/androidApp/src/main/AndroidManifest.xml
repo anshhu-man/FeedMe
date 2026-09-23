@@ -1,0 +1,53 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- The shipping composition is foreground/timer-only. WorkManager is retained as
+         compile-time support for exact historical worker cancellation, but no production
+         owner initializes or schedules it. Do not request dormant background privileges. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" tools:node="remove" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" tools:node="remove" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" tools:node="remove" />
+    <application android:name=".FeedMeApplication" android:label="${feedmeAppLabel}"
+        android:icon="@drawable/ic_feedme" android:theme="@style/Theme.FeedMe"
+        android:allowBackup="false" android:fullBackupContent="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:usesCleartextTraffic="false" android:networkSecurityConfig="@xml/network_security_config">
+        <activity android:name=".GuestActivity" android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".SupabaseOAuthCallbackActivity" android:exported="true"
+            android:theme="@android:style/Theme.NoDisplay" android:noHistory="true"
+            android:excludeFromRecents="true" android:taskAffinity="">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="${applicationId}" android:host="auth" android:path="/callback" />
+            </intent-filter>
+        </activity>
+        <!-- Full HTML-backed product starts at AUTH_WELCOME. Offline release is a separate unchanged module. -->
+        <activity android:name=".AccountActivity" android:exported="true"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- Cleanup identity only. No background timer delivery or automatic account restore. -->
+        <receiver android:name=".AccountTimerCancellationReceiver" android:enabled="false" android:exported="false" />
+        <!-- Workers remain unconfigured. Do not auto-start a replacement worker. -->
+        <provider android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup" android:exported="false" tools:node="merge">
+            <meta-data android:name="androidx.work.WorkManagerInitializer" tools:node="remove" />
+        </provider>
+        <!-- Removing only the initializer still leaves WorkManager's dormant services and
+             receivers in the merged manifest. Exclude all of them until a reviewed product
+             feature owns explicit initialization, scheduling, permissions and recovery. -->
+        <service android:name="androidx.work.impl.background.systemjob.SystemJobService" tools:node="remove" />
+        <service android:name="androidx.work.impl.foreground.SystemForegroundService" tools:node="remove" />
+        <receiver android:name="androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver" tools:node="remove" />
+        <receiver android:name="androidx.work.impl.background.systemalarm.RescheduleReceiver" tools:node="remove" />
+        <receiver android:name="androidx.work.impl.diagnostics.DiagnosticsReceiver" tools:node="remove" />
+    </application>
+</manifest>

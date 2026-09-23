@@ -25,6 +25,25 @@ val verifyReleaseScope by tasks.registering(Exec::class) {
         "../outputs/biteclub_blueprint/registry/screen_registry.json")
 }
 
+// Production registration/source gate for the approved free V1. Final APK/AAB inspection
+// separately pins the merged component surface; this check does not claim artifact acceptance.
+val verifyV1RuntimeSurface by tasks.registering(Exec::class) {
+    group = "verification"
+    description = "Rejects deferred background registrations and paid-offer activation in free V1."
+    workingDir(rootDir)
+    commandLine("node", "scripts/verify-v1-runtime-surface.mjs")
+    inputs.files("scripts/verify-v1-runtime-surface.mjs",
+        "server/src/main/kotlin/com/feedme/server/runtime/AccountCoreRuntime.kt",
+        "server/src/main/kotlin/com/feedme/server/runtime/V1ReleaseScope.kt",
+        "apps/androidApp/src/main/AndroidManifest.xml", "gradle/libs.versions.toml")
+    inputs.files(fileTree(rootDir) {
+        include("**/*.gradle.kts", "apps/androidApp/src/main/**/*.kt",
+            "shared/app/src/commonMain/**/*.kt", "shared/app/src/androidMain/**/*.kt",
+            "shared/app/src/iosMain/**/*.kt", "server/src/main/**/*.kt")
+        exclude("**/build/**", "docs/**")
+    })
+}
+
 // Coverage of declared catalog licenses only; not a resolved SBOM or legal clearance.
 // No outputs are declared: the local, network-free check runs whenever its task is included.
 val verifyDependencyLicenses by tasks.registering(Exec::class) {
@@ -38,8 +57,10 @@ val verifyDependencyLicenses by tasks.registering(Exec::class) {
 
 subprojects {
     tasks.configureEach {
-        if (name == "check" || name == "build" || name.startsWith("assemble") || name.startsWith("bundle")) {
+        if (name == "check" || name == "build" || name == "distZip" || name == "distTar" ||
+            name == "installDist" || name.startsWith("assemble") || name.startsWith("bundle")) {
             dependsOn(rootProject.tasks.named("verifyReleaseScope"))
+            dependsOn(rootProject.tasks.named("verifyV1RuntimeSurface"))
         }
         // Direct test/compiler/package entry points must not rely on an incidental
         // assemble-resource task to bring this check into their dependency graph.
