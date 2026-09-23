@@ -1,0 +1,63 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {
+  staffModerationGrantOperation,
+  splitStaffModerationGrantResource,
+  staffModerationPreflightSql,
+  staffModerationPostflightSql,
+  staffModerationApplySql,
+} from './feedme-staff-moderation-role.mjs';
+
+const resource = fs.readFileSync(new URL(
+  '../server/src/main/resources/db/provider/feedme-staff-moderation-serving-grants.sql',
+  import.meta.url), 'utf8');
+
+test('operation parser defaults to a credential-free plan and accepts no target override', () => {
+  assert.equal(staffModerationGrantOperation([]), '--plan');
+  assert.equal(staffModerationGrantOperation(['--plan']), '--plan');
+  assert.equal(staffModerationGrantOperation(['--preflight']), '--preflight');
+  assert.equal(staffModerationGrantOperation(['--apply']), '--apply');
+  for (const args of [['--apply','again'],['--project','other'],['--check'],['']])
+    assert.throws(() => staffModerationGrantOperation(args));
+});
+
+test('reviewed resource has one preflight, fifteen grants and one postflight', () => {
+  const parts = splitStaffModerationGrantResource(resource);
+  assert.equal(parts.grants.length, 15);
+  assert.match(parts.prefix, /\(90,'staff_operational_health_reader'/);
+  assert.match(parts.prefix, /current_user='feedme_api'/);
+  assert.doesNotMatch(parts.explicit, /^\s*(?:ALTER|CREATE|DROP|DELETE|INSERT|UPDATE|TRUNCATE)\b/im);
+  assert.match(parts.verifier, /has prohibited authority/);
+  for (const statement of parts.grants) {
+    assert.match(statement, /^GRANT /);
+    assert.match(statement, / TO feedme_api;$/);
+    assert.doesNotMatch(statement, /WITH GRANT OPTION|PUBLIC|service_role|authenticated|anon/);
+  }
+});
+
+test('preflight and postflight are rollback-only while apply has one explicit commit', () => {
+  const parts = splitStaffModerationGrantResource(resource);
+  const preflight = staffModerationPreflightSql(parts);
+  const postflight = staffModerationPostflightSql(parts);
+  const apply = staffModerationApplySql(resource);
+  for (const sql of [preflight,postflight]) {
+    assert.match(sql, /^BEGIN READ ONLY;/);
+    assert.equal((sql.match(/\bROLLBACK;/g) || []).length, 1);
+    assert.equal((sql.match(/\bCOMMIT;/g) || []).length, 0);
+    assert.match(sql, /current_user<>'postgres'/);
+  }
+  assert.doesNotMatch(preflight, /^GRANT /m);
+  assert.match(postflight, /feedme_staff_serving_verify/);
+  assert.match(apply, /^BEGIN;/);
+  assert.equal((apply.match(/\bCOMMIT;/g) || []).length, 1);
+  assert.equal((apply.match(/\bROLLBACK;/g) || []).length, 0);
+  assert.equal((apply.match(/^GRANT /gm) || []).length, 15);
+});
+
+test('any resource edit, extra grant or marker drift is refused', () => {
+  for (const changed of [resource + '\n',resource.replace('TO feedme_api;','TO PUBLIC;'),
+    resource.replace("(90,'staff_operational_health_reader'","(89,'staff_operational_health_reader'"),
+    resource.replace('EXPLICIT_GRANTS_BEGIN','EXPLICIT_GRANTS_CHANGED')])
+    assert.throws(() => splitStaffModerationGrantResource(changed));
+});

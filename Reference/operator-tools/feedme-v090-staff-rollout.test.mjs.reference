@@ -1,0 +1,112 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {
+  rolloutOperation,
+  verifyRolloutArtifacts,
+  parseRolloutChildReport,
+  runRollout,
+} from './feedme-v090-staff-rollout.mjs';
+
+const names = [
+  'server/src/main/resources/db/migration/V089__never_dispatched_export_erasure.sql',
+  'server/src/main/resources/db/migration/V090__staff_operational_health_reader.sql',
+  'server/src/main/resources/db/provider/feedme-staff-moderation-serving-grants.sql',
+  'deploy/supabase-migrate.mjs',
+  'deploy/feedme-staff-moderation-role.mjs',
+];
+const files = Object.fromEntries(names.map(name => [name, fs.readFileSync(new URL(`../${name}`, import.meta.url))]));
+const versions = count => Array.from({length:count}, (_, index) => index + 1);
+const migration = (status, applied, pending) => ({project:'bljskfhazmnzmhkbkcev',status,
+  appliedVersions:applied,pendingVersions:pending});
+const grant = status => ({project:'bljskfhazmnzmhkbkcev',status});
+
+test('parser defaults to a credential-free plan and only accepts the exact rollout phrase', () => {
+  assert.equal(rolloutOperation([]), '--plan');
+  assert.equal(rolloutOperation(['--plan']), '--plan');
+  assert.equal(rolloutOperation(['--preflight']), '--preflight');
+  assert.equal(rolloutOperation(['--apply-v089-v090-and-staff-grants']), '--apply');
+  for (const args of [['--apply'],['--project','other'],['--preflight','again'],['PRIVATE']])
+    assert.throws(() => rolloutOperation(args), error => !error.message.includes('PRIVATE'));
+});
+
+test('the rollout pins both migrations, the exact optional grants and both guarded child tools', () => {
+  const pins = verifyRolloutArtifacts(files);
+  assert.deepEqual(Object.keys(pins).sort(), names.sort());
+  for (const [name, bytes] of Object.entries(files)) {
+    const changed = {...files, [name]:Buffer.concat([bytes, Buffer.from('\n')])};
+    assert.throws(() => verifyRolloutArtifacts(changed));
+  }
+  assert.throws(() => verifyRolloutArtifacts({...files, 'deploy/extra.mjs':Buffer.from('extra')}));
+});
+
+test('child report parsing accepts one fixed-project report and never echoes private output', () => {
+  const value = parseRolloutChildReport(Buffer.from('header\n'+JSON.stringify(
+    migration('migrations-pending', versions(88), [89,90]))+'\nnote PRIVATE\n'), ['migrations-pending']);
+  assert.deepEqual(value.pendingVersions, [89,90]);
+  for (const input of ['PRIVATE', '{}\n{}', JSON.stringify({project:'other',status:'migrations-pending'}),
+    JSON.stringify({project:'bljskfhazmnzmhkbkcev',status:'unexpected'})])
+    assert.throws(() => parseRolloutChildReport(input, ['migrations-pending']),
+      error => !error.message.includes('PRIVATE'));
+});
+
+test('read-only preflight at exact V088 stops before any grant or write step', () => {
+  const calls = [];
+  const result = runRollout('--preflight', step => {
+    calls.push(step);
+    return migration('migrations-pending', versions(88), [89,90]);
+  });
+  assert.deepEqual(calls, ['migration-check']);
+  assert.equal(result.status, 'ready-for-v089-v090-and-staff-grant-approval');
+  assert.equal(result.changed, false);
+  assert.equal(result.grantsChecked, false);
+});
+
+test('approved rollout enforces migration then grant order and verifies both final states', () => {
+  const calls = [];
+  const replies = [
+    migration('migrations-pending', versions(88), [89,90]),
+    {project:'bljskfhazmnzmhkbkcev',status:'migrations-completed'},
+    migration('history-current', versions(90), []),
+    grant('staff-moderation-grants-pending'),
+    grant('staff-moderation-grants-installed-and-verified'),
+    grant('staff-moderation-grants-current'),
+  ];
+  const result = runRollout('--apply', step => { calls.push(step); return replies.shift(); });
+  assert.deepEqual(calls, ['migration-check','migration-apply','migration-check',
+    'grant-preflight','grant-apply','grant-preflight']);
+  assert.equal(result.status, 'v090-and-staff-grants-current');
+  assert.equal(result.changed, true);
+  assert.equal(result.automaticRetry, false);
+});
+
+test('already-current rollout is a verified no-op', () => {
+  const calls = [];
+  const result = runRollout('--apply', step => {
+    calls.push(step);
+    return step === 'migration-check' ? migration('history-current', versions(90), []) :
+      grant('staff-moderation-grants-current');
+  });
+  assert.deepEqual(calls, ['migration-check','grant-preflight']);
+  assert.equal(result.changed, false);
+  assert.equal(result.status, 'v090-and-staff-grants-current');
+});
+
+test('unexpected migration history or an unverified write stops before the next phase', () => {
+  for (const report of [
+    migration('migrations-pending', versions(87), [88,89,90]),
+    migration('history-current', versions(89), []),
+    migration('migrations-pending', versions(88), [90]),
+  ]) {
+    const calls = [];
+    assert.throws(() => runRollout('--apply', step => { calls.push(step); return report; }));
+    assert.deepEqual(calls, ['migration-check']);
+  }
+  const calls = [];
+  assert.throws(() => runRollout('--apply', step => {
+    calls.push(step);
+    if (step === 'migration-check') return migration('migrations-pending', versions(88), [89,90]);
+    return {project:'bljskfhazmnzmhkbkcev',status:'failed-or-interrupted'};
+  }));
+  assert.deepEqual(calls, ['migration-check','migration-apply']);
+});

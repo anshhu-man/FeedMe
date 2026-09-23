@@ -1,0 +1,60 @@
+// Pure synthetic tests only; never open .local, invoke Java, or connect to a database.
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {migrationOperation, decodeDatabasePassword, validateSupabaseCertificate,
+  migrationEnvironment, safeMigrationResult} from './supabase-migrate.mjs';
+
+test('check is default and only a sole apply argument authorizes the apply mode', () => {
+  assert.equal(migrationOperation([]), '--check');
+  assert.equal(migrationOperation(['--check']), '--check');
+  assert.equal(migrationOperation(['--apply']), '--apply');
+  for (const args of [['--check', '--apply'], ['--apply', 'PRIVATE'], ['--host', 'other'], ['--help']])
+    assert.throws(() => migrationOperation(args), error => !error.message.includes('PRIVATE'));
+});
+
+test('password decoding removes only one line ending and rejects unsafe bounded input without echo', () => {
+  for (const suffix of ['', '\n', '\r\n']) assert.equal(decodeDatabasePassword(Buffer.from(`synthetic password ${suffix}`)), 'synthetic password ');
+  for (const input of [Buffer.alloc(0), Buffer.from('  '), Buffer.from('PRIVATE\n\n'), Buffer.from('PRIVATE\0'),
+    Buffer.from([0xc3, 0x28]), Buffer.from('\ufeffPRIVATE'), Buffer.from('x'.repeat(4097)), Buffer.alloc(16387)])
+    assert.throws(() => decodeDatabasePassword(input), error => !error.message.includes('PRIVATE') && error.cause === undefined);
+});
+
+test('migration environment contains only the approved project and fixed transport inputs', () => {
+  const env = migrationEnvironment('synthetic-only', '/absolute/public-ca.crt');
+  assert.equal(env.FEEDME_MIGRATION_ENVIRONMENT, 'production');
+  assert.equal(env.FEEDME_MIGRATION_DB_HOST, 'aws-0-ap-southeast-2.pooler.supabase.com');
+  assert.equal(env.FEEDME_MIGRATION_DB_PORT, '5432');
+  assert.equal(env.FEEDME_MIGRATION_DB_NAME, 'postgres');
+  assert.equal(env.FEEDME_MIGRATION_DB_USER, 'postgres.bljskfhazmnzmhkbkcev');
+  assert.equal(env.FEEDME_MIGRATION_DB_PASSWORD, 'synthetic-only');
+  assert.equal(env.FEEDME_MIGRATION_DB_SSL_ROOT_CERT, '/absolute/public-ca.crt');
+  assert.deepEqual(Object.keys(env).sort(), ['JAVA_HOME', 'PATH', 'FEEDME_MIGRATION_ENVIRONMENT',
+    ...['HOST', 'PORT', 'NAME', 'USER', 'PASSWORD', 'SSL_ROOT_CERT'].map(suffix => `FEEDME_MIGRATION_DB_${suffix}`)].sort());
+});
+
+test('untrusted certificate inputs never reveal bytes or accept a file hash instead of DER identity', () => {
+  for (const bytes of [Buffer.from('PRIVATE'), Buffer.alloc(16385), Buffer.from('-----BEGIN CERTIFICATE-----\nPRIVATE\n-----END CERTIFICATE-----')])
+    assert.throws(() => validateSupabaseCertificate(bytes), error => !error.message.includes('PRIVATE') && error.cause === undefined);
+});
+
+test('child diagnostics stay private while pending versions and unknown apply outcomes remain distinct', () => {
+  const pending = safeMigrationResult('--check', {status: 3, stdout: Buffer.from('Applied versions: 99\nPending versions: 100\nPRIVATE'),
+    stderr: Buffer.from('Applied versions: 1,2\nPending versions: 3,4\nPRIVATE')});
+  assert.equal(pending.status, 'migrations-pending'); assert.deepEqual(pending.appliedVersions, [1, 2]);
+  assert.deepEqual(pending.pendingVersions, [3, 4]); assert.equal(JSON.stringify(pending).includes('PRIVATE'), false);
+  const current = safeMigrationResult('--check', {status: 0, stdout: Buffer.from('Applied versions: 1,2\nPending versions: none'),
+    stderr: Buffer.from('Applied versions: 99\nPending versions: 100\nPRIVATE')});
+  assert.deepEqual(current.appliedVersions, [1, 2]); assert.deepEqual(current.pendingVersions, []);
+  for (const status of [1, 2, 4, 130]) {
+    const failed = safeMigrationResult('--check', {status, stdout: Buffer.from('Applied versions: 99\nPending versions: 100'),
+      stderr: Buffer.from('Applied versions: 99\nPending versions: 100')});
+    assert.equal(Object.hasOwn(failed, 'appliedVersions'), false); assert.equal(Object.hasOwn(failed, 'pendingVersions'), false);
+  }
+  for (const child of [{status: null, signal: 'SIGTERM'}, {status: 0, error: new Error('PRIVATE')}, {status: 99}, {status: 1}]) {
+    const result = safeMigrationResult('--apply', child);
+    assert.equal(result.status, 'failed-or-interrupted'); assert.equal(result.exitCode, 1);
+    assert.equal(JSON.stringify(result).includes('PRIVATE'), false);
+  }
+  assert.equal(safeMigrationResult('--check', {status: 4}).status, 'history-incompatible');
+  assert.equal(safeMigrationResult('--apply', {status: 0}).status, 'migrations-completed');
+});
