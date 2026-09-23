@@ -26,10 +26,10 @@ migrations before adding grants.
 
 - 4/4 real PostgreSQL role-boundary methods pass.
 - 12/12 existing real PostgreSQL staff workflow methods pass.
-- The exact 559-input / 8,650,397-byte source context passes its 17-task offline
+- The exact 559-input / 8,652,710-byte source context passes its 17-task offline
   JDK 17 release-scope and server-distribution build.
 - Context manifest SHA-256:
-  `9243bbd412234d6ab410ac8cb0135a559fa87b348661345b1aab46c700f3a6c9`.
+  `c263c48c9580b9a1df11c00781c052c559f30df158bf1e42e33b5fd33d075bfd`.
 
 ## Deployment boundary
 

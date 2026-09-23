@@ -150,6 +150,32 @@ BEGIN
             RAISE EXCEPTION 'Missing or grantable staff-moderation read: %',wanted.relation_name;
         END IF;
     END LOOP;
+    FOR wanted IN SELECT * FROM (VALUES
+        ('platform.schema_migrations','SELECT',ARRAY['description']::text[]),
+        ('auth.sessions','SELECT',ARRAY['id','user_id','factor_id']::text[]),
+        ('auth.mfa_factors','SELECT',ARRAY['id','user_id','status','factor_type']::text[]),
+        ('platform.media_processing_jobs','SELECT',ARRAY['environment','state','created_at']::text[]),
+        ('safety.reports','UPDATE',ARRAY['version','status','updated_at']::text[]),
+        ('safety.moderation_cases','UPDATE',ARRAY['version','status','assignee_staff_id','reason_code','updated_at','action']::text[]),
+        ('safety.moderation_actions','INSERT',ARRAY['environment','id','case_id','report_id','case_version','report_version','actor_id',
+            'provider_session_id','authority_revision','action','reason_code','notes','operation_id','command_key','request_sha256',
+            'request_text','if_match','response_text','response_sha256','event_id','trace_id','created_at','target_version']::text[]),
+        ('safety.moderation_access_audit','INSERT',ARRAY['environment','id','actor_id','provider_session_id','authority_revision',
+            'purpose','observed_cases','trace_id','created_at']::text[]),
+        ('safety.moderation_removals','INSERT',ARRAY['environment','id','case_id','report_id','action_id','target_type','target_id',
+            'target_owner_id','target_version','target_sha256','state','created_at']::text[]),
+        ('safety.report_evidence','UPDATE',ARRAY['report_id']::text[]),
+        ('safety.moderation_actions','UPDATE',ARRAY['id']::text[]),
+        ('safety.moderation_removals','UPDATE',ARRAY['id']::text[]),
+        ('social.posts','UPDATE',ARRAY['id']::text[]),
+        ('social.thread_messages','UPDATE',ARRAY['id']::text[])
+    ) x(relation_name,privilege_name,columns) LOOP
+        IF EXISTS (SELECT 1 FROM unnest(wanted.columns) column_name
+            WHERE NOT pg_catalog.has_column_privilege(api,wanted.relation_name,column_name,wanted.privilege_name)
+                OR pg_catalog.has_column_privilege(api,wanted.relation_name,column_name,wanted.privilege_name||' WITH GRANT OPTION')) THEN
+            RAISE EXCEPTION 'Missing or grantable staff-moderation column privilege: % %',wanted.relation_name,wanted.privilege_name;
+        END IF;
+    END LOOP;
     IF pg_catalog.has_table_privilege(api,'staff.publication_policies','INSERT,UPDATE,DELETE,TRUNCATE,REFERENCES,TRIGGER')
         OR pg_catalog.has_table_privilege(api,'staff.actors','INSERT,UPDATE,DELETE,TRUNCATE,REFERENCES,TRIGGER')
         OR pg_catalog.has_table_privilege(api,'staff.moderator_enrollments','INSERT,UPDATE,DELETE,TRUNCATE,REFERENCES,TRIGGER')
