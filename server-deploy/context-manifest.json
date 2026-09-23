@@ -2583,6 +2583,11 @@
       "sha256": "aa8f43374e18e945dbd2882087e34884d730ce889b4096b75f0480507b03368f"
     },
     {
+      "path": "feedme/server/src/main/resources/db/provider/feedme-staff-moderation-serving-grants.sql",
+      "bytes": 11907,
+      "sha256": "a8e2f0cca7f5e4dcf065452b23000e1c454981c28df2ff38b4762824b7c92450"
+    },
+    {
       "path": "feedme/server/src/main/resources/db/provider/supabase-authority.sql",
       "bytes": 6581,
       "sha256": "974eccebeedf9c630cf11d9a4890a18f89d6548e3839ab17254c8db783967d61"
@@ -2793,7 +2798,7 @@
       "sha256": "5e17e5ce6ea0a96b35adf873261ebed147bd4ac0e43d4f0ac9da53ea4bf0d6ff"
     }
   ],
-  "totalBytes": 8638490,
+  "totalBytes": 8650397,
   "limitations": [
     "Source snapshot only; no container build or deployment was performed.",
     "Third-party image selection, dependency authenticity and live configuration require separate review."

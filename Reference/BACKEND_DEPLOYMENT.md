@@ -3,11 +3,19 @@
 ## Current V090 source handoff — 23 September 2026 IST
 
 The credential-free [`server-deploy/`](../server-deploy/) handoff is refreshed
-from the current production source closure: **558 build inputs / 8,638,490
+from the current production source closure: **559 build inputs / 8,650,397
 bytes**, all **V001–V090** application migrations, the locked 207-operation
 server contract, public build metadata, reviewed Dockerfile and pinned public
 Supabase CA. Its context-manifest SHA-256 is
-`852639f17d0dbcdcd0e7b408442639373c1bcccec04cc2a580ddaf6275b2d2ed`.
+`9243bbd412234d6ab410ac8cb0135a559fa87b348661345b1aab46c700f3a6c9`.
+
+The handoff now includes the explicit optional staff-moderation serving grant
+package. It supplies only the reviewed provider/MFA observations, workforce and
+moderator reads, report workflow capabilities, exact source-content reads and
+three aggregate media-health columns used by the existing handlers. It creates
+no role, credential, staff actor, moderator enrollment, policy or product
+activation. Four real PostgreSQL role-boundary methods and all 12 existing staff
+workflow methods pass. Hosted Supabase has not received this package.
 
 V090 adds a restricted, read-only `adminGetHealth` backend for the existing
 staff Incident console. Current Supabase workforce/MFA/moderator admission,
@@ -57,7 +65,7 @@ closed V032 dependency-hold revision. Current reviewed runtime configuration,
 provider/session-policy approval, recipe content and connected end-to-end
 acceptance remain required before replacing that service or calling the API live.
 Do not deploy this V090 source until the controlled hosted V089/V090 database
-rollout, reviewed runtime grants and postflight are complete.
+rollout, optional staff grants, runtime configuration and postflight are complete.
 
 ## Current Render connection attempt — 19 September 2026 UTC
 
