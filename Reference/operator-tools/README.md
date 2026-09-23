@@ -1,9 +1,10 @@
 # FeedMe V090 operator-tool source snapshots
 
 These are exact credential-free source snapshots for the guarded V089/V090 and
-optional staff-serving grant workflow. They are reference artifacts, not part of
-the `server-deploy/` container context and not an instruction to run a hosted
-write.
+optional staff-serving grant workflow, plus the protected account-runtime
+preparation/export boundary. They are reference artifacts, not part of the
+`server-deploy/` container context and not an instruction to run a hosted write
+or deployment.
 
 The tools expect their original path to be `deploy/` inside a matching FeedMe
 source root. They also require the ignored, owner-only local Supabase password and

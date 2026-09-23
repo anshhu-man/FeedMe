@@ -1,0 +1,184 @@
+// Pure model checks plus owned /private/tmp fixtures only. Never open workspace
+// .local, provider credentials, a socket or a subprocess; never start the CLI.
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import {preparationOperation,accountRuntimePreparation,createCursorKeyrings,validateCursorKeyrings,
+  prepareAccountRuntime,initializeCursorKeys} from './prepare-account-runtime.mjs';
+
+function entropy() { let seed=0; return size=>Buffer.alloc(size,++seed); }
+function temporary(t) {
+  const root=fs.mkdtempSync('/private/tmp/feedme-account-runtime-test-');
+  fs.chmodSync(root,0o700);
+  t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
+  return root;
+}
+const keyFile=root=>path.join(root,'.local/account-runtime/cursor-keys.json');
+const draftFile=root=>path.join(root,'.local/account-runtime/preparation.json');
+const safeError=action=>assert.throws(action,error=>error.message.includes('preparation refused') &&
+  !error.message.includes('PRIVATE_CANARY') && error.cause===undefined);
+
+test('only two explicit preparation operations are accepted, with no target or secret arguments',()=>{
+  for (const mode of ['--prepare','--init-cursor-keys']) assert.equal(preparationOperation([mode]),mode);
+  for (const args of [[],['--seal'],['--deploy'],['--prepare','--init-cursor-keys'],['--prepare','PRIVATE_CANARY'],['--root','/private/tmp']])
+    safeError(()=>preparationOperation(args));
+});
+
+test('draft has the current required parser sections and explicitly closed optional Terms capability',()=>{
+  const draft=accountRuntimePreparation(),config=draft.proposedAccountConfig;
+  const parser=fs.readFileSync(new URL('../server/src/main/kotlin/com/feedme/server/config/AccountCoreRuntimeConfig.kt',import.meta.url),'utf8');
+  const required=/exact\((?:root|JsonObject\(root[^)]*\)),([\s\S]*?)\)\n/.exec(parser);
+  assert.ok(required, 'current parser required-root field declaration must be located');
+  const fields=[...required[1].matchAll(/"([A-Za-z]+)"/g)].map(match=>match[1]);
+  assert.deepEqual(Object.keys(config).filter(name=>name!=='termsNotice').sort(),fields.sort());
+  assert.match(parser,/root - "termsNotice"/);
+  assert.equal(config.termsNotice,null);
+  assert.notDeepEqual(Object.keys(draft).sort(),fields);
+  assert.equal(draft.runnable,false); assert.equal(draft.status,'DRAFT_NOT_RUNTIME_CONFIGURATION');
+  assert.equal(draft.basis.operator.minimumAgePreference,18);
+  assert.deepEqual(accountRuntimePreparation(),draft); // no freshly stamped dates/IDs
+  assert.equal(config.database.user,'feedme_api.bljskfhazmnzmhkbkcev');
+  assert.equal(config.database.sslMode,'verify-full'); assert.equal(config.database.sslRootCert,null);
+  assert.equal(config.listener.port,10000); assert.equal(config.deployment.lowAssuranceTimeoutSeconds,900);
+  for (const field of ['migrationVersions','reviewedAt','validUntil']) assert.equal(config.deployment[field],null);
+  assert.equal(config.accountRules.eligibilityPolicyVersion,null); assert.equal(config.accountRules.requiredTermsVersion,null);
+  assert.equal(config.preferencePolicy.consent.currentVersion,null);
+  assert.equal(config.planningOperational.revision,null); assert.equal(config.planningPolicy.rankingVersion,null);
+  assert.equal(config.accountRules.acceptExactSubmittedTerms,false); assert.equal(config.preferencePolicy.consent.acceptNewConsent,false);
+  assert.equal(config.accountRules.adultSelfAttestationEnabled,false); assert.equal(config.reconnectionRules,null);
+  assert.equal(config.planningOperational.newPlanningEnabled,false); assert.equal(config.newCookingEnabled,false); assert.equal(config.newCopiesEnabled,false);
+  assert.equal(draft.protectedInputs.apiPassword.readByThisTool,false); assert.equal(draft.protectedInputs.cursorKeys.readByPrepare,false);
+  assert.match(draft.limitations.join(' '),/legacy unconfigured preview/);
+});
+
+test('unresolved adult and Terms inputs and browser OAuth remain explicit without cert-readability or provider claims',()=>{
+  const draft=accountRuntimePreparation();
+  const unresolved=new Set(draft.unresolved.flatMap(item=>item.paths));
+  for(const name of ['database.sslRootCert','accountRules.adultSelfAttestationEnabled',
+    'accountRules.eligibilityPolicyVersion','accountRules.requiredTermsVersion','accountRules.acceptExactSubmittedTerms','termsNotice'])
+    assert.ok(unresolved.has(name),`Missing unresolved input: ${name}`);
+  assert.equal(draft.basis.proposedContainerCaPath,'/opt/feedme/trust/prod-ca-2021.crt');
+  assert.equal(draft.basis.containerCaMountAndUid10001ReadabilityVerified,false);
+  assert.equal(draft.basis.providerReviewApproved,false); assert.equal(draft.basis.policyApproved,false);
+  const dockerfile=fs.readFileSync(new URL('Dockerfile',import.meta.url),'utf8');
+  assert.ok(dockerfile.includes(`COPY --chown=0:0 feedme/deploy/trust/prod-ca-2021.crt ${draft.basis.proposedContainerCaPath}`));
+  const requirements=draft.unresolved.map(item=>item.requires).join(' ');
+  assert.match(requirements,/Supabase Google browser OAuth with PKCE/);
+  assert.match(requirements,/email delivery is a separate requirement only if email signup is offered/);
+  assert.match(requirements,/not evidence that a deployed image contains or can read it/);
+});
+
+test('four independently generated exact keyring shapes validate and temporary entropy bytes are wiped',()=>{
+  const buffers=[];
+  const keys=createCursorKeyrings(size=>{assert.equal(size,32); const value=Buffer.alloc(size,buffers.length+1); buffers.push(value); return value;});
+  assert.equal(buffers.length,4); assert.ok(buffers.every(bytes=>bytes.every(value=>value===0)));
+  const values=Object.values(keys).map(ring=>ring.keys.k1);
+  assert.equal(new Set(values).size,4); assert.ok(values.every(value=>/^[A-Za-z0-9_-]{43}$/.test(value)));
+  for (const ring of Object.values(keys)) assert.deepEqual(Object.keys(ring),['currentKeyId','keys']);
+  assert.deepEqual(validateCursorKeyrings(JSON.stringify(keys)),{purposes:4,keys:4});
+  assert.deepEqual(validateCursorKeyrings(JSON.stringify(keys,null,2)+'\n'),{purposes:4,keys:4});
+  safeError(()=>createCursorKeyrings(size=>Buffer.alloc(size)));
+  safeError(()=>createCursorKeyrings(()=>Buffer.alloc(31)));
+});
+
+test('key validation refuses duplicate names, reused purpose keys, malformed encodings and unsupported fields',()=>{
+  const keys=createCursorKeyrings(entropy());
+  const changes=[
+    value=>delete value.saved,
+    value=>{value.extra=value.saved;},
+    value=>{value.saved.extra='PRIVATE_CANARY';},
+    value=>{value.saved.currentKeyId='missing';},
+    value=>{value.saved.keys={};},
+    value=>{value.saved.keys.k1=value.ingredient.keys.k1;},
+    value=>{value.saved.keys.k1='A'.repeat(42)+'B';},
+    value=>{value.saved.keys.k1+='=';},
+    value=>{value.saved.keys.k1='PRIVATE_CANARY';},
+    value=>{value.saved.keys.BAD=value.saved.keys.k1;},
+  ];
+  for (const change of changes) {const value=structuredClone(keys); change(value); safeError(()=>validateCursorKeyrings(JSON.stringify(value)));}
+  for (const raw of ['', 'PRIVATE_CANARY', '[]', ' '.repeat(32769),
+    JSON.stringify(keys).replace('"currentKeyId":"k1"','"currentKeyId":"k1","currentKeyId":"k1"'),
+    JSON.stringify(keys).replace('ingredient','ingredi\\u0065nt')]) safeError(()=>validateCursorKeyrings(raw));
+});
+
+test('prepare creates an owner-only non-runnable draft and preserves the exact existing file',t=>{
+  const root=temporary(t),first=prepareAccountRuntime(root),file=draftFile(root);
+  assert.equal(first.status,'non-runnable-draft-created'); assert.equal(first.runnable,false);
+  assert.equal(fs.statSync(path.dirname(file)).mode&0o777,0o700);
+  const before=fs.statSync(file); assert.equal(before.mode&0o777,0o600); assert.equal(before.nlink,1);
+  assert.equal(JSON.parse(fs.readFileSync(file,'utf8')).runnable,false);
+  const second=prepareAccountRuntime(root); assert.equal(second.status,'existing-draft-preserved');
+  const after=fs.statSync(file); assert.equal(after.ino,before.ino); assert.equal(after.mtimeMs,before.mtimeMs);
+  assert.equal(fs.existsSync(keyFile(root)),false); assert.equal(fs.existsSync(path.join(root,'.local/supabase')),false);
+  assert.deepEqual(fs.readdirSync(path.dirname(file)),['preparation.json']);
+});
+
+test('updated preparation refuses prior draft bytes rather than upgrading policy or replacing existing keys',t=>{
+  const root=temporary(t); prepareAccountRuntime(root); initializeCursorKeys(root,entropy());
+  const legacy=accountRuntimePreparation();
+  delete legacy.proposedAccountConfig.accountRules.adultSelfAttestationEnabled;
+  delete legacy.proposedAccountConfig.termsNotice;
+  legacy.basis.proposedContainerCaPath='/etc/secrets/prod-ca-2021.crt';
+  const file=draftFile(root),bytes=Buffer.from(JSON.stringify(legacy,null,2)+'\n');
+  fs.writeFileSync(file,bytes);
+  const before=fs.statSync(file),keys=fs.readFileSync(keyFile(root)),keyStat=fs.statSync(keyFile(root));
+  safeError(()=>prepareAccountRuntime(root));
+  assert.deepEqual(fs.readFileSync(file),bytes); assert.equal(fs.statSync(file).ino,before.ino);
+  assert.equal(fs.statSync(file).mtimeMs,before.mtimeMs);
+  assert.deepEqual(fs.readFileSync(keyFile(root)),keys); assert.equal(fs.statSync(keyFile(root)).ino,keyStat.ino);
+  assert.equal(fs.statSync(keyFile(root)).mtimeMs,keyStat.mtimeMs);
+});
+
+test('ordinary prepare does not even open unsafe cursor or API-password targets',t=>{
+  const root=temporary(t);
+  fs.mkdirSync(path.join(root,'.local'),{mode:0o700});
+  fs.mkdirSync(path.join(root,'.local/account-runtime'),{mode:0o700});
+  fs.mkdirSync(path.join(root,'.local/supabase'),{mode:0o700});
+  fs.symlinkSync(path.join(root,'missing-PRIVATE_CANARY'),keyFile(root));
+  fs.symlinkSync(path.join(root,'another-missing-PRIVATE_CANARY'),path.join(root,'.local/supabase/api-database-password'));
+  assert.equal(prepareAccountRuntime(root).status,'non-runnable-draft-created');
+  assert.ok(fs.lstatSync(keyFile(root)).isSymbolicLink());
+});
+
+test('explicit key initialization is exclusive and repeated runs preserve valid key bytes and inode',t=>{
+  const root=temporary(t),first=initializeCursorKeys(root,entropy()),file=keyFile(root);
+  assert.equal(first.status,'cursor-keys-created');
+  const bytes=fs.readFileSync(file),before=fs.statSync(file);
+  assert.equal(before.mode&0o777,0o600); assert.equal(before.nlink,1);
+  assert.equal(fs.statSync(path.dirname(file)).mode&0o777,0o700);
+  assert.deepEqual(validateCursorKeyrings(bytes.toString('utf8')),{purposes:4,keys:4});
+  const second=initializeCursorKeys(root,()=>{throw Error('must not replace existing entropy');});
+  assert.equal(second.status,'existing-cursor-keys-preserved'); assert.deepEqual(fs.readFileSync(file),bytes);
+  assert.equal(fs.statSync(file).ino,before.ino); assert.equal(fs.statSync(file).mtimeMs,before.mtimeMs);
+  assert.equal(fs.existsSync(draftFile(root)),false);
+  for (const key of Object.values(JSON.parse(bytes)).map(ring=>ring.keys.k1))
+    assert.equal(JSON.stringify([first,second]).includes(key),false);
+});
+
+test('invalid, linked, shared-mode and BOM key files are refused without replacement',t=>{
+  for (const kind of ['invalid','empty','shared-mode','hardlink','symlink','bom']) {
+    const root=temporary(t); initializeCursorKeys(root,entropy()); const file=keyFile(root);
+    if (kind==='invalid') fs.writeFileSync(file,'PRIVATE_CANARY');
+    if (kind==='empty') fs.truncateSync(file,0);
+    if (kind==='shared-mode') fs.chmodSync(file,0o644);
+    if (kind==='hardlink') fs.linkSync(file,path.join(root,'linked-keys'));
+    if (kind==='symlink') {fs.renameSync(file,path.join(root,'held-keys')); fs.symlinkSync(path.join(root,'held-keys'),file);}
+    if (kind==='bom') fs.writeFileSync(file,Buffer.concat([Buffer.from([0xef,0xbb,0xbf]),fs.readFileSync(file)]));
+    const before=fs.lstatSync(file),bytes=fs.readFileSync(file);
+    safeError(()=>initializeCursorKeys(root,entropy()));
+    assert.equal(fs.lstatSync(file).ino,before.ino); assert.deepEqual(fs.readFileSync(file),bytes);
+  }
+});
+
+test('unsafe private directory or edited draft is never repaired or overwritten',t=>{
+  const root=temporary(t),outside=temporary(t);
+  fs.symlinkSync(outside,path.join(root,'.local'));
+  safeError(()=>prepareAccountRuntime(root)); assert.deepEqual(fs.readdirSync(outside),[]);
+  const changed=temporary(t); prepareAccountRuntime(changed);
+  fs.writeFileSync(draftFile(changed),'PRIVATE_CANARY');
+  safeError(()=>prepareAccountRuntime(changed)); assert.equal(fs.readFileSync(draftFile(changed),'utf8'),'PRIVATE_CANARY');
+  const shared=temporary(t); prepareAccountRuntime(shared);
+  fs.chmodSync(path.join(shared,'.local/account-runtime'),0o755);
+  safeError(()=>initializeCursorKeys(shared,entropy())); assert.equal(fs.existsSync(keyFile(shared)),false);
+});

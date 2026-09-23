@@ -2,7 +2,7 @@
 
 **23 September backend-only addendum:** [current server deployment source](BACKEND_DEPLOYMENT.md)
 is separately packaged under `server-deploy/` with its own current 559-input /
-8,652,710-byte V090 manifest and locked 207-operation server contract. Its offline
+8,653,116-byte V090 manifest and locked 207-operation server contract. Its offline
 JDK 17 release-scope/server-distribution build passes, and its context/preflight
 suites report 10 pass / 3 explicit skips / 0 failures. The top-level full-app/source-copy checkpoint described
 below remains historical and unchanged; the public inventory additionally records

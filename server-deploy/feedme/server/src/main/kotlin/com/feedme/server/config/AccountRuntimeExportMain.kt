@@ -47,6 +47,7 @@ internal fun validateAccountRuntimeExport(bytes: ByteArray, clock: Clock): Strin
     require(config.termsNotice?.termsVersion == FeedMeAdultPolicy.TERMS_VERSION)
     val now = clock.instant()
     require(config.deployment.reviewedAt <= now && now < config.deployment.validUntil)
+    val staff = config.staffPolicy
     buildJsonObject {
         put("status", "config-valid-local")
         put("adultAdmissionEnabled", true)
@@ -57,6 +58,11 @@ internal fun validateAccountRuntimeExport(bytes: ByteArray, clock: Clock): Strin
         put("mediaConfigured", config.media != null)
         put("accountExportConfigured", config.exportPolicy != null && config.exportStorage != null)
         put("accountDeletionConfigured", config.deletionRules != null)
+        put("staffSessionConfigured", staff != null)
+        put("staffCatalogDraftsEnabled", staff?.catalogDraftsEnabled == true)
+        put("staffCatalogReviewsEnabled", staff?.catalogReviewsEnabled == true)
+        put("staffCatalogPublicationEnabled", staff?.catalogPublicationEnabled == true)
+        put("staffModerationEnabled", staff?.moderationEnabled == true)
         put("providerReviewValidUntil", config.deployment.validUntil.toString())
     }.toString()
 } catch (failure: InterruptedException) {

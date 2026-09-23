@@ -3,11 +3,17 @@
 ## Current V090 source handoff — 23 September 2026 IST
 
 The credential-free [`server-deploy/`](../server-deploy/) handoff is refreshed
-from the current production source closure: **559 build inputs / 8,652,710
+from the current production source closure: **559 build inputs / 8,653,116
 bytes**, all **V001–V090** application migrations, the locked 207-operation
 server contract, public build metadata, reviewed Dockerfile and pinned public
 Supabase CA. Its context-manifest SHA-256 is
-`c263c48c9580b9a1df11c00781c052c559f30df158bf1e42e33b5fd33d075bfd`.
+`4ec5bccad0d50d687997d2f2a00030b5b5af38bdb88611a52724bbb6a637113a`.
+
+The current packaged runtime validator also reports each staff capability
+explicitly—session, catalog drafts, catalog review, catalog publication and
+moderation—without exposing policy identifiers. Missing private reviewed runtime
+configuration therefore remains visible as a closed deployment gate rather than
+being mistaken for an active staff service.
 
 The handoff now includes the explicit optional staff-moderation serving grant
 package. It supplies only the reviewed provider/MFA observations, workforce and

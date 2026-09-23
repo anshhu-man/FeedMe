@@ -1,0 +1,193 @@
+// Synthetic temporary files only. Package integration is explicitly opt-in below;
+// even then the validator opens no network, database, real .local input or service.
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {accountExportOperation,exportAccountRuntime,validatePackagedAccountRuntime} from './export-account-runtime.mjs';
+import {accountRuntimePreparation,createCursorKeyrings} from './prepare-account-runtime.mjs';
+
+const repository=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const NOW=Date.parse('2026-09-21T00:00:00Z');
+const configPath='.local/account-runtime/reviewed-config.json',outputPath='.local/account-runtime/render.env';
+const terms='feedme-connected-adults-2026-09-20-v1',eligibility='feedme-adults-18-self-attested-v1';
+const config=(now=NOW)=>{
+  const c=accountRuntimePreparation().proposedAccountConfig;
+  c.database.sslRootCert='/opt/feedme/trust/prod-ca-2021.crt';
+  Object.assign(c.deployment,{migrationVersions:['20260101000000'],reviewedAt:new Date(now-60000).toISOString(),validUntil:new Date(now+3600000).toISOString()});
+  c.accountRules={eligibilityPolicyVersion:eligibility,requiredTermsVersion:terms,acceptExactSubmittedTerms:true,adultSelfAttestationEnabled:true};
+  c.termsNotice={termsVersion:terms,termsUrl:'https://synthetic.example/terms',privacyUrl:'https://synthetic.example/privacy'};
+  Object.assign(c.preferencePolicy,{revision:'synthetic-v1',dietaryPatterns:[],equipmentIds:['bowl'],consent:{currentVersion:'synthetic-v1',acceptNewConsent:false}});
+  c.planningOperational.revision='synthetic-v1';c.planningPolicy.rankingVersion='synthetic-v1';return c;
+};
+const ai=()=>({FEEDME_ACCOUNT_AI_CONFIG:JSON.stringify({provider:'cloudflare',billingMode:'free-only',freeTierAccountVerified:true,
+  model:'@cf/qwen/qwen3-30b-a3b-fp8',maxRequestBytes:32768,maxResponseBytes:65536,maxOutputTokens:1024,timeoutMillis:10000,minimumStartIntervalMillis:1000},null,2),
+  FEEDME_ACCOUNT_AI_ACCOUNT_ID:'60af02a9cae7b8408be51f6f35bc652f',FEEDME_ACCOUNT_AI_API_TOKEN:'SYNTHETIC_ONLY_PRIVATE_CANARY'});
+const media=()=>({FEEDME_ACCOUNT_MEDIA_CONFIG:JSON.stringify({provider:'supabase',projectOrigin:'https://synthetic.example',bucket:'feedme-media'},null,2),
+  FEEDME_ACCOUNT_MEDIA_STORAGE_API_KEY:'SYNTHETIC_MEDIA_KEY',FEEDME_ACCOUNT_MEDIA_STORAGE_BEARER:'SYNTHETIC_MEDIA_BEARER'});
+const accountExport=()=>({FEEDME_ACCOUNT_EXPORT_CONFIG:JSON.stringify({provider:'supabase',projectOrigin:'https://synthetic.example',bucket:'feedme-exports'},null,2),
+  FEEDME_ACCOUNT_EXPORT_STORAGE_API_KEY:'SYNTHETIC_EXPORT_KEY',FEEDME_ACCOUNT_EXPORT_WRAPPING_KEY:'SYNTHETIC_WRAPPING_KEY'});
+const fake=values=>{const c=JSON.parse(values.FEEDME_ACCOUNT_RUNTIME_CONFIG);return {status:'config-valid-local',adultAdmissionEnabled:true,
+  planningEnabled:c.planningOperational.newPlanningEnabled,cookingEnabled:c.newCookingEnabled,savedCopiesEnabled:c.newCopiesEnabled,
+  aiConfigured:Object.hasOwn(values,'FEEDME_ACCOUNT_AI_CONFIG'),mediaConfigured:Object.hasOwn(values,'FEEDME_ACCOUNT_MEDIA_CONFIG'),
+  accountExportConfigured:Object.hasOwn(values,'FEEDME_ACCOUNT_EXPORT_CONFIG'),accountDeletionConfigured:Object.hasOwn(c,'deletionPolicy'),
+  staffSessionConfigured:Object.hasOwn(c,'staffPolicy'),staffCatalogDraftsEnabled:c.staffPolicy?.catalogDraftsEnabled===true,
+  staffCatalogReviewsEnabled:c.staffPolicy?.catalogReviewsEnabled===true,
+  staffCatalogPublicationEnabled:c.staffPolicy?.catalogPublicationEnabled===true,
+  staffModerationEnabled:c.staffPolicy?.moderationEnabled===true,
+  providerReviewValidUntil:new Date(c.deployment.validUntil).toISOString()};};
+const refused=fn=>assert.throws(fn,e=>e.message.startsWith('Account runtime export refused.')&&!e.message.includes('PRIVATE_CANARY')&&e.cause===undefined);
+function fixture(t,now=NOW) {
+  const base=fs.realpathSync(fs.mkdtempSync('/private/tmp/feedme-runtime-export-test-'));fs.chmodSync(base,0o700);
+  t.after(()=>fs.rmSync(base,{recursive:true,force:true}));
+  for(const d of ['.local','.local/account-runtime','.local/supabase','deploy','deploy/trust'])fs.mkdirSync(path.join(base,d),{mode:0o700});
+  fs.writeFileSync(path.join(base,configPath),JSON.stringify(config(now),null,2)+'\n',{mode:0o600});
+  let seed=0;fs.writeFileSync(path.join(base,'.local/account-runtime/cursor-keys.json'),JSON.stringify(createCursorKeyrings(n=>Buffer.alloc(n,++seed)),null,2)+'\n',{mode:0o600});
+  fs.writeFileSync(path.join(base,'.local/supabase/api-database-password'),'A'.repeat(43)+'\n',{mode:0o600});
+  fs.copyFileSync(new URL('trust/prod-ca-2021.crt',import.meta.url),path.join(base,'deploy/trust/prod-ca-2021.crt'));
+  fs.chmodSync(path.join(base,'deploy/trust/prod-ca-2021.crt'),0o644);
+  return base;
+}
+function put(base,relative,value){fs.writeFileSync(path.join(base,relative),typeof value==='string'?value:JSON.stringify(value),{mode:0o600});}
+function alter(base,change){const c=JSON.parse(fs.readFileSync(path.join(base,configPath),'utf8'));change(c);put(base,configPath,c);}
+const run=(base,operation='--export',validate=fake,now=()=>NOW)=>exportAccountRuntime(operation,base,validate,now);
+const output=base=>fs.readFileSync(path.join(base,outputPath),'utf8');
+const lines=raw=>Object.fromEntries(raw.trimEnd().split('\n').map(line=>[line.slice(0,line.indexOf('=')),line.slice(line.indexOf('=')+1)]));
+
+test('CLI has only two explicit fixed-path operations',()=>{
+  assert.equal(accountExportOperation(['--check']),'--check');assert.equal(accountExportOperation(['--export']),'--export');
+  for(const args of [[],['--prepare'],['--apply'],['--export','PRIVATE_CANARY'],['--check','/tmp/config']])refused(()=>accountExportOperation(args));
+});
+test('check forwards original private input bytes to validation, writes nothing and never reads operator password',t=>{
+  const base=fixture(t);fs.symlinkSync(path.join(base,'missing-PRIVATE_CANARY'),path.join(base,'.local/supabase/database-password'));
+  let calls=0;const result=run(base,'--check',values=>{calls++;assert.equal(values.FEEDME_ACCOUNT_RUNTIME_CONFIG,fs.readFileSync(path.join(base,configPath),'utf8'));
+    assert.equal(values.FEEDME_ACCOUNT_CURSOR_KEYS,fs.readFileSync(path.join(base,'.local/account-runtime/cursor-keys.json'),'utf8'));
+    assert.deepEqual(Object.keys(values),['FEEDME_ACCOUNT_RUNTIME_CONFIG','FEEDME_ACCOUNT_DB_PASSWORD','FEEDME_ACCOUNT_CURSOR_KEYS','PORT']);return fake(values);});
+  assert.equal(calls,1);assert.equal(result.status,'account-runtime-inputs-verified');assert.equal(result.productReady,false);
+  assert.equal(result.networkAttempted,false);assert.equal(result.deployed,false);assert.equal(fs.existsSync(path.join(base,outputPath)),false);
+  assert.equal(JSON.stringify(result).includes('A'.repeat(43)),false);
+});
+test('export preserves explicit flags, review and numeric spellings with owner-only durable output',t=>{
+  const base=fixture(t);const raw=fs.readFileSync(path.join(base,configPath),'utf8').replace('"maximumDefaultServings": 4','"maximumDefaultServings": 4.00');put(base,configPath,raw);
+  const before=['.local/supabase/api-database-password','.local/account-runtime/cursor-keys.json',configPath].map(f=>[f,fs.readFileSync(path.join(base,f))]);
+  const result=run(base),env=lines(output(base));assert.equal(result.status,'account-runtime-export-created');
+  assert.deepEqual(Object.keys(env),['FEEDME_ACCOUNT_RUNTIME_CONFIG','FEEDME_ACCOUNT_DB_PASSWORD','FEEDME_ACCOUNT_CURSOR_KEYS','PORT']);
+  assert.match(env.FEEDME_ACCOUNT_RUNTIME_CONFIG,/"maximumDefaultServings":4\.00/);
+  assert.deepEqual(JSON.parse(env.FEEDME_ACCOUNT_RUNTIME_CONFIG),JSON.parse(raw));assert.equal(env.PORT,'10000');
+  assert.equal(result.planningEnabled,false);assert.equal(result.cookingEnabled,false);assert.equal(result.savedCopiesEnabled,false);assert.equal(result.aiConfigured,false);
+  assert.equal(result.staffSessionConfigured,false);assert.equal(result.staffModerationEnabled,false);
+  for(const name of Object.keys(ai()))assert.ok(result.removeConflictingEnvironment.includes(name));
+  const file=path.join(base,outputPath),stat=fs.statSync(file);assert.equal(stat.mode&0o777,0o600);assert.equal(stat.nlink,1);
+  assert.equal(run(base).status,'identical-export-preserved');assert.equal(fs.statSync(file).ino,stat.ino);assert.equal(fs.statSync(file).mtimeMs,stat.mtimeMs);
+  for(const [f,b] of before)assert.deepEqual(fs.readFileSync(path.join(base,f)),b);
+});
+test('staff capability report preserves exact booleans without exposing policy identifiers',t=>{
+  const base=fixture(t);alter(base,c=>c.staffPolicy={policyVersion:'PRIVATE_POLICY_CANARY',policyClientId:'PRIVATE_CLIENT_CANARY',
+    maximumTotpAgeSeconds:300,observationSeconds:30,maxResponseBytes:4096,catalogDraftsEnabled:true,
+    catalogReviewsEnabled:true,catalogPublicationEnabled:false,moderationEnabled:true});
+  const result=run(base,'--check');
+  assert.equal(result.staffSessionConfigured,true);assert.equal(result.staffCatalogDraftsEnabled,true);
+  assert.equal(result.staffCatalogReviewsEnabled,true);assert.equal(result.staffCatalogPublicationEnabled,false);
+  assert.equal(result.staffModerationEnabled,true);
+  assert.equal(JSON.stringify(result).includes('PRIVATE_'),false);
+});
+test('optional AI inputs remain explicit backend-only strings and are validated before compaction',t=>{
+  const base=fixture(t);put(base,'.local/account-runtime/ai.json',ai());let received;
+  const result=run(base,'--export',values=>{received=values;return fake(values);});const env=lines(output(base));
+  assert.equal(received.FEEDME_ACCOUNT_AI_CONFIG,ai().FEEDME_ACCOUNT_AI_CONFIG);assert.equal(result.aiConfigured,true);
+  assert.deepEqual(JSON.parse(env.FEEDME_ACCOUNT_AI_CONFIG),JSON.parse(ai().FEEDME_ACCOUNT_AI_CONFIG));
+  assert.equal(env.FEEDME_ACCOUNT_AI_API_TOKEN,ai().FEEDME_ACCOUNT_AI_API_TOKEN);assert.equal(Object.keys(env).length,7);
+  for(const name of Object.keys(ai()))assert.ok(!result.removeConflictingEnvironment.includes(name));
+  assert.equal(JSON.stringify(result).includes('PRIVATE_CANARY'),false);
+});
+test('optional media and account-export envelopes are preserved without leaking into arguments',t=>{
+  const base=fixture(t);put(base,'.local/account-runtime/media.json',media());put(base,'.local/account-runtime/account-export.json',accountExport());
+  let received;const result=run(base,'--export',values=>{received=values;return fake(values);});const exported=lines(output(base));
+  assert.equal(result.mediaConfigured,true);assert.equal(result.accountExportConfigured,true);
+  for(const [name,value] of Object.entries({...media(),...accountExport()})) {
+    assert.equal(received[name],value);assert.equal(exported[name],name.endsWith('_CONFIG')?JSON.stringify(JSON.parse(value)):value);
+    assert.ok(!result.removeConflictingEnvironment.includes(name));
+  }
+  assert.equal(output(base).includes('SYNTHETIC_ONLY_PRIVATE_CANARY'),false);
+});
+test('partial, duplicate or extra media/export envelopes are refused without output',t=>{
+  for(const [file,valid] of [['media.json',media()],['account-export.json',accountExport()]]) for(const kind of ['partial','duplicate','extra']) {
+    const base=fixture(t),copy={...valid};if(kind==='partial')delete copy[Object.keys(copy)[0]];if(kind==='extra')copy.extra='PRIVATE_CANARY';
+    let text=JSON.stringify(copy);if(kind==='duplicate')text=text.replace('{',`{"${Object.keys(valid)[0]}":"PRIVATE_CANARY",`);
+    put(base,`.local/account-runtime/${file}`,text);refused(()=>run(base));assert.equal(fs.existsSync(path.join(base,outputPath)),false);
+  }
+});
+test('partial, duplicate, extra or different-account AI envelope is refused without output',t=>{
+  for(const kind of ['partial','duplicate','extra','account']) {
+    const base=fixture(t),value=ai();if(kind==='partial')delete value.FEEDME_ACCOUNT_AI_CONFIG;
+    if(kind==='extra')value.extra='PRIVATE_CANARY';if(kind==='account')value.FEEDME_ACCOUNT_AI_ACCOUNT_ID='a'.repeat(32);
+    let text=JSON.stringify(value);if(kind==='duplicate')text=text.replace('{','{"FEEDME_ACCOUNT_AI_CONFIG":"PRIVATE_CANARY",');
+    put(base,'.local/account-runtime/ai.json',text);refused(()=>run(base));assert.equal(fs.existsSync(path.join(base,outputPath)),false);
+  }
+});
+test('wrong database, provider, listener or CA target cannot be exported',t=>{
+  for(const change of [c=>c.database.user='postgres.bljskfhazmnzmhkbkcev',c=>c.database.host='different.example',c=>c.database.sslMode='require',
+    c=>c.database.sslRootCert='/different.pem',c=>c.deployment.verification.issuer='https://different.example/auth/v1',
+    c=>c.listener.port=8783,c=>c.environment='staging']) {
+    const base=fixture(t);alter(base,change);refused(()=>run(base));assert.equal(fs.existsSync(path.join(base,outputPath)),false);
+  }
+});
+test('unsafe private inputs, absent inputs and unsafe destinations never overwrite',t=>{
+  for(const kind of ['config-mode','config-link','key-hardlink','password-empty','password-link','private-dir','ca','existing-output','output-mode','output-link','output-hardlink','missing-config']) {
+    const base=fixture(t),c=path.join(base,configPath),p=path.join(base,'.local/supabase/api-database-password'),o=path.join(base,outputPath);
+    if(kind==='config-mode')fs.chmodSync(c,0o644);
+    if(kind==='config-link'){fs.renameSync(c,c+'.held');fs.symlinkSync(c+'.held',c);}
+    if(kind==='key-hardlink')fs.linkSync(path.join(base,'.local/account-runtime/cursor-keys.json'),path.join(base,'held-key'));
+    if(kind==='password-empty')put(base,'.local/supabase/api-database-password','');
+    if(kind==='password-link'){fs.renameSync(p,p+'.held');fs.symlinkSync(p+'.held',p);}
+    if(kind==='private-dir')fs.chmodSync(path.join(base,'.local/account-runtime'),0o755);
+    if(kind==='ca')put(base,'deploy/trust/prod-ca-2021.crt','PRIVATE_CANARY');
+    if(kind==='missing-config')fs.unlinkSync(c);
+    if(kind==='existing-output'||kind==='output-mode'||kind==='output-hardlink')put(base,outputPath,'PRIVATE_CANARY');
+    if(kind==='output-mode')fs.chmodSync(o,0o644);
+    if(kind==='output-hardlink')fs.linkSync(o,path.join(base,'held-output'));
+    if(kind==='output-link'){put(base,'held-output','PRIVATE_CANARY');fs.symlinkSync(path.join(base,'held-output'),o);}
+    const previous=fs.existsSync(o)?fs.readFileSync(o):null;refused(()=>run(base));
+    if(previous)assert.deepEqual(fs.readFileSync(o),previous);else assert.equal(fs.existsSync(o),false);
+  }
+});
+test('a changed input or newly appearing optional capability during validation refuses before export',t=>{
+  for(const target of [configPath,'.local/account-runtime/cursor-keys.json','.local/supabase/api-database-password','.local/account-runtime/ai.json',
+    '.local/account-runtime/media.json','.local/account-runtime/account-export.json']) {
+    const base=fixture(t);refused(()=>run(base,'--export',values=>{put(base,target,'PRIVATE_CANARY');return fake(values);}));
+    assert.equal(fs.existsSync(path.join(base,outputPath)),false);
+  }
+});
+test('review cannot expire across validation or be silently replaced in an existing export',t=>{
+  const base=fixture(t);const until=Date.parse(config().deployment.validUntil);
+  refused(()=>run(base,'--export',fake,()=>until));assert.equal(fs.existsSync(path.join(base,outputPath)),false);
+  run(base);const original=output(base);alter(base,c=>c.deployment.validUntil=new Date(until-60000).toISOString());
+  refused(()=>run(base));assert.equal(output(base),original);
+  const other=fixture(t);let time=NOW;refused(()=>run(other,'--export',values=>{time=until;return fake(values);},()=>time));
+  assert.equal(fs.existsSync(path.join(other,outputPath)),false);
+});
+test('equivalent canonical Kotlin Instant output does not rewrite reviewed input bytes',t=>{
+  const base=fixture(t);run(base,'--export',values=>({...fake(values),providerReviewValidUntil:config().deployment.validUntil.replace('.000Z','Z')}));
+  assert.equal(JSON.parse(lines(output(base)).FEEDME_ACCOUNT_RUNTIME_CONFIG).deployment.validUntil,config().deployment.validUntil);
+});
+test('unsafe dotenv content and validator failures are redacted and produce no export',t=>{
+  for(const text of ['PRIVATE_CANARY#comment','PRIVATE_CANARY$INTERPOLATION','PRIVATE_CANARY\nline','"PRIVATE_CANARY"','PRIVATE_CANARY\\tail']) {
+    const base=fixture(t);put(base,'.local/account-runtime/ai.json',{...ai(),FEEDME_ACCOUNT_AI_API_TOKEN:text});refused(()=>run(base));
+    assert.equal(fs.existsSync(path.join(base,outputPath)),false);
+  }
+  const base=fixture(t);refused(()=>run(base,'--export',()=>{throw Error('PRIVATE_CANARY');}));assert.equal(fs.existsSync(path.join(base,outputPath)),false);
+});
+test('raw duplicate runtime config reaches the parser unchanged, not a normalized last-key-wins value',t=>{
+  const base=fixture(t),raw=fs.readFileSync(path.join(base,configPath),'utf8').replace('{','{"version":1,');put(base,configPath,raw);
+  let saw=false;refused(()=>run(base,'--export',values=>{assert.equal(values.FEEDME_ACCOUNT_RUNTIME_CONFIG,raw);saw=true;throw Error('PRIVATE_CANARY');}));
+  assert.equal(saw,true);assert.equal(fs.existsSync(path.join(base,outputPath)),false);
+});
+test('actual packaged Kotlin validator accepts synthetic exact core export and rejects invalid review/adult config',
+  {skip:process.env.FEEDME_RUN_RUNTIME_EXPORT_PACKAGE_CHECK!=='1'},t=>{
+    const now=Date.now(),base=fixture(t,now),validate=values=>validatePackagedAccountRuntime(values,repository);
+    const accepted=run(base,'--export',validate,()=>Date.now());assert.equal(accepted.adultAdmissionEnabled,true);assert.equal(accepted.productReady,false);
+    assert.equal(JSON.parse(lines(output(base)).FEEDME_ACCOUNT_RUNTIME_CONFIG).accountRules.adultSelfAttestationEnabled,true);
+    const invalid=fixture(t,now);alter(invalid,c=>c.accountRules.adultSelfAttestationEnabled=false);refused(()=>run(invalid,'--check',validate,()=>Date.now()));
+    const expired=fixture(t,now);alter(expired,c=>c.deployment.validUntil=new Date(now-1).toISOString());refused(()=>run(expired,'--check',validate,()=>Date.now()));
+  });
