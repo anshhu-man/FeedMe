@@ -21,3 +21,13 @@ and focused tests against the matching server source.
 does not generate an actor, select a Supabase subject, produce SQL or install
 authority. Its decision-check mode accepts only a separate owner-only local file
 and returns a redacted report.
+
+`feedme-staff-authority.mjs` is the separate fixed-project installation boundary
+for those future owner-approved decisions. It pins the required migrations,
+validator and launcher; reports only `absent`, `current` or `conflict`; and has no
+update/delete/grant/retry route. Its sole write argument is
+`--apply-owner-approved-staff-authority`. Exact replay changes nothing and any
+partial or changed authority refuses. The companion focused snapshots cover the
+credential-free plan, byte pins, rollback-only preflight and insert-only SQL; the
+opt-in PostgreSQL snapshot exercises installation, replay and conflict refusal in
+a disposable local fixture.

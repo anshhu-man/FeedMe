@@ -1,0 +1,75 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {
+  staffAuthorityOperation,
+  verifyStaffAuthorityArtifacts,
+  staffAuthorityStateQuery,
+  staffAuthorityPreflightSql,
+  staffAuthorityApplySql,
+} from './feedme-staff-authority.mjs';
+
+const names=[
+  'server/src/main/resources/db/migration/V040__staff_publication_approvals.sql',
+  'server/src/main/resources/db/migration/V077__staff_moderator_enrollments.sql',
+  'server/src/main/resources/db/migration/V090__staff_operational_health_reader.sql',
+  'deploy/prepare-staff-authority.mjs','deploy/supabase-migrate.mjs',
+];
+const files=Object.fromEntries(names.map(name=>[name,fs.readFileSync(new URL(`../${name}`,import.meta.url))]));
+const encoded=Buffer.from(JSON.stringify({formatVersion:1,project:'bljskfhazmnzmhkbkcev',environment:'production',
+  issuer:'https://bljskfhazmnzmhkbkcev.supabase.co/auth/v1',audience:'authenticated',policyVersion:'synthetic-policy',
+  policyClientId:'synthetic-client',actorId:'11111111-1111-4111-8111-111111111111',
+  subject:'22222222-2222-4222-8222-2222222222ab',canPublish:false,canReview:false,moderatorEnabled:true,
+  tokenValidAfter:'2026-09-23T00:00:00.000Z',notBefore:'2026-09-23T00:00:00.000Z',validUntil:'2026-12-31T00:00:00.000Z',
+  maximumTotpAgeSeconds:300,observationSeconds:30,maxResponseBytes:4096,catalogDraftsEnabled:false,
+  catalogReviewsEnabled:false,catalogPublicationEnabled:false})).toString('base64');
+
+test('default is a credential-free plan and write requires the exact owner-approved phrase',()=>{
+  assert.equal(staffAuthorityOperation([]),'--plan');assert.equal(staffAuthorityOperation(['--plan']),'--plan');
+  assert.equal(staffAuthorityOperation(['--preflight']),'--preflight');
+  assert.equal(staffAuthorityOperation(['--apply-owner-approved-staff-authority']),'--apply');
+  for(const args of [['--apply'],['--project','other'],['--preflight','again'],['PRIVATE']])
+    assert.throws(()=>staffAuthorityOperation(args),error=>!error.message.includes('PRIVATE'));
+});
+
+test('installer pins the exact migrations, decision validator and database launcher',()=>{
+  assert.deepEqual(Object.keys(verifyStaffAuthorityArtifacts(files)).sort(),names.sort());
+  for(const [name,bytes] of Object.entries(files))
+    assert.throws(()=>verifyStaffAuthorityArtifacts({...files,[name]:Buffer.concat([bytes,Buffer.from('\n')])}));
+  assert.throws(()=>verifyStaffAuthorityArtifacts({...files,'extra':Buffer.from('x')}));
+});
+
+test('state query distinguishes only absent current or conflict without exposing raw identity',()=>{
+  const sql=staffAuthorityStateQuery(encoded);
+  for(const value of ["'absent'","'current'","'conflict'"])assert.match(sql,new RegExp(value));
+  assert.match(sql,/staff\.publication_policies/);assert.match(sql,/staff\.actors/);assert.match(sql,/staff\.moderator_enrollments/);
+  assert.doesNotMatch(sql,/11111111|22222222|synthetic-policy|synthetic-client/);
+  assert.match(sql,/decode\('[A-Za-z0-9+/=]+'/);
+});
+
+test('preflight is one rollback-only read-only transaction with exact migration guards',()=>{
+  const sql=staffAuthorityPreflightSql(encoded);
+  assert.match(sql,/^BEGIN READ ONLY;/);assert.equal((sql.match(/\bROLLBACK;/g)||[]).length,1);
+  assert.equal((sql.match(/\bCOMMIT;/g)||[]).length,0);assert.doesNotMatch(sql,/^\s*(?:INSERT|UPDATE|DELETE|TRUNCATE)\b/m);
+  for(const version of [40,77,90])assert.match(sql,new RegExp(`version=${version}`));
+  assert.match(sql,/current_user<>'postgres'/);assert.match(sql,/session_replication_role/);
+});
+
+test('apply is insert-only, locks all authority roots and has one explicit commit',()=>{
+  const sql=staffAuthorityApplySql(encoded);
+  assert.match(sql,/^BEGIN;/);assert.equal((sql.match(/\bCOMMIT;/g)||[]).length,1);
+  assert.equal((sql.match(/^\s*INSERT INTO /gm)||[]).length,3);
+  assert.match(sql,/INSERT INTO staff\.publication_policies/);assert.match(sql,/INSERT INTO staff\.actors/);
+  assert.match(sql,/INSERT INTO staff\.moderator_enrollments/);assert.match(sql,/IN SHARE ROW EXCLUSIVE MODE/);
+  assert.doesNotMatch(sql,/^\s*(?:UPDATE|DELETE|TRUNCATE|ALTER|CREATE|DROP|GRANT|REVOKE)\b/m);
+  assert.match(sql,/observed='conflict'/);assert.match(sql,/observed<>'current'/);
+  assert.doesNotMatch(sql,/11111111|22222222|synthetic-policy|synthetic-client/);
+});
+
+test('encoded decision input is bounded to base64 and cannot become SQL syntax',()=>{
+  for(const invalid of ['',"abc' OR true--",'x'.repeat(65537),'%%%%']) {
+    assert.throws(()=>staffAuthorityStateQuery(invalid));
+    assert.throws(()=>staffAuthorityPreflightSql(invalid));
+    assert.throws(()=>staffAuthorityApplySql(invalid));
+  }
+});
