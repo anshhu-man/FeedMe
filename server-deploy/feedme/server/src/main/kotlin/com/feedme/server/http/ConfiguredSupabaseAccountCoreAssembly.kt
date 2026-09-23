@@ -236,7 +236,10 @@ class ConfiguredSupabaseAccountCoreAssembly private constructor(
                                 config.environment, transactions, admission, ingredients, journal)) else null,
                         if (policy.moderationEnabled) com.feedme.server.staff.SupabaseStaffModerationStore(
                             config.environment, transactions, admission,
-                            com.feedme.server.staff.StaffModerationPolicy(262144, 300),
+                            // The free V1 has no entitlement processor or incident registry.
+                            // Turning either on must first supply a measured health source.
+                            com.feedme.server.staff.StaffModerationPolicy(262144, 300,
+                                entitlementPipelineEnabled = false, incidentRegistryEnabled = false),
                             checkNotNull(config.staffModerationCursors)) else null)
                 }
                 val deletionStore = config.deletionRules?.let { rules ->

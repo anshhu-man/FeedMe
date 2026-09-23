@@ -1,6 +1,7 @@
 package com.feedme.server.staff
 
-internal class StaffModerationPolicy(val maxResponseBytes: Int, val cursorLifetimeSeconds: Long) {
+internal class StaffModerationPolicy(val maxResponseBytes: Int, val cursorLifetimeSeconds: Long,
+    val entitlementPipelineEnabled: Boolean, val incidentRegistryEnabled: Boolean) {
     init { require(maxResponseBytes in 4096..262144 && cursorLifetimeSeconds in 1..86400) }
     override fun toString() = "StaffModerationPolicy(<redacted>)"
 }

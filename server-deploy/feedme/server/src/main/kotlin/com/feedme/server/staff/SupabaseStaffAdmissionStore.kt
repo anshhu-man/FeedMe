@@ -63,6 +63,8 @@ internal class SupabaseStaffAdmissionStore(
                     }
                     if (policy.moderationEnabled && observed.canModerate) {
                         add(JsonPrimitive("ADMIN_REPORTS")); add(JsonPrimitive("ADMIN_CASE")); add(JsonPrimitive("ADMIN_AUDIT"))
+                        add(JsonPrimitive("ADMIN_FLAGS"))
+                        add(JsonPrimitive("ADMIN_INCIDENT"))
                     }
                 }))
                 put("serverTime", observed.checkedAt.toString())

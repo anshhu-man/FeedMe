@@ -14,7 +14,8 @@ import java.util.UUID
 import kotlinx.coroutines.*
 import kotlinx.serialization.json.*
 
-internal val staffModerationHttpOperations = setOf("adminListReports", "adminGetCase", "adminClaimReport", "adminActOnReport", "adminListAudit")
+internal val staffModerationHttpOperations = setOf(
+    "adminListReports", "adminGetCase", "adminClaimReport", "adminActOnReport", "adminListAudit", "adminGetHealth")
 
 /** Every operation obtains actual current moderator/MFA authority in its own audited
  * transaction. A consumer token, queue item or prior HOME observation is not authority. */
@@ -30,7 +31,7 @@ internal suspend fun ApplicationCall.staffModerationOperation(operation: String,
         val writing = operation in setOf("adminClaimReport", "adminActOnReport")
         val pathName = when (operation) {
             "adminGetCase" -> "caseId"
-            "adminListReports", "adminListAudit" -> null
+            "adminListReports", "adminListAudit", "adminGetHealth" -> null
             else -> "reportId"
         }
         if (parameters.names() != (pathName?.let { setOf(it) } ?: emptySet<String>())) invalidModeration()
@@ -105,6 +106,7 @@ internal suspend fun ApplicationCall.staffModerationOperation(operation: String,
             when (operation) {
                 "adminListReports" -> store.adminListReports(subject, cursor, limit, trace)
                 "adminListAudit" -> store.adminListAudit(subject, cursor, limit, trace)
+                "adminGetHealth" -> store.adminGetHealth(subject, trace)
                 "adminGetCase" -> store.adminGetCase(subject, target!!, trace)
                 "adminClaimReport" -> moderationReply(store.adminClaimReport(subject, target!!, key!!, body!!, trace))
                 "adminActOnReport" -> moderationReply(when (body!!["action"]) {

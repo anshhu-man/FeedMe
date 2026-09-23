@@ -12,6 +12,7 @@ import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.SQLException
+import java.time.Duration
 import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
@@ -30,6 +31,50 @@ internal class SupabaseStaffModerationStore(private val environment: String, tra
     private val commands = DurableCommands(transactions)
     private val outbox = OutboxStore(transactions)
     init { require(auth.isBoundTo(environment, transactions)) }
+
+    /** Reads only aggregate, environment-scoped operational measurements. The free
+     * V1 explicitly has no entitlement processor or incident registry, so their
+     * canonical values are not-applicable zero/empty and the overall status stays
+     * degraded. If either subsystem is enabled before a real source is integrated,
+     * this reader fails closed instead of manufacturing health. */
+    fun adminGetHealth(subject: VerifiedSupabaseSubject, traceId: String): StoredReply = access(subject) { c, actor ->
+        trace(traceId)
+        if (policy.entitlementPipelineEnabled || policy.incidentRegistryEnabled) unavailable()
+        val metric = query(c, HEALTH_SELECT, {
+            setString(1, environment); setString(2, environment); setString(3, environment)
+        }) { rows ->
+            if (!rows.next()) unavailable()
+            val value = HealthMetric(
+                rows.getObject("observed_at", OffsetDateTime::class.java)?.toInstant() ?: unavailable(),
+                rows.getLong("outbox_depth").also { if (rows.wasNull()) unavailable() },
+                rows.getObject("outbox_oldest", OffsetDateTime::class.java)?.toInstant(),
+                rows.getObject("media_oldest", OffsetDateTime::class.java)?.toInstant(),
+            )
+            if (rows.next()) unavailable()
+            value
+        }
+        if (metric.outboxDepth !in 0..MAX_SAFE_JSON_INTEGER) unavailable()
+        fun age(oldest: Instant?): Long {
+            if (oldest == null) return 0
+            if (oldest > metric.observedAt) unavailable()
+            return Duration.between(oldest, metric.observedAt).seconds.also {
+                if (it !in 0..MAX_SAFE_JSON_INTEGER) unavailable()
+            }
+        }
+        val body = buildJsonObject {
+            put("status", "degraded")
+            put("outboxOldestSeconds", age(metric.outboxOldest))
+            put("queueDepth", metric.outboxDepth)
+            put("mediaOldestSeconds", age(metric.mediaOldest))
+            put("entitlementLagSeconds", 0)
+            put("activeIncidentIds", JsonArray(emptyList()))
+            put("serverTime", metric.observedAt.toString())
+        }
+        val reply = reply(HEALTH, body)
+        audit(c, actor, "health-read", emptyList(), traceId, metric.observedAt)
+        current(c, actor)
+        reply
+    }
 
     fun adminListReports(subject: VerifiedSupabaseSubject, cursor: String?, limit: Int, traceId: String): StoredReply = access(subject) { c, actor ->
         trace(traceId); if (limit !in 1..50) invalid()
@@ -210,6 +255,9 @@ internal class SupabaseStaffModerationStore(private val environment: String, tra
         val action: String, val targetType: String, val targetId: String, val reason: String,
         val traceId: String, val source: Int)
 
+    private data class HealthMetric(val observedAt: Instant, val outboxDepth: Long,
+        val outboxOldest: Instant?, val mediaOldest: Instant?)
+
     private fun auditRow(r: ResultSet): Audit {
         val value = Audit(r.getObject("id", UUID::class.java), r.getLong("version"), instant(r, "created_at"),
             r.getObject("actor_id", UUID::class.java), r.getString("operation_id"), r.getString("target_type"),
@@ -219,8 +267,8 @@ internal class SupabaseStaffModerationStore(private val environment: String, tra
             value.traceId.length !in 1..128 || value.traceId.any(Char::isISOControl)) unavailable()
         if (value.source == 0) {
             if (value.version != 1L || value.targetType != "moderationAccess" || value.targetId != value.id.toString() ||
-                value.action !in setOf(LIST, GET, CLAIM, DISMISS, AUDIT) ||
-                value.reason !in setOf("queue-list", "case-review", "claim-receipt", "dismiss-receipt", "remove-receipt", "audit-list")) unavailable()
+                value.action !in setOf(LIST, GET, CLAIM, DISMISS, AUDIT, HEALTH) ||
+                value.reason !in setOf("queue-list", "case-review", "claim-receipt", "dismiss-receipt", "remove-receipt", "audit-list", "health-read")) unavailable()
         } else if (value.source == 1) {
             if (value.version !in 2L..3L || value.action !in setOf(CLAIM, DISMISS) ||
                 value.targetType !in setOf("post", "message", "user", "shortcut") || !uuid(value.targetId)) unavailable()
@@ -538,7 +586,13 @@ internal class SupabaseStaffModerationStore(private val environment: String, tra
         private const val CLAIM = "adminClaimReport"
         private const val DISMISS = "adminActOnReport"
         private const val AUDIT = "adminListAudit"
+        private const val HEALTH = "adminGetHealth"
+        private const val MAX_SAFE_JSON_INTEGER = 9_007_199_254_740_991L
         private const val PRIORITY = "CASE c.priority WHEN 'urgent' THEN 0 WHEN 'high' THEN 1 ELSE 2 END"
+        private const val HEALTH_SELECT = "SELECT clock_timestamp() observed_at," +
+            "(SELECT count(*) FROM platform.outbox WHERE owner_environment=? AND published_at IS NULL AND quarantined_at IS NULL) outbox_depth," +
+            "(SELECT min(occurred_at) FROM platform.outbox WHERE owner_environment=? AND published_at IS NULL AND quarantined_at IS NULL) outbox_oldest," +
+            "(SELECT min(created_at) FROM platform.media_processing_jobs WHERE environment=? AND state IN ('queued','working','retry','quarantined')) media_oldest"
         private const val MESSAGE_FINGERPRINT = "jsonb_build_object('id',id,'threadId',thread_id,'ownerId',sender_user_id,'version',1," +
             "'kind',kind,'text',text,'createdAt',to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD\"T\"HH24:MI:SS.US\"Z\"')," +
             "'recipeRequestId',recipe_request_id,'recipeVersionId',recipe_version_id)"
@@ -551,7 +605,7 @@ internal class SupabaseStaffModerationStore(private val environment: String, tra
             "SELECT a.id,1::bigint version,a.created_at,a.actor_id," +
             "CASE a.purpose WHEN 'queue-list' THEN 'adminListReports' WHEN 'case-review' THEN 'adminGetCase' " +
             "WHEN 'claim-receipt' THEN 'adminClaimReport' WHEN 'dismiss-receipt' THEN 'adminActOnReport' " +
-            "WHEN 'remove-receipt' THEN 'adminActOnReport' ELSE 'adminListAudit' END operation_id," +
+            "WHEN 'remove-receipt' THEN 'adminActOnReport' WHEN 'health-read' THEN 'adminGetHealth' ELSE 'adminListAudit' END operation_id," +
             "'moderationAccess'::varchar target_type,a.id::text target_id,a.purpose reason,a.trace_id,0 source_rank " +
             "FROM safety.moderation_access_audit a WHERE a.environment=? UNION ALL " +
             "SELECT m.id,m.case_version,m.created_at,m.actor_id,m.operation_id,c.target_type,c.target_id::text," +

@@ -1,13 +1,22 @@
 # Backend deployment source
 
-## Current V089 source handoff — 23 September 2026 IST
+## Current V090 source handoff — 23 September 2026 IST
 
 The credential-free [`server-deploy/`](../server-deploy/) handoff is refreshed
-from the current production source closure: **557 build inputs / 8,631,681
-bytes**, all **V001–V089** application migrations, the locked 207-operation
+from the current production source closure: **558 build inputs / 8,638,490
+bytes**, all **V001–V090** application migrations, the locked 207-operation
 server contract, public build metadata, reviewed Dockerfile and pinned public
 Supabase CA. Its context-manifest SHA-256 is
-`4713f08970949e9fad07c8fdabc00d298f2de6a341187a377da7a97d85237d01`.
+`852639f17d0dbcdcd0e7b408442639373c1bcccec04cc2a580ddaf6275b2d2ed`.
+
+V090 adds a restricted, read-only `adminGetHealth` backend for the existing
+staff Incident console. Current Supabase workforce/MFA/moderator admission,
+environment-scoped outbox and media aggregates, canonical response validation,
+immutable `health-read` auditing and a final authority check share one database
+transaction. Free V1 has no entitlement processor or incident registry, so the
+snapshot remains `degraded`; enabling either future subsystem without a real
+metric source fails closed. No pause, replay, flag mutation or on-call authority
+is added. Twelve staff PostgreSQL, six migration and 28 staff-browser methods pass.
 
 V089 adds only exact-owner deletion of account-export data that never crossed a
 durable upload-dispatch or verification marker. Dispatched, verified, foreign,
@@ -35,7 +44,8 @@ verified temporary export apart from ignored local build caches. An offline JDK
 `:verifyReleaseScope :server:installDist`: 44 included and 10 deferred features,
 all 98 canonical screens retained, dependency inventory accepted, 208 schemas /
 160 paths / 207 operations contract-locked, and all 17 requested Gradle tasks
-executed. The publication scanner passes all 558 files. Separately, 11 focused
+executed. The V090 context/preflight suites report 10 pass, 3 explicit skips and
+0 failures. Separately, 11 focused
 Kotlin validator checks and 15 protected-export checks pass, including the actual
 packaged Kotlin validator.
 
@@ -46,8 +56,8 @@ current through V088, but the existing Render preview still runs the historical
 closed V032 dependency-hold revision. Current reviewed runtime configuration,
 provider/session-policy approval, recipe content and connected end-to-end
 acceptance remain required before replacing that service or calling the API live.
-Do not deploy this V089 source until the controlled hosted V089 database rollout
-and postflight are complete.
+Do not deploy this V090 source until the controlled hosted V089/V090 database
+rollout, reviewed runtime grants and postflight are complete.
 
 ## Current Render connection attempt — 19 September 2026 UTC
 

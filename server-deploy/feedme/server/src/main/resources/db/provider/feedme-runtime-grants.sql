@@ -1,5 +1,5 @@
 -- Fixed account-core runtime privileges. Apply only inside an installer-owned transaction
--- AFTER verified V001--V089 and the exact managed Auth projector installation. No roles,
+-- AFTER verified V001--V090 and the exact managed Auth projector installation. No roles,
 -- passwords, provider grants, policies, default privileges or database connections are
 -- created here. The installer separately controls CONNECT on its exact selected database.
 -- This is not an ACL reset: reject unexpected inherited/PUBLIC/existing privileges before

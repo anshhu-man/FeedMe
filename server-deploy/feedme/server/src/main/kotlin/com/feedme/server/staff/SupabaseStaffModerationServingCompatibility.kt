@@ -12,11 +12,35 @@ internal object SupabaseStaffModerationServingCompatibility {
         try {
             require(!c.isClosed && !c.autoCommit && c.transactionIsolation == Connection.TRANSACTION_READ_COMMITTED)
             if (Thread.currentThread().isInterrupted) throw InterruptedException("Staff moderation compatibility interrupted")
-            c.prepareStatement("SELECT description,checksum FROM platform.schema_migrations WHERE version=77").use { s ->
-                s.executeQuery().use { r -> check(r.next() && r.getString(1) == "staff_moderator_enrollments" &&
-                    r.getString(2) == sha(source) && !r.next()) }
+            c.prepareStatement("SELECT version,description,checksum FROM platform.schema_migrations WHERE version IN (77,90) ORDER BY version").use { s ->
+                s.executeQuery().use { r ->
+                    check(r.next() && r.getInt(1) == 77 && r.getString(2) == "staff_moderator_enrollments" && r.getString(3) == sha(source))
+                    check(r.next() && r.getInt(1) == 90 && r.getString(2) == "staff_operational_health_reader" && r.getString(3) == sha(healthSource))
+                    check(!r.next())
+                }
             }
             c.createStatement().use { s ->
+                s.executeQuery("SELECT c.convalidated,c.contype::text," +
+                    "ARRAY(SELECT a.attname FROM unnest(c.conkey) k(n) JOIN pg_catalog.pg_attribute a " +
+                    "ON a.attrelid=c.conrelid AND a.attnum=k.n),pg_get_constraintdef(c.oid) " +
+                    "FROM pg_catalog.pg_constraint c WHERE c.conrelid='safety.moderation_access_audit'::regclass " +
+                    "AND c.conname='moderation_access_audit_purpose_check'").use { r ->
+                    check(r.next() && r.getBoolean(1) && r.getString(2) == "c" &&
+                        (r.getArray(3).array as Array<*>).map { it.toString() } == listOf("purpose"))
+                    val values = Regex("'([^']+)'").findAll(r.getString(4)).map { it.groupValues[1] }.toSet()
+                    check(values == setOf("queue-list", "case-review", "claim-receipt", "dismiss-receipt",
+                        "remove-receipt", "audit-list", "health-read") && !r.next())
+                }
+                s.executeQuery("SELECT " +
+                    "has_column_privilege(current_user,'platform.outbox','owner_environment','SELECT')," +
+                    "has_column_privilege(current_user,'platform.outbox','published_at','SELECT')," +
+                    "has_column_privilege(current_user,'platform.outbox','quarantined_at','SELECT')," +
+                    "has_column_privilege(current_user,'platform.outbox','occurred_at','SELECT')," +
+                    "has_column_privilege(current_user,'platform.media_processing_jobs','environment','SELECT')," +
+                    "has_column_privilege(current_user,'platform.media_processing_jobs','state','SELECT')," +
+                    "has_column_privilege(current_user,'platform.media_processing_jobs','created_at','SELECT')").use { r ->
+                    check(r.next() && (1..7).all(r::getBoolean) && !r.next())
+                }
                 s.executeQuery("SELECT r.rolsuper,r.rolbypassrls,current_setting('session_replication_role')='origin'," +
                     "m.relkind,m.relrowsecurity,m.relforcerowsecurity,m.relowner<>r.oid," +
                     "NOT EXISTS(SELECT 1 FROM pg_catalog.pg_inherits i WHERE i.inhrelid=m.oid OR i.inhparent=m.oid)," +
@@ -124,6 +148,10 @@ internal object SupabaseStaffModerationServingCompatibility {
     )
     private val source by lazy {
         checkNotNull(javaClass.getResourceAsStream("/db/migration/V077__staff_moderator_enrollments.sql"))
+            .use { it.readBytes().decodeToString() }
+    }
+    private val healthSource by lazy {
+        checkNotNull(javaClass.getResourceAsStream("/db/migration/V090__staff_operational_health_reader.sql"))
             .use { it.readBytes().decodeToString() }
     }
     private fun body(marker: String): String {

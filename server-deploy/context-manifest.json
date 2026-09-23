@@ -459,8 +459,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/db/PlatformMigrations.kt",
-      "bytes": 16086,
-      "sha256": "aeb73aeedfb88b9a5a22bd898704f87e5cb688b2903c7eb8a375347add18b1d3"
+      "bytes": 16163,
+      "sha256": "c3f1920d34f17e603fd5b6efe2e77ff276dd62baeedefe376b733561b66d5541"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/export/AccountExportDownloadService.kt",
@@ -894,8 +894,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/http/ConfiguredSupabaseAccountCoreAssembly.kt",
-      "bytes": 37923,
-      "sha256": "e11c849bef3ddc5cc76c841f4a3f57c7a6ef8d3d21ad90c40e7e44a65281763f"
+      "bytes": 38211,
+      "sha256": "cf4244b496f16e090d47098db4b2b59d4bf79a69a51f15d7e62e39eea6c2d6c0"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/http/ConfiguredSupabaseAccountMealAssembly.kt",
@@ -1079,8 +1079,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/http/SupabaseStaffModerationHttpRoutes.kt",
-      "bytes": 9852,
-      "sha256": "3135633d343a249a56b68e2f18100dafe265c15cad622cb41383077f5beadf92"
+      "bytes": 9966,
+      "sha256": "62f357a2b9b6b95074d7511602c9975be5bae7b884c871deb01c151db61e3257"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/http/SupabaseStaffRecipeHttpRoutes.kt",
@@ -2019,8 +2019,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/staff/StaffModerationModels.kt",
-      "bytes": 668,
-      "sha256": "96f479cc504a546fb5ae630fd08b100f9f85b007193ea8d8eb8364d99d321eef"
+      "bytes": 751,
+      "sha256": "308e8bcba17842d88e7fe40bcd51e71520e35f1ffdb53665f81d7f57650cff96"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/staff/StaffModerationServingCompatibility.kt",
@@ -2059,18 +2059,18 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/staff/SupabaseStaffAdmissionStore.kt",
-      "bytes": 23623,
-      "sha256": "9f34b92c11b9c5af071d376668a13cd1fdc3219aa054b6839c637c891f451776"
+      "bytes": 23742,
+      "sha256": "e1a5132dfbf03c9b55fad096e83649f3a9f2e01a1cfafc39525842252980ee4c"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/staff/SupabaseStaffModerationServingCompatibility.kt",
-      "bytes": 10792,
-      "sha256": "20cfe4ed492efcd7f5b41f83afdc1402008ccc7d169228702a06ab27957eba2a"
+      "bytes": 13134,
+      "sha256": "a53d408c73083c1c3b9e048fef5f194e2ea04e34151e04b00edc766b231e89ce"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/staff/SupabaseStaffModerationStore.kt",
-      "bytes": 45291,
-      "sha256": "0c65b71a09689a406e24efd19719938aa3fde1cfdd52fd59bb2b8c9ec70b459b"
+      "bytes": 48522,
+      "sha256": "5a2f593c57a13bfaef9b42e40cb5ae6f819e167c1d29d72bee72e55259def075"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/staff/SupabaseStaffRecipeDraftCodec.kt",
@@ -2568,6 +2568,11 @@
       "sha256": "da4f0903499b3257c97bc8a9f2f86159e0f78a0a9ef8b6a205ebd11cca87dc5f"
     },
     {
+      "path": "feedme/server/src/main/resources/db/migration/V090__staff_operational_health_reader.sql",
+      "bytes": 555,
+      "sha256": "13b093289a20928b91bbf439714a788525ea179bbe3ec52a87e5ce47e8d20b0d"
+    },
+    {
       "path": "feedme/server/src/main/resources/db/provider/feedme-account-deletion-serving-grants.sql",
       "bytes": 11845,
       "sha256": "07c5a01338fabf2678a458b71ab9a9b0c9527efebc3ea75e3279444c9b8b6c1e"
@@ -2575,7 +2580,7 @@
     {
       "path": "feedme/server/src/main/resources/db/provider/feedme-runtime-grants.sql",
       "bytes": 66276,
-      "sha256": "ece860c702aacd2bfedaf9666f10c149fad74e0593465e04bf51579153ecf1c2"
+      "sha256": "aa8f43374e18e945dbd2882087e34884d730ce889b4096b75f0480507b03368f"
     },
     {
       "path": "feedme/server/src/main/resources/db/provider/supabase-authority.sql",
@@ -2788,7 +2793,7 @@
       "sha256": "5e17e5ce6ea0a96b35adf873261ebed147bd4ac0e43d4f0ac9da53ea4bf0d6ff"
     }
   ],
-  "totalBytes": 8631681,
+  "totalBytes": 8638490,
   "limitations": [
     "Source snapshot only; no container build or deployment was performed.",
     "Third-party image selection, dependency authenticity and live configuration require separate review."
