@@ -5,58 +5,76 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="no-referrer">
   <title>FeedMe Privacy Policy</title>
-  <meta name="description" content="Privacy information for FeedMe's offline Android edition: local choices, deletion, optional email and website hosting.">
+  <meta name="description" content="Privacy Policy for the connected FeedMe app.">
   <link rel="canonical" href="https://anshhu-man.github.io/FeedMe/privacy/">
   <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
   <header>
-    <a class="brand" href="../" aria-label="FeedMe home">FeedMe</a>
-    <nav aria-label="Main navigation"><a href="./" aria-current="page">Privacy</a><a href="../support/">Support</a></nav>
+    <a class="brand" href="../">FeedMe</a>
+    <nav aria-label="Policy navigation"><a href="../terms/">Terms</a><a href="./" aria-current="page">Privacy</a><a href="../delete/">Delete account</a><a href="../support/">Support</a></nav>
   </header>
   <main id="main">
-    <p class="eyebrow">Offline Android edition</p>
+    <p class="eyebrow">Connected app</p>
     <h1>Privacy policy</h1>
-    <p class="meta">Effective date: 19 September 2026.</p>
+    <p class="meta">Effective date: 24 September 2026.</p>
 
-    <h2>Who operates FeedMe</h2>
-    <p>FeedMe (<code>com.anshhuman.feedme</code>) is operated by <strong>Anshuman Acharya</strong>. For privacy questions or support, contact <a href="mailto:hazloteams3@gmail.com">hazloteams3@gmail.com</a>.</p>
-    <p>This policy covers the offline Android edition and these privacy/support pages. It does not describe a future connected service.</p>
+    <h2>Who is responsible</h2>
+    <p>FeedMe (<code>com.anshhuman.feedme</code>) is operated by Anshuman Acharya. For privacy requests, contact <a href="mailto:hazloteams3@gmail.com">hazloteams3@gmail.com</a>. This policy covers the connected FeedMe app and these public policy pages.</p>
 
-    <h2>Information kept on your device</h2>
-    <p>FeedMe remembers your ingredient and meal-preference draft and the identifiers of recipes you explicitly save. It uses these to restore your choices and show your Saved recipes. They are stored in the app's private on-device storage (Android SharedPreferences), not an online account.</p>
-    <p>FeedMe does not upload these choices or send them to Supabase, Render or another service. Recipe matching and cooking screens run on your device.</p>
-    <p>This edition has no sign-in, account creation, social posting, photo or camera features, advertising or purchases. FeedMe's offline cooking implementation includes no analytics or crash-reporting service. The developer-built offline package does not request Internet, camera, microphone, contacts or location access. It does not require an email address, date of birth or advertising identifier to use the cooking features.</p>
+    <h2>Information the connected app processes</h2>
+    <ul>
+      <li><strong>Account and authentication:</strong> Supabase user identifier, Google-provided email and basic profile information, session/device identifiers, adult and Terms acceptance, and account status.</li>
+      <li><strong>Cooking information:</strong> ingredients, pantry items, dietary and taste preferences, equipment, time, energy and cleanup choices, meal requests, recommendations, cooking progress, saves and feedback.</li>
+      <li><strong>Optional social information:</strong> profile details, circles and membership, posts, captions, selected photos, messages, reactions, invitations, reports, blocks and chosen audiences.</li>
+      <li><strong>Safety and operation:</strong> command identifiers, versions, security and moderation events, audit records, error or trace identifiers and bounded service-health information.</li>
+      <li><strong>Support:</strong> your sender address, message and any attachments you choose when you email support.</li>
+    </ul>
+    <p>FeedMe does not sell personal data or use third-party advertising SDKs in the first connected release.</p>
 
-    <h2 id="play-verification">Google Play installation verification</h2>
-    <p>Meal matching, recipes and Saved choices work locally. Google Play can add installation verification to the version it distributes. These checks generally work offline, but may occasionally require a connection if the Play Store has been offline for a prolonged period.</p>
-    <p>Google Play's own services handle information under Google's policies; the local-package description above is not a claim that Google processes no information. See <a href="https://support.google.com/googleplay/android-developer/answer/10183279?hl=en">Google's automatic protection guidance</a> and the <a href="https://policies.google.com/privacy">Google Privacy Policy</a>. Installation verification does not change FeedMe's local storage of your ingredient draft and Saved choices.</p>
+    <h2>Why information is used</h2>
+    <p>Information is used to authenticate you; provide and restore cooking, Saved and intentional social features; enforce audiences and blocks; secure the service; investigate reports; operate account deletion and support; and comply with applicable obligations. Private cooking preferences are not used for advertising or public profiles.</p>
 
-    <h2>Keeping and removing local information</h2>
-    <p>Your draft and Saved recipe choices remain on this device until you change or remove them. <strong>Clear local data</strong>, followed by confirmation, removes both the draft and Saved recipe identifiers. Uninstalling FeedMe removes its local files.</p>
-    <p>Android cloud backup and device-to-device transfer are disabled for this app. FeedMe does not provide cloud sync or recovery of cleared choices.</p>
-    <p>App-private storage limits access by other ordinary apps. This is not a promise of protection against someone with access to your unlocked device or a compromised operating system, and it is not a claim of separately encrypted SharedPreferences.</p>
+    <h2>AI processing</h2>
+    <p>If AI request interpretation is enabled, FeedMe is designed to send Cloudflare Workers AI only bounded meal-request content and reviewed public ingredient options needed for that request. It is not designed to send your email, account identifier, social content, photos, medical history or an unrestricted copy of your pantry or profile for meal interpretation. You review the interpretation before it becomes a meal request.</p>
+    <p>If social-photo upload is enabled, FeedMe may separately send one decoded and re-encoded private display image to Cloudflare Workers AI solely for automated content moderation before the image can become available to its chosen audience. The moderation request is not designed to include your email or account identifier. An unavailable, malformed or uncertain result does not approve the image. FeedMe is designed to retain the bounded decision evidence needed for safety and audit, not the model's reasoning or a generated caption.</p>
+    <p>Cloudflare states that Workers AI customer content is not used to train AI models or improve Cloudflare or third-party services without explicit consent. See <a href="https://developers.cloudflare.com/workers-ai/platform/data-usage/">Cloudflare's Workers AI data-usage documentation</a>.</p>
 
-    <h2>Optional support email</h2>
-    <p><strong>Contact support</strong> opens your email app. Opening it does not send a message: you decide whether to send one and what to include. If you send an email, the operator receives your sender address, message and any attachments you choose through the email providers involved, including the operator's Gmail service.</p>
-    <p>FeedMe does not automatically attach your ingredient draft, Saved choices or diagnostic files. Avoid sending passwords, health information or other sensitive details. A parent or guardian can contact support on a child's behalf.</p>
-    <p id="support-retention">The operator uses support messages to answer requests and retains correspondence only as needed for support or legal obligations. You can request deletion by emailing <a href="mailto:hazloteams3@gmail.com">hazloteams3@gmail.com</a>.</p>
-    <p>Clearing FeedMe's local data does not delete an email you sent. For questions about support correspondence or a request to delete it, email <a href="mailto:hazloteams3@gmail.com">hazloteams3@gmail.com</a>. External email providers handle their services under their own policies.</p>
+    <h2>Service providers</h2>
+    <ul>
+      <li><strong>Google</strong> provides Google sign-in and Google Play distribution.</li>
+      <li><strong>Supabase</strong> provides authentication, PostgreSQL database and, when enabled, private media storage.</li>
+      <li><strong>Render</strong> hosts the FeedMe application API.</li>
+      <li><strong>Cloudflare Workers AI</strong> may process bounded meal-request content for request interpretation and one decoded, re-encoded social-photo derivative for automated content moderation, only when the relevant feature is enabled.</li>
+      <li><strong>GitHub Pages</strong> hosts these public pages and processes ordinary web request information under GitHub's practices.</li>
+      <li><strong>Email providers</strong> process support correspondence when you choose to send it.</li>
+    </ul>
+    <p>These providers may process information in countries other than yours under their own terms and privacy practices.</p>
 
-    <h2 id="website">This website and external links</h2>
-    <p>The app's public privacy-policy link opens your browser and may need Internet access. FeedMe does not include your local choices or a user identifier in that link.</p>
-    <p>When you visit these pages on GitHub Pages, that service hosts the website. The site includes no scripts, forms, external fonts or images, FeedMe analytics, or FeedMe tracking cookies. That does not mean the hosting service receives no information: GitHub says it records and keeps visitors' IP addresses for security, whether or not they are signed in to GitHub.</p>
-    <p>GitHub handles hosting-related information under its own practices. See <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages">GitHub Pages data collection</a> and the <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub General Privacy Statement</a>. This policy does not promise a retention period for GitHub's logs.</p>
-    <p>Links to other websites are ordinary links, not embedded content. Following a link uses your browser and the destination's own services.</p>
+    <h2>Sharing with other people</h2>
+    <p>FeedMe shares social content with the audience you choose only when you intentionally publish or send it. Audience members can still copy or capture what they receive. Safety reports can expose limited content to authorized moderators. Information may be disclosed when required by applicable law.</p>
 
-    <h2>Younger users and cooking</h2>
-    <p>The intended audience is ages 11 and above. FeedMe does not verify age or create child accounts. Children should cook with a responsible adult, particularly when using knives, heat or boiling water.</p>
-    <p>Check ingredient labels and allergies. Recipe suggestions are not medical advice or a guarantee that a meal is suitable for a particular person.</p>
+    <h2>Retention</h2>
+    <p>Account, cooking and social information is kept while needed to provide your connected account, until you remove it through available controls or request account deletion, subject to feature-specific expiry and the limited exceptions below. Temporary links and Today content may expire sooner; Saved copies and messages have their own lifecycles.</p>
+    <p>Security, consent, moderation, deletion and transaction records may be retained for the limited time needed to protect users, preserve system integrity, resolve disputes, prevent fraud or meet legal obligations. Provider backups may take additional time to cycle after deletion. Access to retained records is restricted to their stated operational purpose.</p>
+    <p>Support messages are used to answer requests and retained only as needed for support or legal obligations. You can request deletion of support correspondence at <a href="mailto:hazloteams3@gmail.com">hazloteams3@gmail.com</a>.</p>
 
-    <h2>Questions</h2>
-    <p>Contact Anshuman Acharya at <a href="mailto:hazloteams3@gmail.com">hazloteams3@gmail.com</a> for questions about this policy or <a href="../support/">read the support page</a>.</p>
+    <h2>Your choices and rights</h2>
+    <p>You can edit supported profile and preference information, choose social audiences, remove supported content, block accounts, leave circles and request account deletion. The external <a href="../delete/">account deletion page</a> is available without reinstalling the app. Other rights may apply under the law where you live; contact support to exercise them.</p>
+
+    <h2>Account deletion</h2>
+    <p>You may start deletion in the app when that control is available or email a request through the external deletion page. FeedMe will verify that the request belongs to the account, confirm the expected completion window and delete or de-identify associated data, except information retained for a specifically stated security or legal reason. Temporary suspension is not treated as deletion.</p>
+
+    <h2>Security</h2>
+    <p>FeedMe uses encrypted transport, scoped server-side authorization, app-private storage and access controls. No system is completely secure. Do not send passwords, access tokens or highly sensitive medical information to support or social features. Report suspected unauthorized access promptly.</p>
+
+    <h2>Adults only</h2>
+    <p>The connected FeedMe account service is intended only for people aged 18 years or older. It is not designed for children. If the operator learns that an ineligible person supplied personal data, contact support so access and deletion can be handled.</p>
+
+    <h2>Changes and contact</h2>
+    <p>Material changes will use a new effective date or policy version and, when required, renewed notice or consent. Contact Anshuman Acharya at <a href="mailto:hazloteams3@gmail.com">hazloteams3@gmail.com</a>.</p>
   </main>
-  <footer>FeedMe · Offline Android edition</footer>
+  <footer>FeedMe · Privacy Policy</footer>
 </body>
 </html>
