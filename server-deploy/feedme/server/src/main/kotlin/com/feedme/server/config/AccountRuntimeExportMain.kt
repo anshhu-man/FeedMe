@@ -22,7 +22,8 @@ internal const val ACCOUNT_RUNTIME_EXPORT_MAX_BYTES = 131_072
 private const val EXPORT_REFUSAL = "{\"status\":\"config-invalid-local\",\"code\":\"ACCOUNT_RUNTIME_CONFIGURATION_REJECTED\"}"
 private val exportRequiredKeys = setOf("FEEDME_ACCOUNT_RUNTIME_CONFIG", "FEEDME_ACCOUNT_DB_PASSWORD", "FEEDME_ACCOUNT_CURSOR_KEYS")
 private val exportAllowedKeys = exportRequiredKeys + AccountMealIntentRuntimeConfig.ENVIRONMENT_KEYS +
-    AccountMediaRuntimeConfig.ENVIRONMENT_KEYS + AccountExportRuntimeConfig.ENVIRONMENT_KEYS + "PORT"
+    AccountMediaRuntimeConfig.ENVIRONMENT_KEYS + AccountExportRuntimeConfig.ENVIRONMENT_KEYS +
+    GuestCoreRuntimeConfig.ENVIRONMENT_KEYS + "PORT"
 
 /** The clock seam is test-only; production always uses the actual UTC clock. This result
  * is neither current dependency health nor evidence that an operator reviewed these facts.
@@ -48,6 +49,30 @@ internal fun validateAccountRuntimeExport(bytes: ByteArray, clock: Clock): Strin
     val now = clock.instant()
     require(config.deployment.reviewedAt <= now && now < config.deployment.validUntil)
     val staff = config.staffPolicy
+    val guest = config.guest
+    val directMakeMine = config.reusePolicy != null
+    val savedMakeMine = config.reusePolicy != null
+    val postMakeMine = directMakeMine && config.postReadPolicy != null &&
+        config.postRecipePolicy?.makeMineEnabled == true
+    val accountExportEnabled = config.exportPolicy?.enabled == true && config.exportStorage != null
+    val makeAgain = config.makeAgainEnabled && config.memoryPolicy != null
+    val inboxReadAcknowledgements = config.notificationPolicy != null &&
+        config.conversationPolicy != null && config.notificationInboxPolicy != null
+    val onboardingPreferences = config.preferencePolicy.dietaryPatterns.isNotEmpty() &&
+        config.preferencePolicy.equipmentIds.isNotEmpty()
+    val socialPhotoUpload = config.media?.admission?.uploadsEnabled == true &&
+        config.postAuthoring?.admission?.draftMutationsEnabled == true &&
+        config.postAuthoring.admission.publishingEnabled &&
+        config.postAuthoring.admission.mediaSafety != null &&
+        config.mediaAccessPolicy?.enabled == true && config.safetyPolicy != null && config.reportPolicy != null
+    val kitchenCircleInvitations = config.circlePolicy?.circleCreationEnabled == true &&
+        config.circlePolicy.invitationCreationEnabled && config.safetyPolicy != null && config.reportPolicy != null
+    val guestCookingJourney = guest?.newSessionsEnabled == true && guest.bootstrapReplayEnabled &&
+        guest.kitchenEnabled && guest.cookingEnabled && guest.savedEnabled && guest.feedbackEnabled && guest.planning != null
+    val fullV1Scope = config.planningOperational.newPlanningEnabled && config.newCookingEnabled &&
+        config.newCopiesEnabled && config.mealIntent != null && directMakeMine && savedMakeMine && postMakeMine &&
+        accountExportEnabled && makeAgain && inboxReadAcknowledgements && onboardingPreferences &&
+        config.deletionRules != null && socialPhotoUpload && kitchenCircleInvitations && guestCookingJourney
     buildJsonObject {
         put("status", "config-valid-local")
         put("adultAdmissionEnabled", true)
@@ -57,7 +82,26 @@ internal fun validateAccountRuntimeExport(bytes: ByteArray, clock: Clock): Strin
         put("aiConfigured", config.mealIntent != null)
         put("mediaConfigured", config.media != null)
         put("accountExportConfigured", config.exportPolicy != null && config.exportStorage != null)
+        put("accountExportEnabled", accountExportEnabled)
         put("accountDeletionConfigured", config.deletionRules != null)
+        put("directMakeMineConfigured", directMakeMine)
+        put("savedMakeMineConfigured", savedMakeMine)
+        put("postMakeMineConfigured", postMakeMine)
+        put("makeAgainEnabled", makeAgain)
+        put("inboxReadAcknowledgementsConfigured", inboxReadAcknowledgements)
+        put("onboardingPreferencesConfigured", onboardingPreferences)
+        put("socialPhotoUploadEnabled", socialPhotoUpload)
+        put("kitchenCircleInvitationsEnabled", kitchenCircleInvitations)
+        put("guestCookingJourneyConfigured", guestCookingJourney)
+        put("fullV1ScopeConfigured", fullV1Scope)
+        put("guestRuntimeConfigured", guest != null)
+        put("guestNewSessionsEnabled", guest?.newSessionsEnabled == true)
+        put("guestBootstrapReplayEnabled", guest?.bootstrapReplayEnabled == true)
+        put("guestKitchenConfigured", guest?.kitchenEnabled == true)
+        put("guestCookingConfigured", guest?.cookingEnabled == true)
+        put("guestSavedConfigured", guest?.savedEnabled == true)
+        put("guestFeedbackConfigured", guest?.feedbackEnabled == true)
+        put("guestPlanningConfigured", guest?.planning != null)
         put("staffSessionConfigured", staff != null)
         put("staffCatalogDraftsEnabled", staff?.catalogDraftsEnabled == true)
         put("staffCatalogReviewsEnabled", staff?.catalogReviewsEnabled == true)

@@ -15,7 +15,7 @@ internal fun entryAccountControlsPresentation(screen: EntryScreen, enabled: Bool
     deletionConfigured: Boolean, privacyAvailable: Boolean, blockedConfigured: Boolean = false,
     sessionsConfigured: Boolean = false, signOutAvailable: Boolean = false, notificationsConfigured: Boolean = false,
     kitchenConfigured: Boolean = false, profileConfigured: Boolean = false, memoryConfigured: Boolean = false,
-    exportConfigured: Boolean = false): BlueprintPreferenceState {
+    exportConfigured: Boolean = false, planConfigured: Boolean = false): BlueprintPreferenceState {
     require(screen in setOf(EntryScreen.ACCOUNT_SETTINGS, EntryScreen.ACCOUNT_PRIVACY))
     val page = if (screen == EntryScreen.ACCOUNT_SETTINGS) BlueprintPreferencePage.SETTINGS else BlueprintPreferencePage.PRIVACY
     return BlueprintPreferenceState(page, enabledActionIds = if (!enabled) emptySet() else buildSet {
@@ -23,6 +23,7 @@ internal fun entryAccountControlsPresentation(screen: EntryScreen, enabled: Bool
         if (page == BlueprintPreferencePage.SETTINGS) {
             if (profileConfigured) add("SETTINGS.01")
             if (memoryConfigured) add("SETTINGS.04")
+            if (planConfigured) add("SETTINGS.09")
             add("SETTINGS.05"); add("SETTINGS.10")
             if (sessionsConfigured) add("SETTINGS.07")
             if (signOutAvailable) add("SETTINGS.12")
@@ -43,8 +44,8 @@ internal fun EntryAccountControlsScreen(screen: EntryScreen, enabled: Boolean, d
     privacyAvailable: Boolean, onAction: (String) -> Unit, onSupport: (() -> Unit)? = null,
     blockedConfigured: Boolean = false, sessionsConfigured: Boolean = false, signOutAvailable: Boolean = false,
     notificationsConfigured: Boolean = false, kitchenConfigured: Boolean = false, profileConfigured: Boolean = false,
-    memoryConfigured: Boolean = false, exportConfigured: Boolean = false) {
-    val view = entryAccountControlsPresentation(screen, enabled, deletionConfigured, privacyAvailable, blockedConfigured, sessionsConfigured, signOutAvailable, notificationsConfigured, kitchenConfigured, profileConfigured, memoryConfigured, exportConfigured)
+    memoryConfigured: Boolean = false, exportConfigured: Boolean = false, planConfigured: Boolean = false) {
+    val view = entryAccountControlsPresentation(screen, enabled, deletionConfigured, privacyAvailable, blockedConfigured, sessionsConfigured, signOutAvailable, notificationsConfigured, kitchenConfigured, profileConfigured, memoryConfigured, exportConfigured, planConfigured)
     var more by remember { mutableStateOf(false) }
     BackHandler(enabled) { onAction("${view.page.name}.back") }
     BlueprintPreferenceScreen(view, onFieldChange = { _, _ -> }, onAction = { action ->

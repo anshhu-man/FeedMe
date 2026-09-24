@@ -7,6 +7,7 @@ import com.feedme.server.config.AccountCoreRuntimeConfig
 import com.feedme.server.cooking.*
 import com.feedme.server.db.*
 import com.feedme.server.export.*
+import com.feedme.server.guest.*
 import com.feedme.server.identity.*
 import com.feedme.server.kitchen.*
 import com.feedme.server.memory.*
@@ -67,6 +68,7 @@ class ConfiguredSupabaseAccountCoreAssembly private constructor(
     val planning: AccountPlanningHttpConfiguration,
     val cooking: AccountCookingHttpConfiguration,
     val saved: AccountSavedRecipeHttpConfiguration,
+    val guest: GuestHttpConfiguration?,
     val blocks: AccountBlockHttpConfiguration?,
     val mealIntent: AccountMealIntentHttpConfiguration?,
     val deletion: AccountDeletionHttpConfiguration?,
@@ -96,6 +98,7 @@ class ConfiguredSupabaseAccountCoreAssembly private constructor(
     val dependencyHealth: AccountCoreDependencyHealth,
     private val authority: SupabasePostgresAuthority,
     private val keys: HttpsSupabaseJwksSource,
+    private val guestReplayCipher: GuestReplayCipher?,
     private val model: CloudflareJsonModel?,
     private val mediaStorage: SupabaseStorageHttp?,
     private val mediaAccessOwner: AccountMediaAccessStore?,
@@ -110,7 +113,9 @@ class ConfiguredSupabaseAccountCoreAssembly private constructor(
         try { exportDownloads?.close() } finally { try { exportWorker?.close() } finally {
         try { exportObjects?.close() } finally { try { exportEncryption?.close() } finally {
         try { mediaAccessOwner?.close() } finally { try { mediaStorage?.close() } finally {
-            try { model?.close() } finally { try { authority.close() } finally { keys.close() } }
+            try { guestReplayCipher?.close() } finally { try { model?.close() } finally {
+                try { authority.close() } finally { keys.close() }
+            } }
         } } } } } }
     }
     override fun toString() = "ConfiguredSupabaseAccountCoreAssembly(<redacted>)"
@@ -130,6 +135,7 @@ class ConfiguredSupabaseAccountCoreAssembly private constructor(
             val transactions = PgTransactions(database)
             val authority = SupabasePostgresAuthority(config.deployment)
             var keys: HttpsSupabaseJwksSource? = null
+            var guestReplayCipher: GuestReplayCipher? = null
             var model: CloudflareJsonModel? = null
             var mediaStorage: SupabaseStorageHttp? = null
             var mediaAccessOwner: AccountMediaAccessStore? = null
@@ -148,11 +154,46 @@ class ConfiguredSupabaseAccountCoreAssembly private constructor(
                 val journal = RecipeCatalogJournal(config.environment, transactions, ReadOnlyCatalogAuthority)
                 val substitutions = RecipeSubstitutionJournal(config.environment, transactions, journal, ReadOnlyCatalogAuthority)
                 val rights = RecipeCopyRightsStore(config.environment, transactions, journal, ReadOnlyCatalogAuthority)
+                val guest = config.guest?.let { guestConfig ->
+                    val cipher = guestConfig.replayCipher()
+                    guestReplayCipher = cipher
+                    val sessions = GuestSessionStore(config.environment, transactions, guestConfig.sessions, cipher,
+                        ConfiguredGuestSessionAuthority(config.environment, guestConfig.sessions,
+                            guestConfig.newSessionsEnabled, guestConfig.bootstrapReplayEnabled))
+                    val search = GuestIngredientSearchStore(sessions,
+                        PostgresIngredientSearch(ingredients, config.ingredientCursors),
+                        guestConfig.maxSearchResponseBytes)
+                    val kitchen = if (guestConfig.kitchenEnabled) GuestKitchenStore(
+                        config.environment, transactions, sessions, ingredients,
+                        config.preferencePolicy, config.kitchenCursors, config.kitchenPolicy) else null
+                    val preparations = guestConfig.planning?.let { policy ->
+                        GuestPlanningStore(config.environment, transactions, sessions, journal, policy)
+                    }
+                    val plans = preparations?.let {
+                        GuestPlansStore(config.environment, transactions, it, config.planningCursors)
+                    }
+                    val cooking = if (guestConfig.cookingEnabled) GuestCookingStore(
+                        config.environment, transactions, checkNotNull(preparations), config.cookingPolicy) else null
+                    val saved = if (guestConfig.savedEnabled) GuestSavedRecipeStore(
+                        config.environment, transactions, checkNotNull(preparations), rights,
+                        config.savedCursors, config.savedPolicy) else null
+                    val feedback = if (guestConfig.feedbackEnabled) GuestFeedbackStore(
+                        config.environment, transactions, sessions, journal, ingredients,
+                        checkNotNull(guestConfig.planning),
+                        FeedbackServicePolicy(checkNotNull(config.memoryPolicy).maxResponseBytes)) else null
+                    GuestHttpConfiguration(sessions, search, databaseDispatcher,
+                        kitchen = kitchen, plans = plans, cooking = cooking, saved = saved,
+                        feedback = feedback)
+                }
                 transactions.run { c ->
                     authority.checkCompatibility(c)
                     ingredients.checkCompatibility(c); recipes.checkCompatibility(c)
                     journal.checkCompatibility(c); rights.checkCompatibility(c); substitutions.checkCompatibility(c)
                     config.planningOperational.checkCompatibility(c)
+                    if (config.guest != null) GuestServingCompatibility.check(c,
+                        config.guest.planning != null, config.guest.kitchenEnabled,
+                        config.guest.cookingEnabled, config.guest.savedEnabled,
+                        config.guest.feedbackEnabled)
                     if (config.safetyPolicy != null) AccountBlockCompatibility.check(c)
                     if (config.postReadPolicy != null) PostReadServingCompatibility.check(c)
                     config.circlePolicy?.let { CircleServingCompatibility.check(c, it.circleCreationEnabled, it.invitationCreationEnabled) }
@@ -458,16 +499,18 @@ class ConfiguredSupabaseAccountCoreAssembly private constructor(
                         AccountRecipeCatalogStore(config.environment, transactions, accounts, journal,
                             config.planningCursors, config.planningPolicy.cursorLifetimeSeconds)),
                     AccountCookingHttpConfiguration(cooking, verifier, databaseDispatcher),
-                    AccountSavedRecipeHttpConfiguration(saved, verifier, databaseDispatcher), blocks, mealIntent, deletion, postReads, social, reports, media, memory, reuse, postDrafts, postPublication, conversations, postDeletion, postPlacement, postReactions, recipeRequests, sessions, notifications, notificationInbox, mediaAccess, remixes,
-                    postRecipes, exports, exportDelivery, staff, exportWorker, health, authority, keySource, model,
-                    mediaStorage, mediaAccessOwner, exportDownloads, exportObjects, exportEncryption, reactionNotificationStore)
+                    AccountSavedRecipeHttpConfiguration(saved, verifier, databaseDispatcher), guest, blocks, mealIntent, deletion, postReads, social, reports, media, memory, reuse, postDrafts, postPublication, conversations, postDeletion, postPlacement, postReactions, recipeRequests, sessions, notifications, notificationInbox, mediaAccess, remixes,
+                    postRecipes, exports, exportDelivery, staff, exportWorker, health, authority, keySource,
+                    guestReplayCipher, model, mediaStorage, mediaAccessOwner, exportDownloads, exportObjects,
+                    exportEncryption, reactionNotificationStore)
             } catch (failure: Throwable) {
                 // Retire every owned resource even if construction or cleanup is interrupted.
                 // The caller owns the DataSource and dispatcher; never close them here.
                 val failures = mutableListOf(failure)
                 for (close in listOf<() -> Unit>({ exportDownloads?.close() }, { exportWorker?.close() },
                     { exportObjects?.close() }, { exportEncryption?.close() }, { unownedDerivativeObjects?.close() },
-                    { mediaAccessOwner?.close() }, { mediaStorage?.close() }, { model?.close() }, { authority.close() }, { keys?.close() })) {
+                    { mediaAccessOwner?.close() }, { mediaStorage?.close() }, { guestReplayCipher?.close() },
+                    { model?.close() }, { authority.close() }, { keys?.close() })) {
                     try { close() } catch (cleanup: Throwable) {
                         failures += cleanup
                     }

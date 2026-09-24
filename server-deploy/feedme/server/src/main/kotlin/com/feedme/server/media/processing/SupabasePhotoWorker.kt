@@ -21,7 +21,8 @@ import kotlinx.coroutines.*
 
 /** Independently executable, single-owner worker. Construction checks DB admission but does not
  * fetch private objects, start a scheduler, mint uploads, publish posts or clean up storage.
- * The mandatory borrowed assessor must actually establish BOTH malware and content approval
+ * The mandatory borrowed assessor must actually establish BOTH malware-scan or validated CDR
+ * approval, and content approval,
  * for these exact hashes. No assessor implementation or permission to export images is supplied.
  * Caller owns transactions/provider/dispatcher/assessor; this owner closes its two HTTP clients
  * and assessment boundary. Keep one retained owner; a timed-out uncooperative assessor can retain

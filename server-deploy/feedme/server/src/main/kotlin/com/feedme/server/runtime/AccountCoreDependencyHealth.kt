@@ -7,6 +7,7 @@ import com.feedme.server.db.PgTransactions
 import com.feedme.server.identity.SupabasePostgresAuthority
 import com.feedme.server.identity.AccountDeletionStore
 import com.feedme.server.identity.AccountDeletionServingCompatibility
+import com.feedme.server.guest.GuestServingCompatibility
 import com.feedme.server.memory.requireAccountSavedMaterial
 import com.feedme.server.memory.MemoryServingCompatibility
 import com.feedme.server.memory.CollectionServingCompatibility
@@ -98,6 +99,10 @@ class AccountCoreDependencyHealth internal constructor(
         if (config.sessionPolicy != null) SessionServingCompatibility.check(c)
         if (config.notificationPolicy != null) NotificationServingCompatibility.check(c)
         if (config.notificationInboxPolicy != null) NotificationInboxServingCompatibility.check(c)
+        if (config.guest != null) GuestServingCompatibility.check(c,
+            config.guest.planning != null, config.guest.kitchenEnabled,
+            config.guest.cookingEnabled, config.guest.savedEnabled,
+            config.guest.feedbackEnabled)
         if (config.reactionNotificationPolicy != null) com.feedme.server.identity.AccountReactionNotificationCompatibility.check(c)
         if (config.exportPolicy != null) com.feedme.server.export.AccountExportServingCompatibility.check(c)
         if (config.staffPolicy != null) com.feedme.server.staff.SupabaseStaffServingCompatibility.check(c)

@@ -19,8 +19,8 @@
     },
     {
       "path": "feedme/apps/androidApp/build.gradle.kts",
-      "bytes": 11159,
-      "sha256": "84a37e608aaa661e9da4bbba74cffa5b4bdf19add1667b5f89cb31c2232f1b5b"
+      "bytes": 13733,
+      "sha256": "299bda3acdb55afce3f52cd4dbd6006c757385b4b6256c9531e62d8ba7096178"
     },
     {
       "path": "feedme/apps/androidApp/gradle.lockfile",
@@ -34,13 +34,13 @@
     },
     {
       "path": "feedme/apps/androidApp/src/main/kotlin/com/feedme/android/AccountActivity.kt",
-      "bytes": 46858,
-      "sha256": "0c964010579e9749383fff918f52f38fee120358329c32e8215a5ba6c94bad7d"
+      "bytes": 47251,
+      "sha256": "ee090a6bddf4b5eee065987661d7ae4a0af38fce569b340099d2c0f427555fdc"
     },
     {
       "path": "feedme/apps/androidApp/src/main/kotlin/com/feedme/android/AccountConfiguration.kt",
-      "bytes": 19297,
-      "sha256": "08e60f8fe713515302283544658cc41a15c0ff68bd270db75912cf73688a7180"
+      "bytes": 19972,
+      "sha256": "588bc475bee2bfbe8fda9e9c9ad87865b7642bd7afede683b7ae8d3363950516"
     },
     {
       "path": "feedme/apps/androidApp/src/main/kotlin/com/feedme/android/AccountCookingTimers.kt",
@@ -74,8 +74,8 @@
     },
     {
       "path": "feedme/apps/androidApp/src/main/kotlin/com/feedme/android/EntryAccountControlsScreen.kt",
-      "bytes": 6576,
-      "sha256": "ffcb064564a4d38e5aa65b8e760817b406cd7f2f1f22d5cef54af16fcc5feee7"
+      "bytes": 6709,
+      "sha256": "7d4f9c9df396caeec05729e1bb85522947cc3752f1a24d3d26cf782fa54645d6"
     },
     {
       "path": "feedme/apps/androidApp/src/main/kotlin/com/feedme/android/EntryAccountDeletionPolicy.kt",
@@ -114,8 +114,8 @@
     },
     {
       "path": "feedme/apps/androidApp/src/main/kotlin/com/feedme/android/FeedMeApplication.kt",
-      "bytes": 94441,
-      "sha256": "4869abeba920df03555849ea59a54e1d59caae156b9100e5ef7a276fb52c84bf"
+      "bytes": 96898,
+      "sha256": "bb1e503d5afa552784ccff5aefa6a1a715177a5178aef489c0a69eb980bfc87b"
     },
     {
       "path": "feedme/apps/androidApp/src/main/kotlin/com/feedme/android/FeedMeSystemBars.kt",
@@ -129,8 +129,8 @@
     },
     {
       "path": "feedme/apps/androidApp/src/main/kotlin/com/feedme/android/GuestActivity.kt",
-      "bytes": 2530,
-      "sha256": "04cd690c91163efbac4521177f97863c37ced7b4e86d90e2f005c5d2e32922b0"
+      "bytes": 4486,
+      "sha256": "ea92f2d023d1d19ddb13be3f07d832a873f5dbd51ed7b3a12d9d15a0ba14b8d5"
     },
     {
       "path": "feedme/apps/androidApp/src/main/kotlin/com/feedme/android/GuestEncryptedDraftStore.kt",
@@ -139,8 +139,13 @@
     },
     {
       "path": "feedme/apps/androidApp/src/main/kotlin/com/feedme/android/GuestEntry.kt",
-      "bytes": 3897,
-      "sha256": "8f79cc5d90b4d999bd3af630cb1ae078c0154f4eeceaabc11ceb51443be7f56b"
+      "bytes": 11867,
+      "sha256": "69dd5159385f0e91f66255be2949959f93d2c5a0e8874a5ba0475ace739ee888"
+    },
+    {
+      "path": "feedme/apps/androidApp/src/main/kotlin/com/feedme/android/GuestMealBackend.kt",
+      "bytes": 12585,
+      "sha256": "aedc69d47ed461eb295c1986f343bb6ad04d4445398ee250acd7f41631df83be"
     },
     {
       "path": "feedme/apps/androidApp/src/main/kotlin/com/feedme/android/NativeReviewedKitchenIntegration.kt",
@@ -259,8 +264,8 @@
     },
     {
       "path": "feedme/scripts/verify-v1-runtime-surface.mjs",
-      "bytes": 4930,
-      "sha256": "585007948dfc6a055d0d2f8745ae01e8027d4149e6fdf7141fb88382aeb1c0ee"
+      "bytes": 7243,
+      "sha256": "f04548a139712fe76492e98b4471a572997194a0b66087f528717dbeaf9851d1"
     },
     {
       "path": "feedme/server/build.gradle.kts",
@@ -489,8 +494,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/config/AccountCoreRuntimeConfig.kt",
-      "bytes": 51792,
-      "sha256": "06bddbd42a324f0cd17bf5508909a3aa0ef00c36b33d920757b22577d6520eb2"
+      "bytes": 52224,
+      "sha256": "8fe588f34c5725e554319b6a9df27a719735a52daccf80e5b81db62aea5a0ed9"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/config/AccountExportRuntimeConfig.kt",
@@ -519,13 +524,18 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/config/AccountRuntimeExportMain.kt",
-      "bytes": 5035,
-      "sha256": "bd208f096013e90d886f00525553b14b6af35988015805b6936dcbd465a23f13"
+      "bytes": 8267,
+      "sha256": "c271888307fe4c1ec9535cdc565c700777e520262e2ac8a0a39867d921b09254"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/config/DependencyHoldConfig.kt",
       "bytes": 3563,
       "sha256": "6d03d78ca544597f56d77a86fc637a3561088e316bf1905a613773922ea015bc"
+    },
+    {
+      "path": "feedme/server/src/main/kotlin/com/feedme/server/config/GuestCoreRuntimeConfig.kt",
+      "bytes": 10948,
+      "sha256": "8b25539268674c32dd0a89b269437da2706757641c228a803fff23a1586aec94"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/config/LocalServerConfig.kt",
@@ -599,8 +609,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/db/PlatformMigrations.kt",
-      "bytes": 16240,
-      "sha256": "6e69076e66302ce84f25f7e3f35d7b395c8ea5b3f99e5dd9b9f45965ca47cc77"
+      "bytes": 16399,
+      "sha256": "170f659be45fa5237f79c35d6bbff9e215d17c7e749d7d801c57d9d0e5990ab0"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/export/AccountExportDownloadService.kt",
@@ -643,6 +653,11 @@
       "sha256": "82d5a2246fbfd32831b19dc69b28ae237ff583ef1cb8568f4e5816dd1d0f3a35"
     },
     {
+      "path": "feedme/server/src/main/kotlin/com/feedme/server/guest/ConfiguredGuestSessionAuthority.kt",
+      "bytes": 5147,
+      "sha256": "cf2b5b3c8d1f4b7624d29815bd00a479784a1576f8253eb9762f719c9b7420e7"
+    },
+    {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/guest/GuestBootstrapRequest.kt",
       "bytes": 3858,
       "sha256": "9e4afc971e97fb523cda171656ee6a00f868fae4f30b0eb3ec6576ce5fb76802"
@@ -654,8 +669,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/guest/GuestCookingStore.kt",
-      "bytes": 7063,
-      "sha256": "882a2d75719bd94f58043272252122491fa54b88918e8ec86880b32ccc92f8eb"
+      "bytes": 7246,
+      "sha256": "96006d4bf09c62e095dd3c1b3f26bad9b8bc84ab801b38ac0c8235a6a5f66a36"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/guest/GuestCurrentSessionReply.kt",
@@ -669,8 +684,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/guest/GuestFeedbackStore.kt",
-      "bytes": 5201,
-      "sha256": "b37a7a23372f70055ff2d8956b9bfbc879da91f34f079266d0dac49d93de2dff"
+      "bytes": 5310,
+      "sha256": "acb4030a6175d80293a09ed24ffb33844c2c0790a8022c93897b60ba0af78a91"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/guest/GuestIngredientSearchStore.kt",
@@ -729,13 +744,13 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/guest/GuestPlanningStore.kt",
-      "bytes": 35019,
-      "sha256": "b5ca779995b50cfc039270d891d32a0502155404cbadd382df2e92e59933e6ff"
+      "bytes": 35180,
+      "sha256": "ca1d73dd8c0d4365f0339c91d7d59448c1708ed7978a26c0467a5bd421f8b49a"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/guest/GuestPlansStore.kt",
-      "bytes": 24687,
-      "sha256": "89aafe51d8ebee36c601a6dc3c084a45ab658ac8bacdd3740e774d52498b95e4"
+      "bytes": 25315,
+      "sha256": "c80da58e3be85b9fca1ca48d6b2f1f9be84acf5eb5dfb3c4d59c05f7e41c216c"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/guest/GuestReplayCipher.kt",
@@ -754,8 +769,13 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/guest/GuestSavedRecipeStore.kt",
-      "bytes": 5303,
-      "sha256": "7b748879b172e083737064c8ba92008f300e38b7d02586443114af921432e414"
+      "bytes": 5522,
+      "sha256": "a7a302987727f6a838d2b404e79a90620b297fff8ed66cb694eaba676e9a4599"
+    },
+    {
+      "path": "feedme/server/src/main/kotlin/com/feedme/server/guest/GuestServingCompatibility.kt",
+      "bytes": 13793,
+      "sha256": "d03879771722cb74f72c855785237f6b0137b4aec8d85d001e403c820956f1ec"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/guest/GuestSessionPolicy.kt",
@@ -764,8 +784,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/guest/GuestSessionStore.kt",
-      "bytes": 28863,
-      "sha256": "3a1ac55b174d2ea5c2caa4ae2d5b10326bc0fb71da1a262a6d4a5ac8b7e08304"
+      "bytes": 28862,
+      "sha256": "c42f6e2bab5acd2c85dfba5b25dd764a413d0a9424827ffd1fb959eaa69f8943"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/guest/GuestTokenMaterial.kt",
@@ -1034,8 +1054,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/http/ConfiguredSupabaseAccountCoreAssembly.kt",
-      "bytes": 38211,
-      "sha256": "cf4244b496f16e090d47098db4b2b59d4bf79a69a51f15d7e62e39eea6c2d6c0"
+      "bytes": 41262,
+      "sha256": "fa7cde660e5ce0810d3fa3968cc7a04e29e149d1f88c7f85780d7db2f56c1844"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/http/ConfiguredSupabaseAccountMealAssembly.kt",
@@ -1074,8 +1094,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/http/FeedMeApplication.kt",
-      "bytes": 26395,
-      "sha256": "644975ac2df73d9f210cd772d621953a200b951efa15081322d4e68b5f717916"
+      "bytes": 27440,
+      "sha256": "a985d332e988a29a3ab46a546c45929479407bff88c1395b89e5a5d0703da5f1"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/http/GuestBootstrapHttpInput.kt",
@@ -1083,24 +1103,44 @@
       "sha256": "27287caec1f3b7d0c3bd2120f55ce2c1d0f5d67b0010215ab4767f7d039ad200"
     },
     {
+      "path": "feedme/server/src/main/kotlin/com/feedme/server/http/GuestCookingHttpRoutes.kt",
+      "bytes": 5809,
+      "sha256": "260819bb59c44fe147b7b03f82e9cee80a092373da07477f90f1d5cc351013b0"
+    },
+    {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/http/GuestCurrentSessionHttpInput.kt",
       "bytes": 2226,
       "sha256": "1bac448174db674950fb1500d8386247d3971d25d772b5690f90791209f503a2"
     },
     {
+      "path": "feedme/server/src/main/kotlin/com/feedme/server/http/GuestFeedbackHttpRoutes.kt",
+      "bytes": 11467,
+      "sha256": "0e74928936cde072fb479cde439e5ef06db5255bc654292bca941ff37717c9eb"
+    },
+    {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/http/GuestHttpConfiguration.kt",
-      "bytes": 1511,
-      "sha256": "2b64c2c479dab34aaa92e5e3b74d2d7f5480899ff3e44d09d862bbd8596b5d10"
+      "bytes": 3015,
+      "sha256": "5212722808c7ce7c7edd0b613b41288df49272c94585b9e847059d185ce623c5"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/http/GuestHttpRoutes.kt",
-      "bytes": 8781,
-      "sha256": "2e05ca469d8e12af36bcffe615a8c74d25b25bd2244d251c07b293079672dd68"
+      "bytes": 8919,
+      "sha256": "2ee53fac4f45d0985393b5c4eef2b5e702c2b6737ed99dc239b17cb8e9f2dbdd"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/http/GuestKitchenHttpRoutes.kt",
       "bytes": 3856,
       "sha256": "eb59b7dea04cc9cc9be8f07c1e8dcc7420e7f4f35259e88d0354745c471f8a5b"
+    },
+    {
+      "path": "feedme/server/src/main/kotlin/com/feedme/server/http/GuestPlanningHttpRoutes.kt",
+      "bytes": 5687,
+      "sha256": "1148b2d0cdc7c61c56bbec37100ac59723301f6bf5c2e4f8b488dc46821faf3e"
+    },
+    {
+      "path": "feedme/server/src/main/kotlin/com/feedme/server/http/GuestSavedRecipeHttpRoutes.kt",
+      "bytes": 6106,
+      "sha256": "0e4391038b14f471586479f69b9a79074eb58f0ff42b36a0d89390854e4e2e4e"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/http/HttpBodyReceive.kt",
@@ -1233,6 +1273,16 @@
       "sha256": "2eb9c1f5b2c0ac685f276b453b29504c75485f01d9074d0ea7a753b92fe5336c"
     },
     {
+      "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/AccountDeletionCompletionStore.kt",
+      "bytes": 10986,
+      "sha256": "1083150153040c274e530e798ab9a20ca7ed47bdf0188cdd0fd6d736df6ad13c"
+    },
+    {
+      "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/AccountDeletionOperationsObservation.kt",
+      "bytes": 3962,
+      "sha256": "fef313cefe06f2a14e111439c34c55e2cb491f571b5edaa0ba22042759a47864"
+    },
+    {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/AccountDeletionReauthentication.kt",
       "bytes": 4971,
       "sha256": "7fabf7b4931960c0185bbef74032a6415146160a80b1d0e1134aa514c4277f20"
@@ -1248,19 +1298,39 @@
       "sha256": "1531ee1f7a79987519f07472fde17f15acd539c8993ec7f59bbcc547b6fb03fb"
     },
     {
+      "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/AccountDeletionSupportChallengeIssuer.kt",
+      "bytes": 6127,
+      "sha256": "abce73d831f8b8858fb7dc5a5577a56ccad09a4590bee67dbcee5ca9770d56de"
+    },
+    {
+      "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/AccountDeletionSupportClaimStore.kt",
+      "bytes": 4583,
+      "sha256": "d5d3e4746d04613817501d519b0a13f644268122eb2a56819619555d50a14a4e"
+    },
+    {
+      "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/AccountDeletionSupportOwnership.kt",
+      "bytes": 7388,
+      "sha256": "9b216df01bae3fcd76e9ffe3a4d28d2e4eccad8e4f3b6572e47f136d30d15bff"
+    },
+    {
+      "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/AccountDeletionSupportRetentionStore.kt",
+      "bytes": 2147,
+      "sha256": "ad50dfd1d78e287517827c6a8968e15ae57e416c684de1f28f756b3dbdc20b3e"
+    },
+    {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/AccountDeviceReconnection.kt",
       "bytes": 13730,
       "sha256": "3664969f922ab5f16e5bb9c483c58922a71f1ca9042afd48dcb4db1ecb3cc9d1"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/AccountErasureCoordinator.kt",
-      "bytes": 10765,
-      "sha256": "65df8cf4543339b224a4fb066ba8cad1c829fd85e68823f8c2f96b44e1349f70"
+      "bytes": 11281,
+      "sha256": "31f080446ae677d7433692700cf4c8445bc8a1faa2c2986da99baa961b314f6b"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/AccountErasureCoreStore.kt",
-      "bytes": 22739,
-      "sha256": "514d02e57bf92fbab92e483b0b80ba5a7155a3bfb7e0d77d0c6b0920db3f0ade"
+      "bytes": 23587,
+      "sha256": "3265b0de20a62ecd64edc4e84bc7531d309488b1cabf0e95fffcf9218459c55d"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/AccountErasureReceiptOwnership.kt",
@@ -1304,8 +1374,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/AccountProviderErasureStore.kt",
-      "bytes": 19222,
-      "sha256": "a34672ba20fc817edf1980fb27afda1ccdd864d81adfdd19bdda8dac5b7320b1"
+      "bytes": 19951,
+      "sha256": "2f8aa7ce1d6d3ceeafb57af803813369ac8080d5a3c5905dd6d679b704d2376d"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/AccountProviderRetryStore.kt",
@@ -1371,6 +1441,11 @@
       "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/SupabaseAuthErasureClient.kt",
       "bytes": 12865,
       "sha256": "5154a91c41da56f59ec781d2554a8aa72c4c4092f3abe721837904a18c737702"
+    },
+    {
+      "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/SupabaseCurrentGoogleIdentitySource.kt",
+      "bytes": 3710,
+      "sha256": "c760134eb851af90cb47c50c88675a92fcc8c694703b8eae489af94412eb83ff"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/identity/SupabaseOAuthReauthentication.kt",
@@ -1478,6 +1553,11 @@
       "sha256": "bd386d12b65bdb699c4933f0eaf6bc084debce69acad76ebb136de7f73a78de8"
     },
     {
+      "path": "feedme/server/src/main/kotlin/com/feedme/server/media/processing/CloudflarePhotoModeration.kt",
+      "bytes": 17677,
+      "sha256": "a94e12fcaa9958a38e50a7f14b88ea198591b75f55c27624a9cba660db9e95dd"
+    },
+    {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/media/processing/codec/BoundedPhotoDecoder.kt",
       "bytes": 12989,
       "sha256": "7b748624bf6f885a6a900e7d92fbdfbdac6a5e7ce4e20b28acc44bac3c27c9fc"
@@ -1504,13 +1584,13 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/media/processing/MediaProcessingModels.kt",
-      "bytes": 7435,
-      "sha256": "dec663eefe7c397fce08e077f4a625c4bf7ddf9c529ac8d549c1272b9feee509"
+      "bytes": 7471,
+      "sha256": "b3761d4264b7406cb25f84f4ef18281885a9349c96c20d6a3af8d373ff4fa77e"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/media/processing/MediaProcessingPorts.kt",
-      "bytes": 2933,
-      "sha256": "9d56accb3cc7fa22303ee18f3eb7bb7d27ccfa65c5a351c7b8feb279cbbbe38b"
+      "bytes": 2978,
+      "sha256": "fd716c8fbcb79acf3048a105a1ed8e08cbd45cc74b555aa184cfe206dc4dd5e6"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/media/processing/MediaProcessingSql.kt",
@@ -1533,9 +1613,14 @@
       "sha256": "56ccffe62d9109a892ef5c3f15244dabf4ecb98c38a7eec792e477ab6c031257"
     },
     {
+      "path": "feedme/server/src/main/kotlin/com/feedme/server/media/processing/PhotoSafetyAssessment.kt",
+      "bytes": 8581,
+      "sha256": "b61e184f8e85ea50368ec5f8e60c6275ac67fd304915029512be2acecf544977"
+    },
+    {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/media/processing/PostMediaReadVerifier.kt",
-      "bytes": 11694,
-      "sha256": "6577f201907cdff2028eb2b0e91968463e83da83655dbcc859a7eb2925690c3d"
+      "bytes": 12522,
+      "sha256": "0634e1078ff8035989ac8e9283a8e995e6b4034aac86006604aa6201e43e3c5f"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/media/processing/SupabaseDerivativeObjects.kt",
@@ -1554,8 +1639,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/media/processing/SupabasePhotoWorker.kt",
-      "bytes": 11821,
-      "sha256": "3b1d2554f483c8d1ebc1c971b2ec3525b2fb050892110582c026a43918c65e50"
+      "bytes": 11857,
+      "sha256": "643710fb924f826342c03524f1f2bb8a1ceaacbd237ef8d493f273474f7117e9"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/media/processing/SupabasePhotoWorkerCompatibility.kt",
@@ -1709,8 +1794,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/memory/SavedRecipeStore.kt",
-      "bytes": 57811,
-      "sha256": "7a7426b9d0dbed369a44b94b54fcc51f9d16ceab3835a3d68b52b9ea1a1290df"
+      "bytes": 57858,
+      "sha256": "a4f2cd845c6ec0aea6c91158aa7cbb6d0d53c1ce1e1cce85137b851cb9310272"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/planning/AccountDerivedPlanningAuthority.kt",
@@ -1854,13 +1939,13 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/runtime/AccountCoreDependencyHealth.kt",
-      "bytes": 9357,
-      "sha256": "5e4c1fd4f3e57c43c8d7fd5a74fb372850e9630d8caf2423bee906f5ffc5799a"
+      "bytes": 9665,
+      "sha256": "57b591a49508838294adbe0645aaf44eb9f5b438b0d4656b21ed3d5a783fcf29"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/runtime/AccountCoreRuntime.kt",
-      "bytes": 11661,
-      "sha256": "8429233b9bc7e48f94727ef80397a3a47ea07b372cc76008433caaf6f68c4fa7"
+      "bytes": 11709,
+      "sha256": "403cd4350f7581305c11c7548349e5476ab9976d08c517a196dba5d5af11dc87"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/runtime/AccountCoreRuntimeResources.kt",
@@ -2153,6 +2238,11 @@
       "sha256": "582a2dfa0805dcbbc76486ef16eb481dc3cab27a9afbeb3c37032a658b81158e"
     },
     {
+      "path": "feedme/server/src/main/kotlin/com/feedme/server/staff/AccountDeletionOperationsStore.kt",
+      "bytes": 3022,
+      "sha256": "7590ebb083eab07c7489fa0e53bdbf41d4e109e87fcb9aba3e0351e36c509a40"
+    },
+    {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/staff/RestrictiveStaffFlagPolicy.kt",
       "bytes": 3340,
       "sha256": "47db46395818b8299ee13daa383440e56814f13aaf697e570f1ba9e50420795a"
@@ -2214,8 +2304,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/staff/SupabaseStaffAdmissionStore.kt",
-      "bytes": 23742,
-      "sha256": "e1a5132dfbf03c9b55fad096e83649f3a9f2e01a1cfafc39525842252980ee4c"
+      "bytes": 23727,
+      "sha256": "0a67a203c0cdfa2761a2eaa8d57ff8fbf763857e94fbc029c4035a37c1e5e9b8"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/staff/SupabaseStaffModerationServingCompatibility.kt",
@@ -2269,8 +2359,8 @@
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/staff/SupabaseStaffServingCompatibility.kt",
-      "bytes": 6059,
-      "sha256": "c95fe026ef56c750640f4fcc515c2ee3f96866bb0cfc7a4f566308a9857e797a"
+      "bytes": 7567,
+      "sha256": "1e8b576a333fde51d2bec79ab228c6cd6807e3e85520d55be759210e74ea6f7c"
     },
     {
       "path": "feedme/server/src/main/kotlin/com/feedme/server/staff/WorkforceAccessVerifier.kt",
@@ -2733,24 +2823,54 @@
       "sha256": "5d80a16f31b52bb031731f9b895181e6309ba2936b382cf12d7eb85bf4f1f3d8"
     },
     {
+      "path": "feedme/server/src/main/resources/db/migration/V092__account_deletion_operations_audit.sql",
+      "bytes": 7472,
+      "sha256": "917fb3ec2b5249eb636201265cc9f633ffc5a239bc010bc464261e2cee7709ec"
+    },
+    {
+      "path": "feedme/server/src/main/resources/db/migration/V093__account_deletion_support_ownership.sql",
+      "bytes": 20832,
+      "sha256": "d4a09f25c00b0cab0168d5c41ff0bd019f4927cc43de72907cbceb6e6d820945"
+    },
+    {
+      "path": "feedme/server/src/main/resources/db/provider/feedme-account-deletion-operations-serving-grants.sql",
+      "bytes": 12362,
+      "sha256": "3780affe5d2e5df832ee1515b7df7cc19a1fb28c140f667a25ede91227c80952"
+    },
+    {
       "path": "feedme/server/src/main/resources/db/provider/feedme-account-deletion-serving-grants.sql",
       "bytes": 11845,
       "sha256": "07c5a01338fabf2678a458b71ab9a9b0c9527efebc3ea75e3279444c9b8b6c1e"
     },
     {
+      "path": "feedme/server/src/main/resources/db/provider/feedme-account-deletion-support-serving-grants.sql",
+      "bytes": 11124,
+      "sha256": "69add1459f246403ebda399b4150d5f4fb6971a3d1537bbc919af136a3ec7527"
+    },
+    {
       "path": "feedme/server/src/main/resources/db/provider/feedme-runtime-grants.sql",
-      "bytes": 66276,
-      "sha256": "0068f5b89c41036b57df049c5265a906cc8e042cf047c9b4952c25eb111c4bda"
+      "bytes": 73791,
+      "sha256": "e1928fc21291dd329d24d6f408c4a90243826375c0ac64a55edcadf047ad0b27"
     },
     {
       "path": "feedme/server/src/main/resources/db/provider/feedme-staff-moderation-serving-grants.sql",
-      "bytes": 16625,
-      "sha256": "32fbf961843d511e474a14c485256f4c8e63faca680efc64319e2c97f338b091"
+      "bytes": 18851,
+      "sha256": "b31500855211a21676c6dc3be6fc547abb82c28d59ecd2feb5016ca131c35028"
     },
     {
       "path": "feedme/server/src/main/resources/db/provider/supabase-authority.sql",
       "bytes": 6581,
       "sha256": "974eccebeedf9c630cf11d9a4890a18f89d6548e3839ab17254c8db783967d61"
+    },
+    {
+      "path": "feedme/server/src/main/resources/db/provider/supabase-google-identity-observer.sql",
+      "bytes": 6410,
+      "sha256": "3eedcc16a6f9800901d113a2c2503991bcb862e45f16add68cbb41ca747b140c"
+    },
+    {
+      "path": "feedme/server/src/main/resources/db/provider/supabase-staff-totp-observer.sql",
+      "bytes": 5049,
+      "sha256": "48655b46e1216d4cebd195f80981ddc5c48c8db71d272ca7e011652e1679a2ee"
     },
     {
       "path": "feedme/settings-gradle.lockfile",
@@ -2963,6 +3083,11 @@
       "sha256": "5af2730178e625216e0c90a32a84ab38b7f2b543e2784f4096679749f4ca2a13"
     },
     {
+      "path": "feedme/shared/app/src/commonMain/kotlin/com/feedme/app/guest/GuestAdultAdmissionScreen.kt",
+      "bytes": 3460,
+      "sha256": "db40ef6da736b51b739623b41e902b37299fd02313b3dfdd89c722539d94ace5"
+    },
+    {
       "path": "feedme/shared/app/src/commonMain/kotlin/com/feedme/app/guest/GuestKitchenDraft.kt",
       "bytes": 9195,
       "sha256": "4bb8abc7fce3008d63c629b5706e7192259bb7c65af48e647ec84f8d2b61c600"
@@ -2979,8 +3104,8 @@
     },
     {
       "path": "feedme/shared/app/src/commonMain/kotlin/com/feedme/app/guest/GuestKitchenScreen.kt",
-      "bytes": 22243,
-      "sha256": "881ede79230b600d75d059dbd7c64fd02c4ab1c20d593c7dc4008ff15118030b"
+      "bytes": 23235,
+      "sha256": "0169ca49d013f49dd569c5eb88bd7f1f925458ec325778f42d1274bc0d1ee616"
     },
     {
       "path": "feedme/shared/app/src/commonMain/kotlin/com/feedme/app/guest/GuestMealReadiness.kt",
@@ -3029,8 +3154,8 @@
     },
     {
       "path": "feedme/shared/app/src/commonMain/kotlin/com/feedme/app/mealflow/BlueprintCookbookPresentation.kt",
-      "bytes": 4555,
-      "sha256": "bc7cbf3253f6505f54c1d7d74774532958f60695b8668381fea9ecea9ae3b3dd"
+      "bytes": 4719,
+      "sha256": "eb94fa9489483358ba2323f9c3f9a33d265286254cbd32fb230ddc33281bf316"
     },
     {
       "path": "feedme/shared/app/src/commonMain/kotlin/com/feedme/app/mealflow/BlueprintCookingPresentation.kt",
@@ -3139,8 +3264,8 @@
     },
     {
       "path": "feedme/shared/app/src/commonMain/kotlin/com/feedme/app/mealflow/CookbookScreen.kt",
-      "bytes": 31612,
-      "sha256": "6ae7f91b434eae5a56449e2c3d184c0cefb666b58b867581831a702fa1f11260"
+      "bytes": 31611,
+      "sha256": "899766e1fffc13316e4c24f74ef7749d7b15358ff3cd25976e36b0bcbcb1b275"
     },
     {
       "path": "feedme/shared/app/src/commonMain/kotlin/com/feedme/app/mealflow/CookbookViewSorting.kt",
@@ -3191,6 +3316,11 @@
       "path": "feedme/shared/app/src/commonMain/kotlin/com/feedme/app/mealflow/FeedMeAccountProfileEditFlow.kt",
       "bytes": 11362,
       "sha256": "76d8d818e6f64062d498bc595ef1c94865de6614bb186d1533df2458ff6fa9b3"
+    },
+    {
+      "path": "feedme/shared/app/src/commonMain/kotlin/com/feedme/app/mealflow/FeedMeFreePlanFlow.kt",
+      "bytes": 1795,
+      "sha256": "2d7323132cc317bed32b2eeba32d2a7e9013f575b53a0c9218fd75264ad26b31"
     },
     {
       "path": "feedme/shared/app/src/commonMain/kotlin/com/feedme/app/mealflow/FeedMeKitchenPreferencesFlow.kt",
@@ -3463,9 +3593,14 @@
       "sha256": "d70776f26ae29eef4d4e32b74a9735e4a3983a88f10e4670bbcec48f1988462e"
     },
     {
+      "path": "feedme/shared/app/src/iosMain/kotlin/com/feedme/app/IosGuestDraftStore.kt",
+      "bytes": 8462,
+      "sha256": "ca536572338a3cfe47fa09da70d25e22d00f4396197b25fd7f034427aff32f4a"
+    },
+    {
       "path": "feedme/shared/app/src/iosMain/kotlin/com/feedme/app/MainViewController.kt",
-      "bytes": 363,
-      "sha256": "990c521dca9b21a7829d2ace6c7ce8d1505bcaaec6b1c256fe61d03cccdb83cd"
+      "bytes": 4741,
+      "sha256": "8c27cdfac4724089e5f0739eb0e894c25c21db3404956e0c65f3506f29e655fd"
     },
     {
       "path": "feedme/shared/app/src/iosMain/kotlin/com/feedme/app/mealflow/BlueprintLocalPhotoCapture.ios.kt",
@@ -3673,7 +3808,7 @@
       "sha256": "5e17e5ce6ea0a96b35adf873261ebed147bd4ac0e43d4f0ac9da53ea4bf0d6ff"
     }
   ],
-  "totalBytes": 11134003,
+  "totalBytes": 11400233,
   "limitations": [
     "Source snapshot only; no container build or deployment was performed.",
     "Third-party image selection, dependency authenticity and live configuration require separate review."

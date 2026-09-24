@@ -34,11 +34,12 @@ internal class GuestPlanningPreparation internal constructor(val manifestId: UUI
  * are owned by ONE GuestSessionStore transaction. No supplied context/header/currentness
  * callback can certify a scan, and no v1 128-candidate representation is used.
  *
- * This is deliberately NOT an HTTP createPlan implementation. D4/D5 database acceptance, D6
- * Plan/continuation lineage, outbox publication and guarded erasure are still required. Do not
- * advertise capabilities or wire a route from this preparation result. The future materializer
- * must keep the original command key and reuse its charged preparation, including after a
- * commit-response loss. No accepting deployment policy or catalog content is provided here. */
+ * This preparation component is deliberately not an HTTP createPlan implementation. The
+ * separate GuestPlansStore performs D6 materialization, receipt and outbox work; an explicit
+ * GuestHttpConfiguration may expose only the operations that concrete store implements. Never
+ * wire a route from this preparation result alone. Materialization keeps the original command
+ * key and reuses its charged preparation, including after commit-response loss. No accepting
+ * deployment policy or catalog content is provided here. */
 internal class GuestPlanningStore(
     private val environment: String,
     private val transactions: PgTransactions,
@@ -54,6 +55,7 @@ internal class GuestPlanningStore(
     private val inputs = GuestPlanningInputs(environment)
     internal fun isBoundTo(expectedEnvironment: String, expectedTransactions: PgTransactions): Boolean =
         environment == expectedEnvironment && transactions === expectedTransactions
+    internal fun isBoundTo(expectedSessions: GuestSessionStore): Boolean = sessions === expectedSessions
     internal val policyBindingSha256: String get() = policy.bindingSha256
 
     /** Checked D5 domain data after the actual guest owner's final admission checks. This

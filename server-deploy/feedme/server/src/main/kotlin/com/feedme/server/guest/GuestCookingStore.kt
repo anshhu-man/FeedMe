@@ -16,7 +16,7 @@ import kotlinx.serialization.json.*
  * owns admission, principal/guest locks, retries, final authority and ONE commit containing
  * cooking state, exact pin, cursor, private step event, receipt and redacted outbox fact.
  * There is no account fallback, synthetic authority, new Plan charge, recipe copy, save,
- * feedback, timer delivery or social publication. No HTTP/runtime capability is activated.
+ * feedback, timer delivery or social publication. HTTP/runtime activation remains explicit.
  * Retention and response limits must be supplied explicitly by deployment configuration.
  */
 internal class GuestCookingStore(
@@ -31,6 +31,8 @@ internal class GuestCookingStore(
         require(preparations.isBoundTo(environment, transactions)) { "Guest cooking requires its actual preparation owner" }
         require(makeAgain == null || makeAgain.isCookingBoundTo(environment, transactions, preparations, policy))
     }
+    internal fun isBoundTo(owner: GuestSessionStore): Boolean = preparations.isBoundTo(owner)
+    internal fun isBoundTo(owner: GuestPlanningStore): Boolean = preparations === owner
 
     fun createCookSession(token: String, key: UUID, body: JsonObject): CommandResult =
         use(token, "createCookSession") { c, actor, store -> store.createCookSession(c, actor, key, body) }

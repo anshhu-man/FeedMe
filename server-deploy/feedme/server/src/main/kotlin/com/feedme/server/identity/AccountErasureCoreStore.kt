@@ -42,6 +42,18 @@ internal class AccountErasureCoreStore(internal val environment: String, interna
 
     internal fun checkCompatibility(c: Connection) {
         work.checkCompatibility(c)
+        val usesV094Purge = c.prepareStatement(
+            "SELECT checksum FROM platform.schema_migrations WHERE version=94",
+        ).use { statement ->
+            statement.executeQuery().use { rows ->
+                if (!rows.next()) false
+                else {
+                    if (rows.getString(1) != AccountDeletionCompletionStore.V094_CANDIDATE_SHA256 || rows.next())
+                        incompatible()
+                    true
+                }
+            }
+        }
         for ((version, bytes) in resources) c.prepareStatement("SELECT checksum FROM platform.schema_migrations WHERE version=?").use { s ->
             s.setInt(1, version)
             s.executeQuery().use { r -> if (!r.next() || r.getString(1) != hash(bytes) || r.next()) incompatible() }
@@ -70,7 +82,11 @@ internal class AccountErasureCoreStore(internal val environment: String, interna
         """.trimIndent()).use { s ->
             s.setString(1, f.signature)
             s.executeQuery().use { r ->
-                if (!r.next() || r.getString(1) != body(f.tag, f.version) || r.getBoolean(2) != f.securityDefiner ||
+                if (!r.next()) incompatible()
+                val expectedBody = if (usesV094Purge && f.signature == CORE_PURGE_SIGNATURE)
+                    hash(r.getString(1).toByteArray(Charsets.UTF_8)) == AccountDeletionCompletionStore.V094_PURGE_BODY_SHA256
+                else r.getString(1) == body(f.tag, f.version)
+                if (!expectedBody || r.getBoolean(2) != f.securityDefiner ||
                     (r.getArray(3)?.array as? Array<*>)?.toSet() != f.configuration ||
                     !r.getBoolean(4) || r.getString(5) != "plpgsql" || r.getString(6) != f.returnType ||
                     !r.getBoolean(7) || !r.getBoolean(8) || r.next()) incompatible()
@@ -145,6 +161,7 @@ internal class AccountErasureCoreStore(internal val environment: String, interna
     override fun toString() = "AccountErasureCoreStore([redacted])"
 
     companion object {
+        private const val CORE_PURGE_SIGNATURE = "identity.purge_account_core(text,uuid,uuid,bigint)"
         private val resources = mapOf(
             44 to "/db/migration/V044__account_core_erasure.sql",
             46 to "/db/migration/V046__account_manifest_erasure.sql",
@@ -194,7 +211,7 @@ internal class AccountErasureCoreStore(internal val environment: String, interna
             val securityDefiner: Boolean = true,
             val configuration: Set<String>? = setOf("search_path=pg_catalog, pg_temp", "row_security=off"))
         private val functions = listOf(
-            Function("identity.purge_account_core(text,uuid,uuid,bigint)", "feedme_core_purge", "text", 89),
+            Function(CORE_PURGE_SIGNATURE, "feedme_core_purge", "text", 89),
             Function("identity.account_erasure_delete_allowed(oid,text,uuid,uuid)", "feedme_core_allowed", "boolean", 89),
             Function("platform.guard_account_export_jobs()", "feedme_export_jobs", "trigger", 89,
                 securityDefiner = false, configuration = setOf("search_path=pg_catalog, pg_temp")),

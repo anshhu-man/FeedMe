@@ -3,7 +3,33 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 
 const forbiddenActivation = /com\.android\.billingclient|com\.revenuecat|BillingClient\s*\.\s*newBuilder|Purchases\s*\.\s*configure|RevenueCat\s*\.\s*configure/i;
+const referenceCommerce = /\bBlueprint(?:Commerce|StoreOffer|PaidAccess|Purchase)[A-Za-z0-9_]*\b/;
+const freePlanOwnerPath = 'shared/app/src/commonMain/kotlin/com/feedme/app/mealflow/FeedMeFreePlanFlow.kt';
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+
+function isStrictFreePlanOwner(entry) {
+  if (entry.path !== freePlanOwnerPath || !entry.text.includes('BlueprintCommerceScreen(') ||
+      !entry.text.includes('page = BlueprintCommercePage.MANAGE_PLAN') ||
+      !entry.text.includes('phase = BlueprintCommercePhase.UNAVAILABLE') ||
+      !entry.text.includes('setOf("MANAGE_PLAN.back")') ||
+      !entry.text.includes('else emptySet()') ||
+      !entry.text.includes('BlueprintCommercePolicyFact.CORE_COOKING_FREE') ||
+      !entry.text.includes('BlueprintCommercePolicyFact.RETAINED_SAVED_ACCESS') ||
+      !entry.text.includes('event.expected === state') ||
+      !entry.text.includes('event.actionId == "MANAGE_PLAN.back"')) return false;
+
+  const pages = [...entry.text.matchAll(/BlueprintCommercePage\.([A-Z_]+)/g)].map(match => match[1]);
+  const phases = [...entry.text.matchAll(/BlueprintCommercePhase\.([A-Z_]+)/g)].map(match => match[1]);
+  const policies = [...entry.text.matchAll(/BlueprintCommercePolicyFact\.([A-Z_]+)/g)].map(match => match[1]);
+  const actionIds = [...entry.text.matchAll(/["']([A-Z_]+\.[A-Za-z0-9_]+)["']/g)].map(match => match[1]);
+  return pages.length === 1 && pages[0] === 'MANAGE_PLAN' &&
+    phases.length === 1 && phases[0] === 'UNAVAILABLE' &&
+    policies.length === 2 && new Set(policies).size === 2 &&
+    policies.every(value => value === 'CORE_COOKING_FREE' || value === 'RETAINED_SAVED_ACCESS') &&
+    actionIds.length === 2 && actionIds.every(value => value === 'MANAGE_PLAN.back') &&
+    !/\bBlueprint(?:StoreOffer|PaidAccess|Purchase)[A-Za-z0-9_]*\b/.test(entry.text) &&
+    !/\bBlueprintCommerce(?:Context|Reference|Pack|Offer|Transaction|Entitlement)\b/.test(entry.text);
+}
 
 /** Pure source/build admission. Final AAB component policy remains a separate artifact gate. */
 export function inspectV1RuntimeSurface(input = {}) {
@@ -30,8 +56,13 @@ export function inspectV1RuntimeSurface(input = {}) {
     findings.push('V1_PAID_OFFER_DEPENDENCY_PRESENT');
   if (input.productSources.some(entry => forbiddenActivation.test(entry.text)))
     findings.push('V1_PAID_OFFER_ACTIVATION_PRESENT');
-  if (input.productSources.some(entry => /\bBlueprint(?:Commerce|StoreOffer|PaidAccess|Purchase)[A-Za-z0-9_]*\b/.test(entry.text)))
+  if (input.productSources.some(entry => referenceCommerce.test(entry.text) && !isStrictFreePlanOwner(entry)))
     findings.push('V1_REFERENCE_COMMERCE_HOSTED_IN_PRODUCT');
+  const cookbook = input.productSources.find(entry =>
+    entry.path === 'shared/app/src/commonMain/kotlin/com/feedme/app/mealflow/BlueprintCookbookPresentation.kt');
+  const cookbookActions = cookbook?.text.match(/allowedActions\s*=([\s\S]*?)allowedNavigation\s*=/)?.[1];
+  if (typeof cookbookActions !== 'string' || cookbookActions.includes('BlueprintLibraryAction.LIBRARY_TOOLS'))
+    findings.push('V1_WITHHELD_LIBRARY_OFFER_INGRESS_PRESENT');
 
   const receiver = input.manifestSource.match(/<receiver\b[^>]*android:name="\.AccountTimerCancellationReceiver"[^>]*\/>/g) ?? [];
   if (receiver.length !== 1 || !/android:enabled="false"/.test(receiver[0]) ||

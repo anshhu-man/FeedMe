@@ -1,4 +1,4 @@
--- Fixed account-core runtime privileges. Apply only inside an installer-owned transaction
+-- Fixed account-core plus guest kitchen-lifecycle runtime privileges. Apply only inside an installer-owned transaction
 -- AFTER verified V001--V091 and the exact managed Auth projector installation. No roles,
 -- passwords, provider grants, policies, default privileges or database connections are
 -- created here. The installer separately controls CONNECT on its exact selected database.
@@ -96,7 +96,9 @@ LOCK TABLE ONLY catalog.ingredient_heads, ONLY catalog.ingredient_releases,
     ONLY catalog.recipe_copy_grants, ONLY catalog.recipe_copy_revocations,
     ONLY catalog.substitution_heads, ONLY catalog.substitution_publications,
     ONLY identity.principals, ONLY identity.device_reconnections, ONLY identity.account_terms_acceptances,
-    ONLY identity.account_erasure_scope, ONLY identity.account_erasure_work, ONLY planning.account_plan_windows,
+    ONLY identity.account_erasure_scope, ONLY identity.account_erasure_work,
+    ONLY identity.guest_planning_policies, ONLY identity.guest_plan_windows,
+    ONLY planning.account_plan_windows, ONLY planning.guest_preparations,
     ONLY planning.manifest_headers, ONLY planning.manifest_ranks, ONLY planning.manifest_seals,
     ONLY platform.post_drafts, ONLY platform.post_draft_heads, ONLY platform.media_draft_lifecycles,
     ONLY erasure.provider_deletions, ONLY erasure.provider_deletion_retries,
@@ -105,7 +107,8 @@ LOCK TABLE ONLY catalog.ingredient_heads, ONLY catalog.ingredient_releases,
     ONLY social.post_reactions, ONLY platform.account_reaction_notifications,
     ONLY platform.account_export_jobs, ONLY platform.account_export_artifacts,
     ONLY platform.outbox, ONLY profile.onboarding_decisions, ONLY planning.plans,
-    ONLY cooking.step_events, ONLY memory.collection_items, ONLY memory.save_commands
+    ONLY cooking.step_events, ONLY memory.collection_items, ONLY memory.save_commands,
+    ONLY memory.feedback, ONLY memory.feedback_commands
     IN ROW EXCLUSIVE MODE;
 
 DO $feedme$
@@ -127,6 +130,10 @@ BEGIN
         ('planning','manifest_headers','manifest_id','manifest_header_no_truncate','planning','reject_manifest_mutation',34,false,'Planning manifests are immutable'),
         ('planning','manifest_ranks','manifest_id','manifest_rank_no_truncate','planning','reject_manifest_mutation',34,false,'Planning manifests are immutable'),
         ('planning','manifest_seals','manifest_id','manifest_seal_no_truncate','planning','reject_manifest_mutation',34,false,'Planning manifests are immutable'),
+        ('planning','guest_preparations','command_key','guest_preparation_immutable','planning','reject_manifest_mutation',58,false,'Planning manifests are immutable'),
+        ('identity','guest_planning_policies','guest_session_id','guest_planning_policy_immutable','planning','reject_manifest_mutation',58,false,'Planning manifests are immutable'),
+        ('identity','guest_plan_windows','used_count','guest_plan_window_retained','planning','reject_manifest_mutation',42,false,'Planning manifests are immutable'),
+        ('memory','feedback_commands','command_key','feedback_command_immutable','memory','protect_feedback_command',19,false,'Feedback command linkage is immutable'),
         ('catalog','ingredient_heads','environment','ingredient_heads_lock_key_immutable','platform','reject_lock_only_key_update',19,true,'Lock-only identity columns cannot be updated'),
         ('catalog','recipe_heads','environment','recipe_heads_lock_key_immutable','platform','reject_lock_only_key_update',19,true,'Lock-only identity columns cannot be updated'),
         ('catalog','substitution_heads','environment','substitution_heads_lock_key_immutable','platform','reject_lock_only_key_update',19,true,'Lock-only identity columns cannot be updated'),
@@ -151,7 +158,7 @@ BEGIN
             AND a.attname=wanted.column_name AND a.attnum>0 AND NOT a.attisdropped
             AND t.tgname=wanted.trigger_name
             AND pn.nspname=wanted.function_schema AND p.proname=wanted.function_name;
-        IF NOT FOUND THEN RAISE EXCEPTION 'Missing account-core immutable-key guard'; END IF;
+        IF NOT FOUND THEN RAISE EXCEPTION 'Missing runtime immutable-key guard'; END IF;
         IF found_guard.relkind<>'r' OR found_guard.inherited
             OR found_guard.tgtype<>wanted.trigger_type OR found_guard.tgenabled NOT IN ('O','A')
             OR found_guard.tgisinternal OR found_guard.tgqual IS NOT NULL
@@ -162,7 +169,7 @@ BEGIN
             OR pg_catalog.regexp_replace(found_guard.prosrc,'[[:space:]]','','g') <>
                 pg_catalog.regexp_replace('BEGIN RAISE EXCEPTION '||pg_catalog.quote_literal(wanted.error_text)||
                     ' USING ERRCODE = ''23514''; END;','[[:space:]]','','g') THEN
-            RAISE EXCEPTION 'Account-core immutable-key guard differs from reviewed source';
+            RAISE EXCEPTION 'Runtime immutable-key guard differs from reviewed source';
         END IF;
     END LOOP;
 END;
@@ -697,6 +704,56 @@ BEGIN
 END;
 $feedme$;
 
+-- Guest serving depends on these owner/quota/feedback transitions. Pin the live
+-- trigger functions and attachments while their tables remain locked; migration
+-- history alone would not detect an owner-side function replacement.
+DO $feedme$
+DECLARE wanted record; actual record;
+BEGIN
+    FOR wanted IN SELECT * FROM (VALUES
+        ('planning','guest_preparations','guest_preparation_owner','planning','guard_guest_preparation',7,false,
+            'ec2236ade153099f3edadfdbbb50d7f21a4b3cabd22f8406cd06433f8ef4b326'),
+        ('planning','guest_preparations','guest_preparation_live_at_commit','planning','require_live_guest_preparation',5,true,
+            'a063e3d0049db7c470e3d22ecba4a2613a0a4f8a3362a3edbfd759828b9ceec5'),
+        ('identity','guest_plan_windows','guest_plan_window_monotonic','identity','guard_guest_plan_window',19,false,
+            'b8d96e7cbf5d3913a9845d9b5f35ce9f1f5d0e357f81135114beb09a3fa6a8ac'),
+        ('memory','feedback','feedback_transition','memory','protect_feedback_transition',19,false,
+            '29a04fadfdcc7c3b594132ba9d006936b932ddd32e5a0b5597d86795c30d822e')
+    ) AS expected(schema_name,table_name,trigger_name,function_schema,function_name,trigger_type,deferred_constraint,body_sha256)
+    LOOP
+        SELECT t.tgtype,t.tgenabled,t.tgisinternal,t.tgqual,t.tgattr,t.tgnargs,t.tgconstraint,
+            c.relkind,c.relowner,p.proowner,p.prosrc,p.prosecdef,p.pronargs,p.prorettype,p.prokind,p.proconfig,
+            l.lanname,nc.contype,nc.condeferrable,nc.condeferred,nc.convalidated,nc.conrelid,
+            EXISTS (SELECT 1 FROM pg_catalog.pg_inherits i WHERE i.inhrelid=c.oid OR i.inhparent=c.oid) AS inherited
+        INTO actual
+        FROM pg_catalog.pg_namespace n
+        JOIN pg_catalog.pg_class c ON c.relnamespace=n.oid
+        JOIN pg_catalog.pg_trigger t ON t.tgrelid=c.oid
+        JOIN pg_catalog.pg_proc p ON p.oid=t.tgfoid
+        JOIN pg_catalog.pg_namespace pn ON pn.oid=p.pronamespace
+        JOIN pg_catalog.pg_language l ON l.oid=p.prolang
+        LEFT JOIN pg_catalog.pg_constraint nc ON nc.oid=t.tgconstraint
+        WHERE n.nspname=wanted.schema_name AND c.relname=wanted.table_name
+            AND t.tgname=wanted.trigger_name
+            AND pn.nspname=wanted.function_schema AND p.proname=wanted.function_name;
+        IF NOT FOUND THEN RAISE EXCEPTION 'Missing guest serving guard'; END IF;
+        IF actual.relkind<>'r' OR actual.inherited OR actual.proowner<>actual.relowner
+            OR actual.tgtype<>wanted.trigger_type OR actual.tgenabled NOT IN ('O','A')
+            OR actual.tgisinternal OR actual.tgqual IS NOT NULL OR actual.tgattr::text<>''
+            OR actual.tgnargs<>0 OR actual.prosecdef OR actual.pronargs<>0 OR actual.prokind<>'f'
+            OR actual.prorettype<>'pg_catalog.trigger'::pg_catalog.regtype OR actual.lanname<>'plpgsql'
+            OR actual.proconfig IS NOT NULL
+            OR pg_catalog.encode(pg_catalog.sha256(pg_catalog.convert_to(actual.prosrc,'UTF8')),'hex')<>wanted.body_sha256
+            OR (wanted.deferred_constraint AND (actual.tgconstraint=0 OR actual.contype<>'t'
+                OR NOT actual.condeferrable OR NOT actual.condeferred OR NOT actual.convalidated
+                OR actual.conrelid<>('"'||wanted.schema_name||'"."'||wanted.table_name||'"')::pg_catalog.regclass))
+            OR (NOT wanted.deferred_constraint AND actual.tgconstraint<>0) THEN
+            RAISE EXCEPTION 'Guest serving guard differs from reviewed source';
+        END IF;
+    END LOOP;
+END;
+$feedme$;
+
 GRANT USAGE ON SCHEMA platform,identity,profile,pantry,planning,cooking,memory,catalog,feedme_auth_access TO feedme_api;
 GRANT EXECUTE ON FUNCTION feedme_auth_access.schema_lock(),feedme_auth_access.migration_versions(),
     feedme_auth_access.user_facts(uuid),feedme_auth_access.factor_facts(uuid),feedme_auth_access.session_facts(uuid),
@@ -711,10 +768,14 @@ GRANT SELECT(environment,user_id,submitted_terms_version,accepted_terms_version,
     eligibility_declaration,eligibility_state,eligibility_policy_version) ON identity.bootstrap_consents TO feedme_api;
 GRANT SELECT ON platform.idempotency,platform.outbox,
     identity.users,identity.principals,identity.device_sessions,identity.device_reconnections,identity.account_terms_acceptances,
+    identity.guest_sessions,identity.guest_bootstrap_receipts,identity.guest_issuance_windows,
+    identity.guest_planning_policies,identity.guest_plan_windows,
     profile.profiles,profile.preferences,profile.onboarding_decisions,pantry.pantry_items,
-    planning.account_plan_windows,planning.plan_requests,planning.plans,
+    planning.account_plan_windows,planning.guest_preparations,planning.manifest_headers,
+    planning.manifest_ranks,planning.manifest_seals,planning.plan_requests,planning.plans,
     cooking.cook_sessions,cooking.device_cursors,cooking.step_events,
     memory.saved_recipes,memory.collections,memory.collection_items,memory.save_commands,memory.library_heads,
+    memory.feedback,memory.feedback_commands,
     catalog.ingredient_heads,catalog.ingredient_releases,catalog.ingredient_release_items,catalog.ingredient_release_aliases,
     catalog.recipe_heads,catalog.recipe_releases,catalog.recipe_release_entries,catalog.recipe_release_compositions,
     catalog.recipe_version_history,catalog.recipe_copy_grants,catalog.recipe_copy_revocations,
@@ -729,7 +790,7 @@ GRANT INSERT(event_id,event_type,schema_version,aggregate_type,aggregate_id,aggr
     producer,correlation_id,causation_id,payload,owner_environment,owner_kind,owner_id) ON platform.outbox TO feedme_api;
 GRANT INSERT(environment,id,provider_issuer,provider_subject,status,eligibility_state,eligibility_policy_version,version)
     ON identity.users TO feedme_api;
-GRANT INSERT(environment,id,user_id,kind,status,version) ON identity.principals TO feedme_api;
+GRANT INSERT(environment,id,user_id,guest_session_id,kind,status,version,created_at,updated_at) ON identity.principals TO feedme_api;
 GRANT INSERT(environment,id,user_id,installation_id_hash,provider_session_id,platform,device_label,app_version,version)
     ON identity.device_sessions TO feedme_api;
 GRANT INSERT(environment,user_id,command_key,submitted_terms_version,accepted_terms_version,
@@ -741,6 +802,13 @@ GRANT INSERT(environment,user_id,command_key,request_sha256,previous_device_id,n
 GRANT INSERT(authentication_method,oauth_authenticated_at) ON identity.device_reconnections TO feedme_api;
 GRANT INSERT(environment,user_id,command_key,request_sha256,device_session_id,provider_issuer,provider_subject,
     provider_session_id,terms_version,notice_sha256,terms_url,privacy_url,accepted_at) ON identity.account_terms_acceptances TO feedme_api;
+GRANT INSERT(environment,id,installation_sha256,token_sha256,created_at,last_seen_at,inactivity_expires_at,
+    absolute_expires_at,policy_revision,capabilities,daily_plan_limit) ON identity.guest_sessions TO feedme_api;
+GRANT INSERT(environment,command_key,installation_sha256,request_sha256,guest_session_id,key_id,nonce,ciphertext,
+    created_at,expires_at) ON identity.guest_bootstrap_receipts TO feedme_api;
+GRANT INSERT(environment,installation_sha256,window_date,issued_count) ON identity.guest_issuance_windows TO feedme_api;
+GRANT INSERT(environment,guest_session_id,policy_sha256) ON identity.guest_planning_policies TO feedme_api;
+GRANT INSERT(environment,guest_session_id,window_date,policy_sha256,used_count) ON identity.guest_plan_windows TO feedme_api;
 GRANT INSERT(environment,user_id,onboarding_step,live,version) ON profile.profiles TO feedme_api;
 GRANT INSERT(environment,actor_kind,principal_id,id,version,created_at,updated_at,fields) ON profile.preferences TO feedme_api;
 GRANT INSERT(environment,user_id,command_key,request_sha256,device_session_id,prompt,disposition,next_step,
@@ -750,10 +818,21 @@ GRANT INSERT(environment,actor_kind,principal_id,ingredient_id,id,version,create
 GRANT INSERT(environment,actor_kind,principal_id,window_date,policy_revision,max_plans,used_count) ON planning.account_plan_windows TO feedme_api;
 GRANT INSERT(environment,actor_kind,principal_id,id,request_text,request_hash,evidence_text,evidence_hash,
     ordered_ids,policy_text,version,created_at,expires_at,cursor_expires_at,current_plan_id,storage_format,
-    derived_operation,derived_command_key,derived_request_sha256,derived_if_match,derived_parent_plan_id,derived_parent_version)
+    derived_operation,derived_command_key,derived_request_sha256,derived_if_match,derived_parent_plan_id,derived_parent_version,
+    manifest_id,create_command_key,command_request_sha256)
     ON planning.plan_requests TO feedme_api;
 GRANT INSERT(environment,actor_kind,principal_id,id,request_id,parent_plan_id,version,position,recipe_version_id,
     status,snapshot_text,snapshot_hash,proof_text,proof_hash,next_cursor_hash,created_at,storage_format) ON planning.plans TO feedme_api;
+GRANT INSERT(environment,actor_kind,principal_id,manifest_id,header_text,header_sha256,catalog_release_id,
+    catalog_revision,catalog_request_sha256,taxonomy_revision,taxonomy_sha256,version_count,comparator)
+    ON planning.manifest_headers TO feedme_api;
+GRANT INSERT(environment,actor_kind,principal_id,manifest_id,recipe_version_id,recipe_id,source_release_id,
+    source_revision,source_request_sha256,recipe_sha256,review_sha256,taste_matches,disliked_ingredients,
+    confirmed_ingredients,active_minutes,cleanup_minutes) ON planning.manifest_ranks TO feedme_api;
+GRANT INSERT(environment,actor_kind,principal_id,manifest_id,header_sha256,traversed_count,eligible_count,
+    rows_sha256,first_decision_text,first_decision_sha256) ON planning.manifest_seals TO feedme_api;
+GRANT INSERT(environment,actor_kind,principal_id,command_key,request_sha256,guest_session_id,policy_sha256,
+    manifest_id,window_date) ON planning.guest_preparations TO feedme_api;
 GRANT INSERT(environment,actor_kind,principal_id,id,plan_id,version,status,device_sequence,snapshot,
     plan_snapshot_text,plan_snapshot_hash,plan_proof_hash,plan_evidence_hash,created_at,updated_at,expires_at)
     ON cooking.cook_sessions TO feedme_api;
@@ -767,11 +846,18 @@ GRANT INSERT(environment,actor_kind,principal_id,id,version,is_default,name,crea
 GRANT INSERT(environment,actor_kind,principal_id,collection_id,saved_recipe_id,position) ON memory.collection_items TO feedme_api;
 GRANT INSERT(environment,actor_kind,principal_id,command_id,saved_recipe_id,collection_id,generation) ON memory.save_commands TO feedme_api;
 GRANT INSERT(environment,actor_kind,principal_id,revision) ON memory.library_heads TO feedme_api;
+GRANT INSERT(environment,actor_kind,principal_id,id,version,cook_session_id,context_text,context_sha256,
+    provenance_text,provenance_sha256,snapshot,created_at,updated_at) ON memory.feedback TO feedme_api;
+GRANT INSERT(environment,actor_kind,principal_id,feedback_id,feedback_version,principal_scope,operation_id,
+    command_key,request_hash,response_sha256) ON memory.feedback_commands TO feedme_api;
 
 -- Mutations actually used by the account-core stores, never full-table UPDATE grants.
 GRANT UPDATE(state,response_code,response_json,response_etag,updated_at,expires_at,tombstoned_at) ON platform.idempotency TO feedme_api;
 GRANT UPDATE(terms_version,terms_accepted_at,version,updated_at) ON identity.users TO feedme_api;
 GRANT UPDATE(last_seen_at,updated_at,version,app_version,revoked_at,logout_command_key) ON identity.device_sessions TO feedme_api;
+GRANT UPDATE(last_seen_at,inactivity_expires_at) ON identity.guest_sessions TO feedme_api;
+GRANT UPDATE(issued_count) ON identity.guest_issuance_windows TO feedme_api;
+GRANT UPDATE(used_count) ON identity.guest_plan_windows TO feedme_api;
 GRANT UPDATE(display_name,normalized_handle,bio,avatar_media_id,onboarding_step,version,updated_at) ON profile.profiles TO feedme_api;
 GRANT UPDATE(fields,version,updated_at) ON profile.preferences TO feedme_api;
 GRANT UPDATE(id,version,created_at,updated_at,fields,deleted,deletion_key) ON pantry.pantry_items TO feedme_api;
@@ -782,6 +868,8 @@ GRANT UPDATE(device_sequence) ON cooking.device_cursors TO feedme_api;
 GRANT UPDATE(deleted,snapshot,copy_evidence,deletion_key,version,updated_at) ON memory.saved_recipes TO feedme_api;
 GRANT UPDATE(version,updated_at) ON memory.collections TO feedme_api;
 GRANT UPDATE(revision) ON memory.library_heads TO feedme_api;
+GRANT UPDATE(version,snapshot,updated_at,deleted,deletion_key,cook_session_id,context_text,context_sha256,
+    provenance_text,provenance_sha256) ON memory.feedback TO feedme_api;
 GRANT DELETE ON memory.collection_items TO feedme_api;
 
 -- Lock-only UPDATE privileges: every attempted assignment, including key=key, is rejected
@@ -803,9 +891,11 @@ GRANT UPDATE(id) ON identity.principals TO feedme_api;
 GRANT UPDATE(event_id) ON platform.outbox TO feedme_api;
 GRANT UPDATE(saved_recipe_id) ON memory.collection_items TO feedme_api;
 GRANT UPDATE(command_id) ON memory.save_commands TO feedme_api;
+GRANT UPDATE(command_key) ON planning.guest_preparations TO feedme_api;
 
--- No sequences are used (UUIDs and explicit counters). No grant to guest/social/media,
--- manifest writers, outbox workers, migration writers or recipe/substitution publishers.
+-- No sequences are used (UUIDs and explicit counters). No grant to social/media,
+-- outbox workers, migration writers or recipe/substitution publishers. Guest writes are
+-- limited to private session/kitchen/manifest/cooking/Saved/feedback state above.
 -- V029's quota trigger reads identity.principals, already selected above. Account-derived
 -- format3 trigger checks use the already-selected owned planning rows; format2 manifest
 -- writer fields/permissions remain absent. Other exercised row guards use NEW/OLD or

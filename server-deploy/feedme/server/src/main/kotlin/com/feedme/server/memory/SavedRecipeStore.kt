@@ -294,13 +294,15 @@ class SavedRecipeStore(val environment: String, private val transactions: PgTran
         // admitted only through the concrete current account/provenance reader below,
         // never by an arbitrary SavedRecipeAuthority returning an accepting copy permit.
         if (format !in 1..5) fail(SavedRecipeFailureCode.NOT_CONFIGURED)
+        val account = if (format in setOf(3, 4, 5))
+            authority as? AccountSavedRecipeAccess ?: fail(SavedRecipeFailureCode.NOT_CONFIGURED)
+        else null
         val text = r.getString(1); val document = Json.parseToJsonElement(text).jsonObject
         if (digest(text) != r.getString(2) || document["id"] != JsonPrimitive(id.toString())) fail(SavedRecipeFailureCode.STORAGE_UNAVAILABLE)
         if (r.getString(3) != "ready" || document["status"] != JsonPrimitive("ready")) fail(SavedRecipeFailureCode.RECIPE_UNAVAILABLE)
         val recipe = document["recipeSnapshot"]?.jsonObject ?: fail(SavedRecipeFailureCode.STORAGE_UNAVAILABLE)
         if (recipe["id"] != JsonPrimitive(r.getObject(4, UUID::class.java).toString())) fail(SavedRecipeFailureCode.STORAGE_UNAVAILABLE)
-        if (format in setOf(3, 4, 5)) {
-            val account = authority as? AccountSavedRecipeAccess ?: fail(SavedRecipeFailureCode.NOT_CONFIGURED)
+        if (account != null) {
             val authorized = account.lockOwnedDerivedPlanRecipe(c, actor, id)
             if (canonical(recipe) != canonical(authorized)) fail(SavedRecipeFailureCode.RECIPE_UNAVAILABLE)
         }

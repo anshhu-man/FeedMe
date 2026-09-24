@@ -13,7 +13,8 @@ import kotlinx.serialization.json.JsonObject
 
 /** Explicit, private guest feedback. The actual session owner encloses the target,
  * feedback, original receipt and redacted event in one transaction. No automatic save,
- * completion, allergy, preference projection, social publication or HTTP activation. */
+ * completion, allergy, preference projection or social publication. HTTP activation is
+ * separately explicit. */
 internal class GuestFeedbackStore(
     private val environment: String,
     private val transactions: PgTransactions,
@@ -28,6 +29,7 @@ internal class GuestFeedbackStore(
         require(sessions.isBoundTo(environment, transactions))
         require(catalog.environment == environment && ingredients.environment == environment)
     }
+    internal fun isBoundTo(owner: GuestSessionStore): Boolean = sessions === owner
     fun createFeedback(token: String, key: UUID, body: JsonObject): CommandResult =
         use(token, "createFeedback") { c, actor, store -> store.createFeedback(c, actor, key, body) }
     fun updateFeedback(token: String, key: UUID, id: UUID, ifMatch: String, body: JsonObject): CommandResult =

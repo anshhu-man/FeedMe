@@ -116,6 +116,7 @@ class AccountCoreRuntime private constructor(
                     feedMeLocalService(listener.service, catalog, clock = clock, lifecycle = lifecycle,
                         observationSink = diagnostics, healthMode = ServiceHealthMode.ACCOUNT_CORE_DEPENDENCIES,
                         accountCoreHealth = assembly.dependencyHealth, account = assembly.account,
+                        guest = assembly.guest,
                         accountPreferences = assembly.preferences, accountPantry = assembly.pantry,
                         accountPlanning = assembly.planning, accountCooking = assembly.cooking, accountSaved = assembly.saved,
                         accountBlocks = assembly.blocks, accountMealIntent = assembly.mealIntent,

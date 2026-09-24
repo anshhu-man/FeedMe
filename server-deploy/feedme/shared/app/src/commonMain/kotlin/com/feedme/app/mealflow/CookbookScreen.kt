@@ -196,7 +196,7 @@ fun RetainedCookbookScreen(state: CookbookState, query: String, picker: MealPick
             onSearch = { rendered, value -> if (rendered === context && underlayCurrent()) actions.query(value) },
             onTab = { rendered, tab -> if (rendered === context && canCollections && underlayCurrent() &&
                 tab == BlueprintLibraryTab.COLLECTIONS) actions.collections?.invoke() },
-            onAction = { dispatchBlueprintSaved(projected, it, underlayCurrent(), actions.open, tools, actions.memory) },
+            onAction = { dispatchBlueprintSaved(projected, it, underlayCurrent(), actions.open, null, actions.memory) },
             onBack = { if (underlayCurrent()) actions.back() }, onMore = tools,
             onNavigate = { destination -> dispatchBlueprintCookbookTab(projected, destination, ::underlayCurrent, actions) },
             onSubmitSearch = { if (underlayCurrent()) {

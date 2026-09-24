@@ -263,7 +263,10 @@ internal class AccountProviderErasureStore(internal val environment: String,
     }
 }
 
-internal enum class AccountProviderErasureRun { NOT_CONFIGURED, IDLE, PROVIDER_ABSENT, RECONCILIATION_PENDING, RETRY_EXHAUSTED, LEASE_LOST }
+internal enum class AccountProviderErasureRun {
+    NOT_CONFIGURED, IDLE, PROVIDER_ABSENT, COMPLETED, COMPLETION_HELD,
+    RECONCILIATION_PENDING, RETRY_EXHAUSTED, LEASE_LOST
+}
 
 /** Explicit single step only. No launch-on-construction, scheduler, secrets or live activation.
  * Provider absence is a durable exact-identity observation, NOT all-data/full-F49 completion.
@@ -271,8 +274,13 @@ internal enum class AccountProviderErasureRun { NOT_CONFIGURED, IDLE, PROVIDER_A
  */
 internal class AccountProviderErasureWorker(private val store: AccountProviderErasureStore,
     private val client: SupabaseAuthErasureClient, private val databaseDispatcher: CoroutineDispatcher,
-    private val retryStore: AccountProviderRetryStore? = null) {
-    init { require(retryStore == null || retryStore.provider === store) }
+    private val retryStore: AccountProviderRetryStore? = null,
+    private val completionStore: AccountDeletionCompletionStore? = null) {
+    init {
+        require(retryStore == null || retryStore.provider === store)
+        require(completionStore == null ||
+            completionStore.environment == store.environment && completionStore.transactions === store.transactions)
+    }
     suspend fun runOne(): AccountProviderErasureRun {
         currentCoroutineContext().ensureActive()
         if (client.configuredIssuer != SupabaseAuthErasureClient.APPROVED_ISSUER) return AccountProviderErasureRun.NOT_CONFIGURED
@@ -285,7 +293,7 @@ internal class AccountProviderErasureWorker(private val store: AccountProviderEr
         } else if (retryStore != null) {
             val prepared = runInterruptible(databaseDispatcher) { retryStore.prepare(lease) }
             when (prepared.outcome) {
-                AccountProviderRetryOutcome.PROVIDER_ABSENT -> return AccountProviderErasureRun.PROVIDER_ABSENT
+                AccountProviderRetryOutcome.PROVIDER_ABSENT -> return complete(lease)
                 AccountProviderRetryOutcome.WAITING -> return AccountProviderErasureRun.RECONCILIATION_PENDING
                 AccountProviderRetryOutcome.EXHAUSTED -> return AccountProviderErasureRun.RETRY_EXHAUSTED
                 AccountProviderRetryOutcome.LEASE_LOST -> return AccountProviderErasureRun.LEASE_LOST
@@ -301,9 +309,17 @@ internal class AccountProviderErasureWorker(private val store: AccountProviderEr
             }
         }
         return when (runInterruptible(databaseDispatcher) { store.reconcile(lease, 60) }) {
-            AccountProviderErasureObservation.PROVIDER_ABSENT -> AccountProviderErasureRun.PROVIDER_ABSENT
+            AccountProviderErasureObservation.PROVIDER_ABSENT -> complete(lease)
             AccountProviderErasureObservation.PROVIDER_PRESENT -> AccountProviderErasureRun.RECONCILIATION_PENDING
             AccountProviderErasureObservation.LEASE_LOST -> AccountProviderErasureRun.LEASE_LOST
+        }
+    }
+
+    private suspend fun complete(lease: AccountProviderErasureLease): AccountProviderErasureRun {
+        val completion = completionStore ?: return AccountProviderErasureRun.PROVIDER_ABSENT
+        return when (runInterruptible(databaseDispatcher) { completion.complete(lease.jobId) }) {
+            AccountDeletionCompletionOutcome.COMPLETED -> AccountProviderErasureRun.COMPLETED
+            AccountDeletionCompletionOutcome.NOT_READY -> AccountProviderErasureRun.COMPLETION_HELD
         }
     }
     override fun toString() = "AccountProviderErasureWorker([redacted])"

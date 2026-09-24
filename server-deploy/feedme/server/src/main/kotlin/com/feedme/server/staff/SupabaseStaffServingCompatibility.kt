@@ -5,9 +5,9 @@ import java.sql.Connection
 import kotlinx.coroutines.CancellationException
 
 /** Read-only compatibility/privilege probe, never an installer. New activation rights:
- * USAGE on staff/auth; SELECT on the listed staff fields; SELECT(id,user_id,factor_id)
- * on auth.sessions and SELECT(id,user_id,status,factor_type) on auth.mfa_factors. The
- * existing reviewed provider projection EXECUTE rights are still required separately.
+ * USAGE on staff and SELECT on the listed staff fields. Current session-to-TOTP
+ * binding is read only through the reviewed provider projection; the runtime has no
+ * direct Auth schema/table privilege. Existing provider projection rights still apply.
  * Forced RLS must not turn a missing enrollment into an apparently authoritative read.
  * This observes required capabilities, not a least-privilege certification of the role. */
 internal object SupabaseStaffServingCompatibility {
@@ -29,8 +29,25 @@ internal object SupabaseStaffServingCompatibility {
                     "FROM ONLY staff.publication_policies WHERE false").close()
                 s.executeQuery("SELECT environment,actor_id,issuer,subject,can_publish,can_review,enabled,token_valid_after,not_before,valid_until " +
                     "FROM ONLY staff.actors WHERE false").close()
-                s.executeQuery("SELECT id,user_id,factor_id FROM ONLY auth.sessions WHERE false").close()
-                s.executeQuery("SELECT id,user_id,status,factor_type FROM ONLY auth.mfa_factors WHERE false").close()
+            }
+            c.createStatement().use { s ->
+                s.executeQuery("SELECT p.prosecdef,p.prokind,p.proretset,p.pronargs," +
+                    "p.prorettype='pg_catalog.record'::regtype,l.lanname,p.provolatile,p.proisstrict," +
+                    "p.proparallel,p.proleakproof,p.proconfig," +
+                    "encode(sha256(convert_to(p.prosrc,'UTF8')),'hex')," +
+                    "(o.rolsuper OR o.rolbypassrls)," +
+                    "has_function_privilege(current_user,p.oid,'EXECUTE')," +
+                    "has_function_privilege(current_user,p.oid,'EXECUTE WITH GRANT OPTION')," +
+                    "(SELECT count(*) FROM pg_proc q WHERE q.pronamespace=p.pronamespace AND q.proname=p.proname) " +
+                    "FROM pg_proc p JOIN pg_language l ON l.oid=p.prolang JOIN pg_roles o ON o.oid=p.proowner " +
+                    "WHERE p.oid='feedme_auth_access.staff_totp_facts(uuid,uuid)'::regprocedure").use { r ->
+                    check(r.next() && r.getBoolean(1) && r.getString(2) == "f" && r.getBoolean(3) && r.getInt(4) == 2 &&
+                        r.getBoolean(5) && r.getString(6) == "plpgsql" && r.getString(7) == "v" && r.getBoolean(8) &&
+                        r.getString(9) == "u" && !r.getBoolean(10) &&
+                        r.getArray(11).array.let { it is Array<*> && it.toList() == listOf("search_path=pg_catalog, pg_temp", "row_security=off") } &&
+                        r.getString(12) == staffTotpSourceSha256 && r.getBoolean(13) && r.getBoolean(14) &&
+                        !r.getBoolean(15) && r.getLong(16) == 1L && !r.next())
+                }
             }
             for ((table, columns) in staffColumns) {
                 c.prepareStatement("SELECT c.relkind,c.relrowsecurity,c.relforcerowsecurity," +
@@ -77,6 +94,7 @@ internal object SupabaseStaffServingCompatibility {
         Triple("auth.sessions", "factor_id", "pg_catalog.uuid"),
         Triple("auth.mfa_factors", "factor_type", "auth.factor_type"),
     )
+    private const val staffTotpSourceSha256 = "5bee9c962edcd245c3e4131b9bbad3036bece2cf7519919011e7bcaf8c4d448f"
     private val checksum by lazy {
         checkNotNull(javaClass.getResourceAsStream("/db/migration/V040__staff_publication_approvals.sql")).use {
             MessageDigest.getInstance("SHA-256").digest(it.readBytes()).joinToString("") { b -> "%02x".format(b.toInt() and 255) }

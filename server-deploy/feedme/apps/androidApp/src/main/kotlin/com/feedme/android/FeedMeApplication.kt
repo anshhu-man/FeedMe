@@ -22,8 +22,22 @@ class FeedMeApplication : Application() {
     private val defaultAccountEntry = lazy { AccountEntry(this) }
     private var testAccountEntry: AccountEntry? = null
     internal val accountEntry: AccountEntry get() = testAccountEntry ?: defaultAccountEntry.value
-    internal val guestEntry by lazy { GuestEntry(this) }
+    private var retainedGuestEntry: GuestEntry? = null
+    internal val guestEntry: GuestEntry get() {
+        check(Looper.myLooper() == Looper.getMainLooper())
+        return retainedGuestEntry ?: GuestEntry(this).also { retainedGuestEntry = it }
+    }
     internal val googleOAuthCallbacks = GoogleOAuthBrowserOwner(android.os.SystemClock::elapsedRealtime)
+
+    /** A fully acknowledged guest-to-account handoff may discard only that closed process
+     * owner. The next intentional guest entry receives a new composition; old Activities can
+     * neither reacquire it nor close its replacement. */
+    internal fun releaseGuestEntry(expected: GuestEntry) {
+        check(Looper.myLooper() == Looper.getMainLooper())
+        check(retainedGuestEntry === expected && expected.closedForReplacement())
+        retainedGuestEntry = null
+        expected.disposeClosed()
+    }
 
     /** Instrumentation-only typed composition. No Intent, asset replacement, injected native
      * owner, accepting verifier or route setter. Existing owners/attachments must be closed. */
@@ -53,7 +67,7 @@ internal enum class EntryScreen { WELCOME, OPENING, EMAIL, PASSWORD_RECOVERY, AC
     OPTIONAL_CHECKPOINT, ROUTE_SELECTION, RECOVERY, WORKING, SETUP_REMAINING, PRODUCT_REQUIRED,
     PRIVATE_MEAL, PRIVATE_SIGN_OUT, ACCOUNT_SETTINGS, ACCOUNT_PRIVACY, ACCOUNT_BLOCKED, ACCOUNT_SESSIONS,
     ACCOUNT_NOTIFICATIONS, ACCOUNT_NOTIFICATION_PERMISSION, ACCOUNT_FOOD_SETTINGS, ACCOUNT_EQUIPMENT_SETTINGS,
-    ACCOUNT_PROFILE_EDIT, ACCOUNT_MEMORY, ACCOUNT_EXPORT,
+    ACCOUNT_PROFILE_EDIT, ACCOUNT_MEMORY, ACCOUNT_EXPORT, ACCOUNT_PLAN,
     ACCOUNT_SUPPORT, ACCOUNT_DELETION, CLOSE_REQUIRED, CLOSING }
 internal data class EntryDecisionIntent(val prompt: OnboardingOptionalPrompt, val choice: OnboardingDecisionChoice)
 internal class EntryMealDestination(val handoff: EmailAccountPrivateHandoff,
@@ -126,7 +140,7 @@ internal class AccountEntry(private val application: Application, private val te
     private val mutable = MutableStateFlow(EntryState(EntryScreen.WELCOME))
     val states = mutable.asStateFlow()
     val clock = testComposition?.clock ?: EpochClock { System.currentTimeMillis() }
-    val configuration: AccountConfiguration? = testComposition?.configuration ?: loadConfiguration()
+    val configuration: AccountConfiguration? = testComposition?.configuration ?: loadFeedMeConfiguration(application)
     private val connectivity = testComposition?.connectivity ?: ConnectivityPort {
         try {
             val manager = application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -320,6 +334,7 @@ internal class AccountEntry(private val application: Application, private val te
                 openAccountPrivacy(token)
             expected.screen == EntryScreen.ACCOUNT_SETTINGS && action == "SETTINGS.10" -> openAccountSupport(token, expected)
             expected.screen == EntryScreen.ACCOUNT_SETTINGS && action == "SETTINGS.07" -> openAccountSessions(token, expected)
+            expected.screen == EntryScreen.ACCOUNT_SETTINGS && action == "SETTINGS.09" -> openAccountPlan(token, expected)
             expected.screen == EntryScreen.ACCOUNT_SETTINGS && action == "SETTINGS.12" -> openAccountDeviceSignOut(token, expected)
             expected.screen == EntryScreen.ACCOUNT_SETTINGS && action == "SETTINGS.06" -> openAccountNotifications(token, expected)
             expected.screen == EntryScreen.ACCOUNT_SETTINGS && action == "SETTINGS.02" -> openAccountKitchenSettings(token, expected, equipment = false)
@@ -349,6 +364,35 @@ internal class AccountEntry(private val application: Application, private val te
     fun accountMemoryAvailable(token: Any, expected: EntryState): Boolean =
         accountControlsCurrent(token, expected) && expected.screen == EntryScreen.ACCOUNT_SETTINGS &&
             accountSettingsReturn?.meal?.experience?.mealMemory != null
+
+    fun accountPlanAvailable(token: Any, expected: EntryState): Boolean =
+        accountControlsCurrent(token, expected) && expected.screen == EntryScreen.ACCOUNT_SETTINGS &&
+            accountSettingsReturn?.meal != null
+
+    private fun openAccountPlan(token: Any, expected: EntryState) {
+        if (!accountPlanAvailable(token, expected)) return
+        mutable.value = EntryState(EntryScreen.ACCOUNT_PLAN, meal = accountSettingsReturn?.meal)
+    }
+
+    fun accountPlanCurrent(token: Any, expected: EntryState): Boolean =
+        attachments.owns(token) && mutable.value === expected && owner != null && operation == null &&
+            expected.screen == EntryScreen.ACCOUNT_PLAN && expected.meal != null &&
+            accountSettingsReturn?.meal === expected.meal
+
+    fun accountPlanUsable(token: Any, expected: EntryState): Boolean {
+        if (!accountPlanCurrent(token, expected)) return false
+        val source = accountSettingsReturn ?: return false
+        val meal = expected.meal ?: return false
+        return source.coordinator?.let { owner?.isCurrent(it) } == true &&
+            meal.connection.boundary.isCurrent(meal.connection.access.lease)
+    }
+
+    fun closeAccountPlan(token: Any, expected: EntryState) {
+        mainThread()
+        if (!accountPlanCurrent(token, expected)) return
+        if (!accountPlanUsable(token, expected)) { closeOwned(); return }
+        mutable.value = EntryState(EntryScreen.ACCOUNT_SETTINGS)
+    }
 
     fun accountExportAvailable(token: Any, expected: EntryState): Boolean =
         accountControlsCurrent(token, expected) && expected.screen == EntryScreen.ACCOUNT_PRIVACY &&
@@ -1512,13 +1556,16 @@ internal class AccountEntry(private val application: Application, private val te
         check(testComposition != null && quiescentForTests())
         scope.cancel()
     }
-    private fun loadConfiguration(): AccountConfiguration? = try {
-        application.assets.open("feedme-config.json").use { input ->
-            val bytes = readAccountConfiguration(input)
-            try { AccountConfiguration.parse(bytes, BuildConfig.VERSION_NAME) } finally { bytes.fill(0) }
-        }
-    } catch (_: FileNotFoundException) { null }
-    catch (_: Exception) { null } // No raw configuration, endpoint, email or token in logs/UI.
 }
+
+/** One bounded, inert public-client configuration loader shared by account and guest entry.
+ * Missing/malformed bytes remain unconfigured; raw values never enter diagnostics or UI. */
+internal fun loadFeedMeConfiguration(application: Application): AccountConfiguration? = try {
+    application.assets.open("feedme-config.json").use { input ->
+        val bytes = readAccountConfiguration(input)
+        try { AccountConfiguration.parse(bytes, BuildConfig.VERSION_NAME) } finally { bytes.fill(0) }
+    }
+} catch (_: FileNotFoundException) { null }
+catch (_: Exception) { null }
 
 private class EntryRouteFailure(val reason: FailureReason) : RuntimeException("Restricted entry action refused")

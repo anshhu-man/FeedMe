@@ -33,7 +33,8 @@ interface MediaProcessingObjects {
     fun settle(cleanup: MediaCleanupLease): SettledMediaVersions
     fun deleteVersion(cleanup: MediaCleanupLease, versionId: String)
 }
-/** Both malware and moderation are mandatory. Pending/outage does not mean rejected or ready.
+/** Both a malware scan or validated content-disarm path, and moderation, are mandatory.
+ * Pending/outage does not mean rejected or ready.
  * The adapter must bound each external assessment with explicit timeouts and propagate caller
  * cancellation/interruption; the codec timeout does not cover this independent provider call. */
 fun interface MediaSafetyAssessment {

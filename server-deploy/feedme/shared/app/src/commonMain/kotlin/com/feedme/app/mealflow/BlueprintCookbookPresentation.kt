@@ -34,7 +34,9 @@ internal fun blueprintCookbookState(state: CookbookState, query: String, busy: B
     if (entries.map { it.reference.id }.distinct().size != entries.size) return null
     return BlueprintCookbookState(context, query, entries = entries,
         controls = BlueprintLibraryControls(loading = blocked,
-            allowedActions = if (blocked) emptySet() else setOf(BlueprintLibraryAction.OPEN_SAVE, BlueprintLibraryAction.LIBRARY_TOOLS) +
+            // COOKBOOK.06 belongs to the withheld expanded-library offer path in free V1.
+            // Keep its canonical presentation visible but never mint an intent here.
+            allowedActions = if (blocked) emptySet() else setOf(BlueprintLibraryAction.OPEN_SAVE) +
                 if (memoryAvailable && state.phase in setOf(CookbookPhase.IDLE, CookbookPhase.READY))
                     setOf(BlueprintLibraryAction.MANAGE_MEMORY) else emptySet(),
             allowedNavigation = if (blocked) emptySet() else V1MobileReleaseScope.admitScreens(
@@ -62,13 +64,13 @@ internal fun dispatchBlueprintCookbookTab(state: BlueprintCookbookState, destina
 }
 
 internal fun dispatchBlueprintSaved(state: BlueprintCookbookState, intent: BlueprintLibraryIntent,
-    current: Boolean, open: (String) -> Unit, tools: () -> Unit, memory: (() -> Unit)? = null) {
+    current: Boolean, open: (String) -> Unit, libraryTools: (() -> Unit)?, memory: (() -> Unit)? = null) {
     if (!current || intent.context !== state.context) return
     val exact = state.intent(intent.action, saved = intent.saved) ?: return
     if (exact.saved != intent.saved) return
     when (intent.action) {
         BlueprintLibraryAction.OPEN_SAVE -> intent.saved?.let { open(it.id) }
-        BlueprintLibraryAction.LIBRARY_TOOLS -> tools()
+        BlueprintLibraryAction.LIBRARY_TOOLS -> libraryTools?.invoke()
         BlueprintLibraryAction.MANAGE_MEMORY -> memory?.invoke()
         else -> Unit
     }

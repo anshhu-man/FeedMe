@@ -29,8 +29,9 @@ import kotlinx.serialization.json.*
  *
  * Internal implementation only: first-Plan historical GET/explanation use a distinct checked
  * path. V2 alternatives, cooking creation and erasure still require their checked paths.
- * No HTTP capability or mobile
- * activation is installed here. A stored alternative cursor does not activate such a route.
+ * No HTTP or mobile activation is installed merely by constructing this store. The optional
+ * guest HTTP composition exposes only create, read and configured explanation operations.
+ * A stored alternative cursor does not activate such a route.
  * In particular the strict original-selection verifier must NOT become historical GET or
  * EXISTING_PIN authorization: those have different lifetime/input/retirement semantics. */
 internal class GuestPlansStore(
@@ -46,6 +47,14 @@ internal class GuestPlansStore(
     private val commands = DurableCommands(transactions)
     private val outbox = OutboxStore(transactions)
     private val validator by lazy { ContractBodyValidator.bundled() }
+    internal val implementedOperations: Set<String> = buildSet {
+        add("createPlan")
+        add("getPlan")
+        if (explanationCursors != null) add("getPlanExplanation")
+    }
+    internal fun isBoundTo(sessions: GuestSessionStore): Boolean = preparations.isBoundTo(sessions)
+    internal fun sharesPreparationWith(cooking: GuestCookingStore): Boolean = cooking.isBoundTo(preparations)
+    internal fun sharesPreparationWith(saved: GuestSavedRecipeStore): Boolean = saved.isBoundTo(preparations)
 
     fun getPlan(token: String, planId: UUID): StoredReply = readFirst(token, "getPlan", planId) { _, _, stored ->
         if (validator.validateResponse("getPlan", 200, checkNotNull(stored.body).toString().toByteArray(Charsets.UTF_8),

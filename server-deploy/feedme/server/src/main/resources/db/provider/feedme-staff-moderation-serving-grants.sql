@@ -3,8 +3,9 @@
 -- migrations V001--V091. This file creates no role, password, staff actor,
 -- moderator enrollment, policy, incident, feature flag or public route.
 --
--- The application role remains unable to edit workforce or moderator authority.
--- It receives the exact provider/MFA observations needed for staff admission,
+-- The application role remains unable to read or edit the managed Auth schema,
+-- workforce or moderator authority. It receives only EXECUTE on the exact
+-- provider/MFA projection needed for staff admission,
 -- read/write access to the reviewed moderation workflow, read-only source content
 -- needed for a removal decision, and three aggregate health columns. Keep auth,
 -- staff and safety outside the client Data API.
@@ -20,7 +21,7 @@ LOCK TABLE ONLY staff.publication_policies, ONLY staff.actors,
     ONLY platform.feature_flag_actions IN ACCESS SHARE MODE;
 
 DO $feedme_staff_serving$
-DECLARE api pg_catalog.pg_roles%ROWTYPE; wanted record; relation record;
+DECLARE api pg_catalog.pg_roles%ROWTYPE; wanted record; relation record; observer record;
 BEGIN
     SELECT * INTO STRICT api FROM pg_catalog.pg_roles WHERE rolname='feedme_api';
     IF api.rolsuper OR api.rolcreatedb OR api.rolcreaterole OR api.rolreplication
@@ -78,7 +79,32 @@ BEGIN
                     OR p.proconfig IS DISTINCT FROM ARRAY['search_path=pg_catalog, pg_temp','row_security=off']::text[])) THEN
         RAISE EXCEPTION 'Moderator locking helper differs from reviewed boundary';
     END IF;
-    IF pg_catalog.has_schema_privilege(api.oid,'auth','CREATE')
+    SELECT p.*,l.lanname,(owner.rolsuper OR owner.rolbypassrls) AS owner_bypass
+    INTO STRICT observer
+    FROM pg_catalog.pg_proc p
+    JOIN pg_catalog.pg_language l ON l.oid=p.prolang
+    JOIN pg_catalog.pg_roles owner ON owner.oid=p.proowner
+    WHERE p.oid='feedme_auth_access.staff_totp_facts(uuid,uuid)'::pg_catalog.regprocedure;
+    IF NOT observer.prosecdef OR observer.prokind<>'f' OR NOT observer.proretset
+        OR observer.pronargs<>2 OR observer.prorettype<>'pg_catalog.record'::pg_catalog.regtype
+        OR observer.lanname<>'plpgsql' OR observer.provolatile<>'v' OR NOT observer.proisstrict
+        OR observer.proparallel<>'u' OR observer.proleakproof OR NOT observer.owner_bypass
+        OR observer.proconfig IS DISTINCT FROM
+            ARRAY['search_path=pg_catalog, pg_temp','row_security=off']::text[]
+        OR pg_catalog.encode(pg_catalog.sha256(
+            pg_catalog.convert_to(observer.prosrc,'UTF8')),'hex')<>
+            '5bee9c962edcd245c3e4131b9bbad3036bece2cf7519919011e7bcaf8c4d448f'
+        OR EXISTS (SELECT 1 FROM pg_catalog.pg_proc p
+            WHERE p.pronamespace=observer.pronamespace AND p.proname=observer.proname
+              AND p.oid<>observer.oid)
+        OR EXISTS (SELECT 1 FROM pg_catalog.aclexplode(COALESCE(observer.proacl,
+            pg_catalog.acldefault('f',observer.proowner))) a
+            WHERE a.grantee NOT IN (observer.proowner,api.oid)
+               OR (a.grantee=api.oid AND
+                   (a.privilege_type<>'EXECUTE' OR a.is_grantable))) THEN
+        RAISE EXCEPTION 'Staff-TOTP observer differs from reviewed boundary';
+    END IF;
+    IF pg_catalog.has_schema_privilege(api.oid,'auth','USAGE,CREATE')
         OR pg_catalog.has_schema_privilege(api.oid,'staff','CREATE')
         OR pg_catalog.has_schema_privilege(api.oid,'safety','CREATE')
         OR pg_catalog.has_schema_privilege(api.oid,'social','CREATE')
@@ -88,10 +114,10 @@ BEGIN
         OR pg_catalog.has_any_column_privilege(api.oid,'staff.publication_policies','INSERT,UPDATE,REFERENCES')
         OR pg_catalog.has_any_column_privilege(api.oid,'staff.actors','INSERT,UPDATE,REFERENCES')
         OR pg_catalog.has_any_column_privilege(api.oid,'staff.moderator_enrollments','INSERT,UPDATE,REFERENCES')
-        OR pg_catalog.has_any_column_privilege(api.oid,'auth.sessions','INSERT,UPDATE,REFERENCES')
-        OR pg_catalog.has_any_column_privilege(api.oid,'auth.mfa_factors','INSERT,UPDATE,REFERENCES')
-        OR pg_catalog.has_table_privilege(api.oid,'auth.sessions','DELETE,TRUNCATE,TRIGGER')
-        OR pg_catalog.has_table_privilege(api.oid,'auth.mfa_factors','DELETE,TRUNCATE,TRIGGER') THEN
+        OR pg_catalog.has_table_privilege(api.oid,'auth.sessions','SELECT,INSERT,UPDATE,DELETE,TRUNCATE,REFERENCES,TRIGGER')
+        OR pg_catalog.has_table_privilege(api.oid,'auth.mfa_factors','SELECT,INSERT,UPDATE,DELETE,TRUNCATE,REFERENCES,TRIGGER')
+        OR pg_catalog.has_any_column_privilege(api.oid,'auth.sessions','SELECT,INSERT,UPDATE,REFERENCES')
+        OR pg_catalog.has_any_column_privilege(api.oid,'auth.mfa_factors','SELECT,INSERT,UPDATE,REFERENCES') THEN
         RAISE EXCEPTION 'Staff-moderation role already has authority-changing privileges';
     END IF;
     IF pg_catalog.has_table_privilege(api.oid,'platform.feature_flags','INSERT,DELETE,TRUNCATE,TRIGGER')
@@ -104,13 +130,12 @@ END;
 $feedme_staff_serving$;
 
 -- FEEDME_STAFF_MODERATION_SERVING_EXPLICIT_GRANTS_BEGIN
-GRANT USAGE ON SCHEMA auth,staff,safety,social TO feedme_api;
+GRANT USAGE ON SCHEMA staff,safety,social TO feedme_api;
 GRANT SELECT(description) ON platform.schema_migrations TO feedme_api;
 -- Runtime compatibility pins the complete shapes of these three narrow registry
 -- tables, so whole-row reads cannot silently expose a future unreviewed column.
 GRANT SELECT ON staff.publication_policies,staff.actors,staff.moderator_enrollments TO feedme_api;
-GRANT SELECT(id,user_id,factor_id) ON auth.sessions TO feedme_api;
-GRANT SELECT(id,user_id,status,factor_type) ON auth.mfa_factors TO feedme_api;
+GRANT EXECUTE ON FUNCTION feedme_auth_access.staff_totp_facts(uuid,uuid) TO feedme_api;
 GRANT EXECUTE ON FUNCTION staff.lock_moderation_actor(text,text,text) TO feedme_api;
 
 GRANT SELECT ON safety.reports,safety.report_evidence,safety.moderation_cases,
@@ -148,10 +173,12 @@ DO $feedme_staff_serving_verify$
 DECLARE api oid; wanted record;
 BEGIN
     SELECT oid INTO STRICT api FROM pg_catalog.pg_roles WHERE rolname='feedme_api';
-    IF NOT pg_catalog.has_schema_privilege(api,'auth','USAGE')
+    IF pg_catalog.has_schema_privilege(api,'auth','USAGE,CREATE')
         OR NOT pg_catalog.has_schema_privilege(api,'staff','USAGE')
         OR NOT pg_catalog.has_schema_privilege(api,'safety','USAGE')
         OR NOT pg_catalog.has_schema_privilege(api,'social','USAGE')
+        OR NOT pg_catalog.has_function_privilege(api,'feedme_auth_access.staff_totp_facts(uuid,uuid)','EXECUTE')
+        OR pg_catalog.has_function_privilege(api,'feedme_auth_access.staff_totp_facts(uuid,uuid)','EXECUTE WITH GRANT OPTION')
         OR NOT pg_catalog.has_function_privilege(api,'staff.lock_moderation_actor(text,text,text)','EXECUTE')
         OR pg_catalog.has_function_privilege(api,'staff.lock_moderation_actor(text,text,text)','EXECUTE WITH GRANT OPTION') THEN
         RAISE EXCEPTION 'Staff-moderation serving privileges were not installed exactly';
@@ -170,8 +197,6 @@ BEGIN
     END LOOP;
     FOR wanted IN SELECT * FROM (VALUES
         ('platform.schema_migrations','SELECT',ARRAY['description']::text[]),
-        ('auth.sessions','SELECT',ARRAY['id','user_id','factor_id']::text[]),
-        ('auth.mfa_factors','SELECT',ARRAY['id','user_id','status','factor_type']::text[]),
         ('platform.media_processing_jobs','SELECT',ARRAY['environment','state','created_at']::text[]),
         ('safety.reports','UPDATE',ARRAY['version','status','updated_at']::text[]),
         ('safety.moderation_cases','UPDATE',ARRAY['version','status','assignee_staff_id','reason_code','updated_at','action']::text[]),
@@ -205,6 +230,10 @@ BEGIN
         OR pg_catalog.has_any_column_privilege(api,'staff.publication_policies','INSERT,UPDATE,REFERENCES')
         OR pg_catalog.has_any_column_privilege(api,'staff.actors','INSERT,UPDATE,REFERENCES')
         OR pg_catalog.has_any_column_privilege(api,'staff.moderator_enrollments','INSERT,UPDATE,REFERENCES')
+        OR pg_catalog.has_table_privilege(api,'auth.sessions','SELECT,INSERT,UPDATE,DELETE,TRUNCATE,REFERENCES,TRIGGER')
+        OR pg_catalog.has_table_privilege(api,'auth.mfa_factors','SELECT,INSERT,UPDATE,DELETE,TRUNCATE,REFERENCES,TRIGGER')
+        OR pg_catalog.has_any_column_privilege(api,'auth.sessions','SELECT,INSERT,UPDATE,REFERENCES')
+        OR pg_catalog.has_any_column_privilege(api,'auth.mfa_factors','SELECT,INSERT,UPDATE,REFERENCES')
         OR pg_catalog.has_table_privilege(api,'safety.moderation_actions','DELETE,TRUNCATE,TRIGGER')
         OR pg_catalog.has_table_privilege(api,'safety.moderation_access_audit','UPDATE,DELETE,TRUNCATE,TRIGGER')
         OR pg_catalog.has_table_privilege(api,'safety.moderation_removals','UPDATE,DELETE,TRUNCATE,TRIGGER')

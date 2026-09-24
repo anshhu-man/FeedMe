@@ -264,5 +264,7 @@ class PlatformMigrations(private val dataSource: DataSource) {
             .plus("/db/migration/V089__never_dispatched_export_erasure.sql")
             .plus("/db/migration/V090__staff_operational_health_reader.sql")
             .plus("/db/migration/V091__restrictive_staff_feature_flags.sql")
+            .plus("/db/migration/V092__account_deletion_operations_audit.sql")
+            .plus("/db/migration/V093__account_deletion_support_ownership.sql")
     }
 }

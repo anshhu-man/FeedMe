@@ -45,6 +45,9 @@ internal class PostMediaReadVerifier(private val environment: String) {
         processingCurrent()
         if (c.isClosed || c.autoCommit || c.transactionIsolation != Connection.TRANSACTION_READ_COMMITTED || mediaVersion <= 0)
             conflict()
+        // Refuse malformed caller material before touching database state. Protocol-specific
+        // source binding is repeated below after the locked asset identifies the trusted bucket.
+        expectedManifest(expectedDerivatives, mediaId)
         val sourceAndUpdated = read(c, "SELECT * FROM platform.media_assets WHERE environment=? " +
             "AND owner_user_id=? AND id=? FOR SHARE NOWAIT", {
             setString(1, environment); setObject(2, ownerId); setObject(3, mediaId)
@@ -139,6 +142,18 @@ internal class PostMediaReadVerifier(private val environment: String) {
     } catch (failure: Exception) {
         throw MediaProcessingFailure(MediaProcessingFailureCode.STORAGE_UNAVAILABLE).also { unavailable ->
             failure.suppressed.forEach(unavailable::addSuppressed)
+        }
+    }
+
+    private fun expectedManifest(value: JsonObject, mediaId: UUID) {
+        if (value.toString().encodeToByteArray(throwOnInvalidSequence = true).size > 65536) conflict()
+        when ((value["version"] as? JsonPrimitive)?.takeIf { !it.isString }?.intOrNull) {
+            1 -> manifest(value)
+            2 -> {
+                val bucket = (value["bucket"] as? JsonPrimitive)?.takeIf { it.isString }?.content ?: conflict()
+                SupabaseMediaReadiness.validateManifest(value, environment, mediaId, bucket)
+            }
+            else -> conflict()
         }
     }
 

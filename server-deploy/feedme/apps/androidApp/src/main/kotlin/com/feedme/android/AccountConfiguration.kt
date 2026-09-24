@@ -15,6 +15,7 @@ import com.feedme.session.OnboardingProfilePolicy
 import com.feedme.session.PreAccountBootstrapConfiguration
 import com.feedme.session.AccountPasswordRecoveryController
 import com.feedme.session.PasswordRecoveryPolicy
+import com.feedme.session.GuestBootstrapSelection
 import com.feedme.core.ports.EpochClock
 import com.feedme.core.ports.ConnectivityPort
 import kotlinx.coroutines.CoroutineDispatcher
@@ -37,6 +38,7 @@ internal class AccountConfiguration private constructor(
     private val providerPolicy: SupabaseProviderIdentityPolicy,
     private val refreshPolicy: SupabaseRefreshIdentityPolicy?,
     private val endpoint: ApiEndpoint,
+    private val apiOrigin: String,
     private val environment: String,
     private val pendingMillis: Long,
     private val resendMillis: Long,
@@ -52,6 +54,14 @@ internal class AccountConfiguration private constructor(
     val accountRefreshConfigured: Boolean get() = refreshPolicy != null
     /** Public expected Supabase issuer, not identity evidence from a browser callback. */
     val googleOAuthProviderIssuer: String get() = provider.providerIssuer
+
+    /** Same immutable, digest-bound API selection used by the account runtime. This is only
+     * guest composition input; it grants no token, lease, catalog access or live readiness. */
+    fun guestSelection() = GuestBootstrapSelection(bootstrap.binding, environment, apiOrigin)
+
+    fun guestSessionConfiguration() = GuestCurrentSessionConfiguration(endpoint, bootstrap.binding,
+        GuestCurrentSessionPolicy(provider.attemptMillis, providerPolicy.evidenceMillis,
+            providerPolicy.allowedFutureClockSkewSeconds * 1_000))
 
     /** No installation/native credential is needed for a purpose-isolated reset. */
     fun createPasswordRecovery(dispatcher: CoroutineDispatcher, clock: EpochClock,
@@ -197,7 +207,8 @@ internal class AccountConfiguration private constructor(
                 }
                 SupabaseRefreshIdentityPolicy(identityPolicy, boundedNumber("maximumJwksAgeSeconds"), boundedNumber("totalTimeoutMillis"))
             }
-            val api = ApiEndpoint.https(environment, string("apiOrigin"))
+            val apiOrigin = string("apiOrigin")
+            val api = ApiEndpoint.https(environment, apiOrigin)
             val ageDeclaration = string("ageDeclarationText")
             require(ageDeclaration == FeedMeAdultPolicy.AGE_DECLARATION)
             val form = EmailAccountFormPolicy(ageDeclaration, string("passwordGuidance"))
@@ -255,7 +266,7 @@ internal class AccountConfiguration private constructor(
             val provider = SupabaseEmailConfiguration.https(binding, string("providerOrigin"),
                 SecretText(string("publishableKey")), maximum, number("attemptMillis"))
             return AccountConfiguration(PreAccountBootstrapConfiguration(binding, provider.providerIssuer), form,
-                terms, privacy, preferenceChoices, privateMeal, provider, identityPolicy, refreshPolicy, api, environment,
+                terms, privacy, preferenceChoices, privateMeal, provider, identityPolicy, refreshPolicy, api, apiOrigin, environment,
                 pending, resend, profile, appVersion, signupTermsVersion, googleOAuthRedirectUrl, accountDeletion,
                 circleInvitationLinkBase, photoUpload, passwordRecoveryPolicy)
         }

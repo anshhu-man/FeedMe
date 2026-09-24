@@ -112,6 +112,46 @@ val prepareReleaseClientConfiguration by tasks.registering(Exec::class) {
     }
 }
 
+// A connected release must retain the agreed FeedMe product, not merely contain
+// structurally valid URLs. Refuse a configuration that silently disables Make Mine,
+// Make Again, AI interpretation, Inbox acknowledgements or their explicit launch
+// dependencies. This reads only the generated public asset and performs no write.
+val verifyConnectedReleaseProductScope by tasks.registering(Exec::class) {
+    group = "verification"
+    description = "Requires the connected release configuration to retain the agreed product scope."
+    workingDir(rootProject.projectDir)
+    commandLine("node", "scripts/check-connected-release-product-scope.mjs")
+    standardOutput = ByteArrayOutputStream()
+    errorOutput = ByteArrayOutputStream()
+    isIgnoreExitValue = true
+    dependsOn(prepareReleaseClientConfiguration)
+    doLast {
+        if (executionResult.get().exitValue != 0) {
+            throw GradleException("Connected release product scope is incomplete; configuration details were not printed.")
+        }
+    }
+}
+
+// A structurally valid public payload is not enough for a connected release.
+// Probe only its fixed public policy/support/API endpoints before release packaging;
+// debug remains reproducible and offline. The checker prints no response bodies or
+// credentials and performs no write, deployment, signing or Play action.
+val verifyConnectedReleaseEndpoints by tasks.registering(Exec::class) {
+    group = "verification"
+    description = "Requires the fixed connected policy/support/API endpoints to be release-ready."
+    workingDir(rootProject.projectDir)
+    commandLine("node", "scripts/check-connected-release-endpoints.mjs", "--release")
+    standardOutput = ByteArrayOutputStream()
+    errorOutput = ByteArrayOutputStream()
+    isIgnoreExitValue = true
+    dependsOn(prepareReleaseClientConfiguration)
+    doLast {
+        if (executionResult.get().exitValue != 0) {
+            throw GradleException("Connected public endpoints are not release-ready; response bodies and private diagnostics were not printed.")
+        }
+    }
+}
+
 android {
     namespace = "com.feedme.android"
     compileSdk = 36
@@ -159,6 +199,8 @@ android {
 kotlin { jvmToolchain(17) }
 tasks.matching { it.name == "preDebugBuild" }.configureEach { dependsOn(prepareClientConfiguration) }
 tasks.matching { it.name == "preReleaseBuild" }.configureEach { dependsOn(prepareReleaseClientConfiguration) }
+tasks.matching { it.name == "preReleaseBuild" }.configureEach { dependsOn(verifyConnectedReleaseProductScope) }
+tasks.matching { it.name == "preReleaseBuild" }.configureEach { dependsOn(verifyConnectedReleaseEndpoints) }
 
 // Explicit publication preparation only. This switch is not connected-service acceptance,
 // policy compliance, a Play upload or approval. Release still requires real configuration
@@ -168,7 +210,7 @@ androidComponents {
 }
 
 // Deliberately not a debug dependency and never signs, packages, uploads or enables release.
-tasks.register<Exec>("verifyLocalUploadSigning") {
+val verifyLocalUploadSigning by tasks.registering(Exec::class) {
     group = "verification"
     description = "Verifies the opted-in local upload certificate and dormant release signing reference."
     val publicOutput = ByteArrayOutputStream()
@@ -197,6 +239,10 @@ tasks.register<Exec>("verifyLocalUploadSigning") {
         logger.lifecycle(publicOutput.toString(Charsets.UTF_8.name()).trim())
     }
 }
+
+// Every enabled release build must verify the exact fixed upload certificate before
+// packaging. This does not affect debug and never creates or replaces signing material.
+tasks.matching { it.name == "preReleaseBuild" }.configureEach { dependsOn(verifyLocalUploadSigning) }
 
 dependencies {
     implementation(project(":shared:core"))

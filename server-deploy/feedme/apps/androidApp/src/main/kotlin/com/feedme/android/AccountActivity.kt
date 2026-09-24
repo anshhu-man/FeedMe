@@ -198,6 +198,7 @@ class AccountActivity : ComponentActivity() {
                 profileConfigured = entry.accountProfileEditAvailable(attachment, state),
                 memoryConfigured = entry.accountMemoryAvailable(attachment, state),
                 exportConfigured = entry.accountExportAvailable(attachment, state),
+                planConfigured = entry.accountPlanAvailable(attachment, state),
                 onAction = { action ->
                     if (action == "PRIVACY.06" && config != null && entry.accountControlsCurrent(attachment, state)) legal(config.privacyUrl)
                     else entry.accountControlsAction(attachment, state, action)
@@ -211,6 +212,10 @@ class AccountActivity : ComponentActivity() {
                     onDownload = saver.save, downloadBusy = saver.busy, downloadStatus = saver.status,
                     platformBackHandler = { enabled, back -> BackHandler(enabled, back) })
             }
+            EntryScreen.ACCOUNT_PLAN -> com.feedme.app.mealflow.FeedMeFreePlanFlow(
+                enabled = entry.accountPlanUsable(attachment, state),
+                onBack = { entry.closeAccountPlan(attachment, state) },
+                platformBackHandler = { enabled, back -> BackHandler(enabled, back) })
             EntryScreen.ACCOUNT_MEMORY -> state.meal?.experience?.mealMemory?.let { controller ->
                 com.feedme.app.mealflow.FeedMeTasteMemoryFlow(controller,
                     hostIsCurrent = { entry.accountMemoryUsable(attachment, state) },

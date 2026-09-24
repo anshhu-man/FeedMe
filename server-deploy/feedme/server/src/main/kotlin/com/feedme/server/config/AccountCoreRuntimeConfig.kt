@@ -133,6 +133,7 @@ class AccountCoreRuntimeConfig private constructor(
     internal val exportStorage: AccountExportRuntimeConfig?,
     internal val staffPolicy: com.feedme.server.staff.SupabaseStaffAdmissionPolicy?,
     internal val deletionRules: AccountDeletionRules?,
+    internal val guest: GuestCoreRuntimeConfig?,
     val databaseParallelism: Int,
     private val database: Database,
     internal val memoryRankingEnabled: Boolean = false,
@@ -164,17 +165,19 @@ class AccountCoreRuntimeConfig private constructor(
         private const val PASSWORD = "FEEDME_ACCOUNT_DB_PASSWORD"
         private const val KEYS = "FEEDME_ACCOUNT_CURSOR_KEYS"
         private val allowed = setOf(CONFIG, PASSWORD, KEYS) + AccountMealIntentRuntimeConfig.ENVIRONMENT_KEYS +
-            AccountMediaRuntimeConfig.ENVIRONMENT_KEYS + AccountExportRuntimeConfig.ENVIRONMENT_KEYS
+            AccountMediaRuntimeConfig.ENVIRONMENT_KEYS + AccountExportRuntimeConfig.ENVIRONMENT_KEYS +
+            GuestCoreRuntimeConfig.ENVIRONMENT_KEYS
         private val conflicting = setOf("FEEDME_MINIMUM_APP_VERSION", "DATABASE_URL", "JDBC_DATABASE_URL",
             "JDBC_DATABASE_USERNAME", "JDBC_DATABASE_PASSWORD", "PGHOST", "PGHOSTADDR", "PGPORT", "PGDATABASE",
             "PGUSER", "PGPASSWORD", "PGSERVICE", "PGSERVICEFILE", "PGSSLMODE", "PGSSLROOTCERT", "PGOPTIONS", "PGPASSFILE")
 
         fun fromEnvironment(values: Map<String, String>): AccountCoreRuntimeConfig = try {
             require(values.keys.none { it.startsWith("FEEDME_ACCOUNT_") && it !in allowed ||
+                it.startsWith("FEEDME_GUEST_") && it !in allowed ||
                 it.startsWith("FEEDME_SERVER_") || it.startsWith("FEEDME_MIGRATION_") ||
                 it.startsWith("FEEDME_PANTRY_") || it in conflicting })
             val root = document(requireNotNull(values[CONFIG]), 65_536)
-            exact(JsonObject(root - "termsNotice" - "safetyPolicy" - "deletionPolicy" - "postReadPolicy" - "circlePolicy" - "reportPolicy" - "memoryPolicy" - "reusePolicy" - "collectionMutationsEnabled" - "postAuthoringPolicy" - "conversationPolicy" - "postDeletionPolicy" - "postPlacementPolicy" - "postReactionPolicy" - "reactionNotificationPolicy" - "recipeRequestPolicy" - "sessionPolicy" - "notificationPolicy" - "notificationInboxPolicy" - "mediaAccessPolicy" - "remixReadPolicy" - "postRecipePolicy" - "exportPolicy" - "staffPolicy"), "version", "environment", "listener", "database", "deployment", "accountRules", "reconnectionRules", "keyPolicy",
+            exact(JsonObject(root - "termsNotice" - "safetyPolicy" - "deletionPolicy" - "postReadPolicy" - "circlePolicy" - "reportPolicy" - "memoryPolicy" - "reusePolicy" - "collectionMutationsEnabled" - "postAuthoringPolicy" - "conversationPolicy" - "postDeletionPolicy" - "postPlacementPolicy" - "postReactionPolicy" - "reactionNotificationPolicy" - "recipeRequestPolicy" - "sessionPolicy" - "notificationPolicy" - "notificationInboxPolicy" - "mediaAccessPolicy" - "remixReadPolicy" - "postRecipePolicy" - "exportPolicy" - "staffPolicy" - "guestPolicy"), "version", "environment", "listener", "database", "deployment", "accountRules", "reconnectionRules", "keyPolicy",
                 "ingredientLimits", "searchMode", "preferencePolicy", "kitchenPolicy", "planningOperational",
                 "planningPolicy", "cookingPolicy", "newCookingEnabled", "savedPolicy", "newCopiesEnabled", "databaseParallelism")
             require(number(root, "version") == 1L)
@@ -306,6 +309,10 @@ class AccountCoreRuntimeConfig private constructor(
             val kitchenCursors = cursor(rings.getValue("kitchen").jsonObject, ::KitchenCursorCodec)
             val planningCursors = cursor(rings.getValue("planning").jsonObject, ::PlanningCursors)
             val savedCursors = cursor(rings.getValue("saved").jsonObject, ::SavedRecipeCursors)
+            val guest = GuestCoreRuntimeConfig.from(root["guestPolicy"], values)
+            require(guest?.feedbackEnabled != true || memoryPolicy != null) {
+                "Guest feedback requires explicit memory policy"
+            }
             val blockCursors = safetyPolicy?.let { derivedBlockCursors(rings.getValue("saved").jsonObject) }
             val postFeedCursors = postReadPolicy?.let { derivedPostFeedCursors(rings.getValue("saved").jsonObject) }
             val memoryCursors = memoryPolicy?.let { derivedMemoryCursors(rings.getValue("saved").jsonObject) }
@@ -450,7 +457,7 @@ class AccountCoreRuntimeConfig private constructor(
                 cookingPolicy, newCooking, savedPolicy, savedCursors, newCopies, makeAgainEnabled, collectionMutations, safetyPolicy, blockCursors,
                 postReadPolicy, postFeedCursors, circlePolicy, reportPolicy, mealIntent, media, memoryPolicy, memoryCursors,
                 reusePolicy, reuseCursors, postAuthoring, conversationPolicy, conversationCursors, postDeletionPolicy, recipeRequestPolicy, sessionPolicy, sessionCursors, notificationPolicy, notificationInboxPolicy, notificationInboxCursors, mediaAccessPolicy, remixReadPolicy, remixCursors,
-                postRecipePolicy, exportPolicy, exportStorage, staffPolicy, deletionRules, parallelism, database, memoryRankingEnabled, staffModerationCursors,
+                postRecipePolicy, exportPolicy, exportStorage, staffPolicy, deletionRules, guest, parallelism, database, memoryRankingEnabled, staffModerationCursors,
                 postPlacementPolicy, postReactionPolicy, reactionNotificationPolicy)
         } catch (failure: CancellationException) { throw failure }
           catch (failure: InterruptedException) { Thread.currentThread().interrupt(); throw failure }

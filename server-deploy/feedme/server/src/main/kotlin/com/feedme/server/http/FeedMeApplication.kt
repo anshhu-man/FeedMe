@@ -114,9 +114,15 @@ fun Application.feedMeLocalService(
     require((healthMode == ServiceHealthMode.ACCOUNT_CORE_DEPENDENCIES) == (accountCoreHealth != null)) {
         "Configured core health requires its owned dependency checker"
     }
-    require(planning == null || accountPlanning == null) { "Choose one planning route authority" }
-    require(cooking == null || accountCooking == null) { "Choose one cooking route authority" }
-    require(savedRecipe == null || accountSaved == null) { "Choose one saved route authority" }
+    require(planning == null || (accountPlanning == null && guest?.plans == null)) {
+        "Choose the generic planning authority or the account/guest planning authorities"
+    }
+    require(cooking == null || (accountCooking == null && guest?.cooking == null)) {
+        "Choose the generic cooking authority or the account/guest cooking authorities"
+    }
+    require(savedRecipe == null || (accountSaved == null && guest?.saved == null)) {
+        "Choose the generic Saved authority or the account/guest Saved authorities"
+    }
     require(listOf(kitchen, pendingPreferences, accountPreferences).count { it != null } <= 1) {
         "Choose at most one kitchen/self-preferences route authority"
     }
@@ -286,6 +292,9 @@ fun Application.feedMeLocalService(
                         call.accountReportOperation(operation.id, accountReports, bodyValidator)
                     } else if (accountConversations != null && operation.id in accountConversationHttpOperations) {
                         call.accountConversationOperation(operation.id, accountConversations, bodyValidator)
+                    } else if (operation.id in guestFeedbackHttpOperations &&
+                        (accountMemory != null || guest?.feedback != null)) {
+                        call.credentialFeedbackOperation(operation.id, accountMemory, guest, bodyValidator)
                     } else if (accountMemory != null && operation.id in accountMemoryOperations) {
                         call.accountMemoryOperation(operation.id, accountMemory, bodyValidator)
                     } else if (accountReuse != null && operation.id == "createReuseOptions") {
@@ -294,6 +303,9 @@ fun Application.feedMeLocalService(
                         call.accountMealIntentOperation(accountMealIntent, bodyValidator)
                     } else if (planning != null && operation.id in planningHttpOperations) {
                         call.planningOperation(operation.id, planning, bodyValidator)
+                    } else if (operation.id in planningHttpOperations &&
+                        (accountPlanning != null || guest?.plans != null)) {
+                        call.credentialPlanningOperation(operation.id, accountPlanning, guest, bodyValidator)
                     } else if (accountPlanning != null && operation.id in accountPlanningHttpOperations) {
                         call.accountPlanningOperation(operation.id, accountPlanning, bodyValidator)
                     } else if (social != null && operation.id in socialHttpOperations) {
@@ -315,15 +327,19 @@ fun Application.feedMeLocalService(
                         call.accountPantryOperation(operation.id, accountPantry, bodyValidator)
                     } else if (cooking != null && operation.id in cookingHttpOperations) {
                         call.cookingOperation(operation.id, cooking, bodyValidator)
-                    } else if (accountCooking != null && operation.id in cookingHttpOperations) {
-                        call.accountCookingOperation(operation.id, accountCooking, bodyValidator)
+                    } else if (operation.id in cookingHttpOperations &&
+                        (accountCooking != null || guest?.cooking != null)) {
+                        call.credentialCookingOperation(operation.id, accountCooking, guest, bodyValidator)
                     } else if (savedRecipe != null && operation.id in savedRecipeHttpOperations) {
                         call.savedRecipeOperation(operation.id, savedRecipe, bodyValidator)
+                    } else if (operation.id in savedRecipeHttpOperations &&
+                        (accountSaved != null || guest?.saved != null)) {
+                        call.credentialSavedRecipeOperation(operation.id, accountSaved, guest, bodyValidator)
                     } else if (accountExports != null && operation.id in accountExportHttpOperations) {
                         call.accountExportOperation(operation.id, accountExports, bodyValidator)
                     } else if (accountPostRecipes != null && operation.id == "getPostRecipeSource") {
                         call.accountPostRecipeSourceOperation(accountPostRecipes, bodyValidator)
-                    } else if (accountSaved != null && (operation.id in savedRecipeHttpOperations || operation.id in accountCollectionHttpOperations || operation.id in accountPostSaveHttpOperations)) {
+                    } else if (accountSaved != null && (operation.id in accountCollectionHttpOperations || operation.id in accountPostSaveHttpOperations)) {
                         call.accountSavedRecipeOperation(operation.id, accountSaved, bodyValidator)
                     } else if (media != null && operation.id in mediaHttpOperations) {
                         call.mediaOperation(operation.id, media, bodyValidator)

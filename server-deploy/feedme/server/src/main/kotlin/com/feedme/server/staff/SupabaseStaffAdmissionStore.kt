@@ -56,7 +56,10 @@ internal class SupabaseStaffAdmissionStore(
                 }))
                 put("screens", JsonArray(buildList {
                     add(JsonPrimitive("ADMIN_HOME"))
-                    if (policy.catalogDraftsEnabled && (observed.canPublish || observed.canReview)) add(JsonPrimitive("ADMIN_RECIPE"))
+                    if (policy.catalogDraftsEnabled && (observed.canPublish || observed.canReview)) {
+                        add(JsonPrimitive("ADMIN_RECIPE"))
+                        add(JsonPrimitive("ADMIN_PACK"))
+                    }
                     if (policy.catalogReviewsEnabled && (observed.canPublish || observed.canReview)) {
                         add(JsonPrimitive("ADMIN_REVIEW"))
                         add(JsonPrimitive("ADMIN_SUBSTITUTION"))
@@ -217,9 +220,7 @@ internal class SupabaseStaffAdmissionStore(
         val canReview: Boolean, val canModerate: Boolean, val checkedAt: Instant, val validUntil: Instant)
 
     private fun exactCurrentTotp(c: Connection, subject: VerifiedSupabaseSubject): UUID = c.prepareStatement(
-        "SELECT s.factor_id,f.user_id,f.status::text,f.factor_type::text FROM ONLY auth.sessions s " +
-            "JOIN ONLY auth.mfa_factors f ON f.id=s.factor_id " +
-            "WHERE s.id=? AND s.user_id=? LIMIT 2").use { s ->
+        "SELECT factor_id,user_id,status,factor_type FROM feedme_auth_access.staff_totp_facts(?,?)").use { s ->
         s.setObject(1, subject.providerSessionId); s.setObject(2, subject.subject)
         s.executeQuery().use { r ->
             if (!r.next() || r.getObject(2, UUID::class.java) != subject.subject || r.getString(3) != "verified" ||

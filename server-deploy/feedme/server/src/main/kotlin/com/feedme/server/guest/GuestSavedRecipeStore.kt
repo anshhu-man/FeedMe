@@ -15,7 +15,8 @@ import kotlinx.serialization.json.*
 
 /** Real guest-token durable saving, bounded reads/default collections and owned deletion.
  * Explicit cursor keys, policy and governed copy-rights store are mandatory. This is not
- * HTTP/mobile activation, implicit Make Again/feedback, adaptation or social sharing. */
+ * HTTP/mobile activation remains explicit; this supplies no implicit Make Again/feedback,
+ * adaptation or social sharing. */
 internal class GuestSavedRecipeStore(
     private val environment: String,
     private val transactions: PgTransactions,
@@ -30,6 +31,8 @@ internal class GuestSavedRecipeStore(
         require(preparations.isBoundTo(environment, transactions) && preparations.hasSavingRightsOwner(rights))
         require(makeAgain == null || makeAgain.isSavingBoundTo(environment, transactions, preparations, rights, cursors, policy))
     }
+    internal fun isBoundTo(owner: GuestSessionStore): Boolean = preparations.isBoundTo(owner)
+    internal fun isBoundTo(owner: GuestPlanningStore): Boolean = preparations === owner
     fun saveRecipe(token: String, key: UUID, body: JsonObject): CommandResult =
         if ((body["markMakeAgain"] as? JsonPrimitive)?.booleanOrNull == true && makeAgain != null)
             makeAgain.saveRecipe(token, key, body)

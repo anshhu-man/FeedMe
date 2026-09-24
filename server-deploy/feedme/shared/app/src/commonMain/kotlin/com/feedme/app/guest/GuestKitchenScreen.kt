@@ -74,16 +74,20 @@ internal fun guestMissingChoices(draft: GuestKitchenDraft): String? {
 
 internal const val GUEST_MATCHING_UNAVAILABLE =
     "Your ingredient names haven’t been matched to a reviewed catalog. Meal choices aren’t available in this build, so no recipe was selected or request sent."
+internal const val GUEST_MATCHING_FAILED =
+    "We couldn’t match every ingredient to the current catalog or reach meal matching. Check the names and connection, then try again. No generic meal was substituted."
 
 /** Guest-only presentation. The host owns the draft, encrypted persistence, tab restoration
  * and action lifetimes. Attachment, recomposition and tab changes never load, save, match,
- * sign in or publish. This slice has no reviewed recipe or connected matching capability. */
+ * sign in or publish. Only the explicit Find action may enter a configured matching owner. */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun GuestKitchenScreen(
     state: GuestKitchenDraftState,
     selectedTab: GuestKitchenTab,
     matchingUnavailable: Boolean,
+    matchingConnected: Boolean = false,
+    matchingBusy: Boolean = false,
     onDraftChange: (GuestKitchenDraft) -> Unit,
     onFindMeal: () -> Unit,
     onRetry: () -> Unit,
@@ -113,7 +117,7 @@ fun GuestKitchenScreen(
                             FeedMeStatusLabel("Guest kitchen", FeedMeColors.SoftLime)
                         }
                         if (selectedTab == GuestKitchenTab.COOK) {
-                            CookInputs(state, matchingUnavailable, onDraftChange,
+                            CookInputs(state, matchingUnavailable, matchingConnected, matchingBusy, onDraftChange,
                                 onFindMeal = { keyboard?.hide(); onFindMeal() }, onRetry = onRetry)
                         } else GuestSecondaryPage(selectedTab, onAccount) { selectTab(GuestKitchenTab.COOK) }
                     }
@@ -148,6 +152,7 @@ private fun GuestKitchenNavigation(current: GuestKitchenTab, select: (GuestKitch
 @OptIn(ExperimentalLayoutApi::class, androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
 private fun CookInputs(state: GuestKitchenDraftState, matchingUnavailable: Boolean,
+    matchingConnected: Boolean, matchingBusy: Boolean,
     onDraftChange: (GuestKitchenDraft) -> Unit, onFindMeal: () -> Unit, onRetry: () -> Unit) {
     val scope = rememberCoroutineScope()
     val keyboard = LocalSoftwareKeyboardController.current
@@ -179,7 +184,7 @@ private fun CookInputs(state: GuestKitchenDraftState, matchingUnavailable: Boole
     }
     GuestDraftStatus(state, onRetry)
     val draft = state.draft
-    val editable = state.phase in setOf(GuestDraftPhase.READY, GuestDraftPhase.SAVING)
+    val editable = state.phase in setOf(GuestDraftPhase.READY, GuestDraftPhase.SAVING) && !matchingBusy
     if (draft != null) {
         var inputError by remember { mutableStateOf<String?>(null) }
         Column(Modifier.fillMaxWidth().bringIntoViewRequester(primaryView), verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -192,13 +197,19 @@ private fun CookInputs(state: GuestKitchenDraftState, matchingUnavailable: Boole
                     GuestKitchenPrimaryAction.FIND_MEAL -> onFindMeal()
                     GuestKitchenPrimaryAction.UNAVAILABLE -> Unit
                 }
-            }, enabled = primaryAction != GuestKitchenPrimaryAction.UNAVAILABLE,
+            }, enabled = primaryAction != GuestKitchenPrimaryAction.UNAVAILABLE && !matchingBusy,
                 modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp), shape = RoundedCornerShape(18.dp)) {
-                Text(primaryAction.label, style = MaterialTheme.typography.titleMedium)
+                Text(if (matchingBusy && matchingConnected) "Finding your meal…" else primaryAction.label,
+                    style = MaterialTheme.typography.titleMedium)
             }
-            Text("Meal matching is not connected in this build.", style = MaterialTheme.typography.bodySmall,
+            Text(when {
+                matchingBusy && matchingConnected -> "Matching only the ingredient names and choices you entered."
+                matchingBusy -> "Opening secure guest meal matching…"
+                matchingConnected -> "Secure guest meal matching is ready."
+                else -> "Meal matching is not connected in this build."
+            }, style = MaterialTheme.typography.bodySmall,
                 color = FeedMeColors.Muted, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
-            if (matchingUnavailable) GuestMatchingUnavailable()
+            if (matchingUnavailable) GuestMatchingUnavailable(matchingConnected)
         }
         GuestInputCard {
             FeedMeSectionHeading("What’s in your kitchen?", "A few ingredients are enough to start.")
@@ -217,7 +228,7 @@ private fun CookInputs(state: GuestKitchenDraftState, matchingUnavailable: Boole
                 modifier = Modifier.fillMaxWidth().bringIntoViewRequester(ingredientsView).focusRequester(ingredientsFocus),
                 label = { Text("Ingredients you have") },
                 placeholder = { Text("For example: rice, eggs, tomatoes") },
-                supportingText = { Text(inputError ?: "Up to ${GuestKitchenDraft.MAX_INGREDIENT_CHARACTERS} characters. Nothing is uploaded.") },
+                supportingText = { Text(inputError ?: "Up to ${GuestKitchenDraft.MAX_INGREDIENT_CHARACTERS} characters. Sent only when you choose Find me a meal.") },
                 isError = inputError != null,
                 minLines = 3,
                 maxLines = 5,
@@ -279,7 +290,7 @@ private fun CookInputs(state: GuestKitchenDraftState, matchingUnavailable: Boole
                 onFindMeal()
                 scope.launch { primaryView.bringIntoView() }
             }
-        }, enabled = guestCanFindMeal(state),
+        }, enabled = guestCanFindMeal(state) && !matchingBusy,
             modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp), shape = RoundedCornerShape(18.dp)) {
             Text("Find me a meal", style = MaterialTheme.typography.titleMedium)
         }
@@ -287,13 +298,14 @@ private fun CookInputs(state: GuestKitchenDraftState, matchingUnavailable: Boole
 }
 
 @Composable
-private fun GuestMatchingUnavailable() {
+private fun GuestMatchingUnavailable(connected: Boolean) {
     Surface(color = FeedMeColors.SoftBlue, shape = RoundedCornerShape(20.dp)) {
         Column(Modifier.fillMaxWidth().padding(18.dp).semantics { liveRegion = LiveRegionMode.Polite },
             verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text("No meal chosen yet", style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.semantics { heading() })
-            Text(GUEST_MATCHING_UNAVAILABLE, style = MaterialTheme.typography.bodyMedium)
+            Text(if (connected) GUEST_MATCHING_FAILED else GUEST_MATCHING_UNAVAILABLE,
+                style = MaterialTheme.typography.bodyMedium)
         }
     }
 }
@@ -336,7 +348,8 @@ private fun GuestSecondaryPage(tab: GuestKitchenTab, onAccount: () -> Unit, onCo
     GuestInputCard {
         if (tab == GuestKitchenTab.PROFILE) {
             Text("You’re cooking as a guest", style = MaterialTheme.typography.titleLarge)
-            Text("Your cooking inputs stay on this device. An account isn’t required to use this kitchen.", style = MaterialTheme.typography.bodyLarge)
+            Text("Your draft stays on this device. Ingredient choices are sent only after you choose Find me a meal. An account isn’t required.",
+                style = MaterialTheme.typography.bodyLarge)
             Text("Account setup opens separately. Your guest inputs won’t be uploaded or merged automatically.",
                 style = MaterialTheme.typography.bodyMedium, color = FeedMeColors.Muted)
             OutlinedButton(onClick = onAccount, modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp),

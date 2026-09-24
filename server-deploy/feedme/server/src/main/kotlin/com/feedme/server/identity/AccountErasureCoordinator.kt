@@ -45,7 +45,9 @@ internal interface AccountErasureCoordinatorSteps {
  * inside a database transaction. Any unexpected failure (including an unknown commit)
  * stops this lifetime; a new explicitly constructed coordinator can recover durable leases.
  * There is no automatic provider retry adapter, media scan, route/launcher registration,
- * credential loading, retention override or whole-account completion transition.
+ * credential loading, retention override or implicit whole-account completion transition.
+ * The future V094 provider-to-completion seam is available only through an explicit
+ * construction flag whose default is false; the current runtime supplies no such flag.
  */
 internal class AccountErasureCoordinator private constructor(
     private val steps: AccountErasureCoordinatorSteps,
@@ -182,13 +184,17 @@ internal class AccountErasureCoordinator private constructor(
     companion object {
         fun create(environment: String, transactions: PgTransactions, authority: SupabasePostgresAuthority,
             databaseDispatcher: CoroutineDispatcher, authClient: SupabaseAuthErasureClient? = null,
-            intervalMillis: Long = 1_000, controlDispatcher: CoroutineDispatcher = Dispatchers.Default): AccountErasureCoordinator {
+            intervalMillis: Long = 1_000, controlDispatcher: CoroutineDispatcher = Dispatchers.Default,
+            completionEnabled: Boolean = false): AccountErasureCoordinator {
             require(authority.deployment.verification.issuer == SupabaseAuthErasureClient.APPROVED_ISSUER)
+            require(!completionEnabled || authClient != null)
             val work = AccountErasureWorkStore(environment, transactions)
             val core = AccountErasureCoreStore(environment, transactions)
             val coreWorker = AccountErasureCoreWorker(work, core)
             val provider = authClient?.let { AccountProviderErasureStore(environment, transactions, authority) }
-            val providerWorker = provider?.let { AccountProviderErasureWorker(it, checkNotNull(authClient), databaseDispatcher) }
+            val completion = if (completionEnabled) AccountDeletionCompletionStore(environment, transactions) else null
+            val providerWorker = provider?.let { AccountProviderErasureWorker(it, checkNotNull(authClient),
+                databaseDispatcher, completionStore = completion) }
             return AccountErasureCoordinator(object : AccountErasureCoordinatorSteps {
                 override suspend fun checkCompatibility() {
                     if (authClient != null && authClient.configuredIssuer != SupabaseAuthErasureClient.APPROVED_ISSUER)
@@ -197,6 +203,7 @@ internal class AccountErasureCoordinator private constructor(
                         authority.checkCompatibility(c)
                         core.checkCompatibility(c)
                         provider?.checkCompatibility(c)
+                        completion?.checkCompatibility(c)
                     } }
                 }
                 override suspend fun runCore() = runInterruptible(databaseDispatcher) { coreWorker.runOne() }

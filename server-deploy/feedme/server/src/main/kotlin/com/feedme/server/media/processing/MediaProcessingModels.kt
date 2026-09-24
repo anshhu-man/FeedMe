@@ -82,7 +82,8 @@ class MediaProcessingReceipt internal constructor(val jobId: UUID, val result: M
     override fun toString() = "MediaProcessingReceipt(<redacted>)"
 }
 enum class MediaSafetyRejection { MALWARE_DETECTED, CONTENT_REJECTED }
-/** Mandatory adapter evidence asserts BOTH malware and content approval for these exact hashes.
+/** Mandatory adapter evidence asserts BOTH malware-scan or validated CDR approval, and content
+ * approval, for these exact hashes.
  * It is revalidated under the current lifecycle/policy lock before READY; construction alone grants nothing. */
 class MediaSafetyEvidence(val receiptId: String, val revision: String, val sourceSha256: String,
     derivativeSha256: Map<PhotoVariant, String>, val assessedAt: Instant, val validUntil: Instant) {

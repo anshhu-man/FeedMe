@@ -120,7 +120,9 @@ internal suspend fun ApplicationCall.guestBoundary(operation: String, validator:
 }
 
 internal fun guestFailureHttp(operation: String, code: GuestSessionFailureCode): GuestHttpFailure {
-    require(operation in setOf("createGuestSession", "searchIngredients", "getCurrentGuestSession") + guestKitchenHttpOperations)
+    require(operation in setOf("createGuestSession", "searchIngredients", "getCurrentGuestSession") +
+        guestKitchenHttpOperations + guestPlanningHttpOperations + guestCookingHttpOperations +
+        guestSavedRecipeHttpOperations + guestFeedbackHttpOperations)
     return when (code) {
         GuestSessionFailureCode.INPUT_INVALID -> GuestHttpFailure(422, "INPUT_INVALID")
         GuestSessionFailureCode.ORIGINAL_MISMATCH -> GuestHttpFailure(409, "IDEMPOTENCY_MISMATCH")

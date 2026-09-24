@@ -326,7 +326,7 @@ internal class GuestSessionStore(
     }
 
     private fun receipt(c: Connection, key: UUID, locked: Boolean): Receipt? =
-        query(c, "SELECT * FROM identity.guest_bootstrap_receipts WHERE environment=? AND command_key=?" + if (locked) " FOR UPDATE" else "",
+        query(c, "SELECT * FROM identity.guest_bootstrap_receipts WHERE environment=? AND command_key=?" + if (locked) " FOR SHARE" else "",
             { setString(1, environment); setObject(2, key) }) {
             Receipt(it.getObject("guest_session_id", UUID::class.java), it.getString("installation_sha256"), it.getString("request_sha256"),
                 time(it, "created_at"), time(it, "expires_at"), GuestReplayEnvelope(it.getString("key_id"), it.getBytes("nonce"), it.getBytes("ciphertext")))
